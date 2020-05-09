@@ -1,0 +1,23 @@
+{% load static %}
+{% load i18n %}
+
+<body style="padding: 0px; margin: 0px; background-color: #F7F8F9;">
+    <div class="main-wrapper" style="box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; display: block; width: 634px; padding: 30px 30px; background-color: #ffffff; border-radius: 2px; margin: auto;" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+		<div class="header-sec">
+			<img src="{{ domain }}{% static 'images/dndsos-logo-black.png' %}" alt="Logo" style="max-width: 20%;">
+		</div>
+		<div class="content-sec">
+			<h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{% trans 'Delivery Alert from DND-SOS!' %}</h5>
+		</div>
+        <h4>{% trans 'To' %}: {{ ordering_busines }}</h4>
+        
+        <p>{% trans 'The following order was accepted by a freelancer' %}</p>
+        <h3>Order ID: {{ order_id }}</h3>
+        <p><b>Freelancer name:</b> {{ fl_name }}</p>
+        <p><b>Freelancer phone:</b> {{ fl_phone }}</p>        
+        <hr>
+        <div>
+            <p><em>If you have received this email by mistake, please ignore it.</p></em>
+        </div>
+</body>
+</html>

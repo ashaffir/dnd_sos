@@ -1,0 +1,35 @@
+{% load static %}
+{% load i18n %}
+{% autoescape off %}
+{% get_current_language as lang %}
+
+<!doctype html>
+<html lang="en">
+<head>
+</head>
+
+
+<body style="padding: 0px; margin: 0px; background-color: #F7F8F9;">
+
+    <div class="main-wrapper" style="box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; display: block; width: 634px; padding: 30px 30px; background-color: #ffffff; border-radius: 2px; margin: auto;" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+		<div class="header-sec">
+			<img src="{{ domain }}{% static 'images/dndsos-logo-black.png' %}" alt="Logo" style="max-width: 20%;">
+		</div>
+		<div class="content-sec">
+			<h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{% trans 'Delivery Alert from DND-SOS!' %}</h5>
+			<div>
+				<!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjuXqngtXmv1rNogLdpCzdtz7cXqnneVmWSQu928dqNIrO7v-F0g"> -->
+			</div>
+		</div>
+        <p>{% trans 'Dear' %} {{ user.first_name| default:user.username }} , </p>
+        <p> click on the link below to activate your account:</p>
+
+        <a href="{{ domain }}{% url 'core:activate_account' uidb64=uid token=token %}" style="display: inline-block; text-decoration: none; font-size: 16px; font-weight: bold; font-family: sans-serif; width: 326px; height: 56px; text-align: center; line-height: 56px; background-color:#129218; color: #ffffff;">Activate account</a>
+
+        <hr>
+        <div>
+            <p><em>If you have received this email by mistake, please ignore it.</p></em>
+        </div>
+</body>
+</html>
+{% endautoescape %}

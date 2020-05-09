@@ -1,0 +1,163 @@
+{% extends 'dndsos_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Freelancers</h2>
+    
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'dndsos_dashboard:b-dashboard' %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Freelancers</span></li>
+            </ol>
+    
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+        <div class="col-md-10 col-lg-10">
+            <div class="tabs">
+                <ul class="nav nav-tabs tabs-primary">
+                    <li class="active">
+                        <a href="#manage" data-toggle="tab">Your Freelancers</a>
+                    </li>
+                    <li >
+                        <a href="#select" data-toggle="tab">Select Freelancers</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="manage" class="tab-pane active">
+
+                        <form class="form-horizontal" enctype="multipart/form-data" name="businessProfile" method="POST">
+                            {% csrf_token %}
+                            <h4 class="mb-xlg">Manage Your Freelancers</h4>
+                                <fieldset>
+                                    <div class="col-md-12">
+                                        <div class="panel-group" id="accordion2">
+                                            <div class="panel panel-accordion panel-accordion-primary">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2One">
+                                                            <i class="fa fa-star"></i> Donec tellus massa
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapse2One" class="accordion-body collapse in">
+                                                    <div class="panel-body">
+                                                        Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-accordion panel-accordion-primary">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2Two">
+                                                            <i class="fa fa-cogs"></i> Praesent id enim
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapse2Two" class="accordion-body collapse">
+                                                    <div class="panel-body">
+                                                        Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-accordion panel-accordion-primary">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2Three">
+                                                            <i class="fa fa-cloud"></i> Lorem ipsum dolor
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapse2Three" class="accordion-body collapse">
+                                                    <div class="panel-body">
+                                                        Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <hr class="dotted tall">
+                                <a class="btn btn-warning" href="/accounts/password/change" role="button">Change Password</a>
+
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-default">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div id="select" class="tab-pane">
+                        <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
+                            {% csrf_token %}
+                            <div class="row" >
+                                <div class="col-md-4">
+                                    <h4>Pick Available Freelancers</h4>
+                                    <p>There  {% if total_freelancers > 1 %}  are {% else %} is {% endif %}{{ total_freelancers }} freelancers available.</p>
+                                    <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
+                                                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-md">
+                                        <input type="text" class="form-control" name="city" placeholder="Enter your city">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Sort!</button>
+                                        </span>
+                                    </div>                    
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-md">
+                                        <input type="text" class="form-control" name="vehicle" placeholder="Preferred vehicle">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">Sort!</button>
+                                        </span>
+                                    </div>                    
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                {% for freelancer in freelancers %}
+                                    <div class="col-md-4">
+										<section class="panel">
+											<header class="panel-heading bg-primary">
+												<div class="panel-heading-profile-picture">
+													<img src="{{ freelancer.profile_pic.url }}">
+												</div>
+											</header>
+											<div class="panel-body">
+												<h4 class="text-semibold mt-sm">{{ freelancer }}</h4>
+												<p>Short bio: {{ freelancer.bio }} </p>
+												<p>City: {{ freelancer.city }} </p>
+												<p>Vehicle: {{ freelancer.vehicle }} </p>
+												<hr class="solid short">
+												<!-- <p><a href="#"><i class="fa fa-user mr-xs"></i> My Profile</a></p>
+												<p><a href="#"><i class="fa fa-lock mr-xs"></i> Lock Screen</a></p>
+												<p><a href="#"><i class="fa fa-power-off mr-xs"></i> Logout</a></p> -->
+											</div>
+										</section>
+                                    </div> 
+                                {% endfor %}
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- end: page -->
+</section>
+
+{% endblock content %}

@@ -1,0 +1,170 @@
+{% extends 'dndsos_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Orders</h2>
+    
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'dndsos_dashboard:b-dashboard' %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Tables</span></li>
+                <li><span>Editable</span></li>
+            </ol>
+    
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="fa fa-caret-down"></a>
+                    <a href="#" class="fa fa-times"></a>
+                </div>
+        
+                <h2 class="panel-title">Default</h2>
+            </header>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-md">
+                            <!-- <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button> -->
+                            <!-- <a href="{% url 'dndsos_dashboard:add-order' %}" id="addOrder" class="btn btn-primary">Add <i class="fa fa-plus"></i></a> -->
+                            {% include 'dndsos_dashboard/add-order.html' %}
+                        </div>
+                    </div>
+                </div>
+                <form action="" method="POST" enctype="multipart/form-data" name="orderTable" id="orderTable">
+                    {% csrf_token %}
+                    <table class="table table-bordered table-striped mb-none" id="datatable-editable">
+                        <thead>
+                            <tr>
+                                <th>Order Time</th>
+                                <th>City</th>
+                                <th>Notes</th>
+                                <th>Allocated</th>
+                                <th>Dispach Status</th>
+                                <th>Delivy Status</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr class="gradeX">
+                                <td>{{ order.order_time }}</td>
+                                <td>{{ order.order_city }}</td>
+                                <td>{{ order.order_notes }}</td>
+                                {% if order.freelancer_allocated.name %}
+                                <td>{{order.freelancer_allocated.name}} / {{order.freelancer_allocated.phone}}</td>
+                                {% else %}
+                                <td style="background-color:orange; color: white">Not Allocated</td>
+                                {% endif %}
+                                {% if order.order_dispatched %}
+                                    <td style="background-color: green; color: white; text-align:center" >
+                                        <div style="background-color: green;">
+                                            <label for="dispached">Dispached</label>                                    
+                                        </div>
+                                    {% else %}
+                                    <td>
+                                        <label for="dispached">Not Dispached</label>
+                                        <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button>
+                                    </td>
+                                {% endif %}
+                                {% if order.order_delivered %}
+                                    <td style="background-color: green; color: white; text-align:center" ">
+                                        <div >
+                                            <label for="delivery"> Delivered</label>
+                                        </div>
+                                    </td>
+                                    {% else %}
+                                    <td>
+                                        <label for="dispached">Not Delivered</label>
+                                        <button class="btn btn-sm btn-success" type="submit" name="delivered" value="{{ order.pk }}">Confirm Delivery</button>                                        
+                                    </td>
+                                {% endif %}
+                                <td class="actions">
+                                    <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
+                                    <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
+                                    <!-- <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a> -->
+                                    {% include 'dndsos_dashboard/partials/confirmation_modal.html' with order_id=order.pk %}
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+
+            </div>
+        </section>
+    <!-- end: page -->
+</section>
+
+<!-- <script>
+    /*
+Websocket events:
+*/
+    //console.log(window.location)
+    let wsStart = 'ws://' 
+    let loc = window.location
+    if (loc.protocol == 'https:') {
+        let wsStart = 'wss://' 
+    }
+    
+    let endpoint = wsStart + loc.host + loc.pathname
+    
+    let socket = new WebSocket(endpoint)
+
+
+    socket.onmessage = function(e){
+        console.log(`message: ${e}`)
+    }
+    socket.open = function(e){
+        console.log(`open: ${e}`)
+    }
+    socket.onerror = function(e){
+        console.log(`error: ${e}`)
+    }
+    socket.onclose = function(e){
+        console.log(`close: ${e}`)
+    }
+
+</script> -->
+{% block js %}
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+//			  const webSocketBridge = new channels.WebSocketBridge();
+      const webSocketBridge = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/notifications/'
+    );
+
+      const nl = document.querySelector("#notifylist");
+      
+      //webSocketBridge.connect('/notifications/');
+      /*
+      webSocketBridge.listen(function(action, stream) {
+        console.log("RESPONSE:", action);
+        if(action.event == "New User") {
+          var el = document.createElement("li");
+          el.innerHTML = `New user <b>${action.username}</b> has joined!`;
+          nl.appendChild(el);
+        }
+      })
+      */
+      document.ws = webSocketBridge; /* for debugging */
+    })
+    </script>
+{% endblock js %}
+{% endblock content %}
+
