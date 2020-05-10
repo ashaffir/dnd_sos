@@ -1,101 +1,63 @@
-INFO 2020-05-09 15:59:11,801 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
-INFO 2020-05-09 15:59:11,801 - Configuring endpoint tcp:port=8010:interface=127.0.0.1
-INFO 2020-05-09 15:59:11,802 - Listening on TCP address 127.0.0.1:8010
-INFO 2020-05-09 16:00:23,031 - [mHTTP GET / 200 [0.07, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:23,270 - [mHTTP GET /static/fonts/icomoon/style.css 200 [0.00, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:23,295 - [mHTTP GET /static/css/bootstrap.min.css 200 [0.02, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:23,299 - [mHTTP GET /static/css/aos.css 200 [0.02, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,299 - [mHTTP GET /static/css/jquery.fancybox.min.css 200 [0.02, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:23,307 - [mHTTP GET /static/css/bootstrap-datepicker.css 200 [0.03, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:23,312 - [mHTTP GET /static/css/jquery-ui.css 200 [0.04, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:23,313 - [mHTTP GET /static/css/style.css 200 [0.02, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:23,317 - [mHTTP GET /static/fonts/flaticon/font/flaticon.css 200 [0.01, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,318 - [mHTTP GET /static/css/owl.carousel.min.css 200 [0.02, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:23,318 - [mHTTP GET /static/css/owl.theme.default.min.css 200 [0.01, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:23,479 - [mHTTP GET /static/js/jquery-3.3.1.min.js 200 [0.01, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,488 - [mHTTP GET /static/js/jquery-migrate-3.0.1.min.js 200 [0.02, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:23,492 - [mHTTP GET /static/js/jquery-ui.js 200 [0.02, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:23,498 - [mHTTP GET /static/js/popper.min.js 200 [0.02, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:23,498 - [mHTTP GET /static/js/bootstrap.min.js 200 [0.01, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,501 - [mHTTP GET /static/js/owl.carousel.min.js 200 [0.01, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:23,517 - [mHTTP GET /static/js/jquery.stellar.min.js 200 [0.01, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,521 - [mHTTP GET /static/js/jquery.countdown.min.js 200 [0.01, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:23,534 - [mHTTP GET /static/js/bootstrap-datepicker.min.js 200 [0.01, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:23,539 - [mHTTP GET /static/js/aos.js 200 [0.01, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:23,539 - [mHTTP GET /static/js/jquery.easing.1.3.js 200 [0.01, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,542 - [mHTTP GET /static/js/jquery.fancybox.min.js 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:23,565 - [mHTTP GET /static/js/jquery.sticky.js 200 [0.01, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:23,568 - [mHTTP GET /static/images/do_ui_kit_download_cta_floating_devices-2x.png 200 [0.01, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:23,569 - [mHTTP GET /static/js/main.js 200 [0.01, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:23,569 - [mHTTP GET /static/images/deliverer.png 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:23,570 - [mHTTP GET /static/images/dndsos-logo-black.png 200 [0.01, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,579 - [mHTTP GET /static/images/person_1.jpg 200 [0.00, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:23,587 - [mHTTP GET /static/images/do_ui_kit_hero_floating_devices-2x.png 200 [0.01, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:23,606 - [mHTTP GET /static/images/person_3.jpg 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:23,608 - [mHTTP GET /static/images/about_1.jpg 200 [0.02, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:23,609 - [mHTTP GET /static/images/person_4.jpg 200 [0.02, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:23,614 - [mHTTP GET /static/images/person_2.jpg 200 [0.02, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,848 - [mHTTP GET /static/images/img_1.jpg 200 [0.01, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:23,850 - [mHTTP GET /static/images/img_2.jpg 200 [0.01, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:23,851 - [mHTTP GET /static/images/img_3.jpg 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:24,373 - [mHTTP GET /static/images/svg_1.svg 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:24,960 - [mHTTP GET /static/fonts/icomoon/fonts/icomoon.ttf?10si43 200 [0.00, 127.0.0.1:49750][0m
-WARNING 2020-05-09 16:00:31,194 - Not Found: /dashboard/
-WARNING 2020-05-09 16:00:31,199 - [33mHTTP GET /dashboard/ 404 [0.02, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,378 - [mHTTP GET /dashboard/orders 200 [0.05, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,488 - [mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,551 - [mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 200 [0.02, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,558 - [mHTTP GET /static/assets/stylesheets/skins/default.css 200 [0.03, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:33,558 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 200 [0.03, 127.0.0.1:49756][0m
-INFO 2020-05-09 16:00:33,561 - [mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 200 [0.03, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,563 - [mHTTP GET /static/assets/stylesheets/theme.css 200 [0.03, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:33,567 - [mHTTP GET /static/assets/vendor/modernizr/modernizr.js 200 [0.04, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:33,604 - [mHTTP GET /static/assets/vendor/jquery/jquery.js 200 [0.01, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:33,758 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 200 [0.01, 127.0.0.1:49749][0m
-INFO 2020-05-09 16:00:33,765 - [mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 200 [0.01, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:33,765 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 200 [0.01, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,766 - [mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 200 [0.02, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:33,782 - [mHTTP GET /static/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,810 - [mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js 200 [0.01, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,811 - [mHTTP GET /static/assets/vendor/jquery-easypiechart/jquery.easypiechart.js 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,841 - [mHTTP GET /static/assets/vendor/flot/jquery.flot.js 200 [0.01, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,856 - [mHTTP GET /static/assets/vendor/flot-tooltip/jquery.flot.tooltip.js 200 [0.01, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,858 - [mHTTP GET /static/assets/vendor/flot/jquery.flot.pie.js 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,871 - [mHTTP GET /static/assets/vendor/jquery-sparkline/jquery.sparkline.js 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,880 - [mHTTP GET /static/assets/vendor/raphael/raphael.js 200 [0.01, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,912 - [mHTTP GET /static/assets/vendor/morris/morris.js 200 [0.01, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,915 - [mHTTP GET /static/assets/vendor/gauge/gauge.js 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,916 - [mHTTP GET /static/assets/vendor/snap-svg/snap.svg.js 200 [0.01, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:33,943 - [mHTTP GET /static/assets/vendor/jqvmap/jquery.vmap.js 200 [0.01, 127.0.0.1:49750][0m
-INFO 2020-05-09 16:00:33,943 - [mHTTP GET /static/assets/vendor/jqvmap/maps/jquery.vmap.world.js 200 [0.01, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,947 - [mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js 200 [0.01, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:33,951 - [mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js 200 [0.01, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:33,961 - [mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js 200 [0.00, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,973 - [mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js 200 [0.01, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:33,981 - [mHTTP GET /static/assets/javascripts/theme.js 200 [0.01, 127.0.0.1:49754][0m
-INFO 2020-05-09 16:00:33,985 - [mHTTP GET /static/assets/javascripts/theme.init.js 200 [0.00, 127.0.0.1:49755][0m
-INFO 2020-05-09 16:00:33,992 - [mHTTP GET /static/assets/images/dndsos-logo-black.png 200 [0.01, 127.0.0.1:49753][0m
-ERROR 2020-05-09 16:00:34,351 - [Failure instance: Traceback: <class 'ValueError'>: No route found for path 'ws/notifications/'.
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/autobahn/websocket/protocol.py:2847:processHandshake
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/txaio/tx.py:366:as_future
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/twisted/internet/defer.py:151:maybeDeferred
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/daphne/ws_protocol.py:83:onConnect
---- <exception caught here> ---
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/twisted/internet/defer.py:151:maybeDeferred
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/daphne/server.py:200:create_application
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/channels/staticfiles.py:41:__call__
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/channels/routing.py:54:__call__
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/channels/sessions.py:47:__call__
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/channels/sessions.py:145:__call__
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/channels/sessions.py:169:__init__
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/channels/middleware.py:31:__call__
-/Users/alfredshaffir/Documents/training/django/channels/venv_channels/lib/python3.7/site-packages/channels/routing.py:150:__call__
-]
-INFO 2020-05-09 16:00:34,399 - [mHTTP GET /static/assets/vendor/font-awesome/fonts/fontawesome-webfont.woff?v=4.1.0 200 [0.01, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:37,685 - [mHTTP GET /dashboard/order/ 200 [0.02, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:37,706 - WebSocket DISCONNECT /ws/notifications/ [127.0.0.1:49762]
-WARNING 2020-05-09 16:00:38,250 - Not Found: /favicon.ico
-WARNING 2020-05-09 16:00:38,252 - [33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:40,737 - [mHTTP GET /dashboard/order/b44/ 200 [0.02, 127.0.0.1:49753][0m
-INFO 2020-05-09 16:00:40,857 - WebSocket HANDSHAKING /ws/dashboard/order/b44/ [127.0.0.1:49765]
-INFO 2020-05-09 16:00:40,907 - WebSocket CONNECT /ws/dashboard/order/b44/ [127.0.0.1:49765]
+INFO 2020-05-10 08:49:32,165 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+INFO 2020-05-10 08:49:32,165 - Configuring endpoint tcp:port=8010:interface=127.0.0.1
+INFO 2020-05-10 08:49:32,166 - Listening on TCP address 127.0.0.1:8010
+INFO 2020-05-10 08:49:33,950 - WebSocket HANDSHAKING /notifications/ [127.0.0.1:50597]
+INFO 2020-05-10 08:49:33,990 - WebSocket CONNECT /notifications/ [127.0.0.1:50597]
+INFO 2020-05-10 08:49:42,720 - [mHTTP GET /admin/jsi18n/ 200 [0.20, 127.0.0.1:50636][0m
+INFO 2020-05-10 08:49:43,101 - [mHTTP GET /admin/dndsos_dashboard/order/add/ 200 [0.60, 127.0.0.1:50635][0m
+INFO 2020-05-10 08:49:55,055 - [32mHTTP POST /admin/dndsos_dashboard/order/add/ 302 [0.06, 127.0.0.1:50635][0m
+INFO 2020-05-10 08:49:55,183 - [mHTTP GET /admin/dndsos_dashboard/order/ 200 [0.12, 127.0.0.1:50635][0m
+INFO 2020-05-10 08:49:55,219 - [mHTTP GET /admin/jsi18n/ 200 [0.03, 127.0.0.1:50635][0m
+INFO 2020-05-10 10:16:44,355 - [32mHTTP POST /dashboard/orders 302 [0.12, 127.0.0.1:55392][0m
+INFO 2020-05-10 10:16:44,451 - [mHTTP GET /dashboard/orders 200 [0.08, 127.0.0.1:55392][0m
+INFO 2020-05-10 10:16:45,008 - [36mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 304 [0.03, 127.0.0.1:55392][0m
+INFO 2020-05-10 10:16:45,009 - [36mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 304 [0.03, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:45,013 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 304 [0.02, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:45,013 - [36mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 304 [0.02, 127.0.0.1:55402][0m
+INFO 2020-05-10 10:16:45,014 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 304 [0.02, 127.0.0.1:55403][0m
+INFO 2020-05-10 10:16:45,020 - [36mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 304 [0.02, 127.0.0.1:55404][0m
+INFO 2020-05-10 10:16:45,031 - [36mHTTP GET /static/assets/stylesheets/skins/default.css 304 [0.01, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:45,031 - [36mHTTP GET /static/assets/vendor/morris/morris.css 304 [0.02, 127.0.0.1:55392][0m
+INFO 2020-05-10 10:16:45,033 - [36mHTTP GET /static/assets/stylesheets/theme-custom.css 304 [0.01, 127.0.0.1:55402][0m
+INFO 2020-05-10 10:16:45,034 - [36mHTTP GET /static/assets/vendor/modernizr/modernizr.js 304 [0.01, 127.0.0.1:55403][0m
+INFO 2020-05-10 10:16:45,035 - [36mHTTP GET /static/assets/stylesheets/theme.css 304 [0.01, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:45,455 - [36mHTTP GET /static/assets/vendor/jquery/jquery.js 304 [0.01, 127.0.0.1:55403][0m
+INFO 2020-05-10 10:16:45,553 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.00, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:45,654 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.01, 127.0.0.1:55403][0m
+INFO 2020-05-10 10:16:45,655 - [36mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 304 [0.01, 127.0.0.1:55392][0m
+INFO 2020-05-10 10:16:45,656 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.01, 127.0.0.1:55402][0m
+INFO 2020-05-10 10:16:45,657 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 304 [0.01, 127.0.0.1:55404][0m
+INFO 2020-05-10 10:16:45,660 - [36mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 304 [0.01, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:45,678 - [36mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 304 [0.00, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:45,705 - [36mHTTP GET /static/assets/vendor/jquery-appear/jquery.appear.js 304 [0.01, 127.0.0.1:55402][0m
+INFO 2020-05-10 10:16:45,707 - [36mHTTP GET /static/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js 304 [0.02, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:45,708 - [36mHTTP GET /static/assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js 304 [0.02, 127.0.0.1:55404][0m
+INFO 2020-05-10 10:16:45,710 - [36mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js 304 [0.02, 127.0.0.1:55392][0m
+INFO 2020-05-10 10:16:46,037 - [36mHTTP GET /static/assets/vendor/flot/jquery.flot.js 304 [0.01, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:46,039 - [36mHTTP GET /static/assets/vendor/jquery-easypiechart/jquery.easypiechart.js 304 [0.01, 127.0.0.1:55403][0m
+INFO 2020-05-10 10:16:46,039 - [36mHTTP GET /static/assets/vendor/font-awesome/fonts/fontawesome-webfont.woff?v=4.1.0 304 [0.01, 127.0.0.1:55402][0m
+INFO 2020-05-10 10:16:46,042 - [36mHTTP GET /static/assets/images/logged-user.jpg 304 [0.01, 127.0.0.1:55404][0m
+INFO 2020-05-10 10:16:46,043 - [36mHTTP GET /static/assets/images/dndsos-logo-black.png 304 [0.01, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:46,050 - [36mHTTP GET /static/assets/vendor/flot-tooltip/jquery.flot.tooltip.js 304 [0.00, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:46,066 - [36mHTTP GET /static/assets/vendor/flot/jquery.flot.pie.js 304 [0.00, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:46,066 - [36mHTTP GET /static/assets/vendor/flot/jquery.flot.categories.js 304 [0.00, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:46,080 - [36mHTTP GET /static/assets/vendor/flot/jquery.flot.resize.js 304 [0.01, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:46,081 - [36mHTTP GET /static/assets/vendor/raphael/raphael.js 304 [0.01, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:46,086 - [36mHTTP GET /static/assets/vendor/morris/morris.js 304 [0.01, 127.0.0.1:55402][0m
+INFO 2020-05-10 10:16:46,125 - [36mHTTP GET /static/assets/vendor/jquery-sparkline/jquery.sparkline.js 304 [0.05, 127.0.0.1:55404][0m
+INFO 2020-05-10 10:16:46,126 - [36mHTTP GET /static/assets/vendor/gauge/gauge.js 304 [0.05, 127.0.0.1:55403][0m
+INFO 2020-05-10 10:16:46,132 - [36mHTTP GET /static/assets/vendor/snap-svg/snap.svg.js 304 [0.05, 127.0.0.1:55392][0m
+INFO 2020-05-10 10:16:46,135 - [36mHTTP GET /static/assets/vendor/jqvmap/jquery.vmap.js 304 [0.01, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:46,135 - [36mHTTP GET /static/assets/vendor/liquid-meter/liquid.meter.js 304 [0.01, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:46,151 - [36mHTTP GET /static/assets/vendor/jqvmap/data/jquery.vmap.sampledata.js 304 [0.01, 127.0.0.1:55403][0m
+INFO 2020-05-10 10:16:46,178 - [36mHTTP GET /static/assets/vendor/jqvmap/maps/jquery.vmap.world.js 304 [0.02, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:46,194 - [36mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js 304 [0.03, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:46,221 - [36mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js 304 [0.02, 127.0.0.1:55403][0m
+INFO 2020-05-10 10:16:46,223 - [36mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js 304 [0.01, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:46,225 - [36mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js 304 [0.02, 127.0.0.1:55404][0m
+INFO 2020-05-10 10:16:46,228 - [36mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js 304 [0.02, 127.0.0.1:55402][0m
+INFO 2020-05-10 10:16:46,231 - [36mHTTP GET /static/assets/javascripts/theme.js 304 [0.02, 127.0.0.1:55401][0m
+INFO 2020-05-10 10:16:46,232 - [36mHTTP GET /static/assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js 304 [0.03, 127.0.0.1:55392][0m
+INFO 2020-05-10 10:16:46,257 - [36mHTTP GET /static/assets/javascripts/theme.init.js 304 [0.01, 127.0.0.1:55404][0m
+INFO 2020-05-10 10:16:46,258 - [36mHTTP GET /static/assets/javascripts/theme.custom.js 304 [0.01, 127.0.0.1:55393][0m
+INFO 2020-05-10 10:16:46,264 - [36mHTTP GET /static/assets/images/sample-user.jpg 304 [0.01, 127.0.0.1:55392][0m

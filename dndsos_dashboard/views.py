@@ -3,13 +3,15 @@ import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.models import User
 from django.contrib import  messages
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.conf import settings
 
+from rest_framework import generics
+from rest_framework.response import Response
 
 from core.models import Employee, Employer, User
 from core.forms import EmployeeProfileForm, EmployerProfileForm
@@ -19,9 +21,16 @@ from .forms import BusinessUpdateForm, FreelancerUpdateForm, OrderForm
 from .models import Order, Email
 from .utilities import send_mail
 
+from .serializers import UserSerializer
+
+
 LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
 logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/dashboard.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
 logger = logging.getLogger()
+
+class SignUpView(generics.CreateAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
 
 def order_input(request):
     return render(request, 'dndsos_dashboard/order-input.html')

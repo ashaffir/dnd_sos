@@ -138,33 +138,8 @@ Websocket events:
     }
 
 </script> -->
-{% block js %}
-<script>
+<!-- Websocket -->
+<!-- <script src="{% static 'assets/javascripts/order.js' %}"></script> -->
 
-    document.addEventListener('DOMContentLoaded', function() {
-//			  const webSocketBridge = new channels.WebSocketBridge();
-      const webSocketBridge = new WebSocket(
-        'ws://'
-        + window.location.host
-        + '/ws/notifications/'
-    );
-
-      const nl = document.querySelector("#notifylist");
-      
-      //webSocketBridge.connect('/notifications/');
-      /*
-      webSocketBridge.listen(function(action, stream) {
-        console.log("RESPONSE:", action);
-        if(action.event == "New User") {
-          var el = document.createElement("li");
-          el.innerHTML = `New user <b>${action.username}</b> has joined!`;
-          nl.appendChild(el);
-        }
-      })
-      */
-      document.ws = webSocketBridge; /* for debugging */
-    })
-    </script>
-{% endblock js %}
 {% endblock content %}
 

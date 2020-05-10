@@ -16,7 +16,7 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-3 control-label">Order ID/Name</label>
                             <div class="col-sm-9">
-                                <input type="text" name="order_id" class="form-control" placeholder="Type the order identifyer in your system" required/>
+                                <input type="text" id="order_id" name="order_id" class="form-control" placeholder="Type the order identifyer in your system" required/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -47,14 +47,14 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Comment</label>
                             <div class="col-sm-9">
-                                <textarea name="notes" rows="5" class="form-control" placeholder="Type your comment..." ></textarea>
+                                <textarea id="comment" name="comment" rows="5" class="form-control" placeholder="Type your comment..." ></textarea>
                             </div>
                         </div>
                     </div>
                 <div class="panel-footer modal-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-lg btn-primary" name="addOrder">{% trans 'Add' %}</button>
+                                <button onclick="createSocket()" type="submit" class="btn btn-lg btn-primary" id="addOrder" name="addOrder">{% trans 'Add' %}</button>
         
                             <!-- <button type="submit" name="addOrder" class="btn btn-primary modal-confirm">Add</button> -->
                             <button class="btn btn-default modal-dismiss">Cancel</button>

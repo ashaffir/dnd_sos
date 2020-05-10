@@ -71,7 +71,7 @@
                 <li><a href="/#contact-section" class="nav-link">Contact</a></li>
                 {% if user.is_authenticated %}
                   <li>{{ user.username }}</li>
-                  <li><a href="/accounts/logout" class="btn btn-sm btn-outline-success">Logout</a></li>
+                  <li><a href="{% url 'core:logout' %}" class="btn btn-sm btn-outline-success">Logout</a></li>
                   {% if user.employer %}
                     <li><a href="{% url 'dndsos_dashboard:b-dashboard' %}" class="">Dashboard</a></li>
                   {% else %}

@@ -31,14 +31,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'core',
     'chat',
     'dndsos',
     'channels',
     'dndsos_dashboard',
+    'notifier.apps.NotifierConfig',
     
-    'core',
     'django_extensions',
     'ckeditor',
+    'rest_framework',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,6 +84,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR,'dndsos/templates'),
             os.path.join(BASE_DIR,'core/templates'),
             os.path.join(BASE_DIR,'dndsos_dashboard/templates'),
+            os.path.join(BASE_DIR,'notifier/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

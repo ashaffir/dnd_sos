@@ -19,6 +19,8 @@ from django.urls.conf import include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from dndsos_dashboard.views import SignUpView
+
 admin.site.site_header = 'DND-SOS'
 
 app_name = 'dnd_sos_project'
@@ -28,6 +30,10 @@ urlpatterns = [
     path('dashboard/', include('dndsos_dashboard.urls')),
     path('core/', include('core.urls')),
     path('chat/', include('chat.urls')),
+    path('notifier/', include('notifier.urls')),
+
+    path('api/sign_up/', SignUpView.as_view(), name='sign_up'),
+    
     path('admin/', admin.site.urls),
 ]
 if settings.DEBUG:
