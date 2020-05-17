@@ -13,16 +13,20 @@
                     {% csrf_token %}
                   
                     <div class="panel-body modal-body">
-                        <div class="form-group mt-lg">
+                        <!-- <div class="form-group mt-lg">
                             <label class="col-sm-3 control-label">Order ID/Name</label>
                             <div class="col-sm-9">
                                 <input type="text" id="order_id" name="order_id" class="form-control" placeholder="Type the order identifyer in your system" required/>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Destincation</label>
+                            <label class="col-sm-3 control-label">Destincation City</label>
+                            <!-- <select name="city" class="form-control" id="orderCity">
+                                <option value="tlv">Tel Aviv</option>
+                                <option value="ramat_gan">Ramat Gan</option>
+                            </select> -->
                             <div class="col-sm-9">
-                                <input type="city" name="city" class="form-control" placeholder="City of delivery" required/>
+                                <input type="text" name="drop_off_address" id="drop_off_address" class="form-control" placeholder="Drop off address" required/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -34,7 +38,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="checkbox">
                                     <label>
@@ -43,19 +47,18 @@
                                     <p>Notify all relevant freelancers. The default is to notify only freelancers you've already worked with.</p>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>                         -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Comment</label>
                             <div class="col-sm-9">
-                                <textarea id="comment" name="comment" rows="5" class="form-control" placeholder="Type your comment..." ></textarea>
+                                <textarea id="notes" name="notes" rows="5" class="form-control" placeholder="Type your comment..." ></textarea>
                             </div>
                         </div>
                     </div>
                 <div class="panel-footer modal-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                                <button onclick="createSocket()" type="submit" class="btn btn-lg btn-primary" id="addOrder" name="addOrder">{% trans 'Add' %}</button>
-        
+                                <button type="submit" class="btn btn-lg btn-primary" id="addOrder" name="addOrder">{% trans 'Add' %}</button>
                             <!-- <button type="submit" name="addOrder" class="btn btn-primary modal-confirm">Add</button> -->
                             <button class="btn btn-default modal-dismiss">Cancel</button>
                         </div>
@@ -65,28 +68,9 @@
     </section>
     </div>
     		<!-- Vendor -->
+{% block orders_js %}
 <script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
 <script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
 <script src="{% static 'assets/vendor/magnific-popup/magnific-popup.js' %}"></script>
 <script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script>
-
-
-<!-- <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.js' %}"></script> -->
-<!-- <script src="{% static 'assets/vendor/nanoscroller/nanoscroller.js' %}"></script> -->
-<!-- <script src="{% static 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script> -->
-<!-- <script src="{% static 'assets/vendor/jquery-placeholder/jquery.placeholder.js' %}"></script> -->
-
-<!-- Specific Page Vendor -->
-<!-- <script src="{% static 'assets/vendor/pnotify/pnotify.custom.js' %}"></script> -->
-
-<!-- Theme Base, Components and Settings -->
-<!-- <script src="{% static 'assets/javascripts/theme.js' %}"></script> -->
-
-<!-- Theme Custom -->
-<!-- <script src="{% static 'assets/javascripts/theme.custom.js' %}"></script> -->
-
-<!-- Theme Initialization Files -->
-<!-- <script src="{% static 'assets/javascripts/theme.init.js' %}"></script> -->
-
-
-<!-- Examples -->
+{% endblock orders_js %}

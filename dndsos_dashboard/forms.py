@@ -6,7 +6,8 @@ from django.contrib.auth import get_user_model
 
 # from django_select2 import ModelSelect2Widget 
 
-from .models import Order, BusinessProfile, FreelancerProfile
+from .models import BusinessProfile, FreelancerProfile
+from orders.models import Order
 
 class SignupForm(forms.ModelForm):
 
@@ -147,10 +148,11 @@ class OrderForm(forms.Form):
         model = Order
         fields = [
                 'status',
-                'order_time',
-                'order_ready',
-                'order_dispatched',
-                'order_delivered',
+                'created',
+                'pick_up_address',
+                'drop_off_address',
+                'dispatched',
+                'city',
                 'business',
                 'freelancer'
             ]

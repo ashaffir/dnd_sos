@@ -73,19 +73,19 @@
                   <li>{{ user.username }}</li>
                   <li><a href="{% url 'core:logout' %}" class="btn btn-sm btn-outline-success">Logout</a></li>
                   {% if user.employer %}
-                    <li><a href="{% url 'dndsos_dashboard:b-dashboard' %}" class="">Dashboard</a></li>
+                    <li><a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li>
                   {% else %}
-                    <li><a href="{% url 'dndsos_dashboard:f-dashboard' %}" class="">Dashboard</a></li>
+                    <li><a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="">Dashboard</a></li>
                   {% endif %}
                 {% else %}
-                  <li><a href="/core/login" class="btn btn-sm btn-outline-success">Login</a></li>
+                  <li><a href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">Login</a></li>
                 {% endif %}
               </ul>
             </nav>
           </div>
 
 
-          <div class="col-4 col-md-4 d-inline-block d-lg-none ml-md-0" ><a href="/accounts/login" class="site-menu-toggle js-menu-toggle text-black float-right"><span class="icon-menu h3"></span></a></div>
+          <div class="col-4 col-md-4 d-inline-block d-lg-none ml-md-0" ><a href="{% url 'core:login' %}" class="site-menu-toggle js-menu-toggle text-black float-right"><span class="icon-menu h3"></span></a></div>
 
         </div>
       </div>

@@ -25,7 +25,7 @@ SECRET_KEY = 'zijbaj^_lv)!8-1ex(&a-00l%t+)fa)b)&)8#hegij@1cuns=('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'chat',
     'dndsos',
     'channels',
+    'orders',
     'dndsos_dashboard',
     'notifier.apps.NotifierConfig',
     
@@ -59,6 +60,7 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             "hosts": [('127.0.0.1', 6379)],
+            # "hosts": [os.environ['REDIS_URL']],
         },
     },
 }

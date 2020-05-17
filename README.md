@@ -1,4 +1,10 @@
-# Channels
+##  References
+
+### Signals
+https://www.youtube.com/watch?v=T6PyDm79PFo&t=170s
+https://docs.djangoproject.com/en/3.0/topics/signals/
+
+### Channels
 https://channels.readthedocs.io/en/latest/tutorial/index.html
 
 ### TikTok/Notifiers 
@@ -11,3 +17,9 @@ https://www.youtube.com/watch?v=RVH05S1qab8
 ### Taxi App:
 https://testdriven.io/courses/real-time-app-with-django-channels-and-angular/part-one-websockets/
 
+### Literature
+https://itnext.io/heroku-chatbot-with-celery-websockets-and-redis-340fcd160f06
+
+### Datatables
+https://www.youtube.com/watch?v=9S7OFBY9atM
+https://datatables.net/

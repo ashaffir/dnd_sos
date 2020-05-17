@@ -4,7 +4,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, get_user_model
-from django.contrib.auth.models import User
+from django.http import HttpResponse
+# from django.contrib.auth.models import User
+
 from django.contrib import  messages
 from django.template.loader import render_to_string
 from django.template import RequestContext
@@ -18,8 +20,11 @@ from core.forms import EmployeeProfileForm, EmployerProfileForm
 from core.decorators import employer_required, employee_required
 
 from .forms import BusinessUpdateForm, FreelancerUpdateForm, OrderForm
-from .models import Order, Email
+from .models import Email, FreelancerProfile, BusinessProfile
+from orders.models import Order
 from .utilities import send_mail
+
+from notifier.signals import alert_freelancer_accepted
 
 from .serializers import UserSerializer
 
@@ -41,18 +46,18 @@ def order(request, order_id):
     })
 
 @login_required
-def b_dashboard(request):
+def b_dashboard(request, b_id):
     context = {}
     return render(request, 'dndsos_dashboard/b-dashboard.html')
 
 @login_required
-def f_dashboard(request):
+def f_dashboard(request, f_id):
     context = {}
     return render(request, 'dndsos_dashboard/f-dashboard.html')
 
 
 @login_required
-def b_profile(request):
+def b_profile(request, b_id):
     context = {}
     user_profile = Employer.objects.get(user=request.user.id)
 
@@ -140,7 +145,7 @@ def b_profile(request):
     return render(request, 'dndsos_dashboard/b-profile.html', context)
 
 @login_required
-def f_profile(request):
+def f_profile(request, f_id):
     context = {}
     context['freelancer'] = True
     user_profile = Employee.objects.get(user=request.user.id)
@@ -220,80 +225,78 @@ def add_freelancer(request):
 
 @employer_required
 @login_required
-def orders(request):
+def orders(request, b_id):
     context = {}
 
-
+    business_id = Employer.objects.get(user=request.user.pk)
     business_profile = Employer.objects.get(user=request.user)
     business_name = business_profile.business_name
     business_city = business_profile.city
     business_street = business_profile.street
     business_building = business_profile.building_number
-    
-    business_orders = Order.objects.filter(order_business=request.user.id).order_by('-order_time')
+
+    if business_street != '' and business_street is not None:
+        if business_city != '' and business_city is not None:
+            if business_building != '' and business_building is not None:
+                pick_up_address = business_name + ', ' + business_building + ' ' + business_street + ' street, ' + business_city
+    else:
+        messages.error(request, 'Please fill our your business address details before adding orders')
+        return redirect('dndsos_dashboard:b-profile', b_id=request.user.pk)
+
+    business_orders = Order.objects.filter(business=request.user.pk).order_by('-created')
     context['orders'] = business_orders
 
     if request.method == 'POST':
         if 'addOrder' in request.POST:
-            new_order = Order()
-            new_order.order_business = Employer.objects.get(user=request.user)
-            new_order.status = True
-
-            order_id = request.POST.get('order_id')
-            order_city = request.POST.get('city')
-            order_product_type = request.POST.get('product_type')
-            order_notes = request.POST.get('notes')
-
-            new_order.order_id = order_id
-            new_order.order_city = order_city
-            new_order.order_product_type = order_product_type
-            new_order.order_notes = order_notes
 
             try:
-                new_order.save()
+                new_order = Order.objects.create(
+                    business=business_id,
+                    pick_up_address=pick_up_address,
+                    drop_off_address=request.POST.get('drop_off_address'),
+                    notes=request.POST.get('notes')
+                )
                 messages.success(request,'Your order was saved.')
             except Exception as e:
                 messages.error(request,f'Failed to save your order. ERROR>> {e}')
                 return HttpResponseRedirect(request.path_info)
 
-            delivery_reuqst_email = Email.objects.get(name='delivery-alert')
-            mail_subject = delivery_reuqst_email.mail_subject
-            mail_title = delivery_reuqst_email.mail_title
-            mail_body = delivery_reuqst_email.mail_body
+            # # TODO: Add the pusher/concurrent run (threads) to email alerts sending
 
-            # TODO: Add the pusher/concurrent run (threads) to email alerts sending
+            # Sending emails to the relevant Freelancers
+            #################
+            # relevant_freelancers = Employee.objects.filter(city=order_city)
 
-            relevant_freelancers = Employee.objects.filter(city=order_city)
+            # for fl in relevant_freelancers:
+            #     try:    
+            #         mail_context = {
+            #             'domain': request._current_scheme_host,
+            #             'fl_name': fl.name,
+            #             'fl_id': fl.pk,
+            #             'email_title': mail_title,
+            #             'ordering_business': business_name,
+            #             'ordering_business_city': business_city,
+            #             'ordering_business_street': business_street,
+            #             'ordering_business_building': business_building,
+            #             'order_id': order_id,
+            #             'oid': new_order.pk,
+            #             'order_city': order_city,
+            #             'order_type': order_product_type,
+            #             'order_notes': order_notes
+            #             # 'email_body': mail_body,
+            #             # 'lang': language,
+            #             }
 
-            for fl in relevant_freelancers:
-                try:    
-                    mail_context = {
-                        'domain': request._current_scheme_host,
-                        'fl_name': fl.name,
-                        'fl_id': fl.pk,
-                        'email_title': mail_title,
-                        'ordering_business': business_name,
-                        'ordering_business_city': business_city,
-                        'ordering_business_street': business_street,
-                        'ordering_business_building': business_building,
-                        'order_id': order_id,
-                        'oid': new_order.pk,
-                        'order_city': order_city,
-                        'order_type': order_product_type,
-                        'order_notes': order_notes
-                        # 'email_body': mail_body,
-                        # 'lang': language,
-                        }
+            #         send_mail(subject=mail_subject, email_template_name=None,
+            #                 context=mail_context, to_email=[fl.email], 
+            #                 html_email_template_name='dndsos_dashboard/emails/delivery_order_email.html')
 
-                    send_mail(subject=mail_subject, email_template_name=None,
-                            context=mail_context, to_email=[fl.email], 
-                            html_email_template_name='dndsos_dashboard/emails/delivery_order_email.html')
+            #     except Exception as ex:
+            #         messages.error(request, f"mail not sent -- Email configurations required. ERROR: {ex}")
+            #         return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
 
-                except Exception as ex:
-                    messages.error(request, f"mail not sent -- Email configurations required. ERROR: {ex}")
-                    return redirect('dndsos_dashboard:orders')
-
-            return redirect('dndsos_dashboard:orders')
+            return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
+       
         elif 'dispached' in request.POST:
             dispached_order_id = request.POST.get('dispached')
             order = Order.objects.get(id=dispached_order_id)
@@ -302,19 +305,19 @@ def orders(request):
 
             # TODO: When the order is dispached need to update the FLs in that city that the order is closed
 
-            return redirect('dndsos_dashboard:orders')
+            return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
 
         elif 'delivered' in request.POST:
             delivered_order_id = request.POST.get('delivered')
             order = Order.objects.get(id=delivered_order_id)
             order.order_delivered = True
             order.save()
-            return redirect('dndsos_dashboard:orders')
+            return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
         elif 'orderDelete' in request.POST:
-            delete_order_id = request.POST.get('orderDelete')
-            order = Order.objects.get(id=delete_order_id)
+            delete_order_id = request.POST.get(f'orderDelete')
+            order = Order.objects.get(order_id=delete_order_id)
             order.delete()
-            return redirect('dndsos_dashboard:orders')
+            return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
         else:
             print('No Order form detected.')
 
@@ -334,17 +337,29 @@ def edit_order(request):
 
 @employee_required
 @login_required
-def deliveries(request):
+def f_deliveries(request, f_id):
     context = {}
     return render(request, 'dndsos_dashboard/deliveries.html', context)
 
 @login_required
-def statistics(request):
+def f_statistics(request, f_id):
     context = {}
     return render(request, 'dndsos_dashboard/statistics.html', context)
 
+@employer_required
 @login_required
-def freelancers(request):
+def b_deliveries(request, b_id):
+    context = {}
+    return render(request, 'dndsos_dashboard/deliveries.html', context)
+
+@login_required
+def b_statistics(request, b_id):
+    context = {}
+    return render(request, 'dndsos_dashboard/statistics.html', context)
+
+
+@login_required
+def freelancers(request, b_id):
     context = {}
     freelancers = Employee.objects.all()
     context['total_freelancers'] = len(freelancers)
@@ -406,7 +421,9 @@ def freelancer_accept(request, fid, oid):
         ordering_business.b_freelancers = ','.join(b_freelancers_set)
         ordering_business.save()
 
-    # 3) Notifying the business about the acceptance
+    # 3) Notifying the business about the acceptance using
+
+    # 3.1) With email
 
     email_template = Email.objects.get(name='freelancer-confirmation')
     mail_subject = email_template.mail_subject
@@ -434,6 +451,8 @@ def freelancer_accept(request, fid, oid):
         messages.error(request, f"mail not sent -- Email configurations required. ERROR: {ex}")
         return redirect('home')
 
+    # 3.2 With alerts/signals
+    alert_freelancer_accepted.send(sender=FreelancerProfile, f_id=freelancer.user, order_id=order.pk)
 
     return render(request, 'dndsos_dashboard/freelancer-accept.html', context)
 
@@ -441,5 +460,5 @@ def email_test(request):
     return render(request, 'dndsos_dashboard/emails/delivery_order_email.html')
 
 
-def broadcast_order(request, order, fl_list, order_status):
+def broadcast_order(request, order, f_list, order_status):
     pass

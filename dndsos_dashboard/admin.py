@@ -5,30 +5,30 @@ from django.utils.html import format_html
 from django.conf.urls import url
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from .models import Order, BusinessProfile, FreelancerProfile, Email
+from .models import BusinessProfile, FreelancerProfile, Email
 
 
 
-@admin.register(Order)
-class Order(admin.ModelAdmin):
-    list_display = (
-        'created',
-        'order_business',
-        'order_id',
-        'order_dispatched',
-        'order_delivered',
-        'status',
-        'order_city',
-        )
-    search_fields = ('order_id','city','order_notes','order_business',)
-    ordering = ('-created',)
+# @admin.register(Order)
+# class Order(admin.ModelAdmin):
+#     list_display = (
+#         'created',
+#         'order_business',
+#         'order_id',
+#         'order_dispatched',
+#         'order_delivered',
+#         'status',
+#         'order_city',
+#         )
+#     search_fields = ('order_id','city','order_notes','order_business',)
+#     ordering = ('-created',)
     
-    list_filter = (
-        'status',
-    )
-    readonly_fields = (
-        'id', 'created',
-    )
+#     list_filter = (
+#         'status',
+#     )
+#     readonly_fields = (
+#         'id', 'created',
+#     )
 
 @admin.register(Email)
 class Email(admin.ModelAdmin):

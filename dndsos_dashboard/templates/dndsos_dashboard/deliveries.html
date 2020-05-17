@@ -11,9 +11,9 @@
             <ol class="breadcrumbs">
                 <li>
                     {% if user.emploee %}
-                        <a href="{% url 'dndsos_dashboard:f-dashboard' %}">
+                        <a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
                     {%else%}
-                        <a href="{% url 'dndsos_dashboard:b-dashboard' %}">
+                        <a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
                     {% endif %}
                         <i class="fa fa-home"></i>
                     </a>

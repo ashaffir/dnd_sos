@@ -1,0 +1,32 @@
+BEGIN;
+--
+-- Create model BusinessProfile
+--
+CREATE TABLE "dndsos_dashboard_businessprofile" ("created" timestamp with time zone NOT NULL, "modified" timestamp with time zone NOT NULL, "id" uuid NOT NULL PRIMARY KEY, "business_category" varchar(50) NULL, "business_name" varchar(50) NULL, "street" varchar(100) NULL, "building_number" varchar(50) NULL, "city" varchar(100) NULL, "email" varchar(100) NULL, "phone" varchar(100) NULL, "profile_pic" varchar(100) NULL, "newsletter_optin" boolean NULL, "user_id" integer NOT NULL UNIQUE);
+--
+-- Create model Email
+--
+CREATE TABLE "dndsos_dashboard_email" ("id" serial NOT NULL PRIMARY KEY, "name" varchar(100) NOT NULL, "mail_subject" varchar(100) NOT NULL, "mail_title" varchar(100) NOT NULL, "mail_body" text NOT NULL);
+--
+-- Create model FreelancerProfile
+--
+CREATE TABLE "dndsos_dashboard_freelancerprofile" ("created" timestamp with time zone NOT NULL, "modified" timestamp with time zone NOT NULL, "id" uuid NOT NULL PRIMARY KEY, "name" varchar(50) NULL, "city" varchar(100) NULL, "bio" text NULL, "email" varchar(100) NULL, "phone" varchar(100) NULL, "vehicle" varchar(100) NULL, "active_hours" varchar(100) NULL, "profile_pic" varchar(100) NULL, "newsletter_optin" boolean NULL, "user_id" integer NOT NULL UNIQUE);
+--
+-- Create model Order
+--
+CREATE TABLE "dndsos_dashboard_order" ("modified" timestamp with time zone NOT NULL, "id" uuid NOT NULL PRIMARY KEY, "order_id" varchar(100) NULL, "created" timestamp with time zone NOT NULL, "status" boolean NOT NULL, "order_delivery_type" varchar(100) NULL, "order_time" timestamp with time zone NOT NULL, "order_dispatched" boolean NOT NULL, "order_delivered" boolean NOT NULL, "order_city" varchar(100) NOT NULL, "order_notes" text NULL, "freelancer_paid" boolean NOT NULL, "freelancer_allocated_id" uuid NULL, "order_business_id" uuid NOT NULL);
+--
+-- Create model Alert
+--
+CREATE TABLE "dndsos_dashboard_alert" ("id" serial NOT NULL PRIMARY KEY, "receiver_id" integer NULL, "sender_id" integer NULL);
+ALTER TABLE "dndsos_dashboard_businessprofile" ADD CONSTRAINT "dndsos_dashboard_bus_user_id_ae5c6d1a_fk_core_user" FOREIGN KEY ("user_id") REFERENCES "core_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "dndsos_dashboard_freelancerprofile" ADD CONSTRAINT "dndsos_dashboard_fre_user_id_3bd4dd67_fk_core_user" FOREIGN KEY ("user_id") REFERENCES "core_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "dndsos_dashboard_order" ADD CONSTRAINT "dndsos_dashboard_ord_freelancer_allocated_b5b9f94c_fk_dndsos_da" FOREIGN KEY ("freelancer_allocated_id") REFERENCES "dndsos_dashboard_freelancerprofile" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "dndsos_dashboard_order" ADD CONSTRAINT "dndsos_dashboard_ord_order_business_id_d7894b12_fk_dndsos_da" FOREIGN KEY ("order_business_id") REFERENCES "dndsos_dashboard_businessprofile" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "dndsos_dashboard_order_freelancer_allocated_id_b5b9f94c" ON "dndsos_dashboard_order" ("freelancer_allocated_id");
+CREATE INDEX "dndsos_dashboard_order_order_business_id_d7894b12" ON "dndsos_dashboard_order" ("order_business_id");
+ALTER TABLE "dndsos_dashboard_alert" ADD CONSTRAINT "dndsos_dashboard_alert_receiver_id_d181c236_fk_core_user_id" FOREIGN KEY ("receiver_id") REFERENCES "core_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "dndsos_dashboard_alert" ADD CONSTRAINT "dndsos_dashboard_alert_sender_id_0d97b7e3_fk_core_user_id" FOREIGN KEY ("sender_id") REFERENCES "core_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "dndsos_dashboard_alert_receiver_id_d181c236" ON "dndsos_dashboard_alert" ("receiver_id");
+CREATE INDEX "dndsos_dashboard_alert_sender_id_0d97b7e3" ON "dndsos_dashboard_alert" ("sender_id");
+COMMIT;

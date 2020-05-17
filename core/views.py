@@ -10,6 +10,7 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.conf import settings
+from django.contrib.auth.models import Group
 
 # import pusher
 
@@ -120,8 +121,8 @@ def employee_dashboard(request):
 @login_required
 def login_redirect(request):
     if request.user.is_employer:
-        return redirect('dndsos_dashboard:b-dashboard')
-    return redirect('dndsos_dashboard:f-dashboard')
+        return redirect(f'dndsos_dashboard:b-dashboard', b_id=(request.user.pk))
+    return redirect('dndsos_dashboard:f-dashboard',f_id=(request.user.pk) )
     
 
 # displays all employees associated with the current user,
@@ -333,13 +334,22 @@ def activate_account(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
+        
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
+
+        if user.is_employer:
+            group = 'businesses'
+        else:
+            group = 'freelancers'
+
+        user_group, _ = Group.objects.get_or_create(name=group)
+        user.groups.add(user_group)
         user.save()
-        
+
         if user.is_employer:
             user_profile = Employer.objects.get(user=user)
         else:

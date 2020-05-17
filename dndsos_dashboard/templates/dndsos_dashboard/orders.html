@@ -10,7 +10,7 @@
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
-                    <a href="{% url 'dndsos_dashboard:b-dashboard' %}">
+                    <a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
@@ -44,57 +44,86 @@
                 </div>
                 <form action="" method="POST" enctype="multipart/form-data" name="orderTable" id="orderTable">
                     {% csrf_token %}
-                    <table class="table table-bordered table-striped mb-none" id="datatable-editable">
+                    <div>
+                        <input id="chat-message-input" type="text" size="100"><br>
+                        <input id="chat-message-submit" type="button" value="Send">                    
+                    </div>
+                        <table class="table table-bordered table-striped mb-none display" id="ordersTable">
                         <thead>
                             <tr>
-                                <th>Order Time</th>
-                                <th>City</th>
+                                <th>Order Created</th>
+                                <th>Destination</th>
+                                <th>Allocated Freelancer</th>
+                                <th>Order Status</th>
                                 <th>Notes</th>
-                                <th>Allocated</th>
-                                <th>Dispach Status</th>
-                                <th>Delivy Status</th>
-                                <th>Delete</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for order in orders %}
                             <tr class="gradeX">
-                                <td>{{ order.order_time }}</td>
-                                <td>{{ order.order_city }}</td>
-                                <td>{{ order.order_notes }}</td>
-                                {% if order.freelancer_allocated.name %}
-                                <td>{{order.freelancer_allocated.name}} / {{order.freelancer_allocated.phone}}</td>
+                                <td>{{ order.created }}</td>
+                                <td>{{ order.drop_off_address }}</td>
+                                {% if order.freelancer %}
+                                <td style="background-color:green; color: white">{{order.freelancer_allocated}} / {{order.freelancer_allocated.phone}}</td>
                                 {% else %}
                                 <td style="background-color:orange; color: white">Not Allocated</td>
                                 {% endif %}
-                                {% if order.order_dispatched %}
-                                    <td style="background-color: green; color: white; text-align:center" >
+                                {% if order.status == 'REQUESTED' %}
+                                    <td style="background-color: rgb(220, 235, 15); color: rgb(0, 0, 0); text-align:center" >
                                         <div style="background-color: green;">
-                                            <label for="dispached">Dispached</label>                                    
+                                            <label for="dispached">Waiting for a Freelancer...</label>                                    
                                         </div>
-                                    {% else %}
+                                {% elif order.status == 'STARTED' %}
+                                    <td style="background-color: rgb(199, 109, 25); color:white; text-align:center">
+                                        <label for="dispached">Waiting for pickup...</label>
+                                        <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
+                                    </td>
+                                {% elif order.status == 'IN_PROGRESS' %}
+                                    <td style="background-color: rgb(5, 97, 202); color:white; text-align:center">
+                                        <label for="dispached">Being delivered...</label>
+                                        <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
+                                    </td>
+                                {% elif order.status == 'COMPLETED' %}
                                     <td>
-                                        <label for="dispached">Not Dispached</label>
-                                        <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button>
+                                        <label for="dispached">Delivered</label>
+                                        <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <label for="dispached">ERROR. PLEASE CHECK WITH ADMIN!!</label>
+                                        <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
                                     </td>
                                 {% endif %}
-                                {% if order.order_delivered %}
-                                    <td style="background-color: green; color: white; text-align:center" ">
-                                        <div >
-                                            <label for="delivery"> Delivered</label>
-                                        </div>
-                                    </td>
-                                    {% else %}
-                                    <td>
-                                        <label for="dispached">Not Delivered</label>
-                                        <button class="btn btn-sm btn-success" type="submit" name="delivered" value="{{ order.pk }}">Confirm Delivery</button>                                        
-                                    </td>
-                                {% endif %}
+                                <td>{{ order.notes }}</td>
                                 <td class="actions">
                                     <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
                                     <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
                                     <!-- <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a> -->
-                                    {% include 'dndsos_dashboard/partials/confirmation_modal.html' with order_id=order.pk %}
+                                    <button type="submit" name="orderDelete" id="_{{ order.order_id }}" value="{{ order.order_id }}" class="fa fa-trash-o"><i class=""></button>
+
+                                    <!-- <a href="#deleteOrder" data-toggle="modal" data-target="#confirmDelete" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>   -->
+                                    <!-- Modal -->
+                                    <!-- <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmDeleteLabel">Delete Confirmation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            Confirm deleting this order.
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" name="orderDelete" value="{{ order.order_id }}" class="btn btn-primary">Confirm</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div> -->
+                                    <!-- End modal -->
                                 </td>
 
                             </tr>
@@ -107,6 +136,7 @@
         </section>
     <!-- end: page -->
 </section>
+
 
 <!-- <script>
     /*
