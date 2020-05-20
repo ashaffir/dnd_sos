@@ -65,6 +65,10 @@ CHANNEL_LAYERS = {
     },
 }
 
+#This is to stop the Async-to-Sync ERROR message in the consumer orders gathering process
+# https://docs.djangoproject.com/en/3.0/topics/async/
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true" 
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

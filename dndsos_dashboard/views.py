@@ -1,10 +1,13 @@
 import logging
 import os
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, get_user_model
 from django.http import HttpResponse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # from django.contrib.auth.models import User
 
 from django.contrib import  messages
@@ -222,6 +225,12 @@ def f_profile(request, f_id):
 def add_freelancer(request):
     context = {}
     return render(request, 'dndsos_dashboard/add-freelancer.html', context)
+
+# @receiver(post_save, sender=Order)
+# def newOrder(sender,instance, **kwargs):
+#     print("NEW ORDER!!!!!!!")
+#     business_id = instance.business.id
+#     return redirect('dndsos_dashboard:orders', b_id=business_id)
 
 @employer_required
 @login_required

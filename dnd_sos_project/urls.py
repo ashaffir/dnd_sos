@@ -31,6 +31,7 @@ urlpatterns = [
     path('core/', include('core.urls')),
     path('chat/', include('chat.urls')),
     path('notifier/', include('notifier.urls')),
+    path('orders/', include('orders.urls')),
 
     path('api/sign_up/', SignUpView.as_view(), name='sign_up'),
     

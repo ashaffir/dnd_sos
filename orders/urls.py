@@ -1,11 +1,12 @@
 from django.urls import path
 
-from orders.views import TripView
+from orders import views as orders_views
 
 
 app_name = 'orders'
 
 urlpatterns = [
-    path('', TripView.as_view({'get': 'list'}), name='trip_list'),
-    path('<uuid:trip_id>/', TripView.as_view({'get': 'retrieve'}), name='trip_detail'), 
+    path('', orders_views.TripView.as_view({'get': 'list'}), name='order_list'),
+    path('orders-table',orders_views.orders_table , name='orders-table'),
+    path('<uuid:trip_id>/', orders_views.TripView.as_view({'get': 'retrieve'}), name='trip_detail'), 
 ]

@@ -34,8 +34,8 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'created', 'updated',)
 
 class ReadOnlyOrderSerializer(serializers.ModelSerializer):
-    driver = UserSerializer(read_only=True)
-    rider = UserSerializer(read_only=True)
+    freelancer_ser = UserSerializer(read_only=True)
+    business_ser = UserSerializer(read_only=True)
 
     class Meta:
         model = Order

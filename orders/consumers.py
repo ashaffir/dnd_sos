@@ -1,4 +1,5 @@
 import asyncio
+from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
@@ -31,19 +32,17 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     channel=self.channel_name
                 ))
             
-            print(f'CHANNEL Groups: {channel_groups}')
-
             # Get orders and add business to each one's group.
-            self.orders = set([str(order_id) for order_id in await self._get_orders(self.scope['user']) ])
+            self.orders = set([
+                str(order_id) for order_id in await self._get_orders(self.scope['user']) 
+            ])
             
-            print(f'B-ORDERS: {self.orders}')
+            print(f"ORDERS ***************{self.orders}****************")
 
             for order in self.orders:
                 channel_groups.append(self.channel_layer.group_add(order, self.channel_name))
+            
             asyncio.gather(*channel_groups)
-
-            print(f'2nd CHANNEL Groups: {channel_groups}')
-
 
             await self.accept()
 
@@ -55,7 +54,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         elif message_type == 'update.order':  
             await self.update_order(content)
 
-    # new
+
     async def echo_message(self, event):
         print(f'SENDING ECHO: {event}')
         await self.send_json(event)
@@ -74,7 +73,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         order_id = f'{order.order_id}'
         order_data = ReadOnlyOrderSerializer(order).data
         
-        print(f'ORDER DATA: {order_data}')
+        # print(f'ORDER DATA: {order_data}')
         
         # Send business requests to all freelancers.
         await self.channel_layer.group_send(group='freelancers', message={
@@ -88,19 +87,19 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 group=order_id,
                 channel=self.channel_name
             )
-
+        
         await self.send_json({
             'type': 'create.order',
             'data': order_data
         })
 
-    # changed
+    
     async def update_order(self, event):
         order = await self._update_order(event.get('data'))
         order_id = f'{order.order_id}'
         order_data = ReadOnlyOrderSerializer(order).data
 
-        # Send updates to riders that subscribe to this order.
+        # Send updates to business that subscribe to this order.
         await self.channel_layer.group_send(group=order_id, message={
             'type': 'echo.message',
             'data': order_data
@@ -118,7 +117,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             'data': order_data
         })
 
-    # changed
+
     async def disconnect(self, code):
         channel_groups = [
             self.channel_layer.group_discard(
@@ -156,25 +155,25 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         print(f'USER GROUPS: {user_groups}')
         
         if 'freelancer' in user_groups:
-            # return user.freelancer_orders.exclude(
-            #     status=Order.COMPLETED).only('order_id').values_list('order_id', flat=True)
-            return []
+            # TODO: Fix this!!!
+            orders = user.freelancer_orders.exclude(status=Order.COMPLETED).only('order_id').values_list('order_id', flat=True)
+            return orders
+            # return []
         else:
-            print(f'Check B-ORDERS: {user.business_orders}')
-            # return user.business_orders.exclude(
-            #     status=Order.COMPLETED).only('order_id').values_list('order_id', flat=True)
-            return []
+            # TODO: Fix this!!!
+            orders = user.business_orders.exclude(status=Order.COMPLETED).only('order_id').values_list('order_id', flat=True)
+            return orders
+            # return []
 
     @database_sync_to_async
     def _get_user_group(self, user):
         if not user.is_authenticated:
             raise Exception('User is not authenticated.')
-
         return user.groups.first().name
 
     @database_sync_to_async
     def _update_order(self, content):
-        instance = Order.objects.get(id=content.get('id'))
+        instance = Order.objects.get(order_id=content.get('order_id'))
         serializer = OrderSerializer(data=content)
         serializer.is_valid(raise_exception=True)
         order = serializer.update(instance, serializer.validated_data)
