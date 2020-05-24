@@ -507,8 +507,10 @@
 		{% if user.is_employee %}
 
 		{% include 'dndsos_dashboard/partials/_f-offer-modal.html' %}
+		{% include 'dndsos_dashboard/partials/_f-offer-removed-modal.html' %}
 
 			<!-- <script src="{% static 'assets/javascripts/employee_alerts.js' %}" ></script> -->
+			<!-- FREELANCER -->
 			<script>
 				// Open the Freelancer Socket
 				console.log('NEW FREELANCER WS')
@@ -520,6 +522,7 @@
 	
 				let data;
 				let current_order_id;
+				let user_id = '{{ user.pk }}'
 				
 				// Handling incoming message about new offer from business
 				freelancerSocket.onmessage = function(e) {
@@ -529,20 +532,31 @@
 					console.log(`ORDER ID: ${data.data.order_id}`);
 					console.log(`Pickup Address: ${data.data.pick_up_address}`);
 					console.log(`Dropoff Address: ${data.data.drop_off_address}`);
+					console.log(`Status: ${data.data.status}`);
 					//document.querySelector('#chat-log').value += (data.message + '\n');
 					const pick_up_address_e = document.querySelector('#pick_up_address');
 					const drop_off_address_e = document.querySelector('#drop_off_address');
+					const notes_e = document.querySelector('#notes');
 					const order_id = data.data.order_id
+					const order_status = data.data.status
+
 					//pick_up_address_e.value = data.data.pick_up_address;
 					//drop_off_address_e.value = data.data.drop_off_address;
-					var pick_up_address = data.data.pick_up_address;
-					var drop_off_address = data.data.drop_off_address;
+					let pick_up_address = data.data.pick_up_address;
+					let drop_off_address = data.data.drop_off_address;
 					$("#pick_up_address").html(pick_up_address)
 					$("#drop_off_address").html(drop_off_address)
+					$("#notes").html(data.data.notes)
+					
 					if (current_order_id != order_id) {
 						$("#newOfferAlert").modal("show");
 					}
 					current_order_id = order_id
+
+					if (order_status == 'STARTED' && data.data.freelancer != user_id){
+						$('#offerRemoved').modal("show");
+					}
+
 				};
 
 				// Handing the acceptance of an offer
@@ -572,13 +586,67 @@
 							'city': 'cityPlaceHolder'
 						}
 					}));
+
+					// Refresh the table to update the accepted order
+					$.ajax({
+						url: "{% url 'orders:deliveries-table' %}",
+						success: function(response) {
+							$('#deliveriesTable').html(response);
+						}
+					})		
 				})
 
+				// Handing the delivery completion
+				stam = function(id,pup,drop) {
+					console.log(`DELIVERED!!`)
+					let order_id_e = document.querySelector("#orderDelivered");
+					let order_id = order_id_e.value;
+					let freelancer_id = "{{ user.pk }}";
+					let pickup_e = document.querySelector(`#pickupAddress_${order_id}`);
+					let dropoff_e = document.querySelector(`#dropoffAddress_${order_id}`);
 
+					current_order_id = order_id
+
+					//pickup_address = pickup_e.value;
+					//dropoff_address = dropoff_e.value;
+					
+					
+					console.log(`P: ${pup}`)
+					console.log(`D: ${drop}`)
+					
+					freelancerSocket.send(JSON.stringify({
+						'message': 'Freelancer delivered',
+						'type': 'update.order', 
+						'data': {
+							'order_id': order_id,
+							'freelancer': freelancer_id,
+							'pick_up_address': pup,
+							'drop_off_address': drop,
+							'status': 'COMPLETED',
+							'city': 'cityPlaceHolder'
+						}
+					}));
+
+					if (current_order_id != order_id) {
+						$("#newOfferAlert").modal("show");
+						current_order_id = order_id
+					}
+					
+					// Refresh the table to update the accepted order
+					$.ajax({
+						url: "{% url 'orders:deliveries-table' %}",
+						success: function(response) {
+							$('#deliveriesTable').html(response);
+						}
+					})		
+				}
+	
 			</script>
 	
 		{% else %}
 			<!-- <script src="{% static 'assets/javascripts/employer_alerts.js' %}" ></script> -->
+			
+			<!-- BUSINESS -->
 			<script>
 				//Open the Order socket from the business side
 				const businessSocket = new WebSocket(
@@ -611,6 +679,7 @@
 					const street = street_e.value;
 					const building = building_e.value;
 					const city = city_e.value;
+					const notes = notes_e.value;
 
 					const address = building + ' ' + street + ', ' + city
 					console.log(`ADDRESS: ${address}`)
@@ -627,6 +696,7 @@
 							'business_name': user_name,
 							'pick_up_address': pick_up_address,
 							'drop_off_address': dropOffAddress,
+							'notes': notes,
 							'city': 'cityPlaceHolder'
 						}
 					}));
@@ -642,7 +712,6 @@
 
 					$('#modalAddOrder').modal('hide');
 										
-					messageInputDom.value = '';
 				};
 
 				// Handling incoming message about new offer
@@ -652,6 +721,15 @@
 					console.log(`DATA RECEIVED: ${data.data}`);
 					console.log(`ORDER ID: ${data.data.order_id}`);
 					console.log(`Freelancer: ${data.data.freelancer}`);
+
+					// Refresh the table to update the accepted order
+					$.ajax({
+						url: "{% url 'orders:orders-table' %}",
+						success: function(response) {
+							$('#ordersTable').html(response);
+						}
+					})		
+
 
 				};
 
@@ -665,8 +743,8 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.2/b-colvis-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/fc-3.3.1/kt-2.5.2/r-2.2.4/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.0/sl-1.3.1/datatables.min.js"></script>
 		
-		<script>
-		
+	<!-- ORDERS -->
+	<script>		
 		$(document).ready(function() {
 			$('#ordersTable').DataTable({
 				dom: '',
@@ -680,7 +758,24 @@
 				}
 			})
 		})
-		</script>
-		<!-- END DATA TABLE -->
+	</script>
+
+	<!-- DELIVERIES -->
+	<script>		
+		$(document).ready(function() {
+			$('#deliveriesTable').DataTable({
+				dom: '',
+				dom: 'B<"clear">lfrtip',
+				order: [[ 0, "desc" ]], // column 0 (first) ascending order. Or desc for descending
+				/*
+				*/
+				buttons: {
+					name: 'default',
+					buttons: ['csv', 'excel', 'pdf']
+				}
+			})
+		})
+	</script>
+	<!-- END DATA TABLE -->
 	</body>
 </html>

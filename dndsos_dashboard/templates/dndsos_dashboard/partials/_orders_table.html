@@ -5,6 +5,8 @@
         <th>Allocated Freelancer</th>
         <th>Order Status</th>
         <th>Notes</th>
+        <th>Picked Up</th>
+        <th>Payments</th>
         <th></th>
     </tr>
 </thead>
@@ -21,35 +23,56 @@
         {% if order.status == 'REQUESTED' %}
             <td style="background-color: rgb(220, 235, 15); color: rgb(0, 0, 0); text-align:center" >
                 <div style="background-color: green;">
-                    <label for="dispached">Waiting for a Freelancer...</label>                                    
+                    <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for a Freelancer...</label>                                    
                 </div>
         {% elif order.status == 'STARTED' %}
             <td style="background-color: rgb(199, 109, 25); color:white; text-align:center">
-                <label for="dispached">Waiting for pickup...</label>
+                <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for pickup...</label>
                 <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% elif order.status == 'IN_PROGRESS' %}
             <td style="background-color: rgb(5, 97, 202); color:white; text-align:center">
-                <label for="dispached">Being delivered...</label>
+                <label for="dispached" id="orderStatus" status='{{ order.status }}'>Being delivered...</label>
                 <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
-        {% elif order.status == 'COMPLETED' %}
+        {% elif order.status == 'COMPLETED' or order.status == 'SETTLED' %}
             <td>
-                <label for="dispached">Delivered</label>
+                <label for="completed" id="orderStatus" status='{{ order.status }}'>Delivered</label>
                 <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% else %}
             <td>
-                <label for="dispached">ERROR. PLEASE CHECK WITH ADMIN!!</label>
+                <label for="error">ERROR. PLEASE CHECK WITH ADMIN!!</label>
                 <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% endif %}
-        <td>{{ order.notes }}</td>
-        <td class="actions">
+        <td>{% if order.notes %}{{ order.notes }}{% endif %}</td>
+        <td class="actions" style='text-align:center'>
             <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
             <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
             <!-- <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a> -->
-            <button type="submit" name="orderDelete" id="_{{ order.order_id }}" value="{{ order.order_id }}" class="fa fa-trash-o"><i class=""></button>
+            {% if order.status == 'STARTED' %}
+                <button class="btn btn-success" type="submit" name="pickedUp" id="pickup_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up <i class="fas fa-truck"></i></button>
+            {% else %}
+            {% endif %}
+
+        </td>
+        <td class="actions" style='text-align:center'>
+            <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
+            <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
+            <!-- <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a> -->
+            {% if order.status == 'COMPLETED' %}
+                <button class="btn btn-success" type="submit" name="makePayment" id="payment_{{ order.order_id }}" value="{{ order.order_id }}">Pay for Delivery <i class="fas fa-hand-holding-usd"></i></button>
+            {% else %}
+            {% endif %}
+
+        </td>
+        <td class="actions" style='text-align:center'>
+            <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
+            <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
+            <!-- <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a> -->
+            <!-- <button type="submit" name="orderDelete" id="_{{ order.order_id }}" value="{{ order.order_id }}" class="fa fa-trash-o"><i class=""></button> -->
+            <button  class="btn btn-danger on-default edit-row" type="submit" name="orderDelete" id="delete_{{ order.order_id }}" value="{{ order.order_id }}"><i class="fa fa-trash-o"></i></button>
 
         </td>
 

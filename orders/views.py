@@ -19,6 +19,14 @@ class TripView(viewsets.ReadOnlyModelViewSet):
 def orders_table(request):
     context = {}
     business_id = request.user.pk
-    orders = Order.objects.filter(business=business_id)
+    orders = Order.objects.filter(business=request.user.pk).exclude(status='ARCHIVED')
     context['orders'] = orders
     return render(request, 'dndsos_dashboard/partials/_orders_table.html', context)
+
+@login_required
+def deliveries_table(request):
+    context = {}
+    freelancer_id = request.user.pk
+    orders = Order.objects.filter(freelancer=freelancer_id).exclude(status='ARCHIVED')
+    context['orders'] = orders
+    return render(request, 'dndsos_dashboard/partials/_deliveries-table.html', context)

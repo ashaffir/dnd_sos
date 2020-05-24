@@ -24,7 +24,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
            # Add a freelancer to the 'freelancers' group.
             user_group = await self._get_user_group(self.scope['user'])
-            print(f'USER GROUP CHECK: {user_group}')
 
             if user_group == 'freelancer':
                 channel_groups.append(self.channel_layer.group_add(
@@ -37,8 +36,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 str(order_id) for order_id in await self._get_orders(self.scope['user']) 
             ])
             
-            print(f"ORDERS ***************{self.orders}****************")
-
             for order in self.orders:
                 channel_groups.append(self.channel_layer.group_add(order, self.channel_name))
             
@@ -47,7 +44,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             await self.accept()
 
     async def receive_json(self, content, **kwargs):
-        print('>>> RECEIVED MESSAGE: ',content)
         message_type = content.get('type')
         if message_type == 'create.order':
             await self.create_order(content)
@@ -56,7 +52,9 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
 
     async def echo_message(self, event):
-        print(f'SENDING ECHO: {event}')
+        
+        # TODO: add filtering so that only the relecant freelancers are getting the notification
+        
         await self.send_json(event)
 
     # The name of this function is edrived from the automated process of generating the name from the signals type order.created
@@ -95,27 +93,43 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
     
     async def update_order(self, event):
-        order = await self._update_order(event.get('data'))
+        
+        order, order_updated = await self._update_order(event.get('data'))
+
         order_id = f'{order.order_id}'
         order_data = ReadOnlyOrderSerializer(order).data
 
-        # Send updates to business that subscribe to this order.
-        await self.channel_layer.group_send(group=order_id, message={
-            'type': 'echo.message',
-            'data': order_data
-        })
+        # Send updates to the business that created this order.
+        if order_updated:
+            print('>>> ORDER UPDATED')
+            await self.channel_layer.group_send(group=order_id, message={
+                'type': 'echo.message',
+                'data': order_data
+            })
 
-        if order_id not in self.orders:
-            self.orders.add(order_id)
-            await self.channel_layer.group_add(
-                group=order_id,
-                channel=self.channel_name
+            if order_id not in self.orders:
+                self.orders.add(order_id)
+                await self.channel_layer.group_add(
+                    group=order_id,
+                    channel=self.channel_name
+                )
+
+            await self.send_json({
+                'type': 'update.order',
+                'data': order_data
+            })
+
+        else:
+            data = {
+                'order_id': order_id,
+                'freelancer': order.freelancer.id,
+                'status': 'STARTED'
+            }
+            await self.send_json({
+                    'type': 'echo.message',
+                    'data': data
+                }
             )
-
-        await self.send_json({
-            'type': 'update.order',
-            'data': order_data
-        })
 
 
     async def disconnect(self, code):
@@ -152,16 +166,14 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             raise Exception('User is not authenticated.')
         user_groups = user.groups.values_list('name', flat=True)
         
-        print(f'USER GROUPS: {user_groups}')
-        
         if 'freelancer' in user_groups:
             # TODO: Fix this!!!
-            orders = user.freelancer_orders.exclude(status=Order.COMPLETED).only('order_id').values_list('order_id', flat=True)
+            orders = user.freelancer_orders.exclude(status=Order.ARCHIVED).only('order_id').values_list('order_id', flat=True)
             return orders
             # return []
         else:
             # TODO: Fix this!!!
-            orders = user.business_orders.exclude(status=Order.COMPLETED).only('order_id').values_list('order_id', flat=True)
+            orders = user.business_orders.exclude(status=Order.ARCHIVED).only('order_id').values_list('order_id', flat=True)
             return orders
             # return []
 
@@ -174,7 +186,21 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
     @database_sync_to_async
     def _update_order(self, content):
         instance = Order.objects.get(order_id=content.get('order_id'))
-        serializer = OrderSerializer(data=content)
-        serializer.is_valid(raise_exception=True)
-        order = serializer.update(instance, serializer.validated_data)
-        return order
+        replying_fl = content.get('freelancer')
+        
+        if instance.freelancer:
+            accepted_fl = instance.freelancer.pk
+        else:
+            accepted_fl = replying_fl
+        
+        if str(accepted_fl) != str(replying_fl):
+            # print(f'SKIPPING. Already allocated: accepted={accepted_fl} replying={replying_fl}')
+            order = instance
+            order_updated = False
+        else:
+            serializer = OrderSerializer(data=content)
+            serializer.is_valid(raise_exception=True)
+            order = serializer.update(instance, serializer.validated_data)
+            order_updated = True
+
+        return order, order_updated

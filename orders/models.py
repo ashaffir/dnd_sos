@@ -11,11 +11,15 @@ class Order(models.Model):
     STARTED = 'STARTED'
     IN_PROGRESS = 'IN_PROGRESS'
     COMPLETED = 'COMPLETED'
+    SETTLED = 'SETTLED'
+    ARCHIVED = 'ARCHIVED'
     STATUSES = (
         (REQUESTED, REQUESTED),
         (STARTED, STARTED),
         (IN_PROGRESS, IN_PROGRESS),
         (COMPLETED, COMPLETED),
+        (SETTLED, SETTLED),
+        (ARCHIVED, ARCHIVED),
     )
 
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

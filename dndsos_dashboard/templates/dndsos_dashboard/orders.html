@@ -33,22 +33,12 @@
                     <div class="col-md-4">
                         {% include 'dndsos_dashboard/add-order.html' %}
                     </div>
-                    <!-- <div class="form-group">
-                        <div class="col-md-4">
-                            <div class="input-group mb-md">
-                                <input type="text" class="form-control" placeholder="Drop-off address here" id="dropOffAddress">
-                                <span class="input-group-btn">
-                                    <button id="addOrder" class="btn btn-success" type="button">Add</button>
-                                </span>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 <hr>
                 <form action="" method="POST" enctype="multipart/form-data" name="orderTable" id="orderTable">
                     {% csrf_token %}
-                    <table class="table table-bordered table-striped mb-none display" id="ordersTable">
-
+                    <table class="table table-responsive table-bordered table-striped mb-none display" id="ordersTable">
+                        <!-- Orders table dynamically updated -->
                     </table>
                 </form>
 

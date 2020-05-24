@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'dndsos',
     'channels',
     'orders',
+    'payments',
     'dndsos_dashboard',
     'notifier.apps.NotifierConfig',
     
@@ -89,6 +90,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR,'templates'),
             os.path.join(BASE_DIR,'dndsos/templates'),
             os.path.join(BASE_DIR,'core/templates'),
+            os.path.join(BASE_DIR,'payments/templates'),
             os.path.join(BASE_DIR,'dndsos_dashboard/templates'),
             os.path.join(BASE_DIR,'notifier/templates'),
         ],

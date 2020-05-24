@@ -252,11 +252,14 @@ def orders(request, b_id):
         messages.error(request, 'Please fill our your business address details before adding orders')
         return redirect('dndsos_dashboard:b-profile', b_id=request.user.pk)
 
-    business_orders = Order.objects.filter(business=request.user.pk).order_by('-created')
-    context['orders'] = business_orders
+    # business_orders = Order.objects.filter(business=request.user.pk).order_by('-created')
+    # context['orders'] = business_orders
 
     if request.method == 'POST':
+        #TODO: Clean up code. There are limited POST from this page...the add-order is from JS/WS
+
         if 'addOrder' in request.POST:
+            print(f'POST: {request.POST}')
 
             try:
                 new_order = Order.objects.create(
@@ -270,7 +273,6 @@ def orders(request, b_id):
                 messages.error(request,f'Failed to save your order. ERROR>> {e}')
                 return HttpResponseRedirect(request.path_info)
 
-            # # TODO: Add the pusher/concurrent run (threads) to email alerts sending
 
             # Sending emails to the relevant Freelancers
             #################
@@ -308,13 +310,22 @@ def orders(request, b_id):
        
         elif 'dispached' in request.POST:
             dispached_order_id = request.POST.get('dispached')
-            order = Order.objects.get(id=dispached_order_id)
+            order = Order.objects.get(order_id=dispached_order_id)
             order.order_dispatched = True
             order.save()
 
             # TODO: When the order is dispached need to update the FLs in that city that the order is closed
 
             return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
+        
+        elif 'pickedUp' in request.POST:
+            pickedup_order_id = request.POST.get('pickedUp')
+            order = Order.objects.get(order_id=pickedup_order_id)
+            if order.status == 'STARTED':
+                order.status = 'IN_PROGRESS'
+                order.save()
+            else:
+                messages.error(request, 'Order can be dispached only after freelancer allocation.')
 
         elif 'delivered' in request.POST:
             delivered_order_id = request.POST.get('delivered')
@@ -322,11 +333,18 @@ def orders(request, b_id):
             order.order_delivered = True
             order.save()
             return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
+
         elif 'orderDelete' in request.POST:
             delete_order_id = request.POST.get(f'orderDelete')
             order = Order.objects.get(order_id=delete_order_id)
-            order.delete()
-            return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
+            if order.status == 'SETTLED':
+                order.status = 'ARCHIVED'
+                order.save()            
+            else:
+                messages.error(request, 'Please pay for the delivery before archiving the order.')
+                # return redirect('dndsos_dashboard:orders')
+                # order.delete()
+            # return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
         else:
             print('No Order form detected.')
 
@@ -348,6 +366,26 @@ def edit_order(request):
 @login_required
 def f_deliveries(request, f_id):
     context = {}
+    freelancer_id = request.user.pk
+
+    if request.method == 'POST':
+        # if 'orderDelivered' in request.POST:
+        #     order_delivered = Order.objects.get(order_id=request.POST.get('orderDelivered'))
+        #     order_delivered.status = 'COMPLETED'
+        #     order_delivered.save()
+        if 'orderSettled' in request.POST:
+            order_settled = Order.objects.get(order_id=request.POST.get('orderSettled'))
+            order_settled.status = 'SETTLED'
+            order_settled.save()
+        elif 'orderDelete' in request.POST:
+            order_archived = Order.objects.get(order_id=request.POST.get('orderDelete'))
+            order_archived.status = 'ARCHIVED'
+            order_archived.save()
+            # order_archived.delete()
+
+    orders = Order.objects.filter(freelancer=freelancer_id)
+    context['orders'] = orders
+
     return render(request, 'dndsos_dashboard/deliveries.html', context)
 
 @login_required
