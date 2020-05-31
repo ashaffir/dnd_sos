@@ -5,7 +5,7 @@ import chat.routing
 import dndsos_dashboard.routing
 from chat import consumers as chat_consumers
 from dndsos_dashboard import consumers as dndsos_dashboard_consumers
-from notifier import consumers as notifier_consumers
+# from notifier import consumers as notifier_consumers
 from orders import consumers as orders_consumers
 
 application = ProtocolTypeRouter({

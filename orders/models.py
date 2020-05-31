@@ -25,9 +25,9 @@ class Order(models.Model):
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    pick_up_address = models.CharField(max_length=255)
-    drop_off_address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
+    pick_up_address = models.CharField(max_length=255, null=True)
+    drop_off_address = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=100, null=True)
     notes = models.TextField(max_length=500, blank=True, null=True)
 
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)

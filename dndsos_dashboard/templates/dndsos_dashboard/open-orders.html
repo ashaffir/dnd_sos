@@ -1,0 +1,82 @@
+{% extends 'dndsos_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Open Orders</h2>
+    
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Open Orders</span></li>
+            </ol>
+    
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+    <div class="col-md-10 col-lg-10">
+        <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
+            {% csrf_token %}
+            <div class="row" >
+                <div class="col-md-4">
+                    <h4>Available orders offered by businesses</h4>
+                    <p>There  {% if num_open_orders > 1 %}  are {% else %} is {% endif %}{{ num_open_orders }} open orders available.</p>
+                    <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
+                                                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-md">
+                        <input type="text" class="form-control" name="city" placeholder="Enter your city">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Sort!</button>
+                        </span>
+                    </div>                    
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-md">
+                        <input type="text" class="form-control" name="vehicle" placeholder="Preferred vehicle">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">Sort!</button>
+                        </span>
+                    </div>                    
+                </div>
+            </div>
+            <hr>
+            <div class="row" id="openOrdersList">
+                <!-- Open orders List -->
+            </div>
+        </form>
+    </div>
+    <!-- end: page -->
+</section>
+
+<!-- Alert for an offer that is not available anymore -->
+<script>
+    $(document).ready(function() {
+        if ("{{ offer_removed }}"){
+            $('#offerRemoved').modal("show");
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'orders:open-orders-list' %}",
+            async:false,
+            success: function(response) {
+                //console.log(response);
+                $('#openOrdersList').html(response);
+            }		
+        });
+    
+    })
+
+
+</script>
+
+{% endblock content %}

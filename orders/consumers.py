@@ -54,7 +54,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
     async def echo_message(self, event):
         
         # TODO: add filtering so that only the relecant freelancers are getting the notification
-        
+        print(f'>>> ECHO 1: {event}')
         await self.send_json(event)
 
     # The name of this function is edrived from the automated process of generating the name from the signals type order.created
@@ -93,7 +93,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
     
     async def update_order(self, event):
-        
         order, order_updated = await self._update_order(event.get('data'))
 
         order_id = f'{order.order_id}'
@@ -101,7 +100,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
         # Send updates to the business that created this order.
         if order_updated:
-            print('>>> ORDER UPDATED')
+            print(f'>>> ORDER UPDATED: {order_data}')
             await self.channel_layer.group_send(group=order_id, message={
                 'type': 'echo.message',
                 'data': order_data
@@ -113,13 +112,15 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     group=order_id,
                     channel=self.channel_name
                 )
-
+            
+            print(f">>> SEND UPDATE: {event.get('data')}")
             await self.send_json({
                 'type': 'update.order',
                 'data': order_data
             })
 
         else:
+            print(f">>> SEND NOT UPDATED: {event.get('data')}")
             data = {
                 'order_id': order_id,
                 'freelancer': order.freelancer.id,
@@ -131,6 +132,18 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 }
             )
 
+
+
+    # async def order_accepted(self, event):
+    #     print('>>> ORDER ACCEPTED: ',event)
+    #     order, order_updated = await self._update_order(event.get('data'))
+    #     order_id = f'{order.order_id}'
+    #     order_data = ReadOnlyOrderSerializer(order).data
+        
+    #     await self.send_json({
+    #         'type': 'echo.message',
+    #         'data': order_data
+    #     })
 
     async def disconnect(self, code):
         channel_groups = [
@@ -153,6 +166,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         self.orders.clear()
 
         await super().disconnect(code)
+
     @database_sync_to_async
     def _create_order(self, content):
         serializer = OrderSerializer(data=content)
@@ -185,22 +199,56 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
     @database_sync_to_async
     def _update_order(self, content):
-        instance = Order.objects.get(order_id=content.get('order_id'))
+        event = content.get('event')
+        order_instance = Order.objects.get(order_id=content.get('order_id'))
+        current_status = order_instance.status
         replying_fl = content.get('freelancer')
+        updating_business = content.get('business')
+        next_status = content.get('status')
         
-        if instance.freelancer:
-            accepted_fl = instance.freelancer.pk
+        print(f"UPDATE CONTENT: ***************{content}****************")
+
+        # print(f'''
+        #     Freelancer: {replying_fl}
+        #     Business: {updating_business}
+        #     Content: {content}
+        # ''')
+
+        # Freelancer updates
+        # if replying_fl:
+        if event == 'Order Accepted':
+            if order_instance.freelancer:  # Freelancer already allocated
+                accepted_fl = order_instance.freelancer.pk
+            else:
+                accepted_fl = replying_fl
+            
+            # Prevent other freelancers to accept after first accept
+            if str(accepted_fl) != str(replying_fl):
+                order = order_instance
+                order_updated = False
+            else: 
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
+                order_updated = True
+        elif event == 'Order Canceled':
+            order = order_instance
+            order_updated = True
         else:
-            accepted_fl = replying_fl
-        
-        if str(accepted_fl) != str(replying_fl):
-            # print(f'SKIPPING. Already allocated: accepted={accepted_fl} replying={replying_fl}')
-            order = instance
-            order_updated = False
-        else:
+            print('======> PO 1 ')
             serializer = OrderSerializer(data=content)
             serializer.is_valid(raise_exception=True)
-            order = serializer.update(instance, serializer.validated_data)
+            order = serializer.update(order_instance, serializer.validated_data)
             order_updated = True
 
+        # Business updates
+        if updating_business:
+            print('======> PO 2 ')
+            serializer = OrderSerializer(data=content)
+            serializer.is_valid(raise_exception=True)
+            order = serializer.update(order_instance, serializer.validated_data)
+            order_updated = True
+
+
         return order, order_updated
+    

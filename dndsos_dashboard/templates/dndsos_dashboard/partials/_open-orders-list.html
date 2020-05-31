@@ -1,0 +1,39 @@
+{% load static %}
+{% for order in open_orders %}
+<div class="col-md-4">
+    <section class="panel panel-featured-left panel-featured-secondary">
+        <div class="panel-body">
+            <div class="widget-summary">
+                <div class="widget-summary-col widget-summary-col-icon">
+                    <div class="summary-icon bg-secondary">
+                        <i class="fa fa-exclamation"></i>
+                    </div>
+                </div>
+                <div class="widget-summary-col">
+                    <div class="summary">
+                        <h4 class="title">{{ order.business.username }}</h4>
+                        <div class="" >
+                            <p class="">Pick Up Address: <b>{{ order.pick_up_address }}</b></p>
+                            <p class="">Drop Off Address: <b>{{ order.drop_off_address }}</b></p>
+                            <p class="" >Business Phone: <b>{{ order.business.phone_number }}</b></p>
+                        </div>
+
+                    </div>
+                    <div class="summary-footer">
+                        <div class="row" >
+                            <div class="col-md-12" style="text-align: center;">
+                                <button id="accept_order_{{ order.order_id }}" class="btn btn-lg btn-success" type="submit" name="acceptOrder" value="{{ order.order_id }}">Accept</button>
+                                <!-- <button id="accept_order_{{ order.order_id }}" class="btn btn-lg btn-success" type="submit" onclick="accept_order('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="acceptOrder" value="{{ order.order_id }}">Accept</button> -->
+                            </div>
+                            <!-- <div class="col-md-6" style="text-align: center;">
+                                <button class="btn btn-lg btn-danger" type="submit" name="dismisstOrder">Dismiss</button>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div> 
+{% endfor %}

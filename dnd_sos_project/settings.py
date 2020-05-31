@@ -35,10 +35,10 @@ INSTALLED_APPS = [
     'chat',
     'dndsos',
     'channels',
-    'orders',
+    # 'orders',
     'payments',
     'dndsos_dashboard',
-    'notifier.apps.NotifierConfig',
+    'orders.apps.OrdersConfig',
     
     'django_extensions',
     'ckeditor',

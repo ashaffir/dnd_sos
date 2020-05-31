@@ -81,7 +81,7 @@
 							<span class="separator"></span>
 					
 							<ul class="notifications">
-								<li>
+								<!-- <li>
 									<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
 										<i class="fa fa-tasks"></i>
 										<span class="badge">3</span>
@@ -187,58 +187,17 @@
 											</div>
 										</div>
 									</div>
-								</li>
+								</li> -->
 								<li>
-									<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
-										<i class="fa fa-bell"></i>
-										<span class="badge">3</span>
-									</a>
-					
-									<div class="dropdown-menu notification-menu">
-										<div class="notification-title">
-											<span class="pull-right label label-default">3</span>
-											Alerts
+									{% if user.is_employee %}
+										<div id="openOrdersAlerts">
+											<!-- Open Orders alerts -->
 										</div>
-					
-										<div class="content">
-											<ul id="notifylist"></ul>
-											<!-- <ul>
-												<li>
-													<a href="#" class="clearfix">
-														<div class="image">
-															<i class="fa fa-thumbs-down bg-danger"></i>
-														</div>
-														<span class="title">Server is Down!</span>
-														<span class="message">Just now</span>
-													</a>
-												</li>
-												<li>
-													<a href="#" class="clearfix">
-														<div class="image">
-															<i class="fa fa-lock bg-warning"></i>
-														</div>
-														<span class="title">User Locked</span>
-														<span class="message">15 minutes ago</span>
-													</a>
-												</li>
-												<li>
-													<a href="#" class="clearfix">
-														<div class="image">
-															<i class="fa fa-signal bg-success"></i>
-														</div>
-														<span class="title">Connection Restaured</span>
-														<span class="message">10/10/2014</span>
-													</a>
-												</li>
-											</ul> -->
-					
-											<hr />
-					
-											<div class="text-right">
-												<a href="#" class="view-more">View All</a>
-											</div>
+									{% elif user.is_employer %}
+										<div id="businessOrdersAlerts">
+											<!-- Order alerts -->
 										</div>
-									</div>
+								{% endif %}
 								</li>
 							</ul>
 					
@@ -334,12 +293,18 @@
 												<span>Orders</span>
 											</a>
     	                                </li>
-										<li>
+	                                    <li>
+                                        	<a href="{% url 'dndsos_dashboard:b-alerts' b_id=user.pk %}">
+												<i class="fa fa-file-text" aria-hidden="true"></i>
+												<span>Alerts</span>
+											</a>
+    	                                </li>
+										<!-- <li>
 											<a href="{% url 'dndsos_dashboard:b-deliveries' b_id=user.pk %}">
 												<i class="fa fa-tasks" aria-hidden="true"></i>
 												<span>Deliveries</span>
 											</a>
-										</li>
+										</li> -->
 										<li>
 											<a href="{% url 'dndsos_dashboard:b-statistics' b_id=user.pk %}">
 												<i class="fa fa-bar-chart-o" aria-hidden="true"></i>
@@ -347,6 +312,12 @@
 											</a>
 										</li>
 									{% else %}
+										<li>
+											<a href="{% url 'orders:open-orders' %}">
+												<i class="fa fa-tasks" aria-hidden="true"></i>
+												<span>Open Orders</span>
+											</a>
+										</li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-deliveries' f_id=user.pk %}">
 												<i class="fa fa-tasks" aria-hidden="true"></i>
@@ -448,45 +419,17 @@
 
 		<!-- Vendor -->
 
-		<!-- <script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
-		<script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
-		<script src="{% static 'assets/vendor/magnific-popup/magnific-popup.js' %}"></script>
-		<script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script> -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 		
 		<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.js' %}"></script>
 		<script src="{% static 'assets/vendor/nanoscroller/nanoscroller.js' %}"></script>
 		<script src="{% static 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
 		<script src="{% static 'assets/vendor/jquery-placeholder/jquery.placeholder.js' %}"></script>
-		
-
-		<!-- Specific Page Vendor -->
-		<!-- <script src="{% static 'assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js' %}"></script>
-		<script src="{% static 'assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js' %}"></script>
-		<script src="{% static 'assets/vendor/jquery-appear/jquery.appear.js' %}"></script>
-		<script src="{% static 'assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js' %}"></script>
-		<script src="{% static 'assets/vendor/jquery-easypiechart/jquery.easypiechart.js' %}"></script>
-		<script src="{% static 'assets/vendor/flot/jquery.flot.js' %}"></script>
-		<script src="{% static 'assets/vendor/flot-tooltip/jquery.flot.tooltip.js' %}"></script>
-		<script src="{% static 'assets/vendor/flot/jquery.flot.pie.js' %}"></script>
-		<script src="{% static 'assets/vendor/flot/jquery.flot.categories.js' %}"></script>
-		<script src="{% static 'assets/vendor/flot/jquery.flot.resize.js' %}"></script>
-		<script src="{% static 'assets/vendor/jquery-sparkline/jquery.sparkline.js' %}"></script>
-		<script src="{% static 'assets/vendor/raphael/raphael.js' %}"></script>
-		<script src="{% static 'assets/vendor/morris/morris.js' %}"></script>
-		<script src="{% static 'assets/vendor/gauge/gauge.js' %}"></script>
-		<script src="{% static 'assets/vendor/snap-svg/snap.svg.js' %}"></script>
-		<script src="{% static 'assets/vendor/liquid-meter/liquid.meter.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/jquery.vmap.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/data/jquery.vmap.sampledata.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/maps/jquery.vmap.world.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js' %}"></script>
-		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js' %}"></script> -->
-		
+		<script>
+			$(function () {
+				$('[data-toggle="tooltip"]').tooltip()
+			  })
+		</script>		
 		<!-- Theme Base, Components and Settings -->
 		<script src="{% static 'assets/javascripts/theme.js' %}"></script>
 		
@@ -496,9 +439,6 @@
 		<!-- Theme Initialization Files -->
 		<script src="{% static 'assets/javascripts/theme.init.js' %}"></script>
 
-
-		<!-- Examples -->
-		<!-- <script src="{% static 'assets/javascripts/dashboard/examples.dashboard.js' %}"></script> -->
 		<!-- Alerts -->
 		<script src="{% static 'assets/javascripts/ui-elements/examples.notifications.js' %}"></script>
 
@@ -506,11 +446,12 @@
 		
 		{% if user.is_employee %}
 
-		{% include 'dndsos_dashboard/partials/_f-offer-modal.html' %}
-		{% include 'dndsos_dashboard/partials/_f-offer-removed-modal.html' %}
+			{% include 'dndsos_dashboard/partials/_f-offer-modal.html' %}
+			{% include 'dndsos_dashboard/partials/_f-offer-removed-modal.html' %}
 
-			<!-- <script src="{% static 'assets/javascripts/employee_alerts.js' %}" ></script> -->
+			<!-- ------------------ -->
 			<!-- FREELANCER -->
+			<!-- ------------------ -->
 			<script>
 				// Open the Freelancer Socket
 				console.log('NEW FREELANCER WS')
@@ -529,39 +470,52 @@
 					data = JSON.parse(e.data);
 					const data_string = JSON.stringify(e.data);
 					console.log(`DATA RECEIVED: ${data.data}`);
-					console.log(`ORDER ID: ${data.data.order_id}`);
-					console.log(`Pickup Address: ${data.data.pick_up_address}`);
-					console.log(`Dropoff Address: ${data.data.drop_off_address}`);
-					console.log(`Status: ${data.data.status}`);
+
 					//document.querySelector('#chat-log').value += (data.message + '\n');
 					const pick_up_address_e = document.querySelector('#pick_up_address');
 					const drop_off_address_e = document.querySelector('#drop_off_address');
 					const notes_e = document.querySelector('#notes');
 					const order_id = data.data.order_id
 					const order_status = data.data.status
+					const freelancer = data.data.freelancer
 
-					//pick_up_address_e.value = data.data.pick_up_address;
-					//drop_off_address_e.value = data.data.drop_off_address;
 					let pick_up_address = data.data.pick_up_address;
 					let drop_off_address = data.data.drop_off_address;
 					$("#pick_up_address").html(pick_up_address)
 					$("#drop_off_address").html(drop_off_address)
 					$("#notes").html(data.data.notes)
 					
-					if (current_order_id != order_id) {
+					if (order_status == 'REQUESTED' && current_order_id != order_id) {
 						$("#newOfferAlert").modal("show");
 					}
 					current_order_id = order_id
 
+					console.log(`freelancer: ${freelancer}  user_id: ${user_id}`)
+
+					// When freelancer tries to accept an order that was already allocated
 					if (order_status == 'STARTED' && data.data.freelancer != user_id){
 						$('#offerRemoved').modal("show");
+					} else if (order_status == 'IN_PROGRESS' && freelancer == user_id){
+						$.ajax({
+							url: "{% url 'orders:deliveries-table' %}",
+							success: function(response) {
+								$('#deliveriesTable').html(response);
+							}
+						})			
+					} else if (order_status == 'ARCHIVED' && freelancer == user_id){
+						$('#offerRemoved').modal("show");
+						$.ajax({
+							url: "{% url 'orders:deliveries-table' %}",
+							success: function(response) {
+								$('#deliveriesTable').html(response);
+							}
+						})								
 					}
 
 				};
 
 				// Handing the acceptance of an offer
 				$("#accept").click( function() {
-					console.log(`ACCEPTED!!`)
 					$('#newOfferAlert').modal('hide');
 					
 					let freelancer_id = "{{ user.pk }}"
@@ -569,15 +523,12 @@
 					let freelancer_name = "{{ user.employee.name }}"
 					let freelancer_email = "{{ user.email }}"
 					let freelancer_phone = "{{ user.employee.phone }}"
-					console.log(`USERNAME: ${freelancer_username}`)
-					console.log(`Email: ${freelancer_email}`)
-					console.log(`Phone: ${freelancer_phone}`)
-					//console.log(`ORDER ID: ${data.data.order_id}`)
+					console.log(`ACCEPTED!!  USERNAME: ${freelancer_username}`)
 					
 					freelancerSocket.send(JSON.stringify({
-						'message': 'Freelancer accepted',
 						'type': 'update.order', 
 						'data': {
+							'event': 'Order Accepted',
 							'order_id': data.data.order_id,
 							'freelancer': freelancer_id,
 							'pick_up_address': data.data.pick_up_address,
@@ -593,11 +544,11 @@
 						success: function(response) {
 							$('#deliveriesTable').html(response);
 						}
-					})		
+					})							
 				})
-
+				
 				// Handing the delivery completion
-				stam = function(id,pup,drop) {
+				delivered = function(id,pup,drop) {
 					console.log(`DELIVERED!!`)
 					let order_id_e = document.querySelector("#orderDelivered");
 					let order_id = order_id_e.value;
@@ -607,17 +558,10 @@
 
 					current_order_id = order_id
 
-					//pickup_address = pickup_e.value;
-					//dropoff_address = dropoff_e.value;
-					
-					
-					console.log(`P: ${pup}`)
-					console.log(`D: ${drop}`)
-					
 					freelancerSocket.send(JSON.stringify({
-						'message': 'Freelancer delivered',
 						'type': 'update.order', 
 						'data': {
+							'event': 'Order Delivered',
 							'order_id': order_id,
 							'freelancer': freelancer_id,
 							'pick_up_address': pup,
@@ -646,18 +590,20 @@
 		{% else %}
 			<!-- <script src="{% static 'assets/javascripts/employer_alerts.js' %}" ></script> -->
 			
-			<!-- BUSINESS -->
+			<!-- ------------------ -->
+				<!-- BUSINESS -->
+			<!-- ------------------ -->
 			<script>
-				//Open the Order socket from the business side
+				//Open business socket
+				console.log('BUSIENSS ORDER WS READY!')
 				const businessSocket = new WebSocket(
 					'ws://'
 					+ window.location.host
 					+ '/ws/orders/'
 			
 				);    
-				console.log('BUSIENSS ORDER WS READY!')
 
-				let user_id = {{ user.pk }}
+				let user_id = "{{ user.pk }}"
 				let user_username = "{{ user.username }}"
 				let user_name = "{{ user.employer.business_name }}"
 				let user_email = "{{ user.email }}"
@@ -665,12 +611,8 @@
 				let building = "{{ user.employer.building_number }}"
 				let city = "{{ user.employer.city }}"
 				let pick_up_address = building + ' ' + street + ', ' + city
-				console.log(`USERNAME: ${user_username}`)
-				console.log(`EMail: ${user_email}`)
-				console.log(`EER: ${user_name}`)
-				console.log(`Address: ${pick_up_address}`)
 				
-				document.querySelector('#addOrder').onclick = function(e) {
+				addOrder = function(e) {
 					const street_e = document.querySelector('#street');
 					const building_e = document.querySelector('#building');
 					const city_e = document.querySelector('#city');
@@ -681,27 +623,20 @@
 					const city = city_e.value;
 					const notes = notes_e.value;
 
-					const address = building + ' ' + street + ', ' + city
-					console.log(`ADDRESS: ${address}`)
+					const drop_off_address = building + ' ' + street + ', ' + city
 
-					//const messageInputDom = document.querySelector('#dropOffAddress');
-					//const dropOffAddress = messageInputDom.value;
-					const dropOffAddress = address;
 					businessSocket.send(JSON.stringify({
-						'message': dropOffAddress,
 						'type': 'create.order', 
 						'data': {
-							'order_id': 'dummyID',
+							'event': 'Create Order',
 							'business': user_id,
 							'business_name': user_name,
 							'pick_up_address': pick_up_address,
-							'drop_off_address': dropOffAddress,
-							'notes': notes,
-							'city': 'cityPlaceHolder'
+							'drop_off_address': drop_off_address,
+							'notes': notes
 						}
 					}));
-					//console.log('RELOADING PAGE to get the new order populated...')
-					//location.reload();
+
 					// Reload only the order table.
 					$.ajax({
 						url: "{% url 'orders:orders-table' %}",
@@ -714,13 +649,42 @@
 										
 				};
 
+				/*
+				*/
+				// Handing the dispatch (pick-up) of an offer
+				pickedup = function(id,pup,drop) {
+					console.log(`PICKED UP!!`)
+					let order_id = id;
+					let business_id = "{{ user.pk }}";
+					current_order_id = order_id
+					
+					businessSocket.send(JSON.stringify({
+						'type': 'update.order', 
+						'data': {
+							'event': 'Order Picked Up',
+							'order_id': order_id,
+							'business': business_id,
+							'pick_up_address': pup,
+							'drop_off_address': drop,
+							'status': 'IN_PROGRESS',
+							'city': 'cityPlaceHolder-Pickup'
+						}
+					}));
+					
+					// Refresh the table to update the dispached/pickedup order
+					$.ajax({
+						url: "{% url 'orders:orders-table' %}",
+						success: function(response) {
+							$('#ordersTable').html(response);
+						}
+					})		
+				}
+
 				// Handling incoming message about new offer
 				businessSocket.onmessage = function(e) {
 					data = JSON.parse(e.data);
 					const data_string = JSON.stringify(e.data);
-					console.log(`DATA RECEIVED: ${data.data}`);
-					console.log(`ORDER ID: ${data.data.order_id}`);
-					console.log(`Freelancer: ${data.data.freelancer}`);
+					console.log(`DATA RECEIVED: ${data.data} ORDER ID: ${data.data.order_id} Freelancer: ${data.data.freelancer}`);
 
 					// Refresh the table to update the accepted order
 					$.ajax({
@@ -730,9 +694,35 @@
 						}
 					})		
 
+					// Refresh the alerts table
+					$.ajax({
+						url: "{% url 'orders:business-alerts-list' %}",
+						success: function(response) {
+							$('#businessOrdersAlerts').html(response);
+						}
+					})		
 
 				};
 
+				request_freelancer = function(order_id, pick_up_address, drop_off_address, notes){
+					console.log('REQUESTING FREELANCER...')
+					// Broadcast a request for an excisting order
+					businessSocket.send(JSON.stringify({
+						'type': 'update.order', 
+						'data': {
+							'event': 'Request Freelancer',
+							'order_id': order_id,
+							'business': user_id,
+							'business_name': user_name,
+							'pick_up_address': pick_up_address,
+							'drop_off_address': drop_off_address,
+							'notes': notes,
+							'status': 'REQUESTED'
+						}
+					}));
+
+
+				}
 
 			</script>
 
@@ -777,5 +767,39 @@
 		})
 	</script>
 	<!-- END DATA TABLE -->
+	
+	<!-- Freelancer open orders table -->
+	<script>
+		$(document).ready(function() {
+			$.ajax({
+				type: 'GET',
+				url: "{% url 'orders:open-orders-alerts' %}",
+				async:false,
+				success: function(response) {
+					//console.log(response);
+					$('#openOrdersAlerts').html(response);
+				}		
+			});
+		});
+
+	</script>
+
+	<!-- Business Alerts -->
+	<script>
+		$(document).ready(function() {
+			$.ajax({
+				type: 'GET',
+				url: "{% url 'orders:business-alerts-list' %}",
+				async:false,
+				success: function(response) {
+					//console.log(response);
+					$('#businessOrdersAlerts').html(response);
+				}		
+			});
+		});
+
+	</script>
+
+
 	</body>
 </html>

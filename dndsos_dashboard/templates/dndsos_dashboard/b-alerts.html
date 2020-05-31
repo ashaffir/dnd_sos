@@ -1,0 +1,93 @@
+{% extends 'dndsos_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Alerts</h2>
+    
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Order Alerts</span></li>
+            </ol>
+    
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+        <div class="col-md-10 col-lg-10">
+        <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
+            {% csrf_token %}
+            <div class="row" >
+                <div class="col-md-4">
+                    <h4>Available orders offered by businesses</h4>
+                    <p>There  {% if num_open_orders > 1 %}  are {% else %} is {% endif %}{{ num_open_orders }} open orders available.</p>
+                    <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
+                                                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-md">
+                        <input type="text" class="form-control" name="city" placeholder="Enter your city">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Sort!</button>
+                        </span>
+                    </div>                    
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-md">
+                        <input type="text" class="form-control" name="vehicle" placeholder="Preferred vehicle">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">Sort!</button>
+                        </span>
+                    </div>                    
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                {% for order in orders %}
+                    <div class="col-md-4">
+                        <section class="panel panel-featured-left panel-featured-secondary">
+                            <div class="panel-body">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon bg-secondary">
+                                            <i class="fa fa-exclamation"></i>
+                                        </div>
+                                    </div>
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">{{ order.business.username }}</h4>
+                                            <div class="" >
+                                                <p class="">Drop Off Address: <b>{{ order.drop_off_address }}</b></p>
+                                                <p class="" >Business Phone: <b>{{ order.business.phone_number }}</b></p>
+                                            </div>
+
+                                        </div>
+                                        <div class="summary-footer">
+                                            <div class="row" >
+                                                <div class="col-md-12" style="text-align: center;">
+                                                    <button id="addOrder_'{{ order.order_id }}'" onclick="request_freelancer('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}', '{{ order.notes }}')" class="btn btn-lg btn-success" type="button" drop_off_address='{{ order.drop_off_address }}' name="requestFreelancer" value="{{ order.order_id }}">Reqeuest Freelancer</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div> 
+                {% endfor %}
+            </form>
+        </div>
+    <!-- end: page -->
+</section>
+
+<!-- Alert for an offer that is not available anymore -->
+
+
+{% endblock content %}

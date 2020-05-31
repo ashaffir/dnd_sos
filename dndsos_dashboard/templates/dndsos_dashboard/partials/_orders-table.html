@@ -1,10 +1,10 @@
 <thead>
     <tr>
-        <th>Order Created</th>
+        <th>Updated</th>
         <th>Destination</th>
+        <th>Notes</th>
         <th>Allocated Freelancer</th>
         <th>Order Status</th>
-        <th>Notes</th>
         <th>Picked Up</th>
         <th>Payments</th>
         <th></th>
@@ -13,8 +13,9 @@
 <tbody>
     {% for order in orders %}
     <tr class="gradeX">
-        <td>{{ order.created }}</td>
+        <td>{{ order.updated }}</td>
         <td>{{ order.drop_off_address }}</td>
+        <td>{% if order.notes %}{{ order.notes }}{% endif %}</td>
         {% if order.freelancer %}
         <td style="background-color:green; color: white">{{order.freelancer.email}} / {{order.freelancer.phone_number}}</td>
         {% else %}
@@ -28,39 +29,28 @@
         {% elif order.status == 'STARTED' %}
             <td style="background-color: rgb(199, 109, 25); color:white; text-align:center">
                 <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for pickup...</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% elif order.status == 'IN_PROGRESS' %}
             <td style="background-color: rgb(5, 97, 202); color:white; text-align:center">
                 <label for="dispached" id="orderStatus" status='{{ order.status }}'>Being delivered...</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% elif order.status == 'COMPLETED' or order.status == 'SETTLED' %}
             <td>
                 <label for="completed" id="orderStatus" status='{{ order.status }}'>Delivered</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% else %}
             <td>
                 <label for="error">ERROR. PLEASE CHECK WITH ADMIN!!</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% endif %}
-        <td>{% if order.notes %}{{ order.notes }}{% endif %}</td>
         <td class="actions" style='text-align:center'>
-            <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
-            <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
-            <!-- <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a> -->
             {% if order.status == 'STARTED' %}
-                <button class="btn btn-success" type="submit" name="pickedUp" id="pickup_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up <i class="fas fa-truck"></i></button>
+                <button class="btn btn-success" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up <i class="fa fa-truck"></i></button>
             {% else %}
             {% endif %}
 
         </td>
         <td class="actions" style='text-align:center'>
-            <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
-            <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
-            <!-- <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a> -->
             {% if order.status == 'COMPLETED' %}
                 <button class="btn btn-success" type="submit" name="makePayment" id="payment_{{ order.order_id }}" value="{{ order.order_id }}">Pay for Delivery <i class="fas fa-hand-holding-usd"></i></button>
             {% else %}
@@ -68,14 +58,24 @@
 
         </td>
         <td class="actions" style='text-align:center'>
-            <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
-            <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
-            <!-- <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a> -->
-            <!-- <button type="submit" name="orderDelete" id="_{{ order.order_id }}" value="{{ order.order_id }}" class="fa fa-trash-o"><i class=""></button> -->
-            <button  class="btn btn-danger on-default edit-row" type="submit" name="orderDelete" id="delete_{{ order.order_id }}" value="{{ order.order_id }}"><i class="fa fa-trash-o"></i></button>
+            <!-- Confirmation modal -->
+            {% include 'dndsos_dashboard/partials/_confirm-b-cancel-modal.html' with order_id=order.order_id %}
+
+            <button onclick="confirmCancel('{{ order.order_id }}')" class="btn btn-danger on-default edit-row" type="button" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="tooltip" data-placement="top" title="Cancel your order. Please confirm with the accepted freelancer that she/he has received your cancellation." {% endif %}><i class="fa fa-trash-o"></i></button>
 
         </td>
 
     </tr>
     {% endfor %}
 </tbody>
+
+<!-- 
+Handing the cancelling of an offer by the business
+This can happen only if the order is not in states IN_PROGRESS and COMPLETED 
+-->
+<script>
+    function confirmCancel(order_id){
+        $(`#cancel_b_order`).val(order_id);
+        $("#bCancelOrder").modal();
+    }
+</script>

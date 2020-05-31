@@ -1,0 +1,36 @@
+<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+    <i class="fa fa-bell"></i>
+    <span class="badge">{{ num_open_orders }}</span>
+</a>
+
+<div class="dropdown-menu notification-menu">
+    <div class="notification-title">
+        <span class="pull-right label label-default">{{ num_open_orders }}</span>
+        New Orders!
+    </div>
+
+    <div class="content" >
+
+            
+        <ul>
+            {% for order in open_orders %}
+            <li>
+                <a href="{% url 'orders:open-orders' %}" class="clearfix">
+                    <div class="image">
+                        <i class="fa fa-thumbs-up bg-success"></i>
+                    </div>
+                    <span class="message">From {{ order.pick_up_address }}</span>
+                    <span class="message">To {{ order.frop_off_address }}</span>
+                </a>
+            </li>
+            {% endfor %}
+
+        </ul> 
+
+        <hr />
+
+        <div class="text-right">
+            <a href="{% url 'orders:open-orders' %}" class="view-more">View All</a>
+        </div>
+    </div>
+</div>

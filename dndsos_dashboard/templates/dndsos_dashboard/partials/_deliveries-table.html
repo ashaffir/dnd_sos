@@ -13,7 +13,7 @@
 <tbody>
     {% for order in orders %}
     <tr class="gradeX">
-        <td>{{ order.created }}</td>
+        <td>{{ order.updated }}</td>
         <td id="pickupAddress_{{ order.order_id }}">{{ order.pick_up_address }}</td>
         <td id="dropoffAddress_{{ order.order_id }}">{{ order.drop_off_address }}</td>
         <td id="notes">{{ order.notes }}</td>
@@ -25,36 +25,31 @@
         {% elif order.status == 'STARTED' %}
             <td style="background-color: rgb(199, 109, 25); color:white; text-align:center">
                 <label for="dispached">Waiting for pickup...</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% elif order.status == 'IN_PROGRESS' %}
             <td style="background-color: rgb(5, 97, 202); color:white; text-align:center">
                 <label for="dispached">Being delivered...</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% elif order.status == 'COMPLETED' %}
             <td>
                 <label for="dispached">Delivered</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% elif order.status == 'SETTLED' %}
             <td>
                 <label for="dispached">Settled</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% else %}
             <td>
                 <label for="dispached">ERROR. PLEASE CHECK WITH ADMIN!!</label>
-                <!-- <button class="btn btn-sm btn-success" type="submit" name="dispached" value="{{ order.pk }}" >Dispach</button> -->
             </td>
         {% endif %}
         <td class="actions" style="text-align: center;">
             {% if order.status == 'COMPLETED' or order.status == 'SETTLED'%}
-                <button class="btn btn-outline-success" onclick="stam()" type="button" name="orderDelivered" id="orderDelivered" value="{{ order.order_id }}" disabled>Delivered!<i class="fas fa-trash"></i></button>
+                <button class="btn btn-outline-success" type="button" name="orderDelivered" id="orderDelivered" value="{{ order.order_id }}" disabled>Delivered!<i class="fas fa-trash"></i></button>
             {% elif order.status == 'STARTED'  %}
                 <!-- Waiting for the pickup -->
             {% else %}
-                <button class="btn btn-success" onclick="stam('{{ order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" type="button" name="orderDelivered" id="orderDelivered" value="{{ order.order_id }}">Delivered?<i class="fas fa-trash"></i></button>
+                <button class="btn btn-success" onclick="delivered('{{ order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" type="button" name="orderDelivered" id="orderDelivered" value="{{ order.order_id }}">Delivered?<i class="fas fa-trash"></i></button>
             {% endif %}
 
         </td>
@@ -66,12 +61,20 @@
             {% endif %}
         </td>
         <td class="actions" style="text-align: center;">
-            <!-- <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a> -->
-            <!-- <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> -->
-            <button  class="btn btn-danger on-default edit-row" type="submit" name="orderDelete" id="_{{ order.order_id }}" value="{{ order.order_id }}"><i class="fa fa-trash-o"></i></button>
+            
+            <!-- Confirmation modal -->
+            {% include 'dndsos_dashboard/partials/_confirm-f-cancel-modal.html' with order_id=order.order_id %}
+
+            <button onclick="confirmCancel('{{ order.order_id }}')" class="btn btn-danger on-default edit-row" type="button" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'STARTED' %} data-toggle="tooltip" data-placement="top" title="Cancel your delivery. Please confirm with the business that they have received your cancellation." {% else %} disabled {% endif %}><i class="fa fa-trash-o"></i></button>
 
         </td>
 
     </tr>
     {% endfor %}
 </tbody>
+<script>
+    function confirmCancel(order_id){
+        $('#cancel_f_order').val(order_id);
+        $("#fCancelOrder").modal();
+    }
+</script>

@@ -4,6 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
 # from django.contrib.postgres.fields import ArrayField
 
+# from orders.models import Order
+
 # use a custom auth user model to add extra fields
 # for both Employer and Employee
 class User(AbstractUser):
@@ -109,6 +111,8 @@ class Employee(models.Model):
     phone = models.CharField(max_length=100, null=True, blank=True)
     vehicle = models.CharField(max_length=100, choices=VEHICLE, blank=True, null=True)
     active_hours = models.CharField(max_length=100, blank=True, null=True)
+    is_available = models.BooleanField(default=True)
+    # current_order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, default=-1)
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
 

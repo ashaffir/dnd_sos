@@ -2,6 +2,8 @@
 
 ### Signals
 https://www.youtube.com/watch?v=Kc1Q_ayAeQk
+https://www.youtube.com/watch?v=T6PyDm79PFo&t=170s
+
 https://docs.djangoproject.com/en/3.0/topics/signals/
 https://stackoverflow.com/questions/46614541/using-django-signals-in-channels-consumer-classes
 

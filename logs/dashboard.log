@@ -1,171 +1,348 @@
-INFO 2020-05-24 11:21:16,475 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
-INFO 2020-05-24 11:21:16,476 - Configuring endpoint tcp:port=8010:interface=127.0.0.1
-INFO 2020-05-24 11:21:16,476 - Listening on TCP address 127.0.0.1:8010
-INFO 2020-05-24 11:29:58,616 - [mHTTP GET /dashboard/freelancer/27/deliveries 200 [0.11, 127.0.0.1:56953][0m
-INFO 2020-05-24 11:29:58,792 - [mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 200 [0.04, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:29:58,793 - [mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 200 [0.05, 127.0.0.1:56953][0m
-INFO 2020-05-24 11:29:58,796 - [mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 200 [0.03, 127.0.0.1:56957][0m
-INFO 2020-05-24 11:29:58,799 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 200 [0.03, 127.0.0.1:56958][0m
-INFO 2020-05-24 11:29:58,800 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 200 [0.05, 127.0.0.1:56956][0m
-INFO 2020-05-24 11:29:58,811 - [mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 200 [0.04, 127.0.0.1:56959][0m
-INFO 2020-05-24 11:29:58,821 - [mHTTP GET /static/assets/vendor/morris/morris.css 200 [0.02, 127.0.0.1:56953][0m
-INFO 2020-05-24 11:29:58,825 - [mHTTP GET /static/assets/stylesheets/skins/default.css 200 [0.02, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:29:58,825 - [mHTTP GET /static/assets/stylesheets/theme.css 200 [0.01, 127.0.0.1:56959][0m
-INFO 2020-05-24 11:29:58,828 - [mHTTP GET /static/assets/vendor/modernizr/modernizr.js 200 [0.01, 127.0.0.1:56958][0m
-INFO 2020-05-24 11:29:58,896 - [mHTTP GET /static/assets/stylesheets/theme-custom.css 200 [0.09, 127.0.0.1:56956][0m
-INFO 2020-05-24 11:29:59,365 - [mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 200 [0.01, 127.0.0.1:56956][0m
-INFO 2020-05-24 11:29:59,423 - [mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 200 [0.04, 127.0.0.1:56956][0m
-INFO 2020-05-24 11:29:59,431 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 200 [0.05, 127.0.0.1:56958][0m
-INFO 2020-05-24 11:29:59,434 - [mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 200 [0.05, 127.0.0.1:56959][0m
-INFO 2020-05-24 11:29:59,444 - [mHTTP GET /static/assets/javascripts/theme.js 200 [0.05, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:29:59,448 - [mHTTP GET /static/assets/javascripts/theme.custom.js 200 [0.06, 127.0.0.1:56953][0m
-INFO 2020-05-24 11:29:59,449 - [mHTTP GET /static/assets/javascripts/theme.init.js 200 [0.06, 127.0.0.1:56957][0m
-INFO 2020-05-24 11:29:59,458 - [mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 200 [0.03, 127.0.0.1:56956][0m
-INFO 2020-05-24 11:29:59,463 - [mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 200 [0.02, 127.0.0.1:56958][0m
-INFO 2020-05-24 11:29:59,465 - [mHTTP GET /static/channels/js/websocketbridge.js 200 [0.02, 127.0.0.1:56959][0m
-INFO 2020-05-24 11:29:59,494 - [mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 200 [0.01, 127.0.0.1:56956][0m
-INFO 2020-05-24 11:29:59,498 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 200 [0.02, 127.0.0.1:56959][0m
-INFO 2020-05-24 11:29:59,499 - [mHTTP GET /static/assets/images/sample-user.jpg 200 [0.02, 127.0.0.1:56958][0m
-INFO 2020-05-24 11:29:59,499 - [mHTTP GET /static/assets/images/dndsos-logo-black.png 200 [0.02, 127.0.0.1:56957][0m
-INFO 2020-05-24 11:29:59,500 - [mHTTP GET /static/assets/images/logged-user.jpg 200 [0.02, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:29:59,618 - [mHTTP GET /static/assets/vendor/font-awesome/fonts/fontawesome-webfont.woff?v=4.1.0 200 [0.01, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:29:59,692 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:30:00,159 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:56976]
-INFO 2020-05-24 11:30:00,475 - WebSocket CONNECT /ws/orders/ [127.0.0.1:56976]
-INFO 2020-05-24 11:30:01,153 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:30:07,812 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:07,917 - [36mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 304 [0.01, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:07,920 - [36mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 304 [0.01, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:07,924 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 304 [0.01, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:07,926 - [36mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 304 [0.01, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:07,927 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 304 [0.02, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:07,929 - [36mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 304 [0.01, 127.0.0.1:57057][0m
-INFO 2020-05-24 11:30:07,941 - [36mHTTP GET /static/assets/stylesheets/theme.css 304 [0.01, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:07,948 - [36mHTTP GET /static/assets/stylesheets/skins/default.css 304 [0.01, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:07,951 - [36mHTTP GET /static/assets/stylesheets/theme-custom.css 304 [0.02, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:07,952 - [36mHTTP GET /static/assets/vendor/modernizr/modernizr.js 304 [0.02, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:07,953 - [36mHTTP GET /static/assets/vendor/morris/morris.css 304 [0.03, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:07,958 - [36mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 304 [0.02, 127.0.0.1:57057][0m
-INFO 2020-05-24 11:30:07,972 - [36mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 304 [0.01, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:07,973 - [36mHTTP GET /static/assets/javascripts/theme.js 304 [0.01, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:07,974 - [36mHTTP GET /static/assets/javascripts/theme.custom.js 304 [0.01, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:07,975 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 304 [0.02, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:07,978 - [36mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 304 [0.02, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:07,993 - [36mHTTP GET /static/assets/javascripts/theme.init.js 304 [0.02, 127.0.0.1:57057][0m
-INFO 2020-05-24 11:30:07,995 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.01, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:07,999 - [36mHTTP GET /static/channels/js/websocketbridge.js 304 [0.02, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:08,000 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 304 [0.02, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:08,021 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.03, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:08,022 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.04, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:08,364 - [36mHTTP GET /static/assets/images/dndsos-logo-black.png 304 [0.00, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:08,407 - [36mHTTP GET /static/assets/images/sample-user.jpg 304 [0.01, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:08,409 - [36mHTTP GET /static/assets/images/logged-user.jpg 304 [0.01, 127.0.0.1:57057][0m
-INFO 2020-05-24 11:30:08,448 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:08,537 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.00, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:08,598 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.00, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:08,616 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.00, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:08,634 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57073]
-INFO 2020-05-24 11:30:08,767 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57073]
-INFO 2020-05-24 11:30:14,085 - [mHTTP POST /dashboard/business/22/orders 200 [0.07, 127.0.0.1:57118][0m
-INFO 2020-05-24 11:30:15,499 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:57118][0m
-INFO 2020-05-24 11:30:15,569 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57137]
-INFO 2020-05-24 11:30:15,629 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57137]
-INFO 2020-05-24 11:30:17,800 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:57118][0m
-INFO 2020-05-24 11:30:21,082 - [mHTTP POST /dashboard/business/22/orders 200 [0.05, 127.0.0.1:57118][0m
-INFO 2020-05-24 11:30:21,111 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:57137]
-INFO 2020-05-24 11:30:21,665 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:57118][0m
-INFO 2020-05-24 11:30:21,707 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57200]
-INFO 2020-05-24 11:30:21,770 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57200]
-INFO 2020-05-24 11:30:26,061 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:57073]
-INFO 2020-05-24 11:30:26,147 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:26,230 - [36mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 304 [0.01, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:26,231 - [36mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 304 [0.01, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:26,237 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 304 [0.02, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:26,238 - [36mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 304 [0.02, 127.0.0.1:57057][0m
-INFO 2020-05-24 11:30:26,242 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 304 [0.02, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:26,244 - [36mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 304 [0.02, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:26,249 - [36mHTTP GET /static/assets/vendor/morris/morris.css 304 [0.01, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:26,251 - [36mHTTP GET /static/assets/stylesheets/theme.css 304 [0.01, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:26,260 - [36mHTTP GET /static/assets/stylesheets/theme-custom.css 304 [0.02, 127.0.0.1:57057][0m
-INFO 2020-05-24 11:30:26,261 - [36mHTTP GET /static/assets/stylesheets/skins/default.css 304 [0.02, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:26,265 - [36mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 304 [0.02, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:26,272 - [36mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 304 [0.01, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:26,272 - [36mHTTP GET /static/assets/vendor/modernizr/modernizr.js 304 [0.02, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:26,275 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 304 [0.02, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:26,284 - [36mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 304 [0.02, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:26,285 - [36mHTTP GET /static/assets/javascripts/theme.js 304 [0.02, 127.0.0.1:57057][0m
-INFO 2020-05-24 11:30:26,301 - [36mHTTP GET /static/assets/javascripts/theme.custom.js 304 [0.03, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:26,302 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.01, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:26,303 - [36mHTTP GET /static/assets/javascripts/theme.init.js 304 [0.02, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:26,304 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 304 [0.02, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:30:26,305 - [36mHTTP GET /static/channels/js/websocketbridge.js 304 [0.02, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:26,306 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.01, 127.0.0.1:57057][0m
-INFO 2020-05-24 11:30:26,313 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.01, 127.0.0.1:57056][0m
-INFO 2020-05-24 11:30:26,717 - [36mHTTP GET /static/assets/images/dndsos-logo-black.png 304 [0.00, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:26,733 - [36mHTTP GET /static/assets/images/sample-user.jpg 304 [0.00, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:26,736 - [36mHTTP GET /static/assets/images/logged-user.jpg 304 [0.01, 127.0.0.1:57055][0m
-INFO 2020-05-24 11:30:26,774 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:26,869 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.00, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:26,888 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.00, 127.0.0.1:57058][0m
-INFO 2020-05-24 11:30:26,905 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.00, 127.0.0.1:57054][0m
-INFO 2020-05-24 11:30:26,918 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57248]
-INFO 2020-05-24 11:30:27,043 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57248]
-INFO 2020-05-24 11:30:29,264 - [mHTTP GET /dashboard/freelancer/27/deliveries 200 [0.04, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:30:29,287 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:56976]
-INFO 2020-05-24 11:30:29,750 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:30:29,823 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57281]
-INFO 2020-05-24 11:30:29,878 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57281]
-INFO 2020-05-24 11:30:30,258 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:30:33,018 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:30:33,099 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:57118][0m
-INFO 2020-05-24 11:30:55,536 - [mHTTP GET /orders/orders-table 200 [0.12, 127.0.0.1:57118][0m
-INFO 2020-05-24 11:30:55,671 - [mHTTP GET /orders/orders-table 200 [0.12, 127.0.0.1:57509][0m
-INFO 2020-05-24 11:30:58,262 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:56955][0m
-INFO 2020-05-24 11:30:58,354 - [mHTTP GET /orders/orders-table 200 [0.07, 127.0.0.1:57509][0m
-INFO 2020-05-24 11:31:10,996 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:57052][0m
-INFO 2020-05-24 11:32:11,356 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:58127][0m
-INFO 2020-05-24 11:32:11,435 - [mHTTP GET /orders/orders-table 200 [0.07, 127.0.0.1:58134][0m
-INFO 2020-05-24 11:32:16,499 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:58177][0m
-INFO 2020-05-24 11:32:16,586 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:58134][0m
-INFO 2020-05-24 11:32:21,548 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:58221][0m
-INFO 2020-05-24 11:32:51,430 - [mHTTP POST /dashboard/business/22/orders 200 [0.06, 127.0.0.1:58134][0m
-INFO 2020-05-24 11:32:51,533 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:57200]
-INFO 2020-05-24 11:32:52,534 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:58134][0m
-INFO 2020-05-24 11:32:52,603 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:58478]
-INFO 2020-05-24 11:32:52,673 - WebSocket CONNECT /ws/orders/ [127.0.0.1:58478]
-INFO 2020-05-24 11:32:56,955 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:57248]
-INFO 2020-05-24 11:32:57,069 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:58177][0m
-INFO 2020-05-24 11:32:57,168 - [36mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 304 [0.02, 127.0.0.1:58177][0m
-INFO 2020-05-24 11:32:57,183 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 304 [0.02, 127.0.0.1:58524][0m
-INFO 2020-05-24 11:32:57,187 - [36mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 304 [0.02, 127.0.0.1:58527][0m
-INFO 2020-05-24 11:32:57,189 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 304 [0.02, 127.0.0.1:58525][0m
-INFO 2020-05-24 11:32:57,194 - [36mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 304 [0.03, 127.0.0.1:58528][0m
-INFO 2020-05-24 11:32:57,195 - [36mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 304 [0.03, 127.0.0.1:58526][0m
-INFO 2020-05-24 11:32:57,226 - [36mHTTP GET /static/assets/vendor/morris/morris.css 304 [0.04, 127.0.0.1:58177][0m
-INFO 2020-05-24 11:32:57,232 - [36mHTTP GET /static/assets/stylesheets/theme-custom.css 304 [0.03, 127.0.0.1:58525][0m
-INFO 2020-05-24 11:32:57,236 - [36mHTTP GET /static/assets/stylesheets/skins/default.css 304 [0.04, 127.0.0.1:58527][0m
-INFO 2020-05-24 11:32:57,237 - [36mHTTP GET /static/assets/stylesheets/theme.css 304 [0.04, 127.0.0.1:58524][0m
-INFO 2020-05-24 11:32:57,255 - [36mHTTP GET /static/assets/vendor/modernizr/modernizr.js 304 [0.03, 127.0.0.1:58526][0m
-INFO 2020-05-24 11:32:57,264 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 304 [0.03, 127.0.0.1:58525][0m
-INFO 2020-05-24 11:32:57,264 - [36mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 304 [0.04, 127.0.0.1:58528][0m
-INFO 2020-05-24 11:32:57,265 - [36mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 304 [0.03, 127.0.0.1:58177][0m
-INFO 2020-05-24 11:32:57,270 - [36mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 304 [0.03, 127.0.0.1:58524][0m
-INFO 2020-05-24 11:32:57,272 - [36mHTTP GET /static/assets/javascripts/theme.custom.js 304 [0.01, 127.0.0.1:58526][0m
-INFO 2020-05-24 11:32:57,273 - [36mHTTP GET /static/assets/javascripts/theme.js 304 [0.02, 127.0.0.1:58527][0m
-INFO 2020-05-24 11:32:57,280 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 304 [0.01, 127.0.0.1:58528][0m
-INFO 2020-05-24 11:32:57,281 - [36mHTTP GET /static/channels/js/websocketbridge.js 304 [0.01, 127.0.0.1:58177][0m
-INFO 2020-05-24 11:32:57,282 - [36mHTTP GET /static/assets/javascripts/theme.init.js 304 [0.01, 127.0.0.1:58525][0m
-INFO 2020-05-24 11:32:57,290 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.02, 127.0.0.1:58524][0m
-INFO 2020-05-24 11:32:57,293 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.01, 127.0.0.1:58527][0m
-INFO 2020-05-24 11:32:57,293 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.02, 127.0.0.1:58526][0m
-INFO 2020-05-24 11:32:57,804 - [36mHTTP GET /static/assets/images/dndsos-logo-black.png 304 [0.01, 127.0.0.1:58528][0m
-INFO 2020-05-24 11:32:58,051 - [36mHTTP GET /static/assets/images/logged-user.jpg 304 [0.01, 127.0.0.1:58524][0m
-INFO 2020-05-24 11:32:58,051 - [36mHTTP GET /static/assets/images/sample-user.jpg 304 [0.01, 127.0.0.1:58525][0m
-INFO 2020-05-24 11:32:58,087 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:58527][0m
-INFO 2020-05-24 11:32:58,110 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.01, 127.0.0.1:58527][0m
-INFO 2020-05-24 11:32:58,130 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.00, 127.0.0.1:58527][0m
-INFO 2020-05-24 11:32:58,188 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.00, 127.0.0.1:58527][0m
-INFO 2020-05-24 11:32:58,201 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:58538]
-INFO 2020-05-24 11:32:58,254 - WebSocket CONNECT /ws/orders/ [127.0.0.1:58538]
-INFO 2020-05-24 11:33:00,771 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:58177][0m
-INFO 2020-05-24 11:33:00,913 - [mHTTP GET /orders/orders-table 200 [0.12, 127.0.0.1:58134][0m
+INFO 2020-05-31 08:31:56,966 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+INFO 2020-05-31 08:31:56,966 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+INFO 2020-05-31 08:31:56,967 - Listening on TCP address 127.0.0.1:8000
+INFO 2020-05-31 08:32:13,836 - [mHTTP GET /dashboard/freelancer/27/deliveries 200 [0.06, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:32:14,575 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:32:14,707 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:50735]
+INFO 2020-05-31 08:32:14,810 - WebSocket CONNECT /ws/orders/ [127.0.0.1:50735]
+INFO 2020-05-31 08:32:15,235 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:32:15,547 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:32:15,583 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:32:17,012 - [mHTTP POST /dashboard/business/22/orders 200 [0.05, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:17,751 - [mHTTP GET /orders/orders-table 200 [0.02, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:17,809 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:50777]
+INFO 2020-05-31 08:32:17,864 - WebSocket CONNECT /ws/orders/ [127.0.0.1:50777]
+INFO 2020-05-31 08:32:18,455 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:18,490 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:19,301 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:28,121 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:28,226 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:32:28,228 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:30,459 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:32:30,621 - [mHTTP GET /orders/business-alerts-list 200 [0.06, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:32:30,623 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:30,657 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:50906][0m
+INFO 2020-05-31 08:32:30,662 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:32:35,909 - [mHTTP POST /dashboard/business/22/orders 200 [0.07, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:32:35,963 - [mHTTP GET /orders/business-alerts-list 200 [0.06, 127.0.0.1:50765][0m
+INFO 2020-05-31 08:32:35,964 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:50777]
+INFO 2020-05-31 08:32:37,451 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:32:37,855 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:50976]
+INFO 2020-05-31 08:32:37,911 - WebSocket CONNECT /ws/orders/ [127.0.0.1:50976]
+INFO 2020-05-31 08:32:39,030 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:32:39,066 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:14,439 - [mHTTP GET /dashboard/freelancer/27/deliveries 200 [0.04, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:14,462 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:50735]
+INFO 2020-05-31 08:33:14,885 - [mHTTP GET /orders/deliveries-table 200 [0.02, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:14,960 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:51306]
+INFO 2020-05-31 08:33:15,024 - WebSocket CONNECT /ws/orders/ [127.0.0.1:51306]
+INFO 2020-05-31 08:33:15,325 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:15,481 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:15,519 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:17,423 - [mHTTP POST /dashboard/business/22/orders 200 [0.07, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:17,454 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:50976]
+INFO 2020-05-31 08:33:18,046 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:18,085 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:51345]
+INFO 2020-05-31 08:33:18,138 - WebSocket CONNECT /ws/orders/ [127.0.0.1:51345]
+INFO 2020-05-31 08:33:18,667 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:18,699 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:19,586 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.00, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:26,411 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:26,649 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:26,663 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:51331][0m
+INFO 2020-05-31 08:33:28,699 - [mHTTP GET /orders/deliveries-table 200 [0.06, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:28,839 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:28,843 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:51331][0m
+INFO 2020-05-31 08:33:28,901 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:50878][0m
+INFO 2020-05-31 08:33:28,932 - [mHTTP GET /orders/business-alerts-list 200 [0.09, 127.0.0.1:51456][0m
+INFO 2020-05-31 08:33:32,744 - [mHTTP POST /dashboard/business/22/orders 200 [0.10, 127.0.0.1:51456][0m
+INFO 2020-05-31 08:33:32,827 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:51345]
+INFO 2020-05-31 08:33:32,845 - [mHTTP GET /dashboard/freelancer/27/deliveries 200 [0.10, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:32,863 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:51306]
+INFO 2020-05-31 08:33:34,457 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:34,601 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:51516]
+INFO 2020-05-31 08:33:34,670 - WebSocket CONNECT /ws/orders/ [127.0.0.1:51516]
+INFO 2020-05-31 08:33:34,871 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:51456][0m
+INFO 2020-05-31 08:33:35,020 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:51526]
+INFO 2020-05-31 08:33:35,087 - WebSocket CONNECT /ws/orders/ [127.0.0.1:51526]
+INFO 2020-05-31 08:33:35,549 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:35,636 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:33:36,224 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:51456][0m
+INFO 2020-05-31 08:33:36,286 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:51456][0m
+INFO 2020-05-31 08:34:34,607 - [mHTTP GET /dashboard/freelancer/27/deliveries 200 [0.06, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:34:34,637 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:51516]
+INFO 2020-05-31 08:34:35,123 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:34:35,203 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:52046]
+INFO 2020-05-31 08:34:35,264 - WebSocket CONNECT /ws/orders/ [127.0.0.1:52046]
+INFO 2020-05-31 08:34:35,593 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.02, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:34:35,761 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:34:35,796 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:34:57,550 - [mHTTP POST /dashboard/business/22/orders 200 [0.08, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:34:57,625 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:51526]
+INFO 2020-05-31 08:34:58,690 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:34:58,764 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:52265]
+INFO 2020-05-31 08:34:58,828 - WebSocket CONNECT /ws/orders/ [127.0.0.1:52265]
+INFO 2020-05-31 08:34:59,575 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:34:59,615 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:35:00,711 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.00, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:35:07,903 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:35:08,008 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:35:08,015 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:52359][0m
+INFO 2020-05-31 08:35:10,169 - [mHTTP GET /orders/deliveries-table 200 [0.07, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:35:10,262 - [mHTTP GET /orders/business-alerts-list 200 [0.05, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:35:10,264 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:52359][0m
+INFO 2020-05-31 08:35:10,320 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:52248][0m
+INFO 2020-05-31 08:35:10,323 - [mHTTP GET /orders/business-alerts-list 200 [0.06, 127.0.0.1:52384][0m
+INFO 2020-05-31 08:35:14,034 - [mHTTP POST /dashboard/business/22/orders 200 [0.09, 127.0.0.1:52384][0m
+INFO 2020-05-31 08:35:14,061 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:50722][0m
+INFO 2020-05-31 08:35:14,128 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:52265]
+INFO 2020-05-31 08:35:14,881 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:52384][0m
+INFO 2020-05-31 08:35:14,980 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:52436]
+INFO 2020-05-31 08:35:15,038 - WebSocket CONNECT /ws/orders/ [127.0.0.1:52436]
+INFO 2020-05-31 08:35:15,631 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:52384][0m
+INFO 2020-05-31 08:35:15,661 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:52384][0m
+INFO 2020-05-31 08:35:33,740 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.08, 127.0.0.1:52595][0m
+INFO 2020-05-31 08:35:34,064 - [36mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 304 [0.06, 127.0.0.1:52595][0m
+INFO 2020-05-31 08:35:34,065 - [36mHTTP GET /static/assets/stylesheets/skins/default.css 304 [0.04, 127.0.0.1:52605][0m
+INFO 2020-05-31 08:35:34,066 - [36mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 304 [0.06, 127.0.0.1:52602][0m
+INFO 2020-05-31 08:35:34,175 - [36mHTTP GET /static/assets/stylesheets/theme.css 304 [0.16, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:34,176 - [36mHTTP GET /static/assets/vendor/morris/morris.css 304 [0.17, 127.0.0.1:52603][0m
+INFO 2020-05-31 08:35:34,177 - [36mHTTP GET /static/assets/stylesheets/theme-custom.css 304 [0.14, 127.0.0.1:52606][0m
+INFO 2020-05-31 08:35:34,183 - [36mHTTP GET /static/assets/vendor/modernizr/modernizr.js 304 [0.00, 127.0.0.1:52595][0m
+INFO 2020-05-31 08:35:34,213 - [36mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 304 [0.01, 127.0.0.1:52595][0m
+INFO 2020-05-31 08:35:34,215 - [36mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 304 [0.01, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:34,219 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 304 [0.01, 127.0.0.1:52603][0m
+INFO 2020-05-31 08:35:34,219 - [36mHTTP GET /static/assets/javascripts/theme.js 304 [0.01, 127.0.0.1:52605][0m
+INFO 2020-05-31 08:35:34,220 - [36mHTTP GET /static/assets/javascripts/theme.custom.js 304 [0.01, 127.0.0.1:52606][0m
+INFO 2020-05-31 08:35:34,220 - [36mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 304 [0.02, 127.0.0.1:52602][0m
+INFO 2020-05-31 08:35:34,230 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 304 [0.01, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:34,232 - [36mHTTP GET /static/assets/javascripts/theme.init.js 304 [0.01, 127.0.0.1:52595][0m
+INFO 2020-05-31 08:35:34,237 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.01, 127.0.0.1:52605][0m
+INFO 2020-05-31 08:35:34,238 - [36mHTTP GET /static/channels/js/websocketbridge.js 304 [0.01, 127.0.0.1:52603][0m
+INFO 2020-05-31 08:35:34,243 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.01, 127.0.0.1:52606][0m
+INFO 2020-05-31 08:35:34,244 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.01, 127.0.0.1:52602][0m
+INFO 2020-05-31 08:35:34,254 - [mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 200 [0.02, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:34,255 - [mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 200 [0.02, 127.0.0.1:52595][0m
+INFO 2020-05-31 08:35:34,257 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 200 [0.01, 127.0.0.1:52603][0m
+INFO 2020-05-31 08:35:34,258 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 200 [0.01, 127.0.0.1:52605][0m
+INFO 2020-05-31 08:35:34,680 - [mHTTP GET /static/assets/images/dndsos-logo-black.png 200 [0.01, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:34,703 - [mHTTP GET /static/assets/images/logged-user.jpg 200 [0.01, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:34,739 - [mHTTP GET /static/assets/images/sample-user.jpg 200 [0.01, 127.0.0.1:52603][0m
+INFO 2020-05-31 08:35:34,755 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:35,008 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.01, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:35,023 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.00, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:35,041 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.00, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:35,060 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:52622]
+INFO 2020-05-31 08:35:35,158 - WebSocket CONNECT /ws/orders/ [127.0.0.1:52622]
+INFO 2020-05-31 08:35:35,653 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:35,851 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:36,417 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:52622]
+INFO 2020-05-31 08:35:36,517 - [mHTTP GET /orders/open-orders 200 [0.05, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:37,194 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:52652]
+INFO 2020-05-31 08:35:37,320 - WebSocket CONNECT /ws/orders/ [127.0.0.1:52652]
+INFO 2020-05-31 08:35:37,550 - [mHTTP GET /orders/open-orders-list 200 [0.03, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:37,929 - [mHTTP GET /orders/open-orders-alerts 200 [0.05, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:35:37,969 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:52604][0m
+INFO 2020-05-31 08:38:50,637 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:52652]
+INFO 2020-05-31 08:38:50,927 - [mHTTP GET /orders/open-orders 200 [0.05, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:38:52,002 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:54321]
+INFO 2020-05-31 08:38:52,062 - WebSocket CONNECT /ws/orders/ [127.0.0.1:54321]
+INFO 2020-05-31 08:38:52,357 - [mHTTP GET /orders/open-orders-list 200 [0.04, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:38:52,723 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:38:52,837 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:39:09,068 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:54472][0m
+INFO 2020-05-31 08:39:09,305 - [mHTTP GET /orders/business-alerts-list 200 [0.15, 127.0.0.1:54478][0m
+INFO 2020-05-31 08:39:09,314 - [mHTTP GET /orders/orders-table 200 [0.17, 127.0.0.1:54472][0m
+INFO 2020-05-31 08:39:13,922 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:39:14,019 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:54478][0m
+INFO 2020-05-31 08:39:14,032 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:54472][0m
+INFO 2020-05-31 08:39:14,087 - [mHTTP GET /orders/business-alerts-list 200 [0.06, 127.0.0.1:54525][0m
+INFO 2020-05-31 08:39:14,088 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:54478][0m
+INFO 2020-05-31 08:39:18,686 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:54321]
+INFO 2020-05-31 08:39:18,759 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.03, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:39:19,120 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:39:19,340 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:54579]
+INFO 2020-05-31 08:39:19,436 - WebSocket CONNECT /ws/orders/ [127.0.0.1:54579]
+INFO 2020-05-31 08:39:19,792 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:39:19,950 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:39:23,923 - [mHTTP GET /orders/deliveries-table 200 [0.02, 127.0.0.1:54629][0m
+INFO 2020-05-31 08:39:27,223 - [mHTTP GET /dashboard/freelancer/27/deliveries 200 [0.04, 127.0.0.1:54629][0m
+INFO 2020-05-31 08:39:27,266 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:52046]
+INFO 2020-05-31 08:39:28,280 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:54629][0m
+INFO 2020-05-31 08:39:28,555 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:54675]
+INFO 2020-05-31 08:39:28,623 - WebSocket CONNECT /ws/orders/ [127.0.0.1:54675]
+INFO 2020-05-31 08:39:29,549 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:54629][0m
+INFO 2020-05-31 08:39:29,605 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:54629][0m
+INFO 2020-05-31 08:39:38,977 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:54478][0m
+INFO 2020-05-31 08:39:39,116 - [mHTTP GET /orders/business-alerts-list 200 [0.06, 127.0.0.1:54525][0m
+INFO 2020-05-31 08:39:39,206 - [mHTTP GET /orders/orders-table 200 [0.14, 127.0.0.1:54472][0m
+INFO 2020-05-31 08:39:41,493 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:54629][0m
+INFO 2020-05-31 08:39:41,629 - [mHTTP GET /orders/business-alerts-list 200 [0.08, 127.0.0.1:54525][0m
+INFO 2020-05-31 08:39:41,716 - [mHTTP GET /orders/orders-table 200 [0.16, 127.0.0.1:54472][0m
+INFO 2020-05-31 08:39:41,718 - [mHTTP GET /orders/business-alerts-list 200 [0.05, 127.0.0.1:54478][0m
+INFO 2020-05-31 08:39:41,776 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:54525][0m
+INFO 2020-05-31 08:40:15,483 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:19,113 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:54579]
+INFO 2020-05-31 08:40:19,208 - [mHTTP GET /orders/open-orders 200 [0.04, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:19,968 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55133]
+INFO 2020-05-31 08:40:20,127 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55133]
+INFO 2020-05-31 08:40:20,318 - [mHTTP GET /orders/open-orders-list 200 [0.02, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:20,512 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:20,591 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:22,459 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55133]
+INFO 2020-05-31 08:40:22,572 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.07, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:22,981 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:23,106 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55170]
+INFO 2020-05-31 08:40:23,279 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55170]
+INFO 2020-05-31 08:40:23,320 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:24,699 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:32,849 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55170]
+INFO 2020-05-31 08:40:32,942 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:33,024 - [36mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 304 [0.04, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:33,033 - [36mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 304 [0.02, 127.0.0.1:55263][0m
+INFO 2020-05-31 08:40:33,037 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 304 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,042 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 304 [0.02, 127.0.0.1:55265][0m
+INFO 2020-05-31 08:40:33,043 - [36mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 304 [0.02, 127.0.0.1:55267][0m
+INFO 2020-05-31 08:40:33,044 - [36mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 304 [0.03, 127.0.0.1:55266][0m
+INFO 2020-05-31 08:40:33,047 - [36mHTTP GET /static/assets/vendor/morris/morris.css 304 [0.01, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:33,058 - [36mHTTP GET /static/assets/stylesheets/theme.css 304 [0.02, 127.0.0.1:55263][0m
+INFO 2020-05-31 08:40:33,062 - [36mHTTP GET /static/assets/stylesheets/skins/default.css 304 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,062 - [36mHTTP GET /static/assets/vendor/modernizr/modernizr.js 304 [0.01, 127.0.0.1:55267][0m
+INFO 2020-05-31 08:40:33,064 - [36mHTTP GET /static/assets/stylesheets/theme-custom.css 304 [0.02, 127.0.0.1:55265][0m
+INFO 2020-05-31 08:40:33,064 - [36mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 304 [0.02, 127.0.0.1:55266][0m
+INFO 2020-05-31 08:40:33,069 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 304 [0.01, 127.0.0.1:55263][0m
+INFO 2020-05-31 08:40:33,069 - [36mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 304 [0.01, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:33,155 - [36mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 304 [0.09, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,169 - [36mHTTP GET /static/assets/javascripts/theme.custom.js 304 [0.10, 127.0.0.1:55266][0m
+INFO 2020-05-31 08:40:33,170 - [36mHTTP GET /static/assets/javascripts/theme.js 304 [0.10, 127.0.0.1:55265][0m
+INFO 2020-05-31 08:40:33,173 - [36mHTTP GET /static/assets/javascripts/theme.init.js 304 [0.10, 127.0.0.1:55267][0m
+INFO 2020-05-31 08:40:33,179 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 304 [0.04, 127.0.0.1:55263][0m
+INFO 2020-05-31 08:40:33,180 - [36mHTTP GET /static/channels/js/websocketbridge.js 304 [0.04, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:33,194 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.01, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,195 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.01, 127.0.0.1:55265][0m
+INFO 2020-05-31 08:40:33,195 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.01, 127.0.0.1:55266][0m
+INFO 2020-05-31 08:40:33,347 - [36mHTTP GET /static/assets/images/dndsos-logo-black.png 304 [0.00, 127.0.0.1:55267][0m
+INFO 2020-05-31 08:40:33,364 - [36mHTTP GET /static/assets/images/logged-user.jpg 304 [0.01, 127.0.0.1:55263][0m
+INFO 2020-05-31 08:40:33,380 - [36mHTTP GET /static/assets/images/sample-user.jpg 304 [0.01, 127.0.0.1:55265][0m
+INFO 2020-05-31 08:40:33,414 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,487 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.00, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,498 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.00, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,509 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.00, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,532 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55269]
+INFO 2020-05-31 08:40:33,624 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55269]
+INFO 2020-05-31 08:40:33,787 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:33,839 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:35,987 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55269]
+INFO 2020-05-31 08:40:36,050 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.03, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:36,615 - [mHTTP GET /orders/deliveries-table 200 [0.07, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:36,753 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55306]
+INFO 2020-05-31 08:40:36,824 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55306]
+INFO 2020-05-31 08:40:37,167 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:37,333 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:42,080 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55306]
+INFO 2020-05-31 08:40:42,172 - [mHTTP POST /dashboard/freelancer/21/deliveries 200 [0.05, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:40:42,462 - [mHTTP GET /orders/orders-table 200 [0.17, 127.0.0.1:55367][0m
+INFO 2020-05-31 08:40:42,462 - [mHTTP GET /orders/business-alerts-list 200 [0.10, 127.0.0.1:55368][0m
+INFO 2020-05-31 08:40:42,526 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:55371][0m
+INFO 2020-05-31 08:40:42,526 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:55367][0m
+INFO 2020-05-31 08:40:42,680 - [mHTTP GET /orders/deliveries-table 200 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:42,768 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55376]
+INFO 2020-05-31 08:40:42,851 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55376]
+INFO 2020-05-31 08:40:43,215 - [mHTTP GET /orders/open-orders-alerts 200 [0.04, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:40:43,431 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:41:03,565 - [mHTTP GET /orders/open-orders 200 [0.04, 127.0.0.1:55568][0m
+INFO 2020-05-31 08:41:03,602 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:54675]
+INFO 2020-05-31 08:41:04,464 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55582]
+INFO 2020-05-31 08:41:04,548 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55582]
+INFO 2020-05-31 08:41:04,961 - [mHTTP GET /orders/open-orders-list 200 [0.05, 127.0.0.1:55568][0m
+INFO 2020-05-31 08:41:05,160 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:55568][0m
+INFO 2020-05-31 08:41:05,198 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:55568][0m
+INFO 2020-05-31 08:41:11,412 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55376]
+INFO 2020-05-31 08:41:11,577 - [mHTTP GET /orders/open-orders 200 [0.05, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:41:13,160 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55661]
+INFO 2020-05-31 08:41:13,225 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55661]
+INFO 2020-05-31 08:41:13,456 - [mHTTP GET /orders/open-orders-list 200 [0.03, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:41:13,691 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:41:13,743 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:41:14,578 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55661]
+INFO 2020-05-31 08:41:14,670 - [mHTTP POST /orders/open-orders 200 [0.06, 127.0.0.1:54297][0m
+INFO 2020-05-31 08:41:14,815 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:55371][0m
+INFO 2020-05-31 08:41:14,817 - [mHTTP GET /orders/business-alerts-list 200 [0.05, 127.0.0.1:55367][0m
+INFO 2020-05-31 08:41:15,309 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55698]
+INFO 2020-05-31 08:41:15,365 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55698]
+INFO 2020-05-31 08:41:15,519 - [mHTTP GET /orders/open-orders-list 200 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:41:15,589 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:41:15,722 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:55264][0m
+INFO 2020-05-31 08:41:18,300 - [mHTTP POST /orders/open-orders 200 [0.04, 127.0.0.1:55568][0m
+INFO 2020-05-31 08:41:18,319 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55582]
+INFO 2020-05-31 08:41:18,949 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55736]
+INFO 2020-05-31 08:41:19,017 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55736]
+INFO 2020-05-31 08:41:19,465 - [mHTTP GET /orders/open-orders-list 200 [0.03, 127.0.0.1:55568][0m
+INFO 2020-05-31 08:41:19,626 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:55568][0m
+INFO 2020-05-31 08:41:19,749 - [mHTTP GET /orders/business-alerts-list 200 [0.09, 127.0.0.1:55568][0m
+INFO 2020-05-31 08:43:02,951 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55698]
+INFO 2020-05-31 08:43:03,091 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:03,622 - [mHTTP GET /orders/deliveries-table 200 [0.07, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:03,707 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:56631]
+INFO 2020-05-31 08:43:03,800 - WebSocket CONNECT /ws/orders/ [127.0.0.1:56631]
+INFO 2020-05-31 08:43:04,043 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:04,297 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:08,385 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:56631]
+INFO 2020-05-31 08:43:08,484 - [mHTTP POST /dashboard/freelancer/21/deliveries 200 [0.05, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:08,663 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:56685][0m
+INFO 2020-05-31 08:43:08,699 - [mHTTP GET /orders/orders-table 200 [0.14, 127.0.0.1:56683][0m
+INFO 2020-05-31 08:43:08,824 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:56683][0m
+INFO 2020-05-31 08:43:08,895 - [mHTTP GET /orders/orders-table 200 [0.18, 127.0.0.1:56685][0m
+INFO 2020-05-31 08:43:09,007 - [mHTTP GET /orders/deliveries-table 200 [0.07, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:09,120 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:56694]
+INFO 2020-05-31 08:43:09,186 - WebSocket CONNECT /ws/orders/ [127.0.0.1:56694]
+INFO 2020-05-31 08:43:09,717 - [mHTTP GET /orders/open-orders-alerts 200 [0.06, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:10,160 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:16,207 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:56694]
+INFO 2020-05-31 08:43:16,292 - [mHTTP GET /orders/open-orders 200 [0.04, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:16,928 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:56773]
+INFO 2020-05-31 08:43:17,041 - WebSocket CONNECT /ws/orders/ [127.0.0.1:56773]
+INFO 2020-05-31 08:43:17,165 - [mHTTP GET /orders/open-orders-list 200 [0.03, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:17,321 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:17,368 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:18,206 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:56773]
+INFO 2020-05-31 08:43:18,292 - [mHTTP POST /orders/open-orders 200 [0.06, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:18,415 - [mHTTP GET /orders/business-alerts-list 200 [0.08, 127.0.0.1:56683][0m
+INFO 2020-05-31 08:43:18,421 - [mHTTP GET /orders/orders-table 200 [0.10, 127.0.0.1:56685][0m
+INFO 2020-05-31 08:43:18,865 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:56799]
+INFO 2020-05-31 08:43:19,010 - WebSocket CONNECT /ws/orders/ [127.0.0.1:56799]
+INFO 2020-05-31 08:43:19,132 - [mHTTP GET /orders/open-orders-list 200 [0.02, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:19,333 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:19,378 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:20,103 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:56799]
+INFO 2020-05-31 08:43:20,167 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.03, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:20,410 - [mHTTP GET /orders/deliveries-table 200 [0.02, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:20,549 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:56826]
+INFO 2020-05-31 08:43:20,671 - WebSocket CONNECT /ws/orders/ [127.0.0.1:56826]
+INFO 2020-05-31 08:43:20,857 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:21,027 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:56618][0m
+INFO 2020-05-31 08:43:33,115 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:56685][0m
+INFO 2020-05-31 08:43:33,230 - [mHTTP GET /orders/orders-table 200 [0.11, 127.0.0.1:56683][0m
+INFO 2020-05-31 08:43:33,233 - [mHTTP GET /orders/business-alerts-list 200 [0.09, 127.0.0.1:56685][0m
+INFO 2020-05-31 08:43:33,266 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:56945][0m
+INFO 2020-05-31 08:43:33,288 - [mHTTP GET /orders/business-alerts-list 200 [0.05, 127.0.0.1:56683][0m
+INFO 2020-05-31 08:43:33,297 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:56947][0m
+INFO 2020-05-31 08:43:50,796 - [mHTTP GET /dashboard/freelancer/27/deliveries 200 [0.05, 127.0.0.1:56945][0m
+INFO 2020-05-31 08:43:50,838 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55736]
+INFO 2020-05-31 08:43:51,474 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:56945][0m
+INFO 2020-05-31 08:43:51,549 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57112]
+INFO 2020-05-31 08:43:51,617 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57112]
+INFO 2020-05-31 08:43:52,319 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:56945][0m
+INFO 2020-05-31 08:43:52,373 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:56945][0m
+INFO 2020-05-31 08:45:28,372 - [mHTTP GET /orders/deliveries-table 200 [0.06, 127.0.0.1:57950][0m
+INFO 2020-05-31 08:45:28,493 - [mHTTP GET /orders/business-alerts-list 200 [0.08, 127.0.0.1:57954][0m
+INFO 2020-05-31 08:45:28,495 - [mHTTP GET /orders/orders-table 200 [0.10, 127.0.0.1:57952][0m
+INFO 2020-05-31 08:45:36,732 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:57952][0m
+INFO 2020-05-31 08:45:36,993 - [mHTTP GET /orders/business-alerts-list 200 [0.18, 127.0.0.1:57954][0m
+INFO 2020-05-31 08:45:37,007 - [mHTTP GET /orders/deliveries-table 200 [0.18, 127.0.0.1:58025][0m
+INFO 2020-05-31 08:45:37,037 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:58033][0m
+INFO 2020-05-31 08:45:37,049 - [mHTTP GET /orders/orders-table 200 [0.26, 127.0.0.1:57952][0m
+INFO 2020-05-31 08:45:37,097 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:58033][0m
+INFO 2020-05-31 08:45:40,511 - [mHTTP GET /orders/deliveries-table 200 [0.10, 127.0.0.1:58025][0m
+INFO 2020-05-31 08:45:40,634 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:57952][0m
+INFO 2020-05-31 08:45:40,639 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:58033][0m

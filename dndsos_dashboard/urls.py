@@ -13,7 +13,8 @@ urlpatterns = [
     path('business/<int:b_id>/deliveries', dndsos_dashboard_views.b_deliveries, name='b-deliveries'),
     path('business/<int:b_id>/statistics', dndsos_dashboard_views.b_statistics, name='b-statistics'),
     path('business/<int:b_id>/freelancers', dndsos_dashboard_views.freelancers, name='freelancers'),
-    path('add-order', dndsos_dashboard_views.add_order, name='add-order'),
+    path('business/<int:b_id>/b-alerts', dndsos_dashboard_views.b_alerts, name='b-alerts'),
+    # path('add-order', dndsos_dashboard_views.add_order, name='add-order'),
     path('add-freelancer', dndsos_dashboard_views.add_freelancer, name='add-freelancer'),
 
     path('freelancer/<int:f_id>/', dndsos_dashboard_views.f_dashboard, name='f-dashboard'),

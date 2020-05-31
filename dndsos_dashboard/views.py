@@ -27,7 +27,7 @@ from .models import Email, FreelancerProfile, BusinessProfile
 from orders.models import Order
 from .utilities import send_mail
 
-from notifier.signals import alert_freelancer_accepted
+# from notifier.signals import alert_freelancer_accepted
 
 from .serializers import UserSerializer
 
@@ -255,6 +255,8 @@ def orders(request, b_id):
     # business_orders = Order.objects.filter(business=request.user.pk).order_by('-created')
     # context['orders'] = business_orders
 
+    context['freelancers'] = Employee.objects.all()
+
     if request.method == 'POST':
         #TODO: Clean up code. There are limited POST from this page...the add-order is from JS/WS
 
@@ -308,53 +310,43 @@ def orders(request, b_id):
 
             return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
        
-        elif 'dispached' in request.POST:
-            dispached_order_id = request.POST.get('dispached')
-            order = Order.objects.get(order_id=dispached_order_id)
-            order.order_dispatched = True
-            order.save()
+        # elif 'dispached' in request.POST:
+        #     dispached_order_id = request.POST.get('dispached')
+        #     order = Order.objects.get(order_id=dispached_order_id)
+        #     order.order_dispatched = True
+        #     order.save()
 
-            # TODO: When the order is dispached need to update the FLs in that city that the order is closed
+        #     # TODO: When the order is dispached need to update the FLs in that city that the order is closed
 
-            return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
-        
-        elif 'pickedUp' in request.POST:
-            pickedup_order_id = request.POST.get('pickedUp')
-            order = Order.objects.get(order_id=pickedup_order_id)
-            if order.status == 'STARTED':
-                order.status = 'IN_PROGRESS'
-                order.save()
+        #     return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
+        elif 'cancel_b_order' in request.POST:
+            order = Order.objects.get(order_id=request.POST.get('cancel_b_order'))
+            if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED':
+                print(f'CANCEL B ORDER: {order.notes}')
+                messages.error(request, 'Please pay for the delivery before archiving the order.')
             else:
-                messages.error(request, 'Order can be dispached only after freelancer allocation.')
-
-        elif 'delivered' in request.POST:
-            delivered_order_id = request.POST.get('delivered')
-            order = Order.objects.get(id=delivered_order_id)
-            order.order_delivered = True
-            order.save()
-            return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
+                order.status = 'ARCHIVED'
+                order.save()            
 
         elif 'orderDelete' in request.POST:
             delete_order_id = request.POST.get(f'orderDelete')
             order = Order.objects.get(order_id=delete_order_id)
-            if order.status == 'SETTLED':
+
+            if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED':
+                messages.error(request, 'Please pay for the delivery before archiving the order.')
+            else:
                 order.status = 'ARCHIVED'
                 order.save()            
-            else:
-                messages.error(request, 'Please pay for the delivery before archiving the order.')
-                # return redirect('dndsos_dashboard:orders')
-                # order.delete()
-            # return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
         else:
             print('No Order form detected.')
 
     return render(request, 'dndsos_dashboard/orders.html', context)
 
-@employer_required
-@login_required
-def add_order(request):
-    context = {}
-    return render(request, 'dndsos_dashboard/add-order.html')
+# @employer_required
+# @login_required
+# def add_order(request):
+#     context = {}
+#     return render(request, 'dndsos_dashboard/add-order.html')
 
 @employer_required
 @login_required
@@ -377,11 +369,11 @@ def f_deliveries(request, f_id):
             order_settled = Order.objects.get(order_id=request.POST.get('orderSettled'))
             order_settled.status = 'SETTLED'
             order_settled.save()
-        elif 'orderDelete' in request.POST:
-            order_archived = Order.objects.get(order_id=request.POST.get('orderDelete'))
-            order_archived.status = 'ARCHIVED'
-            order_archived.save()
-            # order_archived.delete()
+        elif 'cancel_f_order' in request.POST:
+            order = Order.objects.get(order_id=request.POST.get('cancel_f_order'))
+            order.status = 'REQUESTED'
+            order.freelancer = None
+            order.save()
 
     orders = Order.objects.filter(freelancer=freelancer_id)
     context['orders'] = orders
@@ -398,6 +390,15 @@ def f_statistics(request, f_id):
 def b_deliveries(request, b_id):
     context = {}
     return render(request, 'dndsos_dashboard/deliveries.html', context)
+
+@employer_required
+@login_required
+def b_alerts(request, b_id):
+    context = {}
+    orders = Order.objects.filter(business=b_id, status='REQUESTED')
+    context['orders'] = orders
+    return render(request, 'dndsos_dashboard/b-alerts.html', context)
+
 
 @login_required
 def b_statistics(request, b_id):
@@ -499,7 +500,7 @@ def freelancer_accept(request, fid, oid):
         return redirect('home')
 
     # 3.2 With alerts/signals
-    alert_freelancer_accepted.send(sender=FreelancerProfile, f_id=freelancer.user, order_id=order.pk)
+    # alert_freelancer_accepted.send(sender=FreelancerProfile, f_id=freelancer.user, order_id=order.pk)
 
     return render(request, 'dndsos_dashboard/freelancer-accept.html', context)
 
