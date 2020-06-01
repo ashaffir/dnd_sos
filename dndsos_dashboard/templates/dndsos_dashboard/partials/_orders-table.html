@@ -21,7 +21,7 @@
         {% else %}
         <td style="background-color:orange; color: white">Not Allocated</td>
         {% endif %}
-        {% if order.status == 'REQUESTED' or order.status == 'REJECTED' %}
+        {% if order.status == 'REQUESTED' or order.status == 'REJECTED' or order.status == 'RE_REQUESTED' %}
             <td style="background-color: rgb(220, 235, 15); color: rgb(0, 0, 0); text-align:center" >
                 <div style="background-color: green;">
                     <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for a Freelancer...</label>                                    
@@ -72,7 +72,6 @@
                                     <p>Are you sure you want to cancel this order?</p>              
                                 </header>
                                 <div class="modal-footer">
-                                    <!-- <button id="cancel_b_order" value="{{ order_id }}" name="cancel_b_order" type="submit" class="btn btn-primary">Confirm</button> -->
                                     <button id="cancel_b_order_{{ order.order_id }}" onclick="b_cancel_order('{{ order.order_id }}')" value="{{ order.order_id }}" name="cancel_b_order" type="button" class="btn btn-primary">Confirm</button>
                                     <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                                 </div>

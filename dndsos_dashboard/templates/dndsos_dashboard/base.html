@@ -487,20 +487,7 @@
 					
 					if (order_status == 'REQUESTED' && current_order_id != order_id) {
 						$("#newOfferAlert").modal("show");
-						$.ajax({
-							url: "{% url 'orders:open-orders-alerts' %}",
-							success: function(response){
-								$('#openOrdersAlerts').html(response);
-							}
-						})
-						
-						$.ajax({
-							url: "{% url 'orders:open-orders-list' %}",
-							success: function(response){
-								$('#openOrdersList').html(response);
-							}
-						})
-
+						update_freelancer_tables()
 					}
 
 					if (order_status == 'RE_REQUESTED' && current_order_id != order_id) {
@@ -714,6 +701,7 @@
 						'data': {
 							'event': 'Order Canceled',
 							'order_id': id,
+							'business': user_id,
 							'status': 'ARCHIVED'
 						}
 					}));
@@ -776,7 +764,7 @@
 
 				};
 
-				request_freelancer = function(order_id, pick_up_address, drop_off_address, notes){
+				broadcast_order = function(order_id, pick_up_address, drop_off_address, notes){
 					console.log('REQUESTING FREELANCER...')
 					// Broadcast a request for an excisting order
 					businessSocket.send(JSON.stringify({

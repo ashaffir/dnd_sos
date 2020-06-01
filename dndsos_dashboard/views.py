@@ -402,7 +402,7 @@ def b_alerts(request, b_id):
         if 'requestFreelancer' in request.POST:
             pass
 
-    orders = Order.objects.filter(Q(business=b_id) & Q(status='REQUESTED') | Q(status='REJECTED'))
+    orders = Order.objects.filter(Q(business=b_id) & Q(status='REQUESTED') | Q(status='REJECTED') | Q(status='RE_REQUESTED'))
     # orders = Order.objects.filter(business=b_id, status='REQUESTED')
     context['orders'] = orders
     return render(request, 'dndsos_dashboard/b-alerts.html', context)

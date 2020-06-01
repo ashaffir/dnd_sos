@@ -242,12 +242,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         
         print(f"UPDATE CONTENT: ***************{content}****************")
 
-        # print(f'''
-        #     Freelancer: {replying_fl}
-        #     Business: {updating_business}
-        #     Content: {content}
-        # ''')
-
         if replying_fl:
             if event == 'Order Accepted':
                 if order_instance.freelancer:  # Freelancer already allocated
@@ -278,12 +272,25 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 serializer.is_valid(raise_exception=True)
                 order = serializer.update(order_instance, serializer.validated_data)
                 order_updated = True
+            elif event == 'Order Delivered':
+                print('DELIVERED!!!!')
+                content['status'] = 'COMPLETED'
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
+                order_updated = True
 
         # Business updates
         if updating_business:
             print('======> PO 2 ')
             if event == 'Request Freelancer':
                 print('======> FREELANCER REQUESTED ')  
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
+                order_updated = True
+            elif event == 'Order Canceled':
+                print('======> ORDER CANCELED ')  
                 serializer = OrderSerializer(data=content)
                 serializer.is_valid(raise_exception=True)
                 order = serializer.update(order_instance, serializer.validated_data)
