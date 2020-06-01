@@ -21,7 +21,7 @@
         {% else %}
         <td style="background-color:orange; color: white">Not Allocated</td>
         {% endif %}
-        {% if order.status == 'REQUESTED' %}
+        {% if order.status == 'REQUESTED' or order.status == 'REJECTED' %}
             <td style="background-color: rgb(220, 235, 15); color: rgb(0, 0, 0); text-align:center" >
                 <div style="background-color: green;">
                     <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for a Freelancer...</label>                                    
@@ -59,9 +59,32 @@
         </td>
         <td class="actions" style='text-align:center'>
             <!-- Confirmation modal -->
-            {% include 'dndsos_dashboard/partials/_confirm-b-cancel-modal.html' with order_id=order.order_id %}
+            <div class="modal fade" id="bCancelOrder_{{ order.order_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmation!</h4>
+                        </div>
+                        <div class="modal-body">
+                             <section class="panel">
+                                <header class="panel-heading">
+                                    <p>Are you sure you want to cancel this order?</p>              
+                                </header>
+                                <div class="modal-footer">
+                                    <!-- <button id="cancel_b_order" value="{{ order_id }}" name="cancel_b_order" type="submit" class="btn btn-primary">Confirm</button> -->
+                                    <button id="cancel_b_order_{{ order.order_id }}" onclick="b_cancel_order('{{ order.order_id }}')" value="{{ order.order_id }}" name="cancel_b_order" type="button" class="btn btn-primary">Confirm</button>
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                </div>
+                             </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             
+            <a class="btn btn-danger on-default edit-row" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="modal" data-target="#bCancelOrder_{{ order.order_id }}" {% endif %} style="color: white;"><i class="fa fa-trash-o"></i></a>
 
-            <button onclick="confirmCancel('{{ order.order_id }}')" class="btn btn-danger on-default edit-row" type="button" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="tooltip" data-placement="top" title="Cancel your order. Please confirm with the accepted freelancer that she/he has received your cancellation." {% endif %}><i class="fa fa-trash-o"></i></button>
+            <!-- <button onclick="confirm_cancel('{{ order.order_id }}')" class="btn btn-danger on-default edit-row" type="button" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="tooltip" data-placement="top" title="Cancel your order. Please confirm with the accepted freelancer that she/he has received your cancellation." {% endif %}><i class="fa fa-trash-o"></i></button> -->
 
         </td>
 
@@ -72,10 +95,11 @@
 <!-- 
 Handing the cancelling of an offer by the business
 This can happen only if the order is not in states IN_PROGRESS and COMPLETED 
--->
+
 <script>
-    function confirmCancel(order_id){
+    confirm_cancel = function (order_id){
         $(`#cancel_b_order`).val(order_id);
         $("#bCancelOrder").modal();
     }
 </script>
+-->

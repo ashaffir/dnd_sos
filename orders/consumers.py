@@ -94,43 +94,77 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
     
     async def update_order(self, event):
         order, order_updated = await self._update_order(event.get('data'))
-
         order_id = f'{order.order_id}'
         order_data = ReadOnlyOrderSerializer(order).data
 
-        # Send updates to the business that created this order.
         if order_updated:
-            print(f'>>> ORDER UPDATED: {order_data}')
-            await self.channel_layer.group_send(group=order_id, message={
-                'type': 'echo.message',
-                'data': order_data
-            })
-
-            if order_id not in self.orders:
-                self.orders.add(order_id)
-                await self.channel_layer.group_add(
-                    group=order_id,
-                    channel=self.channel_name
-                )
-            
-            print(f">>> SEND UPDATE: {event.get('data')}")
-            await self.send_json({
-                'type': 'update.order',
-                'data': order_data
-            })
-
-        else:
-            print(f">>> SEND NOT UPDATED: {event.get('data')}")
-            data = {
-                'order_id': order_id,
-                'freelancer': order.freelancer.id,
-                'status': 'STARTED'
-            }
-            await self.send_json({
+    
+            # Order Re-Requested
+            if event.get('data')['event'] == 'Request Freelancer':
+                print(f'RE-REQUESTED: {order_data}')
+                data = {
+                    'order_id': order_id,
+                    'business': order.business.id,
+                    'pick_up_address': order.pick_up_address,
+                    'drop_off_address': order.drop_off_address,
+                    'notes': order.notes,
+                    'status': 'RE_REQUESTED'
+                }
+    
+                await self.channel_layer.group_send(group='freelancers', message={
                     'type': 'echo.message',
                     'data': data
+                })
+
+            else:            
+            # Send updates to the business that created this order.
+                print(f'UPDATED: {order_data}')
+                await self.channel_layer.group_send(group=order_id, message={
+                    'type': 'echo.message',
+                    'data': order_data
+                })
+
+                if order_id not in self.orders:
+                    self.orders.add(order_id)
+                    await self.channel_layer.group_add(
+                        group=order_id,
+                        channel=self.channel_name
+                    )
+                
+                await self.send_json({
+                    'type': 'update.order',
+                    'data': order_data
+                })
+
+        else:
+            # Order Re-Requested
+            if event.get('data')['event'] == 'Request Freelancer':
+                data = {
+                    'order_id': order_id,
+                    'business': order.business.id,
+                    'pick_up_address': order.pick_up_address,
+                    'drop_off_address': order.drop_off_address,
+                    'notes': order.notes,
+                    'status': 'REQUESTED'
                 }
-            )
+    
+                await self.channel_layer.group_send(group='freelancers', message={
+                    'type': 'echo.message',
+                    'data': data
+                })
+            
+            else:
+                data = {
+                    'order_id': order_id,
+                    'freelancer': order.freelancer.id,
+                    'status': 'STARTED'
+                }
+
+                await self.send_json({
+                        'type': 'echo.message',
+                        'data': data
+                    }
+                )
 
 
 
@@ -214,40 +248,52 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         #     Content: {content}
         # ''')
 
-        # Freelancer updates
-        # if replying_fl:
-        if event == 'Order Accepted':
-            if order_instance.freelancer:  # Freelancer already allocated
-                accepted_fl = order_instance.freelancer.pk
-            else:
-                accepted_fl = replying_fl
-            
-            # Prevent other freelancers to accept after first accept
-            if str(accepted_fl) != str(replying_fl):
-                order = order_instance
-                order_updated = False
-            else: 
+        if replying_fl:
+            if event == 'Order Accepted':
+                if order_instance.freelancer:  # Freelancer already allocated
+                    accepted_fl = order_instance.freelancer.pk
+                else:
+                    accepted_fl = replying_fl
+                
+                # Prevent other freelancers to accept after first accept
+                if str(accepted_fl) != str(replying_fl):
+                    order = order_instance
+                    order_updated = False
+                else: 
+                    serializer = OrderSerializer(data=content)
+                    serializer.is_valid(raise_exception=True)
+                    order = serializer.update(order_instance, serializer.validated_data)
+                    order_updated = True
+            elif event == 'Order Canceled':
+                print('CANCELED!!!!')
+                content['freelancer'] = None
                 serializer = OrderSerializer(data=content)
                 serializer.is_valid(raise_exception=True)
                 order = serializer.update(order_instance, serializer.validated_data)
                 order_updated = True
-        elif event == 'Order Canceled':
-            order = order_instance
-            order_updated = True
-        else:
-            print('======> PO 1 ')
-            serializer = OrderSerializer(data=content)
-            serializer.is_valid(raise_exception=True)
-            order = serializer.update(order_instance, serializer.validated_data)
-            order_updated = True
+            elif event == 'Order Delivered':
+                print('DELIVERED!!!!')
+                content['status'] = 'COMPLETED'
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
+                order_updated = True
 
         # Business updates
         if updating_business:
             print('======> PO 2 ')
-            serializer = OrderSerializer(data=content)
-            serializer.is_valid(raise_exception=True)
-            order = serializer.update(order_instance, serializer.validated_data)
-            order_updated = True
+            if event == 'Request Freelancer':
+                print('======> FREELANCER REQUESTED ')  
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
+                order_updated = True
+            else:
+                print('======> PO 3 ')
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
+                order_updated = True
 
 
         return order, order_updated

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from rest_framework import generics, permissions, status, views, viewsets 
 from rest_framework.response import Response
@@ -28,7 +29,7 @@ def orders_table(request):
 def deliveries_table(request):
     context = {}
     freelancer_id = request.user.pk
-    orders = Order.objects.filter(freelancer=freelancer_id).exclude(status='ARCHIVED')
+    orders = Order.objects.filter(Q(freelancer=freelancer_id) & ~Q(status='REQUESTED') & ~Q(status='ARCHIVED'))
     context['orders'] = orders
 
     return render(request, 'dndsos_dashboard/partials/_deliveries-table.html', context)
@@ -79,7 +80,7 @@ def open_orders(request):
 def business_alerts_list(request):
     context = {}
     business_id = request.user.pk
-    orders = Order.objects.filter(business=business_id, status='REQUESTED')
+    orders = Order.objects.filter(Q(business=business_id) & Q(status='REQUESTED') | Q(status='REJECTED'))
     # number_open_orders = len(open_orders)
     context['orders'] = orders
     context['num_alerts'] = len(orders)

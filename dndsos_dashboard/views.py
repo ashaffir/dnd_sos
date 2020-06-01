@@ -14,6 +14,7 @@ from django.contrib import  messages
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.conf import settings
+from django.db.models import Q
 
 from rest_framework import generics
 from rest_framework.response import Response
@@ -360,23 +361,24 @@ def f_deliveries(request, f_id):
     context = {}
     freelancer_id = request.user.pk
 
-    if request.method == 'POST':
+    # if request.method == 'POST':
         # if 'orderDelivered' in request.POST:
         #     order_delivered = Order.objects.get(order_id=request.POST.get('orderDelivered'))
         #     order_delivered.status = 'COMPLETED'
         #     order_delivered.save()
-        if 'orderSettled' in request.POST:
-            order_settled = Order.objects.get(order_id=request.POST.get('orderSettled'))
-            order_settled.status = 'SETTLED'
-            order_settled.save()
-        elif 'cancel_f_order' in request.POST:
-            order = Order.objects.get(order_id=request.POST.get('cancel_f_order'))
-            order.status = 'REQUESTED'
-            order.freelancer = None
-            order.save()
+    #     if 'orderSettled' in request.POST:
+    #         order_settled = Order.objects.get(order_id=request.POST.get('orderSettled'))
+    #         order_settled.status = 'SETTLED'
+    #         order_settled.save()
+    #     elif 'cancel_f_order' in request.POST:
+    #         order = Order.objects.get(order_id=request.POST.get('cancel_f_order'))
+    #         order.status = 'REQUESTED'
+    #         order.freelancer = None
+    #         order.save()
 
-    orders = Order.objects.filter(freelancer=freelancer_id)
-    context['orders'] = orders
+    # orders = Order.objects.filter(freelancer=freelancer_id, status='STARTED')
+    # print(f'ORDERs: {orders}')
+    # context['orders'] = orders
 
     return render(request, 'dndsos_dashboard/deliveries.html', context)
 
@@ -395,7 +397,13 @@ def b_deliveries(request, b_id):
 @login_required
 def b_alerts(request, b_id):
     context = {}
-    orders = Order.objects.filter(business=b_id, status='REQUESTED')
+
+    if request.method == 'POST':
+        if 'requestFreelancer' in request.POST:
+            pass
+
+    orders = Order.objects.filter(Q(business=b_id) & Q(status='REQUESTED') | Q(status='REJECTED'))
+    # orders = Order.objects.filter(business=b_id, status='REQUESTED')
     context['orders'] = orders
     return render(request, 'dndsos_dashboard/b-alerts.html', context)
 

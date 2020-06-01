@@ -487,29 +487,39 @@
 					
 					if (order_status == 'REQUESTED' && current_order_id != order_id) {
 						$("#newOfferAlert").modal("show");
+						$.ajax({
+							url: "{% url 'orders:open-orders-alerts' %}",
+							success: function(response){
+								$('#openOrdersAlerts').html(response);
+							}
+						})
+						
+						$.ajax({
+							url: "{% url 'orders:open-orders-list' %}",
+							success: function(response){
+								$('#openOrdersList').html(response);
+							}
+						})
+
 					}
+
+					if (order_status == 'RE_REQUESTED' && current_order_id != order_id) {
+						$("#newOfferAlert").modal("show");
+					}
+
 					current_order_id = order_id
 
 					console.log(`freelancer: ${freelancer}  user_id: ${user_id}`)
 
 					// When freelancer tries to accept an order that was already allocated
 					if (order_status == 'STARTED' && data.data.freelancer != user_id){
-						$('#offerRemoved').modal("show");
-					} else if (order_status == 'IN_PROGRESS' && freelancer == user_id){
-						$.ajax({
-							url: "{% url 'orders:deliveries-table' %}",
-							success: function(response) {
-								$('#deliveriesTable').html(response);
-							}
-						})			
+						$('#orderRemoved').modal("show");
+						update_freelancer_tables()
 					} else if (order_status == 'ARCHIVED' && freelancer == user_id){
-						$('#offerRemoved').modal("show");
-						$.ajax({
-							url: "{% url 'orders:deliveries-table' %}",
-							success: function(response) {
-								$('#deliveriesTable').html(response);
-							}
-						})								
+						$('#orderRemoved').modal("show");
+						update_freelancer_tables()
+					} else {
+						update_freelancer_tables()
 					}
 
 				};
@@ -546,16 +556,40 @@
 						}
 					})							
 				})
-				
+
+				accept_order = function(order_id,pick_up_address, drop_off_address){
+					freelancerSocket.send(JSON.stringify({
+						'type': 'update.order', 
+						'data': {
+							'event': 'Order Accepted',
+							'order_id': order_id,
+							'freelancer': user_id,
+							'pick_up_address': pick_up_address,
+							'drop_off_address': drop_off_address,
+							'status': 'STARTED',
+							'city': 'cityPlaceHolder'
+						}
+					}));
+				}
+
+				f_cancel_order = function(id) {
+					console.log(`Freelancer canceling Order ID ${id}`)
+					$(`#fCancelOrder_${id}`).modal('hide');
+					freelancerSocket.send(JSON.stringify({
+						'type': 'update.order', 
+						'data': {
+							'event': 'Order Canceled',
+							'order_id': id,
+							'freelancer': user_id,
+							'status': 'REJECTED'
+						}
+					}));
+				}
+
 				// Handing the delivery completion
-				delivered = function(id,pup,drop) {
+				delivered = function(order_id,pup,drop) {
 					console.log(`DELIVERED!!`)
 					let order_id_e = document.querySelector("#orderDelivered");
-					let order_id = order_id_e.value;
-					let freelancer_id = "{{ user.pk }}";
-					let pickup_e = document.querySelector(`#pickupAddress_${order_id}`);
-					let dropoff_e = document.querySelector(`#dropoffAddress_${order_id}`);
-
 					current_order_id = order_id
 
 					freelancerSocket.send(JSON.stringify({
@@ -563,7 +597,7 @@
 						'data': {
 							'event': 'Order Delivered',
 							'order_id': order_id,
-							'freelancer': freelancer_id,
+							'freelancer': user_id,
 							'pick_up_address': pup,
 							'drop_off_address': drop,
 							'status': 'COMPLETED',
@@ -585,7 +619,30 @@
 					})		
 				}
 	
-			</script>
+		update_freelancer_tables = function(){
+			$.ajax({
+				url: "{% url 'orders:deliveries-table' %}",
+				success: function(response) {
+					$('#deliveriesTable').html(response);
+				}
+			})
+			$.ajax({
+				url: "{% url 'orders:open-orders-alerts' %}",
+				success: function(response){
+					$('#openOrdersAlerts').html(response);
+				}
+			})
+
+			$.ajax({
+				url: "{% url 'orders:open-orders-list' %}",
+				success: function(response){
+					$('#openOrdersList').html(response);
+				}
+			})
+		}
+
+
+		</script>
 	
 		{% else %}
 			<!-- <script src="{% static 'assets/javascripts/employer_alerts.js' %}" ></script> -->
@@ -649,6 +706,18 @@
 										
 				};
 
+				b_cancel_order = function(id) {
+					console.log(`Business canceling Order ID ${id}`)
+					$(`#bCancelOrder_${id}`).modal('hide');
+					businessSocket.send(JSON.stringify({
+						'type': 'update.order', 
+						'data': {
+							'event': 'Order Canceled',
+							'order_id': id,
+							'status': 'ARCHIVED'
+						}
+					}));
+				}
 				/*
 				*/
 				// Handing the dispatch (pick-up) of an offer
@@ -686,6 +755,9 @@
 					const data_string = JSON.stringify(e.data);
 					console.log(`DATA RECEIVED: ${data.data} ORDER ID: ${data.data.order_id} Freelancer: ${data.data.freelancer}`);
 
+					if (data.data.status == 'STARTED'){
+						location.reload()
+					}
 					// Refresh the table to update the accepted order
 					$.ajax({
 						url: "{% url 'orders:orders-table' %}",
@@ -717,7 +789,7 @@
 							'pick_up_address': pick_up_address,
 							'drop_off_address': drop_off_address,
 							'notes': notes,
-							'status': 'REQUESTED'
+							'status': 'RE_REQUESTED'
 						}
 					}));
 

@@ -20,61 +20,65 @@ def announce_new_user(sender, instance, created, **kwargs):
                        "event": "New User",
                        "username": instance.username})
 
-@receiver(post_save, sender=Order)
-def signal_order_update(sender, instance, update_fields, **kwargs):        
-    business_id = instance.business_id
-    print(f'>>>>>>> SIGNAL >>> Order Status Change: {instance.status}. ID: {instance.order_id}')  
+# @receiver(post_save, sender=Order)
+# def signal_order_update(sender, instance, update_fields, **kwargs):        
+#     business_id = instance.business_id
+#     print(f'>>>>>>> SIGNAL >>> Order Status Change: {instance.status}. ID: {instance.order_id}')  
     
-    if instance.status == 'STARTED':
-        # print(f''''
-        # >>>>>>> SIGNAL: Order STARTED: {instance.order_id}  
-        # update: {instance.status} type: {type(instance.status)}
-        # update: {instance.order_id} type: {type(instance.order_id)}
-        # update: {instance.business_id} type: {type(instance.business_id)}
-        # ''')
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            str(instance.order_id), {
-                # 'type':"order.accepted",
-                'type':"update.order",
-                'data': {
-                    'event': 'Order Accepted',
-                    'order_id': str(instance.order_id), 
-                    'business_id': business_id,
-                    'status': str(instance.status)
-                }
-            }
-        )
-    elif instance.status == 'REQUESTED':
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            str(instance.order_id), {
-                'type':"update.order",
-                # 'type':"order.canceled",
-                'data': {
-                    'event': 'Order Canceled',
-                    'order_id': str(instance.order_id), 
-                    'business_id': business_id,
-                    'status': str(instance.status)
-                }
-            }
-        )
+#     if instance.status == 'STARTED':
+#         # print(f''''
+#         # >>>>>>> SIGNAL: Order STARTED: {instance.order_id}  
+#         # update: {instance.status} type: {type(instance.status)}
+#         # update: {instance.order_id} type: {type(instance.order_id)}
+#         # update: {instance.business_id} type: {type(instance.business_id)}
+#         # ''')
+#         channel_layer = get_channel_layer()
+#         async_to_sync(channel_layer.group_send)(
+#             str(instance.order_id), {
+#                 # 'type':"order.accepted",
+#                 'type':"update.order",
+#                 'data': {
+#                     'event': 'Order Accepted',
+#                     'order_id': str(instance.order_id), 
+#                     'business_id': business_id,
+#                     'status': str(instance.status)
+#                 }
+#             }
+#         )
+#     elif instance.status == 'REQUESTED':
+#         channel_layer = get_channel_layer()
+#         async_to_sync(channel_layer.group_send)(
+#             str(instance.order_id), {
+#                 'type':"update.order",
+#                 # 'type':"order.canceled",
+#                 'data': {
+#                     'event': 'Order Canceled',
+#                     'order_id': str(instance.order_id), 
+#                     'business_id': business_id,
+#                     'status': str(instance.status)
+#                 }
+#             }
+#         )
+    
+#     elif instance.status == 'RE_REQUESTED': # Avoiding second update through the sigmnl
+#         print('RE-REQUEST. No action on this signal.')
+#         pass
 
-    elif instance.status == 'ARCHIVED':
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            str(instance.order_id), {
-                'type':"echo.message",
-                # 'type':"order.canceled",
-                'data': {
-                    'event': 'Order Canceled',
-                    'order_id': str(instance.order_id),
-                    'freelancer': str(instance.freelancer.pk),
-                    'business_id': business_id,
-                    'status': str(instance.status)
-                }
-            }
-        )
+#     elif instance.status == 'ARCHIVED':
+#         channel_layer = get_channel_layer()
+#         async_to_sync(channel_layer.group_send)(
+#             str(instance.order_id), {
+#                 'type':"echo.message",
+#                 # 'type':"order.canceled",
+#                 'data': {
+#                     'event': 'Order Canceled',
+#                     'order_id': str(instance.order_id),
+#                     'freelancer': str(instance.freelancer.pk),
+#                     'business_id': business_id,
+#                     'status': str(instance.status)
+#                 }
+#             }
+#         )
 
     # elif instance.status == 'IN_PROGRESS':
     #     print(f''''

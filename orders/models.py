@@ -8,6 +8,8 @@ from core.models import Employee, Employer, User
 
 class Order(models.Model):
     REQUESTED = 'REQUESTED'
+    RE_REQUESTED = 'RE_REQUESTED'
+    REJECTED = 'REJECTED'
     STARTED = 'STARTED'
     IN_PROGRESS = 'IN_PROGRESS'
     COMPLETED = 'COMPLETED'
@@ -15,6 +17,8 @@ class Order(models.Model):
     ARCHIVED = 'ARCHIVED'
     STATUSES = (
         (REQUESTED, REQUESTED),
+        (RE_REQUESTED, RE_REQUESTED),
+        (REJECTED, REJECTED),
         (STARTED, STARTED),
         (IN_PROGRESS, IN_PROGRESS),
         (COMPLETED, COMPLETED),

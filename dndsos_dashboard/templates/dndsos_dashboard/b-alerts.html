@@ -72,6 +72,7 @@
                                         <div class="summary-footer">
                                             <div class="row" >
                                                 <div class="col-md-12" style="text-align: center;">
+                                                    <!-- <button id="requestFreelancer_{{ order.order_id }}" class="btn btn-lg btn-success" type="submit" drop_off_address='{{ order.drop_off_address }}' name="requestFreelancer" value="{{ order.order_id }}">Reqeuest Freelancer</button> -->
                                                     <button id="addOrder_'{{ order.order_id }}'" onclick="request_freelancer('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}', '{{ order.notes }}')" class="btn btn-lg btn-success" type="button" drop_off_address='{{ order.drop_off_address }}' name="requestFreelancer" value="{{ order.order_id }}">Reqeuest Freelancer</button>
                                                 </div>
                                             </div>
