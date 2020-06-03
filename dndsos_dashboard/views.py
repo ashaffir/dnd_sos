@@ -407,6 +407,16 @@ def b_alerts(request, b_id):
     context['orders'] = orders
     return render(request, 'dndsos_dashboard/b-alerts.html', context)
 
+@employer_required
+@login_required
+def b_alerts_items(request, b_id):
+    context = {}
+    orders = Order.objects.filter(Q(business=b_id) & Q(status='REQUESTED') | Q(status='REJECTED') | Q(status='RE_REQUESTED'))
+    context['orders'] = orders
+    return render(request, 'dndsos_dashboard/partials/_b-alerts-items.html', context)
+
+
+
 
 @login_required
 def b_statistics(request, b_id):
@@ -417,10 +427,16 @@ def b_statistics(request, b_id):
 @login_required
 def freelancers(request, b_id):
     context = {}
+
     freelancers = Employee.objects.all()
     context['total_freelancers'] = len(freelancers)
     
+    orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='REQUESTED') | Q(status='RE_REQUESTED') | Q(status='REJECTED'))
+    context['orders'] = orders
+
     if request.method == 'POST':
+
+        # Freelancers filtering options
         city = request.POST.get('city')
         vehicle = request.POST.get('vehicle')
         if vehicle and city:
@@ -437,6 +453,8 @@ def freelancers(request, b_id):
             context['total_freelancers'] = len(freelancers)
 
     context['freelancers'] = freelancers
+
+
     return render(request, 'dndsos_dashboard/freelancers.html', context)
 
 def freelancer_accept(request, fid, oid):

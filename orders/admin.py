@@ -29,12 +29,13 @@ class OrderAdmin(admin.ModelAdmin):
     fields = ( # changed
         'order_id', 'pick_up_address', 'drop_off_address', 'status', 'notes',
         'freelancer', 'business',
+        'selected_freelancers',
         'created', 'updated',
     )
     list_display = ( # changed
         'order_id', 'pick_up_address', 'drop_off_address', 'status','notes',
         'freelancer', 'business',
-        'created', 'updated',
+        'updated',
     )
     list_filter = (
         'status',
@@ -43,4 +44,4 @@ class OrderAdmin(admin.ModelAdmin):
         'order_id', 'created', 'updated',
     )
 
-    ordering = ('-created',)
+    ordering = ('-updated',)

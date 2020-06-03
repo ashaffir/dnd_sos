@@ -14,6 +14,7 @@ urlpatterns = [
     path('business/<int:b_id>/statistics', dndsos_dashboard_views.b_statistics, name='b-statistics'),
     path('business/<int:b_id>/freelancers', dndsos_dashboard_views.freelancers, name='freelancers'),
     path('business/<int:b_id>/b-alerts', dndsos_dashboard_views.b_alerts, name='b-alerts'),
+    path('business/<int:b_id>/b-alerts-items', dndsos_dashboard_views.b_alerts_items, name='b-alerts-items'),
     # path('add-order', dndsos_dashboard_views.add_order, name='add-order'),
     path('add-freelancer', dndsos_dashboard_views.add_freelancer, name='add-freelancer'),
 

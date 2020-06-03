@@ -442,6 +442,7 @@
 		<!-- Alerts -->
 		<script src="{% static 'assets/javascripts/ui-elements/examples.notifications.js' %}"></script>
 
+		<!-- Websocket -->
 		<script src="{% static '/channels/js/websocketbridge.js' %}" type="text/javascript"></script>
 		
 		{% if user.is_employee %}
@@ -467,9 +468,9 @@
 				
 				// Handling incoming message about new offer from business
 				freelancerSocket.onmessage = function(e) {
+					console.log(`DATA RECEIVED: ${e.data}`);
 					data = JSON.parse(e.data);
 					const data_string = JSON.stringify(e.data);
-					console.log(`DATA RECEIVED: ${data.data}`);
 
 					//document.querySelector('#chat-log').value += (data.message + '\n');
 					const pick_up_address_e = document.querySelector('#pick_up_address');
@@ -478,6 +479,7 @@
 					const order_id = data.data.order_id
 					const order_status = data.data.status
 					const freelancer = data.data.freelancer
+					const message_title = data.data.title
 
 					let pick_up_address = data.data.pick_up_address;
 					let drop_off_address = data.data.drop_off_address;
@@ -489,6 +491,7 @@
 						$("#newOfferAlert").modal("show");
 						update_freelancer_tables()
 					}
+
 
 					if (order_status == 'RE_REQUESTED' && current_order_id != order_id) {
 						$("#newOfferAlert").modal("show");
@@ -509,7 +512,22 @@
 						update_freelancer_tables()
 					}
 
+					//Handling direct messages
+					if (message_title == 'Direct Invitation'){
+						requested_freelancer = data.data.requested_freelancer
+						freelancerSocket.send(JSON.stringify({
+							'type': 'update.order', 
+							'data': {
+								'event': 'Direct Invitation',
+								'order_id': order_id,
+								'freelancer': user_id,
+							}
+						}));
+					}
+
+
 				};
+
 
 				// Handing the acceptance of an offer
 				$("#accept").click( function() {
@@ -667,6 +685,18 @@
 					const city = city_e.value;
 					const notes = notes_e.value;
 
+					if (city === "" || building == "" || street == ""){
+						if (city === ""){
+							alert("Please input the City");
+						} else if (building == ""){
+							alert("Building number is missing");
+						} else {
+							alert("Street is missing");
+						}
+						return false;
+					}
+			
+
 					const drop_off_address = building + ' ' + street + ', ' + city
 
 					businessSocket.send(JSON.stringify({
@@ -761,6 +791,20 @@
 							$('#businessOrdersAlerts').html(response);
 						}
 					})		
+
+					let items_url_e = document.querySelector('#b_alerts_items');
+					let items_url = items_url_e.getAttribute('url')
+					//console.log(items_url);
+					//let url = "{% url 'dndsos_dashboard:b-alerts-items' b_id=user.pk %}"
+					$.ajax({
+						type: 'GET',
+						url: item_url,
+						async:false,
+						success: function(response) {
+							$("#b_alerts_items").html(response)
+						}		
+					});
+			
 
 				};
 
@@ -859,6 +903,10 @@
 		});
 
 	</script>
+
+	{% block js %}
+	<!-- JS Block  -->
+	{% endblock js %}
 
 
 	</body>

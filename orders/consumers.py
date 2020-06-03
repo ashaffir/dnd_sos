@@ -2,9 +2,11 @@ import asyncio
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from channels.layers import get_channel_layer
 
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
+from core.models import User
 
 class OrderConsumer(AsyncJsonWebsocketConsumer):
 
@@ -41,6 +43,11 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             
             asyncio.gather(*channel_groups)
 
+            # Add a channel name to to DB for direct communications
+            user = User.objects.get(pk=user.pk)
+            user.channel_name = self.channel_name
+            user.save()
+
             await self.accept()
 
     async def receive_json(self, content, **kwargs):
@@ -49,19 +56,44 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             await self.create_order(content)
         elif message_type == 'update.order':  
             await self.update_order(content)
+        elif message_type == 'direct.message':  
+            await self.direct_message(content)
 
 
+    # Sending JSON messages 
     async def echo_message(self, event):
-        
-        # TODO: add filtering so that only the relecant freelancers are getting the notification
         print(f'>>> ECHO 1: {event}')
         await self.send_json(event)
 
-    # The name of this function is edrived from the automated process of generating the name from the signals type order.created
-    # This method will generate and broadcast the alert
-    # async def order_created(self, event):
-    #     await self.send_json(event)
-    #     print(f'Got message: {event} at group: {self.channel_name}')
+    # Sending direct text messages 
+    async def text_message(self, event):
+        print(f'>>> ECHO 2: {event}')
+        await self.send(event)
+
+    async def direct_message(self, message):
+        message_data = message.get('data')
+        print(f'DIRECT MESSAGE: {message_data}')
+        channel_layer = get_channel_layer()
+
+        if message_data.get('requested_freelancer'):
+            freelancer_id = message_data.get('requested_freelancer')
+            freelancer = User.objects.get(pk=freelancer_id)
+            freelancer_channel = freelancer.channel_name
+
+            order_id = message_data.get('order_id')
+            business = message_data.get('business')
+            order_id = message_data.get('order_id')
+
+            data = {
+                    'order_id': order_id,
+                    'business': business,
+                    'title': 'Direct Invitation'
+                }
+
+            await channel_layer.send(freelancer_channel, message={
+                "type": "echo.message",
+                "data": data
+                })
 
 
     async def create_order(self, event):
@@ -99,7 +131,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
         if order_updated:
     
-            # Order Re-Requested
+            # Order Re-Requested. Brodcast again to ALL freelancers
             if event.get('data')['event'] == 'Request Freelancer':
                 print(f'RE-REQUESTED: {order_data}')
                 data = {
@@ -116,6 +148,9 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     'data': data
                 })
 
+            elif event.get('data')['event'] == 'Direct Invitation':
+                print('DIRECT INVITE UPDATED')
+                pass
             else:            
             # Send updates to the business that created this order.
                 print(f'UPDATED: {order_data}')
@@ -138,33 +173,33 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
         else:
             # Order Re-Requested
-            if event.get('data')['event'] == 'Request Freelancer':
-                data = {
-                    'order_id': order_id,
-                    'business': order.business.id,
-                    'pick_up_address': order.pick_up_address,
-                    'drop_off_address': order.drop_off_address,
-                    'notes': order.notes,
-                    'status': 'REQUESTED'
-                }
+            # if event.get('data')['event'] == 'Request Freelancer':
+            #     data = {
+            #         'order_id': order_id,
+            #         'business': order.business.id,
+            #         'pick_up_address': order.pick_up_address,
+            #         'drop_off_address': order.drop_off_address,
+            #         'notes': order.notes,
+            #         'status': 'REQUESTED'
+            #     }
     
-                await self.channel_layer.group_send(group='freelancers', message={
+            #     await self.channel_layer.group_send(group='freelancers', message={
+            #         'type': 'echo.message',
+            #         'data': data
+            #     })
+            
+            # else:
+            data = {
+                'order_id': order_id,
+                'freelancer': order.freelancer.id,
+                'status': 'STARTED'
+            }
+
+            await self.send_json({
                     'type': 'echo.message',
                     'data': data
-                })
-            
-            else:
-                data = {
-                    'order_id': order_id,
-                    'freelancer': order.freelancer.id,
-                    'status': 'STARTED'
                 }
-
-                await self.send_json({
-                        'type': 'echo.message',
-                        'data': data
-                    }
-                )
+            )
 
 
 
@@ -268,16 +303,22 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             elif event == 'Order Delivered':
                 print('DELIVERED!!!!')
                 content['status'] = 'COMPLETED'
-                serializer = OrderSerializer(data=content)
-                serializer.is_valid(raise_exception=True)
-                order = serializer.update(order_instance, serializer.validated_data)
+
+                if not order_instance.selected_freelancers:
+                    order_instance.selected_freelancers = [replying_fl]
+                else:
+                    order_instance.selected_freelancers.append(replying_fl)
+
                 order_updated = True
-            elif event == 'Order Delivered':
-                print('DELIVERED!!!!')
-                content['status'] = 'COMPLETED'
-                serializer = OrderSerializer(data=content)
-                serializer.is_valid(raise_exception=True)
-                order = serializer.update(order_instance, serializer.validated_data)
+            elif event == 'Direct Invitation':
+                print(f'======> DIRECT INVITATION: {replying_fl}')
+                if not order_instance.selected_freelancers:
+                    order_instance.selected_freelancers = [replying_fl]
+                else:
+                    order_instance.selected_freelancers.append(replying_fl)
+                
+                order_instance.save()
+                order = order_instance
                 order_updated = True
 
         # Business updates

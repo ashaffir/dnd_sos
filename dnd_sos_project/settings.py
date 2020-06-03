@@ -103,6 +103,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'dndsos_dashboard.context_processors.business_type',
                 'dndsos_dashboard.context_processors.debugMode',
+                # 'dndsos_dashboard.context_processors.requested_freelancer',                
             ],
         },
     },

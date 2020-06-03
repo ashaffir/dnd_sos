@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
-from jsonfield import JSONField
-# from django.contrib.postgres.fields import ArrayField
+# from jsonfield import JSONField
+from django.contrib.postgres.fields import ArrayField
 
 # from orders.models import Order
 
@@ -39,6 +39,19 @@ class User(AbstractUser):
     
     # require the email to be the unique identifier
     USERNAME_FIELD = 'email'
+
+    # List of user that are in relations, Freelancers in business and Businesses in freelancer
+    relations = ArrayField(
+        ArrayField(
+            models.CharField(max_length=10000, null=True, blank=True),
+            size=400
+        ),
+        size=1,
+        null=True,
+        blank=True
+    )
+
+    channel_name = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.email

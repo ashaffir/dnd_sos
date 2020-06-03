@@ -3,8 +3,10 @@ import uuid
 from django.urls import reverse
 from django.db import models
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 
 from core.models import Employee, Employer, User
+
 
 class Order(models.Model):
     REQUESTED = 'REQUESTED'
@@ -34,6 +36,16 @@ class Order(models.Model):
     city = models.CharField(max_length=100, null=True)
     notes = models.TextField(max_length=500, blank=True, null=True)
 
+    selected_freelancers = ArrayField(
+        ArrayField(
+            models.CharField(max_length=10000, null=True, blank=True),
+            size=400
+        ),
+        size=1,
+        null=True,
+        blank=True
+    )
+
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)
     freelancer = models.ForeignKey( # new
         # settings.AUTH_USER_MODEL,
@@ -57,5 +69,4 @@ class Order(models.Model):
 
     def get_absolute_url(self):
         return reverse('trip:trip_detail', kwargs={'trip_id': self.order_id})
-
 

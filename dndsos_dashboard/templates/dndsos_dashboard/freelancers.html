@@ -25,15 +25,15 @@
         <div class="col-md-10 col-lg-10">
             <div class="tabs">
                 <ul class="nav nav-tabs tabs-primary">
-                    <li class="active">
+                    <!-- <li class="active">
                         <a href="#manage" data-toggle="tab">Your Freelancers</a>
-                    </li>
+                    </li> -->
                     <li >
                         <a href="#select" data-toggle="tab">Select Freelancers</a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div id="manage" class="tab-pane active">
+                    <!-- <div id="manage" class="tab-pane ">
 
                         <form class="form-horizontal" enctype="multipart/form-data" name="businessProfile" method="POST">
                             {% csrf_token %}
@@ -100,8 +100,8 @@
 
                         </form>
 
-                    </div>
-                    <div id="select" class="tab-pane">
+                    </div> -->
+                    <div id="select" class="tab-pane active" active>
                         <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
                             {% csrf_token %}
                             <div class="row" >
@@ -145,7 +145,61 @@
 												<hr class="solid short">
 												<!-- <p><a href="#"><i class="fa fa-user mr-xs"></i> My Profile</a></p>
 												<p><a href="#"><i class="fa fa-lock mr-xs"></i> Lock Screen</a></p>
-												<p><a href="#"><i class="fa fa-power-off mr-xs"></i> Logout</a></p> -->
+                                                <p><a href="#"><i class="fa fa-power-off mr-xs"></i> Logout</a></p> -->
+                                                <div class="row">
+                                                    <div class="col-md-6 text-center" >
+
+                                                        <!-- Select Freelancer modal -->
+                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#selectFreelancer_{{ freelancer.pk }}">Request Freelancer</a>
+
+                                                        <div class="modal fade" id="selectFreelancer_{{ freelancer.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4 class="modal-title" id="myModalLabel">Which order would you like the freelancer for?</h4>
+                                                                    </div>
+                                                                    <div class="modal-body form-group">
+                                                                         <select class="form-control" name="open_orders" id="open_orders_{{ freelancer.pk }}">
+                                                                             <option value="">---------</option>
+                                                                             {% for order in orders %}
+                                                                                <option value="{{ order.order_id  }}">{{ order.drop_off_address }}</option>
+                                                                             {% endfor %}
+                                                                         </select>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" id="freelancer_{{ freelancer.pk }}" onclick="request_specific_freelancer('{{ freelancer.pk }}')" class="btn btn-primary">Confirm</button>
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-center">
+                                                        <!-- Pay Freelancer modal QR Code-->
+                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#selectFreelancer">Pay Freelancer</a>
+
+                                                        <div class="modal fade" id="selectFreelancer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                         <p>Are you sure that you want to delete this image?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-primary">Confirm</button>
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
 											</div>
 										</section>
                                     </div> 
@@ -159,5 +213,37 @@
         </div>
     <!-- end: page -->
 </section>
-
 {% endblock content %}
+
+{% block js %}
+{% include 'dndsos_dashboard/partials/_freelancer-request-sent-modal.html' %}
+<script>
+    request_specific_freelancer = function(freelancer_id){
+        order_id = document.getElementById(`open_orders_${freelancer_id}`).value;
+
+        if (order_id == ''){
+            alert('Please pick a order or cancel message.')
+            return false
+        }
+        //console.log(`SELECTED: ${order_id}`);
+        $(`#selectFreelancer_${freelancer_id}`).modal('hide')
+
+        businessSocket.send(JSON.stringify({
+            'type': 'direct.message', 
+            'data': {
+                'event': 'Specific Freelancer',
+                'order_id': order_id,                
+                'business': user_id,
+                'requested_freelancer': freelancer_id,
+                'status': 'RE_REQUESTED'
+            }
+        }));
+
+
+        $("#requestFreelancerSent").modal("show");
+
+    }
+</script>
+
+
+{% endblock js %}

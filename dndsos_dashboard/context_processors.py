@@ -14,6 +14,16 @@ def business_type(request):
         
     return context
 
+# def requested_freelancer(request):
+#     context = {}
+#     try:
+#         context['freelacner_requested'] = request.session['freelacner_requested']
+#     except Exception as e:
+#         print(f'Context ERROR: {e}')
+
+#     return context
+
+
 def debugMode(request):
     context = {}
     context['debug'] = settings.DEBUG

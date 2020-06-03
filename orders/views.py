@@ -7,6 +7,7 @@ from django.db.models import Q
 from rest_framework import generics, permissions, status, views, viewsets 
 from rest_framework.response import Response
 
+from core.models import User
 from .models import Order 
 from .serializers import OrderSerializer, UserSerializer
 
@@ -28,6 +29,13 @@ def orders_table(request):
 @login_required
 def deliveries_table(request):
     context = {}
+    print(f'>>>> RELATIONS: {request.user.relations[-1]}')
+
+    f = User.objects.get(pk=request.user.pk)
+    # f.relations = ['stam','batata', 'CCC', 'trerteerrttttttttttttt','gggffsdfgsdf']
+    # f.relations.append('hhh')
+    # f.save()
+
     freelancer_id = request.user.pk
     orders = Order.objects.filter(Q(freelancer=freelancer_id) & ~Q(status='REQUESTED') & ~Q(status='ARCHIVED'))
     context['orders'] = orders
@@ -69,6 +77,7 @@ def open_orders(request):
                 context['offer_removed'] = True
 
     open_orders = Order.objects.filter(freelancer=None).exclude(status='ARCHIVED')
+        
     number_open_orders = len(open_orders)
     context['open_orders'] = open_orders
     context['num_open_orders'] = number_open_orders

@@ -27,7 +27,7 @@
                         </header> -->
                         <div class="panel-body">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Address</label>
+                                <label class="col-sm-3 control-label">* Address</label>
                                 <div class="col-sm-4">
                                     <input class="form-control" type="text" name="street" id="street" placeholder="Street" required>
                                     <label class="error" for="street"></label>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">City</label>
+                                <label class="col-sm-3 control-label">* City</label>
                                 <div class="col-sm-9">
                                     <select id="city" name="city" class="form-control" required>
                                         <option value="">Choose a City</option>
@@ -51,13 +51,15 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Choose Freelancer/s</label>
                                 <div class="col-sm-9">
-                                    <select id="city" name="city" class="form-control" required>
+                                    <select id="freelancer" name="freelancer" class="form-control" required>
                                         <option value="">Notify all available</option>
+                                        <option value="">Do not broadcast. I will pick a freelanceer later</option>
+                                        <option value="">-------------------------</option>
                                         {% for freelancer in freelancers %}
                                             <option value="{{ freelancer.pk }}">{{ freelancer.email }}</option>
                                         {% endfor %}
                                     </select>
-                                    <label class="error" for="city"></label>
+                                    <label class="error" for="freelancer"></label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -79,11 +81,10 @@
     </div>
 <!-- Vendor -->
 {% block orders_js %}
-<script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
+<!-- <script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
 <script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
 <script src="{% static 'assets/vendor/magnific-popup/magnific-popup.js' %}"></script>
-<script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script>
+<script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script> -->
 <!-- <script src="{% static 'assets/javascripts/forms/examples.validation.js' %}"></script> -->
-
 
 {% endblock orders_js %}

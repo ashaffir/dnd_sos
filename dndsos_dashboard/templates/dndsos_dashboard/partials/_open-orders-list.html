@@ -5,9 +5,15 @@
         <div class="panel-body">
             <div class="widget-summary">
                 <div class="widget-summary-col widget-summary-col-icon">
-                    <div class="summary-icon bg-secondary">
-                        <i class="fa fa-exclamation"></i>
-                    </div>
+                    {% if user.pk|slugify in order.selected_freelancers %}
+                        <div class="summary-icon bg-secondary">
+                            <i class="fa fa-exclamation"></i>
+                        </div>    
+                    {% else %}
+                        <div class="summary-icon bg-primary">
+                            <i class="fa fa-exclamation"></i>
+                        </div>    
+                    {% endif %}
                 </div>
                 <div class="widget-summary-col">
                     <div class="summary">
