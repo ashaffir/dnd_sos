@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'ckeditor',
     'rest_framework',
+    'qr_code',
     
     'django.contrib.admin',
     'django.contrib.auth',

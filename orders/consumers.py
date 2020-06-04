@@ -303,13 +303,34 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             elif event == 'Order Delivered':
                 print('DELIVERED!!!!')
                 content['status'] = 'COMPLETED'
-
-                if not order_instance.selected_freelancers:
-                    order_instance.selected_freelancers = [replying_fl]
-                else:
-                    order_instance.selected_freelancers.append(replying_fl)
-
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
                 order_updated = True
+
+                # Updating the involved parties relationships
+                freelancer = User.objects.get(pk=order_instance.freelancer.pk)
+                business = User.objects.get(pk=order_instance.business.pk)
+
+                if not freelancer.relationships:
+                    freelancer.relationships = {'businesses':[business.pk]}
+                else:
+                    businesses_list = freelancer.relationships['businesses']
+                    businesses_list.append(business.pk)
+                    freelancer.relationships['businesses'] = list(set(businesses_list))
+
+                if not business.relationships:
+                    business.relationships = {'freelancers':[freelancer.pk]}
+                else:
+                    freelancers_list = business.relationships['freelancers']
+                    freelancers_list.append(freelancer.pk)
+                    business.relationships['freelancers'] = list(set(freelancers_list))
+
+                
+                freelancer.save()
+                business.save()
+
+
             elif event == 'Direct Invitation':
                 print(f'======> DIRECT INVITATION: {replying_fl}')
                 if not order_instance.selected_freelancers:

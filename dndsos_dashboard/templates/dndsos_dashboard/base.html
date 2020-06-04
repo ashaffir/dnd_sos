@@ -792,13 +792,13 @@
 						}
 					})		
 
-					let items_url_e = document.querySelector('#b_alerts_items');
-					let items_url = items_url_e.getAttribute('url')
+					//let items_url_e = document.querySelector('#b_alerts_items');
+					//let url = items_url_e.getAttribute('url')
 					//console.log(items_url);
-					//let url = "{% url 'dndsos_dashboard:b-alerts-items' b_id=user.pk %}"
+					let url = "{% url 'dndsos_dashboard:b-alerts-items' b_id=user.pk %}"
 					$.ajax({
 						type: 'GET',
-						url: item_url,
+						url: url,
 						async:false,
 						success: function(response) {
 							$("#b_alerts_items").html(response)

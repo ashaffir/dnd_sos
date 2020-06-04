@@ -430,7 +430,9 @@ def freelancers(request, b_id):
 
     freelancers = Employee.objects.all()
     context['total_freelancers'] = len(freelancers)
-    
+
+    # b_freelancers = Employee.
+
     orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='REQUESTED') | Q(status='RE_REQUESTED') | Q(status='REJECTED'))
     context['orders'] = orders
 

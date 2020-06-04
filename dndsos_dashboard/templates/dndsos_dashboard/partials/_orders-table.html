@@ -52,7 +52,8 @@
         </td>
         <td class="actions" style='text-align:center'>
             {% if order.status == 'COMPLETED' %}
-                <button class="btn btn-success" type="submit" name="makePayment" id="payment_{{ order.order_id }}" value="{{ order.order_id }}">Pay for Delivery <i class="fas fa-hand-holding-usd"></i></button>
+                {% include './_payment-modal.html' with order=order %}
+                <!-- <button class="btn btn-success" type="submit" name="makePayment" id="payment_{{ order.order_id }}" value="{{ order.order_id }}">Pay for Delivery <i class="fas fa-hand-holding-usd"></i></button> -->
             {% else %}
             {% endif %}
 

@@ -1,0 +1,58 @@
+{% load i18n %}
+{% load static %}
+{% load qr_code %}
+<a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#makePayment" style="color: white;">Pay<i class="fas fa-hand-holding-usd"></i></a>
+
+<div class="modal fade" id="makePayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Payment Information</h4>
+            </div>
+            <div class="">
+                <h3>Order Information</h3>
+                <p>Order ID: {{ order.order_id }}</p>
+                <p>Created: {{ order.created }}</p>
+                <p>Drop off address: {{ order.drop_off_address }}</p>
+                <hr>
+                <h3>Freelancer Information</h3>
+                <p>Freelancer: {{ order.freelancer.email }}</p>
+                 <p>Freelancer: {{ order.freelancer.phone_number }} <button type="button" onclick="showQR()" class="btn btn-sm btn-success"><i class="fas fa-qrcode"></i> Get Phone QR</i></button></p>
+            </div>
+            <div class="row ml-2">
+                <div class="col-6">
+                    <a href="http://paypal.com" target="_blank"><img src="{% static 'assets/images/paypal-button.png' %}" alt="" style="max-width: 50%;"></a>
+                </div>
+                <div class="col-6">
+                    <div class="" id="qrContent" style="display: none;">
+                        {% qr_from_text order.freelancer.phone_number size="T" %}
+                    </div>        
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="payment_{{ order_id }}" value="{{ order_id }}">Confirm</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block orders_js %}
+<script>
+    showQR = function() {
+        var div = document.getElementById('qrContent');
+        if (div.style.display !== 'none') {
+            div.style.display = 'none';
+        }
+        else {
+            div.style.display = 'block';
+        }
+    };
+    
+</script>
+
+
+
+{% endblock orders_js %}

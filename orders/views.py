@@ -29,7 +29,7 @@ def orders_table(request):
 @login_required
 def deliveries_table(request):
     context = {}
-    print(f'>>>> RELATIONS: {request.user.relations[-1]}')
+    # print(f'>>>> RELATIONS: {request.user.relations[-1]}')
 
     f = User.objects.get(pk=request.user.pk)
     # f.relations = ['stam','batata', 'CCC', 'trerteerrttttttttttttt','gggffsdfgsdf']
