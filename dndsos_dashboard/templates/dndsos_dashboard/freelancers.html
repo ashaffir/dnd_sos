@@ -26,16 +26,16 @@
             <div class="tabs">
                 <ul class="nav nav-tabs tabs-primary">
                     <li class="active">
-                        <a href="#select" data-toggle="tab">Select Freelancers</a>
+                        <a href="#select_tab" data-toggle="tab">Select Freelancers</a>
                     </li>
                     <li >
-                        <a href="#manage" data-toggle="tab">Your Freelancers</a>
+                        <a href="#manage_tab" data-toggle="tab">Your Freelancers</a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div id="manage" class="tab-pane ">
+                    <div id="manage_tab" class="tab-pane ">
 
-                        <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
+                        <form action="" method="POST" enctype="multipart/form-data" id="b_select_freelancers" name="select_freelancers">
                             {% csrf_token %}
                             <div class="row" >
                                 <div class="col-md-4">
@@ -61,9 +61,91 @@
                                 </div>
                             </div>
                             <hr>
+                            <div class="row">
+                                {% for freelancer in b_freelancers %}
+                                    <div class="col-md-4">
+										<section class="panel">
+											<header class="panel-heading bg-primary">
+												<div class="panel-heading-profile-picture">
+													<img src="{{ freelancer.employee.profile_pic.url }}">
+												</div>
+											</header>
+											<div class="panel-body">
+												<h4 class="text-semibold mt-sm">{{ freelancer.employee.name }}</h4>
+												<p>Email: {{ freelancer.employee.email }} </p>
+												<p>Short bio: {{ freelancer.employee.bio }} </p>
+												<p>City: {{ freelancer.employee.city }} </p>
+												<p>Vehicle: {{ freelancer.employee.vehicle }} </p>
+												<hr class="solid short">
+												<!-- <p><a href="#"><i class="fa fa-user mr-xs"></i> My Profile</a></p>
+												<p><a href="#"><i class="fa fa-lock mr-xs"></i> Lock Screen</a></p>
+                                                <p><a href="#"><i class="fa fa-power-off mr-xs"></i> Logout</a></p> -->
+
+                                                <div class="row">
+                                                    <!-- Request Freelancer Button -->
+                                                    <div class="col-md-12 text-center" >
+
+                                                        <!-- Select Freelancer modal -->
+                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#b_selectFreelancer_{{ freelancer.pk }}">Request Freelancer</a>
+
+                                                        <div class="modal fade" id="b_selectFreelancer_{{ freelancer.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4 class="modal-title" id="myModalLabel">Which order would you like the freelancer for?</h4>
+                                                                    </div>
+                                                                    <div class="modal-body form-group">
+                                                                         <select class="form-control" name="open_orders" id="b_open_orders_{{ freelancer.pk }}">
+                                                                             <option value="">---------</option>
+                                                                             {% for order in orders %}
+                                                                                <option value="{{ order.order_id  }}">{{ order.drop_off_address }}</option>
+                                                                             {% endfor %}
+                                                                         </select>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" id="b_freelancer_{{ freelancer.pk }}" onclick="request_specific_freelancer('{{ freelancer.pk }}')" class="btn btn-primary">Confirm</button>
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <hr>
+                                                <h5>Payments Due</h5>
+                                                <div class="table-responsive-sm">
+                                                    <table class="table table-striped table-borderless table-hover table-sm" style="width:100%">
+                                                        <thead>
+                                                            <th style="width: 30%">Date</th>
+                                                            <th style="width: 50%">Drop-off</th>
+                                                            <th style="width: 20%"></th>
+                                                        </thead>
+                                                            <tbody>
+                                                                {% for order in completer_orders %}
+                                                                    {% if order.freelancer == freelancer.employee.user %}
+                                                                        <tr>
+                                                                            <td>{{ order.created }}</td>
+                                                                            <td>{{ order.drop_off_address }}</td>
+                                                                            <td style='text-align:center'>
+                                                                                {% include './partials/_payment-modal.html' with order=order %}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </tbody>
+                                                    </table>    
+                                                </div>
+											</div>
+										</section>
+                                    </div> 
+                                {% endfor %}
+                            </div>
+
                         </form>
                     </div> 
-                    <div id="select" class="tab-pane active" active>
+                    <div id="select_tab" class="tab-pane active" active>
                         <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
                             {% csrf_token %}
                             <div class="row" >
@@ -111,7 +193,7 @@
 
                                                 <div class="row">
                                                     <!-- Request Freelancer Button -->
-                                                    <div class="col-md-6 text-center" >
+                                                    <div class="col-md-12 text-center" >
 
                                                         <!-- Select Freelancer modal -->
                                                         <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#selectFreelancer_{{ freelancer.pk }}">Request Freelancer</a>
@@ -141,32 +223,11 @@
                                                     </div>
 
                                                 </div>
-                                                <hr>
-                                                <h5>Payments Due</h5>
-                                                <div class="table-responsive-sm">
-                                                    <table class="table table-striped table-borderless table-hover table-sm" style="width:100%">
-                                                        <thead>
-                                                            <th style="width: 30%">Date</th>
-                                                            <th style="width: 50%">Drop-off</th>
-                                                            <th style="width: 20%"></th>
-                                                        </thead>
-                                                            <tbody>
-                                                                {% for order in orders %}
-                                                                <tr>
-                                                                    <td>Date</td>
-                                                                    <td>Address</td>
-                                                                    <td style='text-align:center'>
-                                                                        {% include './partials/_payment-modal.html' with order=order %}
-                                                                    </td>
-                                                                </tr>
-                                                                {% endfor %}
-                                                            </tbody>
-                                                    </table>    
-                                                </div>
 											</div>
 										</section>
                                     </div> 
                                 {% endfor %}
+                            </div>
                             </form>
                         </div>
 
@@ -182,14 +243,18 @@
 {% include 'dndsos_dashboard/partials/_freelancer-request-sent-modal.html' %}
 <script>
     request_specific_freelancer = function(freelancer_id){
+        b_order_id = document.getElementById(`b_open_orders_${freelancer_id}`).value;
         order_id = document.getElementById(`open_orders_${freelancer_id}`).value;
 
-        if (order_id == ''){
+        if (order_id == '' && b_order_id == ''){
             alert('Please pick a order or cancel message.')
             return false
+        } else if(b_order_id){
+            order_id = b_order_id
         }
         //console.log(`SELECTED: ${order_id}`);
         $(`#selectFreelancer_${freelancer_id}`).modal('hide')
+        $(`#b_selectFreelancer_${freelancer_id}`).modal('hide')
 
         businessSocket.send(JSON.stringify({
             'type': 'direct.message', 

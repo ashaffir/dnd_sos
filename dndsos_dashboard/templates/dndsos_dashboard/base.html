@@ -773,9 +773,6 @@
 					const data_string = JSON.stringify(e.data);
 					console.log(`DATA RECEIVED: ${data.data} ORDER ID: ${data.data.order_id} Freelancer: ${data.data.freelancer}`);
 
-					if (data.data.status == 'STARTED'){
-						location.reload()
-					}
 					// Refresh the table to update the accepted order
 					$.ajax({
 						url: "{% url 'orders:orders-table' %}",
@@ -792,9 +789,7 @@
 						}
 					})		
 
-					//let items_url_e = document.querySelector('#b_alerts_items');
-					//let url = items_url_e.getAttribute('url')
-					//console.log(items_url);
+					// Refresh business alerts items page
 					let url = "{% url 'dndsos_dashboard:b-alerts-items' b_id=user.pk %}"
 					$.ajax({
 						type: 'GET',

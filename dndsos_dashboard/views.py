@@ -431,10 +431,21 @@ def freelancers(request, b_id):
     freelancers = Employee.objects.all()
     context['total_freelancers'] = len(freelancers)
 
-    # b_freelancers = Employee.
+    b_freelancers = []
+    b_relationships = User.objects.get(pk=b_id).relationships
+    for fl in b_relationships['freelancers']:
+        b_freelancers.append(User.objects.get(pk=fl))
+    
+    context['b_freelancers'] = b_freelancers
+    for f in b_freelancers:
+        print(f'>>>F: {f.employee.vehicle}')
 
     orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='REQUESTED') | Q(status='RE_REQUESTED') | Q(status='REJECTED'))
     context['orders'] = orders
+
+    completer_orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='COMPLETED') & ~Q(status='SETTLED'))
+    context['completer_orders'] = completer_orders
+
 
     if request.method == 'POST':
 

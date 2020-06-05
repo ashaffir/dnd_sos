@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     
     'django_extensions',
     'ckeditor',
-    'rest_framework',
-    'qr_code',
+    'rest_framework', #https://www.django-rest-framework.org/
+    'qr_code', # https://github.com/dprog-philippe-docourt/django-qr-code
     
     'django.contrib.admin',
     'django.contrib.auth',
