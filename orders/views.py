@@ -7,7 +7,7 @@ from django.db.models import Q
 from rest_framework import generics, permissions, status, views, viewsets 
 from rest_framework.response import Response
 
-from core.models import User
+from core.models import User, Employee, Employer
 from .models import Order 
 from .serializers import OrderSerializer, UserSerializer
 
@@ -60,6 +60,31 @@ def open_orders_list(request):
     context['num_open_orders'] = number_open_orders
     return render(request, 'dndsos_dashboard/partials/_open-orders-list.html', context)
 
+@login_required
+def freelancer_messages_list(request):
+    context = {}
+    freelancer_id = request.user.pk
+    current_orders = Order.objects.filter(Q(freelancer=freelancer_id) & ~Q(status='COMPLETED') & ~Q(status='ARCHIVED'))
+
+    freelancer = Employee.objects.get(pk=freelancer_id)
+
+    current_new_messages = 0
+    orders_with_chats = []
+    for order in current_orders:
+        print(f'ORDER ID: {order.order_id}')
+        if order.new_message['freelancer']:
+            current_new_messages += 1
+
+        if order.chat:
+            orders_with_chats.append(order)
+    
+    freelancer.new_messages = current_new_messages
+    freelancer.save()
+
+    context['orders_with_chats'] = orders_with_chats
+    
+    return render(request, 'dndsos_dashboard/partials/_freelancer-messages-alerts-list.html', context)
+
 
 @login_required
 def open_orders(request):
@@ -94,3 +119,28 @@ def business_alerts_list(request):
     context['orders'] = orders
     context['num_alerts'] = len(orders)
     return render(request, 'dndsos_dashboard/partials/_business-orders-alerts-list.html', context)
+
+@login_required
+def business_messages_list(request):
+    context = {}
+    business_id = request.user.pk
+    current_orders = Order.objects.filter(Q(business=business_id) & ~Q(status='COMPLETED') & ~Q(status='ARCHIVED'))
+
+    business = Employer.objects.get(pk=business_id)
+
+    current_new_messages = 0
+    orders_with_chats = []
+    for order in current_orders:
+        print(f'ORDER ID: {order.order_id}')
+        if order.new_message['business']:
+            current_new_messages += 1
+
+        if order.chat:
+            orders_with_chats.append(order)
+    
+    business.new_messages = current_new_messages
+    business.save()
+    
+    context['orders_with_chats'] = orders_with_chats
+    
+    return render(request, 'dndsos_dashboard/partials/_business-messages-alerts-list.html', context)

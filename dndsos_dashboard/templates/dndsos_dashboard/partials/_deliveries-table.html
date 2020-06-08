@@ -6,6 +6,7 @@
         <th>Notes</th>
         <th>Order Status</th>
         <th>Delivered</th>
+        <th>Messages</th>
         <th>Paid for</th>
         <th></th>
     </tr>
@@ -53,11 +54,21 @@
             {% endif %}
 
         </td>
+
+        <!-- Messages -->
+        <td class="actions" style='text-align:center'>
+            {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' or order.status == 'STARTED' %}
+                {% include './_f-message-modal.html' with order=order %}
+            {% else %}
+            {% endif %}
+        </td>
+
+        <!-- Settlement -->
         <td class="actions" style="text-align: center;">
             {% if order.status == 'SETTLED' %}
-                <button style="text-align: center;" class="btn btn-success" type="submit" name="orderSettled" id="_{{ order.order_id }}" value="{{ order.order_id }}" disabled>Paid For<i class="fas fa-trash"></i></button>
+                <button style="text-align: center;" class="btn btn-success" disabled>Paid For<i class="fas fa-trash"></i></button>
             {% else %}
-                <button style="text-align: center;" class="btn btn-success" type="submit" name="orderSettled" id="_{{ order.order_id }}" value="{{ order.order_id }}">Paid For<i class="fas fa-trash"></i></button>
+                <button type="button" onclick="settleOrder('{{ order.order_id }}')" style="text-align: center;" class="btn btn-success" name="orderSettled" id="{{ order.order_id }}" value="{{ order.order_id }}">Paid For<i class="fas fa-trash"></i></button>
             {% endif %}
         </td>
         <td class="actions" style="text-align: center;">
@@ -87,16 +98,29 @@
             </div>
             <a class="btn btn-danger on-default edit-row" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="modal" data-target="#fCancelOrder_{{ order.order_id }}" {% endif %} style="color: white;"><i class="fa fa-trash-o"></i></a>
 
-            <!-- <button type="button" onclick="confirmCancel('{{ order.order_id }}')" class="btn btn-danger on-default edit-row" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'STARTED' %} data-toggle="tooltip" data-placement="top" title="Cancel your delivery. Please confirm with the business that they have received your cancellation." {% else %} disabled {% endif %}><i class="fa fa-trash-o"></i></button> -->
-
         </td>
 
     </tr>
     {% endfor %}
 </tbody>
-<!-- <script>
-    function confirmCancel(order_id){
-        $('#cancel_f_order').val(order_id);
-        $("#fCancelOrder").modal();
+
+{% block js %}
+<script>
+    settleOrder = function(order_id){
+        console.log(`Order Settled: ${order_id}`);
+        user = '{{ user.pk }}'
+        freelancerSocket.send(JSON.stringify({
+            'type': 'update.order', 
+            'data': {
+                'event': 'Order Settled',
+                'freelancer': user,
+                'status': 'SETTLED',
+                'order_id': order_id
+            }
+        }));
+
+        $("#orderSettled").modal("show");
     }
-</script> -->
+
+</script>
+{% endblock js %}

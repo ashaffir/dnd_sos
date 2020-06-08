@@ -30,11 +30,13 @@ class OrderAdmin(admin.ModelAdmin):
         'order_id', 'pick_up_address', 'drop_off_address', 'status', 'notes',
         'freelancer', 'business',
         'selected_freelancers',
-        'created', 'updated',
+        'chat', 
+        'created', 'updated','new_message',
     )
     list_display = ( # changed
         'order_id', 'pick_up_address', 'drop_off_address', 'status','notes',
         'freelancer', 'business',
+        'new_message',
         'updated',
     )
     list_filter = (

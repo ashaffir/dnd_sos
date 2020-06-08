@@ -127,67 +127,18 @@
 											</ul>
 										</div>
 									</div>
-								</li>
+								</li>-->
 								<li>
-									<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
-										<i class="fa fa-envelope"></i>
-										<span class="badge">4</span>
-									</a>
-					
-									<div class="dropdown-menu notification-menu">
-										<div class="notification-title">
-											<span class="pull-right label label-default">230</span>
-											Messages
+									{% if user.is_employee %}
+										<div id="freelancerMessagesAlerts">
+											<!-- Freelancer Messages alerts List-->
 										</div>
-					
-										<div class="content">
-											<ul>
-												<li>
-													<a href="#" class="clearfix">
-														<figure class="image">
-															<img src="{% static 'assets/images/sample-user.jpg' %}" alt="Joseph Doe Junior" class="img-circle" />
-														</figure>
-														<span class="title">Joseph Doe</span>
-														<span class="message">Lorem ipsum dolor sit.</span>
-													</a>
-												</li>
-												<li>
-													<a href="#" class="clearfix">
-														<figure class="image">
-															<img src="{% static 'assets/images/sample-user.jpg' %}" alt="Joseph Junior" class="img-circle" />
-														</figure>
-														<span class="title">Joseph Junior</span>
-														<span class="message truncate">Truncated message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam, nec venenatis risus. Vestibulum blandit faucibus est et malesuada. Sed interdum cursus dui nec venenatis. Pellentesque non nisi lobortis, rutrum eros ut, convallis nisi. Sed tellus turpis, dignissim sit amet tristique quis, pretium id est. Sed aliquam diam diam, sit amet faucibus tellus ultricies eu. Aliquam lacinia nibh a metus bibendum, eu commodo eros commodo. Sed commodo molestie elit, a molestie lacus porttitor id. Donec facilisis varius sapien, ac fringilla velit porttitor et. Nam tincidunt gravida dui, sed pharetra odio pharetra nec. Duis consectetur venenatis pharetra. Vestibulum egestas nisi quis elementum elementum.</span>
-													</a>
-												</li>
-												<li>
-													<a href="#" class="clearfix">
-														<figure class="image">
-															<img src="{% static 'assets/images/sample-user.jpg' %}" alt="Joe Junior" class="img-circle" />
-														</figure>
-														<span class="title">Joe Junior</span>
-														<span class="message">Lorem ipsum dolor sit.</span>
-													</a>
-												</li>
-												<li>
-													<a href="#" class="clearfix">
-														<figure class="image">
-															<img src="{% static 'assets/images/sample-user.jpg' %}" alt="Joseph Junior" class="img-circle" />
-														</figure>
-														<span class="title">Joseph Junior</span>
-														<span class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam.</span>
-													</a>
-												</li>
-											</ul>
-					
-											<hr />
-					
-											<div class="text-right">
-												<a href="#" class="view-more">View All</a>
-											</div>
+									{% elif user.is_employer %}
+										<div id="businessMessagesAlerts">
+											<!-- Businee Messages alerts List-->
 										</div>
-									</div>
-								</li> -->
+									{% endif %}
+								</li> 
 								<li>
 									{% if user.is_employee %}
 										<div id="openOrdersAlerts">
@@ -197,7 +148,7 @@
 										<div id="businessOrdersAlerts">
 											<!-- Order alerts -->
 										</div>
-								{% endif %}
+									{% endif %}
 								</li>
 							</ul>
 					
@@ -299,6 +250,13 @@
 												<span>Alerts</span>
 											</a>
     	                                </li>
+
+	                                    <li>
+                                        	<a href="{% url 'dndsos_dashboard:b-messages' b_id=user.pk %}">
+												<i class="fa fa-send" aria-hidden="true"></i>
+												<span>Messages</span>
+											</a>
+    	                                </li>
 										<!-- <li>
 											<a href="{% url 'dndsos_dashboard:b-deliveries' b_id=user.pk %}">
 												<i class="fa fa-tasks" aria-hidden="true"></i>
@@ -324,6 +282,12 @@
 												<span>Deliveries</span>
 											</a>
 										</li>
+	                                    <li>
+                                        	<a href="{% url 'dndsos_dashboard:f-messages' f_id=user.pk %}">
+												<i class="fa fa-send" aria-hidden="true"></i>
+												<span>Messages</span>
+											</a>
+    	                                </li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-statistics' f_id=user.pk %}">
 												<i class="fa fa-bar-chart-o" aria-hidden="true"></i>
@@ -416,8 +380,15 @@
 				</div>
 			</aside>
 		</section>
+		
+		{% include 'dndsos_dashboard/partials/_message-sent-modal.html' %}
+		{% include 'dndsos_dashboard/partials/_order-settled-modal.html' %}
 
 		<!-- Vendor -->
+		<!-- DATA TABLE -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.2/b-colvis-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/fc-3.3.1/kt-2.5.2/r-2.2.4/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.0/sl-1.3.1/datatables.min.js"></script>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 		
@@ -489,7 +460,7 @@
 					
 					if (order_status == 'REQUESTED' && current_order_id != order_id) {
 						$("#newOfferAlert").modal("show");
-						update_freelancer_tables()
+						update_freelancer_notifications()
 					}
 
 
@@ -504,12 +475,12 @@
 					// When freelancer tries to accept an order that was already allocated
 					if (order_status == 'STARTED' && data.data.freelancer != user_id){
 						$('#orderRemoved').modal("show");
-						update_freelancer_tables()
+						update_freelancer_notifications()
 					} else if (order_status == 'ARCHIVED' && freelancer == user_id){
 						$('#orderRemoved').modal("show");
-						update_freelancer_tables()
+						update_freelancer_notifications()
 					} else {
-						update_freelancer_tables()
+						update_freelancer_notifications()
 					}
 
 					//Handling direct messages
@@ -624,7 +595,7 @@
 					})		
 				}
 	
-		update_freelancer_tables = function(){
+		update_freelancer_notifications = function(){
 			$.ajax({
 				url: "{% url 'orders:deliveries-table' %}",
 				success: function(response) {
@@ -644,10 +615,51 @@
 					$('#openOrdersList').html(response);
 				}
 			})
+
+			$.ajax({
+				url: "{% url 'orders:freelancer-messages-list' %}",
+				success: function(response){
+					$('#freelancerMessagesAlerts').html(response);
+				}
+			})
+
+			$.ajax({
+				url: "{% url 'dndsos_dashboard:f-messages-list' f_id=user.pk %}",
+				success: function(response) {
+					$('#messagesList').html(response);
+				}
+			})    
+		
+
 		}
 
 
 		</script>
+
+			<!-- Freelancer open orders table -->
+		<script>
+			$(document).ready(function() {
+				$.ajax({
+					type: 'GET',
+					url: "{% url 'orders:open-orders-alerts' %}",
+					async:false,
+					success: function(response) {
+						//console.log(response);
+						$('#openOrdersAlerts').html(response);
+					}		
+				});
+
+				$.ajax({
+					url: "{% url 'orders:freelancer-messages-list' %}",
+					success: function(response){
+						$('#freelancerMessagesAlerts').html(response);
+					}
+				})
+
+			});
+
+		</script>
+
 	
 		{% else %}
 			<!-- <script src="{% static 'assets/javascripts/employer_alerts.js' %}" ></script> -->
@@ -779,7 +791,7 @@
 						success: function(response) {
 							$('#ordersTable').html(response);
 						}
-					})		
+					});		
 
 					// Refresh the alerts table
 					$.ajax({
@@ -787,8 +799,16 @@
 						success: function(response) {
 							$('#businessOrdersAlerts').html(response);
 						}
-					})		
+					});		
 
+					// Refresh the messages list
+					$.ajax({
+						url: "{% url 'orders:business-messages-list' %}",
+						success: function(response) {
+							$('#businessMessagesAlerts').html(response);
+						}
+					});		
+					
 					// Refresh business alerts items page
 					let url = "{% url 'dndsos_dashboard:b-alerts-items' b_id=user.pk %}"
 					$.ajax({
@@ -824,16 +844,35 @@
 				}
 
 			</script>
+			<!-- Business Alerts -->
+			<script>
+				$(document).ready(function() {
+					$.ajax({
+						type: 'GET',
+						url: "{% url 'orders:business-alerts-list' %}",
+						async:false,
+						success: function(response) {
+							//console.log(response);
+							$('#businessOrdersAlerts').html(response);
+						}		
+					});
+
+					$.ajax({
+						url: "{% url 'orders:business-messages-list' %}",
+						success: function(response) {
+							$('#businessMessagesAlerts').html(response);
+						}
+					});		
+
+				});
+
+			</script>
+
 
 		{% endif %}
-
-		<!-- DATA TABLE -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.2/b-colvis-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/fc-3.3.1/kt-2.5.2/r-2.2.4/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.0/sl-1.3.1/datatables.min.js"></script>
 		
-	<!-- ORDERS -->
-	<script>		
+	<!-- ORDERS Data Tables -->
+	<!-- <script>		
 		$(document).ready(function() {
 			$('#ordersTable').DataTable({
 				dom: '',
@@ -847,10 +886,10 @@
 				}
 			})
 		})
-	</script>
+	</script> -->
 
-	<!-- DELIVERIES -->
-	<script>		
+	<!-- DELIVERIES Data Tables -->
+	<!-- <script>		
 		$(document).ready(function() {
 			$('#deliveriesTable').DataTable({
 				dom: '',
@@ -864,41 +903,9 @@
 				}
 			})
 		})
-	</script>
+	</script> -->
 	<!-- END DATA TABLE -->
 	
-	<!-- Freelancer open orders table -->
-	<script>
-		$(document).ready(function() {
-			$.ajax({
-				type: 'GET',
-				url: "{% url 'orders:open-orders-alerts' %}",
-				async:false,
-				success: function(response) {
-					//console.log(response);
-					$('#openOrdersAlerts').html(response);
-				}		
-			});
-		});
-
-	</script>
-
-	<!-- Business Alerts -->
-	<script>
-		$(document).ready(function() {
-			$.ajax({
-				type: 'GET',
-				url: "{% url 'orders:business-alerts-list' %}",
-				async:false,
-				success: function(response) {
-					//console.log(response);
-					$('#businessOrdersAlerts').html(response);
-				}		
-			});
-		});
-
-	</script>
-
 	{% block js %}
 	<!-- JS Block  -->
 	{% endblock js %}

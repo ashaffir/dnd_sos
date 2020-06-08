@@ -1,0 +1,54 @@
+{% for order in orders %}
+{% if order.freelancer %}                     
+    <div class="chat_td panel-body" onclick="showChat('{{ order.order_id }}')">
+        <div class="row">
+            <div class="col-md-11 col-11">
+                <p>Customer Address: {{ order.drop_off_address }}</p>
+                <p>Freelancer: {{ order.freelancer }}</p>    
+            </div>
+            <div class="col-md-1 col-1 col-sm-1">
+                {% if order.new_message.business %}
+                    <span  class="my_badge my_badge-danger">New</span> 
+                {% endif %}
+            </div>
+
+        </div>
+          
+    </div>
+
+{% endif %}
+{% endfor %}
+
+
+<style>
+    .chat_td{
+        cursor: pointer;
+        border-width: 1px 1px 1px 1px;
+        border: solid rgb(128, 160, 128);
+    }
+
+    table {
+        border: 2px solid green;
+    }
+
+    .my_badge {
+        display: inline-block;
+        padding: 0.25em 0.4em;
+        font-size: 1.2rem;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem; }
+        .badge:empty {
+          display: none; }   
+    .my_badge-danger {
+        color: #fff;
+        background-color: #f23a2e; }
+        .badge-danger[href]:hover, .badge-danger[href]:focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: #df1b0e; }
+
+</style>

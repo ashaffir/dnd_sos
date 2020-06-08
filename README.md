@@ -38,3 +38,6 @@ https://docs.djangoproject.com/en/3.0/ref/contrib/postgres/fields/
 
 ### Built in templates (value|slugify)
 https://docs.djangoproject.com/en/3.0/ref/templates/builtins/
+
+### QR Code
+https://github.com/dprog-philippe-docourt/django-qr-code

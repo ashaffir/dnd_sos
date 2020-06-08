@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load static %}
 {% load qr_code %}
-<a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#makePayment_{{ order.order_id }}" style="color: white;">Pay<i class="fas fa-hand-holding-usd"></i></a>
+<a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#makePayment_{{ order.order_id }}" style="color: white;">Pay <i class="fas fa-hand-holding-usd"></i></a>
 
 <div class="modal fade" id="makePayment_{{ order.order_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

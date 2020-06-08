@@ -243,6 +243,7 @@
 {% include 'dndsos_dashboard/partials/_freelancer-request-sent-modal.html' %}
 <script>
     request_specific_freelancer = function(freelancer_id){
+        
         b_order_id = document.getElementById(`b_open_orders_${freelancer_id}`).value;
         order_id = document.getElementById(`open_orders_${freelancer_id}`).value;
 

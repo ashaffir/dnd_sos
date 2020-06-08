@@ -6,6 +6,7 @@
         <th>Allocated Freelancer</th>
         <th>Order Status</th>
         <th>Picked Up</th>
+        <th>Messages</th>
         <th>Payments</th>
         <th></th>
     </tr>
@@ -16,6 +17,8 @@
         <td>{{ order.updated }}</td>
         <td>{{ order.drop_off_address }}</td>
         <td>{% if order.notes %}{{ order.notes }}{% endif %}</td>
+        
+        <!-- Order allocation -->
         {% if order.freelancer %}
         <td style="background-color:green; color: white">{{order.freelancer.email}} / {{order.freelancer.phone_number}}</td>
         {% else %}
@@ -43,6 +46,8 @@
                 <label for="error">ERROR. PLEASE CHECK WITH ADMIN!!</label>
             </td>
         {% endif %}
+
+        <!-- Order Status -->
         <td class="actions" style='text-align:center'>
             {% if order.status == 'STARTED' %}
                 <button class="btn btn-success" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up <i class="fa fa-truck"></i></button>
@@ -50,14 +55,25 @@
             {% endif %}
 
         </td>
+
+        <!-- Messages -->
+        <td class="actions" style='text-align:center'>
+            {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' or order.status == 'STARTED' %}
+                {% include './_b-message-modal.html' with order=order %}
+            {% else %}
+            {% endif %}
+        </td>
+
+        <!-- Payments -->
         <td class="actions" style='text-align:center'>
             {% if order.status == 'COMPLETED' %}
                 {% include './_payment-modal.html' with order=order %}
-                <!-- <button class="btn btn-success" type="submit" name="makePayment" id="payment_{{ order.order_id }}" value="{{ order.order_id }}">Pay for Delivery <i class="fas fa-hand-holding-usd"></i></button> -->
             {% else %}
             {% endif %}
 
         </td>
+
+        <!-- Delete/cancel -->
         <td class="actions" style='text-align:center'>
             <!-- Confirmation modal -->
             <div class="modal fade" id="bCancelOrder_{{ order.order_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

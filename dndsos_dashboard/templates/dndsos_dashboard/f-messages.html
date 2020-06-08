@@ -1,0 +1,147 @@
+{% extends 'dndsos_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Messages</h2>
+    
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Messages</span></li>
+            </ol>
+    
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+    <div class="col-md-10 col-lg-10">
+            <div class="row" >
+                <div class="col-md-12 col-12">
+                    <h3>Messages Related to Orders</h3>
+                </div>
+            </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Colums with all messages with sorting -->
+                <div class="" id="f_chat_rooms">
+                    <!-- Chat rooms names/dates... -->
+                    <div class="panel" id="messagesList">
+
+                        <!-- Messages List -->
+                    
+                    </div>
+        
+                </div>        
+            </div>
+            <div class="col-md-8" id="chatRoom">
+
+                <!-- Chat room -->
+
+            </div>
+        </div>
+    </div>
+    <!-- end: page -->
+</section>
+
+{% endblock content %}
+{% block js %}
+<script>
+    showChat = function(order_id){
+        console.log(`CHAT: ${order_id}`)
+        url = "{% url 'dndsos_dashboard:f-chat-room' f_id=user.pk %}"
+        $.ajax({
+            url: url,
+			data: {
+				oid: order_id
+			},
+            success: function(response) {
+                $('#chatRoom').html(response);
+            }
+        })		
+
+        //Cancel "New Message" alert
+        freelancerSocket.send(JSON.stringify({
+            'type': 'direct.message', 
+            'data': {
+                'chat_message': 'clear_alerts',
+                'new_message': 'clear_freelancer',
+                'order_id': order_id
+            }
+        }));
+
+        $.ajax({
+            url: "{% url 'dndsos_dashboard:f-messages-list' f_id=user.pk %}",
+            success: function(response) {
+                $('#messagesList').html(response);
+            }
+        })
+        
+};
+
+freelancerSocket.onmessage = function(e) {
+    let data = JSON.parse(e.data);
+    const data_string = JSON.stringify(e.data);
+    console.log(`DATA RECEIVED: ${data.data.message} ORDER ID: ${data.data.order_id}`);
+    let order_id = data.data.order_id
+    // Refresh the table to update the accepted order
+    $.ajax({
+        url: "{% url 'dndsos_dashboard:f-chat-room' f_id=user.pk %}",
+        data: {
+            oid: order_id
+        },
+        success: function(response) {
+            $('#chatRoom').html(response);
+        }
+    })		
+
+    $.ajax({
+        url: "{% url 'dndsos_dashboard:f-messages-list' f_id=user.pk %}",
+        success: function(response) {
+            $('#messagesList').html(response);
+        }
+    })    
+
+    $.ajax({
+        url: "{% url 'orders:freelancer-messages-list' %}",
+        success: function(response){
+            $('#freelancerMessagesAlerts').html(response);
+        }
+    })
+
+
+}
+
+
+$(document).ready(function (){
+    $.ajax({
+        url: "{% url 'dndsos_dashboard:f-messages-list' f_id=user.pk %}",
+        success: function(response) {
+            $('#messagesList').html(response);
+        }
+    })    
+})
+
+</script>
+
+<style>
+    .chat_td{
+        cursor: pointer;
+        border-width: 1px 1px 1px 1px;
+        border: solid rgb(128, 160, 128);
+    }
+
+    table {
+        border: 2px solid green;
+    }
+</style>
+
+{% endblock js %}

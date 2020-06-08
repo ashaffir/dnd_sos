@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
@@ -58,7 +59,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             await self.update_order(content)
         elif message_type == 'direct.message':  
             await self.direct_message(content)
-
+        elif message_type == 'cancel.alert':
+            await self.cancel_alert(content)
 
     # Sending JSON messages 
     async def echo_message(self, event):
@@ -70,11 +72,22 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         print(f'>>> ECHO 2: {event}')
         await self.send(event)
 
+
+    async def cancel_alert(self, event):
+        print(f'Cancel Alert!! {event}')
+        data = event.get('data')
+        order_id = data.get('order_id')
+        order = Order.objects.get(order_id=order_id)
+        order.new_message = ''
+        order.save()
+
+
     async def direct_message(self, message):
         message_data = message.get('data')
         print(f'DIRECT MESSAGE: {message_data}')
         channel_layer = get_channel_layer()
 
+        # Freelancer direct request 
         if message_data.get('requested_freelancer'):
             freelancer_id = message_data.get('requested_freelancer')
             freelancer = User.objects.get(pk=freelancer_id)
@@ -94,6 +107,58 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 "type": "echo.message",
                 "data": data
                 })
+       
+        # Chat message directly to the freelancer
+        elif message_data.get('chat_message'):
+            chat_message = message_data.get("chat_message")
+            order_id = message_data.get('order_id')
+            order = Order.objects.get(order_id=order_id)
+
+            if not order.new_message:
+                order.new_message = {
+                    'business': '',
+                    'freelancer':''
+                }
+
+            if message_data.get('new_message') == 'to_business':
+                order.new_message['business'] = True
+            elif message_data.get('new_message') == 'to_freelancer':
+                order.new_message['freelancer'] = True
+            elif message_data.get('new_message') == 'clear_business':
+                order.new_message['business'] = False
+            elif message_data.get('new_message') == 'clear_freelancer':
+                order.new_message['freelancer'] = False
+            else:
+                print('WRONG MESSAGE ALERT SEETUP!!! (consumers.py/b-messages/f-messages)')
+
+            if not order.chat:
+                order.chat = {
+                    'messages': []
+                }
+
+            now = datetime.now()
+
+            order.chat['freelancer'] = order.freelancer.pk
+
+            chat_message = {
+                'time': now.ctime(),
+                'message': chat_message,
+                'order_id':order_id
+            }
+
+            if message_data.get('new_message') == 'clear_freelancer' or message_data.get('new_message') == 'clear_business':
+                pass
+            else:
+                order.chat['messages'].append(chat_message) 
+            
+            order.save()
+
+            print(f'CHAT MESSAGE: {chat_message}')
+            await self.channel_layer.group_send(group=order_id, message={
+                'type': 'echo.message',
+                'data': chat_message
+                })
+
 
 
     async def create_order(self, event):
@@ -103,6 +168,16 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         order_id = f'{order.order_id}'
         order_data = ReadOnlyOrderSerializer(order).data
         
+        # Setting up inital data for messages
+        order = Order.objects.get(order_id = order_id)
+        order.chat = {
+            'messages': []
+        }
+        order.new_message = {
+            'freelancer':'',
+            'business':''
+        }
+        order.save()
         # print(f'ORDER DATA: {order_data}')
         
         # Send business requests to all freelancers.
@@ -151,6 +226,10 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             elif event.get('data')['event'] == 'Direct Invitation':
                 print('DIRECT INVITE UPDATED')
                 pass
+
+            elif event.get('data')['event'] == 'Order Settled':
+                print('Order Settled')
+                pass
             else:            
             # Send updates to the business that created this order.
                 print(f'UPDATED: {order_data}')
@@ -172,23 +251,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 })
 
         else:
-            # Order Re-Requested
-            # if event.get('data')['event'] == 'Request Freelancer':
-            #     data = {
-            #         'order_id': order_id,
-            #         'business': order.business.id,
-            #         'pick_up_address': order.pick_up_address,
-            #         'drop_off_address': order.drop_off_address,
-            #         'notes': order.notes,
-            #         'status': 'REQUESTED'
-            #     }
-    
-            #     await self.channel_layer.group_send(group='freelancers', message={
-            #         'type': 'echo.message',
-            #         'data': data
-            #     })
-            
-            # else:
             data = {
                 'order_id': order_id,
                 'freelancer': order.freelancer.id,
@@ -341,6 +403,15 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 order_instance.save()
                 order = order_instance
                 order_updated = True
+
+            elif event == 'Order Settled':
+                print(f'======> Order Settled: {replying_fl}')
+                order_instance.status = 'SETTLED'
+
+                order_instance.save()
+                order = order_instance
+                order_updated = True
+
 
         # Business updates
         if updating_business:

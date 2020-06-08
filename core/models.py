@@ -92,6 +92,8 @@ class Employer(models.Model):
 
     newsletter_optin = models.BooleanField(default=True, null=True)
 
+    new_messages = models.IntegerField(default=0)
+
     class Meta:
         verbose_name = _('Business Profile')
         verbose_name_plural = _('Business Profiles')
@@ -132,6 +134,8 @@ class Employee(models.Model):
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
 
     newsletter_optin = models.BooleanField(default=True, null=True)
+
+    new_messages = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = _('Freelancer Profile')

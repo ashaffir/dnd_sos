@@ -409,12 +409,63 @@ def b_alerts(request, b_id):
 
 @employer_required
 @login_required
+def b_messages(request, b_id):
+    context = {}
+    return render(request, 'dndsos_dashboard/b-messages.html', context)
+
+@employer_required
+@login_required
+def b_chat_room(request, b_id):
+    context = {}
+    order_id = request.GET.get("oid")
+    order = Order.objects.get(order_id=order_id)
+    context['order'] = order
+    return render(request, 'dndsos_dashboard/partials/_b-chat-room.html', context)
+
+@employee_required
+@login_required
+def f_messages(request, f_id):
+    context = {}
+    orders_chat = []
+    orders = Order.objects.filter(Q(freelancer=f_id))
+    print(f'ORDERS:{orders}')
+    for order in orders:
+        if order.chat:
+            orders_chat.append(order)
+    context['orders'] = orders_chat
+    return render(request, 'dndsos_dashboard/f-messages.html', context)
+
+@employee_required
+@login_required
+def f_chat_room(request, f_id):
+    context = {}
+    order_id = request.GET.get("oid")
+    order = Order.objects.get(order_id=order_id)
+    context['order'] = order
+    return render(request, 'dndsos_dashboard/partials/_f-chat-room.html', context)
+
+
+
+@employer_required
+@login_required
 def b_alerts_items(request, b_id):
     context = {}
     orders = Order.objects.filter(Q(business=b_id) & Q(status='REQUESTED') | Q(status='REJECTED') | Q(status='RE_REQUESTED'))
     context['orders'] = orders
     return render(request, 'dndsos_dashboard/partials/_b-alerts-items.html', context)
 
+@employer_required
+@login_required
+def b_messages_list(request, b_id):
+    context = {}
+    orders_chat = []
+    orders = Order.objects.filter(Q(business=b_id))
+    for order in orders:
+        if order.chat:
+            orders_chat.append(order)
+    
+    context['orders'] = orders_chat
+    return render(request, 'dndsos_dashboard/partials/_b-messages-list.html', context)
 
 
 
@@ -542,6 +593,19 @@ def freelancer_accept(request, fid, oid):
     # alert_freelancer_accepted.send(sender=FreelancerProfile, f_id=freelancer.user, order_id=order.pk)
 
     return render(request, 'dndsos_dashboard/freelancer-accept.html', context)
+
+@employee_required
+@login_required
+def f_messages_list(request, f_id):
+    context = {}
+    orders_chat = []
+    orders = Order.objects.filter(Q(freelancer=f_id))
+    for order in orders:
+        if order.chat:
+            orders_chat.append(order)
+    
+    context['orders'] = orders_chat
+    return render(request, 'dndsos_dashboard/partials/_f-messages-list.html', context)
 
 def email_test(request):
     return render(request, 'dndsos_dashboard/emails/delivery_order_email.html')

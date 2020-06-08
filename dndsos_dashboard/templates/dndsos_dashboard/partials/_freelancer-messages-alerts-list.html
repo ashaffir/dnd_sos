@@ -1,0 +1,44 @@
+{% load static %}
+<a href="{% url 'dndsos_dashboard:f-messages' f_id=user.pk %}" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+    <i class="fa fa-envelope"></i>
+    <span class="badge">{{ user.employee.new_messages }}</span>
+</a>
+
+<div class="dropdown-menu notification-menu">
+    <div class="notification-title">
+        <span class="pull-right label label-default">{{ user.employee.new_messages }}</span>
+        Messages
+    </div>
+
+    <div class="content">
+        <ul>
+            {% for order in orders_with_chats %}
+            <li>
+                <a href="{% url 'dndsos_dashboard:f-messages' f_id=user.pk %}" class="clearfix">
+                    <div class="row">
+                        <div class="col-2 col-md-2">
+                            <figure class="image">
+                                <img src="{{ order.business.employer.profile_pic.url }}" alt="{{ order.freelancer.employer.business_name }}" class="img-circle" style="max-width: 2000%;"/>
+                            </figure>
+                        </div>
+                        <div class="col-10 col-md-10">
+                            <span class="title">{{ order.business.employer.business_name }}</span>
+                            {% for message in order.chat.messages %}
+                                {% if forloop.last %}
+                                    <span class="message">{{ message.message }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <hr />
+
+        <div class="text-right">
+            <a href="{% url 'dndsos_dashboard:f-messages' f_id=user.pk %}" class="view-more">View All</a>
+        </div>
+    </div>
+</div>
