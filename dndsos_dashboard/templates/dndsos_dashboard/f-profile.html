@@ -26,43 +26,9 @@
 					<!-- start: page -->
 
 					<div class="row">
-						<div class="col-md-4 col-lg-3">
-
-							<section class="panel">
-								<div class="panel-body">
-									<div class="thumb-info mb-md">
-										<img src="{% if user.profile.profile_pic %}{{user.profile.profile_pic.url}} {% else %} {% static 'assets/images/logged-user.jpg' %} {% endif %}" class="rounded img-responsive" alt="{{ user.username }} logo">
-										<div class="thumb-info-title">
-											<span class="thumb-info-inner">{{ profile.name }}</span>
-											<span class="thumb-info-type">CEO</span>
-										</div>
-									</div>
-
-									<div class="widget-toggle-expand mb-md">
-										<div class="widget-header">
-											<h6>Profile Completion ({{ complete }}%)</h6>
-											<div class="widget-toggle">+</div>
-										</div>
-										<div class="widget-content-collapsed">
-											<div class="progress progress-xs light">
-												<div class="progress-bar" role="progressbar" aria-valuenow="{{ complete }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete }}%;">
-													{{ complete }}
-												</div>
-											</div>
-										</div>
-										<div class="widget-content-expanded">
-											<ul class="simple-todo-list">
-												{% for required_field, is_completed in required_fields.items %}
-												<li class="{% if is_completed %}completed{% else %}{% endif %}">{{ required_field }}</li>
-												{% endfor %}
-											</ul>
-										</div>
-									</div>
-
-								</div>
-							</section>
+						<div class="col-md-3 col-lg-2">
 						</div>
-						<div class="col-md-8 col-lg-6">
+						<div class="col-md-9 col-lg-7">
 
 							<div class="tabs">
 								<ul class="nav nav-tabs tabs-primary">
@@ -75,7 +41,16 @@
 								</ul>
 								<div class="tab-content">
 									<div id="overview" class="tab-pane active">
-										<h4>Profile Information</h4>
+										<h4>Profile Information -
+											{% if profile.is_approved %} 
+											<span style="color: green; border: solid green 2px; padding:0.5rem; border-radius: 2rem  " ><b>Approved</b></span> 
+											{% else %}
+											<span style="color: red;" ><b>Not Approved</b> 
+												<span style="font-size: 1.5rem;">(Please complete profile)</span> 
+											</span>
+											{% endif %}
+
+										</h4>
 										<section class="panel panel-group">
 											<header class="panel-heading bg-primary"> 
 												<div class="widget-profile-info">
@@ -95,12 +70,29 @@
 												<p><b>Phone</b>: {{ profile.phone }}</p>
 												<p><b>Business Type</b>: {{ profile.business_type }}</p>
 												<p><b>Bio: </b> {{ profile.bio }}</p>
-												<p><b>Address:</b> {{ profile.building_number }} {{ profile.street }} street, {{ profile.city }}</p>
+												<p><b>City:</b>{{ profile.city }}</p>
 											</div>
 										</section>
-
-
-										<h4 class="mb-md">Update Status</h4>
+										<div class="widget-toggle-expand mb-md">
+											<div class="widget-header">
+												<h6>Profile Completion ({{ complete }}%)</h6>
+												<div class="widget-toggle">+</div>
+											</div>
+											<div class="widget-content-collapsed">
+												<div class="progress progress-xs light">
+													<div class="progress-bar" role="progressbar" aria-valuenow="{{ complete }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete }}%;">
+														{{ complete }}
+													</div>
+												</div>
+											</div>
+											<div class="widget-content-expanded">
+												<ul class="simple-todo-list">
+													{% for required_field, is_completed in required_fields.items %}
+													<li class="{% if is_completed %}completed{% else %}{% endif %}">{{ required_field }} </li>
+													{% endfor %}
+												</ul>
+											</div>
+										</div>
 
 
 									</div>

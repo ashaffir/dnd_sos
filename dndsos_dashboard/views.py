@@ -290,6 +290,13 @@ def f_profile(request, f_id):
             required_fields[field] = True
             field_count += 1
 
+    if field_count == len(required_fields):
+        user_profile.is_approved = True
+    else:
+        user_profile.is_approved = False
+
+    user_profile.save()
+
     context['required_fields'] = required_fields
     context['complete'] = round(field_count/len(required_fields)*100)
     context['email'] = request.user.email
