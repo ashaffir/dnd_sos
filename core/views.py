@@ -342,9 +342,9 @@ def activate_account(request, uidb64, token):
         user.is_active = True
 
         if user.is_employer:
-            group = 'businesses'
+            group = 'business'
         else:
-            group = 'freelancers'
+            group = 'freelancer'
 
         user_group, _ = Group.objects.get_or_create(name=group)
         user.groups.add(user_group)

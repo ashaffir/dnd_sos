@@ -6,11 +6,11 @@ from .models import (User, Employer, Employee, Asset, AssignedAsset)
 
 # employer signup form
 class EmployerSignupForm(UserCreationForm):
-    business_name = forms.CharField()
+    # business_name = forms.CharField()
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'email', 'phone_number', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2')
     
     @transaction.atomic
     def save(self):
@@ -20,12 +20,12 @@ class EmployerSignupForm(UserCreationForm):
         user.save()
         
         # create employer profile for user
-        business_name = self.cleaned_data.get('business_name')
+        # business_name = self.cleaned_data.get('business_name')
         no_of_emp = self.cleaned_data.get('number_of_employees')
         employer = Employer.objects.create(
             user=user,
-            business_name=business_name,
-            number_of_employees=no_of_emp
+            # business_name=business_name
+            # number_of_employees=no_of_emp
         )
         
         return user
@@ -49,11 +49,11 @@ class EmployeeSignupForm(UserCreationForm):
         ('20:00-00:00', '20:00-00:00'),
     )
 
-    vehicle = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'class':'form-group form-control'}))
+    # vehicle = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'class':'form-group form-control'}))
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'email', 'phone_number','vehicle', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2')
     
     @transaction.atomic
     def save(self):

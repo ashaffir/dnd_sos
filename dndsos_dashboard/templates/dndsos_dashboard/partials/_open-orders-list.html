@@ -1,13 +1,13 @@
 {% load static %}
 {% for order in open_orders %}
-<div class="col-md-4">
+<div class="col-md-6">
     <section class="panel panel-featured-left panel-featured-secondary">
         <div class="panel-body">
             <div class="widget-summary">
                 <div class="widget-summary-col widget-summary-col-icon">
                     {% if user.pk|slugify in order.selected_freelancers %}
                         <div class="summary-icon bg-secondary">
-                            <i class="fa fa-exclamation"></i>
+                            <i class="fa fa-exclamation"></i>                            
                         </div>    
                     {% else %}
                         <div class="summary-icon bg-primary">

@@ -1,0 +1,140 @@
+{% extends 'dndsos_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Businesses</h2>
+    
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Businesses</span></li>
+            </ol>
+    
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+        <div class="col-md-10 col-lg-10">
+            <div class="tabs">
+                <ul class="nav nav-tabs tabs-primary">
+                    <li class="active">
+                        <a href="#select_tab" data-toggle="tab">Businesses you've worked with</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="select_tab" class="tab-pane active" active>
+
+                        <!-- Filters -->
+                        <div class="row" >
+                            <div class="col-md-4">
+                                <h4>Check our the businesses you've worked with</h4>
+                                <p>There  {% if num_businesses > 1 %}  are {% else %} is {% endif %}{{ num_businesses }} businesses in your list.</p>
+                                <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-md">
+                                    <input type="text" class="form-control" name="city" placeholder="Enter your city">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Sort!</button>
+                                    </span>
+                                </div>                    
+                            </div>
+                            <!-- <div class="col-md-4">
+                                <div class="input-group mb-md">
+                                    <input type="text" class="form-control" name="vehicle" placeholder="Preferred vehicle">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">Sort!</button>
+                                    </span>
+                                </div>                    
+                            </div> -->
+                        </div>
+                        <hr>
+                        <div class="row">
+                            {% for business in businesses %}
+                                <div class="col-md-4">
+                                    <section class="panel">
+                                        <header class="panel-heading bg-primary">
+                                            <div class="panel-heading-profile-picture">
+                                                <img src="{{ business.profile_pic.url }}">
+                                            </div>
+                                        </header>
+                                        <div class="panel-body">
+                                            <h4 class="text-semibold mt-sm">{{ business }}</h4>
+                                            <p>Email: {{ business.email }} </p>
+                                            <p>Phone: {{ business.phone }} </p>
+                                            <p>City: {{ business.city }} </p>
+                                            <hr class="solid short">
+
+                                        </div>
+                                    </section>
+                                </div> 
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: page -->
+</section>
+{% endblock content %}
+
+{% block js %}
+{% include 'dndsos_dashboard/partials/_freelancer-request-sent-modal.html' %}
+<script>
+    request_specific_freelancer = function(freelancer_id, managed){
+        
+        if (managed){
+            order_id = document.getElementById(`b_open_orders_${freelancer_id}`).value;
+        } else {
+            order_id = document.getElementById(`open_orders_${freelancer_id}`).value;
+        }
+
+        if (order_id == ''){
+            alert('Please pick a order or cancel message.')
+            return false
+        }
+        //console.log(`SELECTED: ${order_id}`);
+        $(`#selectFreelancer_${freelancer_id}`).modal('hide')
+        $(`#b_selectFreelancer_${freelancer_id}`).modal('hide')
+
+        businessSocket.send(JSON.stringify({
+            'type': 'direct.message', 
+            'data': {
+                'event': 'Specific Freelancer',
+                'order_id': order_id,                
+                'business': user_id,
+                'requested_freelancer': freelancer_id,
+                'status': 'RE_REQUESTED'
+            }
+        }));
+
+
+        $("#requestFreelancerSent").modal("show");
+
+    }
+</script>
+
+<script>
+    toggleSection = function() {
+        var div = document.getElementById('qrContent');
+        if (div.style.display !== 'none') {
+            div.style.display = 'none';
+        }
+        else {
+            div.style.display = 'block';
+        }
+    };
+    
+</script>
+
+{% endblock js %}

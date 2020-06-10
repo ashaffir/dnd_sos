@@ -30,7 +30,9 @@ class BusinessProfile(TimeStampedUUIDModel):
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
 
-    newsletter_optin = models.BooleanField(default=True, null=True)
+    newsletter_optin = models.BooleanField(default=True)
+
+    is_approved = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Business Profile')
@@ -67,7 +69,9 @@ class FreelancerProfile(TimeStampedUUIDModel):
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
 
-    newsletter_optin = models.BooleanField(default=True, null=True)
+    newsletter_optin = models.BooleanField(default=True)
+
+    is_approved = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Freelancer Profile')

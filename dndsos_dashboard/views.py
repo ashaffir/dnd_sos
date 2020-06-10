@@ -1,5 +1,6 @@
 import logging
 import os
+from datetime import datetime,date
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
@@ -23,7 +24,7 @@ from core.models import Employee, Employer, User
 from core.forms import EmployeeProfileForm, EmployerProfileForm
 from core.decorators import employer_required, employee_required
 
-from .forms import BusinessUpdateForm, FreelancerUpdateForm, OrderForm
+from .forms import BusinessUpdateForm, FreelancerUpdateForm
 from .models import Email, FreelancerProfile, BusinessProfile
 from orders.models import Order
 from .utilities import send_mail
@@ -49,15 +50,98 @@ def order(request, order_id):
         'order_id': order_id
     })
 
+@employer_required
 @login_required
 def b_dashboard(request, b_id):
     context = {}
-    return render(request, 'dndsos_dashboard/b-dashboard.html')
 
+    # Active orders stats
+    active_orders = Order.objects.filter(Q(business=request.user.pk) 
+                            & Q(status='IN_PROGRESS') 
+                            | Q(status='REQUESTED') 
+                            | Q(status='RE_REQUESTED') 
+                            | Q(status='REJECTED') 
+                            | Q(status='STARTED'))
+    context['active_orders'] = active_orders
+
+    orders = []
+    for order in active_orders:
+        created_ts = datetime.timestamp(order.created)
+        now_ts = datetime.timestamp(datetime.now())
+        delta_time_ts = now_ts - created_ts
+        delta_time = datetime.fromtimestamp(delta_time_ts)
+
+        order_timing = {
+            'order':order,
+            'order_hours': delta_time.hour,
+            'order_minutes': delta_time.minute,
+            'delayed': True if delta_time.hour == 1 else False 
+        }
+
+        orders.append(order_timing)
+
+    # Daily orders:
+    context['orders'] = orders
+    context['num_orders'] = len(orders)
+
+    today = date.today()
+    daily_orders = Order.objects.filter(business=request.user.pk, created__contains=today)
+    
+    context['num_daily_orders'] = len(daily_orders)
+
+    context['num_active_freelancers'] = len(request.user.relationships['freelancers'])
+
+    return render(request, 'dndsos_dashboard/b-dashboard.html', context)
+
+@employee_required
 @login_required
 def f_dashboard(request, f_id):
     context = {}
-    return render(request, 'dndsos_dashboard/f-dashboard.html')
+
+    # Active orders stats
+    active_orders = Order.objects.filter(
+        (Q(freelancer=request.user.pk) & Q(status='IN_PROGRESS'))                            
+        | (Q(freelancer=request.user.pk) & Q(status='STARTED')))
+    context['active_orders'] = active_orders
+
+
+    orders = []
+    for order in active_orders:
+        created_ts = datetime.timestamp(order.created)
+        now_ts = datetime.timestamp(datetime.now())
+        delta_time_ts = now_ts - created_ts
+        delta_time = datetime.fromtimestamp(delta_time_ts)
+
+        order_timing = {
+            'order':order,
+            'order_hours': delta_time.hour,
+            'order_minutes': delta_time.minute,
+            'delayed': True if delta_time.hour == 1 else False 
+        }
+
+        orders.append(order_timing)
+
+    # Daily orders:
+    context['orders'] = orders
+    context['num_orders'] = len(orders)
+
+    today = date.today()
+    daily_orders = Order.objects.filter(freelancer=request.user.pk, created__contains=today)
+    
+    context['num_daily_orders'] = len(daily_orders)
+
+    f_businesses = []
+    f_relationships = User.objects.get(pk=f_id).relationships
+    if f_relationships:
+        for fl in f_relationships['businesses']:
+            f_businesses.append(User.objects.get(pk=fl))
+    
+        context['f_businesses'] = f_businesses
+
+    context['num_active_businesses'] = len(f_businesses)
+
+
+    return render(request, 'dndsos_dashboard/f-dashboard.html', context)
 
 
 @login_required
@@ -66,7 +150,6 @@ def b_profile(request, b_id):
     user_profile = Employer.objects.get(user=request.user.id)
 
     if request.method == 'POST':
-        # form = BusinessUpdateForm(request.POST, instance=request.user.profile)
 
         new_name = request.POST.get("name")
         new_business_name = request.POST.get("business_name")
@@ -82,13 +165,10 @@ def b_profile(request, b_id):
             user_profile.name = new_name
 
         if new_business_name:
-            user_profile.company = new_business_name
+            user_profile.business_name = new_business_name
 
         if new_business_category:
             user_profile.business_category = new_business_category
-
-        # if new_vehicle:
-        #     user_profile.vehicle = new_vehicle
 
         if new_phone:
             user_profile.phone = new_phone
@@ -110,12 +190,6 @@ def b_profile(request, b_id):
         else:
             user_profile.profile_pic = profile_pic
 
-        # if form.is_valid():
-        #     form.save()
-        #     messages.success(request,'You have successfully updated your profile.')
-        # else:
-        #     messages.error(request,'There was an error updating the profile.')
-
         user_profile.email = request.user.email
 
         try:        
@@ -129,18 +203,24 @@ def b_profile(request, b_id):
     required_fields = {
         'business_name': False,
         'phone': False,
+        'street': False,
+        'building_number':False,
         'city': False
         }    
-    # for f in user_profile._meta.get_fields():
-        # field = str(f).split('.')[2]
+
     field_count = 0
     for field in required_fields.keys():
         if getattr(user_profile, field):
             required_fields[field] = True
             field_count += 1
+    
+    if field_count == len(required_fields):
+        user_profile.is_approved = True
+    else:
+        user_profile.is_approved = False
 
-    # context['required_fields'] = ['Business Name', 'Business Type', 'Phone', 'City']
-    # context['business_type'] = request.user.profile.business_type
+    user_profile.save()
+
     context['required_fields'] = required_fields
     context['complete'] = round(field_count/len(required_fields)*100)
     context['email'] = request.user.email
@@ -203,16 +283,13 @@ def f_profile(request, f_id):
         'phone': False,
         'city': False
         }    
-    # for f in user_profile._meta.get_fields():
-        # field = str(f).split('.')[2]
+
     field_count = 0
     for field in required_fields.keys():
         if getattr(user_profile, field):
             required_fields[field] = True
             field_count += 1
 
-    # context['required_fields'] = ['Business Name', 'Business Type', 'Phone', 'City']
-    # context['business_type'] = request.user.profile.business_type
     context['required_fields'] = required_fields
     context['complete'] = round(field_count/len(required_fields)*100)
     context['email'] = request.user.email
@@ -227,12 +304,6 @@ def add_freelancer(request):
     context = {}
     return render(request, 'dndsos_dashboard/add-freelancer.html', context)
 
-# @receiver(post_save, sender=Order)
-# def newOrder(sender,instance, **kwargs):
-#     print("NEW ORDER!!!!!!!")
-#     business_id = instance.business.id
-#     return redirect('dndsos_dashboard:orders', b_id=business_id)
-
 @employer_required
 @login_required
 def orders(request, b_id):
@@ -240,41 +311,42 @@ def orders(request, b_id):
 
     business_id = Employer.objects.get(user=request.user.pk)
     business_profile = Employer.objects.get(user=request.user)
-    business_name = business_profile.business_name
-    business_city = business_profile.city
-    business_street = business_profile.street
-    business_building = business_profile.building_number
+    context['business_profile'] = business_profile
+    # business_name = business_profile.business_name
+    # business_city = business_profile.city
+    # business_street = business_profile.street
+    # business_building = business_profile.building_number
 
-    if business_street != '' and business_street is not None:
-        if business_city != '' and business_city is not None:
-            if business_building != '' and business_building is not None:
-                pick_up_address = business_name + ', ' + business_building + ' ' + business_street + ' street, ' + business_city
-    else:
-        messages.error(request, 'Please fill our your business address details before adding orders')
-        return redirect('dndsos_dashboard:b-profile', b_id=request.user.pk)
+    # if business_street != '' and business_street is not None:
+    #     if business_city != '' and business_city is not None:
+    #         if business_building != '' and business_building is not None:
+    #             pick_up_address = business_name + ', ' + business_building + ' ' + business_street + ' street, ' + business_city
+    # else:
+    #     messages.error(request, 'Please fill our your business address details before adding orders')
+    #     return redirect('dndsos_dashboard:b-profile', b_id=request.user.pk)
 
     # business_orders = Order.objects.filter(business=request.user.pk).order_by('-created')
     # context['orders'] = business_orders
 
-    context['freelancers'] = Employee.objects.all()
+    # context['freelancers'] = Employee.objects.all()
 
-    if request.method == 'POST':
-        #TODO: Clean up code. There are limited POST from this page...the add-order is from JS/WS
+    # if request.method == 'POST':
+    #     #TODO: Clean up code. There are limited POST from this page...the add-order is from JS/WS
 
-        if 'addOrder' in request.POST:
-            print(f'POST: {request.POST}')
+    #     if 'addOrder' in request.POST:
+    #         print(f'POST: {request.POST}')
 
-            try:
-                new_order = Order.objects.create(
-                    business=business_id,
-                    pick_up_address=pick_up_address,
-                    drop_off_address=request.POST.get('drop_off_address'),
-                    notes=request.POST.get('notes')
-                )
-                messages.success(request,'Your order was saved.')
-            except Exception as e:
-                messages.error(request,f'Failed to save your order. ERROR>> {e}')
-                return HttpResponseRedirect(request.path_info)
+    #         try:
+    #             new_order = Order.objects.create(
+    #                 business=business_id,
+    #                 pick_up_address=pick_up_address,
+    #                 drop_off_address=request.POST.get('drop_off_address'),
+    #                 notes=request.POST.get('notes')
+    #             )
+    #             messages.success(request,'Your order was saved.')
+    #         except Exception as e:
+    #             messages.error(request,f'Failed to save your order. ERROR>> {e}')
+    #             return HttpResponseRedirect(request.path_info)
 
 
             # Sending emails to the relevant Freelancers
@@ -309,45 +381,30 @@ def orders(request, b_id):
             #         messages.error(request, f"mail not sent -- Email configurations required. ERROR: {ex}")
             #         return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
 
-            return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
-       
-        # elif 'dispached' in request.POST:
-        #     dispached_order_id = request.POST.get('dispached')
-        #     order = Order.objects.get(order_id=dispached_order_id)
-        #     order.order_dispatched = True
-        #     order.save()
+            # return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
+ 
+        # elif 'cancel_b_order' in request.POST:
+        #     order = Order.objects.get(order_id=request.POST.get('cancel_b_order'))
+        #     if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED':
+        #         print(f'CANCEL B ORDER: {order.notes}')
+        #         messages.error(request, 'Please pay for the delivery before archiving the order.')
+        #     else:
+        #         order.status = 'ARCHIVED'
+        #         order.save()            
 
-        #     # TODO: When the order is dispached need to update the FLs in that city that the order is closed
+        # elif 'orderDelete' in request.POST:
+        #     delete_order_id = request.POST.get(f'orderDelete')
+        #     order = Order.objects.get(order_id=delete_order_id)
 
-        #     return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
-        elif 'cancel_b_order' in request.POST:
-            order = Order.objects.get(order_id=request.POST.get('cancel_b_order'))
-            if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED':
-                print(f'CANCEL B ORDER: {order.notes}')
-                messages.error(request, 'Please pay for the delivery before archiving the order.')
-            else:
-                order.status = 'ARCHIVED'
-                order.save()            
-
-        elif 'orderDelete' in request.POST:
-            delete_order_id = request.POST.get(f'orderDelete')
-            order = Order.objects.get(order_id=delete_order_id)
-
-            if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED':
-                messages.error(request, 'Please pay for the delivery before archiving the order.')
-            else:
-                order.status = 'ARCHIVED'
-                order.save()            
-        else:
-            print('No Order form detected.')
+        #     if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED':
+        #         messages.error(request, 'Please pay for the delivery before archiving the order.')
+        #     else:
+        #         order.status = 'ARCHIVED'
+        #         order.save()            
+        # else:
+        #     print('No Order form detected.')
 
     return render(request, 'dndsos_dashboard/orders.html', context)
-
-# @employer_required
-# @login_required
-# def add_order(request):
-#     context = {}
-#     return render(request, 'dndsos_dashboard/add-order.html')
 
 @employer_required
 @login_required
@@ -361,26 +418,23 @@ def f_deliveries(request, f_id):
     context = {}
     freelancer_id = request.user.pk
 
-    # if request.method == 'POST':
-        # if 'orderDelivered' in request.POST:
-        #     order_delivered = Order.objects.get(order_id=request.POST.get('orderDelivered'))
-        #     order_delivered.status = 'COMPLETED'
-        #     order_delivered.save()
-    #     if 'orderSettled' in request.POST:
-    #         order_settled = Order.objects.get(order_id=request.POST.get('orderSettled'))
-    #         order_settled.status = 'SETTLED'
-    #         order_settled.save()
-    #     elif 'cancel_f_order' in request.POST:
-    #         order = Order.objects.get(order_id=request.POST.get('cancel_f_order'))
-    #         order.status = 'REQUESTED'
-    #         order.freelancer = None
-    #         order.save()
-
-    # orders = Order.objects.filter(freelancer=freelancer_id, status='STARTED')
-    # print(f'ORDERs: {orders}')
-    # context['orders'] = orders
-
     return render(request, 'dndsos_dashboard/deliveries.html', context)
+
+@employee_required
+@login_required
+def f_businesses(request, f_id):
+    context = {}
+    f_businesses = request.user.relationships['businesses']
+    
+    businesses = []
+    for b_id in f_businesses:
+        businesses.append(Employer.objects.get(pk=b_id))
+
+    context['businesses'] = businesses
+    context['num_businesses'] = len(businesses)
+    
+    return render(request, 'dndsos_dashboard/f-businesses.html', context)
+
 
 @login_required
 def f_statistics(request, f_id):
@@ -474,7 +528,7 @@ def b_statistics(request, b_id):
     context = {}
     return render(request, 'dndsos_dashboard/statistics.html', context)
 
-
+@employer_required
 @login_required
 def freelancers(request, b_id):
     context = {}
@@ -484,19 +538,25 @@ def freelancers(request, b_id):
 
     b_freelancers = []
     b_relationships = User.objects.get(pk=b_id).relationships
-    for fl in b_relationships['freelancers']:
-        b_freelancers.append(User.objects.get(pk=fl))
+    if b_relationships:
+        for fl in b_relationships['freelancers']:
+            b_freelancers.append(User.objects.get(pk=fl))
     
-    context['b_freelancers'] = b_freelancers
-    for f in b_freelancers:
-        print(f'>>>F: {f.employee.vehicle}')
+        context['b_freelancers'] = b_freelancers
 
     orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='REQUESTED') | Q(status='RE_REQUESTED') | Q(status='REJECTED'))
     context['orders'] = orders
 
-    completer_orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='COMPLETED') & ~Q(status='SETTLED'))
-    context['completer_orders'] = completer_orders
+    completed_orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='COMPLETED') & ~Q(status='SETTLED'))
+    context['completed_orders'] = completed_orders
 
+    # Quering the freelancers that are due payment
+    freelancers_due_payment = []
+    for order in completed_orders:
+        freelancers_due_payment.append(order.freelancer.pk)
+
+    context['freelancers_due_payment'] = freelancers_due_payment
+    context['num_freelancers_due_payment'] = len(freelancers_due_payment)
 
     if request.method == 'POST':
 

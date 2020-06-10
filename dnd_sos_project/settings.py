@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     
     'django_extensions',
     'ckeditor',
+    'crispy_forms',
     'rest_framework', #https://www.django-rest-framework.org/
     'qr_code', # https://github.com/dprog-philippe-docourt/django-qr-code
     
@@ -191,6 +192,8 @@ EMAIL_HOST_PASSWORD = '7075700fa37924a22ebe6b5ffcdac824'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'ashaffir@gmail.com'
 
+ADMIN_EMAIL = 'alfred.shaffir@gmail.com'
+
 # use bootstrap friendly message tags
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
@@ -200,3 +203,5 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',
     messages.ERROR: 'alert-danger',
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

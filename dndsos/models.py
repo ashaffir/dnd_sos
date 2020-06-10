@@ -1,3 +1,12 @@
 from django.db import models
 
-# Create your models here.
+class ContactUs(models.Model):
+    fname = models.CharField(max_length=100, blank=True, null=True)
+    lname = models.CharField(max_length=100, blank=True, null=True)
+    subject = models.CharField(max_length=100, blank=True, null=True)
+    email = models.CharField(max_length=100)
+    message = models.TextField(max_length=500)
+    created = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.email

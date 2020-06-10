@@ -5,18 +5,22 @@
   <div class="site-blocks-cover mt-2">
     <div class="container">
       <div class="row align-items-center justify-content-center">
-        {% include 'core/_messages.html' %}      
         <div class="col-md-12" style="position: relative;" data-aos="fade-up">
           
           <img src="{% static 'images/deliverer.png' %}" alt="delivery scooter" class="img-fluid img-absolute">
 
           <div class="row mb-4">
             <div class="col-lg-4 mr-auto">
-              <h1>Grow Your Business Faster</h1>
-              <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam assumenda ea quo cupiditate facere deleniti fuga officia.</p>
+              <h1>Delivery and Dispatch Management System</h1>
+              <p class="mb-5">DND-SOS online platform allows businesses to locate, hire, and manage their delivery workforce while providing individuals with an additional income stream.</p>
               <div>
-                <a href="/core/employer/signup/" class="btn btn-primary mr-2 mb-2">Business</a>
-                <a href="/core/employee/signup/" class="btn btn-primary mr-2 mb-2">Freelancer</a>
+                {% if user.is_authenticated %}
+                  <!-- <a href="{ url 'core:employer_signup' }" class="btn btn-primary mr-2 mb-2">Business</a>
+                  <a href="/core/employee/signup/" class="btn btn-primary mr-2 mb-2">Freelancer</a> -->
+                {% else %}
+                  <a href="{% url 'core:employer_signup' %}" class="btn btn-primary mr-2 mb-2">Business</a>
+                  <a href="{% url 'core:employee_signup' %}" class="btn btn-primary mr-2 mb-2">Freelancer</a>
+              {% endif %}
               </div>
             </div>
             
@@ -33,7 +37,7 @@
     <div class="container">
       <div class="row mb-5">
         <div class="col-12 text-center">
-          <h2 class="section-title mb-3">Features</h2>
+          <h2 class="section-title mb-3">Get the necessary tools to manage orders’ delivery</h2>
         </div>
       </div>
       <div class="row align-items-stretch">
@@ -44,9 +48,9 @@
               <span class="icon-wrap"><span class="text-primary icon-autorenew"></span></span>
             </div>
             <div>
-              <h3>Business Consulting</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
-              <p><a href="#">Learn More</a></p>
+              <h3>Scale your business</h3>
+              <p>With DND-SOS you will never run out of delivery personnel. Get as many as you need to accommodate your customers’ needs.</p>
+              <!-- <p><a href="#">Learn More</a></p> -->
             </div>
           </div>
 
@@ -58,9 +62,9 @@
               <span class="icon-wrap"><span class="text-primary icon-store_mall_directory"></span></span>
             </div>
             <div>
-              <h3>Market Analysis</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
-              <p><a href="#">Learn More</a></p>
+              <h3>Clear and easy to use</h3>
+              <p>Open order and manage its life cycle through a user-friendly interface.</p>
+              <!-- <p><a href="#">Learn More</a></p> -->
             </div>
           </div>
         </div>
@@ -70,14 +74,14 @@
               <span class="icon-wrap"><span class="text-primary icon-shopping_basket"></span></span>
             </div>
             <div>
-              <h3>User Monitoring</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
-              <p><a href="#">Learn More</a></p>
+              <h3>Real-time response</h3>
+              <p>Maintain real-time communication with the delivery team to maintain it’s efficiency and punctuality.</p>
+              <!-- <p><a href="#">Learn More</a></p> -->
             </div>
           </div>
         </div>
 
-
+<!-- 
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
           <div class="unit-4 d-block">
             <div class="unit-4-icon mb-3">
@@ -117,41 +121,31 @@
               <p><a href="#">Learn More</a></p>
             </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </div>
   </div>
 
-  <div class="feature-big">
+  <div class="feature-big" id="how-it-works-section">
     <div class="container">
-      <div class="row mb-5 site-section border-bottom">
-        <div class="col-lg-7">
-          <img src="{% static 'images/do_ui_kit_download_cta_floating_devices-2x.png' %}" alt="Image" class="img-fluid">
-        </div>
-        <div class="col-lg-5 pl-lg-5 ml-auto mt-md-5">
-          <h2 class="text-black">Create interactive prototypes</h2>
-          <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem neque nisi architecto autem molestias corrupti officia veniam.</p>
-          <ul class="ul-check mb-5 list-unstyled success">
-            <li>Adipisci excepturi aliquam</li>
-            <li>Deleniti labore reiciendis</li>
+      <div class="row">
+        <div class="col-lg-12 pl-lg-12 ml-auto mt-5">
+          <h2 class="text-black">How it works</h2>
+          <p class="mb-4">DND-SOS allows individuals that would like to start another income stream, to join a pool of freelancers that are available and able to make deliveries.</p>
+          <ul class="ul-check mb-1 list-unstyled success">
+            <li>Businesses have practically unlimited delivery workforce resources to select from and scale their operations.</li>
+            <li>Freelancers can user the platform <strong>free of charge</strong>, decide which delivery to make, and for which business.</li>
           </ul>
-          <div class="author-box">
-            <div class="d-flex mb-4">
-              <div class="mr-3">
-                <img src="{% static 'images/person_1.jpg' %}" alt="Image" class="img-fluid rounded-circle">
-              </div>
-              <div class="mr-auto text-black">
-                <strong class="font-weight-bold mb-0">Amalia G.</strong> <br>
-                Co-Founder, XYZ Inc.
-              </div>
-            </div>
-            <blockquote>&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus vitae ipsa asperiores inventore aperiam iure?&rdquo;</blockquote>
-          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-10 col-md-10">
+          <img src="{% static 'images/how-it-works.png' %}" alt="Image" class="img-fluid">
         </div>
       </div>
 
-      <div class="mt-5 row mb-5 site-section ">
+      <!-- <div class="mt-5 row mb-5 site-section ">
         <div class="col-lg-7 order-1 order-lg-2">
           <img src="{% static 'images/do_ui_kit_hero_floating_devices-2x.png' %}" alt="Image" class="img-fluid">
         </div>
@@ -177,12 +171,90 @@
             <blockquote>&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus vitae ipsa asperiores inventore aperiam iure?&rdquo;</blockquote>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
+  <div class="site-section bg-light" id="pricing">
+    <div class="container">
+      
+      <div class="row mb-1">
+        <div class="col-12 text-center">
+          <h2 class="section-title mb-3">Pricing</h2>
+        </div>
+      </div>
 
-  <div class="site-section bg-light" id="about-section">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="pricing-table">
+            <div class="col-lg-12 col-md-12 col-sm-6">
+              <div class="plan">
+                <h3>Enterprise<span>$59</span></h3>
+                <a class="btn btn-lg btn-primary" href="#">Sign up</a>
+                <ul>
+                  <li><b>10GB</b> Disk Space</li>
+                  <li><b>100GB</b> Monthly Bandwidth</li>
+                  <li><b>20</b> Email Accounts</li>
+                  <li><b>Unlimited</b> subdomains</li>
+                </ul>
+              </div>
+            </div>
+          </div>  
+        </div>
+
+        <div class="col-md-4">
+          <div class="pricing-table">
+            <div class="col-lg-12 col-md-12 col-sm-6">
+              <div class="plan most-popular">
+                <div class="plan-ribbon-wrapper"><div class="plan-ribbon">Popular</div></div>
+                <h3>Professional<span>$29</span></h3>
+                <a class="btn btn-lg btn-primary" href="#">Sign up</a>
+                <ul>
+                  <li><b>5GB</b> Disk Space</li>
+                  <li><b>50GB</b> Monthly Bandwidth</li>
+                  <li><b>10</b> Email Accounts</li>
+                  <li><b>Unlimited</b> subdomains</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="pricing-table">
+            <div class="col-lg-12 col-sm-6">
+              <div class="plan">
+                <h3>Standard<span>$17</span></h3>
+                <a class="btn btn-lg btn-primary" href="#">Sign up</a>
+                <ul>
+                  <li><b>3GB</b> Disk Space</li>
+                  <li><b>25GB</b> Monthly Bandwidth</li>
+                  <li><b>5</b> Email Accounts</li>
+                  <li><b>Unlimited</b> subdomains</li>
+                </ul>
+              </div>
+            </div>
+          </div>          
+        </div>
+        </div>
+      </div>      
+  </div>
+
+
+      
+      <!-- <div class="row mb-5">
+        <div class="col-lg-6">
+          <img src="{% static 'images/about_1.jpg' %}" alt="Image" class="img-fluid mb-5 mb-lg-0 rounded shadow">
+        </div>
+        <div class="col-lg-5 ml-auto pl-lg-5">
+          <h2 class="text-black mb-4">Create interactive prototypes</h2>
+          <p class="mb-4">Eos cumque optio dolores excepturi rerum temporibus magni recusandae eveniet, totam omnis consectetur maxime quibusdam expedita dolorem dolor nobis dicta labore quaerat esse magnam unde, aperiam delectus! At maiores, itaque.</p>
+          <p><a href="#" class="btn btn-primary">Learn More</a></p>
+        </div>
+      </div> -->
+      
+    </div>
+  </div>
+  <!-- <div class="site-section bg-light" id="about-section">
     <div class="container">
       <div class="row mb-5">
         <div class="col-12 text-center">
@@ -201,10 +273,10 @@
       </div>
       
     </div>
-  </div>
+  </div> -->
 
 
-  <div class="site-section testimonial-wrap" id="testimonials-section">
+  <!-- <div class="site-section testimonial-wrap" id="testimonials-section">
     <div class="container">
       <div class="row mb-5">
         <div class="col-12 text-center">
@@ -274,9 +346,9 @@
         </div>
 
       </div>
-  </div>
+  </div> -->
 
-  <div class="site-section" id="blog-section">
+  <!-- <div class="site-section" id="blog-section">
     <div class="container">
       <div class="row mb-5">
         <div class="col-12 text-center">
@@ -315,7 +387,7 @@
         
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="site-section bg-light" id="contact-section">
     <div class="container">
@@ -329,47 +401,48 @@
 
           
 
-          <form action="#" class="p-5 bg-white">
+          <form action="#" method="POST" name="contactForm" id="contactForm" class="p-5 bg-white">
+            {% csrf_token %}
             
-            <h2 class="h4 text-black mb-5">Contact Form</h2> 
+            <h2 class="h4 text-black mb-5">Get in Touch</h2> 
 
             <div class="row form-group">
               <div class="col-md-6 mb-3 mb-md-0">
-                <label class="text-black" for="fname">First Name</label>
-                <input type="text" id="fname" class="form-control rounded-0">
+                <label class="text-black" for="fname">* First Name</label>
+                <input type="text" id="fname" name='fname' class="form-control rounded-0">
               </div>
               <div class="col-md-6">
-                <label class="text-black" for="lname">Last Name</label>
-                <input type="text" id="lname" class="form-control rounded-0">
+                <label class="text-black" for="lname">* Last Name</label>
+                <input type="text" id="lname" name="lname" class="form-control rounded-0">
               </div>
             </div>
 
             <div class="row form-group">
               
               <div class="col-md-12">
-                <label class="text-black" for="email">Email</label> 
-                <input type="email" id="email" class="form-control rounded-0">
+                <label class="text-black" for="email">* Email</label> 
+                <input type="email" id="email" name="email" class="form-control rounded-0">
               </div>
             </div>
 
             <div class="row form-group">
               
               <div class="col-md-12">
-                <label class="text-black" for="subject">Subject</label> 
-                <input type="subject" id="subject" class="form-control rounded-0">
+                <label class="text-black" for="subject">* Subject</label> 
+                <input type="subject" id="subject" name="subject" class="form-control rounded-0">
               </div>
             </div>
 
             <div class="row form-group">
               <div class="col-md-12">
-                <label class="text-black" for="message">Message</label> 
+                <label class="text-black" for="message">* Message</label> 
                 <textarea name="message" id="message" cols="30" rows="7" class="form-control rounded-0" placeholder="Write your notes or questions here..."></textarea>
               </div>
             </div>
 
             <div class="row form-group">
               <div class="col-md-12">
-                <input type="submit" value="Send Message" class="btn btn-primary mr-2 mb-2">
+                <input type="submit" name="contact_us" value="Send Message" class="btn btn-primary mr-2 mb-2">
               </div>
             </div>
 

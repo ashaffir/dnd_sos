@@ -3,15 +3,17 @@
     <div class="chat_td panel-body" onclick="showChat('{{ order.order_id }}')">
         <div class="row">
             <div class="col-md-11 col-11">
-                <p>Customer Address: {{ order.drop_off_address }}</p>
-                <p>Business: {{ order.freelancer }}</p>   
+                <h4>Order Details</h4>
+                <p>Business: <b>{{ order.business.employer.business_name }}</b></p>   
+                <p>Business address (pick-up): <b>{{ order.pick_up_address }}</b></p>   
+                <p>Customer address (Drop off): <b>{{ order.drop_off_address }}</b></p>
             </div>
             <div class="col-md-1 col-1 col-sm-1">
                 {% if order.new_message.freelancer %}
                     <span  class="my_badge my_badge-danger">New</span> 
                 {% endif %}
             </div>
-
+            <i class="fa fa-chevron-right fa-2x"></i>
         </div>
           
     </div>

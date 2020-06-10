@@ -29,6 +29,8 @@
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
   
@@ -53,30 +55,32 @@
     <header class="site-navbar py-md-4 js-sticky-header site-navbar-target" role="banner">
 
       <div class="container">
+        {% include 'core/_messages.html' %}      
         <div class="row align-items-center">
           
-          <div class="col-8 col-md-8 col-xl-2  d-block d-lg-none">
+          <div class="col-10 col-md-10 col-xl-2  d-block d-lg-none">
             <h6 class="mb-0 site-logo"><a href="{% url 'dndsos:home' %}" class="text-black h2 mb-0">DnD-SOS<span class="text-primary"><img src="{% static 'images/dndsos-logo-black.png' %}" alt="dndsos logo type" style="max-width: 15%;"></span> </a></h6>
           </div>
 
-          <div class="col-12 col-md-10 main-menu">
+          <div class="col-12 col-md-12 main-menu">
             <nav class="site-navigation position-relative text-right" role="navigation">
 
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li><a href="/#home-section" class="nav-link">Home</a></li>
                 <li><a href="/#features-section" class="nav-link">Features</a></li>
-                <li><a href="/#about-section" class="nav-link">About Us</a></li>
-                <li><a href="/#testimonials-section" class="nav-link">Testimonials</a></li>
-                <li><a href="/#blog-section" class="nav-link">Blog</a></li>
+                <li><a href="/#how-it-works-section" class="nav-link">How it Works</a></li>
+                <!-- <li><a href="/#about-section" class="nav-link">About Us</a></li> -->
+                <!-- <li><a href="/#testimonials-section" class="nav-link">Testimonials</a></li> -->
+                <!-- <li><a href="/#blog-section" class="nav-link">Blog</a></li> -->
+                <li><a href="/#pricing" class="nav-link">Pricing</a></li>
                 <li><a href="/#contact-section" class="nav-link">Contact</a></li>
                 {% if user.is_authenticated %}
-                  <li>{{ user.username }}</li>
-                  <li><a href="{% url 'core:logout' %}" class="btn btn-sm btn-outline-success">Logout</a></li>
                   {% if user.employer %}
-                    <li><a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li>
+                    <li><a class="btn btn-success text-white" href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li>
                   {% else %}
-                    <li><a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="">Dashboard</a></li>
+                    <li><a class="btn btn-outline-danger" href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="">Dashboard</a></li>
                   {% endif %}
+                    <li><a href="{% url 'core:logout' %}" class="btn btn-sm btn-outline-success">Logout</a></li>
                 {% else %}
                   <li><a href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">Login</a></li>
                 {% endif %}
@@ -103,9 +107,9 @@
         <div class="row mb-5">
           <div class="col-12">
             <p class="mb-0">
-              <a href="#" class="p-3"><span class="icon-facebook"></span></a>
+              <!-- <a href="#" class="p-3"><span class="icon-facebook"></span></a>
               <a href="#" class="p-3"><span class="icon-twitter"></span></a>
-              <a href="#" class="p-3"><span class="icon-instagram"></span></a>
+              <a href="#" class="p-3"><span class="icon-instagram"></span></a> -->
             </p>
           </div>
         </div>
@@ -113,7 +117,7 @@
           <div class="col-md-12">
             <p class="mb-0">
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | DND-SOS Ltd. <i class="icon-heart" aria-hidden="true"></i> by <a href="https://actappon.com" target="_blank" >Actappon</a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>

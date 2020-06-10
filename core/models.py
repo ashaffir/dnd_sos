@@ -72,7 +72,7 @@ class Employer(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     
     # business name
-    business_name = models.CharField(max_length=200, default=None, blank=True, null=True)
+    business_name = models.CharField(max_length=200, blank=True, null=True)
     
     # number of employees associated with the employer
     number_of_employees  = models.IntegerField(default=0, blank=True, null=True)
@@ -85,14 +85,16 @@ class Employer(models.Model):
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
 
-    b_freelancers = models.CharField(max_length=500, null=True)
+    b_freelancers = models.CharField(max_length=500, null=True, blank=True)
  
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
 
-    newsletter_optin = models.BooleanField(default=True, null=True)
+    newsletter_optin = models.BooleanField(default=True)
 
     new_messages = models.IntegerField(default=0)
+
+    is_approved = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Business Profile')
@@ -133,9 +135,11 @@ class Employee(models.Model):
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
 
-    newsletter_optin = models.BooleanField(default=True, null=True)
+    newsletter_optin = models.BooleanField(default=True)
 
     new_messages = models.IntegerField(default=0)
+
+    is_approved = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Freelancer Profile')
@@ -158,9 +162,5 @@ class Asset(models.Model):
 class AssignedAsset(models.Model):
     asset = models.OneToOneField(Asset, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-
-
-
-
 
 

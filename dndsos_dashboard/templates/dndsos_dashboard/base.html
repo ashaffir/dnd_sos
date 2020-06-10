@@ -258,17 +258,11 @@
 											</a>
     	                                </li>
 										<!-- <li>
-											<a href="{% url 'dndsos_dashboard:b-deliveries' b_id=user.pk %}">
-												<i class="fa fa-tasks" aria-hidden="true"></i>
-												<span>Deliveries</span>
-											</a>
-										</li> -->
-										<li>
 											<a href="{% url 'dndsos_dashboard:b-statistics' b_id=user.pk %}">
 												<i class="fa fa-bar-chart-o" aria-hidden="true"></i>
 												<span>Statistics</span>
 											</a>
-										</li>
+										</li> -->
 									{% else %}
 										<li>
 											<a href="{% url 'orders:open-orders' %}">
@@ -282,18 +276,24 @@
 												<span>Deliveries</span>
 											</a>
 										</li>
+										<li>
+											<a href="{% url 'dndsos_dashboard:f-businesses' f_id=user.pk %}">
+												<i class="fa fa-building" aria-hidden="true"></i>
+												<span>Businesses</span>
+											</a>
+										</li>
 	                                    <li>
                                         	<a href="{% url 'dndsos_dashboard:f-messages' f_id=user.pk %}">
 												<i class="fa fa-send" aria-hidden="true"></i>
 												<span>Messages</span>
 											</a>
     	                                </li>
-										<li>
+										<!-- <li>
 											<a href="{% url 'dndsos_dashboard:f-statistics' f_id=user.pk %}">
 												<i class="fa fa-bar-chart-o" aria-hidden="true"></i>
 												<span>Statistics</span>
 											</a>
-										</li>
+										</li> -->
 									{% endif %}
 								</nav>
 				

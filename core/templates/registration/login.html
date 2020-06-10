@@ -1,6 +1,7 @@
 {% extends "dndsos/base.html" %}
 
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block title %}DND SOS - Login{% endblock %}
 
@@ -17,8 +18,8 @@
 
           <form class="login" method="POST" action="{% url 'core:login' %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-success primaryAction" type="submit">{% trans "Sign In" %}</button>
+        {{ form|crispy }}
+        <button class="btn btn-success primaryAction text-white" type="submit">{% trans "Sign In" %}</button>
         {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}

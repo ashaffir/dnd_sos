@@ -1,7 +1,13 @@
 {% load i18n %}
 {% load static %}
-    <!-- <a  href="#modalForm" id="" class="btn btn-primary modal-with-form">Add <i class="fa fa-plus"></i></a> -->
+    {% if business_profile.is_approved %}
     <a class="mb-xs mt-xs mr-xs btn btn-primary" data-toggle="modal" data-target="#modalAddOrder">Add new customer order <i class="fa fa-plus"></i></a>
+    {% else %}
+    <h4 style="color: red;"><i class="fa fa-exclamation"></i> Please complete your profile before adding orders. 
+        <a href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">Go to Business Profile</a>
+    </h4>
+    <button class="mb-xs mt-xs mr-xs btn btn-primary" disabled>Add new customer order <i class="fa fa-plus"></i></button>
+    {% endif %}
     <!-- Modal Form -->
 
     <div class="modal fade" id="modalAddOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
