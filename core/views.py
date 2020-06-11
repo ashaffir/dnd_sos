@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
+from django.http import HttpResponse, HttpResponseForbidden, JsonResponse, HttpResponseRedirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -11,8 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.contrib.auth.models import Group
+from django.contrib.auth.tokens import default_token_generator
 
-# import pusher
+from dndsos_dashboard.utilities import send_mail
+from django.utils.translation import gettext as _
 
 from .forms import *
 from .models import User, Employer, Employee, Asset, AssignedAsset
@@ -392,39 +394,88 @@ def employee_set_password(request, uid):
 
 
 def reset_password(request):
-    pass
+    if request.method == "POST":
+        user = request.user
+        password1 = request.POST.get("new_password1")
+        password2 = request.POST.get("new_password2")
+        error = False
+        if not password1:
+            enter_password_msg = _("Enter password")
+            messages.error(request, enter_password_msg)
+            error =True
+        elif len(password1) < 8:
+            pwd_too_short_msg = _("Minimum password length should be 8")
+            messages.error(request, pwd_too_short_msg)
+            error = True
+        elif not (password1 == password2):
+            pwd_missmatch_msg = _("Mismatch password")
+            messages.error(request, )
+            error=True
 
-# pusher auth
-# @require_POST
-# @employer_required
-# @login_required
-# def pusher_auth(request):
-#     '''
-#     employers have only access to private-{{employer-email}} channels,
-#     employer-email should match the current user
-#     '''
-#     socket_id = request.POST['socket_id']
-#     channel_name = request.POST['channel_name']
-    
-#     start_index = len('private-')
-#     employer_email = channel_name[start_index:]
-    
-#     if request.user.email == employer_email:
-#         pusher_client = pusher.Pusher(
-#                 app_id = settings.APP_ID,
-#                 key = settings.APP_KEY,
-#                 secret = settings.APP_SECRET,
-#                 cluster = settings.APP_CLUSTER
-#             )
-        
-#         auth = pusher_client.authenticate(
-#                 channel = channel_name,
-#                 socket_id = socket_id
-#             )
-#         return JsonResponse(auth)
-#     else:
-#         return HttpResponseForbidden()
+        if error:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+        try:
+            user.set_password(password1)
+            user.save()
+            changed_pwd_msg = _("Successfully changed the password, please login again.")
+            messages.success(request, changed_pwd_msg)
+            logout(request)
+            return redirect('core:login')
+        except Exception as ex:
+            messages.error(request, ex.message)
+
+    return render(request, 'core/reset-password.html', {})
+
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST.get("login_email")
+
+        if email:
+            print(f"EMAIL: ***************{email}****************")
+            if '@' in email: 
+
+                user = User.objects.filter(email=email).first()
+                print(f'>>>>>>>  USER: {user}')
+                # return HttpResponse(user)
+                if user is not None :
+                    token_generator = default_token_generator
+
+                    context = {
+                        'domain': request._current_scheme_host,
+                        'uidb64':  urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token': token_generator.make_token(user),
+                        'user': user
+                    }
+
+                    try:
+                        send_mail('Reset Password', email_template_name=None,
+                                  context=context, to_email=[email],
+                                  html_email_template_name='core/emails/change-password-email.html')
+                        
+                        check_email_message = _("Check your mail inbox to reset password")
+                        messages.success(request, check_email_message)
+                        return redirect('dndsos:home')
+
+                    except Exception as ex:
+                        print(ex)
+                        messages.error(request, "Email configurations Error !!!")
+                    
+                    return redirect('core:login')
+                else:
+                    not_registered_message = _("This email is not registered to us. Please register first ")
+                    messages.error(request, not_registered_message)
+                    return redirect('dndsos:home')
+            else:
+                valid_email_message = _("Please enter a valid email")
+                messages.error(request, valid_email_message)
+                return redirect('core:forgot-password')
+        else:
+            enter_email_msg =  _("Please do enter the email")
+            messages.error(request, enter_email_msg)
+            return redirect('core:forgot-password')
+    else:
+        return render(request, 'core/forgot_password.html', {})
 
 
 

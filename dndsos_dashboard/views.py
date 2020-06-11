@@ -126,7 +126,7 @@ def f_dashboard(request, f_id):
     context['num_orders'] = len(orders)
 
     today = date.today()
-    daily_orders = Order.objects.filter(freelancer=request.user.pk, created__contains=today)
+    daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
     
     context['num_daily_orders'] = len(daily_orders)
 

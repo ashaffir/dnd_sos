@@ -2,14 +2,46 @@
 {% load i18n %}
 
   <!-- Message Sent Modal -->
-  <div class="modal fade" id="messageSent" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal fade" id="messageSent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Message Sent</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-check fa-4x animated rotateIn" style="color: green;"></i>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a href="" class="btn  btn-outline-danger">OK</a>
+        <!-- <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a> -->
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+  
+<!-- <div class="modal fade" id="messageSent" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header ">
           <h5 class="modal-title" id="requestSentLabel">Message Sent</h5>
+
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
+          <div class="modal-icon">
+            <i class="fa fa-check" style="color: green;"></i>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
@@ -17,3 +49,4 @@
       </div>
     </div>
   </div>
+   -->

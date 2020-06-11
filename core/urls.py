@@ -33,9 +33,13 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('activate/account/<slug:uidb64>/<slug:token>/', core_views.activate_account, name='activate_account'),
     path('account/activation/sent/', core_views.account_activation_sent, name='account_activation_sent'),
-    
-    path('reset_password/', core_views.reset_password, name='reset_password'),
-    
+
+    # path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+
+    # Password:
+    # https://docs.djangoproject.com/en/3.0/topics/auth/default/
+    path('forgot-password/', core_views.forgot_password, name='forgot-password'),
+
     # pusher user authentication
     # path('pusher/auth/', core_views.pusher_auth, name='pusher_auth'),
     

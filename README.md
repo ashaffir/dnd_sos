@@ -44,3 +44,6 @@ https://github.com/dprog-philippe-docourt/django-qr-code
 
 ### Model query with date time conditions
 https://stackoverflow.com/questions/1317714/how-can-i-filter-a-date-of-a-datetimefield-in-django
+
+### Passwords
+https://www.youtube.com/watch?v=qjlZWBbX7-o
