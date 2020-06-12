@@ -35,9 +35,13 @@
             <td style="background-color: rgb(5, 97, 202); color:white; text-align:center">
                 <label for="dispached" id="orderStatus" status='{{ order.status }}'>Being delivered...</label>
             </td>
-        {% elif order.status == 'COMPLETED' or order.status == 'SETTLED' %}
+        {% elif order.status == 'COMPLETED' %}
             <td>
                 <label for="completed" id="orderStatus" status='{{ order.status }}'>Delivered</label>
+            </td>
+        {% elif order.status == 'SETTLED' %}
+            <td>
+                <label for="completed" id="orderStatus" status='{{ order.status }}'>Settled</label>
             </td>
         {% else %}
             <td>

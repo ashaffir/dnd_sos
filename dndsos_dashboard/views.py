@@ -279,6 +279,7 @@ def f_profile(request, f_id):
 
     # Check profile completion
     required_fields = {
+        'name': False,
         'vehicle': False,
         'phone': False,
         'city': False

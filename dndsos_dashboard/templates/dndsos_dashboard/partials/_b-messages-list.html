@@ -1,4 +1,4 @@
-{% for order in orders %}
+{% for order in orders|dictsort:'created' %}
 {% if order.freelancer %}                     
     <div class="chat_td panel-body" onclick="showChat('{{ order.order_id }}')">
         <div class="row">

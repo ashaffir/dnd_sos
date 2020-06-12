@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load static %}
-<a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#makePayment_{{ order.order_id }}" style="color: white;">Message <i class="fa fa-send"></i></a>
+<a class="btn btn-primary" data-toggle="modal" data-target="#makePayment_{{ order.order_id }}" style="color: white;">Message <i class="fa fa-send"></i></a>
 
 <div class="modal fade" id="makePayment_{{ order.order_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

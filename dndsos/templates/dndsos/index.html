@@ -2,10 +2,20 @@
 {% load static %}
 {% block content %}
 
-  <div class="site-blocks-cover mt-2">
+<style>
+  @media (max-width: 480px){
+
+    .special {
+      padding-top: 25%;
+      margin-bottom: 50%;
+    }
+  }
+
+</style>
+  <div class="site-blocks-cover mt-2 special">
     <div class="container">
       <div class="row align-items-center justify-content-center">
-        <div class="col-md-12" style="position: relative;" data-aos="fade-up">
+        <div class="col-md-12 col-sm-12" style="position: relative;" data-aos="fade-up">
           
           <img src="{% static 'images/deliverer.png' %}" alt="delivery scooter" class="img-fluid img-absolute">
 

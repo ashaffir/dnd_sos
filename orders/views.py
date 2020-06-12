@@ -73,9 +73,23 @@ def active_deliveries_list(request):
 
 @login_required
 def freelancer_messages_list(request):
+    '''
+    Messages can be sent between the users only when the order status is:
+    1) Started
+    2) IN_PROGRESS
+    3) COMPLETED
+
+    In other statuses the message button is in active.
+    '''
+
     context = {}
     freelancer_id = request.user.pk
-    current_orders = Order.objects.filter(Q(freelancer=freelancer_id) & ~Q(status='COMPLETED') & ~Q(status='ARCHIVED'))
+
+    current_orders = Order.objects.filter(
+        (Q(freelancer=freelancer_id) & Q(status='STARTED')) |
+         Q(freelancer=freelancer_id) & Q(status='IN_PROGRESS') |
+         Q(freelancer=freelancer_id) & Q(status='COMPLETED')
+         )
 
     freelancer = Employee.objects.get(pk=freelancer_id)
 
@@ -133,9 +147,23 @@ def business_alerts_list(request):
 
 @login_required
 def business_messages_list(request):
+    '''
+    Messages can be sent between the users only when the order status is:
+    1) Started
+    2) IN_PROGRESS
+    3) COMPLETED
+
+    In other statuses the message button is in active.
+    '''
+
     context = {}
     business_id = request.user.pk
-    current_orders = Order.objects.filter(Q(business=business_id) & ~Q(status='COMPLETED') & ~Q(status='ARCHIVED'))
+
+    current_orders = Order.objects.filter(
+        (Q(business=business_id) & Q(status='STARTED')) |
+         Q(business=business_id) & Q(status='IN_PROGRESS') |
+         Q(business=business_id) & Q(status='COMPLETED')
+         )
 
     business = Employer.objects.get(pk=business_id)
 
