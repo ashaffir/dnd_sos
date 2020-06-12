@@ -1,0 +1,59 @@
+{% load static %}
+<div class="row" >
+    <div class="col-md-4">
+        <h4>Active Deliveries</h4>
+        <p>There {% if num_active_deliveries == 0 %} are no active deliveries. {% elif num_active_deliveries > 1 %}  are {{ num_active_deliveries }} active deliveries. {% else %} is {{ num_active_deliveries }} active delivery.{% endif %}</p>
+    </div>
+</div>
+<hr>
+
+{% for order in active_deliveries %}
+<div class="col-md-5">
+    <section class="panel panel-featured-left panel-featured-secondary">
+        <div class="panel-body">
+            <div class="widget-summary">
+                <div class="widget-summary-col widget-summary-col-icon">
+                    {% if user.pk|slugify in order.selected_freelancers %}
+                        <div class="summary-icon bg-secondary">
+                            <i class="fa fa-exclamation"></i>                            
+                        </div>    
+                    {% else %}
+                        <div class="summary-icon bg-primary">
+                            <i class="fa fa-exclamation"></i>
+                        </div>    
+                    {% endif %}
+                </div>
+                <div class="widget-summary-col">
+                    <div class="summary">
+                        <h4 class="title">Business Name: <b>{{ order.business.employer.business_name }}</b></h4>
+                        <div class="" >
+                            <p class="">Started: <b>{{ order.updated }}</b></p>
+                            <p class="">Pick Up Address: <b>{{ order.pick_up_address }}</b></p>
+                            <p class="">Drop Off Address: <b>{{ order.drop_off_address }}</b></p>
+                            <p class="" >Business Phone: <b>{{ order.business.employer.phone }}</b></p>
+                        </div>
+
+                    </div>
+                    <div class="summary-footer">
+                        <div class="row" >
+                            <div class="col-md-4">
+                                <!-- <button id="accept_order_{{ order.order_id }}" class="btn btn-lg btn-success" type="submit" name="acceptOrder" value="{{ order.order_id }}">Accept</button> -->
+                                {% if order.status == 'IN_PROGRESS' %}
+                                    <button id="accept_order_{{ order.order_id }}" class="btn btn-lg btn-success" type="button" onclick="delivered('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="orderDelivered" value="{{ order.order_id }}">Report Delivery</button>
+                                {% else %}
+                                    <button class="btn btn-lg btn-success" type="button" disabled>Report Delivery</button>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4" style="text-align: center;">
+                                <button class="btn btn-lg btn-primary" type="submit" name="dismisstOrder">Message Business</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div> 
+{% endfor %}
+<!-- Includes -->

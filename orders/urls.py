@@ -10,6 +10,7 @@ urlpatterns = [
 
     # Freelancers
     path('open-orders-list',orders_views.open_orders_list , name='open-orders-list'),
+    path('active-deliveries-list',orders_views.active_deliveries_list , name='active-deliveries-list'),
     path('open-orders',orders_views.open_orders, name='open-orders'),
     path('open-orders-alerts',orders_views.open_orders_alerts, name='open-orders-alerts'),
     path('deliveries-table',orders_views.deliveries_table , name='deliveries-table'),

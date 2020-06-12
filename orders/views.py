@@ -8,6 +8,8 @@ from rest_framework import generics, permissions, status, views, viewsets
 from rest_framework.response import Response
 
 from core.models import User, Employee, Employer
+from core.decorators import employer_required, employee_required
+
 from .models import Order 
 from .serializers import OrderSerializer, UserSerializer
 
@@ -29,12 +31,6 @@ def orders_table(request):
 @login_required
 def deliveries_table(request):
     context = {}
-    # print(f'>>>> RELATIONS: {request.user.relations[-1]}')
-
-    f = User.objects.get(pk=request.user.pk)
-    # f.relations = ['stam','batata', 'CCC', 'trerteerrttttttttttttt','gggffsdfgsdf']
-    # f.relations.append('hhh')
-    # f.save()
 
     freelancer_id = request.user.pk
     orders = Order.objects.filter(Q(freelancer=freelancer_id) & ~Q(status='REQUESTED') & ~Q(status='ARCHIVED'))
@@ -59,6 +55,21 @@ def open_orders_list(request):
     context['open_orders'] = open_orders
     context['num_open_orders'] = number_open_orders
     return render(request, 'dndsos_dashboard/partials/_open-orders-list.html', context)
+
+@employee_required
+@login_required
+def active_deliveries_list(request):
+    context = {}
+    f_id = request.user.pk
+    active_deliveries = Order.objects.filter(
+        (Q(freelancer=f_id) & Q(status='STARTED')) | 
+         Q(freelancer=f_id) & Q(status='IN_PROGRESS')
+         )
+    num_active_deliveries = len(active_deliveries)
+    context['active_deliveries'] = active_deliveries
+    context['num_active_deliveries'] = num_active_deliveries
+    return render(request, 'dndsos_dashboard/partials/_active-deliveries-list.html', context)
+
 
 @login_required
 def freelancer_messages_list(request):

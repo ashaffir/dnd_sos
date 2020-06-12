@@ -91,6 +91,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         if message_data.get('requested_freelancer'):
             freelancer_id = message_data.get('requested_freelancer')
             freelancer = User.objects.get(pk=freelancer_id)
+            
+            # TODO: Add solution to situation where the user is not conneted or does not have a channel_name yet (did)
             freelancer_channel = freelancer.channel_name
 
             order_id = message_data.get('order_id')
@@ -398,7 +400,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 if not order_instance.selected_freelancers:
                     order_instance.selected_freelancers = [replying_fl]
                 else:
-                    order_instance.selected_freelancers.append(replying_fl)
+                    if replying_fl not in order_instance.selected_freelancers:
+                        order_instance.selected_freelancers.append(replying_fl)
                 
                 order_instance.save()
                 order = order_instance
@@ -415,7 +418,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
         # Business updates
         if updating_business:
-            print('======> PO 2 ')
             if event == 'Request Freelancer':
                 print('======> FREELANCER REQUESTED ')  
                 serializer = OrderSerializer(data=content)
@@ -429,7 +431,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 order = serializer.update(order_instance, serializer.validated_data)
                 order_updated = True
             else:
-                print('======> PO 3 ')
                 serializer = OrderSerializer(data=content)
                 serializer.is_valid(raise_exception=True)
                 order = serializer.update(order_instance, serializer.validated_data)

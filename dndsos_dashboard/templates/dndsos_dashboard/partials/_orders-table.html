@@ -26,9 +26,7 @@
         {% endif %}
         {% if order.status == 'REQUESTED' or order.status == 'REJECTED' or order.status == 'RE_REQUESTED' %}
             <td style="background-color: rgb(220, 235, 15); color: rgb(0, 0, 0); text-align:center" >
-                <div style="background-color: green;">
-                    <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for a Freelancer...</label>                                    
-                </div>
+            <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for a Freelancer...</label>                                    
         {% elif order.status == 'STARTED' %}
             <td style="background-color: rgb(199, 109, 25); color:white; text-align:center">
                 <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for pickup...</label>

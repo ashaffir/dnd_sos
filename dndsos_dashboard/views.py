@@ -429,6 +429,15 @@ def f_deliveries(request, f_id):
 
 @employee_required
 @login_required
+def f_active_deliveries(request,f_id):
+    context = {}
+    freelancer_id = request.user.pk
+
+    return render(request, 'dndsos_dashboard/active-deliveries.html', context)
+
+
+@employee_required
+@login_required
 def f_businesses(request, f_id):
     context = {}
     f_businesses = request.user.relationships['businesses']

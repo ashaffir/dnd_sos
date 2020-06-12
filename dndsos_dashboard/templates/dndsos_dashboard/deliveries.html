@@ -8,17 +8,16 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" /> -->
     
     <header class="page-header">
-        <h2>Orders</h2>
+        <h2>Deliveries</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
-                    <a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
+                    <a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Tables</span></li>
-                <li><span>Editable</span></li>
+                <li><span>Deliveries</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -28,14 +27,14 @@
     <!-- start: page -->
         <section class="panel">
             <div class="panel-body">
-                <h3 class="">My Delivery List</h3>
-                <form action="" method="POST" enctype="multipart/form-data" name="orderTable" id="orderTable">
-                    {% csrf_token %}
-                    <table class="table table-bordered table-striped mb-none display" id="deliveriesTable">
+                <h3 class="">Deliveries Summary Table</h3>
+                
+                <div class="table-responsive-">
+                    <table class="table table-bordered table-striped mb-none display center" id="deliveriesTable">
                         <!-- Dynamically updated deliveries table -->
                     </table>
-                </form>
-
+                </div>
+            
             </div>
         </section>
     <!-- end: page -->

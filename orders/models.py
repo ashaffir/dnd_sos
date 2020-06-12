@@ -46,6 +46,9 @@ class Order(models.Model):
         blank=True
     )
 
+    # selected_freelancers = JSONField(blank=True, null=True, default={})
+
+
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)
 
     freelancer = models.ForeignKey( # new

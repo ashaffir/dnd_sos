@@ -17,8 +17,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Tables</span></li>
-                <li><span>Editable</span></li>
+                <li><span>Orders</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -37,7 +36,7 @@
                 <hr>
                 <form action="" method="POST" enctype="multipart/form-data" name="orderTable" id="orderTable">
                     {% csrf_token %}
-                    <table class="table table-responsive table-bordered table-striped mb-none display" id="ordersTable">
+                    <table class="table table-responsive table-bordered table-striped mb-none display center" id="ordersTable">
 
                         <!-- Orders table dynamically updated -->
                         

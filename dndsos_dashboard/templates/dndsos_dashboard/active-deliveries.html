@@ -1,0 +1,60 @@
+{% extends 'dndsos_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Active Deliveries</h2>
+    
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Active Deliveries</span></li>
+            </ol>
+    
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+    <div class="col-md-10 col-lg-10">
+        <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
+            {% csrf_token %}
+            <div class="row" id="activeDeliveriesList">
+                <!-- ---------------- -->
+                <!-- Open orders List -->
+                <!-- ---------------- -->
+            </div>
+        </form>
+    </div>
+    <!-- end: page -->
+</section>
+
+<!-- Alert for an offer that is not available anymore -->
+<script>
+    $(document).ready(function() {
+        if ("{{ offer_removed }}"){
+            $('#orderRemoved').modal("show");
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'orders:active-deliveries-list' %}",
+            async:false,
+            success: function(response) {
+                //console.log(response);
+                $('#activeDeliveriesList').html(response);
+            }		
+        });
+    
+    })
+
+
+</script>
+
+{% endblock content %}

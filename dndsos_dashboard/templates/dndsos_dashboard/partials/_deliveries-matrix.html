@@ -1,0 +1,91 @@
+<!-- Header -->
+<div class="row">
+    <div class="col-md-1 col-sm-1">
+        Offer Date
+    </div>
+    <div class="col-md-2 col-sm-2">
+        Pickup Address
+    </div>
+    <div class="col-md-2 col-sm-2">
+        Destination Address
+    </div>
+    <div class="col-md-2 col-sm-2">
+        Notes
+    </div>
+    <div class="col-md-2 col-sm-2">
+        Order Status
+    </div>
+    <div class="col-md-1 col-sm-1">
+        Delivered
+    </div>
+    <div class="col-md-1 col-sm-1">
+        Message
+    </div>
+    <div class="col-md-1 col-sm-1">
+        Paid-For
+    </div>
+</div>
+{% for order in orders %}
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+            {{ order.updated }}
+        </div>
+        <div class="col-md-2 col-sm-2" id="pickupAddress_{{ order.order_id }}">
+            {{ order.pick_up_address }}
+        </div>
+        <div class="col-md-2 col-sm-2" id="dropoffAddress_{{ order.order_id }}">
+            {{ order.drop_off_address }}
+        </div>
+        <div class="col-md-2 col-sm-2" id="notes">
+            {{ order.notes }}
+        </div>
+        <div class="col-md-2 col-sm-2">
+            {% if order.status == 'REQUESTED' %}
+            <div style="background-color: rgb(220, 235, 15); color: rgb(0, 0, 0);" >
+                <label for="dispached">Waiting for a Freelancer...</label>          
+            </div>                          
+        {% elif order.status == 'STARTED' %}
+            <div style="background-color: rgb(199, 109, 25); color:white;">
+                <label for="dispached">Go to pickup!!</label>
+            </div>
+        {% elif order.status == 'IN_PROGRESS' %}
+            <div style="background-color: rgb(5, 97, 202); color:white;">
+                <label for="dispached">Being delivered...</label>
+            </div>
+        {% elif order.status == 'COMPLETED' %}
+            <div>
+                <label for="dispached">Delivered</label>
+            </div>
+        {% elif order.status == 'SETTLED' %}
+            <div>
+                <label for="dispached">Settled</label>
+            </div>
+        {% else %}
+            <div>
+                <label for="dispached">ERROR. PLEASE CHECK WITH ADMIN!!</label>
+            </div>
+        {% endif %}
+        </div>
+        <div class="col-md-1 col-sm-1">
+            {% if order.status == 'COMPLETED' or order.status == 'SETTLED'%}
+            <button class="btn btn-outline-success" type="button" name="orderDelivered" id="orderDelivered" value="{{ order.order_id }}" disabled>Delivered!<i class="fas fa-trash"></i></button>
+        {% elif order.status == 'STARTED'  %}
+            <!-- Waiting for the pickup -->
+        {% else %}
+            <button class="btn btn-success" onclick="delivered('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" type="button" name="orderDelivered" id="orderDelivered" value="{{ order.order_id }}">Delivered?<i class="fas fa-trash"></i></button>
+        {% endif %}
+        </div>
+        <div class="col-md-1 col-sm-1">
+            {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' or order.status == 'STARTED' %}
+                {% include './_f-message-modal.html' with order=order %}
+            {% else %}
+            {% endif %}        </div>
+        <div class="col-md-1 col-sm-1">
+            {% if order.status == 'SETTLED' %}
+                <button style="text-align: center;" class="btn btn-success" disabled>Paid For<i class="fas fa-trash"></i></button>
+            {% else %}
+                <button type="button" onclick="settleOrder('{{ order.order_id }}')" style="text-align: center;" class="btn btn-success" name="orderSettled" id="{{ order.order_id }}" value="{{ order.order_id }}">Paid For<i class="fas fa-trash"></i></button>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

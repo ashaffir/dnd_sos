@@ -10,7 +10,7 @@
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
-                    <a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
+                    <a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
@@ -35,7 +35,7 @@
                         <!-- Filters -->
                         <div class="row" >
                             <div class="col-md-4">
-                                <h4>Check our the businesses you've worked with</h4>
+                                <h4>Check the businesses you've worked with</h4>
                                 <p>There  {% if num_businesses > 1 %}  are {% else %} is {% endif %}{{ num_businesses }} businesses in your list.</p>
                                 <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
                             </div>
@@ -81,52 +81,5 @@
 {% endblock content %}
 
 {% block js %}
-{% include 'dndsos_dashboard/partials/_freelancer-request-sent-modal.html' %}
-<script>
-    request_specific_freelancer = function(freelancer_id, managed){
-        
-        if (managed){
-            order_id = document.getElementById(`b_open_orders_${freelancer_id}`).value;
-        } else {
-            order_id = document.getElementById(`open_orders_${freelancer_id}`).value;
-        }
-
-        if (order_id == ''){
-            alert('Please pick a order or cancel message.')
-            return false
-        }
-        //console.log(`SELECTED: ${order_id}`);
-        $(`#selectFreelancer_${freelancer_id}`).modal('hide')
-        $(`#b_selectFreelancer_${freelancer_id}`).modal('hide')
-
-        businessSocket.send(JSON.stringify({
-            'type': 'direct.message', 
-            'data': {
-                'event': 'Specific Freelancer',
-                'order_id': order_id,                
-                'business': user_id,
-                'requested_freelancer': freelancer_id,
-                'status': 'RE_REQUESTED'
-            }
-        }));
-
-
-        $("#requestFreelancerSent").modal("show");
-
-    }
-</script>
-
-<script>
-    toggleSection = function() {
-        var div = document.getElementById('qrContent');
-        if (div.style.display !== 'none') {
-            div.style.display = 'none';
-        }
-        else {
-            div.style.display = 'block';
-        }
-    };
-    
-</script>
 
 {% endblock js %}

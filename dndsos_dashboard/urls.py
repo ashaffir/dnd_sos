@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('freelancer/<int:f_id>/', dndsos_dashboard_views.f_dashboard, name='f-dashboard'),
     path('freelancer/<int:f_id>/deliveries', dndsos_dashboard_views.f_deliveries, name='f-deliveries'),
+    path('freelancer/<int:f_id>/active-deliveries', dndsos_dashboard_views.f_active_deliveries, name='f-active-deliveries'),
     path('freelancer/<int:f_id>/f-businesses', dndsos_dashboard_views.f_businesses, name='f-businesses'),
     path('freelancer/<int:f_id>/statistics', dndsos_dashboard_views.f_statistics, name='f-statistics'),
     path('freelancer/<int:f_id>/f-profile', dndsos_dashboard_views.f_profile, name='f-profile'),

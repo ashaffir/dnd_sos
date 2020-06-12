@@ -267,13 +267,19 @@
 										<li>
 											<a href="{% url 'orders:open-orders' %}">
 												<i class="fa fa-tasks" aria-hidden="true"></i>
-												<span>Open Orders</span>
+												<span>Open Offers</span>
+											</a>
+										</li>
+										<li>
+											<a href="{% url 'dndsos_dashboard:f-active-deliveries' f_id=user.pk %}">
+												<i class="fa fa-tasks" aria-hidden="true"></i>
+												<span>Active Deliveries</span>
 											</a>
 										</li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-deliveries' f_id=user.pk %}">
 												<i class="fa fa-tasks" aria-hidden="true"></i>
-												<span>Deliveries</span>
+												<span>Deliveries Summary</span>
 											</a>
 										</li>
 										<li>
@@ -312,7 +318,7 @@
 
 			</div>
 
-			<aside id="sidebar-right" class="sidebar-right">
+			<!-- <aside id="sidebar-right" class="sidebar-right">
 				<div class="nano">
 					<div class="nano-content">
 						<a href="#" class="mobile-close visible-xs">
@@ -378,7 +384,7 @@
 						</div>
 					</div>
 				</div>
-			</aside>
+			</aside> -->
 		</section>
 		
 		{% include 'dndsos_dashboard/partials/_message-sent-modal.html' %}
@@ -565,7 +571,6 @@
 				// Handing the delivery completion
 				delivered = function(order_id,pup,drop) {
 					console.log(`DELIVERED!!`)
-					let order_id_e = document.querySelector("#orderDelivered");
 					current_order_id = order_id
 
 					freelancerSocket.send(JSON.stringify({
@@ -629,7 +634,15 @@
 					$('#messagesList').html(response);
 				}
 			})    
-		
+			
+			$.ajax({
+				type: 'GET',
+				url: "{% url 'orders:active-deliveries-list' %}",
+				async:false,
+				success: function(response) {
+					$('#activeDeliveriesList').html(response);
+				}		
+			});		
 
 		}
 
