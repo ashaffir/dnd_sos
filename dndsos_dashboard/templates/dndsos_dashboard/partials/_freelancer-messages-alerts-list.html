@@ -13,25 +13,27 @@
     <div class="content">
         <ul>
             {% for order in orders_with_chats %}
-            <li>
-                <a href="{% url 'dndsos_dashboard:f-messages' f_id=user.pk %}" class="clearfix">
-                    <div class="row">
-                        <div class="col-2 col-md-2">
-                            <figure class="image">
-                                <img src="{{ order.business.employer.profile_pic.url }}" alt="{{ order.freelancer.employer.business_name }}" class="img-circle" style="max-width: 2000%;"/>
-                            </figure>
+            {% if forloop.counter < 4%} 
+                <li>
+                    <a href="{% url 'dndsos_dashboard:f-messages' f_id=user.pk %}" class="clearfix">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <figure class="image">
+                                    <img src="{{ order.business.employer.profile_pic.url }}" alt="{{ order.freelancer.employer.business_name }}" class="img-circle mobilePic"/>
+                                </figure>
+                            </div>
+                            <div class="col-10 col-md-10">
+                                <span class="title">{{ order.business.employer.business_name }}</span>
+                                {% for message in order.chat.messages %}
+                                    {% if forloop.last %}
+                                        <span class="message">{{ message.message }}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div class="col-10 col-md-10">
-                            <span class="title">{{ order.business.employer.business_name }}</span>
-                            {% for message in order.chat.messages %}
-                                {% if forloop.last %}
-                                    <span class="message">{{ message.message }}</span>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </a>
-            </li>
+                    </a>
+                </li>
+            {% endif %}
             {% endfor %}
         </ul>
 

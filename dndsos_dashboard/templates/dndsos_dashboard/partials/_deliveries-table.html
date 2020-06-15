@@ -70,6 +70,8 @@
                 <button type="button" onclick="settleOrder('{{ order.order_id }}')" style="text-align: center;" class="btn btn-success" name="orderSettled" id="{{ order.order_id }}" value="{{ order.order_id }}">Paid For<i class="fas fa-trash"></i></button>
             {% endif %}
         </td>
+
+        <!-- Delete/Cancel order/offer -->
         <td class="actions" style="text-align: center;">
             
             <!-- Confirmation modal -->
@@ -95,7 +97,18 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-danger on-default edit-row" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="modal" data-target="#fCancelOrder_{{ order.order_id }}" {% endif %} style="color: white;"><i class="fa fa-trash-o"></i></a>
+            <a 
+                class="btn btn-danger on-default edit-row" 
+                name="orderCancel" id="{{ order.order_id }}" 
+                value="{{ order.order_id }}" 
+                {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %}
+                    disabled 
+                {% else %} 
+                    data-toggle="modal" data-target="#fCancelOrder_{{ order.order_id }}" 
+                {% endif %} 
+                style="color: white;">
+                <i class="fa fa-trash-o"></i>
+            </a>
 
         </td>
 
@@ -117,7 +130,12 @@
                 'order_id': order_id
             }
         }));
-
+        $.ajax({
+            url: "{% url 'orders:deliveries-table' %}",
+            success: function(response) {
+                $('#deliveriesTable').html(response);
+            }
+        })
         $("#orderSettled").modal("show");
     }
 

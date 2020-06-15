@@ -77,19 +77,40 @@
                 <li><a href="/#pricing" class="nav-link">Pricing</a></li>
                 <li><a href="/#contact-section" class="nav-link">Contact</a></li>
                 {% if user.is_authenticated %}
-                  {% if user.employer %}
-                    <li><a class="btn btn-success text-white" href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li>
+                  {% if user.is_employer %}
+                    <!-- <li><a class="btn btn-success text-white" href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li> -->
+                    <li><a id="b_dashboard" onclick="b_dashboard()" class="btn btn-success text-white" href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li>
                   {% else %}
-                    <li><a class="btn btn-outline-danger" href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="">Dashboard</a></li>
+                    <li><a id="f_dashboard" onclick="f_dashboard()" class="btn btn-success text-white" href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="">Dashboard</a></li>
                   {% endif %}
-                    <li><a href="{% url 'core:logout' %}" class="btn btn-sm btn-outline-success">Logout</a></li>
+                    <li><a id="logout" onclick="logout()" href="{% url 'core:logout' %}" class="btn btn-sm btn-outline-success">Logout</a></li>
                 {% else %}
-                  <li><a href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">Login</a></li>
+                  <!-- <li><a href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">Login</a></li> -->
+                  <li><a id='login' onclick="login()" href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">Login</a></li>
                 {% endif %}
               </ul>
             </nav>
           </div>
 
+          <script>
+            login = function(e){
+              link = document.querySelector('#login').getAttribute('href')
+              window.open(link)
+            }
+            logout = function(e){
+              link = document.querySelector('#logout').getAttribute('href')
+              window.open(link)
+            }
+            f_dashboard = function(e){
+              link = document.querySelector('#f_dashboard').getAttribute('href')
+              window.open(link)
+            }
+            b_dashboard = function(e){
+              link = document.querySelector('#b_dashboard').getAttribute('href')
+              window.open(link)
+            }
+            
+          </script>
 
           <div class="col-4 col-md-4 d-inline-block d-lg-none ml-md-0" ><a href="{% url 'core:login' %}" class="site-menu-toggle js-menu-toggle text-black float-right"><span class="icon-menu h3"></span></a></div>
 

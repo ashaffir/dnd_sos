@@ -4,6 +4,45 @@
 
     <!-- Freelancer offer - removed modal -->
 
+<!-- Message Sent Modal -->
+<div class="modal fade" id="orderRemoved" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-sm modal-notify modal-success" role="document">
+  <!--Content-->
+  <div class="modal-content text-center">
+    <!--Header-->
+    <div class="modal-header d-flex justify-content-center">
+      <p class="heading">Order Canceled</p>
+    </div>
+
+    <!--Body-->
+    <div class="modal-body">
+
+      <i class="fa fa-times fa-4x animated rotateIn" style="color: red;"></i>
+        
+        <h4>Order Details</h4>
+        <div class="row">
+            Business: <b></b>
+        </div>
+        <div class="row">
+            Created: <b></b>
+        </div>
+        <div class="row">
+            Drop off address: <b></b>
+        </div>
+
+    </div>
+
+    <!--Footer-->
+    <div class="modal-footer flex-center">
+      <a href="" class="btn  btn-outline-danger">OK</a>
+      <!-- <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a> -->
+    </div>
+  </div>
+  <!--/.Content-->
+</div>
+</div>
+<!-- 
     <div class="modal fade" id="orderRemoved" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -23,12 +62,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 <!-- Vendor -->
 {% block orders_js %}
 <!-- <script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script> -->
-<script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
+
+<!-- <script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
 <script src="{% static 'assets/vendor/magnific-popup/magnific-popup.js' %}"></script>
-<script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script>
+<script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script> -->
+
 <!-- <script src="{% static 'assets/javascripts/forms/examples.validation.js' %}"></script> -->
 {% endblock orders_js %}

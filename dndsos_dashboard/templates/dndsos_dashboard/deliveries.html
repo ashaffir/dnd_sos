@@ -4,6 +4,21 @@
 {% block content %}
 {% include 'dndsos_dashboard/partials/_message-sent-modal.html' %}
 
+<style>
+    .mobileShow {display: none;}
+
+    /* Smartphone Portrait and Landscape */
+    @media only screen
+      and (min-device-width : 320px)
+      and (max-device-width : 480px){ 
+        .mobileShow {
+            display:block;
+            align-items: center;
+        }
+    }
+</style>
+
+
 <section role="main" class="content-body">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" /> -->
@@ -21,8 +36,9 @@
                 <li><span>Deliveries</span></li>
             </ol>
     
-            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
         </div>
+
     </header>
 
     <!-- start: page -->
@@ -30,10 +46,14 @@
             <div class="panel-body">
                 <h3 class="">Deliveries Summary Table</h3>
                 
-                <div class="table-responsive-">
-                    <table class="table table-bordered table-striped mb-none display center" id="deliveriesTable">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped mb-none display" id="deliveriesTable">
                         <!-- Dynamically updated deliveries table -->
                     </table>
+                </div>
+
+                <div class="row mobileShow center">
+                    <i class='fa fa-arrows-h fa-3x'></i>
                 </div>
             
             </div>

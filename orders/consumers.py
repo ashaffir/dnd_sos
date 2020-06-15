@@ -232,6 +232,28 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             elif event.get('data')['event'] == 'Order Settled':
                 print('Order Settled')
                 pass
+            elif event.get('data')['event'] == 'Order Canceled':
+                print('Order Canceled')
+                data = {
+                    'order_id': order_id,
+                    'business': order.business.pk,
+                    'freelancer': order.freelancer.pk,
+                    'status': 'ARCHIVED'
+                }
+                await self.channel_layer.group_send(group='freelancers', message={
+                    'type': 'echo.message',
+                    'data': data
+                })
+            elif event.get('data')['event'] == 'Freelancer Canceled':
+                print(f'Freelancer Canceled. Order: {order.order_id}')
+                data = {
+                    'order_id': order_id,
+                    'status': 'REJECTED'
+                }
+                await self.channel_layer.group_send(group=order_id, message={
+                    'type': 'echo.message',
+                    'data': data
+                })
             else:            
             # Send updates to the business that created this order.
                 print(f'UPDATED: {order_data}')
@@ -357,7 +379,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     serializer.is_valid(raise_exception=True)
                     order = serializer.update(order_instance, serializer.validated_data)
                     order_updated = True
-            elif event == 'Order Canceled':
+            elif event == 'Freelancer Canceled':
                 print('CANCELED!!!!')
                 content['freelancer'] = None
                 serializer = OrderSerializer(data=content)

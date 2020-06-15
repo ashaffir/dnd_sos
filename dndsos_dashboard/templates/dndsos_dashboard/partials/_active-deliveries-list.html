@@ -8,61 +8,47 @@
 <hr>
 
 {% for order in active_deliveries %}
-<div class="col-md-5">
-    <section class="panel panel-featured-left panel-featured-secondary">
+<div class="col-md-6 col-lg-6 col-xl-3">
+    <section class="panel">
+        {% if order.status == 'STARTED' %}
+            <header class="panel-heading bg-secondary">
+                <div class="">
+                    <i class="fa fa-exclamation fa-2x"> Go to pick up!</i>
+                </div>
+            </header>
+        {% else %}
+            <header class="panel-heading bg-primary">
+                <div class="">
+                    <i class="fa fa-car fa-2x"> Deliver the package</i>
+                </div>
+            </header>
+        {% endif %}
         <div class="panel-body">
-            <div class="widget-summary">
-                <div class="widget-summary-col widget-summary-col-icon">
-                    {% if user.pk|slugify in order.selected_freelancers %}
-                        <div class="summary-icon bg-secondary">
-                            <i class="fa fa-car"></i>                            
-                        </div>    
+            <h4 class="title">Business Name: <b>{{ order.business.employer.business_name }}</b></h4>
+            <div class="" >
+                <p class="">Started: <b>{{ order.updated }}</b></p>
+                <p class="">Pick Up Address: <b>{{ order.pick_up_address }}</b></p>
+                <p class="">Drop Off Address: <b>{{ order.drop_off_address }}</b></p>
+                <p class="" >Business Phone: <b>{{ order.business.employer.phone }}</b></p>
+            </div>
+
+            <div class="row" >
+                <div class="col-md-5 col-sm-12 mb-2">
+                    {% if order.status == 'IN_PROGRESS' %}
+                        <button id="accept_order_{{ order.order_id }}" class="btn btn-md btn-success" type="button" onclick="delivered('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="orderDelivered" value="{{ order.order_id }}">Report Delivered</button>
                     {% else %}
-                        {% if order.status == 'STARTED' %}
-                            <div class="summary-icon bg-danger">
-                                <i class="fa fa-exclamation"></i>
-                            </div>
-                        {% else %}    
-                        {% endif %}
+                        <button class="btn btn-md btn-success" type="button" disabled>Report Delivered</button>
                     {% endif %}
                 </div>
-                <div class="widget-summary-col">
-                    <div class="summary">
-                        <h4 class="title">Business Name: <b>{{ order.business.employer.business_name }}</b></h4>
-                        <div class="" >
-                            <p class="">Started: <b>{{ order.updated }}</b></p>
-                            <p class="">Pick Up Address: <b>{{ order.pick_up_address }}</b></p>
-                            <p class="">Drop Off Address: <b>{{ order.drop_off_address }}</b></p>
-                            <p class="" >Business Phone: <b>{{ order.business.employer.phone }}</b></p>
-                        </div>
-
-                    </div>
-                    <div class="summary-footer">
-                        <div class="row" >
-                            <div class="col-md-4" style="text-align: center;">
-                                {% if order.status == 'STARTED' %}
-                                    <button class="btn btn-md btn-danger" type="button">Go to Pick Up</button>
-                                {% else %}
-                                {% endif %}
-                            </div>
-                            <div class="col-md-4">
-                                <!-- <button id="accept_order_{{ order.order_id }}" class="btn btn-lg btn-success" type="submit" name="acceptOrder" value="{{ order.order_id }}">Accept</button> -->
-                                {% if order.status == 'IN_PROGRESS' %}
-                                    <button id="accept_order_{{ order.order_id }}" class="btn btn-md btn-success" type="button" onclick="delivered('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="orderDelivered" value="{{ order.order_id }}">Report Delivered</button>
-                                {% else %}
-                                    <button class="btn btn-md btn-success" type="button" disabled>Report Delivered</button>
-                                {% endif %}
-                            </div>
-                            <div class="col-md-4" style="text-align: center;">
-                                    {% include './_f-message-modal.html' with order=order %}
-                            </div>
-
-                        </div>
-                    </div>
+                <div class="col-md-2 col-sm-12 mb-2"><hr></div>
+                    <div class="col-md-5">
+                        {% include './_f-message-modal.html' with order=order %}
                 </div>
+
             </div>
-        </div>
+
+        </div>                
     </section>
-</div> 
+</div>
 {% endfor %}
 <!-- Includes -->

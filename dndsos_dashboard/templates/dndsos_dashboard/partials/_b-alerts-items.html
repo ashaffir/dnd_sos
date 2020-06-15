@@ -10,17 +10,16 @@
                 </div>
                 <div class="widget-summary-col">
                     <div class="summary">
-                        <h4 class="title">{{ order.business.username }}</h4>
+                        <!-- <h4 class="title">Order ID: {{ order.order_id|slugify }}</h4> -->
                         <div class="" >
-                            <p class="">Drop Off Address: <b>{{ order.drop_off_address }}</b></p>
-                            <p class="" >Business Phone: <b>{{ order.business.phone_number }}</b></p>
+                            <p class="" >Order Created: <b>{{ order.created }}</b></p>
+                            <p class="">Customer Address: <b>{{ order.drop_off_address }}</b></p>
                         </div>
 
                     </div>
                     <div class="summary-footer">
                         <div class="row" >
                             <div class="col-md-12" style="text-align: center;">
-                                <!-- <button id="requestFreelancer_{{ order.order_id }}" class="btn btn-lg btn-success" type="submit" drop_off_address='{{ order.drop_off_address }}' name="requestFreelancer" value="{{ order.order_id }}">Reqeuest Freelancer</button> -->
                                 <button id="addOrder_'{{ order.order_id }}'" onclick="broadcast_order('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}', '{{ order.notes }}')" class="btn btn-lg btn-success" type="button" drop_off_address='{{ order.drop_off_address }}' name="requestFreelancer" value="{{ order.order_id }}">Reqeuest Freelancer</button>
                             </div>
                         </div>

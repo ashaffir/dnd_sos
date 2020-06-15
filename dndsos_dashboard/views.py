@@ -105,7 +105,7 @@ def f_dashboard(request, f_id):
     context['active_orders'] = active_orders
 
 
-    orders = []
+    orders_summary = []
     for order in active_orders:
         created_ts = datetime.timestamp(order.created)
         now_ts = datetime.timestamp(datetime.now())
@@ -119,11 +119,11 @@ def f_dashboard(request, f_id):
             'delayed': True if delta_time.hour == 1 else False 
         }
 
-        orders.append(order_timing)
+        orders_summary.append(order_timing)
 
     # Daily orders:
-    context['orders'] = orders
-    context['num_orders'] = len(orders)
+    context['orders_summary'] = orders_summary
+    context['num_orders'] = len(orders_summary)
 
     today = date.today()
     daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
@@ -473,9 +473,14 @@ def b_alerts(request, b_id):
         if 'requestFreelancer' in request.POST:
             pass
 
-    orders = Order.objects.filter(Q(business=b_id) & Q(status='REQUESTED') | Q(status='REJECTED') | Q(status='RE_REQUESTED'))
-    # orders = Order.objects.filter(business=b_id, status='REQUESTED')
+    orders = Order.objects.filter(
+            (Q(business=b_id) & Q(status='REQUESTED')) | 
+            (Q(business=b_id) & Q(status='REJECTED'))  | 
+            (Q(business=b_id) & Q(status='RE_REQUESTED'))
+        )
+
     context['orders'] = orders
+    context['num_orders'] = len(orders)
     return render(request, 'dndsos_dashboard/b-alerts.html', context)
 
 @employer_required
@@ -530,7 +535,7 @@ def b_alerts_items(request, b_id):
 def b_messages_list(request, b_id):
     context = {}
     orders_chat = []
-    orders = Order.objects.filter(Q(business=b_id))
+    orders = Order.objects.filter(Q(business=b_id) & ~Q(status='ARCHIVED'))
     for order in orders:
         if order.chat:
             orders_chat.append(order)
@@ -676,7 +681,7 @@ def freelancer_accept(request, fid, oid):
 def f_messages_list(request, f_id):
     context = {}
     orders_chat = []
-    orders = Order.objects.filter(Q(freelancer=f_id))
+    orders = Order.objects.filter(Q(freelancer=f_id) & ~Q(status='ARCHIVED'))
     for order in orders:
         if order.chat:
             orders_chat.append(order)

@@ -135,11 +135,14 @@ def open_orders(request):
 
     return render(request, 'dndsos_dashboard/open-orders.html', context)
 
+# Alerts to business about orders that were rejected or that are late
 @login_required
 def business_alerts_list(request):
     context = {}
     business_id = request.user.pk
-    orders = Order.objects.filter(Q(business=business_id) & Q(status='REQUESTED') | Q(status='REJECTED') | Q(status='RE_REQUESTED'))
+    orders = Order.objects.filter(
+        (Q(business=business_id) & Q(status='REJECTED'))
+        )
     # number_open_orders = len(open_orders)
     context['orders'] = orders
     context['num_alerts'] = len(orders)

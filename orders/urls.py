@@ -18,6 +18,8 @@ urlpatterns = [
 
     # Bussiness    
     path('orders-table',orders_views.orders_table , name='orders-table'),
+
+    # Business "Bell" alerts
     path('business-alerts-list',orders_views.business_alerts_list, name='business-alerts-list'),
     path('business-messages-list',orders_views.business_messages_list, name='business-messages-list'),
 
