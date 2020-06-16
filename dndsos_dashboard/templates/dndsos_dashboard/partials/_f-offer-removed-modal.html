@@ -12,7 +12,7 @@ aria-hidden="true">
   <div class="modal-content text-center">
     <!--Header-->
     <div class="modal-header d-flex justify-content-center">
-      <p class="heading">Order Canceled</p>
+      <h3 class="heading">Order Canceled</h3>
     </div>
 
     <!--Body-->
@@ -20,15 +20,20 @@ aria-hidden="true">
 
       <i class="fa fa-times fa-4x animated rotateIn" style="color: red;"></i>
         
-        <h4>Order Details</h4>
-        <div class="row">
-            Business: <b></b>
+        <h5>Order Details</h5>
+        <label class="col-sm-3 control-label">Created:</label>
+        <div class="row" id="created">
+
         </div>
-        <div class="row">
-            Created: <b></b>
+        
+        <label class="col-sm-3 control-label">Business:</label>
+        <div class="row" id="business_name">
+
         </div>
-        <div class="row">
-            Drop off address: <b></b>
+        
+        <label class="col-sm-3 control-label">Address</label>
+        <div class="row" id="canceled_drop_off_address">
+        
         </div>
 
     </div>

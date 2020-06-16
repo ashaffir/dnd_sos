@@ -182,11 +182,12 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         order.save()
         # print(f'ORDER DATA: {order_data}')
         
-        # Send business requests to all freelancers.
-        await self.channel_layer.group_send(group='freelancers', message={
-            'type': 'echo.message',
-            'data': order_data
-        })
+        # Send business requests to all freelancers if broadcast was requested.
+        if event.get('data')['select_freelancers'] == 'all':
+            await self.channel_layer.group_send(group='freelancers', message={
+                'type': 'echo.message',
+                'data': order_data
+            })
 
         if order_id not in self.orders:
             self.orders.add(order_id)
@@ -234,10 +235,17 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 pass
             elif event.get('data')['event'] == 'Order Canceled':
                 print('Order Canceled')
+                if order.freelancer:
+                    active_freelancer = order.freelancer.pk
+                else:
+                    active_freelancer = None
                 data = {
                     'order_id': order_id,
                     'business': order.business.pk,
-                    'freelancer': order.freelancer.pk,
+                    'freelancer': active_freelancer,
+                    'drop_off_address': order.drop_off_address,
+                    'business_name': order.business.employer.business_name,
+                    'created': str(order.created),
                     'status': 'ARCHIVED'
                 }
                 await self.channel_layer.group_send(group='freelancers', message={

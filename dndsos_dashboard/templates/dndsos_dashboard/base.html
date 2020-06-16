@@ -347,32 +347,30 @@
 					data = JSON.parse(e.data);
 					const data_string = JSON.stringify(e.data);
 
-					//document.querySelector('#chat-log').value += (data.message + '\n');
-					const pick_up_address_e = document.querySelector('#pick_up_address');
-					const drop_off_address_e = document.querySelector('#drop_off_address');
-					const notes_e = document.querySelector('#notes');
-					const order_id = data.data.order_id
-					const order_status = data.data.status
-					const freelancer = data.data.freelancer
-					const message_title = data.data.title
+					const order_id = data.data.order_id;
+					const order_status = data.data.status;
+					const freelancer = data.data.freelancer;
+					const message_title = data.data.title;
+					const business_name = data.data.business_name;
+					const created = data.data.created;
 
 					let pick_up_address = data.data.pick_up_address;
 					let drop_off_address = data.data.drop_off_address;
-					$("#pick_up_address").html(pick_up_address)
-					$("#drop_off_address").html(drop_off_address)
-					$("#notes").html(data.data.notes)
+					$("#pick_up_address").html(pick_up_address);
+					$("#drop_off_address").html(drop_off_address);
+					$("#new_offer_notes").html(data.data.notes);
 					
 					
 					if (order_status == 'REQUESTED' && current_order_id != order_id) {
-						console.log(`NEW ORDER`)
+						console.log(`NEW ORDER`);
 						$("#newOfferAlert").modal("show");
-						update_freelancer_notifications()
+						update_freelancer_notifications();
 					}
 
 
 					if (order_status == 'RE_REQUESTED' && current_order_id != order_id) {
 						$("#newOfferAlert").modal("show");
-						update_freelancer_notifications()
+						update_freelancer_notifications();
 					}
 
 					current_order_id = order_id
@@ -383,26 +381,29 @@
 					if (order_status == 'STARTED' && data.data.freelancer != user_id){
 						console.log('ORDER STARTED - Not the freelancer')
 						$('#orderRemoved').modal("show");
-						update_freelancer_notifications()
+						update_freelancer_notifications();
 					
 					} else if (order_status == 'STARTED' && data.data.freelancer == user_id){
 						console.log(`ORDER STARTED - Freelancer ${user_id}`)
-						update_freelancer_notifications()
+						update_freelancer_notifications();
 					
 					// When a business removes the offer after freelancer's acceptance
 					} else if (order_status == 'ARCHIVED' && data.data.freelancer == user_id){
-						console.log('ORDER CANCELED')
+						console.log('ORDER CANCELED');
+						$("#business_name").html(business_name);
+						$("#created").html(created);
+						$("#canceled_drop_off_address").html(drop_off_address);
 						$('#orderRemoved').modal("show");
 						update_freelancer_notifications()
 					
 					} else if (order_status == 'ARCHIVED'){
 						console.log('ORDER CANCELED (no freelancer)')
 						$('#newOfferAlert').modal('hide');
-						update_freelancer_notifications()
+						update_freelancer_notifications();
 					
 					} else {
-						console.log('Updating tables...')
-						update_freelancer_notifications()
+						console.log('Updating tables...');
+						update_freelancer_notifications();
 					}
 
 					if (data.data.chat_message){
@@ -655,11 +656,13 @@
 					const building_e = document.querySelector('#building');
 					const city_e = document.querySelector('#city');
 					const notes_e = document.querySelector('#notes');
+					const freelancer_e = document.querySelector('#freelancer');
 
 					const street = street_e.value;
 					const building = building_e.value;
 					const city = city_e.value;
 					const notes = notes_e.value;
+					const freelancer = freelancer_e.value;
 
 					if (city === "" || building == "" || street == ""){
 						if (city === ""){
@@ -683,7 +686,8 @@
 							'business_name': user_name,
 							'pick_up_address': pick_up_address,
 							'drop_off_address': drop_off_address,
-							'notes': notes
+							'notes': notes,
+							'select_freelancers':freelancer
 						}
 					}));
 

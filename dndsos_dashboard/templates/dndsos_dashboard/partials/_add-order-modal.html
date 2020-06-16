@@ -58,12 +58,15 @@
                                 <label class="col-sm-3 control-label">Choose Freelancer/s</label>
                                 <div class="col-sm-9">
                                     <select id="freelancer" name="freelancer" class="form-control" required>
-                                        <option value="">Notify all available</option>
-                                        <option value="">Do not broadcast. I will pick a freelanceer later</option>
+                                        <option value="all">Notify all available</option>
+                                        <option value="none">Do not broadcast. I will pick a freelanceer later</option>
                                         <option value="">-------------------------</option>
-                                        {% for freelancer in freelancers %}
+
+                                        <!-- TODO: Add the option to select a freelancer for an order -->
+                                        <!-- {% for freelancer in freelancers %}
                                             <option value="{{ freelancer.pk }}">{{ freelancer.email }}</option>
-                                        {% endfor %}
+                                        {% endfor %} -->
+
                                     </select>
                                     <label class="error" for="freelancer"></label>
                                 </div>

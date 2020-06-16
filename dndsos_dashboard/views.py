@@ -89,7 +89,8 @@ def b_dashboard(request, b_id):
     
     context['num_daily_orders'] = len(daily_orders)
 
-    context['num_active_freelancers'] = len(request.user.relationships['freelancers'])
+    if request.user.relationships:
+        context['num_active_freelancers'] = len(request.user.relationships['freelancers'])
 
     return render(request, 'dndsos_dashboard/b-dashboard.html', context)
 
@@ -320,6 +321,8 @@ def orders(request, b_id):
     business_id = Employer.objects.get(user=request.user.pk)
     business_profile = Employer.objects.get(user=request.user)
     context['business_profile'] = business_profile
+    context['freelancers'] = Employee.objects.all()
+
     # business_name = business_profile.business_name
     # business_city = business_profile.city
     # business_street = business_profile.street
@@ -336,7 +339,6 @@ def orders(request, b_id):
     # business_orders = Order.objects.filter(business=request.user.pk).order_by('-created')
     # context['orders'] = business_orders
 
-    # context['freelancers'] = Employee.objects.all()
 
     # if request.method == 'POST':
     #     #TODO: Clean up code. There are limited POST from this page...the add-order is from JS/WS

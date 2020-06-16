@@ -87,54 +87,6 @@
         
 };
 
-/*
-freelancerSocket.onmessage = function(e) {
-    let data = JSON.parse(e.data);
-    const data_string = JSON.stringify(e.data);
-    console.log(`DATA RECEIVED: ${data.data.message} ORDER ID: ${data.data.order_id}`);
-    let order_id = data.data.order_id
-    let order_status = data.data.status
-
-    if (order_status == 'REQUESTED' && current_order_id != order_id) {
-        console.log(`NEW ORDER`)
-        $("#newOfferAlert").modal("show");
-        update_freelancer_notifications()
-    }
-
-    // Refresh the table to update the accepted order
-    $.ajax({
-        url: "{% url 'dndsos_dashboard:f-chat-room' f_id=user.pk %}",
-        data: {
-            oid: order_id
-        },
-        success: function(response) {
-            $('#chatRoom').html(response);
-        }
-    })		
-
-    $.ajax({
-        url: "{% url 'dndsos_dashboard:f-messages-list' f_id=user.pk %}",
-        success: function(response) {
-            $('#messagesList').html(response);
-        }
-    })    
-
-    $.ajax({
-        url: "{% url 'orders:freelancer-messages-list' %}",
-        success: function(response){
-            $('#freelancerMessagesAlerts').html(response);
-        }
-    })
-
-    $.ajax({
-        url: "{% url 'orders:open-orders-alerts' %}",
-        success: function(response){
-            $('#openOrdersAlerts').html(response);
-        }
-    })
-}
-*/
-
 $(document).ready(function (){
     $.ajax({
         url: "{% url 'dndsos_dashboard:f-messages-list' f_id=user.pk %}",

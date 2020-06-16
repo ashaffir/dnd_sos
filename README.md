@@ -47,3 +47,9 @@ https://stackoverflow.com/questions/1317714/how-can-i-filter-a-date-of-a-datetim
 
 ### Passwords
 https://www.youtube.com/watch?v=qjlZWBbX7-o
+
+### GEO Location:
+#### In the chat/templates/room.html
+https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
+
+
