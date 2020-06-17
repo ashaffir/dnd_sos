@@ -27,7 +27,7 @@ from .models import Order
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     fields = ( # changed
-        'order_id', 'pick_up_address', 'drop_off_address', 'status', 'notes',
+        'order_id','city', 'pick_up_address', 'drop_off_address', 'status', 'notes',
         'freelancer', 'business',
         'selected_freelancers',
         'chat', 

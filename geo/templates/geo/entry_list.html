@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <link rel="stylesheet"
+        href="//unpkg.com/leaflet/dist/leaflet.css"/>
+        <script src="//unpkg.com/leaflet/dist/leaflet.js"></script>
+    </head>
+    <body><h1>DjangoCon Europe 2019 Venues</h1>
+        <div id="m" style="width: 1920px; height: 1080px;"></div>
+
+        <script type="text/javascript">
+            var m = L.map('m').setView([55.67, 12.55], 13); 
+            L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(m);
+            {% for e in object_list %}
+            L.marker({{ e.lat_lng }}).addTo(m).bindPopup('{{e}}');
+            {% endfor %}
+        </script>
+    </body>
+</html>

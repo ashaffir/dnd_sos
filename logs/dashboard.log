@@ -1,578 +1,327 @@
-INFO 2020-06-15 19:03:44,643 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
-INFO 2020-06-15 19:03:44,644 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
-INFO 2020-06-15 19:03:44,645 - Listening on TCP address 127.0.0.1:8000
-INFO 2020-06-15 19:03:48,317 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.08, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:48,489 - [mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 200 [0.01, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:48,510 - [mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 200 [0.01, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:48,522 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 200 [0.01, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:48,546 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 200 [0.01, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:48,549 - [mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:48,565 - [mHTTP GET /static/assets/vendor/morris/morris.css 200 [0.01, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:48,566 - [mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:48,582 - [mHTTP GET /static/assets/stylesheets/theme.css 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:48,594 - [mHTTP GET /static/assets/stylesheets/skins/default.css 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:48,612 - [mHTTP GET /static/assets/stylesheets/theme-custom.css 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:48,616 - [mHTTP GET /static/assets/vendor/modernizr/modernizr.js 200 [0.01, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:49,069 - [mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 200 [0.01, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:49,089 - [mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 200 [0.02, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:49,098 - [mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 200 [0.02, 127.0.0.1:51391][0m
-INFO 2020-06-15 19:03:49,100 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 200 [0.03, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:03:49,101 - [mHTTP GET /static/assets/javascripts/theme.js 200 [0.02, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:49,175 - [mHTTP GET /static/assets/javascripts/theme.custom.js 200 [0.02, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:03:49,179 - [mHTTP GET /static/assets/javascripts/theme.init.js 200 [0.02, 127.0.0.1:51391][0m
-INFO 2020-06-15 19:03:49,179 - [mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 200 [0.01, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:03:49,182 - [mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 200 [0.01, 127.0.0.1:51396][0m
-INFO 2020-06-15 19:03:49,182 - [mHTTP GET /static/channels/js/websocketbridge.js 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:49,381 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:49,398 - [mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:49,717 - [mHTTP GET /static/assets/images/dndsos-logo-black.png 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:49,724 - [mHTTP GET /static/assets/images/logged-user.jpg 200 [0.01, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:03:49,918 - [mHTTP GET /static/assets/vendor/font-awesome/fonts/fontawesome-webfont.woff?v=4.1.0 200 [0.01, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:03:50,235 - [mHTTP GET /orders/deliveries-table 200 [0.07, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:03:51,289 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:51432]
-INFO 2020-06-15 19:03:51,414 - WebSocket CONNECT /ws/orders/ [127.0.0.1:51432]
-INFO 2020-06-15 19:03:51,456 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:03:51,511 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:03:51,522 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:03:55,860 - [mHTTP GET /dashboard/business/31/orders 200 [0.06, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:03:56,673 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:03:57,047 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:51547]
-INFO 2020-06-15 19:03:57,126 - WebSocket CONNECT /ws/orders/ [127.0.0.1:51547]
-INFO 2020-06-15 19:03:57,422 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:03:57,477 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:03:58,826 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.00, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:04:07,449 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:04:07,695 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.21, 127.0.0.1:51391][0m
-INFO 2020-06-15 19:04:07,696 - [mHTTP GET /orders/open-orders-list 200 [0.21, 127.0.0.1:51396][0m
-INFO 2020-06-15 19:04:07,708 - [mHTTP GET /orders/active-deliveries-list 200 [0.22, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:04:07,713 - [mHTTP GET /orders/open-orders-alerts 200 [0.24, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:04:07,739 - [mHTTP GET /orders/deliveries-table 200 [0.28, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:04:07,754 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:04:07,757 - [mHTTP GET /orders/business-alerts-list 200 [0.07, 127.0.0.1:51740][0m
-INFO 2020-06-15 19:04:07,763 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.07, 127.0.0.1:51742][0m
-INFO 2020-06-15 19:04:07,895 - [mHTTP GET /orders/deliveries-table 200 [0.13, 127.0.0.1:51390][0m
-INFO 2020-06-15 19:04:07,895 - [mHTTP GET /orders/freelancer-messages-list 200 [0.16, 127.0.0.1:51371][0m
-INFO 2020-06-15 19:04:07,896 - [mHTTP GET /orders/business-messages-list 200 [0.20, 127.0.0.1:51741][0m
-INFO 2020-06-15 19:04:07,946 - [mHTTP GET /orders/open-orders-alerts 200 [0.07, 127.0.0.1:51396][0m
-INFO 2020-06-15 19:04:07,949 - [mHTTP GET /orders/open-orders-list 200 [0.07, 127.0.0.1:51391][0m
-INFO 2020-06-15 19:04:07,951 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=a336ad4a-9e9b-475a-8c3d-6b6d375b6865 200 [0.21, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:04:07,967 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.08, 127.0.0.1:51755][0m
-INFO 2020-06-15 19:04:07,979 - [mHTTP GET /orders/active-deliveries-list 200 [0.09, 127.0.0.1:51756][0m
-INFO 2020-06-15 19:04:08,081 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=a336ad4a-9e9b-475a-8c3d-6b6d375b6865 200 [0.06, 127.0.0.1:51755][0m
-INFO 2020-06-15 19:04:08,094 - [mHTTP GET /orders/freelancer-messages-list 200 [0.08, 127.0.0.1:51756][0m
-INFO 2020-06-15 19:04:11,010 - [mHTTP GET /orders/deliveries-table 200 [0.09, 127.0.0.1:51756][0m
-INFO 2020-06-15 19:04:11,147 - [mHTTP GET /orders/open-orders-alerts 200 [0.12, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:04:11,167 - [mHTTP GET /orders/open-orders-list 200 [0.14, 127.0.0.1:51391][0m
-INFO 2020-06-15 19:04:11,173 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.13, 127.0.0.1:51740][0m
-INFO 2020-06-15 19:04:11,174 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.13, 127.0.0.1:51756][0m
-INFO 2020-06-15 19:04:11,197 - [mHTTP GET /orders/active-deliveries-list 200 [0.15, 127.0.0.1:51396][0m
-INFO 2020-06-15 19:04:11,209 - [mHTTP GET /orders/orders-table 200 [0.21, 127.0.0.1:51741][0m
-INFO 2020-06-15 19:04:11,213 - [mHTTP GET /orders/business-alerts-list 200 [0.20, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:04:11,241 - [mHTTP GET /orders/deliveries-table 200 [0.22, 127.0.0.1:51755][0m
-INFO 2020-06-15 19:04:11,340 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=a336ad4a-9e9b-475a-8c3d-6b6d375b6865 200 [0.09, 127.0.0.1:51756][0m
-INFO 2020-06-15 19:04:11,341 - [mHTTP GET /orders/business-messages-list 200 [0.32, 127.0.0.1:51742][0m
-INFO 2020-06-15 19:04:11,354 - [mHTTP GET /orders/freelancer-messages-list 200 [0.12, 127.0.0.1:51396][0m
-INFO 2020-06-15 19:04:17,314 - [mHTTP GET /orders/business-alerts-list 200 [0.05, 127.0.0.1:51515][0m
-INFO 2020-06-15 19:04:17,319 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.05, 127.0.0.1:51741][0m
-INFO 2020-06-15 19:04:17,320 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:51742][0m
-INFO 2020-06-15 19:04:17,466 - [mHTTP GET /orders/open-orders-list 200 [0.09, 127.0.0.1:51755][0m
-INFO 2020-06-15 19:04:17,469 - [mHTTP GET /orders/open-orders-alerts 200 [0.10, 127.0.0.1:51756][0m
-INFO 2020-06-15 19:04:17,480 - [mHTTP GET /orders/deliveries-table 200 [0.11, 127.0.0.1:51396][0m
-INFO 2020-06-15 19:04:17,484 - [mHTTP GET /orders/active-deliveries-list 200 [0.09, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:04:17,484 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.10, 127.0.0.1:51391][0m
-INFO 2020-06-15 19:04:17,540 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=a336ad4a-9e9b-475a-8c3d-6b6d375b6865 200 [0.04, 127.0.0.1:51391][0m
-INFO 2020-06-15 19:04:17,546 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:51378][0m
-INFO 2020-06-15 19:05:46,702 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.07, 127.0.0.1:53472][0m
-INFO 2020-06-15 19:05:46,753 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:51432]
-INFO 2020-06-15 19:05:46,897 - [mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 200 [0.01, 127.0.0.1:53472][0m
-INFO 2020-06-15 19:05:46,931 - [mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 200 [0.03, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:46,932 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 200 [0.02, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:46,933 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 200 [0.02, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:46,937 - [mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 200 [0.02, 127.0.0.1:53489][0m
-INFO 2020-06-15 19:05:46,937 - [mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 200 [0.02, 127.0.0.1:53488][0m
-INFO 2020-06-15 19:05:46,940 - [mHTTP GET /static/assets/vendor/morris/morris.css 200 [0.02, 127.0.0.1:53472][0m
-INFO 2020-06-15 19:05:46,953 - [mHTTP GET /static/assets/stylesheets/theme.css 200 [0.02, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:46,955 - [mHTTP GET /static/assets/stylesheets/skins/default.css 200 [0.02, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:46,957 - [mHTTP GET /static/assets/vendor/modernizr/modernizr.js 200 [0.01, 127.0.0.1:53489][0m
-INFO 2020-06-15 19:05:46,959 - [mHTTP GET /static/assets/stylesheets/theme-custom.css 200 [0.02, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:47,379 - [mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 200 [0.01, 127.0.0.1:53489][0m
-INFO 2020-06-15 19:05:47,387 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 200 [0.02, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:47,388 - [mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 200 [0.02, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:47,391 - [mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 200 [0.02, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:47,392 - [mHTTP GET /static/assets/javascripts/theme.js 200 [0.02, 127.0.0.1:53488][0m
-INFO 2020-06-15 19:05:47,393 - [mHTTP GET /static/assets/javascripts/theme.custom.js 200 [0.02, 127.0.0.1:53472][0m
-INFO 2020-06-15 19:05:47,402 - [mHTTP GET /static/assets/javascripts/theme.init.js 200 [0.01, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:47,402 - [mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 200 [0.01, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:47,419 - [mHTTP GET /static/channels/js/websocketbridge.js 200 [0.01, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:47,424 - [mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 200 [0.01, 127.0.0.1:53488][0m
-INFO 2020-06-15 19:05:47,427 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 200 [0.01, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:47,438 - [mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 200 [0.01, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:47,439 - [mHTTP GET /static/assets/images/logged-user.jpg 200 [0.01, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:47,439 - [mHTTP GET /static/assets/images/dndsos-logo-black.png 200 [0.01, 127.0.0.1:53472][0m
-INFO 2020-06-15 19:05:47,630 - [mHTTP GET /static/assets/vendor/font-awesome/fonts/fontawesome-webfont.woff?v=4.1.0 200 [0.01, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:47,693 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:48,576 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53516]
-INFO 2020-06-15 19:05:48,663 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53516]
-INFO 2020-06-15 19:05:48,712 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.00, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:48,767 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:48,863 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:52,693 - [mHTTP GET /orders/orders-table 200 [0.09, 127.0.0.1:53592][0m
-INFO 2020-06-15 19:05:52,730 - [mHTTP GET /orders/deliveries-table 200 [0.09, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:52,731 - [mHTTP GET /orders/open-orders-alerts 200 [0.08, 127.0.0.1:53472][0m
-INFO 2020-06-15 19:05:52,746 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.09, 127.0.0.1:53488][0m
-INFO 2020-06-15 19:05:52,748 - [mHTTP GET /orders/open-orders-list 200 [0.09, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:52,757 - [mHTTP GET /orders/active-deliveries-list 200 [0.09, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:52,989 - [mHTTP GET /orders/business-alerts-list 200 [0.23, 127.0.0.1:53600][0m
-INFO 2020-06-15 19:05:52,997 - [mHTTP GET /orders/orders-table 200 [0.26, 127.0.0.1:53592][0m
-INFO 2020-06-15 19:05:53,010 - [mHTTP GET /orders/open-orders-list 200 [0.18, 127.0.0.1:53472][0m
-INFO 2020-06-15 19:05:53,012 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.17, 127.0.0.1:53489][0m
-INFO 2020-06-15 19:05:53,016 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=dc2fef6a-98ea-4b77-9c57-5334764df531 200 [0.18, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:53,018 - [mHTTP GET /orders/open-orders-alerts 200 [0.18, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:53,020 - [mHTTP GET /orders/deliveries-table 200 [0.19, 127.0.0.1:53488][0m
-INFO 2020-06-15 19:05:53,059 - [mHTTP GET /orders/active-deliveries-list 200 [0.11, 127.0.0.1:53602][0m
-INFO 2020-06-15 19:05:53,061 - [mHTTP GET /orders/freelancer-messages-list 200 [0.23, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:53,139 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.15, 127.0.0.1:53604][0m
-INFO 2020-06-15 19:05:53,223 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=dc2fef6a-98ea-4b77-9c57-5334764df531 200 [0.09, 127.0.0.1:53602][0m
-INFO 2020-06-15 19:05:53,224 - [mHTTP GET /orders/business-messages-list 200 [0.25, 127.0.0.1:53603][0m
-INFO 2020-06-15 19:05:53,240 - [mHTTP GET /orders/freelancer-messages-list 200 [0.10, 127.0.0.1:53488][0m
-INFO 2020-06-15 19:05:54,973 - [mHTTP GET /orders/deliveries-table 200 [0.11, 127.0.0.1:53488][0m
-INFO 2020-06-15 19:05:55,188 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.21, 127.0.0.1:53600][0m
-INFO 2020-06-15 19:05:55,191 - [mHTTP GET /orders/open-orders-alerts 200 [0.24, 127.0.0.1:53602][0m
-INFO 2020-06-15 19:05:55,195 - [mHTTP GET /orders/business-alerts-list 200 [0.22, 127.0.0.1:53604][0m
-INFO 2020-06-15 19:05:55,215 - [mHTTP GET /orders/open-orders-list 200 [0.25, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:55,216 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.25, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:55,221 - [mHTTP GET /orders/active-deliveries-list 200 [0.25, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:55,224 - [mHTTP GET /orders/business-messages-list 200 [0.25, 127.0.0.1:53592][0m
-INFO 2020-06-15 19:05:55,321 - [mHTTP GET /orders/orders-table 200 [0.35, 127.0.0.1:53603][0m
-INFO 2020-06-15 19:05:55,339 - [mHTTP GET /orders/deliveries-table 200 [0.36, 127.0.0.1:53489][0m
-INFO 2020-06-15 19:05:55,348 - [mHTTP GET /orders/freelancer-messages-list 200 [0.09, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:55,357 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=dc2fef6a-98ea-4b77-9c57-5334764df531 200 [0.10, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:58,725 - [mHTTP GET /orders/business-alerts-list 200 [0.07, 127.0.0.1:53592][0m
-INFO 2020-06-15 19:05:58,734 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.07, 127.0.0.1:53604][0m
-INFO 2020-06-15 19:05:58,734 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:53603][0m
-INFO 2020-06-15 19:05:58,903 - [mHTTP GET /orders/open-orders-list 200 [0.09, 127.0.0.1:53489][0m
-INFO 2020-06-15 19:05:58,908 - [mHTTP GET /orders/deliveries-table 200 [0.13, 127.0.0.1:53487][0m
-INFO 2020-06-15 19:05:58,909 - [mHTTP GET /orders/open-orders-alerts 200 [0.10, 127.0.0.1:53485][0m
-INFO 2020-06-15 19:05:58,909 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.10, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:58,918 - [mHTTP GET /orders/active-deliveries-list 200 [0.10, 127.0.0.1:53602][0m
-INFO 2020-06-15 19:05:58,992 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=dc2fef6a-98ea-4b77-9c57-5334764df531 200 [0.05, 127.0.0.1:53486][0m
-INFO 2020-06-15 19:05:58,998 - [mHTTP GET /orders/freelancer-messages-list 200 [0.06, 127.0.0.1:53602][0m
-INFO 2020-06-15 19:07:25,581 - [mHTTP GET /dashboard/business/31/orders 200 [0.05, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:07:25,706 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:51547]
-INFO 2020-06-15 19:07:26,681 - [mHTTP GET /orders/orders-table 200 [0.03, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:07:27,072 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55267]
-INFO 2020-06-15 19:07:27,172 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55267]
-INFO 2020-06-15 19:07:27,478 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:07:27,535 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:07:29,295 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:07:29,340 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.06, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:29,390 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:53516]
-INFO 2020-06-15 19:07:30,021 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:30,547 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55336]
-INFO 2020-06-15 19:07:30,588 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.00, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:30,618 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55336]
-INFO 2020-06-15 19:07:31,035 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:31,087 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:41,671 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:07:41,808 - [mHTTP GET /orders/open-orders-alerts 200 [0.11, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:07:41,819 - [mHTTP GET /orders/open-orders-list 200 [0.11, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:07:41,830 - [mHTTP GET /orders/orders-table 200 [0.11, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:07:41,834 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.11, 127.0.0.1:55542][0m
-INFO 2020-06-15 19:07:41,835 - [mHTTP GET /orders/business-alerts-list 200 [0.12, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:07:41,848 - [mHTTP GET /orders/business-messages-list 200 [0.13, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:07:41,859 - [mHTTP GET /orders/deliveries-table 200 [0.16, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:41,862 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.14, 127.0.0.1:55540][0m
-INFO 2020-06-15 19:07:41,881 - [mHTTP GET /orders/active-deliveries-list 200 [0.15, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:07:42,015 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.09, 127.0.0.1:55560][0m
-INFO 2020-06-15 19:07:42,026 - [mHTTP GET /orders/open-orders-alerts 200 [0.11, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:07:42,031 - [mHTTP GET /orders/open-orders-list 200 [0.11, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:07:42,032 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=962f8cb1-9752-4d5a-8e48-e345a49fe0d4 200 [0.12, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:42,033 - [mHTTP GET /orders/deliveries-table 200 [0.12, 127.0.0.1:55540][0m
-INFO 2020-06-15 19:07:42,033 - [mHTTP GET /orders/freelancer-messages-list 200 [0.12, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:07:42,044 - [mHTTP GET /orders/active-deliveries-list 200 [0.12, 127.0.0.1:55561][0m
-INFO 2020-06-15 19:07:42,133 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=962f8cb1-9752-4d5a-8e48-e345a49fe0d4 200 [0.05, 127.0.0.1:55540][0m
-INFO 2020-06-15 19:07:42,145 - [mHTTP GET /orders/freelancer-messages-list 200 [0.06, 127.0.0.1:55561][0m
-INFO 2020-06-15 19:07:44,876 - [mHTTP GET /orders/deliveries-table 200 [0.09, 127.0.0.1:55561][0m
-INFO 2020-06-15 19:07:45,012 - [mHTTP GET /orders/business-alerts-list 200 [0.15, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:07:45,030 - [mHTTP GET /orders/open-orders-alerts 200 [0.17, 127.0.0.1:55540][0m
-INFO 2020-06-15 19:07:45,040 - [mHTTP GET /orders/orders-table 200 [0.18, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:07:45,042 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.18, 127.0.0.1:55542][0m
-INFO 2020-06-15 19:07:45,094 - [mHTTP GET /orders/open-orders-list 200 [0.23, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:07:45,109 - [mHTTP GET /orders/business-messages-list 200 [0.25, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:07:45,111 - [mHTTP GET /orders/deliveries-table 200 [0.22, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:07:45,126 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.26, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:45,135 - [mHTTP GET /orders/active-deliveries-list 200 [0.27, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:07:45,212 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=962f8cb1-9752-4d5a-8e48-e345a49fe0d4 200 [0.06, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:45,235 - [mHTTP GET /orders/freelancer-messages-list 200 [0.08, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:07:48,481 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.06, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:07:48,482 - [mHTTP GET /orders/business-alerts-list 200 [0.06, 127.0.0.1:55542][0m
-INFO 2020-06-15 19:07:48,504 - [mHTTP GET /orders/orders-table 200 [0.09, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:07:48,647 - [mHTTP GET /orders/open-orders-alerts 200 [0.11, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:07:48,657 - [mHTTP GET /orders/open-orders-list 200 [0.10, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:07:48,668 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.09, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:07:48,672 - [mHTTP GET /orders/active-deliveries-list 200 [0.09, 127.0.0.1:55540][0m
-INFO 2020-06-15 19:07:48,673 - [mHTTP GET /orders/deliveries-table 200 [0.14, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:07:48,746 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=962f8cb1-9752-4d5a-8e48-e345a49fe0d4 200 [0.04, 127.0.0.1:55540][0m
-INFO 2020-06-15 19:07:48,752 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:17,366 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:17,378 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55336]
-INFO 2020-06-15 19:08:17,848 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:18,248 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:56218]
-INFO 2020-06-15 19:08:18,291 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:18,323 - WebSocket CONNECT /ws/orders/ [127.0.0.1:56218]
-INFO 2020-06-15 19:08:18,364 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:18,483 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:21,924 - [mHTTP GET /orders/orders-table 200 [0.10, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:08:22,101 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.12, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:08:22,106 - [mHTTP GET /orders/open-orders-alerts 200 [0.17, 127.0.0.1:55540][0m
-INFO 2020-06-15 19:08:22,148 - [mHTTP GET /orders/open-orders-list 200 [0.20, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:08:22,160 - [mHTTP GET /orders/business-alerts-list 200 [0.19, 127.0.0.1:55542][0m
-INFO 2020-06-15 19:08:22,160 - [mHTTP GET /orders/deliveries-table 200 [0.22, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:22,163 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.22, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:08:22,164 - [mHTTP GET /orders/active-deliveries-list 200 [0.20, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:08:22,173 - [mHTTP GET /orders/orders-table 200 [0.21, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:08:22,269 - [mHTTP GET /orders/business-messages-list 200 [0.29, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:08:22,281 - [mHTTP GET /orders/open-orders-list 200 [0.08, 127.0.0.1:55540][0m
-INFO 2020-06-15 19:08:22,309 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=0872c944-e267-440a-b4a1-514d54f9d9c7 200 [0.12, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:08:22,319 - [mHTTP GET /orders/freelancer-messages-list 200 [0.14, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:08:22,327 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.12, 127.0.0.1:55561][0m
-INFO 2020-06-15 19:08:22,329 - [mHTTP GET /orders/open-orders-alerts 200 [0.14, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:08:22,330 - [mHTTP GET /orders/deliveries-table 200 [0.14, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:22,330 - [mHTTP GET /orders/active-deliveries-list 200 [0.12, 127.0.0.1:55560][0m
-INFO 2020-06-15 19:08:22,441 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=0872c944-e267-440a-b4a1-514d54f9d9c7 200 [0.04, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:22,448 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:55560][0m
-INFO 2020-06-15 19:08:24,234 - [mHTTP GET /orders/deliveries-table 200 [0.10, 127.0.0.1:55560][0m
-INFO 2020-06-15 19:08:24,290 - [mHTTP GET /orders/open-orders-alerts 200 [0.09, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:24,323 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.11, 127.0.0.1:55561][0m
-INFO 2020-06-15 19:08:24,325 - [mHTTP GET /orders/open-orders-list 200 [0.13, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:08:24,354 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.13, 127.0.0.1:55227][0m
-INFO 2020-06-15 19:08:24,360 - [mHTTP GET /orders/business-alerts-list 200 [0.14, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:08:24,371 - [mHTTP GET /orders/orders-table 200 [0.15, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:08:24,381 - [mHTTP GET /orders/deliveries-table 200 [0.14, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:08:24,382 - [mHTTP GET /orders/business-messages-list 200 [0.16, 127.0.0.1:55542][0m
-INFO 2020-06-15 19:08:24,408 - [mHTTP GET /orders/active-deliveries-list 200 [0.18, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:08:24,510 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=0872c944-e267-440a-b4a1-514d54f9d9c7 200 [0.04, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:08:24,523 - [mHTTP GET /orders/freelancer-messages-list 200 [0.06, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:08:28,452 - [mHTTP GET /orders/business-alerts-list 200 [0.05, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:08:28,476 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:55542][0m
-INFO 2020-06-15 19:08:28,498 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.05, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:08:28,572 - [mHTTP GET /orders/open-orders-list 200 [0.08, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:08:28,597 - [mHTTP GET /orders/active-deliveries-list 200 [0.09, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:08:28,597 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.10, 127.0.0.1:55561][0m
-INFO 2020-06-15 19:08:28,600 - [mHTTP GET /orders/open-orders-alerts 200 [0.11, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:08:28,605 - [mHTTP GET /orders/deliveries-table 200 [0.11, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:08:28,665 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=0872c944-e267-440a-b4a1-514d54f9d9c7 200 [0.04, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:08:28,668 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:14,842 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:14,860 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:56218]
-INFO 2020-06-15 19:09:15,362 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:15,815 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57264]
-INFO 2020-06-15 19:09:15,884 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57264]
-INFO 2020-06-15 19:09:15,890 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:15,941 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:16,034 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:24,341 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:09:24,525 - [mHTTP GET /orders/open-orders-alerts 200 [0.15, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:09:24,589 - [mHTTP GET /orders/business-alerts-list 200 [0.18, 127.0.0.1:55542][0m
-INFO 2020-06-15 19:09:24,598 - [mHTTP GET /orders/open-orders-list 200 [0.22, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:09:24,611 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.17, 127.0.0.1:57420][0m
-INFO 2020-06-15 19:09:24,620 - [mHTTP GET /orders/business-messages-list 200 [0.20, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:09:24,629 - [mHTTP GET /orders/orders-table 200 [0.22, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:09:24,681 - [mHTTP GET /orders/deliveries-table 200 [0.31, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:24,800 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.05, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:24,806 - [mHTTP GET /orders/active-deliveries-list 200 [0.05, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:09:24,969 - [mHTTP GET /orders/open-orders-alerts 200 [0.08, 127.0.0.1:55561][0m
-INFO 2020-06-15 19:09:24,994 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=6ff1bab2-79fd-4489-b927-48acfa7bd265 200 [0.11, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:25,012 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.10, 127.0.0.1:57442][0m
-INFO 2020-06-15 19:09:25,026 - [mHTTP GET /orders/open-orders-list 200 [0.13, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:09:25,030 - [mHTTP GET /orders/deliveries-table 200 [0.14, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:09:25,031 - [mHTTP GET /orders/active-deliveries-list 200 [0.11, 127.0.0.1:57444][0m
-INFO 2020-06-15 19:09:25,044 - [mHTTP GET /orders/freelancer-messages-list 200 [0.17, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:09:25,155 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=6ff1bab2-79fd-4489-b927-48acfa7bd265 200 [0.09, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:09:25,178 - [mHTTP GET /orders/freelancer-messages-list 200 [0.13, 127.0.0.1:57444][0m
-INFO 2020-06-15 19:09:26,417 - [mHTTP GET /orders/deliveries-table 200 [0.12, 127.0.0.1:57444][0m
-INFO 2020-06-15 19:09:26,546 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.14, 127.0.0.1:55542][0m
-INFO 2020-06-15 19:09:26,563 - [mHTTP GET /orders/business-alerts-list 200 [0.16, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:09:26,571 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.17, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:09:26,581 - [mHTTP GET /orders/open-orders-alerts 200 [0.18, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:09:26,626 - [mHTTP GET /orders/open-orders-list 200 [0.22, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:09:26,629 - [mHTTP GET /orders/orders-table 200 [0.24, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:09:26,630 - [mHTTP GET /orders/business-messages-list 200 [0.23, 127.0.0.1:57420][0m
-INFO 2020-06-15 19:09:26,632 - [mHTTP GET /orders/deliveries-table 200 [0.21, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:26,644 - [mHTTP GET /orders/active-deliveries-list 200 [0.24, 127.0.0.1:57442][0m
-INFO 2020-06-15 19:09:26,736 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=6ff1bab2-79fd-4489-b927-48acfa7bd265 200 [0.06, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:26,746 - [mHTTP GET /orders/freelancer-messages-list 200 [0.08, 127.0.0.1:57442][0m
-INFO 2020-06-15 19:09:33,618 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.07, 127.0.0.1:55538][0m
-INFO 2020-06-15 19:09:33,620 - [mHTTP GET /orders/business-alerts-list 200 [0.08, 127.0.0.1:57420][0m
-INFO 2020-06-15 19:09:33,634 - [mHTTP GET /orders/orders-table 200 [0.09, 127.0.0.1:55537][0m
-INFO 2020-06-15 19:09:33,784 - [mHTTP GET /orders/open-orders-list 200 [0.09, 127.0.0.1:55536][0m
-INFO 2020-06-15 19:09:33,786 - [mHTTP GET /orders/open-orders-alerts 200 [0.09, 127.0.0.1:55309][0m
-INFO 2020-06-15 19:09:33,797 - [mHTTP GET /orders/deliveries-table 200 [0.11, 127.0.0.1:57442][0m
-INFO 2020-06-15 19:09:33,797 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.10, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:09:33,802 - [mHTTP GET /orders/active-deliveries-list 200 [0.11, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:09:33,873 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=6ff1bab2-79fd-4489-b927-48acfa7bd265 200 [0.04, 127.0.0.1:55535][0m
-INFO 2020-06-15 19:09:33,881 - [mHTTP GET /orders/freelancer-messages-list 200 [0.06, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:09:39,873 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:09:39,884 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:57264]
-INFO 2020-06-15 19:09:40,464 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:09:40,970 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57752]
-INFO 2020-06-15 19:09:41,104 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57752]
-INFO 2020-06-15 19:09:41,163 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:09:41,226 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:55541][0m
-INFO 2020-06-15 19:14:36,859 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.11, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:37,029 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:57752]
-INFO 2020-06-15 19:14:37,181 - [mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 200 [0.06, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:37,192 - [mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 200 [0.10, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:37,201 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 200 [0.07, 127.0.0.1:62828][0m
-INFO 2020-06-15 19:14:37,201 - [mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 200 [0.06, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:14:37,201 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 200 [0.08, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:37,202 - [mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 200 [0.07, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:37,209 - [mHTTP GET /static/assets/vendor/morris/morris.css 200 [0.02, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:37,229 - [mHTTP GET /static/assets/stylesheets/skins/default.css 200 [0.01, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:37,231 - [mHTTP GET /static/assets/stylesheets/theme-custom.css 200 [0.01, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:37,232 - [mHTTP GET /static/assets/stylesheets/theme.css 200 [0.02, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:37,591 - [mHTTP GET /static/assets/vendor/modernizr/modernizr.js 200 [0.37, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:37,838 - [mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 200 [0.02, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:37,843 - [mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 200 [0.02, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:37,844 - [mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 200 [0.02, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:37,846 - [mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 200 [0.02, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:37,850 - [mHTTP GET /static/assets/javascripts/theme.js 200 [0.02, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:14:37,851 - [mHTTP GET /static/assets/javascripts/theme.custom.js 200 [0.02, 127.0.0.1:62828][0m
-INFO 2020-06-15 19:14:37,892 - [mHTTP GET /static/assets/javascripts/theme.init.js 200 [0.02, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:14:37,894 - [mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 200 [0.02, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:37,895 - [mHTTP GET /static/channels/js/websocketbridge.js 200 [0.02, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:37,901 - [mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 200 [0.02, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:38,038 - [mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 200 [0.16, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:38,042 - [mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 200 [0.16, 127.0.0.1:62828][0m
-INFO 2020-06-15 19:14:38,074 - [mHTTP GET /static/assets/images/dndsos-logo-black.png 200 [0.01, 127.0.0.1:62828][0m
-INFO 2020-06-15 19:14:38,076 - [mHTTP GET /static/assets/images/logged-user.jpg 200 [0.01, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:38,350 - [mHTTP GET /static/assets/vendor/font-awesome/fonts/fontawesome-webfont.woff?v=4.1.0 200 [0.01, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:38,467 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:40,648 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:62891]
-INFO 2020-06-15 19:14:40,748 - WebSocket CONNECT /ws/orders/ [127.0.0.1:62891]
-INFO 2020-06-15 19:14:40,764 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:40,832 - [mHTTP GET /orders/open-orders-alerts 200 [0.04, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:40,981 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:47,543 - [mHTTP GET /orders/orders-table 200 [0.11, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:14:47,780 - [mHTTP GET /orders/deliveries-table 200 [0.13, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:47,798 - [mHTTP GET /orders/orders-table 200 [0.16, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:14:47,830 - [mHTTP GET /orders/open-orders-alerts 200 [0.17, 127.0.0.1:62828][0m
-INFO 2020-06-15 19:14:47,865 - [mHTTP GET /orders/open-orders-list 200 [0.19, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:47,870 - [mHTTP GET /orders/business-alerts-list 200 [0.11, 127.0.0.1:63023][0m
-INFO 2020-06-15 19:14:47,873 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.12, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:47,896 - [mHTTP GET /orders/active-deliveries-list 200 [0.14, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:47,897 - [mHTTP GET /orders/business-messages-list 200 [0.14, 127.0.0.1:63025][0m
-INFO 2020-06-15 19:14:47,913 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.05, 127.0.0.1:63028][0m
-INFO 2020-06-15 19:14:48,148 - [mHTTP GET /orders/open-orders-alerts 200 [0.12, 127.0.0.1:62828][0m
-INFO 2020-06-15 19:14:48,149 - [mHTTP GET /orders/open-orders-list 200 [0.12, 127.0.0.1:62824][0m
-INFO 2020-06-15 19:14:48,150 - [mHTTP GET /orders/deliveries-table 200 [0.13, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:48,157 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=f17d30ad-ae0f-47f3-bfd6-a079bc7f1b72 200 [0.16, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:48,184 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.15, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:14:48,193 - [mHTTP GET /orders/freelancer-messages-list 200 [0.25, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:48,194 - [mHTTP GET /orders/active-deliveries-list 200 [0.14, 127.0.0.1:63042][0m
-INFO 2020-06-15 19:14:48,270 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=f17d30ad-ae0f-47f3-bfd6-a079bc7f1b72 200 [0.05, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:48,272 - [mHTTP GET /orders/freelancer-messages-list 200 [0.06, 127.0.0.1:63042][0m
-INFO 2020-06-15 19:14:52,037 - [mHTTP GET /orders/deliveries-table 200 [0.10, 127.0.0.1:63042][0m
-INFO 2020-06-15 19:14:52,182 - [mHTTP GET /orders/open-orders-alerts 200 [0.14, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:14:52,192 - [mHTTP GET /orders/open-orders-list 200 [0.14, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:52,273 - [mHTTP GET /orders/business-alerts-list 200 [0.06, 127.0.0.1:63025][0m
-INFO 2020-06-15 19:14:52,275 - [mHTTP GET /orders/orders-table 200 [0.07, 127.0.0.1:63028][0m
-INFO 2020-06-15 19:14:52,413 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.36, 127.0.0.1:63042][0m
-INFO 2020-06-15 19:14:52,422 - [mHTTP GET /orders/active-deliveries-list 200 [0.37, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:52,425 - [mHTTP GET /orders/deliveries-table 200 [0.38, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:52,465 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.24, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:14:52,502 - [mHTTP GET /orders/business-messages-list 200 [0.29, 127.0.0.1:63023][0m
-INFO 2020-06-15 19:14:52,541 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=f17d30ad-ae0f-47f3-bfd6-a079bc7f1b72 200 [0.07, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:52,615 - [mHTTP GET /orders/freelancer-messages-list 200 [0.15, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:58,061 - [mHTTP GET /orders/open-orders-alerts 200 [0.07, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:14:58,100 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.05, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:14:58,102 - [mHTTP GET /orders/open-orders-list 200 [0.10, 127.0.0.1:63042][0m
-INFO 2020-06-15 19:14:58,153 - [mHTTP GET /orders/active-deliveries-list 200 [0.06, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:14:58,327 - [mHTTP GET /orders/deliveries-table 200 [0.35, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:14:58,338 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=f17d30ad-ae0f-47f3-bfd6-a079bc7f1b72 200 [0.06, 127.0.0.1:63042][0m
-INFO 2020-06-15 19:14:58,342 - [mHTTP GET /orders/freelancer-messages-list 200 [0.06, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:15:01,414 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.22, 127.0.0.1:63025][0m
-INFO 2020-06-15 19:15:01,429 - [mHTTP GET /orders/business-alerts-list 200 [0.24, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:15:01,442 - [mHTTP GET /orders/business-messages-list 200 [0.26, 127.0.0.1:63028][0m
-INFO 2020-06-15 19:15:01,457 - [mHTTP GET /orders/orders-table 200 [0.29, 127.0.0.1:63023][0m
-INFO 2020-06-15 19:15:15,614 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.07, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:15:15,756 - [mHTTP GET /orders/business-alerts-list 200 [0.23, 127.0.0.1:63028][0m
-INFO 2020-06-15 19:15:15,762 - [mHTTP GET /orders/orders-table 200 [0.24, 127.0.0.1:63023][0m
-INFO 2020-06-15 19:15:16,019 - [mHTTP GET /orders/active-deliveries-list 200 [0.12, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:15:16,025 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.13, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:15:16,027 - [mHTTP GET /orders/open-orders-alerts 200 [0.14, 127.0.0.1:63042][0m
-INFO 2020-06-15 19:15:16,027 - [mHTTP GET /orders/open-orders-list 200 [0.13, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:15:16,036 - [mHTTP GET /orders/deliveries-table 200 [0.15, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:15:16,128 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:15:16,149 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=f17d30ad-ae0f-47f3-bfd6-a079bc7f1b72 200 [0.04, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:15:37,579 - [mHTTP GET /orders/orders-table 200 [0.10, 127.0.0.1:63023][0m
-INFO 2020-06-15 19:15:37,582 - [mHTTP GET /orders/business-alerts-list 200 [0.09, 127.0.0.1:63028][0m
-INFO 2020-06-15 19:15:37,597 - [mHTTP GET /dashboard/business/31/b-alerts-items 200 [0.10, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:15:37,685 - [mHTTP GET /orders/open-orders-alerts 200 [0.10, 127.0.0.1:62830][0m
-INFO 2020-06-15 19:15:37,722 - [mHTTP GET /orders/active-deliveries-list 200 [0.06, 127.0.0.1:62808][0m
-INFO 2020-06-15 19:15:37,722 - [mHTTP GET /orders/deliveries-table 200 [0.15, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:15:37,727 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.12, 127.0.0.1:63042][0m
-INFO 2020-06-15 19:15:37,741 - [mHTTP GET /orders/open-orders-list 200 [0.14, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:15:37,824 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=f17d30ad-ae0f-47f3-bfd6-a079bc7f1b72 200 [0.04, 127.0.0.1:62826][0m
-INFO 2020-06-15 19:15:37,825 - [mHTTP GET /orders/freelancer-messages-list 200 [0.08, 127.0.0.1:62829][0m
-INFO 2020-06-15 19:15:42,081 - [mHTTP GET /dashboard/business/31/orders 200 [0.07, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:15:42,216 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55267]
-INFO 2020-06-15 19:15:43,520 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:15:44,553 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:63997]
-INFO 2020-06-15 19:15:44,621 - WebSocket CONNECT /ws/orders/ [127.0.0.1:63997]
-INFO 2020-06-15 19:15:44,863 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:15:44,933 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:63017][0m
-INFO 2020-06-15 19:15:46,768 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:63017][0m
-INFO 2020-06-16 04:42:41,332 - [32mHTTP GET /chat/room 301 [0.04, 127.0.0.1:59168][0m
-INFO 2020-06-16 04:42:41,550 - [mHTTP GET /chat/room/ 200 [0.20, 127.0.0.1:59168][0m
-INFO 2020-06-16 04:42:41,951 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:63997]
-INFO 2020-06-16 04:42:43,432 - WebSocket HANDSHAKING /ws/chat/room/ [127.0.0.1:59202]
-INFO 2020-06-16 04:42:43,466 - WebSocket CONNECT /ws/chat/room/ [127.0.0.1:59202]
-WARNING 2020-06-16 04:42:46,112 - Not Found: /favicon.ico
-WARNING 2020-06-16 04:42:46,116 - [33mHTTP GET /favicon.ico 404 [0.02, 127.0.0.1:59168][0m
-INFO 2020-06-16 04:43:51,217 - [32mHTTP GET /chat/room 301 [0.01, 127.0.0.1:60099][0m
-INFO 2020-06-16 04:43:51,658 - [mHTTP GET /chat/room/ 200 [0.04, 127.0.0.1:60099][0m
-WARNING 2020-06-16 04:43:52,348 - Not Found: /favicon.ico
-WARNING 2020-06-16 04:43:52,350 - [33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:60099][0m
-INFO 2020-06-16 04:43:52,453 - WebSocket HANDSHAKING /ws/chat/room/ [127.0.0.1:60115]
-INFO 2020-06-16 04:43:52,476 - WebSocket CONNECT /ws/chat/room/ [127.0.0.1:60115]
-INFO 2020-06-16 04:44:15,379 - WebSocket DISCONNECT /ws/chat/room/ [127.0.0.1:60115]
-INFO 2020-06-16 04:44:16,411 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:60431]
-INFO 2020-06-16 04:44:16,516 - WebSocket CONNECT /ws/orders/ [127.0.0.1:60431]
-INFO 2020-06-16 04:45:29,929 - [mHTTP GET / 200 [0.10, 127.0.0.1:61382][0m
-INFO 2020-06-16 04:45:31,179 - [mHTTP GET /static/js/jquery-3.3.1.min.js 200 [0.02, 127.0.0.1:61382][0m
-INFO 2020-06-16 04:45:31,193 - [mHTTP GET /static/fonts/icomoon/style.css 200 [0.01, 127.0.0.1:61410][0m
-INFO 2020-06-16 04:45:31,340 - [mHTTP GET /static/css/bootstrap.min.css 200 [0.02, 127.0.0.1:61412][0m
-INFO 2020-06-16 04:45:31,350 - [mHTTP GET /static/css/owl.carousel.min.css 200 [0.01, 127.0.0.1:61417][0m
-INFO 2020-06-16 04:45:31,352 - [mHTTP GET /static/css/jquery-ui.css 200 [0.01, 127.0.0.1:61416][0m
-INFO 2020-06-16 04:45:31,352 - [mHTTP GET /static/css/owl.theme.default.min.css 200 [0.01, 127.0.0.1:61418][0m
-INFO 2020-06-16 04:45:32,041 - [mHTTP GET /static/css/jquery.fancybox.min.css 200 [0.01, 127.0.0.1:61417][0m
-INFO 2020-06-16 04:45:32,051 - [mHTTP GET /static/css/bootstrap-datepicker.css 200 [0.01, 127.0.0.1:61418][0m
-INFO 2020-06-16 04:45:32,204 - [mHTTP GET /static/fonts/flaticon/font/flaticon.css 200 [0.01, 127.0.0.1:61416][0m
-INFO 2020-06-16 04:45:32,487 - [mHTTP GET /static/css/aos.css 200 [0.01, 127.0.0.1:61410][0m
-INFO 2020-06-16 04:45:32,731 - [mHTTP GET /static/css/style.css 200 [0.01, 127.0.0.1:61416][0m
-INFO 2020-06-16 04:45:32,743 - [mHTTP GET /static/css/custom.css 200 [0.01, 127.0.0.1:61417][0m
-INFO 2020-06-16 04:45:32,767 - [mHTTP GET /static/js/jquery-migrate-3.0.1.min.js 200 [0.01, 127.0.0.1:61418][0m
-INFO 2020-06-16 04:45:32,856 - [mHTTP GET /static/js/jquery-ui.js 200 [0.01, 127.0.0.1:61412][0m
-INFO 2020-06-16 04:45:32,985 - [mHTTP GET /static/js/popper.min.js 200 [0.02, 127.0.0.1:61410][0m
-INFO 2020-06-16 04:45:33,143 - [mHTTP GET /static/js/bootstrap.min.js 200 [0.01, 127.0.0.1:61382][0m
-INFO 2020-06-16 04:45:33,255 - [mHTTP GET /static/js/owl.carousel.min.js 200 [0.01, 127.0.0.1:61417][0m
-INFO 2020-06-16 04:45:33,279 - [mHTTP GET /static/js/jquery.stellar.min.js 200 [0.01, 127.0.0.1:61418][0m
-INFO 2020-06-16 04:45:33,690 - [mHTTP GET /static/js/jquery.countdown.min.js 200 [0.01, 127.0.0.1:61410][0m
-INFO 2020-06-16 04:45:33,726 - [mHTTP GET /static/js/bootstrap-datepicker.min.js 200 [0.01, 127.0.0.1:61412][0m
-INFO 2020-06-16 04:45:33,771 - [mHTTP GET /static/js/jquery.easing.1.3.js 200 [0.01, 127.0.0.1:61416][0m
-INFO 2020-06-16 04:45:33,793 - [mHTTP GET /static/js/aos.js 200 [0.01, 127.0.0.1:61418][0m
-INFO 2020-06-16 04:45:33,954 - [mHTTP GET /static/js/jquery.fancybox.min.js 200 [0.01, 127.0.0.1:61417][0m
-INFO 2020-06-16 04:45:34,122 - [mHTTP GET /static/js/jquery.sticky.js 200 [0.01, 127.0.0.1:61410][0m
-INFO 2020-06-16 04:45:34,270 - [mHTTP GET /static/js/main.js 200 [0.00, 127.0.0.1:61416][0m
-INFO 2020-06-16 04:45:34,292 - [mHTTP GET /static/fonts/icomoon/fonts/icomoon.ttf?10si43 200 [0.01, 127.0.0.1:61418][0m
-INFO 2020-06-16 04:45:34,349 - [mHTTP GET /static/images/dndsos-logo-black.png 200 [0.01, 127.0.0.1:61382][0m
-INFO 2020-06-16 04:45:34,408 - [mHTTP GET /static/images/deliverer.png 200 [0.01, 127.0.0.1:61412][0m
-INFO 2020-06-16 04:45:34,526 - [mHTTP GET /static/images/how-it-works.png 200 [0.01, 127.0.0.1:61410][0m
-INFO 2020-06-16 04:45:34,708 - [mHTTP GET /static/images/svg_1.svg 200 [0.01, 127.0.0.1:61417][0m
-INFO 2020-06-16 04:45:36,595 - [mHTTP GET /static/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:61490][0m
-INFO 2020-06-16 04:45:44,258 - [32mHTTP GET /chat/room 301 [0.00, 127.0.0.1:61418][0m
-INFO 2020-06-16 04:45:44,779 - [mHTTP GET /chat/room/ 200 [0.00, 127.0.0.1:61418][0m
-WARNING 2020-06-16 04:45:45,403 - Not Found: /favicon.ico
-WARNING 2020-06-16 04:45:45,406 - [33mHTTP GET /favicon.ico 404 [0.02, 127.0.0.1:61490][0m
-INFO 2020-06-16 04:45:45,598 - WebSocket HANDSHAKING /ws/chat/room/ [127.0.0.1:61609]
-INFO 2020-06-16 04:45:45,601 - WebSocket CONNECT /ws/chat/room/ [127.0.0.1:61609]
-INFO 2020-06-16 04:46:22,049 - WebSocket DISCONNECT /ws/chat/room/ [127.0.0.1:61609]
-INFO 2020-06-16 04:46:22,063 - [mHTTP GET /chat/room/ 200 [0.01, 127.0.0.1:61418][0m
-INFO 2020-06-16 04:46:33,133 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:60431]
-INFO 2020-06-16 04:49:25,234 - WebSocket DISCONNECT /ws/chat/room/ [127.0.0.1:59202]
-INFO 2020-06-16 04:49:26,906 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:64501]
-INFO 2020-06-16 04:49:27,045 - WebSocket CONNECT /ws/orders/ [127.0.0.1:64501]
-INFO 2020-06-16 07:12:40,422 - [mHTTP GET /chat/room/ 200 [0.13, 127.0.0.1:62070][0m
-INFO 2020-06-16 07:12:41,437 - WebSocket HANDSHAKING /ws/chat/room/ [127.0.0.1:62089]
-INFO 2020-06-16 07:12:41,458 - WebSocket CONNECT /ws/chat/room/ [127.0.0.1:62089]
-INFO 2020-06-16 07:13:08,225 - WebSocket HANDSHAKING /ws/chat/room/ [127.0.0.1:62440]
-INFO 2020-06-16 07:13:08,415 - WebSocket CONNECT /ws/chat/room/ [127.0.0.1:62440]
-INFO 2020-06-16 07:13:10,601 - [mHTTP GET /chat/room/ 200 [0.03, 127.0.0.1:62473][0m
-INFO 2020-06-16 07:13:11,087 - WebSocket DISCONNECT /ws/chat/room/ [127.0.0.1:62440]
-INFO 2020-06-16 07:13:11,292 - WebSocket HANDSHAKING /ws/chat/room/ [127.0.0.1:62485]
-INFO 2020-06-16 07:13:11,314 - WebSocket CONNECT /ws/chat/room/ [127.0.0.1:62485]
-INFO 2020-06-16 07:13:26,970 - [mHTTP GET /chat/room/ 200 [0.03, 127.0.0.1:62686][0m
-INFO 2020-06-16 07:13:27,238 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:64501]
-INFO 2020-06-16 07:13:28,300 - WebSocket HANDSHAKING /ws/chat/room/ [127.0.0.1:62716]
-INFO 2020-06-16 07:13:28,323 - WebSocket CONNECT /ws/chat/room/ [127.0.0.1:62716]
-INFO 2020-06-16 07:14:13,173 - [mHTTP GET / 200 [0.12, 127.0.0.1:63300][0m
-INFO 2020-06-16 07:14:13,906 - [mHTTP GET /static/fonts/icomoon/style.css 200 [0.03, 127.0.0.1:63319][0m
-INFO 2020-06-16 07:14:13,917 - [mHTTP GET /static/css/bootstrap.min.css 200 [0.07, 127.0.0.1:63300][0m
-INFO 2020-06-16 07:14:14,045 - [mHTTP GET /static/css/jquery-ui.css 200 [0.01, 127.0.0.1:63321][0m
-INFO 2020-06-16 07:14:14,047 - [mHTTP GET /static/css/owl.theme.default.min.css 200 [0.01, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:14,227 - [mHTTP GET /static/css/owl.carousel.min.css 200 [0.01, 127.0.0.1:63326][0m
-INFO 2020-06-16 07:14:14,228 - [mHTTP GET /static/css/jquery.fancybox.min.css 200 [0.01, 127.0.0.1:63327][0m
-INFO 2020-06-16 07:14:14,638 - [mHTTP GET /static/css/bootstrap-datepicker.css 200 [0.01, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:14,747 - [mHTTP GET /static/fonts/flaticon/font/flaticon.css 200 [0.01, 127.0.0.1:63319][0m
-INFO 2020-06-16 07:14:14,787 - [mHTTP GET /static/css/aos.css 200 [0.02, 127.0.0.1:63326][0m
-INFO 2020-06-16 07:14:14,788 - [mHTTP GET /static/css/style.css 200 [0.01, 127.0.0.1:63321][0m
-INFO 2020-06-16 07:14:14,861 - [mHTTP GET /static/css/custom.css 200 [0.01, 127.0.0.1:63327][0m
-INFO 2020-06-16 07:14:15,109 - [mHTTP GET /static/js/jquery-3.3.1.min.js 200 [0.01, 127.0.0.1:63300][0m
-INFO 2020-06-16 07:14:15,115 - [mHTTP GET /static/js/jquery-migrate-3.0.1.min.js 200 [0.01, 127.0.0.1:63319][0m
-INFO 2020-06-16 07:14:15,263 - [mHTTP GET /static/js/jquery-ui.js 200 [0.01, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:15,422 - [mHTTP GET /static/js/bootstrap.min.js 200 [0.01, 127.0.0.1:63326][0m
-INFO 2020-06-16 07:14:15,427 - [mHTTP GET /static/js/popper.min.js 200 [0.01, 127.0.0.1:63327][0m
-INFO 2020-06-16 07:14:15,455 - [mHTTP GET /static/js/owl.carousel.min.js 200 [0.01, 127.0.0.1:63321][0m
-INFO 2020-06-16 07:14:15,727 - [mHTTP GET /static/js/jquery.stellar.min.js 200 [0.01, 127.0.0.1:63319][0m
-INFO 2020-06-16 07:14:15,886 - [mHTTP GET /static/fonts/icomoon/fonts/icomoon.ttf?10si43 200 [0.01, 127.0.0.1:63300][0m
-INFO 2020-06-16 07:14:16,086 - [mHTTP GET /static/images/dndsos-logo-black.png 200 [0.03, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:16,175 - [mHTTP GET /static/images/deliverer.png 200 [0.01, 127.0.0.1:63321][0m
-INFO 2020-06-16 07:14:16,197 - [mHTTP GET /static/js/jquery.countdown.min.js 200 [0.01, 127.0.0.1:63319][0m
-INFO 2020-06-16 07:14:16,198 - [mHTTP GET /static/js/bootstrap-datepicker.min.js 200 [0.01, 127.0.0.1:63326][0m
-INFO 2020-06-16 07:14:16,291 - [mHTTP GET /static/js/jquery.easing.1.3.js 200 [0.01, 127.0.0.1:63327][0m
-INFO 2020-06-16 07:14:16,711 - [mHTTP GET /static/js/aos.js 200 [0.01, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:16,939 - [mHTTP GET /static/js/jquery.fancybox.min.js 200 [0.01, 127.0.0.1:63319][0m
-INFO 2020-06-16 07:14:17,122 - [mHTTP GET /static/js/jquery.sticky.js 200 [0.02, 127.0.0.1:63327][0m
-INFO 2020-06-16 07:14:17,452 - [mHTTP GET /static/js/main.js 200 [0.01, 127.0.0.1:63300][0m
-INFO 2020-06-16 07:14:17,466 - [mHTTP GET /static/images/how-it-works.png 200 [0.01, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:17,471 - [mHTTP GET /static/images/svg_1.svg 200 [0.01, 127.0.0.1:63321][0m
-INFO 2020-06-16 07:14:19,364 - [mHTTP GET /static/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:23,448 - [32mHTTP GET /chat/room 301 [0.01, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:23,894 - [mHTTP GET /chat/room/ 200 [0.01, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:24,819 - WebSocket HANDSHAKING /ws/chat/room/ [127.0.0.1:63475]
-INFO 2020-06-16 07:14:24,824 - WebSocket CONNECT /ws/chat/room/ [127.0.0.1:63475]
-WARNING 2020-06-16 07:14:29,399 - Not Found: /favicon.ico
-WARNING 2020-06-16 07:14:29,407 - [33mHTTP GET /favicon.ico 404 [0.05, 127.0.0.1:63323][0m
-INFO 2020-06-16 07:14:37,640 - [mHTTP GET / 200 [0.02, 127.0.0.1:63646][0m
-INFO 2020-06-16 07:14:38,639 - [mHTTP GET /static/fonts/icomoon/style.css 200 [0.01, 127.0.0.1:63646][0m
-INFO 2020-06-16 07:14:38,654 - [mHTTP GET /static/css/bootstrap.min.css 200 [0.01, 127.0.0.1:63665][0m
-INFO 2020-06-16 07:14:38,986 - [mHTTP GET /static/css/jquery-ui.css 200 [0.01, 127.0.0.1:63676][0m
-INFO 2020-06-16 07:14:38,990 - [mHTTP GET /static/css/owl.carousel.min.css 200 [0.01, 127.0.0.1:63678][0m
-INFO 2020-06-16 07:14:39,162 - [mHTTP GET /static/css/owl.theme.default.min.css 200 [0.01, 127.0.0.1:63682][0m
-INFO 2020-06-16 07:14:39,163 - [mHTTP GET /static/css/jquery.fancybox.min.css 200 [0.01, 127.0.0.1:63681][0m
-INFO 2020-06-16 07:14:39,661 - WebSocket DISCONNECT /ws/chat/room/ [127.0.0.1:63475]
-INFO 2020-06-16 07:14:39,890 - [mHTTP GET /static/css/bootstrap-datepicker.css 200 [0.01, 127.0.0.1:63646][0m
-INFO 2020-06-16 07:14:40,456 - [mHTTP GET /static/fonts/flaticon/font/flaticon.css 200 [0.01, 127.0.0.1:63678][0m
-INFO 2020-06-16 07:14:40,460 - [mHTTP GET /static/css/aos.css 200 [0.01, 127.0.0.1:63682][0m
-INFO 2020-06-16 07:14:40,604 - [mHTTP GET /static/css/style.css 200 [0.01, 127.0.0.1:63676][0m
-INFO 2020-06-16 07:14:40,664 - [mHTTP GET /static/css/custom.css 200 [0.01, 127.0.0.1:63681][0m
-INFO 2020-06-16 07:14:40,902 - [mHTTP GET /static/images/dndsos-logo-black.png 200 [0.02, 127.0.0.1:63665][0m
-INFO 2020-06-16 07:14:41,122 - [mHTTP GET /static/js/jquery-migrate-3.0.1.min.js 200 [0.01, 127.0.0.1:63678][0m
-INFO 2020-06-16 07:14:41,128 - [mHTTP GET /static/js/jquery-3.3.1.min.js 200 [0.00, 127.0.0.1:63646][0m
-INFO 2020-06-16 07:14:41,311 - [mHTTP GET /static/fonts/icomoon/fonts/icomoon.ttf?10si43 200 [0.01, 127.0.0.1:63682][0m
-INFO 2020-06-16 07:14:41,527 - [mHTTP GET /static/js/jquery-ui.js 200 [0.01, 127.0.0.1:63681][0m
-INFO 2020-06-16 07:14:41,530 - [mHTTP GET /static/js/popper.min.js 200 [0.01, 127.0.0.1:63665][0m
-INFO 2020-06-16 07:14:41,688 - [mHTTP GET /static/js/bootstrap.min.js 200 [0.01, 127.0.0.1:63678][0m
-INFO 2020-06-16 07:14:41,883 - [mHTTP GET /static/js/owl.carousel.min.js 200 [0.00, 127.0.0.1:63676][0m
-INFO 2020-06-16 07:14:42,337 - [mHTTP GET /static/images/deliverer.png 200 [0.01, 127.0.0.1:63646][0m
-INFO 2020-06-16 07:14:42,962 - [mHTTP GET /static/js/jquery.stellar.min.js 200 [0.01, 127.0.0.1:63665][0m
-INFO 2020-06-16 07:14:43,225 - [mHTTP GET /static/js/jquery.countdown.min.js 200 [0.00, 127.0.0.1:63681][0m
-INFO 2020-06-16 07:14:43,358 - [mHTTP GET /static/js/bootstrap-datepicker.min.js 200 [0.00, 127.0.0.1:63678][0m
-INFO 2020-06-16 07:14:43,561 - [mHTTP GET /static/js/jquery.easing.1.3.js 200 [0.00, 127.0.0.1:63676][0m
-INFO 2020-06-16 07:14:43,778 - [mHTTP GET /static/js/aos.js 200 [0.01, 127.0.0.1:63665][0m
-INFO 2020-06-16 07:14:43,948 - [mHTTP GET /static/js/jquery.fancybox.min.js 200 [0.01, 127.0.0.1:63646][0m
-INFO 2020-06-16 07:14:43,963 - [mHTTP GET /static/js/jquery.sticky.js 200 [0.00, 127.0.0.1:63681][0m
-INFO 2020-06-16 07:14:44,235 - [mHTTP GET /static/js/main.js 200 [0.01, 127.0.0.1:63676][0m
-INFO 2020-06-16 07:14:44,256 - [mHTTP GET /static/images/how-it-works.png 200 [0.01, 127.0.0.1:63682][0m
-INFO 2020-06-16 07:14:44,274 - [mHTTP GET /static/images/svg_1.svg 200 [0.01, 127.0.0.1:63678][0m
-INFO 2020-06-16 07:14:45,717 - [mHTTP GET /static/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:63682][0m
-INFO 2020-06-16 07:14:47,341 - [32mHTTP GET /chat/room 301 [0.00, 127.0.0.1:63682][0m
-INFO 2020-06-16 07:14:47,741 - [mHTTP GET /chat/room/ 200 [0.00, 127.0.0.1:63682][0m
-WARNING 2020-06-16 07:14:49,377 - Not Found: /favicon.ico
-WARNING 2020-06-16 07:14:49,380 - [33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:63682][0m
-INFO 2020-06-16 07:15:18,599 - [mHTTP GET /chat/room/ 200 [0.05, 127.0.0.1:64196][0m
-INFO 2020-06-16 07:15:19,937 - WebSocket DISCONNECT /ws/chat/room/ [127.0.0.1:62485]
-WARNING 2020-06-16 07:15:22,019 - Not Found: /favicon.ico
-WARNING 2020-06-16 07:15:22,022 - [33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:64196][0m
-INFO 2020-06-16 07:30:01,882 - WebSocket DISCONNECT /ws/chat/room/ [127.0.0.1:62089]
+INFO 2020-06-17 10:48:03,498 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+INFO 2020-06-17 10:48:03,499 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+INFO 2020-06-17 10:48:03,499 - Listening on TCP address 127.0.0.1:8000
+INFO 2020-06-17 10:49:00,754 - [mHTTP GET /dashboard/business/32/orders 200 [0.09, 127.0.0.1:54121][0m
+INFO 2020-06-17 10:49:01,445 - [mHTTP GET /orders/orders-table 200 [0.02, 127.0.0.1:54121][0m
+INFO 2020-06-17 10:49:02,075 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:54121][0m
+INFO 2020-06-17 10:49:02,131 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:54121][0m
+INFO 2020-06-17 10:49:04,313 - [mHTTP GET /dashboard/business/32/freelancers 200 [0.06, 127.0.0.1:54121][0m
+INFO 2020-06-17 10:49:05,592 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:54121][0m
+INFO 2020-06-17 10:49:05,639 - [mHTTP GET /orders/business-messages-list 200 [0.03, 127.0.0.1:54121][0m
+INFO 2020-06-17 10:57:26,229 - [mHTTP GET /orders/open-orders 200 [0.18, 127.0.0.1:61827][0m
+INFO 2020-06-17 10:57:27,637 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61865]
+INFO 2020-06-17 10:57:27,662 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.03, 127.0.0.1:61827][0m
+INFO 2020-06-17 10:57:27,844 - [mHTTP GET /orders/open-orders-list 200 [0.20, 127.0.0.1:61867][0m
+INFO 2020-06-17 10:57:27,898 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61865]
+INFO 2020-06-17 10:57:27,928 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:61867][0m
+INFO 2020-06-17 10:57:27,998 - [mHTTP GET /orders/freelancer-messages-list 200 [0.06, 127.0.0.1:61867][0m
+INFO 2020-06-17 10:57:31,576 - [mHTTP GET /orders/open-orders-alerts 200 [0.07, 127.0.0.1:61827][0m
+INFO 2020-06-17 10:57:31,589 - [mHTTP GET /orders/open-orders-list 200 [0.07, 127.0.0.1:61937][0m
+INFO 2020-06-17 10:57:31,593 - [mHTTP GET /orders/deliveries-table 200 [0.09, 127.0.0.1:61867][0m
+INFO 2020-06-17 10:57:31,607 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.08, 127.0.0.1:61938][0m
+INFO 2020-06-17 10:57:31,607 - [mHTTP GET /orders/active-deliveries-list 200 [0.08, 127.0.0.1:61940][0m
+INFO 2020-06-17 10:57:31,678 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.04, 127.0.0.1:61938][0m
+INFO 2020-06-17 10:57:31,682 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:61940][0m
+INFO 2020-06-17 10:58:19,244 - [mHTTP GET /dashboard/business/32/freelancers 200 [0.09, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:20,921 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:62695]
+INFO 2020-06-17 10:58:20,984 - WebSocket CONNECT /ws/orders/ [127.0.0.1:62695]
+INFO 2020-06-17 10:58:21,181 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:21,236 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:22,698 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:31,449 - [mHTTP GET /dashboard/business/32/orders 200 [0.05, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:31,478 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:62695]
+INFO 2020-06-17 10:58:32,090 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:32,482 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:62881]
+INFO 2020-06-17 10:58:32,550 - WebSocket CONNECT /ws/orders/ [127.0.0.1:62881]
+INFO 2020-06-17 10:58:32,788 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:32,853 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:37,771 - [mHTTP GET /dashboard/freelancer/21/active-deliveries 200 [0.04, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:37,784 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:61865]
+INFO 2020-06-17 10:58:39,120 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:62993]
+INFO 2020-06-17 10:58:39,253 - [mHTTP GET /orders/active-deliveries-list 200 [0.05, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:39,295 - WebSocket CONNECT /ws/orders/ [127.0.0.1:62993]
+INFO 2020-06-17 10:58:39,349 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:39,399 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:41,329 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:41,338 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:62993]
+INFO 2020-06-17 10:58:41,854 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:42,302 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:63056]
+INFO 2020-06-17 10:58:42,368 - WebSocket CONNECT /ws/orders/ [127.0.0.1:63056]
+INFO 2020-06-17 10:58:42,450 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:42,587 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:46,597 - [mHTTP GET /orders/deliveries-table 200 [0.19, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:58:46,607 - [mHTTP GET /orders/open-orders-alerts 200 [0.19, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:58:46,625 - [mHTTP GET /orders/orders-table 200 [0.15, 127.0.0.1:62663][0m
+INFO 2020-06-17 10:58:46,625 - [mHTTP GET /orders/active-deliveries-list 200 [0.18, 127.0.0.1:63126][0m
+INFO 2020-06-17 10:58:46,653 - [mHTTP GET /orders/business-alerts-list 200 [0.11, 127.0.0.1:63127][0m
+INFO 2020-06-17 10:58:46,654 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.24, 127.0.0.1:63125][0m
+INFO 2020-06-17 10:58:46,675 - [mHTTP GET /orders/open-orders-list 200 [0.26, 127.0.0.1:63124][0m
+INFO 2020-06-17 10:58:46,702 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.13, 127.0.0.1:63131][0m
+INFO 2020-06-17 10:58:46,767 - [mHTTP GET /orders/business-messages-list 200 [0.22, 127.0.0.1:63128][0m
+INFO 2020-06-17 10:58:46,768 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.10, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:58:46,768 - [mHTTP GET /orders/freelancer-messages-list 200 [0.11, 127.0.0.1:63126][0m
+INFO 2020-06-17 10:58:51,135 - [mHTTP GET /dashboard/business/32/b-alerts 200 [0.04, 127.0.0.1:63128][0m
+INFO 2020-06-17 10:58:51,162 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:62881]
+INFO 2020-06-17 10:58:52,191 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:63238]
+INFO 2020-06-17 10:58:52,262 - WebSocket CONNECT /ws/orders/ [127.0.0.1:63238]
+INFO 2020-06-17 10:58:52,444 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:63128][0m
+INFO 2020-06-17 10:58:52,495 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:63128][0m
+INFO 2020-06-17 10:58:52,500 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.03, 127.0.0.1:63131][0m
+INFO 2020-06-17 10:58:57,803 - [mHTTP GET /dashboard/business/32/freelancers 200 [0.12, 127.0.0.1:63131][0m
+INFO 2020-06-17 10:58:57,827 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:63238]
+INFO 2020-06-17 10:58:58,863 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:63347]
+INFO 2020-06-17 10:58:58,926 - WebSocket CONNECT /ws/orders/ [127.0.0.1:63347]
+INFO 2020-06-17 10:58:59,082 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:63131][0m
+INFO 2020-06-17 10:58:59,123 - [mHTTP GET /orders/business-messages-list 200 [0.03, 127.0.0.1:63131][0m
+INFO 2020-06-17 10:59:03,271 - [mHTTP GET /dashboard/business/32/b-alerts 200 [0.04, 127.0.0.1:63131][0m
+INFO 2020-06-17 10:59:03,305 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:63347]
+INFO 2020-06-17 10:59:04,271 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:63438]
+INFO 2020-06-17 10:59:04,333 - WebSocket CONNECT /ws/orders/ [127.0.0.1:63438]
+INFO 2020-06-17 10:59:04,475 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:63131][0m
+INFO 2020-06-17 10:59:04,519 - [mHTTP GET /orders/business-messages-list 200 [0.03, 127.0.0.1:63131][0m
+INFO 2020-06-17 10:59:04,523 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.03, 127.0.0.1:63128][0m
+INFO 2020-06-17 10:59:05,873 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:63126][0m
+INFO 2020-06-17 10:59:05,886 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.05, 127.0.0.1:63125][0m
+INFO 2020-06-17 10:59:05,891 - [mHTTP GET /orders/open-orders-alerts 200 [0.06, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:59:05,901 - [mHTTP GET /orders/active-deliveries-list 200 [0.07, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:59:05,912 - [mHTTP GET /orders/open-orders-list 200 [0.08, 127.0.0.1:63124][0m
+INFO 2020-06-17 10:59:05,956 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.03, 127.0.0.1:63124][0m
+INFO 2020-06-17 10:59:05,956 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:59:22,402 - [mHTTP GET /dashboard/freelancer/21/deliveries 200 [0.04, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:59:22,411 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:63056]
+INFO 2020-06-17 10:59:22,892 - [mHTTP GET /orders/deliveries-table 200 [0.02, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:59:23,366 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:63747]
+INFO 2020-06-17 10:59:23,441 - WebSocket CONNECT /ws/orders/ [127.0.0.1:63747]
+INFO 2020-06-17 10:59:23,516 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:59:23,576 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:63124][0m
+INFO 2020-06-17 10:59:23,610 - [mHTTP GET /orders/freelancer-messages-list 200 [0.03, 127.0.0.1:63124][0m
+INFO 2020-06-17 10:59:27,812 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:63124][0m
+INFO 2020-06-17 10:59:27,819 - [mHTTP GET /orders/open-orders-alerts 200 [0.06, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:59:27,822 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.06, 127.0.0.1:63125][0m
+INFO 2020-06-17 10:59:27,824 - [mHTTP GET /orders/active-deliveries-list 200 [0.06, 127.0.0.1:63126][0m
+INFO 2020-06-17 10:59:27,856 - [mHTTP GET /orders/open-orders-list 200 [0.10, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:59:27,913 - [mHTTP GET /orders/freelancer-messages-list 200 [0.07, 127.0.0.1:63126][0m
+INFO 2020-06-17 10:59:27,916 - [mHTTP GET /orders/open-orders-alerts 200 [0.06, 127.0.0.1:63124][0m
+INFO 2020-06-17 10:59:27,938 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.08, 127.0.0.1:63833][0m
+INFO 2020-06-17 10:59:27,938 - [mHTTP GET /orders/active-deliveries-list 200 [0.08, 127.0.0.1:63834][0m
+INFO 2020-06-17 10:59:27,951 - [mHTTP GET /orders/deliveries-table 200 [0.09, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:59:27,980 - [mHTTP GET /orders/open-orders-list 200 [0.11, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:59:28,017 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.16, 127.0.0.1:63125][0m
+INFO 2020-06-17 10:59:28,034 - [mHTTP GET /orders/freelancer-messages-list 200 [0.05, 127.0.0.1:62966][0m
+INFO 2020-06-17 10:59:28,059 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.04, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:59:33,464 - [mHTTP GET /orders/open-orders 200 [0.03, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:59:33,472 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:63747]
+INFO 2020-06-17 10:59:34,251 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:63943]
+INFO 2020-06-17 10:59:34,321 - WebSocket CONNECT /ws/orders/ [127.0.0.1:63943]
+INFO 2020-06-17 10:59:34,355 - [mHTTP GET /orders/open-orders-list 200 [0.03, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:59:34,420 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:59:34,458 - [mHTTP GET /orders/freelancer-messages-list 200 [0.03, 127.0.0.1:63123][0m
+INFO 2020-06-17 10:59:46,758 - [mHTTP GET /dashboard/business/32/freelancers 200 [0.06, 127.0.0.1:64140][0m
+INFO 2020-06-17 10:59:48,199 - [36mHTTP GET /static/assets/stylesheets/theme-custom.css 304 [0.02, 127.0.0.1:64140][0m
+INFO 2020-06-17 10:59:49,960 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:64140][0m
+INFO 2020-06-17 10:59:50,644 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:64204]
+INFO 2020-06-17 10:59:50,659 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.18, 127.0.0.1:64205][0m
+INFO 2020-06-17 10:59:50,670 - [mHTTP GET /orders/business-messages-list 200 [0.20, 127.0.0.1:64140][0m
+INFO 2020-06-17 10:59:50,708 - WebSocket CONNECT /ws/orders/ [127.0.0.1:64204]
+INFO 2020-06-17 10:59:58,643 - [mHTTP GET /orders/open-orders 200 [0.04, 127.0.0.1:64330][0m
+INFO 2020-06-17 10:59:59,408 - [36mHTTP GET /static/assets/vendor/bootstrap/css/bootstrap.css 304 [0.01, 127.0.0.1:64330][0m
+INFO 2020-06-17 10:59:59,781 - [36mHTTP GET /static/assets/vendor/morris/morris.css 304 [0.00, 127.0.0.1:64330][0m
+INFO 2020-06-17 10:59:59,946 - [36mHTTP GET /static/assets/vendor/font-awesome/css/font-awesome.css 304 [0.00, 127.0.0.1:64363][0m
+INFO 2020-06-17 10:59:59,955 - [36mHTTP GET /static/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css 304 [0.00, 127.0.0.1:64366][0m
+INFO 2020-06-17 10:59:59,956 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/css/datepicker3.css 304 [0.01, 127.0.0.1:64367][0m
+INFO 2020-06-17 10:59:59,992 - [36mHTTP GET /static/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css 304 [0.00, 127.0.0.1:64371][0m
+INFO 2020-06-17 10:59:59,993 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.css 304 [0.00, 127.0.0.1:64370][0m
+INFO 2020-06-17 11:00:00,155 - [36mHTTP GET /static/assets/stylesheets/theme.css 304 [0.01, 127.0.0.1:64330][0m
+INFO 2020-06-17 11:00:00,304 - [36mHTTP GET /static/assets/stylesheets/skins/default.css 304 [0.00, 127.0.0.1:64363][0m
+INFO 2020-06-17 11:00:00,322 - [36mHTTP GET /static/assets/stylesheets/theme-custom.css 304 [0.01, 127.0.0.1:64367][0m
+INFO 2020-06-17 11:00:00,323 - [36mHTTP GET /static/assets/vendor/modernizr/modernizr.js 304 [0.00, 127.0.0.1:64366][0m
+INFO 2020-06-17 11:00:00,444 - [36mHTTP GET /static/assets/vendor/bootstrap/js/bootstrap.js 304 [0.00, 127.0.0.1:64371][0m
+INFO 2020-06-17 11:00:00,445 - [36mHTTP GET /static/assets/vendor/nanoscroller/nanoscroller.js 304 [0.00, 127.0.0.1:64370][0m
+INFO 2020-06-17 11:00:00,525 - [36mHTTP GET /static/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js 304 [0.00, 127.0.0.1:64330][0m
+INFO 2020-06-17 11:00:00,667 - [36mHTTP GET /static/assets/vendor/jquery-placeholder/jquery.placeholder.js 304 [0.00, 127.0.0.1:64363][0m
+INFO 2020-06-17 11:00:00,694 - [36mHTTP GET /static/assets/javascripts/theme.js 304 [0.00, 127.0.0.1:64366][0m
+INFO 2020-06-17 11:00:00,773 - [36mHTTP GET /static/assets/javascripts/theme.custom.js 304 [0.00, 127.0.0.1:64367][0m
+INFO 2020-06-17 11:00:00,831 - [36mHTTP GET /static/assets/javascripts/theme.init.js 304 [0.00, 127.0.0.1:64371][0m
+INFO 2020-06-17 11:00:00,832 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.notifications.js 304 [0.00, 127.0.0.1:64370][0m
+INFO 2020-06-17 11:00:00,903 - [36mHTTP GET /static/channels/js/websocketbridge.js 304 [0.00, 127.0.0.1:64330][0m
+INFO 2020-06-17 11:00:01,031 - [36mHTTP GET /static/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js 304 [0.00, 127.0.0.1:64363][0m
+INFO 2020-06-17 11:00:01,066 - [36mHTTP GET /static/assets/vendor/magnific-popup/magnific-popup.js 304 [0.00, 127.0.0.1:64366][0m
+INFO 2020-06-17 11:00:01,159 - [36mHTTP GET /static/assets/javascripts/ui-elements/examples.modals.js 304 [0.00, 127.0.0.1:64367][0m
+INFO 2020-06-17 11:00:01,292 - [36mHTTP GET /static/assets/images/dndsos-logo-black.png 304 [0.00, 127.0.0.1:64371][0m
+INFO 2020-06-17 11:00:01,296 - [36mHTTP GET /static/assets/images/logged-user.jpg 304 [0.01, 127.0.0.1:64370][0m
+INFO 2020-06-17 11:00:01,633 - [mHTTP GET /orders/open-orders-list 200 [0.03, 127.0.0.1:64363][0m
+INFO 2020-06-17 11:00:02,038 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:64399]
+INFO 2020-06-17 11:00:02,084 - WebSocket CONNECT /ws/orders/ [127.0.0.1:64399]
+INFO 2020-06-17 11:00:02,236 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:64363][0m
+INFO 2020-06-17 11:00:02,662 - [mHTTP GET /orders/freelancer-messages-list 200 [0.03, 127.0.0.1:64363][0m
+INFO 2020-06-17 11:00:05,923 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:64467][0m
+INFO 2020-06-17 11:00:05,925 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.03, 127.0.0.1:64469][0m
+INFO 2020-06-17 11:00:05,933 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:64466][0m
+INFO 2020-06-17 11:00:05,940 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:64468][0m
+INFO 2020-06-17 11:00:06,306 - [mHTTP GET /orders/open-orders-alerts 200 [0.04, 127.0.0.1:64363][0m
+INFO 2020-06-17 11:00:06,320 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:64205][0m
+INFO 2020-06-17 11:00:06,323 - [mHTTP GET /orders/open-orders-list 200 [0.05, 127.0.0.1:64366][0m
+INFO 2020-06-17 11:00:06,328 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.05, 127.0.0.1:64367][0m
+INFO 2020-06-17 11:00:06,470 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:64140][0m
+INFO 2020-06-17 11:00:06,476 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:64371][0m
+INFO 2020-06-17 11:00:06,479 - [mHTTP GET /orders/active-deliveries-list 200 [0.05, 127.0.0.1:64370][0m
+INFO 2020-06-17 11:00:06,735 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.02, 127.0.0.1:64495][0m
+INFO 2020-06-17 11:00:06,829 - [mHTTP GET /orders/business-messages-list 200 [0.03, 127.0.0.1:64498][0m
+INFO 2020-06-17 11:00:06,938 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.03, 127.0.0.1:64363][0m
+INFO 2020-06-17 11:00:06,949 - [mHTTP GET /orders/freelancer-messages-list 200 [0.03, 127.0.0.1:64371][0m
+INFO 2020-06-17 11:00:07,427 - [36mHTTP GET /media/profile_pics/no-img.jpg 304 [0.01, 127.0.0.1:64371][0m
+INFO 2020-06-17 11:00:21,247 - [mHTTP GET /dashboard/business/32/freelancers 200 [0.07, 127.0.0.1:64498][0m
+INFO 2020-06-17 11:00:21,988 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:64204]
+INFO 2020-06-17 11:00:24,285 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:64498][0m
+INFO 2020-06-17 11:00:24,508 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:64495][0m
+INFO 2020-06-17 11:00:24,662 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:64776]
+INFO 2020-06-17 11:00:24,710 - WebSocket CONNECT /ws/orders/ [127.0.0.1:64776]
+INFO 2020-06-17 11:00:24,978 - [mHTTP GET /orders/business-messages-list 200 [0.03, 127.0.0.1:64495][0m
+INFO 2020-06-17 11:00:43,716 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:43,882 - [mHTTP GET /orders/open-orders-alerts 200 [0.04, 127.0.0.1:65088][0m
+INFO 2020-06-17 11:00:43,886 - [mHTTP GET /orders/open-orders-list 200 [0.04, 127.0.0.1:65087][0m
+INFO 2020-06-17 11:00:43,899 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.05, 127.0.0.1:65091][0m
+INFO 2020-06-17 11:00:43,901 - [mHTTP GET /orders/active-deliveries-list 200 [0.05, 127.0.0.1:65089][0m
+INFO 2020-06-17 11:00:44,357 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=6c34e766-3b21-4b33-ad3e-d021e54a568d 200 [0.03, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:44,372 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:65089][0m
+INFO 2020-06-17 11:00:49,443 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:64399]
+INFO 2020-06-17 11:00:49,494 - [mHTTP GET /orders/open-orders 200 [0.04, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:50,943 - [mHTTP GET /orders/open-orders-list 200 [0.02, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:51,450 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:51,561 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:65222]
+INFO 2020-06-17 11:00:51,605 - WebSocket CONNECT /ws/orders/ [127.0.0.1:65222]
+INFO 2020-06-17 11:00:51,947 - [mHTTP GET /orders/freelancer-messages-list 200 [0.03, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:57,064 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:65222]
+INFO 2020-06-17 11:00:57,106 - [mHTTP GET /dashboard/freelancer/21/active-deliveries 200 [0.04, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:58,620 - [mHTTP GET /orders/active-deliveries-list 200 [0.03, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:59,027 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:65345]
+INFO 2020-06-17 11:00:59,073 - WebSocket CONNECT /ws/orders/ [127.0.0.1:65345]
+INFO 2020-06-17 11:00:59,163 - [mHTTP GET /orders/open-orders-alerts 200 [0.02, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:00:59,676 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:01:11,851 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:49165][0m
+INFO 2020-06-17 11:01:11,856 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:49164][0m
+INFO 2020-06-17 11:01:11,856 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.04, 127.0.0.1:49168][0m
+INFO 2020-06-17 11:01:11,873 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:49167][0m
+INFO 2020-06-17 11:01:12,247 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:64495][0m
+INFO 2020-06-17 11:01:12,251 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:64498][0m
+INFO 2020-06-17 11:01:12,259 - [mHTTP GET /orders/business-messages-list 200 [0.03, 127.0.0.1:49178][0m
+INFO 2020-06-17 11:01:12,438 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.05, 127.0.0.1:49182][0m
+INFO 2020-06-17 11:01:12,442 - [mHTTP GET /orders/open-orders-alerts 200 [0.07, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:01:12,445 - [mHTTP GET /orders/open-orders-list 200 [0.07, 127.0.0.1:65087][0m
+INFO 2020-06-17 11:01:12,447 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.07, 127.0.0.1:65088][0m
+INFO 2020-06-17 11:01:12,452 - [mHTTP GET /orders/active-deliveries-list 200 [0.08, 127.0.0.1:65089][0m
+INFO 2020-06-17 11:01:12,459 - [mHTTP GET /orders/deliveries-table 200 [0.08, 127.0.0.1:65091][0m
+INFO 2020-06-17 11:01:12,956 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:01:12,966 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.03, 127.0.0.1:65089][0m
+INFO 2020-06-17 11:01:23,776 - [mHTTP GET /dashboard/business/32/b-messages 200 [0.05, 127.0.0.1:49167][0m
+INFO 2020-06-17 11:01:23,812 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:63438]
+INFO 2020-06-17 11:01:25,118 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:49397]
+INFO 2020-06-17 11:01:25,187 - WebSocket CONNECT /ws/orders/ [127.0.0.1:49397]
+INFO 2020-06-17 11:01:25,433 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:49167][0m
+INFO 2020-06-17 11:01:25,584 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:49167][0m
+INFO 2020-06-17 11:01:25,643 - [mHTTP GET /dashboard/business/32/b-messages-list 200 [0.07, 127.0.0.1:49164][0m
+INFO 2020-06-17 11:01:28,040 - [mHTTP GET /dashboard/business/32/b-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.05, 127.0.0.1:49164][0m
+INFO 2020-06-17 11:01:28,078 - [mHTTP GET /dashboard/business/32/b-messages-list 200 [0.05, 127.0.0.1:49167][0m
+INFO 2020-06-17 11:01:28,126 - [mHTTP GET /dashboard/business/32/b-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.04, 127.0.0.1:49164][0m
+INFO 2020-06-17 11:01:28,133 - [mHTTP GET /dashboard/business/32/b-messages-list 200 [0.04, 127.0.0.1:49167][0m
+INFO 2020-06-17 11:01:28,156 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:49168][0m
+INFO 2020-06-17 11:01:28,427 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:64495][0m
+INFO 2020-06-17 11:01:28,428 - [mHTTP GET /orders/orders-table 200 [0.05, 127.0.0.1:49182][0m
+INFO 2020-06-17 11:01:28,455 - [mHTTP GET /orders/business-messages-list 200 [0.07, 127.0.0.1:49178][0m
+INFO 2020-06-17 11:01:28,460 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.04, 127.0.0.1:64498][0m
+INFO 2020-06-17 11:01:28,467 - [mHTTP GET /orders/deliveries-table 200 [0.05, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:01:28,578 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.04, 127.0.0.1:65089][0m
+INFO 2020-06-17 11:01:28,578 - [mHTTP GET /orders/open-orders-alerts 200 [0.04, 127.0.0.1:65087][0m
+INFO 2020-06-17 11:01:28,586 - [mHTTP GET /orders/open-orders-list 200 [0.05, 127.0.0.1:65091][0m
+INFO 2020-06-17 11:01:28,589 - [mHTTP GET /orders/active-deliveries-list 200 [0.04, 127.0.0.1:65088][0m
+INFO 2020-06-17 11:01:29,074 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.02, 127.0.0.1:65091][0m
+INFO 2020-06-17 11:01:29,078 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:65073][0m
+INFO 2020-06-17 11:01:53,542 - [mHTTP GET /dashboard/business/32/b-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.04, 127.0.0.1:49168][0m
+INFO 2020-06-17 11:01:53,543 - [mHTTP GET /dashboard/business/32/b-messages-list 200 [0.04, 127.0.0.1:49167][0m
+INFO 2020-06-17 11:01:53,550 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:49164][0m
+INFO 2020-06-17 11:01:53,920 - [mHTTP GET /orders/orders-table 200 [0.04, 127.0.0.1:49178][0m
+INFO 2020-06-17 11:01:53,921 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:64498][0m
+INFO 2020-06-17 11:01:53,929 - [mHTTP GET /dashboard/business/32/b-alerts-items 200 [0.03, 127.0.0.1:64495][0m
+INFO 2020-06-17 11:01:53,933 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:49182][0m
+INFO 2020-06-17 11:01:54,381 - [mHTTP GET /orders/deliveries-table 200 [0.03, 127.0.0.1:49877][0m
+INFO 2020-06-17 11:01:54,547 - [mHTTP GET /orders/open-orders-alerts 200 [0.04, 127.0.0.1:49884][0m
+INFO 2020-06-17 11:01:54,556 - [mHTTP GET /orders/open-orders-list 200 [0.04, 127.0.0.1:49886][0m
+INFO 2020-06-17 11:01:54,558 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.05, 127.0.0.1:49883][0m
+INFO 2020-06-17 11:01:54,567 - [mHTTP GET /orders/active-deliveries-list 200 [0.06, 127.0.0.1:49885][0m
+INFO 2020-06-17 11:01:55,153 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.03, 127.0.0.1:49885][0m
+INFO 2020-06-17 11:01:55,162 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:49877][0m
+INFO 2020-06-17 11:05:55,589 - [mHTTP GET /dashboard/business/32/freelancers 200 [0.08, 127.0.0.1:53570][0m
+INFO 2020-06-17 11:05:56,688 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:64776]
+INFO 2020-06-17 11:05:57,514 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:53570][0m
+INFO 2020-06-17 11:05:57,919 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53610]
+INFO 2020-06-17 11:05:57,941 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:53570][0m
+INFO 2020-06-17 11:05:57,976 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53610]
+INFO 2020-06-17 11:05:58,076 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:53618][0m
+INFO 2020-06-17 11:07:24,973 - [mHTTP GET /dashboard/business/32/freelancers 200 [0.12, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:07:25,975 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:53610]
+INFO 2020-06-17 11:07:27,222 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:07:27,830 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:07:27,880 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:07:28,034 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:54990]
+INFO 2020-06-17 11:07:28,110 - WebSocket CONNECT /ws/orders/ [127.0.0.1:54990]
+INFO 2020-06-17 11:08:10,979 - [mHTTP GET /dashboard/business/32/freelancers 200 [0.05, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:11,777 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:54990]
+INFO 2020-06-17 11:08:12,528 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:12,547 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:12,892 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55686]
+INFO 2020-06-17 11:08:12,937 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55686]
+INFO 2020-06-17 11:08:12,976 - [mHTTP GET /orders/business-messages-list 200 [0.03, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:30,124 - [mHTTP GET /dashboard/business/32/b-messages 200 [0.05, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:30,782 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55686]
+INFO 2020-06-17 11:08:31,573 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:31,985 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:55988]
+INFO 2020-06-17 11:08:32,015 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:32,043 - WebSocket CONNECT /ws/orders/ [127.0.0.1:55988]
+INFO 2020-06-17 11:08:32,138 - [mHTTP GET /dashboard/business/32/b-messages-list 200 [0.04, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:34,520 - [mHTTP GET /dashboard/business/32/b-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.04, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:34,521 - [mHTTP GET /dashboard/business/32/b-messages-list 200 [0.04, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:34,689 - [mHTTP GET /dashboard/business/32/b-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.05, 127.0.0.1:56035][0m
+INFO 2020-06-17 11:08:34,690 - [mHTTP GET /dashboard/business/32/b-messages-list 200 [0.05, 127.0.0.1:56036][0m
+INFO 2020-06-17 11:08:34,721 - [mHTTP GET /orders/business-messages-list 200 [0.06, 127.0.0.1:56045][0m
+INFO 2020-06-17 11:08:34,941 - [mHTTP GET /dashboard/business/32/b-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.03, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:34,948 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:35,346 - [mHTTP GET /dashboard/business/32/b-messages-list 200 [0.02, 127.0.0.1:56057][0m
+INFO 2020-06-17 11:08:35,560 - [mHTTP GET /orders/deliveries-table 200 [0.04, 127.0.0.1:56064][0m
+INFO 2020-06-17 11:08:35,561 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:56067][0m
+INFO 2020-06-17 11:08:35,711 - [mHTTP GET /orders/open-orders-list 200 [0.03, 127.0.0.1:56069][0m
+INFO 2020-06-17 11:08:35,722 - [mHTTP GET /dashboard/freelancer/21/f-messages-list 200 [0.04, 127.0.0.1:56078][0m
+INFO 2020-06-17 11:08:35,730 - [mHTTP GET /orders/active-deliveries-list 200 [0.04, 127.0.0.1:56077][0m
+INFO 2020-06-17 11:08:36,292 - [mHTTP GET /dashboard/freelancer/21/f-chat-room?oid=474ff410-e654-403d-9461-81d002d13a95 200 [0.03, 127.0.0.1:56077][0m
+INFO 2020-06-17 11:08:36,297 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:56064][0m
+INFO 2020-06-17 11:08:45,562 - [mHTTP GET / 200 [0.02, 127.0.0.1:56057][0m
+INFO 2020-06-17 11:08:46,250 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:55988]
+INFO 2020-06-17 11:08:46,391 - [mHTTP GET /static/fonts/icomoon/style.css 200 [0.01, 127.0.0.1:56057][0m
+INFO 2020-06-17 11:08:46,481 - [mHTTP GET /static/css/bootstrap.min.css 200 [0.01, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:46,568 - [mHTTP GET /static/css/jquery-ui.css 200 [0.00, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:47,310 - [mHTTP GET /static/css/owl.carousel.min.css 200 [0.01, 127.0.0.1:56266][0m
+INFO 2020-06-17 11:08:47,684 - [mHTTP GET /static/css/owl.theme.default.min.css 200 [0.01, 127.0.0.1:56272][0m
+INFO 2020-06-17 11:08:47,778 - [mHTTP GET /static/css/jquery.fancybox.min.css 200 [0.01, 127.0.0.1:56278][0m
+INFO 2020-06-17 11:08:47,960 - [mHTTP GET /static/css/bootstrap-datepicker.css 200 [0.01, 127.0.0.1:56057][0m
+INFO 2020-06-17 11:08:48,146 - [mHTTP GET /static/fonts/flaticon/font/flaticon.css 200 [0.01, 127.0.0.1:56266][0m
+INFO 2020-06-17 11:08:48,255 - [mHTTP GET /static/css/aos.css 200 [0.01, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:48,489 - [mHTTP GET /static/css/style.css 200 [0.01, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:48,729 - [mHTTP GET /static/css/custom.css 200 [0.01, 127.0.0.1:56272][0m
+INFO 2020-06-17 11:08:48,949 - [mHTTP GET /static/js/jquery-3.3.1.min.js 200 [0.01, 127.0.0.1:56057][0m
+INFO 2020-06-17 11:08:49,636 - [mHTTP GET /static/js/jquery-migrate-3.0.1.min.js 200 [0.01, 127.0.0.1:56266][0m
+INFO 2020-06-17 11:08:49,745 - [mHTTP GET /static/js/jquery-ui.js 200 [0.01, 127.0.0.1:56278][0m
+INFO 2020-06-17 11:08:49,896 - [mHTTP GET /static/js/popper.min.js 200 [0.01, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:50,099 - [mHTTP GET /static/js/bootstrap.min.js 200 [0.01, 127.0.0.1:56272][0m
+INFO 2020-06-17 11:08:50,479 - [mHTTP GET /static/js/owl.carousel.min.js 200 [0.01, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:51,011 - [mHTTP GET /static/js/jquery.stellar.min.js 200 [0.01, 127.0.0.1:56266][0m
+INFO 2020-06-17 11:08:51,742 - [mHTTP GET /static/js/jquery.countdown.min.js 200 [0.01, 127.0.0.1:56057][0m
+INFO 2020-06-17 11:08:51,889 - [mHTTP GET /static/js/bootstrap-datepicker.min.js 200 [0.01, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:52,060 - [mHTTP GET /static/js/jquery.easing.1.3.js 200 [0.01, 127.0.0.1:56278][0m
+INFO 2020-06-17 11:08:52,181 - [mHTTP GET /static/js/aos.js 200 [0.01, 127.0.0.1:56272][0m
+INFO 2020-06-17 11:08:52,225 - [mHTTP GET /static/js/jquery.fancybox.min.js 200 [0.01, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:52,271 - [mHTTP GET /static/js/jquery.sticky.js 200 [0.01, 127.0.0.1:56266][0m
+INFO 2020-06-17 11:08:52,428 - [mHTTP GET /static/js/main.js 200 [0.01, 127.0.0.1:56057][0m
+INFO 2020-06-17 11:08:52,548 - [mHTTP GET /static/images/deliverer.png 200 [0.01, 127.0.0.1:56278][0m
+INFO 2020-06-17 11:08:52,978 - [mHTTP GET /static/images/dndsos-logo-black.png 200 [0.00, 127.0.0.1:54936][0m
+INFO 2020-06-17 11:08:53,064 - [mHTTP GET /static/images/how-it-works.png 200 [0.01, 127.0.0.1:54984][0m
+INFO 2020-06-17 11:08:53,082 - [mHTTP GET /static/images/svg_1.svg 200 [0.01, 127.0.0.1:56057][0m
+INFO 2020-06-17 11:08:53,615 - [mHTTP GET /static/fonts/icomoon/fonts/icomoon.ttf?10si43 200 [0.01, 127.0.0.1:54936][0m

@@ -33,7 +33,7 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     pick_up_address = models.CharField(max_length=255, null=True)
     drop_off_address = models.CharField(max_length=255, null=True)
-    city = models.CharField(max_length=100, null=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
     notes = models.TextField(max_length=500, blank=True, null=True)
 
     selected_freelancers = ArrayField(

@@ -445,13 +445,32 @@ def f_businesses(request, f_id):
     context = {}
     f_businesses = request.user.relationships['businesses']
     
+    cities = []
     businesses = []
     for b_id in f_businesses:
         businesses.append(Employer.objects.get(pk=b_id))
 
-    context['businesses'] = businesses
-    context['num_businesses'] = len(businesses)
-    
+    for b in businesses:
+        cities.append(b.city)
+
+    if request.method == 'POST':
+        if 'sort_by_city' in request.POST:
+            sorted_businesses = []
+            city = request.POST.get('city')
+            for biz in businesses:
+                if biz.city == city:
+                    sorted_businesses.append(biz)
+            context['businesses'] = sorted_businesses
+            context['num_businesses'] = len(sorted_businesses)
+        else:
+            context['businesses'] = businesses
+            context['num_businesses'] = len(businesses)
+    else:
+        context['businesses'] = businesses
+        context['num_businesses'] = len(businesses)
+
+    context['cities'] = set(cities)
+
     return render(request, 'dndsos_dashboard/f-businesses.html', context)
 
 
@@ -560,6 +579,12 @@ def freelancers(request, b_id):
     freelancers = Employee.objects.all()
     context['total_freelancers'] = len(freelancers)
 
+    cities = []
+    vehicles = []
+    for fl in freelancers:
+        cities.append(fl.city)
+        vehicles.append(fl.vehicle)
+
     b_freelancers = []
     b_relationships = User.objects.get(pk=b_id).relationships
     if b_relationships:
@@ -582,26 +607,30 @@ def freelancers(request, b_id):
     context['freelancers_due_payment'] = freelancers_due_payment
     context['num_freelancers_due_payment'] = len(freelancers_due_payment)
 
+
     if request.method == 'POST':
 
         # Freelancers filtering options
         city = request.POST.get('city')
         vehicle = request.POST.get('vehicle')
-        if vehicle and city:
-            freelancers = Employee.objects.filter(vehicle=vehicle, city=city)
-            context['total_freelancers'] = len(freelancers)
-        elif vehicle and not city:
-            freelancers = Employee.objects.filter(vehicle=vehicle)
-            context['total_freelancers'] = len(freelancers)
-        elif not vehicle and city:
-            freelancers = Employee.objects.filter(city=city)
-            context['total_freelancers'] = len(freelancers)
-        else:
-            freelancers = Employee.objects.all()
-            context['total_freelancers'] = len(freelancers)
+
+        if 'filter' in request.POST:
+            if vehicle and city:
+                freelancers = Employee.objects.filter(vehicle=vehicle, city=city)
+                context['total_freelancers'] = len(freelancers)
+            elif vehicle and not city:
+                freelancers = Employee.objects.filter(vehicle=vehicle)
+                context['total_freelancers'] = len(freelancers)
+            elif not vehicle and city:
+                freelancers = Employee.objects.filter(city=city)
+                context['total_freelancers'] = len(freelancers)
+            else:
+                freelancers = Employee.objects.all()
+                context['total_freelancers'] = len(freelancers)
 
     context['freelancers'] = freelancers
-
+    context['cities'] = set(cities)
+    context['vehicles'] = set(vehicles)
 
     return render(request, 'dndsos_dashboard/freelancers.html', context)
 

@@ -114,25 +114,26 @@ def freelancer_messages_list(request):
 @login_required
 def open_orders(request):
     context = {}
+    
+    open_orders = Order.objects.filter(freelancer=None).exclude(status='ARCHIVED')
+
+    cities = []
+    for order in open_orders:
+        cities.append(order.city)
 
     if request.method == 'POST':
-        if 'acceptOrder' in request.POST:
-            order = Order.objects.get(order_id=request.POST.get('acceptOrder'))
-            if order.status == 'REQUESTED':
-                order.freelancer = request.user
-                order.status = 'STARTED'
-                order.save()
-            else:
-                print('>>>>>>>> NOT AVAILABLE')
-                context['offer_removed'] = True
+        if 'sort_by_city' in request.POST:
 
-    open_orders = Order.objects.filter(freelancer=None).exclude(status='ARCHIVED')
-        
-    number_open_orders = len(open_orders)
-    context['open_orders'] = open_orders
-    context['num_open_orders'] = number_open_orders
+            city = request.POST.get('city')
+            print(f'{city}')
+            sorted_orders = Order.objects.filter(Q(city=city) & Q(freelancer=None) & Q(status='ARCHIVED'))
+            context['open_orders'] = sorted_orders
+            context['num_open_orders'] = len(sorted_orders)
+        else:
+            context['open_orders'] = open_orders
+            context['num_open_orders'] = len(open_orders)
 
-
+    context['cities'] = set(cities)
     return render(request, 'dndsos_dashboard/open-orders.html', context)
 
 # Alerts to business about orders that were rejected or that are late

@@ -42,23 +42,7 @@
                                 <div class="col-md-4">
                                     <h4>Pick Available Freelancers From Your Pool</h4>
                                     <p>There  {% if num_freelancers_due_payment > 1 %}  are {% else %} is {% endif %}{{ num_freelancers_due_payment }} freelancers in your pool.</p>
-                                    <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
-                                                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group mb-md">
-                                        <input type="text" class="form-control" name="city" placeholder="Enter your city">
-                                        <span class="input-group-btn">
-                                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Sort!</button>
-                                        </span>
-                                    </div>                    
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group mb-md">
-                                        <input type="text" class="form-control" name="vehicle" placeholder="Preferred vehicle">
-                                        <span class="input-group-btn">
-                                            <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">Sort!</button>
-                                        </span>
-                                    </div>                    
+                                    <!-- <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button> -->
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 1rem;">
@@ -164,23 +148,30 @@
                                 <div class="col-md-4">
                                     <h4>Pick Available Freelancers</h4>
                                     <p>There  {% if total_freelancers > 1 %}  are {% else %} is {% endif %}{{ total_freelancers }} freelancers available.</p>
-                                    <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
-                                                                </div>
-                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-warning mobile-bottom-margin" name="sort_by_city" type="button">Show all!</button>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="input-group mb-md">
-                                        <input type="text" class="form-control" name="city" placeholder="Enter your city">
-                                        <span class="input-group-btn">
-                                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Sort!</button>
+                                        <label for="city_selector" style="margin-right: 2rem;">Filter by City </label>
+                                        <select name="city" id="city_selector">
+                                            <option value="">--------------------</option>
+                                            {% for city in cities %}
+                                            <option value="{{ city }}">{{ city }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="vehicle_selector" style="margin: 2rem;">Filter by Vehicle </label>
+                                        <select name="vehicle" id="vehicle_selector">
+                                            <option value="">--------------------</option>
+                                            {% for vehicle in vehicles %}
+                                            <option value="{{ vehicle }}">{{ vehicle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <span class="input-group-btn left">
+                                            <button type="submit" class="btn btn-success" name="filter" type="button">Filter!</button>
                                         </span>
                                     </div>                    
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="input-group mb-md">
-                                        <input type="text" class="form-control" name="vehicle" placeholder="Preferred vehicle">
-                                        <span class="input-group-btn">
-                                            <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">Sort!</button>
-                                        </span>
-                                    </div>                    
+                                <div class="col-md-2 left">
                                 </div>
                             </div>
                             <hr>

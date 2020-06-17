@@ -52,6 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # GEO
+    'django.contrib.gis',
+    'geo.apps.GeoConfig',
+    'leaflet',
+
 ]
 
 # Channels
@@ -125,7 +131,9 @@ WSGI_APPLICATION = 'dnd_sos_project.wsgi.application'
 # }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'dndsos', #LIVE DAATABASE
         'USER': 'alfreds',
         'PASSWORD': '!Q2w3e4r%T',

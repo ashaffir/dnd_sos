@@ -50,6 +50,23 @@ https://www.youtube.com/watch?v=qjlZWBbX7-o
 
 ### GEO Location:
 #### In the chat/templates/room.html
-https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
+* Get location of the browser/device: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
+
+
+## Production Notes
+### GEO (https://tinyurl.com/y8hegdk8)
+* Install GDAL
+** https://pypi.org/project/GDAL/ - UNIX (Notice the GDAL version, might not suit the local one)
+** https://tinyurl.com/y7t4aau6 - MAC installation
+*** brew switch openssl 1.0.2s  - solution to openssl issue after installing GDAL
+*** Error in POSTGRES about extension GIS: https://tinyurl.com/yafufges
+--
+$ psql <db name>
+> CREATE EXTENSION postgis;
+--
+Notice the changes in the DB Engine in settings, to GIS 
+--
+#### To load a shape (*.shp) file for a city/location:
+ogr2ogr -f "PostgreSQL" PG:"dbname=dndsos user=alfreds" geo/maps/natural_earth_vector/10m_cultural/ne_10m_airports.shp -nln geo_city -append
 
 

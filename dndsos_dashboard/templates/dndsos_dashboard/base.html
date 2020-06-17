@@ -44,6 +44,34 @@
 
 		<!-- Head Libs -->
 		<script src="{% static 'assets/vendor/modernizr/modernizr.js' %}"></script>
+		
+		<style>
+			@media screen and (max-width: 768px) {
+				.mobile-top-margin {
+				   margin-top: 17px;
+				}
+				.mobile-bottom-margin {
+					margin-bottom: 17px;
+				 }
+ 
+			  }
+		</style>
+
+		<style>
+			/*To show the double sided arrow for the horizontal scroll of the tables.*/
+			.mobileShow {display: none;}
+		
+			/* Smartphone Portrait and Landscape */
+			@media only screen
+			  and (min-device-width : 320px)
+			  and (max-device-width : 480px){ 
+				.mobileShow {
+					display:block;
+					align-items: center;
+				}
+			}
+		</style>
+		
 
 		<style>
 			.mobilePic {max-width: 2000%;}
@@ -331,8 +359,9 @@
 			<script>
 				// Open the Freelancer Socket
 				console.log('NEW FREELANCER WS')
+				const scheme = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 				const freelancerSocket = new WebSocket(
-					'ws://'
+					scheme
 					+ window.location.host
 					+ '/ws/orders/'
 				);
@@ -634,9 +663,10 @@
 			<!-- ------------------ -->
 			<script>
 				//Open business socket
+				const scheme = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 				console.log('BUSIENSS ORDER WS READY!')
 				const businessSocket = new WebSocket(
-					'ws://'
+					scheme
 					+ window.location.host
 					+ '/ws/orders/'
 			
@@ -684,6 +714,7 @@
 							'event': 'Create Order',
 							'business': user_id,
 							'business_name': user_name,
+							'city': city,
 							'pick_up_address': pick_up_address,
 							'drop_off_address': drop_off_address,
 							'notes': notes,

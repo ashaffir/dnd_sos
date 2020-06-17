@@ -35,14 +35,17 @@
                     </div>
                 </div>
                 <hr>
-                <form action="" method="POST" enctype="multipart/form-data" name="orderTable" id="orderTable">
-                    {% csrf_token %}
-                    <table class="table table-responsive table-bordered table-striped mb-none display center" id="ordersTable">
+                <div class="table-responsive">
+                    <table class="table  table-bordered table-striped mb-none display center" id="ordersTable">
 
                         <!-- Orders table dynamically updated -->
                         
-                    </table>
-                </form>
+                    </table>    
+                </div>
+
+                <div class="row mobileShow center">
+                    <i class='fa fa-arrows-h fa-3x'></i>
+                </div>
 
             </div>
         </section>

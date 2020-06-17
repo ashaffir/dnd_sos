@@ -23,30 +23,29 @@
 
     <!-- start: page -->
     <div class="col-md-10 col-lg-10">
-        <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
+        <form action="" method="POST" enctype="multipart/form-data" id="open_orders" name="openOrders">
             {% csrf_token %}
             <div class="row" >
                 <div class="col-md-4">
                     <h4>Available orders offered by businesses</h4>
                     <p>There  {% if num_open_orders > 1 %}  are {% else %} is {% endif %}{{ num_open_orders }} open orders available.</p>
-                    <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
-                                                </div>
-                <div class="col-md-4">
+                    <!-- <button type="submit" class="btn btn-warning mobile-bottom-margin" name="all_cities" type="button">Show all!</button> -->
+                </div>
+                <!-- TODO: Add filter results -->
+                <!-- <div class="col-md-4">
                     <div class="input-group mb-md">
-                        <input type="text" class="form-control" name="city" placeholder="Enter your city">
-                        <span class="input-group-btn">
-                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Sort!</button>
+                        <label for="city_selector" style="margin-right: 2rem;">Filter by City </label>
+                        <select name="city" id="city_selector">
+                            <option value="">--------------------</option>
+                            {% for city in cities %}
+                            <option value="{{ city }}">{{ city }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="input-group-btn left">
+                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Filter!</button>
                         </span>
                     </div>                    
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group mb-md">
-                        <input type="text" class="form-control" name="vehicle" placeholder="Preferred vehicle">
-                        <span class="input-group-btn">
-                            <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">Sort!</button>
-                        </span>
-                    </div>                    
-                </div>
+                </div> -->
             </div>
             <div class="row" style="margin-top: 1rem;">
                 <div class="col-md-3">

@@ -1,6 +1,7 @@
 <thead>
     <tr>
         <th>Offer Date</th>
+        <th>Business</th>
         <th>Pickup</th>
         <th>Destination</th>
         <th>Notes</th>
@@ -15,6 +16,7 @@
     {% for order in orders %}
     <tr class="gradeX">
         <td>{{ order.updated }}</td>
+        <td id="business_{{ order.order_id }}">{{ order.business.employer.business_name }}</td>
         <td id="pickupAddress_{{ order.order_id }}">{{ order.pick_up_address }}</td>
         <td id="dropoffAddress_{{ order.order_id }}">{{ order.drop_off_address }}</td>
         <td id="notes">{{ order.notes }}</td>
