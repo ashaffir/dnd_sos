@@ -49,5 +49,5 @@ wcwidth==0.1.9
 zipp==3.1.0
 zope.interface==5.1.0
 djangorestframework==3.11.0
-pip install gdal==2.4.4
+gdal==2.4.4
 django-leaflet==0.26.0
