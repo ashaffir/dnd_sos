@@ -62,8 +62,6 @@ INSTALLED_APPS = [
 
 # Channels
 ASGI_APPLICATION = 'dnd_sos_project.routing.application'
-
-ASGI_APPLICATION = 'dnd_sos_project.routing.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
