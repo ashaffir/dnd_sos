@@ -1,7 +1,7 @@
 #!/bin/bash
 
-NAME="DND-SOS"                                   # Name of the application
-DJANGODIR=/data/dnd_sos/dnd_sos_project               # Django project directory
+NAME="dnd_sos_project"                                   # Name of the application
+DJANGODIR=/data/dnd_sos                             # Django project directory (above the "_project internal")
 SOCKFILE=/data/dnd_sos/venv_dnd/run/gunicorn.sock  # we will communicte using this unix socket
 USER=alfreds                                         # the user to run as
 GROUP=alfreds                                        # the group to run as
