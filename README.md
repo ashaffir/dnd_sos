@@ -55,7 +55,17 @@ https://www.youtube.com/watch?v=qjlZWBbX7-o
 
 ## Production Notes
 ### Server setup: https://www.youtube.com/watch?v=EdK15Qcc3Zs
+1) Sources (Git)
+2) Supervisor
+3) Gunicorn
+4) Daphne (https://github.com/django/daphne)
+5) Nginx
+6) Redis (https://tinyurl.com/y8j73zcg)
+7) Postgres
 
+
+### Websockets issues on production
+- https://tinyurl.com/y9oxq4xy
 
 ### GEO (https://tinyurl.com/y8hegdk8)
 * Install GDAL

@@ -3,13 +3,22 @@
 {% block content %}
 
 <style>
-  @media (max-width: 480px){
+  @media (max-width: 360){
 
     .special {
-      padding-top: 25%;
+      padding-top: 30%;
       margin-bottom: 50%;
     }
   }
+
+  @media (max-width: 375px){
+
+    .special {
+      padding-top: 40%;
+      margin-bottom: 50%;
+    }
+  }
+
 
 </style>
   <div class="site-blocks-cover mt-2 special">
@@ -21,7 +30,7 @@
 
           <div class="row mb-4">
             <div class="col-lg-4 mr-auto">
-              <h1>Delivery and Dispatch Management System</h1>
+              <h1>Dispatch and Delivery Management System</h1>
               <p class="mb-5">DND-SOS online platform allows businesses to locate, hire, and manage their delivery workforce while providing individuals with an additional income stream.</p>
               <div>
                 {% if user.is_authenticated %}
