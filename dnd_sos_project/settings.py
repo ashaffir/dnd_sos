@@ -25,7 +25,11 @@ SECRET_KEY = 'zijbaj^_lv)!8-1ex(&a-00l%t+)fa)b)&)8#hegij@1cuns=('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'www.dndsos.com',
+    'dndsos.com'
+]
 
 
 # Application definition
