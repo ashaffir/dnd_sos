@@ -246,6 +246,7 @@ def f_profile(request, f_id):
         new_city = request.POST.get("city")
         new_hours = request.POST.get("active_hours")
         profile_pic = request.FILES.get("profile_pic")
+        id_doc = request.FILES.get("id_doc")
 
         if new_name:
             user_profile.name = new_name
@@ -265,6 +266,9 @@ def f_profile(request, f_id):
         if new_hours:
             user_profile.active_hours = new_hours
 
+        if id_doc:
+            user_profile.id_doc = request.FILES.get("id_doc")
+
         if not profile_pic:
             profile_pic = request.FILES.get("old_profile_pic")
         else:
@@ -274,6 +278,13 @@ def f_profile(request, f_id):
         
         try:
             user_profile.save()
+            
+            # if id_doc:
+            #     path = user_profile.id_doc
+            #     print(f'PATH: {path}')
+            #     filename = request.FILES.get("id_doc").name
+            #     os.rename('documents/' + filename, f"documents/{f_id}.{filename}")
+
             messages.success(request,'You have successfully updated your profile.')
         except Exception as e:
             messages.success(request,f'There was an error updating your profile. ERRRO: {e}')
@@ -283,7 +294,8 @@ def f_profile(request, f_id):
         'name': False,
         'vehicle': False,
         'phone': False,
-        'city': False
+        'city': False,
+        'id_doc':False,
         }    
 
     field_count = 0

@@ -103,6 +103,10 @@ class Employer(models.Model):
     def __str__(self):
         return self.business_name
 
+
+def id_path(instance, filename):
+    return f'documents/{instance.pk}.id_doc.{filename}'
+
 # profile model for fields specific to Freelancer
 class Employee(models.Model):    
     # employee 'belongs' to employer
@@ -134,6 +138,7 @@ class Employee(models.Model):
     # current_order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, default=-1)
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
+    id_doc = models.FileField(null=True, blank=True, upload_to=id_path)
 
     newsletter_optin = models.BooleanField(default=True)
 

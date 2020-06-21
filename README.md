@@ -65,7 +65,7 @@ https://www.youtube.com/watch?v=qjlZWBbX7-o
 
 
 ### Websockets issues on production
-- https://tinyurl.com/y9oxq4xy
+- https://tinyurl.com/y9oxq4xy (changes added to the .asgi file in the project directory)
 
 ### GEO (https://tinyurl.com/y8hegdk8)
 * Install GDAL

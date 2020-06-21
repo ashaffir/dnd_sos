@@ -111,6 +111,7 @@ class FreelancerUpdateForm(forms.ModelForm):
             'bio',
             'city',
             'newsletter_optin',
+            'id_doc',
         ]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name'}),

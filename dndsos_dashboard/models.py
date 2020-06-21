@@ -1,4 +1,4 @@
-
+import os
 from django.db import models
 from django.db.models.signals import post_save
 # from django.contrib.auth.models import User
@@ -41,6 +41,9 @@ class BusinessProfile(TimeStampedUUIDModel):
     def __str__(self):
         return self.user.username
 
+def id_path(instance, filename):
+    return f'documents/{instance.pk}.id_doc.{filename}'
+
 class FreelancerProfile(TimeStampedUUIDModel):
 
     VEHICLE = (
@@ -58,6 +61,7 @@ class FreelancerProfile(TimeStampedUUIDModel):
         ('20:00-00:00', '20:00-00:00'),
     )
 
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
@@ -68,6 +72,7 @@ class FreelancerProfile(TimeStampedUUIDModel):
     active_hours = models.CharField(max_length=100, blank=True, null=True)
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
+    id_doc = models.FileField(null=True, blank=True, upload_to=id_path)
 
     newsletter_optin = models.BooleanField(default=True)
 
@@ -80,37 +85,7 @@ class FreelancerProfile(TimeStampedUUIDModel):
     def __str__(self):
         return self.user.username
 
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         BusinessProfile.objects.create(user=instance)
 
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
-
-# class Order(TimeStampedUUIDModel):
-#     order_id = models.CharField(max_length=100, null=True, default=-1)
-#     created = models.DateTimeField(auto_now_add=True)
-#     status = models.BooleanField(default=False, help_text='Active or not active')    
-#     order_delivery_type = models.CharField(max_length=100, null=True, default='food')
-#     order_time = models.DateTimeField(auto_now=True)
-#     order_dispatched = models.BooleanField(default=False)
-#     order_delivered = models.BooleanField(default=False)
-#     order_city = models.CharField(max_length=100)
-#     order_notes = models.TextField(max_length=500, blank=True, null=True)
-
-#     order_business = models.ForeignKey(Employer, on_delete=models.CASCADE)
-#     freelancer_allocated = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)    
-
-#     freelancer_paid = models.BooleanField(default=False)
-
-#     class Meta:
-#         verbose_name = _('Order')
-#         verbose_name_plural = _('Orders')
-    
-#     def __str__(self):
-#         return f'{self.order_business}: {self.id}'
 
 
 class Email(models.Model):

@@ -1,19 +1,4 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
-{% if form.errors %}
-<div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
-    <div id="form_errors">
-        {% for key, value in form.errors.items %}
-            <span class="fieldWrapper">
-                {{ key }}:{{ value }}
-            </span>
-        {% endfor %}
-    </div>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% else %}
 {% for message in messages %}
   <div class="alert {{ message.tags }} alert-dismissible display-message" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -22,7 +7,6 @@
     {{ message }} 
   </div>
 {% endfor %}
-{% endif %}
 
 
 <script>
