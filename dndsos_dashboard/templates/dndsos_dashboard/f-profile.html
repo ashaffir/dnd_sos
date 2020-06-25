@@ -105,21 +105,51 @@
 													{% for non_field_error in form.non_field.errors %}
 														<p class="help is-danger">{{ non_field_error }}</p>
 													{% endfor %}
-													{% for field in form %}
 														<div class="form-group">
-															<label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.html_name }}</label>
-															<div class="col-md-8">
-																{{ field }}
-																{% for error in field.errors %}
-																	<p class="help is-danger">{{  error }}</p>
-																{% endfor %}
-																
-																{% if field.help_text %}
-																	<p class="help">{{ field.help_text }}</p>
-																{% endif %}
+															<div class="row">
+																<label class="col-md-3 control-label" for="">Name</label>
+																<div class="col-md-8">{{ form.name }}</div>	
 															</div>
+															<div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">Phone Number</label>
+																<div class="col-md-8">{{ form.phone }}</div>	
+															</div>
+															<div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">Vehicle</label>
+																<div class="col-md-8">{{ form.vehicle }}</div>	
+															</div>
+															<div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">Short Bio</label>
+																<div class="col-md-8">{{ form.bio }}</div>	
+															</div>
+															<div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">City</label>
+																<!-- <div class="col-md-8">{{ form.city }}</div> -->
+																<div class="col-md-8">
+																	<select id="city" name="city" class="form-control" required>
+																		<option value="none">---------------</option>
+																		{% for city in cities %}
+																			<option value="{{ city.hebrew_name }}">{{ city.hebrew_name }}</option>
+																		{% endfor %}
+																	</select>								
+																</div>
+															</div>
+
+															<div class="row" style="margin-top: 2%;">
+																<label class="col-md-3 control-label" for="">ID Document</label>
+																<div class="col-md-8">{{ form.id_doc }}</div>	
+															</div>
+															<div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">Active Hours</label>
+																<div class="col-md-8">{{ form.active_hours }}</div>	
+															</div>
+															<div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">Newsletter Optin</label>
+																<div class="col-md-8">{{ form.newsletter_optin }}</div>
+															</div>
+
+
 														</div>
-													{% endfor %}
 													<div class="row">
 														<div class="col-3"></div>
 														<div class="col-md-3 col-md-offset-3">

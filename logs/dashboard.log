@@ -1,3 +1,37 @@
-INFO 2020-06-25 07:17:54,046 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
-INFO 2020-06-25 07:17:54,046 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
-INFO 2020-06-25 07:17:54,047 - Listening on TCP address 127.0.0.1:8000
+INFO 2020-06-25 07:34:18,774 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+INFO 2020-06-25 07:34:18,774 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+INFO 2020-06-25 07:34:18,776 - Listening on TCP address 127.0.0.1:8000
+INFO 2020-06-25 07:34:23,706 - [mHTTP GET /dashboard/freelancer/21/f-profile 200 [0.19, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:24,117 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57908]
+INFO 2020-06-25 07:34:24,247 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:24,276 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57908]
+INFO 2020-06-25 07:34:24,279 - [mHTTP GET /orders/open-orders-alerts 200 [0.04, 127.0.0.1:57910][0m
+INFO 2020-06-25 07:34:24,333 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:57910][0m
+INFO 2020-06-25 07:34:32,274 - [mHTTP GET /password_change/ 200 [0.05, 127.0.0.1:57910][0m
+INFO 2020-06-25 07:34:32,281 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:57908]
+INFO 2020-06-25 07:34:32,359 - [36mHTTP GET /static/css/style.css 304 [0.01, 127.0.0.1:57910][0m
+INFO 2020-06-25 07:34:32,361 - [36mHTTP GET /static/css/custom.css 304 [0.01, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:32,404 - [36mHTTP GET /static/js/popper.min.js 304 [0.00, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:35,559 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57924]
+INFO 2020-06-25 07:34:35,632 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57924]
+INFO 2020-06-25 07:34:35,689 - [mHTTP GET /orders/open-orders-alerts 200 [0.05, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:35,740 - [mHTTP GET /orders/freelancer-messages-list 200 [0.04, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:39,511 - [mHTTP POST /dashboard/freelancer/21/f-profile 200 [0.12, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:39,538 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:57924]
+INFO 2020-06-25 07:34:39,982 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:57935]
+INFO 2020-06-25 07:34:40,056 - WebSocket CONNECT /ws/orders/ [127.0.0.1:57935]
+INFO 2020-06-25 07:34:40,084 - [mHTTP GET /orders/open-orders-alerts 200 [0.03, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:40,124 - [mHTTP GET /orders/freelancer-messages-list 200 [0.03, 127.0.0.1:57905][0m
+INFO 2020-06-25 07:34:46,805 - [mHTTP GET /admin/ 200 [0.14, 127.0.0.1:57943][0m
+INFO 2020-06-25 07:34:48,903 - [mHTTP GET /admin/core/user/ 200 [0.09, 127.0.0.1:57943][0m
+INFO 2020-06-25 07:34:48,943 - [mHTTP GET /admin/jsi18n/ 200 [0.03, 127.0.0.1:57943][0m
+INFO 2020-06-25 07:34:51,889 - [mHTTP GET /admin/core/user/21/change/ 200 [0.24, 127.0.0.1:57943][0m
+INFO 2020-06-25 07:34:51,930 - [mHTTP GET /admin/jsi18n/ 200 [0.03, 127.0.0.1:57943][0m
+WARNING 2020-06-25 07:34:52,025 - Not Found: /favicon.ico
+WARNING 2020-06-25 07:34:52,029 - [33mHTTP GET /favicon.ico 404 [0.02, 127.0.0.1:57950][0m
+INFO 2020-06-25 07:35:04,658 - [mHTTP GET /admin/core/ 200 [0.03, 127.0.0.1:57943][0m
+INFO 2020-06-25 07:35:05,761 - [mHTTP GET /admin/jsi18n/ 200 [0.02, 127.0.0.1:57956][0m
+INFO 2020-06-25 07:35:05,845 - [mHTTP GET /admin/core/employee/ 200 [0.11, 127.0.0.1:57943][0m
+INFO 2020-06-25 07:35:05,881 - [mHTTP GET /admin/jsi18n/ 200 [0.02, 127.0.0.1:57943][0m
+INFO 2020-06-25 07:35:07,481 - [mHTTP GET /admin/core/employee/21/change/ 200 [0.14, 127.0.0.1:57943][0m
+INFO 2020-06-25 07:35:07,517 - [mHTTP GET /admin/jsi18n/ 200 [0.03, 127.0.0.1:57943][0m

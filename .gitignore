@@ -8,6 +8,9 @@ ngrok
 ## VENV
 venv*
 
+## Media
+media/*
+
 ### OSX ###
 .DS_Store
 .AppleDouble

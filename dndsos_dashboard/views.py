@@ -242,6 +242,7 @@ def f_profile(request, f_id):
     context = {}
     context['freelancer'] = True
     user_profile = Employee.objects.get(user=request.user.id)
+    context['cities'] = CityModel.objects.all()
 
     if request.method == 'POST':
 
