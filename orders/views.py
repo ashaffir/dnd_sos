@@ -12,6 +12,8 @@ from core.decorators import employer_required, employee_required
 
 from .models import Order 
 from .serializers import OrderSerializer, UserSerializer
+from geo.geo_utils import distance_calculator
+
 
 class TripView(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'id' 
@@ -25,6 +27,16 @@ def orders_table(request):
     context = {}
     business_id = request.user.pk
     orders = Order.objects.filter(business=request.user.pk).exclude(status='ARCHIVED')
+
+    for order in orders:
+        if order.status == 'IN_PROGRESS':
+            # Calculated completed distance
+            trip_completed = distance_calculator(order)
+            order.trip_completed = trip_completed
+            order.save()
+        else:
+            pass
+    
     context['orders'] = orders
     return render(request, 'dndsos_dashboard/partials/_orders-table.html', context)
 
@@ -119,7 +131,7 @@ def open_orders(request):
 
     cities = []
     for order in open_orders:
-        cities.append(order.city)
+        cities.append(order.order_city_name)
 
     if request.method == 'POST':
         if 'sort_by_city' in request.POST:

@@ -2,7 +2,7 @@
     <tr>
         <th>Updated</th>
         <th>Destination</th>
-        <th>Notes</th>
+        <!-- <th>Notes</th> -->
         <th>Allocated Freelancer</th>
         <th>Order Status</th>
         <th>Picked Up</th>
@@ -16,7 +16,7 @@
     <tr class="gradeX">
         <td>{{ order.updated }}</td>
         <td>{{ order.drop_off_address }}</td>
-        <td>{% if order.notes %}{{ order.notes }}{% endif %}</td>
+        <!-- <td>{% if order.notes %}{{ order.notes }}{% endif %}</td> -->
         
         <!-- Order allocation -->
         {% if order.freelancer %}
@@ -33,7 +33,15 @@
             </td>
         {% elif order.status == 'IN_PROGRESS' %}
             <td style="background-color: rgb(5, 97, 202); color:white; text-align:center">
-                <label for="dispached" id="orderStatus" status='{{ order.status }}'>Being delivered...</label>
+                <div class="row">
+                    <div class="col-md-6" style="border-right: solid white;">
+                        <label for="dispached" id="orderStatus" status='{{ order.status }}'>Being delivered...</label>
+                    </div>
+                    <div class="col-md-6">
+                        {{ order.trip_completed }} % completed.
+                    </div>
+                </div>
+                
             </td>
         {% elif order.status == 'COMPLETED' %}
             <td>

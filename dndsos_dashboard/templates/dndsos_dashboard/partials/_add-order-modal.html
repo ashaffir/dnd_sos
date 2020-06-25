@@ -33,25 +33,27 @@
                         </header> -->
                         <div class="panel-body">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">* Address</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="text" name="street" id="street" placeholder="Street" required>
-                                    <label class="error" for="street"></label>
+                                <label class="col-sm-3 control-label">* City</label>
+                                <div class="col-sm-9">
+                                    <select id="city" name="city" class="form-control" required>
+                                        <option value="none">Choose a City</option>
+                                        {% for city in cities %}
+                                            <option value="{{ city.city_symbol }}">{{ city.hebrew_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label class="error" for="city"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">* Street</label>
+                                <div class="col-sm-4" id="streets">
+                                        <!-- Loaded from Ajax -->
+
+                                        <label class="error" for="street"></label>
                                 </div>
                                 <div class="col-sm-2 pl-3">
                                     <input class="form-control" type="text" name="building" id="building" placeholder="Number" required>
                                     <label class="error" for="building"></label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">* City</label>
-                                <div class="col-sm-9">
-                                    <select id="city" name="city" class="form-control" required>
-                                        <option value="">Choose a City</option>
-                                        <option value="Tel Aviv">Tel Aviv</option>
-                                        <option value="Ramat Gan">Ramat Gan</option>
-                                    </select>
-                                    <label class="error" for="city"></label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -71,12 +73,6 @@
                                     <label class="error" for="freelancer"></label>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Comment</label>
-                                <div class="col-sm-9">
-                                    <textarea id="notes" name="notes" rows="5" class="form-control" placeholder="Type your comment..." ></textarea>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="modal-footer">
@@ -88,12 +84,31 @@
             </div>
         </div>
     </div>
-<!-- Vendor -->
+
+
+<script type="text/javascript">
+    /*
+        Placement of cities and streets in the selection areas
+    */
+    $("#city").change(function () {
+
+        let city = document.querySelector('#city'); 
+        let selected_city = $(this).val();
+        let city_streets_url = '{% url "geo:city-streets" %}'
+		console.log(selected_city);
+        $.ajax({
+            url: city_streets_url,
+            data: {
+                city: selected_city
+            },
+            success: function(response) {
+            //console.log(response)
+            $('#streets').html(response);
+            }
+        })		
+    });
+
+</script>
 {% block orders_js %}
-<!-- <script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
-<script src="{% static 'assets/vendor/magnific-popup/magnific-popup.js' %}"></script>
-<script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script> -->
-<!-- <script src="{% static 'assets/javascripts/forms/examples.validation.js' %}"></script> -->
 
 {% endblock orders_js %}

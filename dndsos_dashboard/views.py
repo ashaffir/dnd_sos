@@ -17,6 +17,8 @@ from django.template import RequestContext
 from django.conf import settings
 from django.db.models import Q
 
+from django.contrib.gis.db.models.functions import Distance
+
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -28,6 +30,7 @@ from .forms import BusinessUpdateForm, FreelancerUpdateForm
 from .models import Email, FreelancerProfile, BusinessProfile
 from orders.models import Order
 from .utilities import send_mail
+from geo.models import Street, CityModel
 
 # from notifier.signals import alert_freelancer_accepted
 
@@ -37,6 +40,8 @@ from .serializers import UserSerializer
 LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
 logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/dashboard.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
 logger = logging.getLogger()
+
+DEFAULT_FREELANCER_RANGE = 1.0 # Default distance beween business and available freelancers
 
 class SignUpView(generics.CreateAPIView):
     queryset = get_user_model().objects.all()
@@ -56,12 +61,13 @@ def b_dashboard(request, b_id):
     context = {}
 
     # Active orders stats
-    active_orders = Order.objects.filter(Q(business=request.user.pk) 
-                            & Q(status='IN_PROGRESS') 
-                            | Q(status='REQUESTED') 
-                            | Q(status='RE_REQUESTED') 
-                            | Q(status='REJECTED') 
-                            | Q(status='STARTED'))
+    active_orders = Order.objects.filter(
+        (Q(business=request.user.pk) & Q(status='IN_PROGRESS')) |
+        (Q(business=request.user.pk) & Q(status='REQUESTED')) |
+        (Q(business=request.user.pk) & Q(status='RE_REQUESTED')) |
+        (Q(business=request.user.pk) & Q(status='REJECTED')) |
+        (Q(business=request.user.pk) & Q(status='STARTED'))
+    )
     context['active_orders'] = active_orders
 
     orders = []
@@ -150,6 +156,8 @@ def b_profile(request, b_id):
     context = {}
     user_profile = Employer.objects.get(user=request.user.id)
 
+    context['cities'] = CityModel.objects.all()
+
     if request.method == 'POST':
 
         new_name = request.POST.get("name")
@@ -157,9 +165,9 @@ def b_profile(request, b_id):
         new_business_category = request.POST.get("business_category")
         new_phone = request.POST.get("phone")
         new_bio = request.POST.get("bio")
-        new_street = request.POST.get("street")
+        new_street = request.POST.get("city_streets").replace('\'', '').replace('\"', '')
         new_building = request.POST.get("building_number")
-        new_city = request.POST.get("city")
+        new_city = request.POST.get("city").replace('\'', '').replace('\"', '')
         profile_pic = request.FILES.get("profile_pic")
 
         if new_name:
@@ -236,8 +244,6 @@ def f_profile(request, f_id):
     user_profile = Employee.objects.get(user=request.user.id)
 
     if request.method == 'POST':
-        # form = FreelancerUpdateForm(request.POST, instance=request.user.profile)
-        # form = EmployeeProfileForm(request.POST or None, instance=request.user)
 
         new_name = request.POST.get("name")
         new_vehicle = request.POST.get("vehicle")
@@ -334,6 +340,8 @@ def orders(request, b_id):
     business_profile = Employer.objects.get(user=request.user)
     context['business_profile'] = business_profile
     context['freelancers'] = Employee.objects.all()
+
+    context['cities'] = CityModel.objects.all()
 
     # business_name = business_profile.business_name
     # business_city = business_profile.city
@@ -588,15 +596,15 @@ def b_statistics(request, b_id):
 def freelancers(request, b_id):
     context = {}
 
-    freelancers = Employee.objects.all()
-    context['total_freelancers'] = len(freelancers)
+    all_freelancers = Employee.objects.all()
 
     cities = []
     vehicles = []
-    for fl in freelancers:
+    for fl in all_freelancers:
         cities.append(fl.city)
         vehicles.append(fl.vehicle)
 
+    # Extracting the freelancers that worked with the business in the past
     b_freelancers = []
     b_relationships = User.objects.get(pk=b_id).relationships
     if b_relationships:
@@ -605,7 +613,12 @@ def freelancers(request, b_id):
     
         context['b_freelancers'] = b_freelancers
 
-    orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='REQUESTED') | Q(status='RE_REQUESTED') | Q(status='REJECTED'))
+    # Extracting the business orders
+    orders = Order.objects.filter(
+        (Q(business=request.user.pk) & Q(status='REQUESTED')) |
+        (Q(business=request.user.pk) & Q(status='RE_REQUESTED')) |
+        (Q(business=request.user.pk) & Q(status='REJECTED'))
+        )
     context['orders'] = orders
 
     completed_orders = Order.objects.filter(Q(business=request.user.pk) & Q(status='COMPLETED') & ~Q(status='SETTLED'))
@@ -618,31 +631,62 @@ def freelancers(request, b_id):
 
     context['freelancers_due_payment'] = freelancers_due_payment
     context['num_freelancers_due_payment'] = len(freelancers_due_payment)
+    max_range = DEFAULT_FREELANCER_RANGE
 
-
+    # Filter freelancers
     if request.method == 'POST':
 
         # Freelancers filtering options
         city = request.POST.get('city')
         vehicle = request.POST.get('vehicle')
+        
+        max_range = request.POST.get('range')
 
         if 'filter' in request.POST:
             if vehicle and city:
-                freelancers = Employee.objects.filter(vehicle=vehicle, city=city)
-                context['total_freelancers'] = len(freelancers)
+                filtered_freelancers = Employee.objects.filter(vehicle=vehicle, city=city)
             elif vehicle and not city:
-                freelancers = Employee.objects.filter(vehicle=vehicle)
-                context['total_freelancers'] = len(freelancers)
+                filtered_freelancers = Employee.objects.filter(vehicle=vehicle)
             elif not vehicle and city:
-                freelancers = Employee.objects.filter(city=city)
-                context['total_freelancers'] = len(freelancers)
+                filtered_freelancers = Employee.objects.filter(city=city)
             else:
-                freelancers = Employee.objects.all()
-                context['total_freelancers'] = len(freelancers)
+                filtered_freelancers = Employee.objects.all()
+        else:
+            filtered_freelancers = Employee.objects.all()
+
+    else:
+        max_range = DEFAULT_FREELANCER_RANGE
+        filtered_freelancers = None
+
+    # Freelancer locations
+    freelancers_in_range = []
+    for freelancer in all_freelancers:
+        try:
+            freelancer_location = freelancer.location
+            business_location = Employer.objects.get(pk=b_id).location
+            range_to_freelancer = round(business_location.distance(freelancer_location) * 100, 3)
+            print(f'DISTANCE from {freelancer}: {range_to_freelancer} km')
+            print(f'MAX RANGE: {max_range} km')
+            if range_to_freelancer < float(max_range):
+                freelancers_in_range.append(freelancer)
+        except Exception as e:
+            print(f'Freelancer {freelancer} does not have location. EX: {e}')
+
+
+    freelancers = []
+    if filtered_freelancers:
+        for fl in filtered_freelancers:
+            if fl in freelancers_in_range:
+                freelancers.append((fl))
+    else:
+        freelancers = freelancers_in_range
+
+    context['total_freelancers'] = len(freelancers)
 
     context['freelancers'] = freelancers
     context['cities'] = set(cities)
     context['vehicles'] = set(vehicles)
+    context['max_range'] = max_range
 
     return render(request, 'dndsos_dashboard/freelancers.html', context)
 

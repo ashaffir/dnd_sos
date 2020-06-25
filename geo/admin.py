@@ -1,14 +1,20 @@
 from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
 
-from .models import City, Entry
+from .models import City, Entry, BusinessLocation, UserLocation, CityModel, Street
 
-@admin.register(City)
-class City(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ('name',)
+@admin.register(CityModel)
+class CityModel(admin.ModelAdmin):
+    list_display = ('city_symbol','hebrew_name',)
+    search_fields = ('hebrew_name',)
+    ordering = ('city_symbol',)
 
+@admin.register(Street)
+class Street(admin.ModelAdmin):
+    list_display = ('country','street_id','street_name', 'city_symbol', 'city_name',)
+    list_filter = ('city_name','country',)
+    search_field = ['street_name', 'city_name']
+    ordering = ('street_id',)
 
 @admin.register(Entry)
 class EntryAdmin(OSMGeoAdmin):
@@ -21,3 +27,21 @@ class EntryAdmin(OSMGeoAdmin):
     default_zoom = 12
 
     #...
+
+@admin.register(BusinessLocation)
+class BusinessLocation(OSMGeoAdmin):
+    list_display = ('name', 'address', 'city',)
+    ordering = ('name',)
+
+@admin.register(UserLocation)
+class UserLocation(OSMGeoAdmin):
+    list_display = ('user_id', 'user_location',)
+    ordering = ('user_id',)
+
+
+# DEMO
+class City(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+    ordering = ('name',)
+

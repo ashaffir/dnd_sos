@@ -1,40 +1,21 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
+from django.contrib.gis.admin import OSMGeoAdmin
 
 from .models import Order
 
-# @admin.register(Order)
-# class Order(admin.ModelAdmin):
-#     list_display = (
-#         'created',
-#         'order_business',
-#         'order_id',
-#         'order_dispatched',
-#         'order_delivered',
-#         'status',
-#         'order_city',
-#         )
-#     search_fields = ('order_id','city','order_notes','order_business',)
-#     ordering = ('-created',)
-    
-#     list_filter = (
-#         'status',
-#     )
-#     readonly_fields = (
-#         'id', 'created',
-#     )
-
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(OSMGeoAdmin):
     fields = ( # changed
-        'order_id','city', 'pick_up_address', 'drop_off_address', 'status', 'notes',
+        'order_id','order_city_name', 'pick_up_address', 'drop_off_address', 'status','order_location',
+        'distance_to_business','trip_completed',
         'freelancer', 'business',
         'selected_freelancers',
         'chat', 
         'created', 'updated','new_message',
     )
     list_display = ( # changed
-        'order_id', 'pick_up_address', 'drop_off_address', 'status','notes',
+        'order_id', 'pick_up_address', 'drop_off_address','distance_to_business', 'status',
         'freelancer', 'business',
         'new_message',
         'updated',

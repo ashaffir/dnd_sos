@@ -1,0 +1,10 @@
+<select name="city_streets" id="city_streets" class="form-control">
+    <option value="none">--------------------</option>
+    {% for street in streets %}
+        {% if data_type == 'profile' %}
+            <option value="{{ street.street_name }}">{{ street.street_name }}</option>
+        {% else %}
+            <option value="{{ street.street_symbol }}">{{ street.street_name }}</option>
+        {% endif %}
+    {% endfor %}
+</select>

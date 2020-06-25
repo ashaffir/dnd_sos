@@ -5,6 +5,10 @@ from django.db import models
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField, JSONField
 
+from django.contrib.gis.db import models as geomodels
+from django.contrib.gis.db.models import PointField
+
+
 from core.models import Employee, Employer, User
 
 
@@ -33,7 +37,18 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     pick_up_address = models.CharField(max_length=255, null=True)
     drop_off_address = models.CharField(max_length=255, null=True)
-    city = models.CharField(max_length=100, null=True, blank=True)
+    
+    # GEO
+    order_country = models.CharField(max_length=100, null=True, blank=True)
+    order_city_name = models.CharField(max_length=100, null=True, blank=True)
+    order_city_symbol = models.IntegerField(null=True, blank=True)
+    order_street_name = models.CharField(max_length=100, null=True, blank=True)
+    order_street_symbol = models.IntegerField(null=True, blank=True)
+    order_location = geomodels.PointField(null=True, blank=True)
+
+    distance_to_business = models.FloatField(null=True, blank=True)
+    trip_completed = models.FloatField(null=True, blank=True)
+
     notes = models.TextField(max_length=500, blank=True, null=True)
 
     selected_freelancers = ArrayField(

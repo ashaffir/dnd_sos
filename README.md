@@ -54,6 +54,7 @@ https://www.youtube.com/watch?v=qjlZWBbX7-o
 
 
 ## Production Notes
+
 ### Server setup: https://www.youtube.com/watch?v=EdK15Qcc3Zs
 1) Sources (Git)
 2) Supervisor
@@ -88,7 +89,21 @@ $ psql <db name>
 --
 Notice the changes in the DB Engine in settings, to GIS 
 --
+
+#### OpenStreet Shape files and other maps downloads: 
+http://download.geofabrik.de/
+
 #### To load a shape (*.shp) file for a city/location:
 ogr2ogr -f "PostgreSQL" PG:"dbname=dndsos user=alfreds" geo/maps/natural_earth_vector/10m_cultural/ne_10m_airports.shp -nln geo_city -append
+
+#### Load initial GIS data to the DB (e.g. businesses) and "Make a Location-Based Web App With Django and GeoDjango": 
+https://tinyurl.com/y9rdrqce
+
+** Implemented in different migrations files, e.g. geo/migrations/0002_init_data.py
+
+#### GEOPY for locating coords and addresses (used in e.g order_location) and distances
+https://pypi.org/project/geopy/ 
+
+
 
 

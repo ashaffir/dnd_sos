@@ -146,18 +146,28 @@
                             {% csrf_token %}
                             <div class="row" >
                                 <div class="col-md-4">
-                                    <h4>Pick Available Freelancers</h4>
+                                    <h4>Pick Available Freelancers in range {{ max_range }} km</h4>
                                     <p>There  {% if total_freelancers > 1 %}  are {% else %} is {% endif %}{{ total_freelancers }} freelancers available.</p>
-                                    <button type="submit" class="btn btn-warning mobile-bottom-margin" name="sort_by_city" type="button">Show all!</button>
+                                    <button type="submit" class="btn btn-warning mobile-bottom-margin" name="sort_by_city" type="button">Reset Filter</button>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group mb-md">
-                                        <label for="city_selector" style="margin-right: 2rem;">Filter by City </label>
+                                        <!-- <label for="city_selector" style="margin-right: 2rem;">Filter by City </label>
                                         <select name="city" id="city_selector">
                                             <option value="">--------------------</option>
                                             {% for city in cities %}
                                             <option value="{{ city }}">{{ city }}</option>
                                             {% endfor %}
+                                        </select> -->
+                                        <label for="range_selector" style="margin-right: 2rem;">Range from freelancer </label>
+                                        <select name="range" id="range_selector">
+                                            <option value="1.0">--------</option>
+                                            <option value="1.0">1 km</option>
+                                            <option value="5.0">5 km</option>
+                                            <option value="10.0">10 km</option>
+                                            <option value="15.0">15 km</option>
+                                            <option value="20.0">20 km</option>
+
                                         </select>
                                         <label for="vehicle_selector" style="margin: 2rem;">Filter by Vehicle </label>
                                         <select name="vehicle" id="vehicle_selector">

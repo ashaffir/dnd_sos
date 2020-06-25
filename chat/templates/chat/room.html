@@ -50,7 +50,7 @@
             messageInputDom.value = '';
         };
     </script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script>    
         function geoFindMe() {
 
@@ -82,7 +82,8 @@
           
           }
           
-          document.querySelector('#find-me').addEventListener('click', geoFindMe);
+          //document.querySelector('#find-me').addEventListener('click', geoFindMe);
+            $(window).on('load',geoFindMe);
     </script>
 </body>
 </html>

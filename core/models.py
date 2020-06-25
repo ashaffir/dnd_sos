@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
-# from jsonfield import JSONField
 from django.contrib.postgres.fields import ArrayField, JSONField
+
+from django.contrib.gis.db import models as geomodels
+from django.contrib.gis.db.models import PointField
+
 
 # from orders.models import Order
 
@@ -33,7 +36,7 @@ class User(AbstractUser):
     
     # KRA PIN
     kra_pin = models.CharField(max_length=50, default=None, blank=True, null=True)
-    
+
     # mandatory fields
     REQUIRED_FIELDS = ['username',]
     
@@ -82,8 +85,12 @@ class Employer(models.Model):
     street = models.CharField(max_length=100, blank=True, null=True)
     building_number = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    location = PointField(blank=True, null=True)
+
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
+
 
     b_freelancers = models.CharField(max_length=500, null=True, blank=True)
  
@@ -136,6 +143,9 @@ class Employee(models.Model):
     active_hours = models.CharField(max_length=100, blank=True, null=True)
     is_available = models.BooleanField(default=True)
     # current_order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, default=-1)
+
+    location = PointField(blank=True, null=True)
+
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
     id_doc = models.FileField(null=True, blank=True, upload_to=id_path)

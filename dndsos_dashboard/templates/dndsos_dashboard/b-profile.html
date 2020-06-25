@@ -71,7 +71,7 @@
 												<!-- <p><b>Business Type</b>: {{ profile.business_type }}</p> -->
 												<p><b>Business Category</b>: {{ profile.business_category }}</p>
 												<p><b>Bio: </b> {{ profile.bio }}</p>
-												<p><b>Address:</b> {{ profile.building_number }} {{ profile.street }} street, {{ profile.city }}</p>
+												<p><b>Address:</b> {{ profile.building_number }} {{ profile.street }}, {{ profile.city }}</p>
 											</div>
 										</section>
 
@@ -125,18 +125,31 @@
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">City</label>
+																<!-- <div class="col-md-8">{{ form.city }}</div> -->
+																<div class="col-md-8">
+																	<select id="city" name="city" class="form-control" required>
+																		<option value="none">---------------</option>
+																		{% for city in cities %}
+																			<option value="{{ city.hebrew_name }}">{{ city.hebrew_name }}</option>
+																		{% endfor %}
+																	</select>								
+																</div>
+															</div>
+
+															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">Street</label>
-																<div class="col-md-8">{{ form.street }}</div>
+																<!-- <div class="col-md-8">{{ form.street }}</div> -->
+																<div class="col-md-8" id="streets">
+																	
+																	<!-- Loaded from Ajax -->
+																	
+																</div>
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">Building Number</label>
 																<div class="col-md-8">{{ form.building_number }}</div>
-															</div>
-
-															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">City</label>
-																<div class="col-md-8">{{ form.city }}</div>
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
@@ -195,5 +208,31 @@
 			//$('#message').modal('hide');
 		});
 	</script>
+
+	<script type="text/javascript">
+		/*
+			Placement of cities and streets in the selection areas
+		*/
+		$("#city").change(function () {
+	
+			let city = document.querySelector('#city'); 
+			let selected_city = $(this).val();
+			let city_streets_url = '{% url "geo:city-streets" %}'
+			console.log(selected_city);
+			$.ajax({
+				url: city_streets_url,
+				data: {
+					city: selected_city,
+					type: 'profile'
+				},
+				success: function(response) {
+				//console.log(response)
+				$('#streets').html(response);
+				}
+			})		
+		});
+	
+	</script>
+	
 
 {% endblock content %}

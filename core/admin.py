@@ -1,9 +1,10 @@
 from django.contrib import admin
 
 from core.models import User, Employer, Employee, Asset, AssignedAsset
+from django.contrib.gis.admin import OSMGeoAdmin
 
 @admin.register(Employer)
-class Employer(admin.ModelAdmin):
+class Employer(OSMGeoAdmin):
     list_display = (
         'business_name',
         'user',
@@ -13,7 +14,7 @@ class Employer(admin.ModelAdmin):
     # ordering = ('-created',)
 
 @admin.register(Employee)
-class Employee(admin.ModelAdmin):
+class Employee(OSMGeoAdmin):
     list_display = (
         'user',
         'city',

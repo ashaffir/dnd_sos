@@ -387,7 +387,7 @@
 					let drop_off_address = data.data.drop_off_address;
 					$("#pick_up_address").html(pick_up_address);
 					$("#drop_off_address").html(drop_off_address);
-					$("#new_offer_notes").html(data.data.notes);
+					//$("#new_offer_notes").html(data.data.notes);
 					
 					
 					if (order_status == 'REQUESTED' && current_order_id != order_id) {
@@ -654,8 +654,42 @@
 
 		</script>
 
+		<!-- Freelancer GEO Location -->
+		<!-- <script>
+			function geoFindMe() {
+
+				function success(position) {
+				  const latitude  = position.coords.latitude;
+				  const longitude = position.coords.longitude;			  
+				  console.log(`Latitude: ${latitude} °, Longitude: ${longitude} °`);
+				  freelancerSocket.send(JSON.stringify({
+					'type': 'user.location', 
+					'data': {
+						'event': 'User Location',
+						'user_id': user_id,
+						'lat': latitude,
+						'lon': longitude,
+						}
+					}));
+				}
+			  
+				function error() {
+				  console.log('Unable to retrieve your location');
+				}
+			  
+				if(!navigator.geolocation) {
+					console.log('Geolocation is not supported by your browser');
+				} else {
+				  navigator.geolocation.getCurrentPosition(success, error);
+				}
+
+			}
+				
+			$(window).on('load',geoFindMe);
+		</script> -->
+
 	
-		{% else %}
+	{% else %}
 			<!-- <script src="{% static 'assets/javascripts/employer_alerts.js' %}" ></script> -->
 			
 			<!-- ------------------ -->
@@ -682,31 +716,45 @@
 				let pick_up_address = building + ' ' + street + ', ' + city
 				
 				addOrder = function(e) {
-					const street_e = document.querySelector('#street');
-					const building_e = document.querySelector('#building');
-					const city_e = document.querySelector('#city');
-					const notes_e = document.querySelector('#notes');
-					const freelancer_e = document.querySelector('#freelancer');
+					
+					//const street_e = document.querySelector('#street');
+					//const notes_e = document.querySelector('#notes');
+					let order_city_e = document.querySelector('#city');
+					let order_city_symbol = order_city_e.value
+					let order_city_name = order_city_e.options[order_city_e.selectedIndex].text
 
-					const street = street_e.value;
-					const building = building_e.value;
-					const city = city_e.value;
-					const notes = notes_e.value;
-					const freelancer = freelancer_e.value;
+					let order_street_symbol = 'none';
+					let order_street_name = 'none';
+					try {
+						order_street_symbol_e = document.querySelector('#city_streets');
+						order_street_symbol = order_street_symbol_e.value
+						order_street_name = order_street_symbol_e.options[order_street_symbol_e.selectedIndex].text;
+					} catch {
+						alert('Please select City.')
+						return
+					}
+					
+					let order_building = document.querySelector('#building').value;
+					const freelancer = document.querySelector('#freelancer').value;
+					
+					console.log(`Street : ${order_street_symbol}  City: ${order_city_symbol} Building: ${order_building}`)
 
-					if (city === "" || building == "" || street == ""){
-						if (city === ""){
+					if (order_city_symbol === "none" || order_building == "" || order_street_symbol == 'none'){
+						if (order_city_symbol === "none"){
 							alert("Please input the City");
-						} else if (building == ""){
-							alert("Building number is missing");
-						} else {
+						} else if (order_street_symbol == 'none'){
 							alert("Street is missing");
+						} else {
+							alert("Building number is missing");
 						}
 						return false;
 					}
 			
+					//order_street_name = order_street_name.replace('\'','')
+					let drop_off_address = order_building + ' ' + order_city_name + ', ' + order_street_name
+					//let drop_off_address = order_building + ' ' + order_street_symbol + ', ' + order_city_symbol
+					console.log(`Order address: ${drop_off_address}`)
 
-					const drop_off_address = building + ' ' + street + ', ' + city
 
 					businessSocket.send(JSON.stringify({
 						'type': 'create.order', 
@@ -714,10 +762,13 @@
 							'event': 'Create Order',
 							'business': user_id,
 							'business_name': user_name,
-							'city': city,
+							'order_city_name': order_city_name,
+							'order_city_symbol': order_city_symbol,
+							'order_street_name': order_street_name,
+							'order_street_symbol': order_street_symbol,
 							'pick_up_address': pick_up_address,
 							'drop_off_address': drop_off_address,
-							'notes': notes,
+							//'notes': notes,
 							'select_freelancers':freelancer
 						}
 					}));
@@ -848,7 +899,7 @@
 
 				};
 
-				broadcast_order = function(order_id, pick_up_address, drop_off_address, notes){
+				broadcast_order = function(order_id, pick_up_address, drop_off_address /*,notes*/){
 					console.log('REQUESTING FREELANCER...')
 					// Broadcast a request for an excisting order
 					businessSocket.send(JSON.stringify({
@@ -860,7 +911,7 @@
 							'business_name': user_name,
 							'pick_up_address': pick_up_address,
 							'drop_off_address': drop_off_address,
-							'notes': notes,
+							//'notes': notes,
 							'status': 'RE_REQUESTED'
 						}
 					}));
@@ -893,6 +944,39 @@
 
 			</script>
 
+		<!-- Business GEO Location -->
+		<!-- <script>
+			function geoFindMe() {
+
+				function success(position) {
+				  const latitude  = position.coords.latitude;
+				  const longitude = position.coords.longitude;			  
+				  console.log(`Latitude: ${latitude} °, Longitude: ${longitude} °`);
+				  businessSocket.send(JSON.stringify({
+					'type': 'user.location', 
+					'data': {
+						'event': 'User Location',
+						'user_id': user_id,
+						'lat': latitude,
+						'lon': longitude,
+						}
+					}));
+				}
+			  
+				function error() {
+				  console.log('Unable to retrieve your location');
+				}
+			  
+				if(!navigator.geolocation) {
+					console.log('Geolocation is not supported by your browser');
+				} else {
+				  navigator.geolocation.getCurrentPosition(success, error);
+				}
+
+			}
+				
+			$(window).on('load',geoFindMe);
+		</script> -->
 
 		{% endif %}
 		

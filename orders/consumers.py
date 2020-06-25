@@ -1,13 +1,19 @@
 import asyncio
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic, distance
+
 from datetime import datetime
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.layers import get_channel_layer
+from django.contrib.gis.geos import Point, fromstr
 
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
-from core.models import User
+from core.models import User, Employer
+
+from geo.models import UserLocation
 
 class OrderConsumer(AsyncJsonWebsocketConsumer):
 
@@ -61,6 +67,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             await self.direct_message(content)
         elif message_type == 'cancel.alert':
             await self.cancel_alert(content)
+        elif message_type == 'user.location':
+            await self.user_location(content)
 
     # Sending JSON messages 
     async def echo_message(self, event):
@@ -332,6 +340,44 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
     @database_sync_to_async
     def _create_order(self, content):
+        # Adding GEO location info before creating the order
+        geolocator = Nominatim(user_agent="dndsos", timeout=3)
+        drop_off_address = content.get('drop_off_address')
+        location = geolocator.geocode(drop_off_address)
+        try:
+            order_location = Point(location.longitude,location.latitude, srid=4326)
+            order_coords = (location.latitude,location.longitude)  # The cords for geopy are reversed to GeoDjango Point.
+        except:
+            try:
+                drop_off_address = content.get('drop_off_address').split(',')[1]
+                order_location = Point(location.longitude,location.latitude, srid=4326)
+                order_coords = (location.latitude,location.longitude)
+            except Exception as e:
+                print(f'Failed getting the location for {drop_off_address}')
+                order_location = None
+                order_coords = None
+
+        content['order_location'] = order_location
+
+        # Calculate distance between drop off address the business
+        business = Employer.objects.get(pk=content.get('business'))
+        business_address = business.building_number + ' ' + business.street + ',' + business.city
+        
+        business_location = geolocator.geocode(business_address)
+        
+        business_coords = (business_location.latitude, business_location.longitude)
+        order_to_business_distance = distance(business_coords, order_coords).km
+
+        content['distance_to_business'] = order_to_business_distance
+
+        if not business.location:
+            business.location = Point(business_location.longitude,business_location.latitude, srid=4326)
+            business.save()
+        else:
+            pass
+
+
+        # Creating the new order
         serializer = OrderSerializer(data=content)
         serializer.is_valid(raise_exception=True)
         order = serializer.create(serializer.validated_data)
@@ -468,4 +514,33 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
 
         return order, order_updated
-    
+
+    # Dynamically obtain the location of users
+    # TODO: This should be done with the mobile app
+    @database_sync_to_async
+    def user_location(self, content):
+        data = content.get('data')
+        event = data['event']
+        user_id = data['user_id']
+        lat = data['lat']
+        lon = data['lon']
+
+        users = []
+        for user_location in UserLocation.objects.all():
+            users.append(str(user_location.user.pk))
+
+        if user_id not in users:
+            # New user, first time location setting
+            UserLocation.objects.create(
+                user=User.objects.get(pk=user_id),
+                user_location = Point(lon,lat, srid=4326)
+            )
+        else:
+            user = UserLocation.objects.get(user=User.objects.get(pk=user_id))
+            past_location = user.user_location
+            current_location = Point(lon,lat, srid=4326)
+            if past_location != current_location:
+                user.user_location = current_location
+                user.save()
+            else:
+                pass

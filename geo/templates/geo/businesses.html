@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Nearby Businesses</title>
+    </head>
+<body>
+    <h1>Nearby Businesses</h1>
+    {% if businesses %}
+    <ul>
+    {% for business in businesses %}
+        <li>
+        {{ business.name }}: {{business.distance}}
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>
