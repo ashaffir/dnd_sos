@@ -1,3 +1,4 @@
+import platform
 from geopy.geocoders import Nominatim
 from django.contrib.gis.geos import fromstr, Point
 
@@ -38,7 +39,17 @@ def location_calculator(city, street, building=1, country='israel'):
     geolocator = Nominatim(user_agent="dndsos", timeout=3)
     address = building + ' ' + street + ', ' + city
     location = geolocator.geocode(address)
-    point = Point(location.latitude,location.longitude)
-    return point, location.longitude, location.latitude
+
+    try:
+        if platform.system() == 'Darwin':
+            point = Point(location.latitude,location.longitude)
+        else:
+            point = Point(location.longitude, location.latitude)
+    
+        return point, location.longitude, location.latitude
+
+    except Exception as e:
+        print(f'No location found for: city - {city} | street - {street}')
+        return None, None, None
 
     

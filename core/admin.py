@@ -35,7 +35,14 @@ class Employee(OSMGeoAdmin):
         )
     search_fields = ('bio','city','business_name',)
 
-admin.site.register(User)
+@admin.register(User)
+class User(admin.ModelAdmin):
+    list_display = ['email','is_employer','is_employee']
+    fields = ['username','email', 'is_employer', 'is_employee',
+                'phone_number', 'relationships'
+            ]
+    search_fields = ('username','email')
+
 # admin.site.register(Employer)
 # admin.site.register(Employee)
 admin.site.register(Asset)
