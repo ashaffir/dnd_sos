@@ -358,24 +358,35 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
     def _create_order(self, content):
         # Adding GEO location info before creating the order
         geolocator = Nominatim(user_agent="dndsos", timeout=3)
-        drop_off_address = content.get('drop_off_address')
-        location = geolocator.geocode(drop_off_address)
+        
         try:
-            order_location = Point(location.latitude,location.longitude)
+            drop_off_address = content.get('drop_off_address')
+            location = geolocator.geocode(drop_off_address)
+    
+            # Checking OS
+            if platform.system() == 'Darwin':
+                order_location = Point(location.latitude,location.longitude)
+            else:
+                order_location = Point(location.longitude, location.latitude)
+           
             order_coords = (location.latitude,location.longitude)  # The cords for geopy are reversed to GeoDjango Point.
+
         except:
             try:
                 drop_off_address = content.get('drop_off_address').split(',')[1]
+                location = geolocator.geocode(drop_off_address)
 
-                                # Checking OS
+                # Checking OS
                 if platform.system() == 'Darwin':
                     order_location = Point(location.latitude,location.longitude)
                 else:
                     order_location = Point(location.longitude, location.latitude)
                 
                 order_coords = (location.latitude,location.longitude)
+                
             except Exception as e:
                 print(f'Failed getting the location for {drop_off_address}')
+                logger.error(f'Failed getting the location for {drop_off_address}')
                 order_location = None
                 order_coords = None
 
