@@ -1,0 +1,5092 @@
+{
+"elements": [
+  {
+      "city_symbol": "967",
+      "hebrew_name": "אבו ג'ווייעד"
+  },
+  {
+      "city_symbol": "472",
+      "hebrew_name": "אבו גוש"
+  },
+  {
+      "city_symbol": "473",
+      "hebrew_name": "אבו סנאן"
+  },
+  {
+      "city_symbol": "935",
+      "hebrew_name": "אבו סריחאן )שבט("
+  },
+  {
+      "city_symbol": "958",
+      "hebrew_name": "אבו עבדון )שבט("
+  },
+  {
+      "city_symbol": "1042",
+      "hebrew_name": "אבו עמאר )שבט("
+  },
+  {
+      "city_symbol": "932",
+      "hebrew_name": "אבו עמרה )שבט("
+  },
+  {
+      "city_symbol": "968",
+      "hebrew_name": "אבו קורינאת )שבט("
+  },
+  {
+      "city_symbol": "1342",
+      "hebrew_name": "אבו קרינאת )יישוב("
+  },
+  {
+      "city_symbol": "966",
+      "hebrew_name": "אבו רובייעה )שבט("
+  },
+  {
+      "city_symbol": "961",
+      "hebrew_name": "אבו רוקייק )שבט("
+  },
+  {
+      "city_symbol": "1375",
+      "hebrew_name": "אבו תלול"
+  },
+  {
+      "city_symbol": "652",
+      "hebrew_name": "אבטין"
+  },
+  {
+      "city_symbol": "1275",
+      "hebrew_name": "אבטליון"
+  },
+  {
+      "city_symbol": "679",
+      "hebrew_name": "אביאל"
+  },
+  {
+      "city_symbol": "1115",
+      "hebrew_name": "אביבים"
+  },
+  {
+      "city_symbol": "819",
+      "hebrew_name": "אביגדור"
+  },
+  {
+      "city_symbol": "175",
+      "hebrew_name": "אביחיל"
+  },
+  {
+      "city_symbol": "2052",
+      "hebrew_name": "אביטל"
+  },
+  {
+      "city_symbol": "1070",
+      "hebrew_name": "אביעזר"
+  },
+  {
+      "city_symbol": "1220",
+      "hebrew_name": "אבירים"
+  },
+  {
+      "city_symbol": "182",
+      "hebrew_name": "אבן יהודה"
+  },
+  {
+      "city_symbol": "1081",
+      "hebrew_name": "אבן מנחם"
+  },
+  {
+      "city_symbol": "783",
+      "hebrew_name": "אבן ספיר"
+  },
+  {
+      "city_symbol": "400",
+      "hebrew_name": "אבן שמואל"
+  },
+  {
+      "city_symbol": "4011",
+      "hebrew_name": "אבני איתן"
+  },
+  {
+      "city_symbol": "3793",
+      "hebrew_name": "אבני חפץ"
+  },
+  {
+      "city_symbol": "3786",
+      "hebrew_name": "אבנת"
+  },
+  {
+      "city_symbol": "1311",
+      "hebrew_name": "אבשלום"
+  },
+  {
+      "city_symbol": "3759",
+      "hebrew_name": "אדורה"
+  },
+  {
+      "city_symbol": "113",
+      "hebrew_name": "אדירים"
+  },
+  {
+      "city_symbol": "1068",
+      "hebrew_name": "אדמית"
+  },
+  {
+      "city_symbol": "1123",
+      "hebrew_name": "אדרת"
+  },
+  {
+      "city_symbol": "446",
+      "hebrew_name": "אודים"
+  },
+  {
+      "city_symbol": "4010",
+      "hebrew_name": "אודם"
+  },
+  {
+      "city_symbol": "1046",
+      "hebrew_name": "אוהד"
+  },
+  {
+      "city_symbol": "2710",
+      "hebrew_name": "אום אל-פחם"
+  },
+  {
+      "city_symbol": "2024",
+      "hebrew_name": "אום אל-קוטוף"
+  },
+  {
+      "city_symbol": "1358",
+      "hebrew_name": "אום בטין"
+  },
+  {
+      "city_symbol": "1108",
+      "hebrew_name": "אומן"
+  },
+  {
+      "city_symbol": "680",
+      "hebrew_name": "אומץ"
+  },
+  {
+      "city_symbol": "31",
+      "hebrew_name": "אופקים"
+  },
+  {
+      "city_symbol": "1294",
+      "hebrew_name": "אור הגנוז"
+  },
+  {
+      "city_symbol": "67",
+      "hebrew_name": "אור הנר"
+  },
+  {
+      "city_symbol": "2400",
+      "hebrew_name": "אור יהודה"
+  },
+  {
+      "city_symbol": "1020",
+      "hebrew_name": "אור עקיבא"
+  },
+  {
+      "city_symbol": "780",
+      "hebrew_name": "אורה"
+  },
+  {
+      "city_symbol": "2012",
+      "hebrew_name": "אורות"
+  },
+  {
+      "city_symbol": "4013",
+      "hebrew_name": "אורטל"
+  },
+  {
+      "city_symbol": "403",
+      "hebrew_name": "אורים"
+  },
+  {
+      "city_symbol": "882",
+      "hebrew_name": "אורנים"
+  },
+  {
+      "city_symbol": "3760",
+      "hebrew_name": "אורנית"
+  },
+  {
+      "city_symbol": "278",
+      "hebrew_name": "אושה"
+  },
+  {
+      "city_symbol": "565",
+      "hebrew_name": "אזור"
+  },
+  {
+      "city_symbol": "1157",
+      "hebrew_name": "אחווה"
+  },
+  {
+      "city_symbol": "821",
+      "hebrew_name": "אחוזם"
+  },
+  {
+      "city_symbol": "1330",
+      "hebrew_name": "אחוזת ברק"
+  },
+  {
+      "city_symbol": "785",
+      "hebrew_name": "אחיהוד"
+  },
+  {
+      "city_symbol": "850",
+      "hebrew_name": "אחיטוב"
+  },
+  {
+      "city_symbol": "804",
+      "hebrew_name": "אחיסמך"
+  },
+  {
+      "city_symbol": "797",
+      "hebrew_name": "אחיעזר"
+  },
+  {
+      "city_symbol": "965",
+      "hebrew_name": "אטרש )שבט("
+  },
+  {
+      "city_symbol": "338",
+      "hebrew_name": "איבים"
+  },
+  {
+      "city_symbol": "716",
+      "hebrew_name": "אייל"
+  },
+  {
+      "city_symbol": "77",
+      "hebrew_name": "איילת השחר"
+  },
+  {
+      "city_symbol": "294",
+      "hebrew_name": "אילון"
+  },
+  {
+      "city_symbol": "1126",
+      "hebrew_name": "אילות"
+  },
+  {
+      "city_symbol": "49",
+      "hebrew_name": "אילניה"
+  },
+  {
+      "city_symbol": "2600",
+      "hebrew_name": "אילת"
+  },
+  {
+      "city_symbol": "1336",
+      "hebrew_name": "אירוס"
+  },
+  {
+      "city_symbol": "3762",
+      "hebrew_name": "איתמר"
+  },
+  {
+      "city_symbol": "37",
+      "hebrew_name": "איתן"
+  },
+  {
+      "city_symbol": "886",
+      "hebrew_name": "איתנים"
+  },
+  {
+      "city_symbol": "478",
+      "hebrew_name": "אכסאל"
+  },
+  {
+      "city_symbol": "1359",
+      "hebrew_name": "אל סייד"
+  },
+  {
+      "city_symbol": "1339",
+      "hebrew_name": "אל-עזי"
+  },
+  {
+      "city_symbol": "1316",
+      "hebrew_name": "אל-עריאן"
+  },
+  {
+      "city_symbol": "4003",
+      "hebrew_name": "אל-רום"
+  },
+  {
+      "city_symbol": "1145",
+      "hebrew_name": "אלומה"
+  },
+  {
+      "city_symbol": "330",
+      "hebrew_name": "אלומות"
+  },
+  {
+      "city_symbol": "1182",
+      "hebrew_name": "אלון הגליל"
+  },
+  {
+      "city_symbol": "3579",
+      "hebrew_name": "אלון מורה"
+  },
+  {
+      "city_symbol": "3604",
+      "hebrew_name": "אלון שבות"
+  },
+  {
+      "city_symbol": "429",
+      "hebrew_name": "אלוני אבא"
+  },
+  {
+      "city_symbol": "4017",
+      "hebrew_name": "אלוני הבשן"
+  },
+  {
+      "city_symbol": "868",
+      "hebrew_name": "אלוני יצחק"
+  },
+  {
+      "city_symbol": "285",
+      "hebrew_name": "אלונים"
+  },
+  {
+      "city_symbol": "4002",
+      "hebrew_name": "אלי-עד"
+  },
+  {
+      "city_symbol": "1365",
+      "hebrew_name": "אליאב"
+  },
+  {
+      "city_symbol": "41",
+      "hebrew_name": "אליכין"
+  },
+  {
+      "city_symbol": "1248",
+      "hebrew_name": "אליפז"
+  },
+  {
+      "city_symbol": "730",
+      "hebrew_name": "אליפלט"
+  },
+  {
+      "city_symbol": "682",
+      "hebrew_name": "אליקים"
+  },
+  {
+      "city_symbol": "204",
+      "hebrew_name": "אלישיב"
+  },
+  {
+      "city_symbol": "841",
+      "hebrew_name": "אלישמע"
+  },
+  {
+      "city_symbol": "1125",
+      "hebrew_name": "אלמגור"
+  },
+  {
+      "city_symbol": "3556",
+      "hebrew_name": "אלמוג"
+  },
+  {
+      "city_symbol": "1309",
+      "hebrew_name": "אלעד"
+  },
+  {
+      "city_symbol": "3618",
+      "hebrew_name": "אלעזר"
+  },
+  {
+      "city_symbol": "3750",
+      "hebrew_name": "אלפי מנשה"
+  },
+  {
+      "city_symbol": "603",
+      "hebrew_name": "אלקוש"
+  },
+  {
+      "city_symbol": "3560",
+      "hebrew_name": "אלקנה"
+  },
+  {
+      "city_symbol": "772",
+      "hebrew_name": "אמונים"
+  },
+  {
+      "city_symbol": "1064",
+      "hebrew_name": "אמירים"
+  },
+  {
+      "city_symbol": "1253",
+      "hebrew_name": "אמנון"
+  },
+  {
+      "city_symbol": "23",
+      "hebrew_name": "אמציה"
+  },
+  {
+      "city_symbol": "4012",
+      "hebrew_name": "אניעם"
+  },
+  {
+      "city_symbol": "960",
+      "hebrew_name": "אסד )שבט("
+  },
+  {
+      "city_symbol": "3754",
+      "hebrew_name": "אספר"
+  },
+  {
+      "city_symbol": "529",
+      "hebrew_name": "אעבלין"
+  },
+  {
+      "city_symbol": "963",
+      "hebrew_name": "אעצם )שבט("
+  },
+  {
+      "city_symbol": "959",
+      "hebrew_name": "אפיניש )שבט("
+  },
+  {
+      "city_symbol": "4301",
+      "hebrew_name": "אפיק"
+  },
+  {
+      "city_symbol": "176",
+      "hebrew_name": "אפיקים"
+  },
+  {
+      "city_symbol": "313",
+      "hebrew_name": "אפק"
+  },
+  {
+      "city_symbol": "3650",
+      "hebrew_name": "אפרת"
+  },
+  {
+      "city_symbol": "701",
+      "hebrew_name": "ארבל"
+  },
+  {
+      "city_symbol": "3598",
+      "hebrew_name": "ארגמן"
+  },
+  {
+      "city_symbol": "714",
+      "hebrew_name": "ארז"
+  },
+  {
+      "city_symbol": "3570",
+      "hebrew_name": "אריאל"
+  },
+  {
+      "city_symbol": "1324",
+      "hebrew_name": "ארסוף"
+  },
+  {
+      "city_symbol": "71",
+      "hebrew_name": "אשבול"
+  },
+  {
+      "city_symbol": "1276",
+      "hebrew_name": "אשבל"
+  },
+  {
+      "city_symbol": "70",
+      "hebrew_name": "אשדוד"
+  },
+  {
+      "city_symbol": "199",
+      "hebrew_name": "אשדות יעקב )איחוד("
+  },
+  {
+      "city_symbol": "188",
+      "hebrew_name": "אשדות יעקב )מאוחד("
+  },
+  {
+      "city_symbol": "1188",
+      "hebrew_name": "אשחר"
+  },
+  {
+      "city_symbol": "3722",
+      "hebrew_name": "אשכולות"
+  },
+  {
+      "city_symbol": "2021",
+      "hebrew_name": "אשל הנשיא"
+  },
+  {
+      "city_symbol": "1152",
+      "hebrew_name": "אשלים"
+  },
+  {
+      "city_symbol": "7100",
+      "hebrew_name": "אשקלון"
+  },
+  {
+      "city_symbol": "1256",
+      "hebrew_name": "אשרת"
+  },
+  {
+      "city_symbol": "740",
+      "hebrew_name": "אשתאול"
+  },
+  {
+      "city_symbol": "1298",
+      "hebrew_name": "אתגר"
+  },
+  {
+      "city_symbol": "6000",
+      "hebrew_name": "באקה אל-גרביה"
+  },
+  {
+      "city_symbol": "21",
+      "hebrew_name": "באר אורה"
+  },
+  {
+      "city_symbol": "1376",
+      "hebrew_name": "באר גנים"
+  },
+  {
+      "city_symbol": "155",
+      "hebrew_name": "באר טוביה"
+  },
+  {
+      "city_symbol": "2530",
+      "hebrew_name": "באר יעקב"
+  },
+  {
+      "city_symbol": "1278",
+      "hebrew_name": "באר מילכה"
+  },
+  {
+      "city_symbol": "9000",
+      "hebrew_name": "באר שבע"
+  },
+  {
+      "city_symbol": "450",
+      "hebrew_name": "בארות יצחק"
+  },
+  {
+      "city_symbol": "697",
+      "hebrew_name": "בארותיים"
+  },
+  {
+      "city_symbol": "399",
+      "hebrew_name": "בארי"
+  },
+  {
+      "city_symbol": "559",
+      "hebrew_name": "בוסתן הגליל"
+  },
+  {
+      "city_symbol": "482",
+      "hebrew_name": "בועיינה-נוג'ידאת"
+  },
+  {
+      "city_symbol": "4001",
+      "hebrew_name": "בוקעאתא"
+  },
+  {
+      "city_symbol": "698",
+      "hebrew_name": "בורגתה"
+  },
+  {
+      "city_symbol": "2043",
+      "hebrew_name": "בחן"
+  },
+  {
+      "city_symbol": "762",
+      "hebrew_name": "בטחה"
+  },
+  {
+      "city_symbol": "234",
+      "hebrew_name": "ביצרון"
+  },
+  {
+      "city_symbol": "998",
+      "hebrew_name": "ביר אל-מכסור"
+  },
+  {
+      "city_symbol": "1348",
+      "hebrew_name": "ביר הדאג'"
+  },
+  {
+      "city_symbol": "368",
+      "hebrew_name": "ביריה"
+  },
+  {
+      "city_symbol": "317",
+      "hebrew_name": "בית אורן"
+  },
+  {
+      "city_symbol": "3574",
+      "hebrew_name": "בית אל"
+  },
+  {
+      "city_symbol": "562",
+      "hebrew_name": "בית אלעזרי"
+  },
+  {
+      "city_symbol": "95",
+      "hebrew_name": "בית אלפא"
+  },
+  {
+      "city_symbol": "3652",
+      "hebrew_name": "בית אריה"
+  },
+  {
+      "city_symbol": "1076",
+      "hebrew_name": "בית ברל"
+  },
+  {
+      "city_symbol": "480",
+      "hebrew_name": "בית ג'ן"
+  },
+  {
+      "city_symbol": "619",
+      "hebrew_name": "בית גוברין"
+  },
+  {
+      "city_symbol": "571",
+      "hebrew_name": "בית גמליאל"
+  },
+  {
+      "city_symbol": "466",
+      "hebrew_name": "בית דגן"
+  },
+  {
+      "city_symbol": "723",
+      "hebrew_name": "בית הגדי"
+  },
+  {
+      "city_symbol": "373",
+      "hebrew_name": "בית הלוי"
+  },
+  {
+      "city_symbol": "322",
+      "hebrew_name": "בית הלל"
+  },
+  {
+      "city_symbol": "572",
+      "hebrew_name": "בית העמק"
+  },
+  {
+      "city_symbol": "3645",
+      "hebrew_name": "בית הערבה"
+  },
+  {
+      "city_symbol": "242",
+      "hebrew_name": "בית השיטה"
+  },
+  {
+      "city_symbol": "353",
+      "hebrew_name": "בית זיד"
+  },
+  {
+      "city_symbol": "710",
+      "hebrew_name": "בית זית"
+  },
+  {
+      "city_symbol": "143",
+      "hebrew_name": "בית זרע"
+  },
+  {
+      "city_symbol": "3575",
+      "hebrew_name": "בית חורון"
+  },
+  {
+      "city_symbol": "877",
+      "hebrew_name": "בית חירות"
+  },
+  {
+      "city_symbol": "2033",
+      "hebrew_name": "בית חלקיה"
+  },
+  {
+      "city_symbol": "159",
+      "hebrew_name": "בית חנן"
+  },
+  {
+      "city_symbol": "800",
+      "hebrew_name": "בית חנניה"
+  },
+  {
+      "city_symbol": "1050",
+      "hebrew_name": "בית חשמונאי"
+  },
+  {
+      "city_symbol": "288",
+      "hebrew_name": "בית יהושע"
+  },
+  {
+      "city_symbol": "265",
+      "hebrew_name": "בית יוסף"
+  },
+  {
+      "city_symbol": "200",
+      "hebrew_name": "בית ינאי"
+  },
+  {
+      "city_symbol": "326",
+      "hebrew_name": "בית יצחק-שער חפר"
+  },
+  {
+      "city_symbol": "430",
+      "hebrew_name": "בית לחם הגלילית"
+  },
+  {
+      "city_symbol": "751",
+      "hebrew_name": "בית מאיר"
+  },
+  {
+      "city_symbol": "784",
+      "hebrew_name": "בית נחמיה"
+  },
+  {
+      "city_symbol": "16",
+      "hebrew_name": "בית ניר"
+  },
+  {
+      "city_symbol": "672",
+      "hebrew_name": "בית נקופה"
+  },
+  {
+      "city_symbol": "202",
+      "hebrew_name": "בית עובד"
+  },
+  {
+      "city_symbol": "301",
+      "hebrew_name": "בית עוזיאל"
+  },
+  {
+      "city_symbol": "756",
+      "hebrew_name": "בית עזרא"
+  },
+  {
+      "city_symbol": "604",
+      "hebrew_name": "בית עריף"
+  },
+  {
+      "city_symbol": "212",
+      "hebrew_name": "בית צבי"
+  },
+  {
+      "city_symbol": "598",
+      "hebrew_name": "בית קמה"
+  },
+  {
+      "city_symbol": "365",
+      "hebrew_name": "בית קשת"
+  },
+  {
+      "city_symbol": "848",
+      "hebrew_name": "בית רבן"
+  },
+  {
+      "city_symbol": "1162",
+      "hebrew_name": "בית רימון"
+  },
+  {
+      "city_symbol": "9200",
+      "hebrew_name": "בית שאן"
+  },
+  {
+      "city_symbol": "2610",
+      "hebrew_name": "בית שמש"
+  },
+  {
+      "city_symbol": "248",
+      "hebrew_name": "בית שערים"
+  },
+  {
+      "city_symbol": "747",
+      "hebrew_name": "בית שקמה"
+  },
+  {
+      "city_symbol": "252",
+      "hebrew_name": "ביתן אהרן"
+  },
+  {
+      "city_symbol": "3780",
+      "hebrew_name": "ביתר עילית"
+  },
+  {
+      "city_symbol": "94",
+      "hebrew_name": "בלפוריה"
+  },
+  {
+      "city_symbol": "760",
+      "hebrew_name": "בן זכאי"
+  },
+  {
+      "city_symbol": "712",
+      "hebrew_name": "בן עמי"
+  },
+  {
+      "city_symbol": "1084",
+      "hebrew_name": "בן שמן )כפר נוער("
+  },
+  {
+      "city_symbol": "2013",
+      "hebrew_name": "בן שמן )מושב("
+  },
+  {
+      "city_symbol": "6100",
+      "hebrew_name": "בני ברק"
+  },
+  {
+      "city_symbol": "1368",
+      "hebrew_name": "בני דקלים"
+  },
+  {
+      "city_symbol": "592",
+      "hebrew_name": "בני דרום"
+  },
+  {
+      "city_symbol": "386",
+      "hebrew_name": "בני דרור"
+  },
+  {
+      "city_symbol": "4015",
+      "hebrew_name": "בני יהודה"
+  },
+  {
+      "city_symbol": "1363",
+      "hebrew_name": "בני נצרים"
+  },
+  {
+      "city_symbol": "448",
+      "hebrew_name": "בני עטרות"
+  },
+  {
+      "city_symbol": "1066",
+      "hebrew_name": "בני עי\"ש"
+  },
+  {
+      "city_symbol": "418",
+      "hebrew_name": "בני ציון"
+  },
+  {
+      "city_symbol": "588",
+      "hebrew_name": "בני ראם"
+  },
+  {
+      "city_symbol": "685",
+      "hebrew_name": "בניה"
+  },
+  {
+      "city_symbol": "9800",
+      "hebrew_name": "בנימינה-גבעת עדה"
+  },
+  {
+      "city_symbol": "1326",
+      "hebrew_name": "בסמ\"ה"
+  },
+  {
+      "city_symbol": "944",
+      "hebrew_name": "בסמת טבעון"
+  },
+  {
+      "city_symbol": "483",
+      "hebrew_name": "בענה"
+  },
+  {
+      "city_symbol": "389",
+      "hebrew_name": "בצרה"
+  },
+  {
+      "city_symbol": "589",
+      "hebrew_name": "בצת"
+  },
+  {
+      "city_symbol": "864",
+      "hebrew_name": "בקוע"
+  },
+  {
+      "city_symbol": "3612",
+      "hebrew_name": "בקעות"
+  },
+  {
+      "city_symbol": "823",
+      "hebrew_name": "בר גיורא"
+  },
+  {
+      "city_symbol": "1191",
+      "hebrew_name": "בר יוחאי"
+  },
+  {
+      "city_symbol": "3744",
+      "hebrew_name": "ברוכין"
+  },
+  {
+      "city_symbol": "428",
+      "hebrew_name": "ברור חיל"
+  },
+  {
+      "city_symbol": "2060",
+      "hebrew_name": "ברוש"
+  },
+  {
+      "city_symbol": "3710",
+      "hebrew_name": "ברכה"
+  },
+  {
+      "city_symbol": "746",
+      "hebrew_name": "ברכיה"
+  },
+  {
+      "city_symbol": "667",
+      "hebrew_name": "ברעם"
+  },
+  {
+      "city_symbol": "141",
+      "hebrew_name": "ברק"
+  },
+  {
+      "city_symbol": "617",
+      "hebrew_name": "ברקאי"
+  },
+  {
+      "city_symbol": "3654",
+      "hebrew_name": "ברקן"
+  },
+  {
+      "city_symbol": "2038",
+      "hebrew_name": "ברקת"
+  },
+  {
+      "city_symbol": "1323",
+      "hebrew_name": "בת הדר"
+  },
+  {
+      "city_symbol": "1361",
+      "hebrew_name": "בת חן"
+  },
+  {
+      "city_symbol": "1319",
+      "hebrew_name": "בת חפר"
+  },
+  {
+      "city_symbol": "1401",
+      "hebrew_name": "בת חצור"
+  },
+  {
+      "city_symbol": "6200",
+      "hebrew_name": "בת ים"
+  },
+  {
+      "city_symbol": "3794",
+      "hebrew_name": "בת עין"
+  },
+  {
+      "city_symbol": "33",
+      "hebrew_name": "בת שלמה"
+  },
+  {
+      "city_symbol": "1292",
+      "hebrew_name": "ג'דיידה-מכר"
+  },
+  {
+      "city_symbol": "485",
+      "hebrew_name": "ג'ולס"
+  },
+  {
+      "city_symbol": "627",
+      "hebrew_name": "ג'לג'וליה"
+  },
+  {
+      "city_symbol": "976",
+      "hebrew_name": "ג'נאביב )שבט("
+  },
+  {
+      "city_symbol": "541",
+      "hebrew_name": "ג'סר א-זרקא"
+  },
+  {
+      "city_symbol": "487",
+      "hebrew_name": "ג'ש )גוש חלב("
+  },
+  {
+      "city_symbol": "628",
+      "hebrew_name": "ג'ת"
+  },
+  {
+      "city_symbol": "872",
+      "hebrew_name": "גאולי תימן"
+  },
+  {
+      "city_symbol": "379",
+      "hebrew_name": "גאולים"
+  },
+  {
+      "city_symbol": "853",
+      "hebrew_name": "גאליה"
+  },
+  {
+      "city_symbol": "352",
+      "hebrew_name": "גבולות"
+  },
+  {
+      "city_symbol": "424",
+      "hebrew_name": "גבים"
+  },
+  {
+      "city_symbol": "86",
+      "hebrew_name": "גבע"
+  },
+  {
+      "city_symbol": "3763",
+      "hebrew_name": "גבע בנימין"
+  },
+  {
+      "city_symbol": "683",
+      "hebrew_name": "גבע כרמל"
+  },
+  {
+      "city_symbol": "2014",
+      "hebrew_name": "גבעולים"
+  },
+  {
+      "city_symbol": "3644",
+      "hebrew_name": "גבעון החדשה"
+  },
+  {
+      "city_symbol": "1344",
+      "hebrew_name": "גבעות בר"
+  },
+  {
+      "city_symbol": "1293",
+      "hebrew_name": "גבעת אבני"
+  },
+  {
+      "city_symbol": "1288",
+      "hebrew_name": "גבעת אלה"
+  },
+  {
+      "city_symbol": "147",
+      "hebrew_name": "גבעת ברנר"
+  },
+  {
+      "city_symbol": "870",
+      "hebrew_name": "גבעת השלושה"
+  },
+  {
+      "city_symbol": "3730",
+      "hebrew_name": "גבעת זאב"
+  },
+  {
+      "city_symbol": "207",
+      "hebrew_name": "גבעת ח\"ן"
+  },
+  {
+      "city_symbol": "2018",
+      "hebrew_name": "גבעת חיים )איחוד("
+  },
+  {
+      "city_symbol": "173",
+      "hebrew_name": "גבעת חיים )מאוחד("
+  },
+  {
+      "city_symbol": "4021",
+      "hebrew_name": "גבעת יואב"
+  },
+  {
+      "city_symbol": "787",
+      "hebrew_name": "גבעת יערים"
+  },
+  {
+      "city_symbol": "919",
+      "hebrew_name": "גבעת ישעיהו"
+  },
+  {
+      "city_symbol": "802",
+      "hebrew_name": "גבעת כ\"ח"
+  },
+  {
+      "city_symbol": "360",
+      "hebrew_name": "גבעת ניל\"י"
+  },
+  {
+      "city_symbol": "703",
+      "hebrew_name": "גבעת עוז"
+  },
+  {
+      "city_symbol": "681",
+      "hebrew_name": "גבעת שמואל"
+  },
+  {
+      "city_symbol": "566",
+      "hebrew_name": "גבעת שמש"
+  },
+  {
+      "city_symbol": "1077",
+      "hebrew_name": "גבעת שפירא"
+  },
+  {
+      "city_symbol": "793",
+      "hebrew_name": "גבעתי"
+  },
+  {
+      "city_symbol": "6300",
+      "hebrew_name": "גבעתיים"
+  },
+  {
+      "city_symbol": "342",
+      "hebrew_name": "גברעם"
+  },
+  {
+      "city_symbol": "133",
+      "hebrew_name": "גבת"
+  },
+  {
+      "city_symbol": "35",
+      "hebrew_name": "גדות"
+  },
+  {
+      "city_symbol": "145",
+      "hebrew_name": "גדיש"
+  },
+  {
+      "city_symbol": "442",
+      "hebrew_name": "גדעונה"
+  },
+  {
+      "city_symbol": "2550",
+      "hebrew_name": "גדרה"
+  },
+  {
+      "city_symbol": "852",
+      "hebrew_name": "גונן"
+  },
+  {
+      "city_symbol": "755",
+      "hebrew_name": "גורן"
+  },
+  {
+      "city_symbol": "1219",
+      "hebrew_name": "גורנות הגליל"
+  },
+  {
+      "city_symbol": "457",
+      "hebrew_name": "גזית"
+  },
+  {
+      "city_symbol": "370",
+      "hebrew_name": "גזר"
+  },
+  {
+      "city_symbol": "706",
+      "hebrew_name": "גיאה"
+  },
+  {
+      "city_symbol": "196",
+      "hebrew_name": "גיבתון"
+  },
+  {
+      "city_symbol": "1043",
+      "hebrew_name": "גיזו"
+  },
+  {
+      "city_symbol": "1204",
+      "hebrew_name": "גילון"
+  },
+  {
+      "city_symbol": "736",
+      "hebrew_name": "גילת"
+  },
+  {
+      "city_symbol": "262",
+      "hebrew_name": "גינוסר"
+  },
+  {
+      "city_symbol": "92",
+      "hebrew_name": "גיניגר"
+  },
+  {
+      "city_symbol": "863",
+      "hebrew_name": "גינתון"
+  },
+  {
+      "city_symbol": "1206",
+      "hebrew_name": "גיתה"
+  },
+  {
+      "city_symbol": "3613",
+      "hebrew_name": "גיתית"
+  },
+  {
+      "city_symbol": "393",
+      "hebrew_name": "גלאון"
+  },
+  {
+      "city_symbol": "3606",
+      "hebrew_name": "גלגל"
+  },
+  {
+      "city_symbol": "346",
+      "hebrew_name": "גליל ים"
+  },
+  {
+      "city_symbol": "369",
+      "hebrew_name": "גלעד )אבן יצחק("
+  },
+  {
+      "city_symbol": "745",
+      "hebrew_name": "גמזו"
+  },
+  {
+      "city_symbol": "1072",
+      "hebrew_name": "גן הדרום"
+  },
+  {
+      "city_symbol": "225",
+      "hebrew_name": "גן השומרון"
+  },
+  {
+      "city_symbol": "239",
+      "hebrew_name": "גן חיים"
+  },
+  {
+      "city_symbol": "734",
+      "hebrew_name": "גן יאשיה"
+  },
+  {
+      "city_symbol": "166",
+      "hebrew_name": "גן יבנה"
+  },
+  {
+      "city_symbol": "1274",
+      "hebrew_name": "גן נר"
+  },
+  {
+      "city_symbol": "311",
+      "hebrew_name": "גן שורק"
+  },
+  {
+      "city_symbol": "144",
+      "hebrew_name": "גן שלמה"
+  },
+  {
+      "city_symbol": "72",
+      "hebrew_name": "גן שמואל"
+  },
+  {
+      "city_symbol": "836",
+      "hebrew_name": "גנות"
+  },
+  {
+      "city_symbol": "549",
+      "hebrew_name": "גנות הדר"
+  },
+  {
+      "city_symbol": "1103",
+      "hebrew_name": "גני הדר"
+  },
+  {
+      "city_symbol": "1371",
+      "hebrew_name": "גני טל"
+  },
+  {
+      "city_symbol": "862",
+      "hebrew_name": "גני יוחנן"
+  },
+  {
+      "city_symbol": "3823",
+      "hebrew_name": "גני מודיעין"
+  },
+  {
+      "city_symbol": "218",
+      "hebrew_name": "גני עם"
+  },
+  {
+      "city_symbol": "229",
+      "hebrew_name": "גני תקווה"
+  },
+  {
+      "city_symbol": "842",
+      "hebrew_name": "געש"
+  },
+  {
+      "city_symbol": "463",
+      "hebrew_name": "געתון"
+  },
+  {
+      "city_symbol": "39",
+      "hebrew_name": "גפן"
+  },
+  {
+      "city_symbol": "1129",
+      "hebrew_name": "גרופית"
+  },
+  {
+      "city_symbol": "4022",
+      "hebrew_name": "גשור"
+  },
+  {
+      "city_symbol": "305",
+      "hebrew_name": "גשר"
+  },
+  {
+      "city_symbol": "574",
+      "hebrew_name": "גשר הזיו"
+  },
+  {
+      "city_symbol": "340",
+      "hebrew_name": "גת )קיבוץ("
+  },
+  {
+      "city_symbol": "128",
+      "hebrew_name": "גת רימון"
+  },
+  {
+      "city_symbol": "494",
+      "hebrew_name": "דאלית אל-כרמל"
+  },
+  {
+      "city_symbol": "146",
+      "hebrew_name": "דבורה"
+  },
+  {
+      "city_symbol": "489",
+      "hebrew_name": "דבוריה"
+  },
+  {
+      "city_symbol": "849",
+      "hebrew_name": "דבירה"
+  },
+  {
+      "city_symbol": "407",
+      "hebrew_name": "דברת"
+  },
+  {
+      "city_symbol": "62",
+      "hebrew_name": "דגניה א'"
+  },
+  {
+      "city_symbol": "79",
+      "hebrew_name": "דגניה ב'"
+  },
+  {
+      "city_symbol": "1067",
+      "hebrew_name": "דוב\"ב"
+  },
+  {
+      "city_symbol": "3747",
+      "hebrew_name": "דולב"
+  },
+  {
+      "city_symbol": "738",
+      "hebrew_name": "דור"
+  },
+  {
+      "city_symbol": "336",
+      "hebrew_name": "דורות"
+  },
+  {
+      "city_symbol": "475",
+      "hebrew_name": "דחי"
+  },
+  {
+      "city_symbol": "490",
+      "hebrew_name": "דייר אל-אסד"
+  },
+  {
+      "city_symbol": "492",
+      "hebrew_name": "דייר חנא"
+  },
+  {
+      "city_symbol": "493",
+      "hebrew_name": "דייר ראפאת"
+  },
+  {
+      "city_symbol": "2200",
+      "hebrew_name": "דימונה"
+  },
+  {
+      "city_symbol": "2063",
+      "hebrew_name": "דישון"
+  },
+  {
+      "city_symbol": "300",
+      "hebrew_name": "דליה"
+  },
+  {
+      "city_symbol": "431",
+      "hebrew_name": "דלתון"
+  },
+  {
+      "city_symbol": "1317",
+      "hebrew_name": "דמיידה"
+  },
+  {
+      "city_symbol": "303",
+      "hebrew_name": "דן"
+  },
+  {
+      "city_symbol": "302",
+      "hebrew_name": "דפנה"
+  },
+  {
+      "city_symbol": "1241",
+      "hebrew_name": "דקל"
+  },
+  {
+      "city_symbol": "1349",
+      "hebrew_name": "דריג'את"
+  },
+  {
+      "city_symbol": "702",
+      "hebrew_name": "האון"
+  },
+  {
+      "city_symbol": "675",
+      "hebrew_name": "הבונים"
+  },
+  {
+      "city_symbol": "356",
+      "hebrew_name": "הגושרים"
+  },
+  {
+      "city_symbol": "191",
+      "hebrew_name": "הדר עם"
+  },
+  {
+      "city_symbol": "9700",
+      "hebrew_name": "הוד השרון"
+  },
+  {
+      "city_symbol": "726",
+      "hebrew_name": "הודיה"
+  },
+  {
+      "city_symbol": "1322",
+      "hebrew_name": "הודיות"
+  },
+  {
+      "city_symbol": "1169",
+      "hebrew_name": "הוואשלה )שבט("
+  },
+  {
+      "city_symbol": "956",
+      "hebrew_name": "הוזייל )שבט("
+  },
+  {
+      "city_symbol": "1186",
+      "hebrew_name": "הושעיה"
+  },
+  {
+      "city_symbol": "250",
+      "hebrew_name": "הזורע"
+  },
+  {
+      "city_symbol": "307",
+      "hebrew_name": "הזורעים"
+  },
+  {
+      "city_symbol": "434",
+      "hebrew_name": "החותרים"
+  },
+  {
+      "city_symbol": "684",
+      "hebrew_name": "היוגב"
+  },
+  {
+      "city_symbol": "1208",
+      "hebrew_name": "הילה"
+  },
+  {
+      "city_symbol": "377",
+      "hebrew_name": "המעפיל"
+  },
+  {
+      "city_symbol": "677",
+      "hebrew_name": "הסוללים"
+  },
+  {
+      "city_symbol": "423",
+      "hebrew_name": "העוגן"
+  },
+  {
+      "city_symbol": "3769",
+      "hebrew_name": "הר אדר"
+  },
+  {
+      "city_symbol": "3603",
+      "hebrew_name": "הר גילה"
+  },
+  {
+      "city_symbol": "1261",
+      "hebrew_name": "הר עמשא"
+  },
+  {
+      "city_symbol": "464",
+      "hebrew_name": "הראל"
+  },
+  {
+      "city_symbol": "1249",
+      "hebrew_name": "הרדוף"
+  },
+  {
+      "city_symbol": "6400",
+      "hebrew_name": "הרצליה"
+  },
+  {
+      "city_symbol": "1203",
+      "hebrew_name": "הררית"
+  },
+  {
+      "city_symbol": "3639",
+      "hebrew_name": "ורד יריחו"
+  },
+  {
+      "city_symbol": "1133",
+      "hebrew_name": "ורדון"
+  },
+  {
+      "city_symbol": "2742",
+      "hebrew_name": "זבארגה )שבט("
+  },
+  {
+      "city_symbol": "815",
+      "hebrew_name": "זבדיאל"
+  },
+  {
+      "city_symbol": "44",
+      "hebrew_name": "זוהר"
+  },
+  {
+      "city_symbol": "584",
+      "hebrew_name": "זיקים"
+  },
+  {
+      "city_symbol": "788",
+      "hebrew_name": "זיתן"
+  },
+  {
+      "city_symbol": "9300",
+      "hebrew_name": "זכרון יעקב"
+  },
+  {
+      "city_symbol": "799",
+      "hebrew_name": "זכריה"
+  },
+  {
+      "city_symbol": "1290",
+      "hebrew_name": "זמר"
+  },
+  {
+      "city_symbol": "1065",
+      "hebrew_name": "זמרת"
+  },
+  {
+      "city_symbol": "816",
+      "hebrew_name": "זנוח"
+  },
+  {
+      "city_symbol": "2064",
+      "hebrew_name": "זרועה"
+  },
+  {
+      "city_symbol": "975",
+      "hebrew_name": "זרזיר"
+  },
+  {
+      "city_symbol": "818",
+      "hebrew_name": "זרחיה"
+  },
+  {
+      "city_symbol": "1321",
+      "hebrew_name": "ח'ואלד"
+  },
+  {
+      "city_symbol": "986",
+      "hebrew_name": "ח'ואלד )שבט("
+  },
+  {
+      "city_symbol": "235",
+      "hebrew_name": "חבצלת השרון"
+  },
+  {
+      "city_symbol": "1110",
+      "hebrew_name": "חבר"
+  },
+  {
+      "city_symbol": "3400",
+      "hebrew_name": "חברון"
+  },
+  {
+      "city_symbol": "717",
+      "hebrew_name": "חגור"
+  },
+  {
+      "city_symbol": "3764",
+      "hebrew_name": "חגי"
+  },
+  {
+      "city_symbol": "205",
+      "hebrew_name": "חגלה"
+  },
+  {
+      "city_symbol": "4026",
+      "hebrew_name": "חד-נס"
+  },
+  {
+      "city_symbol": "618",
+      "hebrew_name": "חדיד"
+  },
+  {
+      "city_symbol": "6500",
+      "hebrew_name": "חדרה"
+  },
+  {
+      "city_symbol": "948",
+      "hebrew_name": "חוג'ייראת )ד'הרה("
+  },
+  {
+      "city_symbol": "160",
+      "hebrew_name": "חולדה"
+  },
+  {
+      "city_symbol": "6600",
+      "hebrew_name": "חולון"
+  },
+  {
+      "city_symbol": "1239",
+      "hebrew_name": "חולית"
+  },
+  {
+      "city_symbol": "253",
+      "hebrew_name": "חולתה"
+  },
+  {
+      "city_symbol": "662",
+      "hebrew_name": "חוסן"
+  },
+  {
+      "city_symbol": "1332",
+      "hebrew_name": "חוסנייה"
+  },
+  {
+      "city_symbol": "115",
+      "hebrew_name": "חופית"
+  },
+  {
+      "city_symbol": "374",
+      "hebrew_name": "חוקוק"
+  },
+  {
+      "city_symbol": "1303",
+      "hebrew_name": "חורה"
+  },
+  {
+      "city_symbol": "496",
+      "hebrew_name": "חורפיש"
+  },
+  {
+      "city_symbol": "355",
+      "hebrew_name": "חורשים"
+  },
+  {
+      "city_symbol": "1047",
+      "hebrew_name": "חזון"
+  },
+  {
+      "city_symbol": "219",
+      "hebrew_name": "חיבת ציון"
+  },
+  {
+      "city_symbol": "3643",
+      "hebrew_name": "חיננית"
+  },
+  {
+      "city_symbol": "4000",
+      "hebrew_name": "חיפה"
+  },
+  {
+      "city_symbol": "162",
+      "hebrew_name": "חירות"
+  },
+  {
+      "city_symbol": "1272",
+      "hebrew_name": "חלוץ"
+  },
+  {
+      "city_symbol": "820",
+      "hebrew_name": "חלץ"
+  },
+  {
+      "city_symbol": "993",
+      "hebrew_name": "חמאם"
+  },
+  {
+      "city_symbol": "801",
+      "hebrew_name": "חמד"
+  },
+  {
+      "city_symbol": "343",
+      "hebrew_name": "חמדיה"
+  },
+  {
+      "city_symbol": "3646",
+      "hebrew_name": "חמדת"
+  },
+  {
+      "city_symbol": "3609",
+      "hebrew_name": "חמרה"
+  },
+  {
+      "city_symbol": "807",
+      "hebrew_name": "חניאל"
+  },
+  {
+      "city_symbol": "280",
+      "hebrew_name": "חניתה"
+  },
+  {
+      "city_symbol": "1257",
+      "hebrew_name": "חנתון"
+  },
+  {
+      "city_symbol": "4005",
+      "hebrew_name": "חספין"
+  },
+  {
+      "city_symbol": "363",
+      "hebrew_name": "חפץ חיים"
+  },
+  {
+      "city_symbol": "90",
+      "hebrew_name": "חפצי-בה"
+  },
+  {
+      "city_symbol": "700",
+      "hebrew_name": "חצב"
+  },
+  {
+      "city_symbol": "13",
+      "hebrew_name": "חצבה"
+  },
+  {
+      "city_symbol": "2034",
+      "hebrew_name": "חצור הגלילית"
+  },
+  {
+      "city_symbol": "406",
+      "hebrew_name": "חצור-אשדוד"
+  },
+  {
+      "city_symbol": "1409",
+      "hebrew_name": "חצר בארותיים"
+  },
+  {
+      "city_symbol": "1402",
+      "hebrew_name": "חצרות חולדה"
+  },
+  {
+      "city_symbol": "1404",
+      "hebrew_name": "חצרות יסף"
+  },
+  {
+      "city_symbol": "1405",
+      "hebrew_name": "חצרות כ\"ח"
+  },
+  {
+      "city_symbol": "397",
+      "hebrew_name": "חצרים"
+  },
+  {
+      "city_symbol": "422",
+      "hebrew_name": "חרב לאת"
+  },
+  {
+      "city_symbol": "1024",
+      "hebrew_name": "חרוצים"
+  },
+  {
+      "city_symbol": "1247",
+      "hebrew_name": "חריש"
+  },
+  {
+      "city_symbol": "3717",
+      "hebrew_name": "חרמש"
+  },
+  {
+      "city_symbol": "1209",
+      "hebrew_name": "חרשים"
+  },
+  {
+      "city_symbol": "3770",
+      "hebrew_name": "חשמונאים"
+  },
+  {
+      "city_symbol": "6700",
+      "hebrew_name": "טבריה"
+  },
+  {
+      "city_symbol": "962",
+      "hebrew_name": "טובא-זנגריה"
+  },
+  {
+      "city_symbol": "498",
+      "hebrew_name": "טורעאן"
+  },
+  {
+      "city_symbol": "2730",
+      "hebrew_name": "טייבה"
+  },
+  {
+      "city_symbol": "497",
+      "hebrew_name": "טייבה )בעמק("
+  },
+  {
+      "city_symbol": "2720",
+      "hebrew_name": "טירה"
+  },
+  {
+      "city_symbol": "663",
+      "hebrew_name": "טירת יהודה"
+  },
+  {
+      "city_symbol": "2100",
+      "hebrew_name": "טירת כרמל"
+  },
+  {
+      "city_symbol": "268",
+      "hebrew_name": "טירת צבי"
+  },
+  {
+      "city_symbol": "462",
+      "hebrew_name": "טל שחר"
+  },
+  {
+      "city_symbol": "1181",
+      "hebrew_name": "טל-אל"
+  },
+  {
+      "city_symbol": "1177",
+      "hebrew_name": "טללים"
+  },
+  {
+      "city_symbol": "3788",
+      "hebrew_name": "טלמון"
+  },
+  {
+      "city_symbol": "8900",
+      "hebrew_name": "טמרה"
+  },
+  {
+      "city_symbol": "547",
+      "hebrew_name": "טמרה )יזרעאל("
+  },
+  {
+      "city_symbol": "3743",
+      "hebrew_name": "טנא"
+  },
+  {
+      "city_symbol": "1214",
+      "hebrew_name": "טפחות"
+  },
+  {
+      "city_symbol": "1295",
+      "hebrew_name": "יאנוח-ג'ת"
+  },
+  {
+      "city_symbol": "1232",
+      "hebrew_name": "יבול"
+  },
+  {
+      "city_symbol": "46",
+      "hebrew_name": "יבנאל"
+  },
+  {
+      "city_symbol": "2660",
+      "hebrew_name": "יבנה"
+  },
+  {
+      "city_symbol": "96",
+      "hebrew_name": "יגור"
+  },
+  {
+      "city_symbol": "798",
+      "hebrew_name": "יגל"
+  },
+  {
+      "city_symbol": "577",
+      "hebrew_name": "יד בנימין"
+  },
+  {
+      "city_symbol": "1134",
+      "hebrew_name": "יד השמונה"
+  },
+  {
+      "city_symbol": "758",
+      "hebrew_name": "יד חנה"
+  },
+  {
+      "city_symbol": "358",
+      "hebrew_name": "יד מרדכי"
+  },
+  {
+      "city_symbol": "775",
+      "hebrew_name": "יד נתן"
+  },
+  {
+      "city_symbol": "64",
+      "hebrew_name": "יד רמב\"ם"
+  },
+  {
+      "city_symbol": "1144",
+      "hebrew_name": "ידידה"
+  },
+  {
+      "city_symbol": "9400",
+      "hebrew_name": "יהוד-מונוסון"
+  },
+  {
+      "city_symbol": "1158",
+      "hebrew_name": "יהל"
+  },
+  {
+      "city_symbol": "2009",
+      "hebrew_name": "יובל"
+  },
+  {
+      "city_symbol": "1226",
+      "hebrew_name": "יובלים"
+  },
+  {
+      "city_symbol": "1112",
+      "hebrew_name": "יודפת"
+  },
+  {
+      "city_symbol": "4007",
+      "hebrew_name": "יונתן"
+  },
+  {
+      "city_symbol": "803",
+      "hebrew_name": "יושיביה"
+  },
+  {
+      "city_symbol": "452",
+      "hebrew_name": "יזרעאל"
+  },
+  {
+      "city_symbol": "409",
+      "hebrew_name": "יחיעם"
+  },
+  {
+      "city_symbol": "866",
+      "hebrew_name": "יטבתה"
+  },
+  {
+      "city_symbol": "3607",
+      "hebrew_name": "ייט\"ב"
+  },
+  {
+      "city_symbol": "811",
+      "hebrew_name": "יכיני"
+  },
+  {
+      "city_symbol": "753",
+      "hebrew_name": "ינוב"
+  },
+  {
+      "city_symbol": "2011",
+      "hebrew_name": "ינון"
+  },
+  {
+      "city_symbol": "29",
+      "hebrew_name": "יסוד המעלה"
+  },
+  {
+      "city_symbol": "440",
+      "hebrew_name": "יסודות"
+  },
+  {
+      "city_symbol": "575",
+      "hebrew_name": "יסעור"
+  },
+  {
+      "city_symbol": "1138",
+      "hebrew_name": "יעד"
+  },
+  {
+      "city_symbol": "1117",
+      "hebrew_name": "יעל"
+  },
+  {
+      "city_symbol": "1044",
+      "hebrew_name": "יעף"
+  },
+  {
+      "city_symbol": "795",
+      "hebrew_name": "יערה"
+  },
+  {
+      "city_symbol": "499",
+      "hebrew_name": "יפיע"
+  },
+  {
+      "city_symbol": "3566",
+      "hebrew_name": "יפית"
+  },
+  {
+      "city_symbol": "134",
+      "hebrew_name": "יפעת"
+  },
+  {
+      "city_symbol": "453",
+      "hebrew_name": "יפתח"
+  },
+  {
+      "city_symbol": "3749",
+      "hebrew_name": "יצהר"
+  },
+  {
+      "city_symbol": "759",
+      "hebrew_name": "יציץ"
+  },
+  {
+      "city_symbol": "417",
+      "hebrew_name": "יקום"
+  },
+  {
+      "city_symbol": "3647",
+      "hebrew_name": "יקיר"
+  },
+  {
+      "city_symbol": "241",
+      "hebrew_name": "יקנעם )מושבה("
+  },
+  {
+      "city_symbol": "240",
+      "hebrew_name": "יקנעם עילית"
+  },
+  {
+      "city_symbol": "623",
+      "hebrew_name": "יראון"
+  },
+  {
+      "city_symbol": "2026",
+      "hebrew_name": "ירדנה"
+  },
+  {
+      "city_symbol": "831",
+      "hebrew_name": "ירוחם"
+  },
+  {
+      "city_symbol": "3000",
+      "hebrew_name": "ירושלים"
+  },
+  {
+      "city_symbol": "718",
+      "hebrew_name": "ירחיב"
+  },
+  {
+      "city_symbol": "502",
+      "hebrew_name": "ירכא"
+  },
+  {
+      "city_symbol": "183",
+      "hebrew_name": "ירקונה"
+  },
+  {
+      "city_symbol": "916",
+      "hebrew_name": "ישע"
+  },
+  {
+      "city_symbol": "805",
+      "hebrew_name": "ישעי"
+  },
+  {
+      "city_symbol": "828",
+      "hebrew_name": "ישרש"
+  },
+  {
+      "city_symbol": "1227",
+      "hebrew_name": "יתד"
+  },
+  {
+      "city_symbol": "1329",
+      "hebrew_name": "יתיר"
+  },
+  {
+      "city_symbol": "504",
+      "hebrew_name": "כאבול"
+  },
+  {
+      "city_symbol": "505",
+      "hebrew_name": "כאוכב אבו אל-היג'א"
+  },
+  {
+      "city_symbol": "576",
+      "hebrew_name": "כברי"
+  },
+  {
+      "city_symbol": "371",
+      "hebrew_name": "כדורי"
+  },
+  {
+      "city_symbol": "1338",
+      "hebrew_name": "כדיתה"
+  },
+  {
+      "city_symbol": "3564",
+      "hebrew_name": "כוכב השחר"
+  },
+  {
+      "city_symbol": "1224",
+      "hebrew_name": "כוכב יאיר"
+  },
+  {
+      "city_symbol": "3779",
+      "hebrew_name": "כוכב יעקב"
+  },
+  {
+      "city_symbol": "824",
+      "hebrew_name": "כוכב מיכאל"
+  },
+  {
+      "city_symbol": "1252",
+      "hebrew_name": "כורזים"
+  },
+  {
+      "city_symbol": "1210",
+      "hebrew_name": "כחל"
+  },
+  {
+      "city_symbol": "1367",
+      "hebrew_name": "כחלה"
+  },
+  {
+      "city_symbol": "840",
+      "hebrew_name": "כיסופים"
+  },
+  {
+      "city_symbol": "1153",
+      "hebrew_name": "כישור"
+  },
+  {
+      "city_symbol": "1183",
+      "hebrew_name": "כליל"
+  },
+  {
+      "city_symbol": "1229",
+      "hebrew_name": "כלנית"
+  },
+  {
+      "city_symbol": "1331",
+      "hebrew_name": "כמאנה"
+  },
+  {
+      "city_symbol": "1291",
+      "hebrew_name": "כמהין"
+  },
+  {
+      "city_symbol": "1201",
+      "hebrew_name": "כמון"
+  },
+  {
+      "city_symbol": "2006",
+      "hebrew_name": "כנות"
+  },
+  {
+      "city_symbol": "4028",
+      "hebrew_name": "כנף"
+  },
+  {
+      "city_symbol": "63",
+      "hebrew_name": "כנרת )מושבה("
+  },
+  {
+      "city_symbol": "57",
+      "hebrew_name": "כנרת )קבוצה("
+  },
+  {
+      "city_symbol": "1059",
+      "hebrew_name": "כסיפה"
+  },
+  {
+      "city_symbol": "859",
+      "hebrew_name": "כסלון"
+  },
+  {
+      "city_symbol": "1296",
+      "hebrew_name": "כסרא-סמיע"
+  },
+  {
+      "city_symbol": "978",
+      "hebrew_name": "כעביה-טבאש-חג'אג'רה"
+  },
+  {
+      "city_symbol": "857",
+      "hebrew_name": "כפר אביב"
+  },
+  {
+      "city_symbol": "3638",
+      "hebrew_name": "כפר אדומים"
+  },
+  {
+      "city_symbol": "364",
+      "hebrew_name": "כפר אוריה"
+  },
+  {
+      "city_symbol": "690",
+      "hebrew_name": "כפר אחים"
+  },
+  {
+      "city_symbol": "220",
+      "hebrew_name": "כפר ביאליק"
+  },
+  {
+      "city_symbol": "177",
+      "hebrew_name": "כפר ביל\"ו"
+  },
+  {
+      "city_symbol": "357",
+      "hebrew_name": "כפר בלום"
+  },
+  {
+      "city_symbol": "2010",
+      "hebrew_name": "כפר בן נון"
+  },
+  {
+      "city_symbol": "633",
+      "hebrew_name": "כפר ברא"
+  },
+  {
+      "city_symbol": "132",
+      "hebrew_name": "כפר ברוך"
+  },
+  {
+      "city_symbol": "106",
+      "hebrew_name": "כפר גדעון"
+  },
+  {
+      "city_symbol": "427",
+      "hebrew_name": "כפר גלים"
+  },
+  {
+      "city_symbol": "310",
+      "hebrew_name": "כפר גליקסון"
+  },
+  {
+      "city_symbol": "76",
+      "hebrew_name": "כפר גלעדי"
+  },
+  {
+      "city_symbol": "707",
+      "hebrew_name": "כפר דניאל"
+  },
+  {
+      "city_symbol": "3796",
+      "hebrew_name": "כפר האורנים"
+  },
+  {
+      "city_symbol": "192",
+      "hebrew_name": "כפר החורש"
+  },
+  {
+      "city_symbol": "254",
+      "hebrew_name": "כפר המכבי"
+  },
+  {
+      "city_symbol": "582",
+      "hebrew_name": "כפר הנגיד"
+  },
+  {
+      "city_symbol": "890",
+      "hebrew_name": "כפר הנוער הדתי"
+  },
+  {
+      "city_symbol": "443",
+      "hebrew_name": "כפר הנשיא"
+  },
+  {
+      "city_symbol": "187",
+      "hebrew_name": "כפר הס"
+  },
+  {
+      "city_symbol": "217",
+      "hebrew_name": "כפר הרא\"ה"
+  },
+  {
+      "city_symbol": "888",
+      "hebrew_name": "כפר הרי\"ף"
+  },
+  {
+      "city_symbol": "190",
+      "hebrew_name": "כפר ויתקין"
+  },
+  {
+      "city_symbol": "320",
+      "hebrew_name": "כפר ורבורג"
+  },
+  {
+      "city_symbol": "1263",
+      "hebrew_name": "כפר ורדים"
+  },
+  {
+      "city_symbol": "1325",
+      "hebrew_name": "כפר זוהרים"
+  },
+  {
+      "city_symbol": "786",
+      "hebrew_name": "כפר זיתים"
+  },
+  {
+      "city_symbol": "696",
+      "hebrew_name": "כפר חב\"ד"
+  },
+  {
+      "city_symbol": "609",
+      "hebrew_name": "כפר חושן"
+  },
+  {
+      "city_symbol": "255",
+      "hebrew_name": "כפר חיטים"
+  },
+  {
+      "city_symbol": "193",
+      "hebrew_name": "כפר חיים"
+  },
+  {
+      "city_symbol": "1297",
+      "hebrew_name": "כפר חנניה"
+  },
+  {
+      "city_symbol": "112",
+      "hebrew_name": "כפר חסידים א'"
+  },
+  {
+      "city_symbol": "889",
+      "hebrew_name": "כפר חסידים ב'"
+  },
+  {
+      "city_symbol": "4004",
+      "hebrew_name": "כפר חרוב"
+  },
+  {
+      "city_symbol": "673",
+      "hebrew_name": "כפר טרומן"
+  },
+  {
+      "city_symbol": "507",
+      "hebrew_name": "כפר יאסיף"
+  },
+  {
+      "city_symbol": "233",
+      "hebrew_name": "כפר ידידיה"
+  },
+  {
+      "city_symbol": "140",
+      "hebrew_name": "כפר יהושע"
+  },
+  {
+      "city_symbol": "168",
+      "hebrew_name": "כפר יונה"
+  },
+  {
+      "city_symbol": "85",
+      "hebrew_name": "כפר יחזקאל"
+  },
+  {
+      "city_symbol": "170",
+      "hebrew_name": "כפר יעבץ"
+  },
+  {
+      "city_symbol": "508",
+      "hebrew_name": "כפר כמא"
+  },
+  {
+      "city_symbol": "509",
+      "hebrew_name": "כפר כנא"
+  },
+  {
+      "city_symbol": "387",
+      "hebrew_name": "כפר מונש"
+  },
+  {
+      "city_symbol": "1095",
+      "hebrew_name": "כפר מימון"
+  },
+  {
+      "city_symbol": "98",
+      "hebrew_name": "כפר מל\"ל"
+  },
+  {
+      "city_symbol": "510",
+      "hebrew_name": "כפר מנדא"
+  },
+  {
+      "city_symbol": "274",
+      "hebrew_name": "כפר מנחם"
+  },
+  {
+      "city_symbol": "297",
+      "hebrew_name": "כפר מסריק"
+  },
+  {
+      "city_symbol": "512",
+      "hebrew_name": "כפר מצר"
+  },
+  {
+      "city_symbol": "764",
+      "hebrew_name": "כפר מרדכי"
+  },
+  {
+      "city_symbol": "316",
+      "hebrew_name": "כפר נטר"
+  },
+  {
+      "city_symbol": "345",
+      "hebrew_name": "כפר סאלד"
+  },
+  {
+      "city_symbol": "6900",
+      "hebrew_name": "כפר סבא"
+  },
+  {
+      "city_symbol": "107",
+      "hebrew_name": "כפר סילבר"
+  },
+  {
+      "city_symbol": "249",
+      "hebrew_name": "כפר סירקין"
+  },
+  {
+      "city_symbol": "875",
+      "hebrew_name": "כפר עבודה"
+  },
+  {
+      "city_symbol": "845",
+      "hebrew_name": "כפר עזה"
+  },
+  {
+      "city_symbol": "3488",
+      "hebrew_name": "כפר עציון"
+  },
+  {
+      "city_symbol": "189",
+      "hebrew_name": "כפר פינס"
+  },
+  {
+      "city_symbol": "634",
+      "hebrew_name": "כפר קאסם"
+  },
+  {
+      "city_symbol": "388",
+      "hebrew_name": "כפר קיש"
+  },
+  {
+      "city_symbol": "654",
+      "hebrew_name": "כפר קרע"
+  },
+  {
+      "city_symbol": "579",
+      "hebrew_name": "כפר ראש הנקרה"
+  },
+  {
+      "city_symbol": "1130",
+      "hebrew_name": "כפר רוזנואלד )זרעית("
+  },
+  {
+      "city_symbol": "295",
+      "hebrew_name": "כפר רופין"
+  },
+  {
+      "city_symbol": "1166",
+      "hebrew_name": "כפר רות"
+  },
+  {
+      "city_symbol": "605",
+      "hebrew_name": "כפר שמאי"
+  },
+  {
+      "city_symbol": "743",
+      "hebrew_name": "כפר שמואל"
+  },
+  {
+      "city_symbol": "267",
+      "hebrew_name": "כפר שמריהו"
+  },
+  {
+      "city_symbol": "47",
+      "hebrew_name": "כפר תבור"
+  },
+  {
+      "city_symbol": "3572",
+      "hebrew_name": "כפר תפוח"
+  },
+  {
+      "city_symbol": "38",
+      "hebrew_name": "כרי דשא"
+  },
+  {
+      "city_symbol": "1285",
+      "hebrew_name": "כרכום"
+  },
+  {
+      "city_symbol": "664",
+      "hebrew_name": "כרם בן זמרה"
+  },
+  {
+      "city_symbol": "88",
+      "hebrew_name": "כרם בן שמן"
+  },
+  {
+      "city_symbol": "1094",
+      "hebrew_name": "כרם יבנה )ישיבה("
+  },
+  {
+      "city_symbol": "580",
+      "hebrew_name": "כרם מהר\"ל"
+  },
+  {
+      "city_symbol": "1085",
+      "hebrew_name": "כרם שלום"
+  },
+  {
+      "city_symbol": "1264",
+      "hebrew_name": "כרמי יוסף"
+  },
+  {
+      "city_symbol": "3766",
+      "hebrew_name": "כרמי צור"
+  },
+  {
+      "city_symbol": "1374",
+      "hebrew_name": "כרמי קטיף"
+  },
+  {
+      "city_symbol": "1139",
+      "hebrew_name": "כרמיאל"
+  },
+  {
+      "city_symbol": "768",
+      "hebrew_name": "כרמיה"
+  },
+  {
+      "city_symbol": "1198",
+      "hebrew_name": "כרמים"
+  },
+  {
+      "city_symbol": "3656",
+      "hebrew_name": "כרמל"
+  },
+  {
+      "city_symbol": "0",
+      "hebrew_name": "לא רשום"
+  },
+  {
+      "city_symbol": "1207",
+      "hebrew_name": "לבון"
+  },
+  {
+      "city_symbol": "585",
+      "hebrew_name": "לביא"
+  },
+  {
+      "city_symbol": "1230",
+      "hebrew_name": "לבנים"
+  },
+  {
+      "city_symbol": "2023",
+      "hebrew_name": "להב"
+  },
+  {
+      "city_symbol": "380",
+      "hebrew_name": "להבות הבשן"
+  },
+  {
+      "city_symbol": "715",
+      "hebrew_name": "להבות חביבה"
+  },
+  {
+      "city_symbol": "1271",
+      "hebrew_name": "להבים"
+  },
+  {
+      "city_symbol": "7000",
+      "hebrew_name": "לוד"
+  },
+  {
+      "city_symbol": "52",
+      "hebrew_name": "לוזית"
+  },
+  {
+      "city_symbol": "595",
+      "hebrew_name": "לוחמי הגיטאות"
+  },
+  {
+      "city_symbol": "1171",
+      "hebrew_name": "לוטם"
+  },
+  {
+      "city_symbol": "1255",
+      "hebrew_name": "לוטן"
+  },
+  {
+      "city_symbol": "674",
+      "hebrew_name": "לימן"
+  },
+  {
+      "city_symbol": "24",
+      "hebrew_name": "לכיש"
+  },
+  {
+      "city_symbol": "1310",
+      "hebrew_name": "לפיד"
+  },
+  {
+      "city_symbol": "1173",
+      "hebrew_name": "לפידות"
+  },
+  {
+      "city_symbol": "1060",
+      "hebrew_name": "לקיה"
+  },
+  {
+      "city_symbol": "2055",
+      "hebrew_name": "מאור"
+  },
+  {
+      "city_symbol": "102",
+      "hebrew_name": "מאיר שפיה"
+  },
+  {
+      "city_symbol": "771",
+      "hebrew_name": "מבוא ביתר"
+  },
+  {
+      "city_symbol": "3569",
+      "hebrew_name": "מבוא דותן"
+  },
+  {
+      "city_symbol": "3709",
+      "hebrew_name": "מבוא חורון"
+  },
+  {
+      "city_symbol": "4204",
+      "hebrew_name": "מבוא חמה"
+  },
+  {
+      "city_symbol": "1141",
+      "hebrew_name": "מבוא מודיעים"
+  },
+  {
+      "city_symbol": "1318",
+      "hebrew_name": "מבואות ים"
+  },
+  {
+      "city_symbol": "1080",
+      "hebrew_name": "מבועים"
+  },
+  {
+      "city_symbol": "829",
+      "hebrew_name": "מבטחים"
+  },
+  {
+      "city_symbol": "573",
+      "hebrew_name": "מבקיעים"
+  },
+  {
+      "city_symbol": "1015",
+      "hebrew_name": "מבשרת ציון"
+  },
+  {
+      "city_symbol": "516",
+      "hebrew_name": "מג'ד אל-כרום"
+  },
+  {
+      "city_symbol": "4201",
+      "hebrew_name": "מג'דל שמס"
+  },
+  {
+      "city_symbol": "481",
+      "hebrew_name": "מגאר"
+  },
+  {
+      "city_symbol": "689",
+      "hebrew_name": "מגדים"
+  },
+  {
+      "city_symbol": "65",
+      "hebrew_name": "מגדל"
+  },
+  {
+      "city_symbol": "874",
+      "hebrew_name": "מגדל העמק"
+  },
+  {
+      "city_symbol": "3561",
+      "hebrew_name": "מגדל עוז"
+  },
+  {
+      "city_symbol": "3751",
+      "hebrew_name": "מגדלים"
+  },
+  {
+      "city_symbol": "586",
+      "hebrew_name": "מגידו"
+  },
+  {
+      "city_symbol": "375",
+      "hebrew_name": "מגל"
+  },
+  {
+      "city_symbol": "695",
+      "hebrew_name": "מגן"
+  },
+  {
+      "city_symbol": "1155",
+      "hebrew_name": "מגן שאול"
+  },
+  {
+      "city_symbol": "722",
+      "hebrew_name": "מגשימים"
+  },
+  {
+      "city_symbol": "2029",
+      "hebrew_name": "מדרך עוז"
+  },
+  {
+      "city_symbol": "1140",
+      "hebrew_name": "מדרשת בן גוריון"
+  },
+  {
+      "city_symbol": "897",
+      "hebrew_name": "מדרשת רופין"
+  },
+  {
+      "city_symbol": "3797",
+      "hebrew_name": "מודיעין עילית"
+  },
+  {
+      "city_symbol": "1200",
+      "hebrew_name": "מודיעין-מכבים-רעות"
+  },
+  {
+      "city_symbol": "269",
+      "hebrew_name": "מולדת"
+  },
+  {
+      "city_symbol": "208",
+      "hebrew_name": "מוצא עילית"
+  },
+  {
+      "city_symbol": "635",
+      "hebrew_name": "מוקייבלה"
+  },
+  {
+      "city_symbol": "1163",
+      "hebrew_name": "מורן"
+  },
+  {
+      "city_symbol": "1178",
+      "hebrew_name": "מורשת"
+  },
+  {
+      "city_symbol": "606",
+      "hebrew_name": "מזור"
+  },
+  {
+      "city_symbol": "28",
+      "hebrew_name": "מזכרת בתיה"
+  },
+  {
+      "city_symbol": "104",
+      "hebrew_name": "מזרע"
+  },
+  {
+      "city_symbol": "517",
+      "hebrew_name": "מזרעה"
+  },
+  {
+      "city_symbol": "3599",
+      "hebrew_name": "מחולה"
+  },
+  {
+      "city_symbol": "1411",
+      "hebrew_name": "מחנה הילה"
+  },
+  {
+      "city_symbol": "1418",
+      "hebrew_name": "מחנה טלי"
+  },
+  {
+      "city_symbol": "1413",
+      "hebrew_name": "מחנה יהודית"
+  },
+  {
+      "city_symbol": "1416",
+      "hebrew_name": "מחנה יוכבד"
+  },
+  {
+      "city_symbol": "1415",
+      "hebrew_name": "מחנה יפה"
+  },
+  {
+      "city_symbol": "1196",
+      "hebrew_name": "מחנה יתיר"
+  },
+  {
+      "city_symbol": "1414",
+      "hebrew_name": "מחנה מרים"
+  },
+  {
+      "city_symbol": "1412",
+      "hebrew_name": "מחנה תל נוף"
+  },
+  {
+      "city_symbol": "308",
+      "hebrew_name": "מחניים"
+  },
+  {
+      "city_symbol": "776",
+      "hebrew_name": "מחסיה"
+  },
+  {
+      "city_symbol": "43",
+      "hebrew_name": "מטולה"
+  },
+  {
+      "city_symbol": "822",
+      "hebrew_name": "מטע"
+  },
+  {
+      "city_symbol": "1128",
+      "hebrew_name": "מי עמי"
+  },
+  {
+      "city_symbol": "2054",
+      "hebrew_name": "מיטב"
+  },
+  {
+      "city_symbol": "649",
+      "hebrew_name": "מייסר"
+  },
+  {
+      "city_symbol": "4019",
+      "hebrew_name": "מיצר"
+  },
+  {
+      "city_symbol": "1282",
+      "hebrew_name": "מירב"
+  },
+  {
+      "city_symbol": "607",
+      "hebrew_name": "מירון"
+  },
+  {
+      "city_symbol": "731",
+      "hebrew_name": "מישר"
+  },
+  {
+      "city_symbol": "1268",
+      "hebrew_name": "מיתר"
+  },
+  {
+      "city_symbol": "3614",
+      "hebrew_name": "מכורה"
+  },
+  {
+      "city_symbol": "1343",
+      "hebrew_name": "מכחול"
+  },
+  {
+      "city_symbol": "382",
+      "hebrew_name": "מכמורת"
+  },
+  {
+      "city_symbol": "1202",
+      "hebrew_name": "מכמנים"
+  },
+  {
+      "city_symbol": "164",
+      "hebrew_name": "מלאה"
+  },
+  {
+      "city_symbol": "2044",
+      "hebrew_name": "מלילות"
+  },
+  {
+      "city_symbol": "596",
+      "hebrew_name": "מלכיה"
+  },
+  {
+      "city_symbol": "1154",
+      "hebrew_name": "מלכישוע"
+  },
+  {
+      "city_symbol": "2030",
+      "hebrew_name": "מנוחה"
+  },
+  {
+      "city_symbol": "1174",
+      "hebrew_name": "מנוף"
+  },
+  {
+      "city_symbol": "1205",
+      "hebrew_name": "מנות"
+  },
+  {
+      "city_symbol": "48",
+      "hebrew_name": "מנחמיה"
+  },
+  {
+      "city_symbol": "347",
+      "hebrew_name": "מנרה"
+  },
+  {
+      "city_symbol": "994",
+      "hebrew_name": "מנשית זבדה"
+  },
+  {
+      "city_symbol": "1258",
+      "hebrew_name": "מסד"
+  },
+  {
+      "city_symbol": "263",
+      "hebrew_name": "מסדה"
+  },
+  {
+      "city_symbol": "298",
+      "hebrew_name": "מסילות"
+  },
+  {
+      "city_symbol": "742",
+      "hebrew_name": "מסילת ציון"
+  },
+  {
+      "city_symbol": "748",
+      "hebrew_name": "מסלול"
+  },
+  {
+      "city_symbol": "4203",
+      "hebrew_name": "מסעדה"
+  },
+  {
+      "city_symbol": "939",
+      "hebrew_name": "מסעודין אל-עזאזמה"
+  },
+  {
+      "city_symbol": "197",
+      "hebrew_name": "מעברות"
+  },
+  {
+      "city_symbol": "1082",
+      "hebrew_name": "מעגלים"
+  },
+  {
+      "city_symbol": "678",
+      "hebrew_name": "מעגן"
+  },
+  {
+      "city_symbol": "694",
+      "hebrew_name": "מעגן מיכאל"
+  },
+  {
+      "city_symbol": "272",
+      "hebrew_name": "מעוז חיים"
+  },
+  {
+      "city_symbol": "3657",
+      "hebrew_name": "מעון"
+  },
+  {
+      "city_symbol": "570",
+      "hebrew_name": "מעונה"
+  },
+  {
+      "city_symbol": "518",
+      "hebrew_name": "מעיליא"
+  },
+  {
+      "city_symbol": "416",
+      "hebrew_name": "מעין ברוך"
+  },
+  {
+      "city_symbol": "290",
+      "hebrew_name": "מעין צבי"
+  },
+  {
+      "city_symbol": "3616",
+      "hebrew_name": "מעלה אדומים"
+  },
+  {
+      "city_symbol": "3608",
+      "hebrew_name": "מעלה אפרים"
+  },
+  {
+      "city_symbol": "1127",
+      "hebrew_name": "מעלה גלבוע"
+  },
+  {
+      "city_symbol": "4008",
+      "hebrew_name": "מעלה גמלא"
+  },
+  {
+      "city_symbol": "286",
+      "hebrew_name": "מעלה החמישה"
+  },
+  {
+      "city_symbol": "3752",
+      "hebrew_name": "מעלה לבונה"
+  },
+  {
+      "city_symbol": "3651",
+      "hebrew_name": "מעלה מכמש"
+  },
+  {
+      "city_symbol": "1327",
+      "hebrew_name": "מעלה עירון"
+  },
+  {
+      "city_symbol": "3653",
+      "hebrew_name": "מעלה עמוס"
+  },
+  {
+      "city_symbol": "3637",
+      "hebrew_name": "מעלה שומרון"
+  },
+  {
+      "city_symbol": "1063",
+      "hebrew_name": "מעלות-תרשיחא"
+  },
+  {
+      "city_symbol": "344",
+      "hebrew_name": "מענית"
+  },
+  {
+      "city_symbol": "230",
+      "hebrew_name": "מעש"
+  },
+  {
+      "city_symbol": "668",
+      "hebrew_name": "מפלסים"
+  },
+  {
+      "city_symbol": "3745",
+      "hebrew_name": "מצדות יהודה"
+  },
+  {
+      "city_symbol": "325",
+      "hebrew_name": "מצובה"
+  },
+  {
+      "city_symbol": "757",
+      "hebrew_name": "מצליח"
+  },
+  {
+      "city_symbol": "58",
+      "hebrew_name": "מצפה"
+  },
+  {
+      "city_symbol": "1222",
+      "hebrew_name": "מצפה אבי\"ב"
+  },
+  {
+      "city_symbol": "1370",
+      "hebrew_name": "מצפה אילן"
+  },
+  {
+      "city_symbol": "3576",
+      "hebrew_name": "מצפה יריחו"
+  },
+  {
+      "city_symbol": "1190",
+      "hebrew_name": "מצפה נטופה"
+  },
+  {
+      "city_symbol": "99",
+      "hebrew_name": "מצפה רמון"
+  },
+  {
+      "city_symbol": "3610",
+      "hebrew_name": "מצפה שלם"
+  },
+  {
+      "city_symbol": "648",
+      "hebrew_name": "מצר"
+  },
+  {
+      "city_symbol": "22",
+      "hebrew_name": "מקווה ישראל"
+  },
+  {
+      "city_symbol": "843",
+      "hebrew_name": "מרגליות"
+  },
+  {
+      "city_symbol": "4101",
+      "hebrew_name": "מרום גולן"
+  },
+  {
+      "city_symbol": "1340",
+      "hebrew_name": "מרחב עם"
+  },
+  {
+      "city_symbol": "97",
+      "hebrew_name": "מרחביה )מושב("
+  },
+  {
+      "city_symbol": "66",
+      "hebrew_name": "מרחביה )קיבוץ("
+  },
+  {
+      "city_symbol": "1098",
+      "hebrew_name": "מרכז שפירא"
+  },
+  {
+      "city_symbol": "421",
+      "hebrew_name": "משאבי שדה"
+  },
+  {
+      "city_symbol": "765",
+      "hebrew_name": "משגב דב"
+  },
+  {
+      "city_symbol": "378",
+      "hebrew_name": "משגב עם"
+  },
+  {
+      "city_symbol": "520",
+      "hebrew_name": "משהד"
+  },
+  {
+      "city_symbol": "3605",
+      "hebrew_name": "משואה"
+  },
+  {
+      "city_symbol": "620",
+      "hebrew_name": "משואות יצחק"
+  },
+  {
+      "city_symbol": "3785",
+      "hebrew_name": "משכיות"
+  },
+  {
+      "city_symbol": "670",
+      "hebrew_name": "משמר איילון"
+  },
+  {
+      "city_symbol": "563",
+      "hebrew_name": "משמר דוד"
+  },
+  {
+      "city_symbol": "732",
+      "hebrew_name": "משמר הירדן"
+  },
+  {
+      "city_symbol": "395",
+      "hebrew_name": "משמר הנגב"
+  },
+  {
+      "city_symbol": "130",
+      "hebrew_name": "משמר העמק"
+  },
+  {
+      "city_symbol": "729",
+      "hebrew_name": "משמר השבעה"
+  },
+  {
+      "city_symbol": "194",
+      "hebrew_name": "משמר השרון"
+  },
+  {
+      "city_symbol": "213",
+      "hebrew_name": "משמרות"
+  },
+  {
+      "city_symbol": "425",
+      "hebrew_name": "משמרת"
+  },
+  {
+      "city_symbol": "791",
+      "hebrew_name": "משען"
+  },
+  {
+      "city_symbol": "1315",
+      "hebrew_name": "מתן"
+  },
+  {
+      "city_symbol": "1184",
+      "hebrew_name": "מתת"
+  },
+  {
+      "city_symbol": "3648",
+      "hebrew_name": "מתתיהו"
+  },
+  {
+      "city_symbol": "4551",
+      "hebrew_name": "נאות גולן"
+  },
+  {
+      "city_symbol": "1124",
+      "hebrew_name": "נאות הכיכר"
+  },
+  {
+      "city_symbol": "408",
+      "hebrew_name": "נאות מרדכי"
+  },
+  {
+      "city_symbol": "1197",
+      "hebrew_name": "נאות סמדר"
+  },
+  {
+      "city_symbol": "524",
+      "hebrew_name": "נאעורה"
+  },
+  {
+      "city_symbol": "396",
+      "hebrew_name": "נבטים"
+  },
+  {
+      "city_symbol": "315",
+      "hebrew_name": "נגבה"
+  },
+  {
+      "city_symbol": "3724",
+      "hebrew_name": "נגוהות"
+  },
+  {
+      "city_symbol": "309",
+      "hebrew_name": "נהורה"
+  },
+  {
+      "city_symbol": "80",
+      "hebrew_name": "נהלל"
+  },
+  {
+      "city_symbol": "9100",
+      "hebrew_name": "נהריה"
+  },
+  {
+      "city_symbol": "4304",
+      "hebrew_name": "נוב"
+  },
+  {
+      "city_symbol": "55",
+      "hebrew_name": "נוגה"
+  },
+  {
+      "city_symbol": "3573",
+      "hebrew_name": "נוה צוף"
+  },
+  {
+      "city_symbol": "1366",
+      "hebrew_name": "נווה"
+  },
+  {
+      "city_symbol": "926",
+      "hebrew_name": "נווה אבות"
+  },
+  {
+      "city_symbol": "590",
+      "hebrew_name": "נווה אור"
+  },
+  {
+      "city_symbol": "4303",
+      "hebrew_name": "נווה אטי\"ב"
+  },
+  {
+      "city_symbol": "405",
+      "hebrew_name": "נווה אילן"
+  },
+  {
+      "city_symbol": "296",
+      "hebrew_name": "נווה איתן"
+  },
+  {
+      "city_symbol": "3725",
+      "hebrew_name": "נווה דניאל"
+  },
+  {
+      "city_symbol": "1057",
+      "hebrew_name": "נווה זוהר"
+  },
+  {
+      "city_symbol": "1314",
+      "hebrew_name": "נווה זיו"
+  },
+  {
+      "city_symbol": "1279",
+      "hebrew_name": "נווה חריף"
+  },
+  {
+      "city_symbol": "312",
+      "hebrew_name": "נווה ים"
+  },
+  {
+      "city_symbol": "686",
+      "hebrew_name": "נווה ימין"
+  },
+  {
+      "city_symbol": "858",
+      "hebrew_name": "נווה ירק"
+  },
+  {
+      "city_symbol": "827",
+      "hebrew_name": "נווה מבטח"
+  },
+  {
+      "city_symbol": "1071",
+      "hebrew_name": "נווה מיכאל"
+  },
+  {
+      "city_symbol": "1259",
+      "hebrew_name": "נווה שלום"
+  },
+  {
+      "city_symbol": "15",
+      "hebrew_name": "נועם"
+  },
+  {
+      "city_symbol": "1333",
+      "hebrew_name": "נוף איילון"
+  },
+  {
+      "city_symbol": "3790",
+      "hebrew_name": "נופים"
+  },
+  {
+      "city_symbol": "1284",
+      "hebrew_name": "נופית"
+  },
+  {
+      "city_symbol": "257",
+      "hebrew_name": "נופך"
+  },
+  {
+      "city_symbol": "3726",
+      "hebrew_name": "נוקדים"
+  },
+  {
+      "city_symbol": "447",
+      "hebrew_name": "נורדיה"
+  },
+  {
+      "city_symbol": "833",
+      "hebrew_name": "נורית"
+  },
+  {
+      "city_symbol": "59",
+      "hebrew_name": "נחושה"
+  },
+  {
+      "city_symbol": "844",
+      "hebrew_name": "נחל עוז"
+  },
+  {
+      "city_symbol": "2045",
+      "hebrew_name": "נחלה"
+  },
+  {
+      "city_symbol": "3767",
+      "hebrew_name": "נחליאל"
+  },
+  {
+      "city_symbol": "449",
+      "hebrew_name": "נחלים"
+  },
+  {
+      "city_symbol": "809",
+      "hebrew_name": "נחם"
+  },
+  {
+      "city_symbol": "522",
+      "hebrew_name": "נחף"
+  },
+  {
+      "city_symbol": "433",
+      "hebrew_name": "נחשולים"
+  },
+  {
+      "city_symbol": "777",
+      "hebrew_name": "נחשון"
+  },
+  {
+      "city_symbol": "705",
+      "hebrew_name": "נחשונים"
+  },
+  {
+      "city_symbol": "1147",
+      "hebrew_name": "נטועה"
+  },
+  {
+      "city_symbol": "4014",
+      "hebrew_name": "נטור"
+  },
+  {
+      "city_symbol": "1369",
+      "hebrew_name": "נטע"
+  },
+  {
+      "city_symbol": "174",
+      "hebrew_name": "נטעים"
+  },
+  {
+      "city_symbol": "1254",
+      "hebrew_name": "נטף"
+  },
+  {
+      "city_symbol": "523",
+      "hebrew_name": "ניין"
+  },
+  {
+      "city_symbol": "3655",
+      "hebrew_name": "ניל\"י"
+  },
+  {
+      "city_symbol": "351",
+      "hebrew_name": "ניצן"
+  },
+  {
+      "city_symbol": "1419",
+      "hebrew_name": "ניצן ב'"
+  },
+  {
+      "city_symbol": "1195",
+      "hebrew_name": "ניצנה )קהילת חינוך("
+  },
+  {
+      "city_symbol": "1280",
+      "hebrew_name": "ניצני סיני"
+  },
+  {
+      "city_symbol": "851",
+      "hebrew_name": "ניצני עוז"
+  },
+  {
+      "city_symbol": "359",
+      "hebrew_name": "ניצנים"
+  },
+  {
+      "city_symbol": "808",
+      "hebrew_name": "ניר אליהו"
+  },
+  {
+      "city_symbol": "553",
+      "hebrew_name": "ניר בנים"
+  },
+  {
+      "city_symbol": "720",
+      "hebrew_name": "ניר גלים"
+  },
+  {
+      "city_symbol": "256",
+      "hebrew_name": "ניר דוד )תל עמל("
+  },
+  {
+      "city_symbol": "11",
+      "hebrew_name": "ניר ח\"ן"
+  },
+  {
+      "city_symbol": "165",
+      "hebrew_name": "ניר יפה"
+  },
+  {
+      "city_symbol": "402",
+      "hebrew_name": "ניר יצחק"
+  },
+  {
+      "city_symbol": "699",
+      "hebrew_name": "ניר ישראל"
+  },
+  {
+      "city_symbol": "2047",
+      "hebrew_name": "ניר משה"
+  },
+  {
+      "city_symbol": "69",
+      "hebrew_name": "ניר עוז"
+  },
+  {
+      "city_symbol": "348",
+      "hebrew_name": "ניר עם"
+  },
+  {
+      "city_symbol": "769",
+      "hebrew_name": "ניר עציון"
+  },
+  {
+      "city_symbol": "2048",
+      "hebrew_name": "ניר עקיבא"
+  },
+  {
+      "city_symbol": "331",
+      "hebrew_name": "ניר צבי"
+  },
+  {
+      "city_symbol": "602",
+      "hebrew_name": "נירים"
+  },
+  {
+      "city_symbol": "1236",
+      "hebrew_name": "נירית"
+  },
+  {
+      "city_symbol": "4035",
+      "hebrew_name": "נמרוד"
+  },
+  {
+      "city_symbol": "825",
+      "hebrew_name": "נס הרים"
+  },
+  {
+      "city_symbol": "1143",
+      "hebrew_name": "נס עמים"
+  },
+  {
+      "city_symbol": "7200",
+      "hebrew_name": "נס ציונה"
+  },
+  {
+      "city_symbol": "186",
+      "hebrew_name": "נעורים"
+  },
+  {
+      "city_symbol": "3787",
+      "hebrew_name": "נעלה"
+  },
+  {
+      "city_symbol": "3713",
+      "hebrew_name": "נעמ\"ה"
+  },
+  {
+      "city_symbol": "158",
+      "hebrew_name": "נען"
+  },
+  {
+      "city_symbol": "3620",
+      "hebrew_name": "נערן"
+  },
+  {
+      "city_symbol": "1041",
+      "hebrew_name": "נצאצרה )שבט("
+  },
+  {
+      "city_symbol": "1372",
+      "hebrew_name": "נצר חזני"
+  },
+  {
+      "city_symbol": "435",
+      "hebrew_name": "נצר סרני"
+  },
+  {
+      "city_symbol": "7300",
+      "hebrew_name": "נצרת"
+  },
+  {
+      "city_symbol": "1061",
+      "hebrew_name": "נצרת עילית"
+  },
+  {
+      "city_symbol": "2500",
+      "hebrew_name": "נשר"
+  },
+  {
+      "city_symbol": "3555",
+      "hebrew_name": "נתיב הגדוד"
+  },
+  {
+      "city_symbol": "693",
+      "hebrew_name": "נתיב הל\"ה"
+  },
+  {
+      "city_symbol": "1242",
+      "hebrew_name": "נתיב העשרה"
+  },
+  {
+      "city_symbol": "792",
+      "hebrew_name": "נתיב השיירה"
+  },
+  {
+      "city_symbol": "246",
+      "hebrew_name": "נתיבות"
+  },
+  {
+      "city_symbol": "7400",
+      "hebrew_name": "נתניה"
+  },
+  {
+      "city_symbol": "525",
+      "hebrew_name": "סאג'ור"
+  },
+  {
+      "city_symbol": "578",
+      "hebrew_name": "סאסא"
+  },
+  {
+      "city_symbol": "587",
+      "hebrew_name": "סביון"
+  },
+  {
+      "city_symbol": "2046",
+      "hebrew_name": "סגולה"
+  },
+  {
+      "city_symbol": "942",
+      "hebrew_name": "סואעד )חמרייה("
+  },
+  {
+      "city_symbol": "989",
+      "hebrew_name": "סואעד )כמאנה( )שבט("
+  },
+  {
+      "city_symbol": "526",
+      "hebrew_name": "סולם"
+  },
+  {
+      "city_symbol": "3756",
+      "hebrew_name": "סוסיה"
+  },
+  {
+      "city_symbol": "1238",
+      "hebrew_name": "סופה"
+  },
+  {
+      "city_symbol": "7500",
+      "hebrew_name": "סח'נין"
+  },
+  {
+      "city_symbol": "1170",
+      "hebrew_name": "סייד )שבט("
+  },
+  {
+      "city_symbol": "1245",
+      "hebrew_name": "סלמה"
+  },
+  {
+      "city_symbol": "3567",
+      "hebrew_name": "סלעית"
+  },
+  {
+      "city_symbol": "1156",
+      "hebrew_name": "סמר"
+  },
+  {
+      "city_symbol": "3777",
+      "hebrew_name": "סנסנה"
+  },
+  {
+      "city_symbol": "419",
+      "hebrew_name": "סעד"
+  },
+  {
+      "city_symbol": "1360",
+      "hebrew_name": "סעוה"
+  },
+  {
+      "city_symbol": "454",
+      "hebrew_name": "סער"
+  },
+  {
+      "city_symbol": "1176",
+      "hebrew_name": "ספיר"
+  },
+  {
+      "city_symbol": "610",
+      "hebrew_name": "סתריה"
+  },
+  {
+      "city_symbol": "4501",
+      "hebrew_name": "ע'ג'ר"
+  },
+  {
+      "city_symbol": "892",
+      "hebrew_name": "עבדון"
+  },
+  {
+      "city_symbol": "376",
+      "hebrew_name": "עברון"
+  },
+  {
+      "city_symbol": "794",
+      "hebrew_name": "עגור"
+  },
+  {
+      "city_symbol": "1199",
+      "hebrew_name": "עדי"
+  },
+  {
+      "city_symbol": "2035",
+      "hebrew_name": "עדנים"
+  },
+  {
+      "city_symbol": "826",
+      "hebrew_name": "עוזה"
+  },
+  {
+      "city_symbol": "528",
+      "hebrew_name": "עוזייר"
+  },
+  {
+      "city_symbol": "737",
+      "hebrew_name": "עולש"
+  },
+  {
+      "city_symbol": "666",
+      "hebrew_name": "עומר"
+  },
+  {
+      "city_symbol": "810",
+      "hebrew_name": "עופר"
+  },
+  {
+      "city_symbol": "3617",
+      "hebrew_name": "עופרה"
+  },
+  {
+      "city_symbol": "32",
+      "hebrew_name": "עוצם"
+  },
+  {
+      "city_symbol": "957",
+      "hebrew_name": "עוקבי )בנו עוקבה("
+  },
+  {
+      "city_symbol": "328",
+      "hebrew_name": "עזוז"
+  },
+  {
+      "city_symbol": "1149",
+      "hebrew_name": "עזר"
+  },
+  {
+      "city_symbol": "837",
+      "hebrew_name": "עזריאל"
+  },
+  {
+      "city_symbol": "711",
+      "hebrew_name": "עזריה"
+  },
+  {
+      "city_symbol": "817",
+      "hebrew_name": "עזריקם"
+  },
+  {
+      "city_symbol": "969",
+      "hebrew_name": "עטאוונה )שבט("
+  },
+  {
+      "city_symbol": "3658",
+      "hebrew_name": "עטרת"
+  },
+  {
+      "city_symbol": "1175",
+      "hebrew_name": "עידן"
+  },
+  {
+      "city_symbol": "530",
+      "hebrew_name": "עיילבון"
+  },
+  {
+      "city_symbol": "156",
+      "hebrew_name": "עיינות"
+  },
+  {
+      "city_symbol": "511",
+      "hebrew_name": "עילוט"
+  },
+  {
+      "city_symbol": "687",
+      "hebrew_name": "עין איילה"
+  },
+  {
+      "city_symbol": "546",
+      "hebrew_name": "עין אל-אסד"
+  },
+  {
+      "city_symbol": "273",
+      "hebrew_name": "עין גב"
+  },
+  {
+      "city_symbol": "2042",
+      "hebrew_name": "עין גדי"
+  },
+  {
+      "city_symbol": "436",
+      "hebrew_name": "עין דור"
+  },
+  {
+      "city_symbol": "1240",
+      "hebrew_name": "עין הבשור"
+  },
+  {
+      "city_symbol": "74",
+      "hebrew_name": "עין הוד"
+  },
+  {
+      "city_symbol": "167",
+      "hebrew_name": "עין החורש"
+  },
+  {
+      "city_symbol": "289",
+      "hebrew_name": "עין המפרץ"
+  },
+  {
+      "city_symbol": "383",
+      "hebrew_name": "עין הנצי\"ב"
+  },
+  {
+      "city_symbol": "367",
+      "hebrew_name": "עין העמק"
+  },
+  {
+      "city_symbol": "270",
+      "hebrew_name": "עין השופט"
+  },
+  {
+      "city_symbol": "676",
+      "hebrew_name": "עין השלושה"
+  },
+  {
+      "city_symbol": "157",
+      "hebrew_name": "עין ורד"
+  },
+  {
+      "city_symbol": "4503",
+      "hebrew_name": "עין זיוון"
+  },
+  {
+      "city_symbol": "1320",
+      "hebrew_name": "עין חוד"
+  },
+  {
+      "city_symbol": "1053",
+      "hebrew_name": "עין חצבה"
+  },
+  {
+      "city_symbol": "89",
+      "hebrew_name": "עין חרוד )איחוד("
+  },
+  {
+      "city_symbol": "82",
+      "hebrew_name": "עין חרוד )מאוחד("
+  },
+  {
+      "city_symbol": "806",
+      "hebrew_name": "עין יהב"
+  },
+  {
+      "city_symbol": "813",
+      "hebrew_name": "עין יעקב"
+  },
+  {
+      "city_symbol": "1056",
+      "hebrew_name": "עין כרם-בי\"ס חקלאי"
+  },
+  {
+      "city_symbol": "426",
+      "hebrew_name": "עין כרמל"
+  },
+  {
+      "city_symbol": "532",
+      "hebrew_name": "עין מאהל"
+  },
+  {
+      "city_symbol": "521",
+      "hebrew_name": "עין נקובא"
+  },
+  {
+      "city_symbol": "223",
+      "hebrew_name": "עין עירון"
+  },
+  {
+      "city_symbol": "622",
+      "hebrew_name": "עין צורים"
+  },
+  {
+      "city_symbol": "4502",
+      "hebrew_name": "עין קנייא"
+  },
+  {
+      "city_symbol": "514",
+      "hebrew_name": "עין ראפה"
+  },
+  {
+      "city_symbol": "139",
+      "hebrew_name": "עין שמר"
+  },
+  {
+      "city_symbol": "880",
+      "hebrew_name": "עין שריד"
+  },
+  {
+      "city_symbol": "1251",
+      "hebrew_name": "עין תמר"
+  },
+  {
+      "city_symbol": "871",
+      "hebrew_name": "עינת"
+  },
+  {
+      "city_symbol": "1187",
+      "hebrew_name": "עיר אובות"
+  },
+  {
+      "city_symbol": "7600",
+      "hebrew_name": "עכו"
+  },
+  {
+      "city_symbol": "1146",
+      "hebrew_name": "עלומים"
+  },
+  {
+      "city_symbol": "3765",
+      "hebrew_name": "עלי"
+  },
+  {
+      "city_symbol": "3727",
+      "hebrew_name": "עלי זהב"
+  },
+  {
+      "city_symbol": "688",
+      "hebrew_name": "עלמה"
+  },
+  {
+      "city_symbol": "3715",
+      "hebrew_name": "עלמון"
+  },
+  {
+      "city_symbol": "1212",
+      "hebrew_name": "עמוקה"
+  },
+  {
+      "city_symbol": "3824",
+      "hebrew_name": "עמיחי"
+  },
+  {
+      "city_symbol": "779",
+      "hebrew_name": "עמינדב"
+  },
+  {
+      "city_symbol": "385",
+      "hebrew_name": "עמיעד"
+  },
+  {
+      "city_symbol": "318",
+      "hebrew_name": "עמיעוז"
+  },
+  {
+      "city_symbol": "773",
+      "hebrew_name": "עמיקם"
+  },
+  {
+      "city_symbol": "319",
+      "hebrew_name": "עמיר"
+  },
+  {
+      "city_symbol": "3660",
+      "hebrew_name": "עמנואל"
+  },
+  {
+      "city_symbol": "708",
+      "hebrew_name": "עמקה"
+  },
+  {
+      "city_symbol": "3712",
+      "hebrew_name": "ענב"
+  },
+  {
+      "city_symbol": "534",
+      "hebrew_name": "עספיא"
+  },
+  {
+      "city_symbol": "7700",
+      "hebrew_name": "עפולה"
+  },
+  {
+      "city_symbol": "3778",
+      "hebrew_name": "עץ אפרים"
+  },
+  {
+      "city_symbol": "917",
+      "hebrew_name": "עצמון שגב"
+  },
+  {
+      "city_symbol": "531",
+      "hebrew_name": "עראבה"
+  },
+  {
+      "city_symbol": "1246",
+      "hebrew_name": "עראמשה"
+  },
+  {
+      "city_symbol": "1335",
+      "hebrew_name": "ערב אל נעים"
+  },
+  {
+      "city_symbol": "2560",
+      "hebrew_name": "ערד"
+  },
+  {
+      "city_symbol": "593",
+      "hebrew_name": "ערוגות"
+  },
+  {
+      "city_symbol": "637",
+      "hebrew_name": "ערערה"
+  },
+  {
+      "city_symbol": "1192",
+      "hebrew_name": "ערערה-בנגב"
+  },
+  {
+      "city_symbol": "591",
+      "hebrew_name": "עשרת"
+  },
+  {
+      "city_symbol": "53",
+      "hebrew_name": "עתלית"
+  },
+  {
+      "city_symbol": "3748",
+      "hebrew_name": "עתניאל"
+  },
+  {
+      "city_symbol": "1151",
+      "hebrew_name": "פארן"
+  },
+  {
+      "city_symbol": "3768",
+      "hebrew_name": "פדואל"
+  },
+  {
+      "city_symbol": "750",
+      "hebrew_name": "פדויים"
+  },
+  {
+      "city_symbol": "838",
+      "hebrew_name": "פדיה"
+  },
+  {
+      "city_symbol": "1104",
+      "hebrew_name": "פוריה - כפר עבודה"
+  },
+  {
+      "city_symbol": "1105",
+      "hebrew_name": "פוריה - נווה עובד"
+  },
+  {
+      "city_symbol": "1313",
+      "hebrew_name": "פוריה עילית"
+  },
+  {
+      "city_symbol": "537",
+      "hebrew_name": "פוריידיס"
+  },
+  {
+      "city_symbol": "767",
+      "hebrew_name": "פורת"
+  },
+  {
+      "city_symbol": "749",
+      "hebrew_name": "פטיש"
+  },
+  {
+      "city_symbol": "1185",
+      "hebrew_name": "פלך"
+  },
+  {
+      "city_symbol": "597",
+      "hebrew_name": "פלמחים"
+  },
+  {
+      "city_symbol": "3723",
+      "hebrew_name": "פני חבר"
+  },
+  {
+      "city_symbol": "3659",
+      "hebrew_name": "פסגות"
+  },
+  {
+      "city_symbol": "535",
+      "hebrew_name": "פסוטה"
+  },
+  {
+      "city_symbol": "2059",
+      "hebrew_name": "פעמי תש\"ז"
+  },
+  {
+      "city_symbol": "3615",
+      "hebrew_name": "פצאל"
+  },
+  {
+      "city_symbol": "536",
+      "hebrew_name": "פקיעין )בוקייעה("
+  },
+  {
+      "city_symbol": "281",
+      "hebrew_name": "פקיעין חדשה"
+  },
+  {
+      "city_symbol": "7800",
+      "hebrew_name": "פרדס חנה-כרכור"
+  },
+  {
+      "city_symbol": "171",
+      "hebrew_name": "פרדסיה"
+  },
+  {
+      "city_symbol": "599",
+      "hebrew_name": "פרוד"
+  },
+  {
+      "city_symbol": "2053",
+      "hebrew_name": "פרזון"
+  },
+  {
+      "city_symbol": "1231",
+      "hebrew_name": "פרי גן"
+  },
+  {
+      "city_symbol": "7900",
+      "hebrew_name": "פתח תקווה"
+  },
+  {
+      "city_symbol": "839",
+      "hebrew_name": "פתחיה"
+  },
+  {
+      "city_symbol": "413",
+      "hebrew_name": "צאלים"
+  },
+  {
+      "city_symbol": "1180",
+      "hebrew_name": "צביה"
+  },
+  {
+      "city_symbol": "1213",
+      "hebrew_name": "צבעון"
+  },
+  {
+      "city_symbol": "465",
+      "hebrew_name": "צובה"
+  },
+  {
+      "city_symbol": "1136",
+      "hebrew_name": "צוחר"
+  },
+  {
+      "city_symbol": "1111",
+      "hebrew_name": "צופיה"
+  },
+  {
+      "city_symbol": "3791",
+      "hebrew_name": "צופים"
+  },
+  {
+      "city_symbol": "198",
+      "hebrew_name": "צופית"
+  },
+  {
+      "city_symbol": "1150",
+      "hebrew_name": "צופר"
+  },
+  {
+      "city_symbol": "1102",
+      "hebrew_name": "צוקי ים"
+  },
+  {
+      "city_symbol": "1262",
+      "hebrew_name": "צוקים"
+  },
+  {
+      "city_symbol": "1113",
+      "hebrew_name": "צור הדסה"
+  },
+  {
+      "city_symbol": "1345",
+      "hebrew_name": "צור יצחק"
+  },
+  {
+      "city_symbol": "276",
+      "hebrew_name": "צור משה"
+  },
+  {
+      "city_symbol": "1148",
+      "hebrew_name": "צור נתן"
+  },
+  {
+      "city_symbol": "774",
+      "hebrew_name": "צוריאל"
+  },
+  {
+      "city_symbol": "1221",
+      "hebrew_name": "צורית"
+  },
+  {
+      "city_symbol": "613",
+      "hebrew_name": "ציפורי"
+  },
+  {
+      "city_symbol": "796",
+      "hebrew_name": "צלפון"
+  },
+  {
+      "city_symbol": "636",
+      "hebrew_name": "צנדלה"
+  },
+  {
+      "city_symbol": "594",
+      "hebrew_name": "צפריה"
+  },
+  {
+      "city_symbol": "1079",
+      "hebrew_name": "צפרירים"
+  },
+  {
+      "city_symbol": "8000",
+      "hebrew_name": "צפת"
+  },
+  {
+      "city_symbol": "612",
+      "hebrew_name": "צרופה"
+  },
+  {
+      "city_symbol": "567",
+      "hebrew_name": "צרעה"
+  },
+  {
+      "city_symbol": "1234",
+      "hebrew_name": "קבועה )שבט("
+  },
+  {
+      "city_symbol": "334",
+      "hebrew_name": "קבוצת יבנה"
+  },
+  {
+      "city_symbol": "3557",
+      "hebrew_name": "קדומים"
+  },
+  {
+      "city_symbol": "195",
+      "hebrew_name": "קדימה-צורן"
+  },
+  {
+      "city_symbol": "392",
+      "hebrew_name": "קדמה"
+  },
+  {
+      "city_symbol": "4025",
+      "hebrew_name": "קדמת צבי"
+  },
+  {
+      "city_symbol": "3781",
+      "hebrew_name": "קדר"
+  },
+  {
+      "city_symbol": "615",
+      "hebrew_name": "קדרון"
+  },
+  {
+      "city_symbol": "1211",
+      "hebrew_name": "קדרים"
+  },
+  {
+      "city_symbol": "964",
+      "hebrew_name": "קודייראת א-צאנע)שבט("
+  },
+  {
+      "city_symbol": "972",
+      "hebrew_name": "קוואעין )שבט("
+  },
+  {
+      "city_symbol": "766",
+      "hebrew_name": "קוממיות"
+  },
+  {
+      "city_symbol": "1179",
+      "hebrew_name": "קורנית"
+  },
+  {
+      "city_symbol": "1052",
+      "hebrew_name": "קטורה"
+  },
+  {
+      "city_symbol": "1167",
+      "hebrew_name": "קיסריה"
+  },
+  {
+      "city_symbol": "414",
+      "hebrew_name": "קלחים"
+  },
+  {
+      "city_symbol": "3601",
+      "hebrew_name": "קליה"
+  },
+  {
+      "city_symbol": "638",
+      "hebrew_name": "קלנסווה"
+  },
+  {
+      "city_symbol": "4024",
+      "hebrew_name": "קלע"
+  },
+  {
+      "city_symbol": "1243",
+      "hebrew_name": "קציר"
+  },
+  {
+      "city_symbol": "1347",
+      "hebrew_name": "קצר א-סר"
+  },
+  {
+      "city_symbol": "4100",
+      "hebrew_name": "קצרין"
+  },
+  {
+      "city_symbol": "2620",
+      "hebrew_name": "קרית אונו"
+  },
+  {
+      "city_symbol": "3611",
+      "hebrew_name": "קרית ארבע"
+  },
+  {
+      "city_symbol": "6800",
+      "hebrew_name": "קרית אתא"
+  },
+  {
+      "city_symbol": "9500",
+      "hebrew_name": "קרית ביאליק"
+  },
+  {
+      "city_symbol": "2630",
+      "hebrew_name": "קרית גת"
+  },
+  {
+      "city_symbol": "2300",
+      "hebrew_name": "קרית טבעון"
+  },
+  {
+      "city_symbol": "9600",
+      "hebrew_name": "קרית ים"
+  },
+  {
+      "city_symbol": "1137",
+      "hebrew_name": "קרית יערים"
+  },
+  {
+      "city_symbol": "2039",
+      "hebrew_name": "קרית יערים)מוסד("
+  },
+  {
+      "city_symbol": "8200",
+      "hebrew_name": "קרית מוצקין"
+  },
+  {
+      "city_symbol": "1034",
+      "hebrew_name": "קרית מלאכי"
+  },
+  {
+      "city_symbol": "3746",
+      "hebrew_name": "קרית נטפים"
+  },
+  {
+      "city_symbol": "78",
+      "hebrew_name": "קרית ענבים"
+  },
+  {
+      "city_symbol": "469",
+      "hebrew_name": "קרית עקרון"
+  },
+  {
+      "city_symbol": "412",
+      "hebrew_name": "קרית שלמה"
+  },
+  {
+      "city_symbol": "2800",
+      "hebrew_name": "קרית שמונה"
+  },
+  {
+      "city_symbol": "3640",
+      "hebrew_name": "קרני שומרון"
+  },
+  {
+      "city_symbol": "4006",
+      "hebrew_name": "קשת"
+  },
+  {
+      "city_symbol": "543",
+      "hebrew_name": "ראמה"
+  },
+  {
+      "city_symbol": "1334",
+      "hebrew_name": "ראס אל-עין"
+  },
+  {
+      "city_symbol": "990",
+      "hebrew_name": "ראס עלי"
+  },
+  {
+      "city_symbol": "2640",
+      "hebrew_name": "ראש העין"
+  },
+  {
+      "city_symbol": "26",
+      "hebrew_name": "ראש פינה"
+  },
+  {
+      "city_symbol": "3602",
+      "hebrew_name": "ראש צורים"
+  },
+  {
+      "city_symbol": "8300",
+      "hebrew_name": "ראשון לציון"
+  },
+  {
+      "city_symbol": "3795",
+      "hebrew_name": "רבבה"
+  },
+  {
+      "city_symbol": "564",
+      "hebrew_name": "רבדים"
+  },
+  {
+      "city_symbol": "354",
+      "hebrew_name": "רביבים"
+  },
+  {
+      "city_symbol": "1225",
+      "hebrew_name": "רביד"
+  },
+  {
+      "city_symbol": "390",
+      "hebrew_name": "רגבה"
+  },
+  {
+      "city_symbol": "444",
+      "hebrew_name": "רגבים"
+  },
+  {
+      "city_symbol": "1161",
+      "hebrew_name": "רהט"
+  },
+  {
+      "city_symbol": "2051",
+      "hebrew_name": "רווחה"
+  },
+  {
+      "city_symbol": "2016",
+      "hebrew_name": "רוויה"
+  },
+  {
+      "city_symbol": "1341",
+      "hebrew_name": "רוח מדבר"
+  },
+  {
+      "city_symbol": "362",
+      "hebrew_name": "רוחמה"
+  },
+  {
+      "city_symbol": "539",
+      "hebrew_name": "רומאנה"
+  },
+  {
+      "city_symbol": "997",
+      "hebrew_name": "רומת הייב"
+  },
+  {
+      "city_symbol": "3619",
+      "hebrew_name": "רועי"
+  },
+  {
+      "city_symbol": "3782",
+      "hebrew_name": "רותם"
+  },
+  {
+      "city_symbol": "854",
+      "hebrew_name": "רחוב"
+  },
+  {
+      "city_symbol": "8400",
+      "hebrew_name": "רחובות"
+  },
+  {
+      "city_symbol": "3822",
+      "hebrew_name": "רחלים"
+  },
+  {
+      "city_symbol": "540",
+      "hebrew_name": "ריחאניה"
+  },
+  {
+      "city_symbol": "3568",
+      "hebrew_name": "ריחן"
+  },
+  {
+      "city_symbol": "542",
+      "hebrew_name": "ריינה"
+  },
+  {
+      "city_symbol": "3565",
+      "hebrew_name": "רימונים"
+  },
+  {
+      "city_symbol": "616",
+      "hebrew_name": "רינתיה"
+  },
+  {
+      "city_symbol": "922",
+      "hebrew_name": "רכסים"
+  },
+  {
+      "city_symbol": "1069",
+      "hebrew_name": "רם-און"
+  },
+  {
+      "city_symbol": "4702",
+      "hebrew_name": "רמות"
+  },
+  {
+      "city_symbol": "206",
+      "hebrew_name": "רמות השבים"
+  },
+  {
+      "city_symbol": "735",
+      "hebrew_name": "רמות מאיר"
+  },
+  {
+      "city_symbol": "445",
+      "hebrew_name": "רמות מנשה"
+  },
+  {
+      "city_symbol": "372",
+      "hebrew_name": "רמות נפתלי"
+  },
+  {
+      "city_symbol": "8500",
+      "hebrew_name": "רמלה"
+  },
+  {
+      "city_symbol": "8600",
+      "hebrew_name": "רמת גן"
+  },
+  {
+      "city_symbol": "135",
+      "hebrew_name": "רמת דוד"
+  },
+  {
+      "city_symbol": "184",
+      "hebrew_name": "רמת הכובש"
+  },
+  {
+      "city_symbol": "335",
+      "hebrew_name": "רמת השופט"
+  },
+  {
+      "city_symbol": "2650",
+      "hebrew_name": "רמת השרון"
+  },
+  {
+      "city_symbol": "178",
+      "hebrew_name": "רמת יוחנן"
+  },
+  {
+      "city_symbol": "122",
+      "hebrew_name": "רמת ישי"
+  },
+  {
+      "city_symbol": "4701",
+      "hebrew_name": "רמת מגשימים"
+  },
+  {
+      "city_symbol": "339",
+      "hebrew_name": "רמת צבי"
+  },
+  {
+      "city_symbol": "460",
+      "hebrew_name": "רמת רזיאל"
+  },
+  {
+      "city_symbol": "127",
+      "hebrew_name": "רמת רחל"
+  },
+  {
+      "city_symbol": "789",
+      "hebrew_name": "רנן"
+  },
+  {
+      "city_symbol": "713",
+      "hebrew_name": "רעים"
+  },
+  {
+      "city_symbol": "8700",
+      "hebrew_name": "רעננה"
+  },
+  {
+      "city_symbol": "1228",
+      "hebrew_name": "רקפת"
+  },
+  {
+      "city_symbol": "247",
+      "hebrew_name": "רשפון"
+  },
+  {
+      "city_symbol": "437",
+      "hebrew_name": "רשפים"
+  },
+  {
+      "city_symbol": "1260",
+      "hebrew_name": "רתמים"
+  },
+  {
+      "city_symbol": "324",
+      "hebrew_name": "שאר ישוב"
+  },
+  {
+      "city_symbol": "1377",
+      "hebrew_name": "שבי דרום"
+  },
+  {
+      "city_symbol": "282",
+      "hebrew_name": "שבי ציון"
+  },
+  {
+      "city_symbol": "3571",
+      "hebrew_name": "שבי שומרון"
+  },
+  {
+      "city_symbol": "913",
+      "hebrew_name": "שבלי - אום אל-גנם"
+  },
+  {
+      "city_symbol": "1286",
+      "hebrew_name": "שגב-שלום"
+  },
+  {
+      "city_symbol": "721",
+      "hebrew_name": "שדה אילן"
+  },
+  {
+      "city_symbol": "304",
+      "hebrew_name": "שדה אליהו"
+  },
+  {
+      "city_symbol": "861",
+      "hebrew_name": "שדה אליעזר"
+  },
+  {
+      "city_symbol": "885",
+      "hebrew_name": "שדה בוקר"
+  },
+  {
+      "city_symbol": "36",
+      "hebrew_name": "שדה דוד"
+  },
+  {
+      "city_symbol": "284",
+      "hebrew_name": "שדה ורבורג"
+  },
+  {
+      "city_symbol": "293",
+      "hebrew_name": "שדה יואב"
+  },
+  {
+      "city_symbol": "142",
+      "hebrew_name": "שדה יעקב"
+  },
+  {
+      "city_symbol": "2008",
+      "hebrew_name": "שדה יצחק"
+  },
+  {
+      "city_symbol": "18",
+      "hebrew_name": "שדה משה"
+  },
+  {
+      "city_symbol": "259",
+      "hebrew_name": "שדה נחום"
+  },
+  {
+      "city_symbol": "329",
+      "hebrew_name": "שדה נחמיה"
+  },
+  {
+      "city_symbol": "1058",
+      "hebrew_name": "שדה ניצן"
+  },
+  {
+      "city_symbol": "739",
+      "hebrew_name": "שדה עוזיהו"
+  },
+  {
+      "city_symbol": "2049",
+      "hebrew_name": "שדה צבי"
+  },
+  {
+      "city_symbol": "327",
+      "hebrew_name": "שדות ים"
+  },
+  {
+      "city_symbol": "27",
+      "hebrew_name": "שדות מיכה"
+  },
+  {
+      "city_symbol": "1223",
+      "hebrew_name": "שדי אברהם"
+  },
+  {
+      "city_symbol": "2015",
+      "hebrew_name": "שדי חמד"
+  },
+  {
+      "city_symbol": "2057",
+      "hebrew_name": "שדי תרומות"
+  },
+  {
+      "city_symbol": "555",
+      "hebrew_name": "שדמה"
+  },
+  {
+      "city_symbol": "306",
+      "hebrew_name": "שדמות דבורה"
+  },
+  {
+      "city_symbol": "3578",
+      "hebrew_name": "שדמות מחולה"
+  },
+  {
+      "city_symbol": "1031",
+      "hebrew_name": "שדרות"
+  },
+  {
+      "city_symbol": "741",
+      "hebrew_name": "שואבה"
+  },
+  {
+      "city_symbol": "761",
+      "hebrew_name": "שובה"
+  },
+  {
+      "city_symbol": "394",
+      "hebrew_name": "שובל"
+  },
+  {
+      "city_symbol": "1304",
+      "hebrew_name": "שוהם"
+  },
+  {
+      "city_symbol": "614",
+      "hebrew_name": "שומרה"
+  },
+  {
+      "city_symbol": "1265",
+      "hebrew_name": "שומריה"
+  },
+  {
+      "city_symbol": "415",
+      "hebrew_name": "שוקדה"
+  },
+  {
+      "city_symbol": "456",
+      "hebrew_name": "שורש"
+  },
+  {
+      "city_symbol": "1235",
+      "hebrew_name": "שורשים"
+  },
+  {
+      "city_symbol": "224",
+      "hebrew_name": "שושנת העמקים"
+  },
+  {
+      "city_symbol": "527",
+      "hebrew_name": "שזור"
+  },
+  {
+      "city_symbol": "7",
+      "hebrew_name": "שחר"
+  },
+  {
+      "city_symbol": "1266",
+      "hebrew_name": "שחרות"
+  },
+  {
+      "city_symbol": "865",
+      "hebrew_name": "שיבולים"
+  },
+  {
+      "city_symbol": "1267",
+      "hebrew_name": "שיטים"
+  },
+  {
+      "city_symbol": "658",
+      "hebrew_name": "שייח' דנון"
+  },
+  {
+      "city_symbol": "3641",
+      "hebrew_name": "שילה"
+  },
+  {
+      "city_symbol": "1165",
+      "hebrew_name": "שילת"
+  },
+  {
+      "city_symbol": "1160",
+      "hebrew_name": "שכניה"
+  },
+  {
+      "city_symbol": "873",
+      "hebrew_name": "שלווה"
+  },
+  {
+      "city_symbol": "1373",
+      "hebrew_name": "שלווה במדבר"
+  },
+  {
+      "city_symbol": "439",
+      "hebrew_name": "שלוחות"
+  },
+  {
+      "city_symbol": "812",
+      "hebrew_name": "שלומי"
+  },
+  {
+      "city_symbol": "1364",
+      "hebrew_name": "שלומית"
+  },
+  {
+      "city_symbol": "366",
+      "hebrew_name": "שמיר"
+  },
+  {
+      "city_symbol": "3784",
+      "hebrew_name": "שמעה"
+  },
+  {
+      "city_symbol": "432",
+      "hebrew_name": "שמרת"
+  },
+  {
+      "city_symbol": "1337",
+      "hebrew_name": "שמשית"
+  },
+  {
+      "city_symbol": "1287",
+      "hebrew_name": "שני"
+  },
+  {
+      "city_symbol": "1132",
+      "hebrew_name": "שניר"
+  },
+  {
+      "city_symbol": "538",
+      "hebrew_name": "שעב"
+  },
+  {
+      "city_symbol": "1299",
+      "hebrew_name": "שעורים"
+  },
+  {
+      "city_symbol": "4009",
+      "hebrew_name": "שעל"
+  },
+  {
+      "city_symbol": "856",
+      "hebrew_name": "שעלבים"
+  },
+  {
+      "city_symbol": "661",
+      "hebrew_name": "שער אפרים"
+  },
+  {
+      "city_symbol": "264",
+      "hebrew_name": "שער הגולן"
+  },
+  {
+      "city_symbol": "237",
+      "hebrew_name": "שער העמקים"
+  },
+  {
+      "city_symbol": "921",
+      "hebrew_name": "שער מנשה"
+  },
+  {
+      "city_symbol": "3720",
+      "hebrew_name": "שערי תקווה"
+  },
+  {
+      "city_symbol": "232",
+      "hebrew_name": "שפיים"
+  },
+  {
+      "city_symbol": "692",
+      "hebrew_name": "שפיר"
+  },
+  {
+      "city_symbol": "846",
+      "hebrew_name": "שפר"
+  },
+  {
+      "city_symbol": "8800",
+      "hebrew_name": "שפרעם"
+  },
+  {
+      "city_symbol": "3649",
+      "hebrew_name": "שקד"
+  },
+  {
+      "city_symbol": "1233",
+      "hebrew_name": "שקף"
+  },
+  {
+      "city_symbol": "292",
+      "hebrew_name": "שרונה"
+  },
+  {
+      "city_symbol": "1114",
+      "hebrew_name": "שריגים )לי-און("
+  },
+  {
+      "city_symbol": "126",
+      "hebrew_name": "שריד"
+  },
+  {
+      "city_symbol": "398",
+      "hebrew_name": "שרשרת"
+  },
+  {
+      "city_symbol": "1045",
+      "hebrew_name": "שתולה"
+  },
+  {
+      "city_symbol": "763",
+      "hebrew_name": "שתולים"
+  },
+  {
+      "city_symbol": "2062",
+      "hebrew_name": "תאשור"
+  },
+  {
+      "city_symbol": "2061",
+      "hebrew_name": "תדהר"
+  },
+  {
+      "city_symbol": "1172",
+      "hebrew_name": "תובל"
+  },
+  {
+      "city_symbol": "3558",
+      "hebrew_name": "תומר"
+  },
+  {
+      "city_symbol": "1083",
+      "hebrew_name": "תושיה"
+  },
+  {
+      "city_symbol": "163",
+      "hebrew_name": "תימורים"
+  },
+  {
+      "city_symbol": "10",
+      "hebrew_name": "תירוש"
+  },
+  {
+      "city_symbol": "5000",
+      "hebrew_name": "תל אביב - יפו"
+  },
+  {
+      "city_symbol": "84",
+      "hebrew_name": "תל יוסף"
+  },
+  {
+      "city_symbol": "287",
+      "hebrew_name": "תל יצחק"
+  },
+  {
+      "city_symbol": "154",
+      "hebrew_name": "תל מונד"
+  },
+  {
+      "city_symbol": "103",
+      "hebrew_name": "תל עדשים"
+  },
+  {
+      "city_symbol": "719",
+      "hebrew_name": "תל קציר"
+  },
+  {
+      "city_symbol": "1054",
+      "hebrew_name": "תל שבע"
+  },
+  {
+      "city_symbol": "1283",
+      "hebrew_name": "תל תאומים"
+  },
+  {
+      "city_symbol": "3719",
+      "hebrew_name": "תלם"
+  },
+  {
+      "city_symbol": "1051",
+      "hebrew_name": "תלמי אליהו"
+  },
+  {
+      "city_symbol": "2003",
+      "hebrew_name": "תלמי אלעזר"
+  },
+  {
+      "city_symbol": "2050",
+      "hebrew_name": "תלמי ביל\"ו"
+  },
+  {
+      "city_symbol": "1237",
+      "hebrew_name": "תלמי יוסף"
+  },
+  {
+      "city_symbol": "727",
+      "hebrew_name": "תלמי יחיאל"
+  },
+  {
+      "city_symbol": "744",
+      "hebrew_name": "תלמי יפה"
+  },
+  {
+      "city_symbol": "814",
+      "hebrew_name": "תלמים"
+  },
+  {
+      "city_symbol": "1244",
+      "hebrew_name": "תמרת"
+  },
+  {
+      "city_symbol": "2002",
+      "hebrew_name": "תנובות"
+  },
+  {
+      "city_symbol": "752",
+      "hebrew_name": "תעוז"
+  },
+  {
+      "city_symbol": "709",
+      "hebrew_name": "תפרח"
+  },
+  {
+      "city_symbol": "665",
+      "hebrew_name": "תקומה"
+  },
+  {
+      "city_symbol": "3563",
+      "hebrew_name": "תקוע"
+  },
+  {
+      "city_symbol": "970",
+      "hebrew_name": "תראבין א-צאנע שבט"
+  },
+  {
+      "city_symbol": "1346",
+      "hebrew_name": "תראבין א-צאנעישוב"
+  },
+  {
+      "city_symbol": "778",
+      "hebrew_name": "תרום"
+  }
+]
+}
