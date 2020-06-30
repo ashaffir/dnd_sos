@@ -1,19 +1,27 @@
 import asyncio
+import os
+import logging
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic, distance
-
 from datetime import datetime
+
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.layers import get_channel_layer
+
 from django.contrib.gis.geos import Point, fromstr
+from django.conf import settings
 
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
 from core.models import User, Employer, Employee
 
 from geo.models import UserLocation
+
+LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
+logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/consumers.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
+logger = logging.getLogger()
 
 class OrderConsumer(AsyncJsonWebsocketConsumer):
 
@@ -370,11 +378,16 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         business = Employer.objects.get(pk=content.get('business'))
         business_address = business.building_number + ' ' + business.street + ',' + business.city
         
-        
-        business_location = geolocator.geocode(business_address)
-        business_coords = (business_location.latitude, business_location.longitude)
-        
-        order_to_business_distance = distance(business_coords, order_coords).km
+        try:
+            business_location = geolocator.geocode(business_address)
+            business_coords = (business_location.latitude, business_location.longitude)
+            order_to_business_distance = distance(business_coords, order_coords).km
+        except Exception as e:
+            logger.error(f'''Fail getting business location. ERROR: {e}
+                            business address: {business_address}
+                            business location: {business_location}
+                        ''')
+            order_to_business_distance = 1000
 
         content['distance_to_business'] = round(order_to_business_distance,2)
 
