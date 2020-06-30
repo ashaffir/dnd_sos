@@ -1,3 +1,4 @@
+import platform
 from datetime import datetime
 import calendar
 import time
@@ -38,7 +39,13 @@ def freelancer_location(request):
         if freelancer.is_available:
             if location['lat'] is not None and location['lon'] is not None:
                 freelancer.trips['locations'].append(location)
-                freelancer.location = Point(float(request.POST.get("lat")), float(request.POST.get("lon")))
+
+                # Checking OS
+                if platform.system() == 'Darwin':
+                    freelancer.location = Point(float(request.POST.get("lat")), float(request.POST.get("lon")))
+                else:
+                    freelancer.location = Point(float(request.POST.get("lon")), float(request.POST.get("lat")))
+
                 freelancer.save()
 
             print(f'LOC: {location}')
