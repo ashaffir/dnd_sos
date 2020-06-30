@@ -1,3 +1,4 @@
+import platform
 import asyncio
 import os
 import logging
@@ -365,7 +366,13 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         except:
             try:
                 drop_off_address = content.get('drop_off_address').split(',')[1]
-                order_location = Point(location.latitude,location.longitude)
+
+                                # Checking OS
+                if platform.system() == 'Darwin':
+                    order_location = Point(location.latitude,location.longitude)
+                else:
+                    order_location = Point(location.longitude, location.latitude)
+                
                 order_coords = (location.latitude,location.longitude)
             except Exception as e:
                 print(f'Failed getting the location for {drop_off_address}')
