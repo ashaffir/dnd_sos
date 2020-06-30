@@ -11,16 +11,19 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import json
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
+with open('config.json') as config_file:
+    config = json.load(config_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'zijbaj^_lv)!8-1ex(&a-00l%t+)fa)b)&)8#hegij@1cuns=('
+SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -142,8 +145,8 @@ DATABASES = {
 
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'dndsos', #LIVE DAATABASE
-        'USER': 'alfredshaffir',
-        'PASSWORD': '!Q2w3e4r%T',
+        'USER': config['POSTGRES_USER'],
+        'PASSWORD': config['POSTGRES_PASS'],
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -202,8 +205,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # Email Setup
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'in-v3.mailjet.com'
-EMAIL_HOST_USER = '59821dd394d97be74449840fe384c8b5'
-EMAIL_HOST_PASSWORD = '7075700fa37924a22ebe6b5ffcdac824'
+EMAIL_HOST_USER = config['MAILJET_HOST_USER']
+EMAIL_HOST_PASSWORD = config['MAILJET_HOST_PASSWORD']
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'ashaffir@gmail.com'
 
