@@ -19,10 +19,28 @@
 
           <form class="signup form-group" id="signup_form" method="post" action="{% url 'core:employee_signup' %}">
             {% csrf_token %}
-            {{ form|crispy }}
-            {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-            {% endif %}
+            <div class="form-group">
+              {% for field in form %}
+                <div class="mt-2">
+                  {% if field.name == "terms_accepted" %}
+                    {{ field.errors }}
+                    {{ field }}
+                    <a href="{% url 'dndsos:terms' %}">Accept Terms and Conditions</a>
+                    <hr>
+                  {% else %}
+                  <div class="row">
+                    {{ field.errors }}
+                    <div class="col-md-4">
+                      {{ field.label_tag }}
+                    </div>
+                    <div class="col-md-4">
+                      {{ field }}  
+                    </div>
+                  </div>
+                  {% endif %}  
+              </div>
+              {% endfor %}
+            </div>
             <button class="btn btn-success text-white" type="submit">{% trans "Sign Up" %} &raquo;</button>
           </form>
           <a href="{% url 'core:employer_signup' %}">Business? Register here</a>

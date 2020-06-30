@@ -54,3 +54,7 @@ def index_test(request):
 def room(request, username):
     context = {}
     return render(request, 'dndsos/room.html', {'username_json': mark_safe(json.dumps(username))})
+
+def terms(request):
+    context = {}
+    return render(request, 'dndsos/terms.html')

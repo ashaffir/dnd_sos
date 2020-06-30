@@ -37,6 +37,9 @@ class User(AbstractUser):
     # KRA PIN
     kra_pin = models.CharField(max_length=50, default=None, blank=True, null=True)
 
+    # Term agreement
+    terms_accepted = models.BooleanField(default=False)
+
     # mandatory fields
     REQUIRED_FIELDS = ['username',]
     

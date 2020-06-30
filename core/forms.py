@@ -6,11 +6,11 @@ from .models import (User, Employer, Employee, Asset, AssignedAsset)
 
 # employer signup form
 class EmployerSignupForm(UserCreationForm):
-    # business_name = forms.CharField()
+    terms_accepted = forms.BooleanField(required=True)
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('email', 'password1', 'password2')
+        fields = ('email', 'password1', 'password2',)
     
     @transaction.atomic
     def save(self):
@@ -50,6 +50,7 @@ class EmployeeSignupForm(UserCreationForm):
     )
 
     # vehicle = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'class':'form-group form-control'}))
+    terms_accepted = forms.BooleanField(required=True)
     
     class Meta(UserCreationForm.Meta):
         model = User

@@ -34,6 +34,10 @@ urlpatterns = [
     path('activate/account/<slug:uidb64>/<slug:token>/', core_views.activate_account, name='activate_account'),
     path('account/activation/sent/', core_views.account_activation_sent, name='account_activation_sent'),
 
+    # Emails
+    path('emails/email-activation/', core_views.email_activation, name='email-activation'),
+
+
     # path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
 
     # Password:

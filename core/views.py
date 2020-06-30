@@ -39,14 +39,26 @@ def employer_signup(request):
             # current_site = get_current_site(request)
             current_site = request._current_scheme_host
             subject = 'Activate Employer Account'
-            message = render_to_string('registration/account_activation_email.html', {
+            # message = render_to_string('registration/account_activation_email.html', {
+            #     'user': user,
+            #     'domain': current_site,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user)
+            # })
+            # user.email_user(subject, message, from_email=settings.DEFAULT_FROM_EMAIL)
+
+            message = {
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user)
-            })
-            user.email_user(subject, message, from_email=settings.DEFAULT_FROM_EMAIL)
-            
+            }
+
+            send_mail(subject, email_template_name=None,
+                    context=message, to_email=[user.email],
+                    html_email_template_name='registration/account_activation_email.html')
+
+
             messages.success(request, 'An accout activation link has been sent to your email: ' + user.email +
                                 '. Go to your email and click the link to activate your account.')
             return redirect('dndsos:home')
@@ -69,14 +81,27 @@ def employee_signup(request):
             current_site = request._current_scheme_host
             # current_site = get_current_site(request)
             subject = 'Activate Freelancer Account'
-            message = render_to_string('registration/account_activation_email.html', {
+            # message = render_to_string('registration/account_activation_email.html', {
+            #     'user': user,
+            #     'domain': current_site,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user)
+            # })
+            # user.email_user(subject, message, from_email=settings.DEFAULT_FROM_EMAIL)
+
+            message = {
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user)
-            })
-            user.email_user(subject, message, from_email=settings.DEFAULT_FROM_EMAIL)
-            
+            }
+
+            send_mail(subject, email_template_name=None,
+                    context=message, to_email=[user.email],
+                    html_email_template_name='registration/account_activation_email.html')
+
+
+
             messages.success(request, 'An accout activation link has been sent to your email: ' + user.email +
                                 '. Go to your email and click the link to activate your account.')
             return redirect('dndsos:home')
@@ -478,13 +503,7 @@ def forgot_password(request):
         return render(request, 'core/forgot_password.html', {})
 
 
-
-
-
-
-
-
-
-
-
-
+def email_activation(request):
+    context = {}
+    context['test'] = True
+    return render(request, 'registration/account_activation_email.html', context)
