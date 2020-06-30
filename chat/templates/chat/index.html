@@ -1,4 +1,5 @@
 <!-- chat/templates/chat/index.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,5 +23,23 @@
             window.location.pathname = '/chat/' + roomName + '/';
         };
     </script>
+
+    <script>
+        let worker;
+        if (window.Worker){
+            worker = new Worker('{% static "assets/javascripts/worker.js" %}');
+        } else {
+            console.log('Browser not supporting workers!!')
+        }
+
+        worker.addEventListener('message', function(event){
+            console.log(`EVENT: ${event}`);
+            console.log(`EVENT DATA: ${event.data.message}`);
+
+            document.querySelector('#count').innerHTML = event.data.message
+            //worker.terminate()
+        })
+        
+    </script> 
 </body>
 </html>

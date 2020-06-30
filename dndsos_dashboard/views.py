@@ -31,6 +31,7 @@ from .models import Email, FreelancerProfile, BusinessProfile
 from orders.models import Order
 from .utilities import send_mail
 from geo.models import Street, CityModel
+from geo.geo_utils import location_calculator
 
 # from notifier.signals import alert_freelancer_accepted
 
@@ -105,6 +106,20 @@ def b_dashboard(request, b_id):
 def f_dashboard(request, f_id):
     context = {}
 
+    freelancer = Employee.objects.get(user=request.user.pk)
+
+    if request.method == 'POST':
+        if request.POST.get('is_available'):
+            freelancer.is_available = False
+            freelancer.save()
+            context['is_available'] = False
+        elif request.POST.get('not_available'):
+            freelancer.is_available = True
+            freelancer.save()
+            context['is_available'] = True
+    else:
+        context['is_available'] = freelancer.is_available
+
     # Active orders stats
     active_orders = Order.objects.filter(
         (Q(freelancer=request.user.pk) & Q(status='IN_PROGRESS'))                            
@@ -165,9 +180,23 @@ def b_profile(request, b_id):
         new_business_category = request.POST.get("business_category")
         new_phone = request.POST.get("phone")
         new_bio = request.POST.get("bio")
-        new_street = request.POST.get("city_streets").replace('\'', '').replace('\"', '')
         new_building = request.POST.get("building_number")
-        new_city = request.POST.get("city").replace('\'', '').replace('\"', '')
+
+        if request.POST.get("city") != 'none':
+            new_city = request.POST.get("city").replace('\'', '').replace('\"', '')
+            user_profile.city = new_city
+        else:
+            pass
+
+        if request.POST.get("city_streets"):
+            new_street = request.POST.get("city_streets").replace('\'', '').replace('\"', '')
+            user_profile.street = new_street
+        else:
+            pass
+
+        user_profile.location, user_profile.lon, user_profile.lat = location_calculator(new_city,new_street, new_building, 'israel')
+        
+
         profile_pic = request.FILES.get("profile_pic")
 
         if new_name:
@@ -185,15 +214,9 @@ def b_profile(request, b_id):
         if new_bio:
             user_profile.bio = new_bio
 
-        if new_street:
-            user_profile.street = new_street
-
         if new_building:
             user_profile.building_number = new_building
 
-        if new_city:
-            user_profile.city = new_city
-    
         if not profile_pic:
             profile_pic = request.FILES.get("old_profile_pic")
         else:
@@ -464,33 +487,37 @@ def f_active_deliveries(request,f_id):
 @login_required
 def f_businesses(request, f_id):
     context = {}
-    f_businesses = request.user.relationships['businesses']
+    context['businesses'] = False
+
+    if request.user.relationships:
+        f_businesses = request.user.relationships['businesses']
     
-    cities = []
-    businesses = []
-    for b_id in f_businesses:
-        businesses.append(Employer.objects.get(pk=b_id))
+        cities = []
+        businesses = []
+        for b_id in f_businesses:
+            businesses.append(Employer.objects.get(pk=b_id))
 
-    for b in businesses:
-        cities.append(b.city)
+        for b in businesses:
+            cities.append(b.city)
 
-    if request.method == 'POST':
-        if 'sort_by_city' in request.POST:
-            sorted_businesses = []
-            city = request.POST.get('city')
-            for biz in businesses:
-                if biz.city == city:
-                    sorted_businesses.append(biz)
-            context['businesses'] = sorted_businesses
-            context['num_businesses'] = len(sorted_businesses)
+        if request.method == 'POST':
+            if 'sort_by_city' in request.POST:
+                sorted_businesses = []
+                city = request.POST.get('city')
+                for biz in businesses:
+                    if biz.city == city:
+                        sorted_businesses.append(biz)
+                context['businesses'] = sorted_businesses
+                context['num_businesses'] = len(sorted_businesses)
+            else:
+                context['businesses'] = businesses
+                context['num_businesses'] = len(businesses)
         else:
             context['businesses'] = businesses
             context['num_businesses'] = len(businesses)
-    else:
-        context['businesses'] = businesses
-        context['num_businesses'] = len(businesses)
 
-    context['cities'] = set(cities)
+        context['businesses'] = True
+        context['cities'] = set(cities)
 
     return render(request, 'dndsos_dashboard/f-businesses.html', context)
 
@@ -597,14 +624,6 @@ def b_statistics(request, b_id):
 def freelancers(request, b_id):
     context = {}
 
-    all_freelancers = Employee.objects.all()
-
-    cities = []
-    vehicles = []
-    for fl in all_freelancers:
-        cities.append(fl.city)
-        vehicles.append(fl.vehicle)
-
     # Extracting the freelancers that worked with the business in the past
     b_freelancers = []
     b_relationships = User.objects.get(pk=b_id).relationships
@@ -645,19 +664,27 @@ def freelancers(request, b_id):
 
         if 'filter' in request.POST:
             if vehicle and city:
-                filtered_freelancers = Employee.objects.filter(vehicle=vehicle, city=city)
+                filtered_freelancers = Employee.objects.filter(is_approved=True, vehicle=vehicle, city=city)
             elif vehicle and not city:
-                filtered_freelancers = Employee.objects.filter(vehicle=vehicle)
+                filtered_freelancers = Employee.objects.filter(is_approved=True, vehicle=vehicle)
             elif not vehicle and city:
-                filtered_freelancers = Employee.objects.filter(city=city)
+                filtered_freelancers = Employee.objects.filter(is_approved=True, city=city)
             else:
                 filtered_freelancers = Employee.objects.all()
         else:
-            filtered_freelancers = Employee.objects.all()
+            filtered_freelancers = Employee.objects.all(is_approved=True)
 
     else:
         max_range = DEFAULT_FREELANCER_RANGE
         filtered_freelancers = None
+
+    all_freelancers = Employee.objects.filter(is_approved=True, is_available=True)
+
+    cities = []
+    vehicles = []
+    for fl in all_freelancers:
+        cities.append(fl.city)
+        vehicles.append(fl.vehicle)
 
     # Freelancer locations
     freelancers_in_range = []

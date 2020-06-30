@@ -5,7 +5,7 @@
 
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Business Dashboard</h2>
+        <h2>Carrier Dashboard</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -30,6 +30,41 @@
         <!-- Best Seller -->
         <!-- Projects Stats -->
         <div class="col-lg-6 col-md-12">
+            <div class="row">
+                <div class="col-md-12 center">
+                    {% if user.is_employee %}
+                    <div class="row">
+                        <div class="col-md-6" style="margin-top: 0.5em;">
+                            <!-- {% if user.is_available %}
+                                <h2><label for="is_available" style="color: green;"><b>Status: Available</b></label></h2>
+                            {% else %}
+                                <h4><label for="is_available" style="color: red;"><b>Status: Unavailable</b></label></h4>
+                            {% endif %} -->
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                Change status
+                            </div>
+                            <div class="row">
+                                <form action="" enctype="multipart/form-data" method="POST" id="availability" name="availability">
+                                {% csrf_token %}
+                                    <div class="switch switch-lg switch-success">
+                                        {% if is_available %}
+                                            <input id="" type="submit" name="is_available" class="btn btn-lg btn-success" value="Available">
+                                        {% else %}                                        
+                                            <input id="" type="submit" name="not_available" class="btn btn-lg btn-danger" value="Unavailable">
+                                        {% endif %}                                        
+                                        <!-- <input id="is_available" type="checkbox" name="is_available" data-plugin-ios-switch {% if is_available %} checked="checked" {% else %} {% endif %}> -->
+                                    </div>    
+                                </form>
+                        </div>
+                        </div>
+                    </div>
+                {%endif%}
+        
+                </div>
+            </div>
+
             <section class="panel">
                 <header class="panel-heading panel-heading-transparent">
                     <div class="panel-actions">

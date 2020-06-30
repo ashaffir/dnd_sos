@@ -1,8 +1,22 @@
 from django.db import models
 from django.contrib.gis.db import models as geomodels
 from django.contrib.gis.db.models import PointField
+from django.contrib.postgres.fields import JSONField
 
 from core.models import User, Employee, Employer
+
+class FreelancerLocation(models.Model):
+    '''
+    Saving all Freelancer's locaitons for mornitorung and statistics
+    locaiton = {
+        time: datetime
+        lat: float
+        lon: float
+    } 
+    '''
+    freelancer = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE)
+    location = JSONField()
+
 
 class City(models.Model):
     name = models.CharField(max_length=100, blank=False)
@@ -14,6 +28,17 @@ class City(models.Model):
 
         # plural form in admin view
         verbose_name_plural = 'cities'
+
+class Country(models.Model):
+    name = models.CharField(max_length=100, blank=False)
+    geometry = geomodels.PointField()
+
+    class Meta:
+        # order of drop-down list items
+        ordering = ('name',)
+
+        # plural form in admin view
+        verbose_name_plural = 'countries'
 
 
 class CityModel(models.Model):

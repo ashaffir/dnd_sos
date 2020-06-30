@@ -80,12 +80,15 @@ class Employer(models.Model):
     # number of employees associated with the employer
     number_of_employees  = models.IntegerField(default=0, blank=True, null=True)
 
-
     business_category = models.CharField(max_length=50, choices=BUSINESS_CATEGORY, blank=True, null=True)
+    
+    # GEO
     street = models.CharField(max_length=100, blank=True, null=True)
     building_number = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
+    lat = models.FloatField(null=True, blank=True)
+    lon = models.FloatField(null=True, blank=True)
     location = PointField(blank=True, null=True)
 
     email = models.CharField(max_length=100, null=True, blank=True)
@@ -108,7 +111,7 @@ class Employer(models.Model):
         verbose_name_plural = _('Business Profiles')
 
     def __str__(self):
-        return self.business_name
+        return self.email
 
 
 def id_path(instance, filename):
@@ -141,10 +144,22 @@ class Employee(models.Model):
     phone = models.CharField(max_length=100, null=True, blank=True)
     vehicle = models.CharField(max_length=100, choices=VEHICLE, blank=True, null=True)
     active_hours = models.CharField(max_length=100, blank=True, null=True)
-    is_available = models.BooleanField(default=True)
+    is_available = models.BooleanField(default=False)
     # current_order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, default=-1)
 
+    lat = models.FloatField(null=True, blank=True)
+    lon = models.FloatField(null=True, blank=True)
     location = PointField(blank=True, null=True)
+
+    '''
+    Trips: saving all Freelancer's locaitons for mornitorung and statistics
+    trips = {
+        time: datetime
+        lat: float
+        lon: float
+    } 
+    '''
+    trips = JSONField(null=True, blank=True)
 
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')

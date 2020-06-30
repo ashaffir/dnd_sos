@@ -10,6 +10,10 @@ venv*
 
 ## Media
 media/*
+themes/*
+
+# Mobile apps
+mobile_apps
 
 ### OSX ###
 .DS_Store

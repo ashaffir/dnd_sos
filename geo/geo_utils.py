@@ -1,3 +1,6 @@
+from geopy.geocoders import Nominatim
+from django.contrib.gis.geos import fromstr, Point
+
 from core.models import User, Employee, Employer
 from orders.models import Order
 
@@ -14,17 +17,28 @@ def distance_calculator(order):
     order_location = order.order_location
     freelancer_location = Employee.objects.get(pk=active_freelancer_id).location
 
-    order_range_to_freelancer = round(order_location.distance(freelancer_location) * 100, 3) * 1000 # In meters
+    try:
+        order_range_to_freelancer = round(order_location.distance(freelancer_location) * 100, 3) * 1000 # In meters
+        print(f'DISTANCE between carrier and order drop off address: {order_range_to_freelancer} meters')
 
-
-    print(f'DISTANCE between carrier and order drop off address: {order_range_to_freelancer} meters')
-
-    if order_business_distance > order_range_to_freelancer:
-        trip_completed = round((order_business_distance - order_range_to_freelancer) / order_business_distance, 2) * 100
-        print(f'Carrier has completed {trip_completed}% of the trip.')
-    else:
-        print(f'Carrier did not start moving.')
+        if order_business_distance > order_range_to_freelancer:
+            trip_completed = round((order_business_distance - order_range_to_freelancer) / order_business_distance, 2) * 100
+            print(f'Carrier has completed {trip_completed}% of the trip.')
+        else:
+            print(f'Carrier did not start moving.')
+            trip_completed = 0
+    except:
+        print(f'ERROR calculating distance between carrier and order drop off address!')
         trip_completed = 0
-    
+
     return trip_completed
 
+
+def location_calculator(city, street, building=1, country='israel'):
+    geolocator = Nominatim(user_agent="dndsos", timeout=3)
+    address = building + ' ' + street + ', ' + city
+    location = geolocator.geocode(address)
+    point = Point(location.latitude,location.longitude)
+    return point, location.longitude, location.latitude
+
+    

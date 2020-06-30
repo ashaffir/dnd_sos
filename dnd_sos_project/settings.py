@@ -116,6 +116,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'dndsos_dashboard.context_processors.business_type',
                 'dndsos_dashboard.context_processors.debugMode',
+                'dndsos_dashboard.context_processors.freelancer_available',
+                
                 # 'dndsos_dashboard.context_processors.requested_freelancer',                
             ],
         },
@@ -140,7 +142,7 @@ DATABASES = {
 
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'dndsos', #LIVE DAATABASE
-        'USER': 'alfreds',
+        'USER': 'alfredshaffir',
         'PASSWORD': '!Q2w3e4r%T',
         'HOST': 'localhost',
         'PORT': '5432',

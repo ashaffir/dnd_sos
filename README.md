@@ -69,7 +69,8 @@ https://www.youtube.com/watch?v=qjlZWBbX7-o
 - https://tinyurl.com/y9oxq4xy (changes added to the .asgi file in the project directory)
 
 ### GEO (https://tinyurl.com/y8hegdk8)
-* Install GDAL
+* Install GDAL 
+** https://tinyurl.com/y7t4aau6, or https://tinyurl.com/y7t4aau6 - on MAC
 ** https://tinyurl.com/y783ef6b - UNIX (Notice the GDAL version, might not suit the local one)
 
 And, if/when errors in pip install for GDAL...
@@ -80,7 +81,6 @@ sudo apt-get install python3-dev python3-pip python3-venv python3-wheel -y
 pip3 install wheel
 sudo apt-get install postgresql-10-postgis-scripts
 
-** https://tinyurl.com/y7t4aau6 - MAC installation
 *** brew switch openssl 1.0.2s  - solution to openssl issue after installing GDAL
 *** Error in POSTGRES about extension GIS: https://tinyurl.com/yafufges
 --
@@ -93,7 +93,7 @@ Notice the changes in the DB Engine in settings, to GIS
 #### OpenStreet Shape files and other maps downloads: 
 http://download.geofabrik.de/
 
-#### To load a shape (*.shp) file for a city/location:
+#### To load a shape (*.shp) file for a city/location if NOT using the Open Source Maps API:
 ogr2ogr -f "PostgreSQL" PG:"dbname=dndsos user=alfreds" geo/maps/natural_earth_vector/10m_cultural/ne_10m_airports.shp -nln geo_city -append
 
 #### Load initial GIS data to the DB (e.g. businesses) and "Make a Location-Based Web App With Django and GeoDjango": 

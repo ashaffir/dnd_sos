@@ -29,6 +29,7 @@
 		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css' %}" />
 		<link rel="stylesheet" href="{% static 'assets/vendor/morris/morris.css' %}" />
 
+
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="{% static 'assets/stylesheets/theme.css' %}" />
 
@@ -85,7 +86,10 @@
 				}
 			}
 		</style>
-			
+
+		<!-- Toggle button -->
+		<!-- <link rel="stylesheet" href="{% static 'assets/stylesheets/toggle-button.css' %}"> -->
+
 
 	</head>
 	<body>
@@ -93,7 +97,7 @@
 			<!-- start: header -->
 			<header class="header">
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="logo-container">
 							<a href="{% url 'dndsos:home' %}" class="logo">
 								<img src="{% static 'assets/images/dndsos-logo-black.png' %}" height="35" alt="DnD-SOS Admin" />
@@ -107,7 +111,7 @@
 					<div class="col-md-4">
 						{% include 'core/_messages.html' %}
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-5">
 						<div class="header-right">
 				
 							<form action="pages-search-results.html" class="search nav-form">
@@ -122,6 +126,21 @@
 							<span class="separator"></span>
 					
 							<ul class="notifications">
+								{% if user.is_employee %}
+								<li>
+									{% if is_available %}
+										<a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="btn btn-success" 	data-toggle="">
+											<i class="fa fa-bell">Available</i>
+											<span class=""></span>
+										</a>
+									{% else %}
+									<a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="btn btn-danger" 	data-toggle="">
+										<i class="fa fa-bell">Unavailable</i>
+										<span class=""></span>
+									</a>
+									{% endif %}
+								</li>
+								{% endif %}
 								<li>
 									{% if user.is_employee %}
 										<div id="freelancerMessagesAlerts">
@@ -151,10 +170,10 @@
 							<div id="userbox" class="userbox">
 								<a href="#" data-toggle="dropdown">
 									<figure class="profile-picture">
-										<img src="{% static 'assets/images/logged-user.jpg' %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/logged-user.jpg' %}" />
+										<img src="{% if user.profile.profile_pic %}{{user.profile.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/logged-user.jpg' %}" />
 									</figure>
 									<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@DnD SOS.com">
-										<span class="name">{{ user.username }}</span>
+										<span class="name">{% if user.is_employee %}  {{ user.employee.name }} {% else %} {{ user.employer.business_name }} {% endif %}</span>
 										<span class="role">{% if user.is_staff %}administrator{% else %}{% endif %}</span>
 									</div>
 					
@@ -234,13 +253,13 @@
 										</li>
 	                                    <li>
                                         	<a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}">
-												<i class="fa fa-file-text" aria-hidden="true"></i>
+												<i class="fa fa-tasks" aria-hidden="true"></i>
 												<span>Orders</span>
 											</a>
     	                                </li>
 	                                    <li>
                                         	<a href="{% url 'dndsos_dashboard:b-alerts' b_id=user.pk %}">
-												<i class="fa fa-file-text" aria-hidden="true"></i>
+												<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 												<span>Alerts</span>
 											</a>
     	                                </li>
@@ -266,19 +285,19 @@
 										</li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-active-deliveries' f_id=user.pk %}">
-												<i class="fa fa-tasks" aria-hidden="true"></i>
+												<i class="fa fa-car" aria-hidden="true"></i>
 												<span>Active Deliveries</span>
 											</a>
 										</li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-deliveries' f_id=user.pk %}">
-												<i class="fa fa-tasks" aria-hidden="true"></i>
+												<i class="fa fa-table" aria-hidden="true"></i>
 												<span>Deliveries Summary</span>
 											</a>
 										</li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-businesses' f_id=user.pk %}">
-												<i class="fa fa-building" aria-hidden="true"></i>
+												<i class="fa fa-bank" aria-hidden="true"></i>
 												<span>Businesses</span>
 											</a>
 										</li>
@@ -311,7 +330,9 @@
                 {% endblock content %}
 
 			</div>
-
+			<div id="csrf">
+				{% csrf_token %}
+			</div>
 		</section>
 		
 		{% include 'dndsos_dashboard/partials/_order-settled-modal.html' %}
@@ -328,6 +349,11 @@
 		<script src="{% static 'assets/vendor/nanoscroller/nanoscroller.js' %}"></script>
 		<script src="{% static 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
 		<script src="{% static 'assets/vendor/jquery-placeholder/jquery.placeholder.js' %}"></script>
+
+		<!-- Toggle button -->
+		<script src="{% static 'assets/vendor/ios7-switch/ios7-switch.js' %}"></script>
+
+
 		<script>
 			$(function () {
 				$('[data-toggle="tooltip"]').tooltip()
@@ -389,7 +415,7 @@
 					$("#drop_off_address").html(drop_off_address);
 					//$("#new_offer_notes").html(data.data.notes);
 					
-					
+					{% if is_available %} // To prevent unavailable freelancers to receive new offer messages
 					if (order_status == 'REQUESTED' && current_order_id != order_id) {
 						console.log(`NEW ORDER`);
 						$("#newOfferAlert").modal("show");
@@ -401,7 +427,7 @@
 						$("#newOfferAlert").modal("show");
 						update_freelancer_notifications();
 					}
-
+					{% endif %}
 					current_order_id = order_id
 
 					console.log(`freelancer: ${freelancer}  user_id: ${user_id}`)
@@ -655,23 +681,50 @@
 		</script>
 
 		<!-- Freelancer GEO Location -->
-		<!-- <script>
-			function geoFindMe() {
+		{% if is_available %}
+		<script>
+			let lat;
+			let lon;
+
+			(function geoFindMe() {
+				//console.log(`STATE: ${freelancerSocket.readyState}`)
 
 				function success(position) {
-				  const latitude  = position.coords.latitude;
-				  const longitude = position.coords.longitude;			  
-				  console.log(`Latitude: ${latitude} °, Longitude: ${longitude} °`);
-				  freelancerSocket.send(JSON.stringify({
-					'type': 'user.location', 
-					'data': {
-						'event': 'User Location',
-						'user_id': user_id,
-						'lat': latitude,
-						'lon': longitude,
-						}
-					}));
-				}
+					lat  = position.coords.latitude;
+					lon = position.coords.longitude;			  
+					//console.log(`Latitude: ${lat} °, Longitude: ${lon} °`);
+
+					/*
+					freelancerSocket.send(JSON.stringify({
+						'type': 'user.location', 
+						'data': {
+							'event': 'User Location',
+							'user_id': user_id,
+							'lat': lat,
+							'lon': lon,
+							}
+						}));
+					*/
+			}
+
+				let csrf = document.getElementsByName("csrfmiddlewaretoken");
+				csrf_value = csrf[0].getAttribute("value");
+				
+				$.ajax({
+					url: "{% url 'geo:freelancer-location' %}",
+					type: "POST",
+					data: {
+						csrfmiddlewaretoken: csrf_value,
+						user_id: user_id,
+						lat: lat,
+						lon: lon
+					},
+					success: function(response) {
+						//$('#chatRoom').html(response);
+						console.log(`AJAX OK. USER ${user_id}`)
+					}
+				})								
+	
 			  
 				function error() {
 				  console.log('Unable to retrieve your location');
@@ -683,10 +736,13 @@
 				  navigator.geolocation.getCurrentPosition(success, error);
 				}
 
-			}
+				setTimeout(geoFindMe, 5000);
 				
-			$(window).on('load',geoFindMe);
-		</script> -->
+				console.log(`LOCATION: LON ${lon}  LAT ${lat}`)
+			})();	
+			//$(window).on('load',geoFindMe);
+		</script>
+		{% endif %}
 
 	
 	{% else %}
@@ -795,7 +851,7 @@
 							'order_id': id,
 							'business': user_id,
 							'status': 'ARCHIVED'
-						}
+						}						
 					}));
 
 					// Reload the order table.

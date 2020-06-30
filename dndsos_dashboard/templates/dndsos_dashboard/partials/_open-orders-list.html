@@ -1,4 +1,7 @@
 {% load static %}
+
+{% if is_available %}
+
 {% for order in open_orders %}
 <div class="col-md-4">
     <section class="panel text-center">
@@ -43,3 +46,4 @@
     </section>
 </div> 
 {% endfor %}
+{% endif %}

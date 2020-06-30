@@ -11,7 +11,7 @@ from django.contrib.gis.geos import Point, fromstr
 
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
-from core.models import User, Employer
+from core.models import User, Employer, Employee
 
 from geo.models import UserLocation
 
@@ -247,6 +247,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     active_freelancer = order.freelancer.pk
                 else:
                     active_freelancer = None
+                
                 data = {
                     'order_id': order_id,
                     'business': order.business.pk,
@@ -260,6 +261,12 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     'type': 'echo.message',
                     'data': data
                 })
+
+                await self.channel_layer.group_send(group=order_id, message={
+                    'type': 'echo.message',
+                    'data': data
+                })
+
             elif event.get('data')['event'] == 'Freelancer Canceled':
                 print(f'Freelancer Canceled. Order: {order.order_id}')
                 data = {
@@ -345,12 +352,12 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         drop_off_address = content.get('drop_off_address')
         location = geolocator.geocode(drop_off_address)
         try:
-            order_location = Point(location.longitude,location.latitude, srid=4326)
+            order_location = Point(location.latitude,location.longitude)
             order_coords = (location.latitude,location.longitude)  # The cords for geopy are reversed to GeoDjango Point.
         except:
             try:
                 drop_off_address = content.get('drop_off_address').split(',')[1]
-                order_location = Point(location.longitude,location.latitude, srid=4326)
+                order_location = Point(location.latitude,location.longitude)
                 order_coords = (location.latitude,location.longitude)
             except Exception as e:
                 print(f'Failed getting the location for {drop_off_address}')
@@ -363,12 +370,13 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         business = Employer.objects.get(pk=content.get('business'))
         business_address = business.building_number + ' ' + business.street + ',' + business.city
         
-        business_location = geolocator.geocode(business_address)
         
+        business_location = geolocator.geocode(business_address)
         business_coords = (business_location.latitude, business_location.longitude)
+        
         order_to_business_distance = distance(business_coords, order_coords).km
 
-        content['distance_to_business'] = order_to_business_distance
+        content['distance_to_business'] = round(order_to_business_distance,2)
 
         if not business.location:
             business.location = Point(business_location.longitude,business_location.latitude, srid=4326)
@@ -515,32 +523,19 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
         return order, order_updated
 
+
     # Dynamically obtain the location of users
-    # TODO: This should be done with the mobile app
-    @database_sync_to_async
-    def user_location(self, content):
-        data = content.get('data')
-        event = data['event']
-        user_id = data['user_id']
-        lat = data['lat']
-        lon = data['lon']
+    # @database_sync_to_async
+    # def user_location(self, content):
+    #     data = content.get('data')
+    #     event = data['event']
+    #     user_id = data['user_id']
+    #     lat = data['lat']
+    #     lon = data['lon']
 
-        users = []
-        for user_location in UserLocation.objects.all():
-            users.append(str(user_location.user.pk))
-
-        if user_id not in users:
-            # New user, first time location setting
-            UserLocation.objects.create(
-                user=User.objects.get(pk=user_id),
-                user_location = Point(lon,lat, srid=4326)
-            )
-        else:
-            user = UserLocation.objects.get(user=User.objects.get(pk=user_id))
-            past_location = user.user_location
-            current_location = Point(lon,lat, srid=4326)
-            if past_location != current_location:
-                user.user_location = current_location
-                user.save()
-            else:
-                pass
+    #     freelancer = Employee.objects.get(pk=user_id)
+    #     freelancer.location = Point(lon,lat, srid=4326)
+    #     freelancer.lon = lon
+    #     freelancer.lat = lat
+    #     freelancer.save()
+    #     print(f'>>>>  F: {user_id} locaiton saved ')

@@ -51,6 +51,7 @@ class Order(models.Model):
 
     notes = models.TextField(max_length=500, blank=True, null=True)
 
+    # List of freelancers that were directly shosen by the business (in case there are more than one)
     selected_freelancers = ArrayField(
         ArrayField(
             models.CharField(max_length=10000, null=True, blank=True),

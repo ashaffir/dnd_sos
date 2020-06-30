@@ -6,10 +6,21 @@ from django.contrib.gis.admin import OSMGeoAdmin
 @admin.register(Employer)
 class Employer(OSMGeoAdmin):
     list_display = (
-        'business_name',
         'user',
+        'business_name',
         'city',
+        'is_approved',
         )
+    
+    fields = (  'user', 'business_name', 'business_category',
+                'email', 'phone',
+                'street', 'building_number', 'city', 'lat', 'lon', 'location',
+                'b_freelancers',
+                'profile_pic',
+                'newsletter_optin',
+                'is_approved'
+            )
+
     search_fields = ('bio','city','business_name',)
     # ordering = ('-created',)
 
@@ -19,6 +30,8 @@ class Employee(OSMGeoAdmin):
         'user',
         'city',
         'vehicle',
+        'is_available',
+        'is_approved',
         )
     search_fields = ('bio','city','business_name',)
 

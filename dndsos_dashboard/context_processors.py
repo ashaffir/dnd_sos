@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from core.models import Employee
 
 # @login_required
 def business_type(request):
@@ -11,6 +12,16 @@ def business_type(request):
             context['business_type'] = 'freelancer'
     except:
         context['business_type'] = ''
+        
+    return context
+
+def freelancer_available(request):
+    context = {}
+    try:
+        freelancer = Employee.objects.get(user=request.user.pk)
+        context['is_available'] = freelancer.is_available
+    except:
+        context['is_available'] = False
         
     return context
 

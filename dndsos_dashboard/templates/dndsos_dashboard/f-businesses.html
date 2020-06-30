@@ -29,7 +29,8 @@
                         <a href="#select_tab" data-toggle="tab">Businesses you've worked with</a>
                     </li>
                 </ul>
-                <div class="tab-content">
+                {% if businesses %}
+                    <div class="tab-content">
                     <div id="select_tab" class="tab-pane active" active>
 
                         <!-- Filters -->
@@ -92,7 +93,14 @@
                             {% endfor %}
                         </div>
                     </div>
-                </div>
+                    </div>
+                {% else %}                
+                    <div class="tab-content">
+                        <div id="select_tab" class="tab-pane active" active>
+                            <h4>There are no businesses here yet.</h4>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

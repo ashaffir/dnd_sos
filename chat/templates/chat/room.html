@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,17 @@
     <button id = "find-me">Show my location</button><br/>
     <p id = "status"></p>
     <a id = "map-link" target="_blank"></a>
+    <div class="container">
+        <div id="count">
+        </div>
 
+        <hr>
+        <h1>OID</h1>
+        <h2>
+            {{ oid }}
+        </h2>
+
+    </div>
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
@@ -50,10 +61,19 @@
             messageInputDom.value = '';
         };
     </script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script>    
+        let worker;
+        if (window.Worker){
+            worker = new Worker('{% static "assets/javascripts/worker.js" %}');
+        } else {
+            console.log('Browser not supporting workers!!')
+        }
+
         function geoFindMe() {
 
+                        
             const status = document.querySelector('#status');
             const mapLink = document.querySelector('#map-link');
           
@@ -67,8 +87,19 @@
               status.textContent = '';
               mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
               mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+            
+              worker.postMessage({type: 'coords',lat: latitude, lon: longitude});
+
+              worker.addEventListener('message', function(event){
+                console.log(`LAT: ${event.data.message.lat}`);
+                console.log(`LON: ${event.data.message.lon}`);
+                coords = event.data.message.lat + ' ' + event.data.message.lon
+                document.querySelector('#count').innerHTML = coords
+                //worker.terminate()
+                })
             }
           
+
             function error() {
               status.textContent = 'Unable to retrieve your location';
             }
@@ -83,7 +114,55 @@
           }
           
           //document.querySelector('#find-me').addEventListener('click', geoFindMe);
-            $(window).on('load',geoFindMe);
+//            $(window).on('load',geoFindMe);
+            for (var i = 0; i <= 1; i++){
+                (function(i) {          
+                  setTimeout(function () {   
+                     console.log(i);
+                     geoFindMe()
+                    }, i*3000)
+                })(i);  
+              }
     </script>
+
+    
+    <!-- <script>
+        // Reference: https://www.youtube.com/watch?v=HcSqj1apNHI
+
+        let worker;
+        if (window.Worker){
+            console.log(`WORKER IS GOOD`);
+            worker = new Worker('{% static "assets/javascripts/worker.js" %}');
+            worker.postMessage('do some work');
+
+            worker.addEventListener('message', function(event){
+                console.log(`EVENT: ${event}`);
+                console.log(`EVENT DATA: ${event.data.message}`);
+
+                document.querySelector('#count').innerHTML = event.data.message
+                worker.terminate()
+            })
+        }
+    </script> -->
+
+    <script>
+        $('#location-button').click(function(){
+      
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position){
+                console.log(position);
+                $.get( "http://maps.googleapis.com/maps/api/geocode/json?latlng="+ position.coords.latitude + "," + position.coords.longitude +"&sensor=false", function(data) {
+                  console.log(data);
+                })
+                var img = new Image();
+                img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude + "&zoom=13&size=800x400&sensor=false";
+                $('#output').html(img);
+              });
+              
+          }
+        });
+</script>
+
+
 </body>
 </html>

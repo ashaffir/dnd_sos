@@ -14,6 +14,7 @@ urlpatterns = [
     path('map/', EntryList.as_view()),
     path('businesses', geo_views.Businesses.as_view()),
     path('city-streets/', geo_views.city_streets, name='city-streets'),
+    path('freelancer-location/', geo_views.freelancer_location, name='freelancer-location'),
 
 
 ]

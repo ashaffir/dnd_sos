@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
 
-from .models import City, Entry, BusinessLocation, UserLocation, CityModel, Street
+from .models import City,Country , Entry, BusinessLocation, UserLocation, CityModel, Street
 
 @admin.register(CityModel)
 class CityModel(admin.ModelAdmin):
@@ -13,7 +13,7 @@ class CityModel(admin.ModelAdmin):
 class Street(admin.ModelAdmin):
     list_display = ('country','street_id','street_name', 'city_symbol', 'city_name',)
     list_filter = ('city_name','country',)
-    search_field = ['street_name', 'city_name']
+    search_fields = ['street_name', 'city_name']
     ordering = ('street_id',)
 
 @admin.register(Entry)
@@ -40,7 +40,14 @@ class UserLocation(OSMGeoAdmin):
 
 
 # DEMO
-class City(admin.ModelAdmin):
+@admin.register(City)
+class City(OSMGeoAdmin):
+    list_display = ('pk','name',)
+    search_fields = ('name',)
+    ordering = ('name',)
+
+@admin.register(Country)
+class Country(OSMGeoAdmin):
     list_display = ('name',)
     search_fields = ('name',)
     ordering = ('name',)

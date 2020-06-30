@@ -10,7 +10,7 @@ class EmployerSignupForm(UserCreationForm):
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('email', 'password1', 'password2')
     
     @transaction.atomic
     def save(self):
@@ -53,7 +53,7 @@ class EmployeeSignupForm(UserCreationForm):
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('email', 'password1', 'password2')
     
     @transaction.atomic
     def save(self):
