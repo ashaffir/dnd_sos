@@ -58,23 +58,23 @@ def freelancer_location(request):
         freelancer.save()
         
     # Tracking location of an available freelancer
-    # if not freelancer.trips:
-    #     freelancer.trips = {'locations':[]}
-    #     freelancer.save()
-    # else:
-    #     if freelancer.is_available:
-    #         if location['lat'] is not None and location['lon'] is not None:
-    #             freelancer.trips['locations'].append(location)
+    if not freelancer.trips:
+        freelancer.trips = {'locations':[]}
+        freelancer.save()
+    else:
+        if freelancer.is_available:
+            if location['lat'] is not None and location['lon'] is not None:
+                freelancer.trips['locations'].append(location)
 
-    #             # Checking OS (for some reason the order of lat/lon in "Point" is different)
-    #             if platform.system() == 'Darwin':
-    #                 freelancer.location = Point(float(request.POST.get("lat")), float(request.POST.get("lon")))
-    #             else:
-    #                 freelancer.location = Point(float(request.POST.get("lon")), float(request.POST.get("lat")))
+                # Checking OS (for some reason the order of lat/lon in "Point" is different)
+                if platform.system() == 'Darwin':
+                    freelancer.location = Point(float(request.POST.get("lat")), float(request.POST.get("lon")))
+                else:
+                    freelancer.location = Point(float(request.POST.get("lon")), float(request.POST.get("lat")))
 
-    #             freelancer.save()
+                freelancer.save()
 
-    #         print(f'LOC: {location}')
+            print(f'LOC: {location}')
     
 
     return render(request, 'geo/f-location.html', context)

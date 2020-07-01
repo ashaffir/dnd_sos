@@ -38,15 +38,10 @@
                             {% if user.freelancer.is_approved %} 
                             <h4>Change your availability status here.</h4>
                             {% else %} 
-                            <h4 style="color: red;"><i class="fa fa-exclamation"></i> Please complete your profile before adding changing availability status. 
+                            <h4 style="color: red;"><i class="fa fa-exclamation"></i> Please complete your profile before changing availability status. 
                                 <a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">Go to Carrier Profile</a>
                             </h4>                            
                             {% endif %}
-                        <!-- {% if user.is_available %}
-                                <h2><label for="is_available" style="color: green;"><b>Status: Available</b></label></h2>
-                            {% else %}
-                                <h4><label for="is_available" style="color: red;"><b>Status: Unavailable</b></label></h4>
-                            {% endif %} -->
                         </div>
                         <div class="col-md-4">
                             {% if user.freelancer.is_active %}
