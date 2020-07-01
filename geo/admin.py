@@ -16,39 +16,39 @@ class Street(admin.ModelAdmin):
     search_fields = ['street_name', 'city_name']
     ordering = ('street_id',)
 
-@admin.register(Entry)
-class EntryAdmin(OSMGeoAdmin):
-    # default_lon = 3872758
-    # default_lat = 3773892
-    # default_zoom = 10
+# @admin.register(Entry)
+# class EntryAdmin(OSMGeoAdmin):
+#     # default_lon = 3872758
+#     # default_lat = 3773892
+#     # default_zoom = 10
 
-    default_lon = 1400000
-    default_lat = 7495000
-    default_zoom = 12
+#     default_lon = 1400000
+#     default_lat = 7495000
+#     default_zoom = 12
 
-    #...
+#     #...
 
-@admin.register(BusinessLocation)
-class BusinessLocation(OSMGeoAdmin):
-    list_display = ('name', 'address', 'city',)
-    ordering = ('name',)
+# @admin.register(BusinessLocation)
+# class BusinessLocation(OSMGeoAdmin):
+#     list_display = ('name', 'address', 'city',)
+#     ordering = ('name',)
 
-@admin.register(UserLocation)
-class UserLocation(OSMGeoAdmin):
-    list_display = ('user_id', 'user_location',)
-    ordering = ('user_id',)
+# @admin.register(UserLocation)
+# class UserLocation(OSMGeoAdmin):
+#     list_display = ('user_id', 'user_location',)
+#     ordering = ('user_id',)
 
 
 # DEMO
-@admin.register(City)
-class City(OSMGeoAdmin):
-    list_display = ('pk','name',)
-    search_fields = ('name',)
-    ordering = ('name',)
+# @admin.register(City)
+# class City(OSMGeoAdmin):
+#     list_display = ('pk','name',)
+#     search_fields = ('name',)
+#     ordering = ('name',)
 
-@admin.register(Country)
-class Country(OSMGeoAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ('name',)
+# @admin.register(Country)
+# class Country(OSMGeoAdmin):
+#     list_display = ('name',)
+#     search_fields = ('name',)
+#     ordering = ('name',)
 

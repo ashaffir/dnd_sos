@@ -46,17 +46,6 @@ class User(AbstractUser):
     # require the email to be the unique identifier
     USERNAME_FIELD = 'email'
 
-    # List of user that are in relations, Freelancers in business and Businesses in freelancer
-    # relations = ArrayField(
-    #     ArrayField(
-    #         models.CharField(max_length=10000, null=True, blank=True),
-    #         size=1
-    #     ),
-    #     size=1000,
-    #     null=True,
-    #     blank=True
-    # )
-
     relationships = JSONField(null=True, blank=True)
 
     channel_name = models.CharField(max_length=100, null=True, blank=True)
@@ -75,7 +64,7 @@ class Employer(models.Model):
         ('Other', 'Other'),
     )
 
-    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True, related_name='business')
     
     # business name
     business_name = models.CharField(max_length=200, blank=True, null=True)
@@ -139,7 +128,7 @@ class Employee(models.Model):
         ('20:00-00:00', '20:00-00:00'),
     )
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='freelancer')
     name = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
@@ -147,7 +136,10 @@ class Employee(models.Model):
     phone = models.CharField(max_length=100, null=True, blank=True)
     vehicle = models.CharField(max_length=100, choices=VEHICLE, blank=True, null=True)
     active_hours = models.CharField(max_length=100, blank=True, null=True)
-    is_available = models.BooleanField(default=False)
+    
+    is_available = models.BooleanField(default=False) # Available for delivering ("open for business")
+    is_active = models.BooleanField(default=False) # Is currently delivering or accepted delivery and going to pick up
+    
     # current_order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, default=-1)
 
     lat = models.FloatField(null=True, blank=True)
@@ -172,7 +164,7 @@ class Employee(models.Model):
 
     new_messages = models.IntegerField(default=0)
 
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False) # He filled up the profile information necessary
 
     class Meta:
         verbose_name = _('Freelancer Profile')

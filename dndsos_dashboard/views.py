@@ -27,7 +27,7 @@ from core.forms import EmployeeProfileForm, EmployerProfileForm
 from core.decorators import employer_required, employee_required
 
 from .forms import BusinessUpdateForm, FreelancerUpdateForm
-from .models import Email, FreelancerProfile, BusinessProfile
+from .models import Email
 from orders.models import Order
 from .utilities import send_mail
 from geo.models import Street, CityModel
@@ -109,6 +109,10 @@ def f_dashboard(request, f_id):
     freelancer = Employee.objects.get(user=request.user.pk)
 
     if request.method == 'POST':
+        if freelancer.is_active:
+            messages.error(request, "Status can't be changed while in the process of delivery")
+            return render(request, 'dndsos_dashboard/f-dashboard.html', context)
+
         if request.POST.get('is_available'):
             freelancer.is_available = False
             freelancer.save()

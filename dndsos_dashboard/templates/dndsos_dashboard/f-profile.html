@@ -153,7 +153,7 @@
 													<div class="row">
 														<div class="col-3"></div>
 														<div class="col-md-3 col-md-offset-3">
-															<img src="{% if user.profile.profile_pic %}{{user.profile.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" style='max-width:50%' id="preview" name="old_profile_pic" alt="Avatar">
+															<img src="{% if user.freelancer.profile_pic %}{{user.freelancer.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" style='max-width:50%' id="preview" name="old_profile_pic" alt="Avatar">
 															<span class="">
 																<input type="file" id="profile_pic"  onchange="preview_image()" name="profile_pic">
 															</span>

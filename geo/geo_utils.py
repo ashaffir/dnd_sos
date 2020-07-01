@@ -16,6 +16,7 @@ def distance_calculator(order):
     active_freelancer_id = order.freelancer.pk
 
     order_location = order.order_location
+    
     freelancer_location = Employee.objects.get(pk=active_freelancer_id).location
 
     try:

@@ -47,11 +47,12 @@ class Order(models.Model):
     order_location = geomodels.PointField(null=True, blank=True)
 
     distance_to_business = models.FloatField(null=True, blank=True)
+    trip = JSONField(null=True, blank=True)
     trip_completed = models.FloatField(null=True, blank=True)
 
     notes = models.TextField(max_length=500, blank=True, null=True)
 
-    # List of freelancers that were directly shosen by the business (in case there are more than one)
+    # List of freelancers that were directly chosen by the business (in case there are more than one)
     selected_freelancers = ArrayField(
         ArrayField(
             models.CharField(max_length=10000, null=True, blank=True),
@@ -72,7 +73,7 @@ class Order(models.Model):
         User,
         null=True,
         blank=True,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name='freelancer_orders'
     )
     business = models.ForeignKey( # new
@@ -80,7 +81,7 @@ class Order(models.Model):
         User,
         null=True,
         blank=True,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name='business_orders'
     )
 

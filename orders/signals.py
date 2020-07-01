@@ -7,8 +7,8 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
 from core.models import User, Employee, Employer
-from dndsos_dashboard.models import FreelancerProfile
-from orders.models import Order
+# from dndsos_dashboard.models import FreelancerProfile
+# from orders.models import Order
 
 @receiver(post_save, sender=User)
 def announce_new_user(sender, instance, created, **kwargs):

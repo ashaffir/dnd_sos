@@ -20,8 +20,10 @@ def freelancer_available(request):
     try:
         freelancer = Employee.objects.get(user=request.user.pk)
         context['is_available'] = freelancer.is_available
+        context['is_active'] = freelancer.is_active
     except:
         context['is_available'] = False
+        context['is_active'] = False
         
     return context
 

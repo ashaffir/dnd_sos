@@ -8,15 +8,19 @@ from django.views import generic
 from django.contrib.gis.geos import fromstr, Point
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import City, BusinessLocation, Street, FreelancerLocation
 from core.models import Employee
+from orders.models import Order
 
 # @csrf_exempt
 def freelancer_location(request):
     context = {}
 
     freelancer = Employee.objects.get(user=request.user.pk)
+    freelancer_in_progress_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(status='IN_PROGRESS'))
 
     try:
         location = {
@@ -32,23 +36,45 @@ def freelancer_location(request):
         }
         print(f'Freelancer location is missing. Reason: {e}')
 
-    if not freelancer.trips:
-        freelancer.trips = {'locations':[]}
+    # Saving the trip point of a carrier throughout the delivery 
+    # process for every order he is involved at that moment
+    for order in freelancer_in_progress_orders:
+        if not order.trip:
+            order.trip = {'locations':[]}
+        else:
+            if freelancer.is_available:
+                if location['lat'] is not None and location['lon'] is not None:
+                    order.trip['locations'].append(location)
+        order.save()
+
+    # Chacking if the freelancer is active
+    active_orders = Order.objects.filter(
+        (Q(freelancer=request.user.pk) & Q(status='IN_PROGRESS'))                            
+        | (Q(freelancer=request.user.pk) & Q(status='STARTED')))
+
+    print(f"active_orders ***************{len(active_orders)}****************")
+    if len(active_orders) == 0:
+        freelancer.is_active = False
         freelancer.save()
-    else:
-        if freelancer.is_available:
-            if location['lat'] is not None and location['lon'] is not None:
-                freelancer.trips['locations'].append(location)
+        
+    # Tracking location of an available freelancer
+    # if not freelancer.trips:
+    #     freelancer.trips = {'locations':[]}
+    #     freelancer.save()
+    # else:
+    #     if freelancer.is_available:
+    #         if location['lat'] is not None and location['lon'] is not None:
+    #             freelancer.trips['locations'].append(location)
 
-                # Checking OS
-                if platform.system() == 'Darwin':
-                    freelancer.location = Point(float(request.POST.get("lat")), float(request.POST.get("lon")))
-                else:
-                    freelancer.location = Point(float(request.POST.get("lon")), float(request.POST.get("lat")))
+    #             # Checking OS (for some reason the order of lat/lon in "Point" is different)
+    #             if platform.system() == 'Darwin':
+    #                 freelancer.location = Point(float(request.POST.get("lat")), float(request.POST.get("lon")))
+    #             else:
+    #                 freelancer.location = Point(float(request.POST.get("lon")), float(request.POST.get("lat")))
 
-                freelancer.save()
+    #             freelancer.save()
 
-            print(f'LOC: {location}')
+    #         print(f'LOC: {location}')
     
 
     return render(request, 'geo/f-location.html', context)

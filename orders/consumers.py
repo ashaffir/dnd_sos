@@ -13,6 +13,7 @@ from channels.layers import get_channel_layer
 
 from django.contrib.gis.geos import Point, fromstr
 from django.conf import settings
+from django.db.models import Q
 
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
@@ -262,7 +263,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     'business': order.business.pk,
                     'freelancer': active_freelancer,
                     'drop_off_address': order.drop_off_address,
-                    'business_name': order.business.employer.business_name,
+                    'business_name': order.business.email,
                     'created': str(order.created),
                     'status': 'ARCHIVED'
                 }
@@ -472,6 +473,12 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     serializer.is_valid(raise_exception=True)
                     order = serializer.update(order_instance, serializer.validated_data)
                     order_updated = True
+                
+                # Updating freelancer is_active status
+                freelancer = Employee.objects.get(pk=accepted_fl)
+                freelancer.is_active = True
+                freelancer.save()
+
             elif event == 'Freelancer Canceled':
                 print('CANCELED!!!!')
                 content['freelancer'] = None
@@ -482,15 +489,11 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             elif event == 'Order Delivered':
                 print('DELIVERED!!!!')
                 content['status'] = 'COMPLETED'
-                serializer = OrderSerializer(data=content)
-                serializer.is_valid(raise_exception=True)
-                order = serializer.update(order_instance, serializer.validated_data)
-                order_updated = True
 
-                # Updating the involved parties relationships
                 freelancer = User.objects.get(pk=order_instance.freelancer.pk)
                 business = User.objects.get(pk=order_instance.business.pk)
 
+                # Updating the involved parties relationships
                 if not freelancer.relationships:
                     freelancer.relationships = {'businesses':[business.pk]}
                 else:
@@ -508,6 +511,12 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 
                 freelancer.save()
                 business.save()
+
+                # Updating the order in the DB
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
+                order_updated = True
 
 
             elif event == 'Direct Invitation':

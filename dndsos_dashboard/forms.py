@@ -6,44 +6,8 @@ from django.contrib.auth import get_user_model
 
 # from django_select2 import ModelSelect2Widget 
 
-from .models import BusinessProfile, FreelancerProfile
 from orders.models import Order
-
-# class SignupForm(forms.ModelForm):
-
-#     BUSINESS_TYPE =( 
-#         ("freelancer", "Freelance"), 
-#         ("business", "Business"), 
-#     ) 
-#     business_type = forms.ChoiceField(label='Choose Your Role (Business/Freelancer)' ,choices=BUSINESS_TYPE, widget=forms.Select(attrs={'class':'form-group form-control'}))
-#     # business_name = forms.CharField(max_length=100, required=False)
-#     # last_name = forms.CharField(max_length=100)
-#     # street = forms.CharField(max_length=100)
-#     # building_number = forms.IntegerField()
-#     # city = forms.CharField(max_length=100)
-
-#     class Meta:
-#         model = BusinessProfile
-#         fields = ('email',)
-#         # widgets = {
-#         #     'business_type': forms.Select(attrs={'class': 'form-control'})
-#         # }
-
-#     def signup(self, request, user):
-#         # Save your user
-#         # user.first_name = self.cleaned_data['name']
-#         # user.last_name = self.cleaned_data['business_name']
-#         # user.save()
-
-#         # user.profile.street = self.cleaned_data['street']
-#         # user.profile.building_number = self.cleaned_data['building_number']
-#         # user.profile.city = self.cleaned_data['city']
-#         # user.profile.name = self.cleaned_data['name']
-#         # user.profile.business_type = self.cleaned_data['business_type']
-#         # user.profile.business_name = self.cleaned_data['business_name']
-#         # user.profile.save()
-#         pass
-
+from core.models import Employer, Employee
 
 class BusinessUpdateForm(forms.ModelForm):
 
@@ -66,7 +30,7 @@ class BusinessUpdateForm(forms.ModelForm):
         ))
 
     class Meta:
-        model = BusinessProfile
+        model = Employer
         fields = [
             'business_name',
             'business_category',
@@ -100,10 +64,10 @@ class FreelancerUpdateForm(forms.ModelForm):
             ('Motorcycle', _("Motorcycle")),
             ('Other', _("Other")),
         ))
-    active_hours = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=FreelancerProfile.ACTIVE_HOURS)
+    active_hours = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=Employee.ACTIVE_HOURS)
 
     class Meta:
-        model = FreelancerProfile
+        model = Employee
         fields = [
             'name',
             'vehicle',
@@ -121,17 +85,3 @@ class FreelancerUpdateForm(forms.ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}),
             # 'newsletter_optin': forms.CheckboxInput(attrs={'class': 'form-control checkbox-custom checkbox-primary'})
         }
-
-# class OrderForm(forms.Form):
-#     class Meta:
-#         model = Order
-#         fields = [
-#                 'status',
-#                 'created',
-#                 'pick_up_address',
-#                 'drop_off_address',
-#                 'dispatched',
-#                 'city',
-#                 'business',
-#                 'freelancer'
-#             ]

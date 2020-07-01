@@ -11,6 +11,7 @@ class OrderAdmin(OSMGeoAdmin):
         'distance_to_business','trip_completed',
         'freelancer', 'business',
         'selected_freelancers',
+        'trip',
         'chat', 
         'created', 'updated','new_message',
     )

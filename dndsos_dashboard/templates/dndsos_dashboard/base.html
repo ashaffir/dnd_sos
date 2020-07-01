@@ -97,7 +97,7 @@
 			<!-- start: header -->
 			<header class="header">
 				<div class="row">
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<div class="logo-container">
 							<a href="{% url 'dndsos:home' %}" class="logo">
 								<img src="{% static 'assets/images/dndsos-logo-black.png' %}" height="35" alt="DnD-SOS Admin" />
@@ -111,7 +111,7 @@
 					<div class="col-md-4">
 						{% include 'core/_messages.html' %}
 					</div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<div class="header-right">
 				
 							<form action="pages-search-results.html" class="search nav-form">
@@ -171,13 +171,13 @@
 								<a href="#" data-toggle="dropdown">
 									<figure class="profile-picture">
 										{% if user.is_employer %}
-										<img src="{% if user.employer.profile_pic %}{{user.employer.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/logged-user.jpg' %}" />
+										<img src="{% if user.business.profile_pic %}{{user.business.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/logged-user.jpg' %}" />
 										{% else %}
-										<img src="{% if user.employee.profile_pic %}{{user.employee.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/logged-user.jpg' %}" />
+										<img src="{% if user.freelancer.profile_pic %}{{user.freelancer.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/logged-user.jpg' %}" />
 										{% endif %}
 									</figure>
 									<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@DnD SOS.com">
-										<span class="name">{% if user.is_employee %}  {{ user.employee.name }} {% else %} {{ user.employer.business_name }} {% endif %}</span>
+										<span class="name">{% if user.is_employee %}  {{ user.freelancer.name }} {% else %} {{ user.business.business_name }} {% endif %}</span>
 										<span class="role">{% if user.is_staff %}administrator{% else %}{% endif %}</span>
 									</div>
 					
@@ -226,20 +226,20 @@
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
 									<li class="nav-active">
-										{% if user.employer %}
+										{% if user.is_employer %}
 											<a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
 												<i class="fa fa-home" aria-hidden="true"></i>
 												<span>Business Dashboard</span>
 											</a>
 										{% else %}
-										<a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
+											<a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
 											<i class="fa fa-home" aria-hidden="true"></i>
 											<span>Freelancer Dashboard</span>
 										</a>
 										{% endif %}
 									</li>
 									<li>
-										{% if user.employee %}
+										{% if user.is_employee %}
 											<a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">
 										{% else %}
 											<a href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">
@@ -248,7 +248,7 @@
 											<span>Profile</span>
 										</a>
 									</li>
-									{% if user.employer %}
+									{% if user.is_employer %}
 										<li>
 											<a href="{% url 'dndsos_dashboard:freelancers' b_id=user.pk %}">
 												<i class="fa fa-group" aria-hidden="true"></i>
@@ -504,9 +504,9 @@
 					
 					let freelancer_id = "{{ user.pk }}"
 					let freelancer_username = "{{ user.username }}"
-					let freelancer_name = "{{ user.employee.name }}"
+					let freelancer_name = "{{ user.freelancer.name }}"
 					let freelancer_email = "{{ user.email }}"
-					let freelancer_phone = "{{ user.employee.phone }}"
+					let freelancer_phone = "{{ user.freelancer.phone }}"
 					console.log(`ACCEPTED!!  USERNAME: ${freelancer_username}`)
 					
 					freelancerSocket.send(JSON.stringify({
@@ -698,17 +698,6 @@
 					lon = position.coords.longitude;			  
 					//console.log(`Latitude: ${lat} °, Longitude: ${lon} °`);
 
-					/*
-					freelancerSocket.send(JSON.stringify({
-						'type': 'user.location', 
-						'data': {
-							'event': 'User Location',
-							'user_id': user_id,
-							'lat': lat,
-							'lon': lon,
-							}
-						}));
-					*/
 			}
 
 				let csrf = document.getElementsByName("csrfmiddlewaretoken");
@@ -768,11 +757,11 @@
 
 				let user_id = "{{ user.pk }}"
 				let user_username = "{{ user.username }}"
-				let user_name = "{{ user.employer.business_name }}"
+				let user_name = "{{ user.business.business_name }}"
 				let user_email = "{{ user.email }}"
-				let street = "{{ user.employer.street }}"
-				let building = "{{ user.employer.building_number }}"
-				let city = "{{ user.employer.city }}"
+				let street = "{{ user.business.street }}"
+				let building = "{{ user.business.building_number }}"
+				let city = "{{ user.business.city }}"
 				let pick_up_address = building + ' ' + street + ', ' + city
 				
 				addOrder = function(e) {

@@ -34,14 +34,30 @@
                 <div class="col-md-12 center">
                     {% if user.is_employee %}
                     <div class="row">
-                        <div class="col-md-6" style="margin-top: 0.5em;">
-                            <!-- {% if user.is_available %}
+                        <div class="col-md-8" style="margin-top: 0.5em;">
+                            {% if user.freelancer.is_approved %} 
+                            <h4>Change your availability status here.</h4>
+                            {% else %} 
+                            <h4 style="color: red;"><i class="fa fa-exclamation"></i> Please complete your profile before adding changing availability status. 
+                                <a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">Go to Carrier Profile</a>
+                            </h4>                            
+                            {% endif %}
+                        <!-- {% if user.is_available %}
                                 <h2><label for="is_available" style="color: green;"><b>Status: Available</b></label></h2>
                             {% else %}
                                 <h4><label for="is_available" style="color: red;"><b>Status: Unavailable</b></label></h4>
                             {% endif %} -->
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            {% if user.freelancer.is_active %}
+                            <h6>Status cannot be changed while in the process of delivering</h6>
+                            <div class="row">
+                                    <div class="switch switch-lg switch-success">
+                                        <input id="" type="submit" name="is_available" class="btn btn-lg btn-success" value="Available" disabled>
+                                    </div>    
+                                </form>
+                            </div>
+                            {% else %}
                             <div class="row">
                                 Change status
                             </div>
@@ -50,14 +66,14 @@
                                 {% csrf_token %}
                                     <div class="switch switch-lg switch-success">
                                         {% if is_available %}
-                                            <input id="" type="submit" name="is_available" class="btn btn-lg btn-success" value="Available">
+                                            <input id="" type="submit" name="is_available" class="btn btn-lg btn-success" value="Available" {% if user.freelancer.is_approved %} {% else %} disabled {% endif %}>
                                         {% else %}                                        
-                                            <input id="" type="submit" name="not_available" class="btn btn-lg btn-danger" value="Unavailable">
+                                            <input id="" type="submit" name="not_available" class="btn btn-lg btn-danger" value="Unavailable" {% if user.freelancer.is_approved %} {% else %} disabled {% endif %}>
                                         {% endif %}                                        
-                                        <!-- <input id="is_available" type="checkbox" name="is_available" data-plugin-ios-switch {% if is_available %} checked="checked" {% else %} {% endif %}> -->
                                     </div>    
                                 </form>
-                        </div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 {%endif%}
