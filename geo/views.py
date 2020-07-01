@@ -64,7 +64,7 @@ def freelancer_location(request):
     else:
         if freelancer.is_available:
             if location['lat'] is not None and location['lon'] is not None:
-                freelancer.trips['locations'].append(location)
+                # freelancer.trips['locations'].append(location)
 
                 # Checking OS (for some reason the order of lat/lon in "Point" is different)
                 if platform.system() == 'Darwin':
