@@ -520,7 +520,7 @@ def f_businesses(request, f_id):
             context['businesses'] = businesses
             context['num_businesses'] = len(businesses)
 
-        context['businesses'] = True
+        context['businesses'] = businesses
         context['cities'] = set(cities)
 
     return render(request, 'dndsos_dashboard/f-businesses.html', context)

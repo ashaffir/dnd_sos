@@ -1,12 +1,12 @@
 {% load static %}
 <a href="{% url 'dndsos_dashboard:b-messages' b_id=user.pk %}" class="dropdown-toggle notification-icon" data-toggle="dropdown">
     <i class="fa fa-envelope"></i>
-    <span class="badge">{{ user.employer.new_messages }}</span>
+    <span class="badge">{{ user.business.new_messages }}</span>
 </a>
 
 <div class="dropdown-menu notification-menu">
     <div class="notification-title">
-        <span class="pull-right label label-default">{{ user.employer.new_messages }}</span>
+        <span class="pull-right label label-default">{{ user.business.new_messages }}</span>
         Messages
     </div>
 
@@ -19,11 +19,11 @@
                             <div class="row">
                                 <div class="col-2 col-md-2">
                                     <figure class="image">
-                                        <img src="{{ order.freelancer.employee.profile_pic.url }}" alt="{{ order.freelancer.employee.name }}" class="img-circle mobilePic"/>
+                                        <img src="{{ order.freelancer.freelancer.profile_pic.url }}" alt="{{ order.freelancer.freelancer.name }}" class="img-circle mobilePic"/>
                                     </figure>        
                                 </div>
                                 <div class="col-10 col-md-10">
-                                    <span class="title">{{ order.freelancer.employee.name }}</span>
+                                    <span class="title">{{ order.freelancer.freelancer.name }}</span>
                                     {% for message in order.chat.messages %}
                                         {% if forloop.last %}
                                             <span class="message">{{ message.message }}</span>

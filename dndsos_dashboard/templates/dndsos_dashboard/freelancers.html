@@ -63,15 +63,15 @@
 											    <header class="panel-heading bg-primary">
                                             {% endif %}
                                             <div class="panel-heading-profile-picture">
-                                                <img src="{{ freelancer.employee.profile_pic.url }}">
+                                                <img src="{{ freelancer.freelancer.profile_pic.url }}">
                                             </div>
 											</header>
 											<div class="panel-body">
 												<h4 class="text-semibold mt-sm">{{ freelancer.employee.name }}</h4>
-												<p>Email: {{ freelancer.employee.email }} </p>
-												<p>Short bio: {{ freelancer.employee.bio }} </p>
-												<p>City: {{ freelancer.employee.city }} </p>
-												<p>Vehicle: {{ freelancer.employee.vehicle }} </p>
+												<p>Email: {{ freelancer.email }} </p>
+												<p>Short bio: {{ freelancer.freelancer.bio }} </p>
+												<p>City: {{ freelancer.freelancer.city }} </p>
+												<p>Vehicle: {{ freelancer.freelancer.vehicle }} </p>
 												<hr class="solid short">
                                                 <div class="row">
                                                     <!-- Request Freelancer Button -->
