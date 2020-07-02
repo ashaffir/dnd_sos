@@ -32,6 +32,8 @@ from orders.models import Order
 from .utilities import send_mail
 from geo.models import Street, CityModel
 from geo.geo_utils import location_calculator
+from payments.views import add_card, remove_card
+from payments.models import Card
 
 # from notifier.signals import alert_freelancer_accepted
 
@@ -179,61 +181,65 @@ def b_profile(request, b_id):
 
     if request.method == 'POST':
 
-        new_name = request.POST.get("name")
-        new_business_name = request.POST.get("business_name")
-        new_business_category = request.POST.get("business_category")
-        new_phone = request.POST.get("phone")
-        new_bio = request.POST.get("bio")
-        new_building = request.POST.get("building_number")
+        if 'update_profile' in request.POST:
+            new_name = request.POST.get("name")
+            new_business_name = request.POST.get("business_name")
+            new_business_category = request.POST.get("business_category")
+            new_phone = request.POST.get("phone")
+            new_bio = request.POST.get("bio")
+            new_building = request.POST.get("building_number")
 
-        if request.POST.get("city") != 'none':
-            new_city = request.POST.get("city").replace('\'', '').replace('\"', '')
-            user_profile.city = new_city
-        else:
-            pass
+            if request.POST.get("city") != 'none':
+                new_city = request.POST.get("city").replace('\'', '').replace('\"', '')
+                user_profile.city = new_city
+            else:
+                pass
 
-        if request.POST.get("city_streets"):
-            new_street = request.POST.get("city_streets").replace('\'', '').replace('\"', '')
-            user_profile.street = new_street
-        else:
-            pass
+            if request.POST.get("city_streets"):
+                new_street = request.POST.get("city_streets").replace('\'', '').replace('\"', '')
+                user_profile.street = new_street
+            else:
+                pass
 
-        user_profile.location, user_profile.lon, user_profile.lat = location_calculator(new_city,new_street, new_building, 'israel')
-        
+            try:
+                user_profile.location, user_profile.lon, user_profile.lat = location_calculator(new_city,new_street, new_building, 'israel')
+            except:
+                pass
 
-        profile_pic = request.FILES.get("profile_pic")
+            profile_pic = request.FILES.get("profile_pic")
 
-        if new_name:
-            user_profile.name = new_name
+            if new_name:
+                user_profile.name = new_name
 
-        if new_business_name:
-            user_profile.business_name = new_business_name
+            if new_business_name:
+                user_profile.business_name = new_business_name
 
-        if new_business_category:
-            user_profile.business_category = new_business_category
+            if new_business_category:
+                user_profile.business_category = new_business_category
 
-        if new_phone:
-            user_profile.phone = new_phone
+            if new_phone:
+                user_profile.phone = new_phone
 
-        if new_bio:
-            user_profile.bio = new_bio
+            if new_bio:
+                user_profile.bio = new_bio
 
-        if new_building:
-            user_profile.building_number = new_building
+            if new_building:
+                user_profile.building_number = new_building
 
-        if not profile_pic:
-            profile_pic = request.FILES.get("old_profile_pic")
-        else:
-            user_profile.profile_pic = profile_pic
+            if not profile_pic:
+                profile_pic = request.FILES.get("old_profile_pic")
+            else:
+                user_profile.profile_pic = profile_pic
 
-        user_profile.email = request.user.email
+            user_profile.email = request.user.email
 
-        try:        
-            user_profile.save()
-            messages.success(request,'You have successfully updated your profile.')
-        except Exception as e:
-            messages.success(request,f'There was ann error processing your request. ERROR: {e}')
-            
+            try:        
+                user_profile.save()
+                messages.success(request,'You have successfully updated your profile.')
+            except Exception as e:
+                messages.success(request,f'There was ann error processing your request. ERROR: {e}')
+        elif 'add_credit_card' in request.POST:
+            pass        
 
     # Check profile completion
     required_fields = {
@@ -257,6 +263,9 @@ def b_profile(request, b_id):
 
     user_profile.save()
 
+    cards = Card.objects.filter(card_holder=request.user, status=True)
+    context['cards'] = cards
+    
     context['required_fields'] = required_fields
     context['complete'] = round(field_count/len(required_fields)*100)
     context['email'] = request.user.email

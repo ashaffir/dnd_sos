@@ -1,7 +1,18 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
-
 {% block content %}
+<style>
+	.payment-card {
+		background-color: #ffffff;
+		box-shadow: 0px 0px 30px rgba( 221, 221, 221, 1);
+		border-radius: 4px;
+		position: relative;
+		padding: 8px 14px;
+		margin: 40px 0;	
+		margin-left: 1rem;
+	}
+	</style>
+	
 <link rel="stylesheet" href="{% static 'assets/vendor/dropzone/css/basic.css' %}" />
 <link rel="stylesheet" href="{% static 'assets/vendor/dropzone/css/dropzone.css' %}" />
 
@@ -39,8 +50,13 @@
 									<li>
 										<a href="#edit" data-toggle="tab">Edit</a>
 									</li>
+									<li>
+										<a href="#add_cc" data-toggle="tab">Manage Credit Cards</a>
+									</li>
 								</ul>
 								<div class="tab-content">
+
+									<!-- Profile Overview -->
 									<div id="overview" class="tab-pane active">
 										<h4>Profile Information - 
 											{% if profile.is_approved %} 
@@ -99,6 +115,9 @@
 	
 
 									</div>
+									<!-- END Profile Overview -->
+
+									<!-- Profile Edit -->
 									<div id="edit" class="tab-pane">
 
 										<form class="form-horizontal" enctype="multipart/form-data" name="businessProfile" method="POST">
@@ -175,7 +194,7 @@
 											<div class="panel-footer">
 												<div class="row">
 													<div class="col-md-9 col-md-offset-3">
-														<button type="submit" class="btn btn-primary">Submit</button>
+														<button type="submit" name="update_profile" class="btn btn-primary">Submit</button>
 														<button type="reset" class="btn btn-default">Reset</button>
 													</div>
 												</div>
@@ -184,6 +203,95 @@
 										</form>
 
 									</div>
+									<!-- END Profile Edit -->
+
+									<!-- Credit Cards Management -->
+									<div id="add_cc" class="tab-pane">
+
+										<form class="form-horizontal" enctype="multipart/form-data" id="add_card" name="add_card" method="POST" action="{% url 'payments:add-card' %}">
+											{% csrf_token %}
+											<div class="row">
+												<div class="col-md-6">
+													<h4 class="mb-xlg">Add/Remove credit cards</h4>
+												</div>
+												<div class="col-md-6">
+													<div class="card-icon mt-2 center">
+														<span class="icon-top"><img src="{% static 'assets/images/visa.png' %}" alt=""></span>
+														<span class="icon-top"><img src="{% static 'assets/images/mastercard.png' %}" alt=""></span>
+														<span class="icon-top"><img src="{% static 'assets/images/credit-card.png' %}" alt=""></span>
+													</div>		
+												</div>
+											</div>										
+											<div class="body-sec">
+													<div class="form-group row">
+														<label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Cardholder Name</label>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-12">
+															<input type="text" id="name" class="form-control" name="name" value="" required placeholder="Cardholder Name">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Card Number</label>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-12">
+															<input type="text" pattern="\d*" maxlength="16" minlength="16" title="must be numeric 16 digit" id="card-number" class="form-control" name="card-number" value="" required placeholder="Card Number">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Expiration Date</label>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-12">
+															<input type="date" id="expiry-date" class="form-control" name="expiry-date" value="" required placeholder="Expiration Date">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">CVV</label>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-12">
+															<input type="text" pattern="\d*" maxlength="4" minlength="3" title="must be numeric 3 digit" id="cvv" class="form-control" name="cvv" value="" required placeholder="CVV">
+														</div>
+													</div>
+
+												{% if cards %}
+												<div class="row" >
+													<div class="col-md-6 payment-card">
+														<div class="bottom-sec">
+																{% for card in cards %}
+																<div>
+																	<div class="row">
+																		<div class="col-lg-10 col-md-10 col-sm-10 col-12">
+																			<div class="text-wrapper">								
+																				<p>XXXX XXXX XXXX {{card.card_number | slice:"12:16"}}</p>
+																				<p>{{card.expiry_date|date:"d-m-Y"}}</p>
+																			</div>
+																		</div>
+																		<div class="col-lg-2 col-md-2 col-sm-2 col-12">
+																			<div class="img-wrapper">
+																				<img src="{% static 'assets/images/visa.png' %}">
+																			</div>
+																		</div>
+																	</div>
+																	<span class="cross-btn">
+																		<a href="{% url 'payments:remove-card' %}?card-id={{card.id}}"><i class="fa fa-times" aria-hidden="true"></i>remove</a>
+																	</span>
+																</div>
+																{% endfor %}
+														</div>		
+													</div>
+												</div>
+												{% endif %}
+
+											</div>
+
+											<div class="panel-footer">
+												<div class="row">
+													<div class="col-md-9 col-md-offset-3">
+														<button type="submit" name="add_credit_card" class="btn btn-primary">Add</button>
+													</div>
+												</div>
+											</div>
+
+										</form>
+
+									</div>
+									<!-- END Credit Cards Management -->
+
 								</div>
 							</div>
 						</div>

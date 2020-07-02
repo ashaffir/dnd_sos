@@ -35,6 +35,7 @@ urlpatterns = [
     path('notifier/', include('notifier.urls')),
     path('orders/', include('orders.urls')),
     path('geo/', include('geo.urls')),
+    path('payments/', include('payments.urls')),
 
     path('api/sign_up/', SignUpView.as_view(), name='sign_up'),
     

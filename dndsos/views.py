@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.conf import settings
 
 from dndsos_dashboard.utilities import send_mail
-from .models import ContactUs
+from .models import ContactUs, ContentPage
 from .forms import ContactForm
 
 def home(request):
@@ -57,4 +57,14 @@ def room(request, username):
 
 def terms(request):
     context = {}
-    return render(request, 'dndsos/terms.html')
+    context['terms'] = ContentPage.objects.get(name='terms').content
+    # context['terms_he'] = ContentPage.objects.get(name='terms_he').content
+
+    return render(request, 'dndsos/terms.html', context)
+
+def privacy(request):
+    context = {}
+    context['privacy'] = ContentPage.objects.get(name='privacy').content
+    # context['terms_he'] = ContentPage.objects.get(name='terms_he').content
+
+    return render(request, 'dndsos/privacy.html', context)    

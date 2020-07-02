@@ -1,3 +1,6 @@
+
+from ckeditor.fields import RichTextField
+
 from django.db import models
 
 class ContactUs(models.Model):
@@ -10,3 +13,12 @@ class ContactUs(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class ContentPage(models.Model):
+	name = models.CharField(max_length=100, null=True)
+	content = RichTextField(max_length=100000, null=True)
+	active = models.BooleanField(default=True)
+
+	def __str__(self):
+	 return self.name

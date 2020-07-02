@@ -108,7 +108,7 @@ def freelancer_messages_list(request):
     current_new_messages = 0
     orders_with_chats = []
     for order in current_orders:
-        print(f'ORDER ID: {order.order_id}')
+        # print(f'ORDER ID: {order.order_id}')
         if order.new_message['freelancer']:
             current_new_messages += 1
 
@@ -186,7 +186,7 @@ def business_messages_list(request):
     current_new_messages = 0
     orders_with_chats = []
     for order in current_orders:
-        print(f'ORDER ID: {order.order_id}')
+        # print(f'ORDER ID: {order.order_id}')
         if order.new_message['business']:
             current_new_messages += 1
 

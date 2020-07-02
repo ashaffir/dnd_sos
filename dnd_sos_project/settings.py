@@ -223,3 +223,6 @@ MESSAGE_TAGS = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Isracard section
+ISRACARD_SECRET_KEY = ''
