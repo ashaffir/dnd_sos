@@ -77,14 +77,9 @@
                             {% csrf_token %}
                             <div class="row" >
                                 <div class="col-md-4">
-                                    <h4>Pick Available Freelancers From Your Pool</h4>
-                                    <p>There  {% if num_freelancers_due_payment > 1 %}  are {% else %} is {% endif %}{{ num_freelancers_due_payment }} freelancers in your pool.</p>
+                                    <h4>Active carriers around your business</h4>
+                                    <p>There  {% if total_freelancers > 1 %}  are {% else %} is {% endif %}{{ total_freelancers }} active carriers.</p>
                                     <!-- <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button> -->
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 1rem;">
-                                <div class="col-md-3">
-                                    <i class="fa fa-circle" style="color: #e36159;"></i><span> Means you need to pay them.</span>
                                 </div>
                             </div>
     
