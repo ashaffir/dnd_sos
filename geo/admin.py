@@ -4,7 +4,7 @@ from django.contrib.gis.admin import OSMGeoAdmin
 from .models import City,Country , Entry, BusinessLocation, UserLocation, CityModel, Street
 
 @admin.register(CityModel)
-class CityModel(admin.ModelAdmin):
+class CityModel(OSMGeoAdmin):
     list_display = ('city_symbol','hebrew_name',)
     search_fields = ('hebrew_name',)
     ordering = ('city_symbol',)

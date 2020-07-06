@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{% static 'css/aos.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
     
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -63,6 +64,7 @@
                 <li><a href="/#home-section" class="nav-link">Home</a></li>
                 <li><a href="/#features-section" class="nav-link">Features</a></li>
                 <li><a href="/#how-it-works-section" class="nav-link">How it Works</a></li>
+                <li><a href="/#faq" class="nav-link">FAQ</a></li>
                 <!-- <li><a href="/#about-section" class="nav-link">About Us</a></li> -->
                 <!-- <li><a href="/#testimonials-section" class="nav-link">Testimonials</a></li> -->
                 <!-- <li><a href="/#blog-section" class="nav-link">Blog</a></li> -->
@@ -118,6 +120,7 @@
           padding-top: 30%;
           margin-bottom: 50%;
         }
+        
       }
     
       @media (max-width: 375px){
@@ -127,6 +130,40 @@
           margin-bottom: 50%;
         }
       }
+
+      /* Scroll up button */
+      #scroll {
+        position:fixed;
+        right:10px;
+        bottom:10px;
+        cursor:pointer;
+        width:50px;
+        height:50px;
+        background-color:#3498db;
+        text-indent:-9999px;
+        display:none;
+        -webkit-border-radius:60px;
+        -moz-border-radius:60px;
+        border-radius:60px
+    }
+    #scroll span {
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin-left:-8px;
+        margin-top:-12px;
+        height:0;
+        width:0;
+        border:8px solid transparent;
+        border-bottom-color:#ffffff;
+    }
+    #scroll:hover {
+        background-color:#e74c3c;
+        opacity:1;filter:"alpha(opacity=100)";
+        -ms-filter:"alpha(opacity=100)";
+    }
+
+
     </style>
     
         {% block content %}
@@ -151,6 +188,7 @@
         <div class="row">
           <div class="col-md-12">
             <p class="mb-0">
+              <a href="#" id="scroll" style="display: none;"><span></span></a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
               Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | DND-SOS Ltd. <i class="icon-heart" aria-hidden="true"></i> by <a href="https://actappon.com" target="_blank" >Actappon</a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -165,6 +203,22 @@
     
   </div> <!-- .site-wrap -->
 
+  <script>
+    $(document).ready(function(){ 
+      $(window).scroll(function(){ 
+          if ($(this).scrollTop() > 100) { 
+              $('#scroll').fadeIn(); 
+          } else { 
+              $('#scroll').fadeOut(); 
+          } 
+      }); 
+      $('#scroll').click(function(){ 
+          $("html, body").animate({ scrollTop: 0 }, 600); 
+          return false; 
+      }); 
+  });
+
+  </script>
   <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
   <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
   <script src="{% static 'js/jquery-ui.js' %}"></script>

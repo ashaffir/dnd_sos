@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load static %}
-<a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#sendMessage_{{ order.order_id }}" style="color: white;">Message <i class="fa fa-send"></i></a>
+<a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#sendMessage_{{ order.order_id }}" style="color: white; margin:0%">Message <i class="fa fa-send"></i></a>
 
 <div class="modal fade" id="sendMessage_{{ order.order_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <footer class="panel-footer">
-                        <button type="button" id="chat-message-submit_{{ order.order_id }}" value="Send" class="btn btn-primary">Send</button>
+                        <button class="btn btn-primary" type="button" id="chat-message-submit_{{ order.order_id }}" value="Send">Send</button>
                     </footer>
             </section>       
          </div>

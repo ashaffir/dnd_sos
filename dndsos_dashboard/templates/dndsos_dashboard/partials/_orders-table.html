@@ -12,8 +12,8 @@
     </tr>
 </thead>
 <tbody>
-    {% for order in orders %}
-    <tr class="gradeX">
+    {% for order in orders|dictsort:'updated' %}
+    <tr class="gradeX special-height">
         <td>{{ order.updated }}</td>
         <td>{{ order.drop_off_address }}</td>
         <!-- <td>{% if order.notes %}{{ order.notes }}{% endif %}</td> -->
@@ -60,7 +60,7 @@
         <!-- Order Status -->
         <td class="actions" style='text-align:center'>
             {% if order.status == 'STARTED' %}
-                <button class="btn btn-success" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up <i class="fa fa-truck"></i></button>
+                <button style="margin: 0%;" class="btn btn-success" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up <i class="fa fa-truck"></i></button>
             {% else %}
             {% endif %}
 
@@ -108,7 +108,7 @@
                 </div>
             </div>
              
-            <a class="btn btn-danger on-default edit-row" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="modal" data-target="#bCancelOrder_{{ order.order_id }}" {% endif %} style="color: white;"><i class="fa fa-trash-o"></i></a>
+            <a class="btn btn-danger on-default edit-row" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="modal" data-target="#bCancelOrder_{{ order.order_id }}" {% endif %} style="color: white; margin:0%"><i class="fa fa-trash-o"></i></a>
 
             <!-- <button onclick="confirm_cancel('{{ order.order_id }}')" class="btn btn-danger on-default edit-row" type="button" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="tooltip" data-placement="top" title="Cancel your order. Please confirm with the accepted freelancer that she/he has received your cancellation." {% endif %}><i class="fa fa-trash-o"></i></button> -->
 

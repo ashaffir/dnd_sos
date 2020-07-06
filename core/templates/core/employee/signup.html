@@ -23,13 +23,11 @@
               {% for field in form %}
                 <div class="mt-2">
                   {% if field.name == "terms_accepted" %}
-                    {{ field.errors }}
                     {{ field }}
                     <a href="{% url 'dndsos:terms' %}">Accept Terms and Conditions</a>
                     <hr>
                   {% else %}
                   <div class="row">
-                    {{ field.errors }}
                     <div class="col-md-4">
                       {{ field.label_tag }}
                     </div>

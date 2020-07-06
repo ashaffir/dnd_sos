@@ -13,8 +13,8 @@
     </tr>
 </thead>
 <tbody>
-    {% for order in orders %}
-    <tr class="gradeX">
+    {% for order in orders|dictsort:'updated' %}
+    <tr class="">
         <td>{{ order.updated }}</td>
         <td id="business_{{ order.order_id }}">{{ order.business.employer.business_name }}</td>
         <td id="pickupAddress_{{ order.order_id }}">{{ order.pick_up_address }}</td>
@@ -22,11 +22,11 @@
         <td id="notes">{{ order.notes }}</td>
         {% if order.status == 'REQUESTED' %}
             <td style="background-color: rgb(220, 235, 15); color: rgb(0, 0, 0);" >
-                <label for="dispached">Waiting for a Freelancer...</label>
+                <p for="dispached">Waiting for a Freelancer...</p>
             </td>                                    
         {% elif order.status == 'STARTED' %}
             <td style="background-color: rgb(199, 109, 25); color:white;">
-                <label for="dispached">Go to pickup!!</label>
+                <p>Go to pickup!!</p>
             </td>
         {% elif order.status == 'IN_PROGRESS' %}
             <td style="background-color: rgb(5, 97, 202); color:white;">

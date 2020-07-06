@@ -61,6 +61,7 @@ class Employer(models.Model):
         ('Cothing', 'Clothing'),
         ('Convenience', 'Convenience'),
         ('Grocery', 'Grocery'),
+        ('Office', 'Office'),
         ('Other', 'Other'),
     )
 

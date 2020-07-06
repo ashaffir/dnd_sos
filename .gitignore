@@ -11,6 +11,9 @@ venv*
 ## Media
 media/*
 themes/*
+*.psd
+*.eps
+*.svg
 
 # Mobile apps
 mobile_apps

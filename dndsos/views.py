@@ -11,9 +11,9 @@ from .forms import ContactForm
 
 def home(request):
     context = {}
-
-    if request.method == 'POST':
-        form = ContactForm(request.POST or None)
+    form = ContactForm(request.POST or None)
+    
+    if request.POST:
         if form.is_valid():
             form.save()
             update_admin(request)
@@ -21,7 +21,9 @@ def home(request):
         else:
             messages.error(request, 'Please fill out the required fields before submitting the form.')
 
-    return render(request, 'dndsos/index.html')
+    context['form'] = form
+    
+    return render(request, 'dndsos/index.html', context)
 
 
 def update_admin(request):

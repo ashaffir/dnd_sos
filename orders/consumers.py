@@ -415,8 +415,18 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             business.save()
         else:
             pass
+        
+        business_categories = {
+            'Restaurant':'Food',
+            'Cothing': 'Clothing',
+            'Convenience': 'Tools',
+            'Grocery': 'Food',
+            'Office':'Documents',
+            'Other': 'Other'
+        }
 
-
+        content['order_type'] = business_categories[business.business_category]
+        
         # Creating the new order
         serializer = OrderSerializer(data=content)
         serializer.is_valid(raise_exception=True)

@@ -11,20 +11,20 @@
 
           <div class="row mb-4">
             <div class="col-lg-4 mr-auto">
-              <h1>Dispatch and Delivery Management System</h1>
-              <p class="mb-5">DND-SOS online platform allows businesses to locate, hire, and manage their delivery workforce while providing individuals with an additional income stream.</p>
+              <h1>Dispatch and Delivery Network</h1>
+              <h4 class="mb-5">Find carriers around you</h4>
               <div>
                 {% if user.is_authenticated %}
                   <!-- <a href="{ url 'core:employer_signup' }" class="btn btn-primary mr-2 mb-2">Business</a>
                   <a href="/core/employee/signup/" class="btn btn-primary mr-2 mb-2">Freelancer</a> -->
                 {% else %}
-                  <a href="{% url 'core:employer_signup' %}" class="btn btn-primary mr-2 mb-2">Business</a>
-                  <a href="{% url 'core:employee_signup' %}" class="btn btn-primary mr-2 mb-2">Freelancer</a>
+                  <a href="{% url 'core:employer_signup' %}" class="btn btn-primary mr-2 mb-2">Register your business</a>
               {% endif %}
               </div>
-            </div>
-            
-            
+            </div>            
+          </div>
+          <div class="row mb-4">
+            <a href="{% url 'core:employee_signup' %}" class=""> Join as a carrier and earn extra income </a>
           </div>
 
         </div>
@@ -37,37 +37,37 @@
     <div class="container">
       <div class="row mb-5">
         <div class="col-12 text-center">
-          <h2 class="section-title mb-3">Get the necessary tools to manage orders’ delivery</h2>
+          <h2 class="section-title mb-3">Why DND-SOS?</h2>
         </div>
       </div>
+      
       <div class="row align-items-stretch">
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
-          
           <div class="unit-4 d-block">
             <div class="unit-4-icon mb-3">
               <span class="icon-wrap"><span class="text-primary icon-autorenew"></span></span>
             </div>
             <div>
-              <h3>Scale your business</h3>
-              <p>With DND-SOS you will never run out of delivery personnel. Get as many as you need to accommodate your customers’ needs.</p>
+              <h3>Unlimited Delivery Workforce</h3>
+              <p>Scale your business. With DND-SOS you will never run out of delivery personnel. Get as many as you need to accommodate your customers’ needs.</p>
               <!-- <p><a href="#">Learn More</a></p> -->
             </div>
           </div>
-
         </div>
-        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
 
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
           <div class="unit-4 d-block">
             <div class="unit-4-icon mb-3">
               <span class="icon-wrap"><span class="text-primary icon-store_mall_directory"></span></span>
             </div>
             <div>
-              <h3>Clear and easy to use</h3>
-              <p>Open order and manage its life cycle through a user-friendly interface.</p>
+              <h3>Pay as you Go</h3>
+              <p>There are no installation-fees or any recurring charges. Your payment is based only on the deliveries that were facilitated through DND-SOS via a simple and clear pricing structure.</p>
               <!-- <p><a href="#">Learn More</a></p> -->
             </div>
           </div>
         </div>
+        
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" >
           <div class="unit-4 d-block">
             <div class="unit-4-icon mb-3">
@@ -132,18 +132,36 @@
       <div class="row">
         <div class="col-lg-12 pl-lg-12 ml-auto mt-5">
           <h2 class="text-black">How it works</h2>
-          <p class="mb-4">DND-SOS allows individuals that would like to start another income stream, to join a pool of freelancers that are available and able to make deliveries.</p>
-          <ul class="ul-check mb-1 list-unstyled success">
-            <li>Businesses have practically unlimited delivery workforce resources to select from and scale their operations.</li>
-            <li>Freelancers can user the platform <strong>free of charge</strong>, decide which delivery to make, and for which business.</li>
-          </ul>
         </div>
       </div>
       <div class="row">
+        <div class="col-lg-3 border-right">
+          <i class="" ><img src="{% static 'assets/images/numbers/png/one.png' %}" style="max-width: 20%;" alt=""></i>
+          <img src="{% static 'assets/images/form.png' %}" alt="Image" class="img-fluid">
+          <h5>Create an order using DND-SOS order form</h5>
+        </div>
+        <div class="col-lg-3 border-right">
+          <i class="" ><img src="{% static 'assets/images/numbers/png/two.png' %}" style="max-width: 20%;" alt=""></i>
+          <img src="{% static 'assets/images/broadcast_dnd.png' %}" alt="Image" class="img-fluid">
+          <h5>Order details are broadcasted to the carriers around your business</h5>
+        </div>
+        <div class="col-lg-3 border-right">
+          <i class="" ><img src="{% static 'assets/images/numbers/png/three.png' %}" style="max-width: 20%;" alt=""></i>
+          <img src="{% static 'assets/images/carrier-red.png' %}" alt="Image" class="img-fluid">
+          <h5>A carrier accepts your order and picks up the package</h5>
+        </div>
+        <div class="col-lg-3 ">
+          <i class="" ><img src="{% static 'assets/images/numbers/png/four.png' %}" style="max-width: 20%;" alt=""></i>
+          <img src="{% static 'assets/images/track_location.png' %}" alt="Image" class="img-fluid">
+          <h5>Carrier makes the delivery while you track the process</h5>
+        </div>
+
+      </div>
+      <!-- <div class="row">
         <div class="col-lg-10 col-md-10">
           <img src="{% static 'images/how-it-works.png' %}" alt="Image" class="img-fluid">
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="mt-5 row mb-5 site-section ">
         <div class="col-lg-7 order-1 order-lg-2">
@@ -175,16 +193,272 @@
     </div>
   </div>
 
-  <div class="site-section bg-light" id="pricing">
+  <div class="site-section bg-light" id="faq">
+    <div class="container">
+      <div class="row mb-1">
+        <div class="col-12 text-center">
+          <h2 class="section-title mb-3">FAQ</h2>
+        </div>
+      </div>
+
+      <ul class="nav md-tabs responsive">
+        <li class="active nav-item waves-effect waves-light" style="width: 50%; text-align: center">
+          <a class="btn btn-lg btn-md btn-sm btn-success nav-link font-weight-bold m-5 fas fa-store fa-2x text-white" href="#business_faq" data-toggle="tab" aria-selected="true"><span class="d-none d-sm-block text-white"> Businesses</span></a>
+        </li>
+        <li class="active nav-item waves-effect waves-light" style="width: 50%; text-align:center">
+          <a class="btn btn-info nav-link font-weight-bold m-5 fas fa-motorcycle fa-2x" href="#freelancer_faq" data-toggle="tab"><span class="d-none d-sm-block">Carriers </span></a>
+        </li>
+      </ul>
+      <div class="tab-content" id="faq">
+        
+        <!-- Business FAQ Pane -->
+        <div class="tab-pane active" id="business_faq" role="tabpanel" aria-labelledby="home-tab">
+        <!--Accordion wrapper-->
+          <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+            <!-- Accordion card -->
+            <div class="card">
+          
+              <!-- Card header -->
+              <div class="card-header" role="tab" id="headingOne1">
+                <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                  aria-controls="collapseOne1">
+                  <h5 class="mb-0">
+                    Collapsible Group Item #1 <i class="fas fa-angle-down rotate-icon"></i>
+                  </h5>
+                </a>
+              </div>
+          
+              <!-- Card body -->
+              <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                data-parent="#accordionEx">
+                <div class="card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                  wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                  eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                  nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                  farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                  labore sustainable VHS.
+                </div>
+              </div>
+          
+            </div>
+            <!-- Accordion card -->
+          
+            <!-- Accordion card -->
+            <div class="card">
+          
+              <!-- Card header -->
+              <div class="card-header" role="tab" id="headingTwo2">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                  aria-expanded="false" aria-controls="collapseTwo2">
+                  <h5 class="mb-0">
+                    Collapsible Group Item #2 <i class="fas fa-angle-down rotate-icon"></i>
+                  </h5>
+                </a>
+              </div>
+          
+              <!-- Card body -->
+              <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                data-parent="#accordionEx">
+                <div class="card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                  wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                  eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                  nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                  farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                  labore sustainable VHS.
+                </div>
+              </div>
+          
+            </div>
+            <!-- Accordion card -->
+          
+            <!-- Accordion card -->
+            <div class="card">
+          
+              <!-- Card header -->
+              <div class="card-header" role="tab" id="headingThree3">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
+                  aria-expanded="false" aria-controls="collapseThree3">
+                  <h5 class="mb-0">
+                    Collapsible Group Item #3 <i class="fas fa-angle-down rotate-icon"></i>
+                  </h5>
+                </a>
+              </div>
+          
+              <!-- Card body -->
+              <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
+                data-parent="#accordionEx">
+                <div class="card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                  wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                  eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                  nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                  farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                  labore sustainable VHS.
+                </div>
+              </div>
+          
+            </div>
+            <!-- Accordion card -->
+          
+          </div>
+        <!-- Accordion wrapper -->
+        </div>
+        <!-- End Business Pane -->
+
+        <!-- Freelancer FAQ pane -->
+        <div class="tab-pane fade" id="freelancer_faq" role="tabpanel" aria-labelledby="home-tab">
+          <!--Accordion wrapper-->
+            <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+  
+              <!-- Accordion card -->
+              <div class="card">
+            
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingOne1">
+                  <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                    aria-controls="collapseOne1">
+                    <h5 class="mb-0">
+                      Where can I see my delivery earnings? <i class="fas fa-angle-down rotate-icon"></i>
+                    </h5>
+                  </a>
+                </div>
+            
+                <!-- Card body -->
+                <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                  data-parent="#accordionEx">
+                  <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                    labore sustainable VHS.
+                  </div>
+                </div>
+            
+              </div>
+              <!-- Accordion card -->
+            
+              <!-- Accordion card -->
+              <div class="card">
+            
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingTwo2">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                    aria-expanded="false" aria-controls="collapseTwo2">
+                    <h5 class="mb-0">
+                      Item #5 <i class="fas fa-angle-down rotate-icon"></i>
+                    </h5>
+                  </a>
+                </div>
+            
+                <!-- Card body -->
+                <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                  data-parent="#accordionEx">
+                  <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                    labore sustainable VHS.
+                  </div>
+                </div>
+            
+              </div>
+              <!-- Accordion card -->
+            
+              <!-- Accordion card -->
+              <div class="card">
+            
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingThree3">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
+                    aria-expanded="false" aria-controls="collapseThree3">
+                    <h5 class="mb-0">
+                      Item #6 <i class="fas fa-angle-down rotate-icon"></i>
+                    </h5>
+                  </a>
+                </div>
+            
+                <!-- Card body -->
+                <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
+                  data-parent="#accordionEx">
+                  <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                    labore sustainable VHS.
+                  </div>
+                </div>
+            
+              </div>
+              <!-- Accordion card -->
+            
+            </div>
+          <!-- Accordion wrapper -->
+          </div>
+  
+        <!-- END Freelancer FAQ pane -->
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="site-section" id="pricing">
     <div class="container">
       
       <div class="row mb-1">
         <div class="col-12 text-center">
           <h2 class="section-title mb-3">Pricing</h2>
+          <hr>
         </div>
       </div>
 
       <div class="row">
+        <div class="col-lg-6 ml-auto pl-lg-6">
+          <div class="row mb-2">
+            <div class="col-md-3">
+              <h2 class="text-black mb-4">Businesses</h2>
+            </div>
+            <div class="col-md-6">
+              <img src="{% static 'assets/images/store.png' %}" alt="Image" class="img-fluid ml-5 mb-5 mb-lg-0 rounded" style="max-width: 50%;">
+            </div>
+          </div>
+          <p class="">As a business, you pay only for the deliveries that you order. The payment for each delivery is based on a base-cost of $3 per km plus $0.5 per any additional 250m to a maximum of $30. Deliveries longer than 16km will be calculated with $0.5 per 500m.</p>
+          <p><a href="{% url 'core:employer_signup' %}" class="btn btn-primary">Register your Business</a></p>
+        </div>
+
+        <div class="col-lg-6 ml-auto pl-lg-6">
+          <div class="row mb-2">
+            <div class="col-md-3">
+              <h2 class="text-black mb-4">Carriers</h2>
+            </div>
+            <div class="col-md-6">
+              <img src="{% static 'assets/images/delivery-motorcycle.png' %}" alt="Image" class="img-fluid ml-5 mb-5 mb-lg-0 rounded" style="max-width: 40%;">
+            </div>
+          </div>
+
+          <p class="">Carriers are welcome to use DNDSOS for FREE. This means, as a carrier you can freely use and benefit from being exposed to plenty of businesses who are looking for available carriers to deliver their goods to their customers and get paid for your time delivering their packages.</p>
+          <p><a href="{% url 'core:employee_signup' %}" class="btn btn-primary">Join as Carrier</a></p>
+        </div>
+      </div>
+
+
+
+      <!-- <div class="row">
         <div class="col-md-4">
           <div class="pricing-table">
             <div class="col-lg-12 col-md-12 col-sm-6">
@@ -235,7 +509,7 @@
             </div>
           </div>          
         </div>
-        </div>
+        </div> -->
       </div>      
   </div>
 
@@ -408,35 +682,44 @@
 
             <div class="row form-group">
               <div class="col-md-6 mb-3 mb-md-0">
-                <label class="text-black" for="fname">* First Name</label>
-                <input type="text" id="fname" name='fname' class="form-control rounded-0">
+                <label class="text-black" for="fname"></label>
+                <!-- <input type="text" id="fname" name='fname' class="form-control rounded-0"> -->
+                {{ form.fname }}
               </div>
               <div class="col-md-6">
-                <label class="text-black" for="lname">* Last Name</label>
-                <input type="text" id="lname" name="lname" class="form-control rounded-0">
+                <label class="text-black" for="lname"></label>
+                <!-- <input type="text" id="lname" name="lname" class="form-control rounded-0"> -->
+                {{ form.lname }}
+
               </div>
             </div>
 
             <div class="row form-group">
               
               <div class="col-md-12">
-                <label class="text-black" for="email">* Email</label> 
-                <input type="email" id="email" name="email" class="form-control rounded-0">
+                <label class="text-black" for="email"></label> 
+                <!-- <input type="email" id="email" name="email" class="form-control rounded-0"> -->
+                {{ form.email }}
+
               </div>
             </div>
 
             <div class="row form-group">
               
               <div class="col-md-12">
-                <label class="text-black" for="subject">* Subject</label> 
-                <input type="subject" id="subject" name="subject" class="form-control rounded-0">
+                <label class="text-black" for="subject"></label> 
+                <!-- <input type="subject" id="subject" name="subject" class="form-control rounded-0"> -->
+                {{ form.subject }}
+
               </div>
             </div>
 
             <div class="row form-group">
               <div class="col-md-12">
-                <label class="text-black" for="message">* Message</label> 
-                <textarea name="message" id="message" cols="30" rows="7" class="form-control rounded-0" placeholder="Write your notes or questions here..."></textarea>
+                <label class="text-black" for="message"></label> 
+                <!-- <textarea name="message" id="message" cols="30" rows="7" class="form-control rounded-0" placeholder="Write your notes or questions here..."></textarea> -->
+                {{ form.message }}
+
               </div>
             </div>
 

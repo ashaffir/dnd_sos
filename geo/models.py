@@ -45,6 +45,7 @@ class CityModel(models.Model):
     name = models.CharField(max_length=100)
     city_symbol = models.IntegerField()
     hebrew_name = models.CharField(max_length=100)
+    geometry = geomodels.PointField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'City Models'

@@ -7,7 +7,7 @@ from .models import Order
 @admin.register(Order)
 class OrderAdmin(OSMGeoAdmin):
     fields = ( # changed
-        'order_id','order_city_name', 'pick_up_address', 'drop_off_address', 'status','order_location',
+        'order_id', 'order_type','order_city_name', 'pick_up_address', 'drop_off_address', 'status','order_location',
         'distance_to_business','trip_completed',
         'freelancer', 'business',
         'selected_freelancers',
@@ -16,7 +16,7 @@ class OrderAdmin(OSMGeoAdmin):
         'created', 'updated','new_message',
     )
     list_display = ( # changed
-        'order_id', 'pick_up_address', 'drop_off_address','distance_to_business', 'status',
+        'order_id','order_type', 'pick_up_address', 'drop_off_address','distance_to_business', 'status',
         'freelancer', 'business',
         'new_message',
         'updated',

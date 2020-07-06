@@ -26,6 +26,7 @@ class BusinessUpdateForm(forms.ModelForm):
             ('Cothing', _('Clothing')),
             ('Convenience', _('Convenience')),
             ('Grocery', _('Grocery')),
+            ('Office', _('Office')),
             ('Other', _('Other')),
         ))
 

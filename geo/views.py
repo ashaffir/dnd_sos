@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import City, BusinessLocation, Street, FreelancerLocation
+from .models import City, BusinessLocation, Street, FreelancerLocation, CityModel
 from core.models import Employee
 from orders.models import Order
 
@@ -100,7 +100,7 @@ class CitiesDetailView(DetailView):
         City detail view.
     """
     template_name = 'geo/city-detail.html'
-    model = City
+    model = CityModel
 
 
 # Reference: https://tinyurl.com/y9rdrqce

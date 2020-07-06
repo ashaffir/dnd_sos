@@ -13,6 +13,7 @@ from core.models import Employee, Employer, User
 
 
 class Order(models.Model):
+    
     REQUESTED = 'REQUESTED'
     RE_REQUESTED = 'RE_REQUESTED'
     REJECTED = 'REJECTED'
@@ -21,6 +22,7 @@ class Order(models.Model):
     COMPLETED = 'COMPLETED'
     SETTLED = 'SETTLED'
     ARCHIVED = 'ARCHIVED'
+    
     STATUSES = (
         (REQUESTED, REQUESTED),
         (RE_REQUESTED, RE_REQUESTED),
@@ -32,11 +34,25 @@ class Order(models.Model):
         (ARCHIVED, ARCHIVED),
     )
 
+    FOOD = 'Food'
+    DOCUMENTS = 'Documents'
+    TOOLS = 'Tools'
+    CLOTHES = 'Clothes'
+    OTHER = 'Other'
+
+    ORDER_TYPES = (
+        (FOOD, FOOD),
+        (DOCUMENTS, DOCUMENTS),
+        (CLOTHES, CLOTHES),
+        (TOOLS, TOOLS),
+        (OTHER, OTHER),
+    )
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     pick_up_address = models.CharField(max_length=255, null=True)
     drop_off_address = models.CharField(max_length=255, null=True)
+    order_type = models.CharField(max_length=50, choices=ORDER_TYPES, default=FOOD)
     
     # GEO
     order_country = models.CharField(max_length=100, null=True, blank=True)
