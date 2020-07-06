@@ -1,3 +1,4 @@
+import platform
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from core.models import Employee
@@ -26,6 +27,21 @@ def freelancer_available(request):
         context['is_active'] = False
         
     return context
+
+def checkOS(request):
+    context = {}
+    try:
+        if platform.system() == 'Darwin':
+            context['platform'] = 'mac'
+        else:
+            context['platform'] = 'linux'
+    
+        return context
+   
+    except Exception as e:
+        context['platform'] = 'mac'
+        return context
+
 
 # def requested_freelancer(request):
 #     context = {}

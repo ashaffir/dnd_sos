@@ -364,7 +364,12 @@
 </script>
 
 <script type="text/javascript">
-    var m = L.map('m').setView([{{ business_location_lat }}, {{ business_location_lon }}], 14); 
+    {% if platform == 'mac' %}
+        var m = L.map('m').setView([{{ user.business.location.x }}, {{ user.business.location.y }}], 14); 
+    {% else %}
+        var m = L.map('m').setView([{{ user.business.location.y }}, {{ user.business.location.x }}], 14); 
+    {% endif %}
+    
     L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(m);
     const century21icon = L.icon({
         iconUrl: "{% static 'assets/images/scooter-icon.png' %}",
@@ -372,7 +377,11 @@
         });
 
     {% for e in freelancers %}
-        L.marker([{{ e.location.x }}, {{ e.location.y }}], {icon: century21icon}).addTo(m).bindPopup('{{e.name}}');
+        {% if platform == 'mac' %}
+            L.marker([{{ e.location.x }}, {{ e.location.y }}], {icon: century21icon}).addTo(m).bindPopup('{{e.name}}');
+        {% else %}
+            L.marker([{{ e.location.y }}, {{ e.location.x }}], {icon: century21icon}).addTo(m).bindPopup('{{e.name}}');
+        {% endif %}
     {% endfor %}
 </script>
 

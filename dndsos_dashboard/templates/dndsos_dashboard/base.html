@@ -687,54 +687,59 @@
 
 		<!-- Freelancer GEO Location -->
 		{% if is_available %}
+		
 		<script>
-			let lat;
-			let lon;
 
-			(function geoFindMe() {
-				//console.log(`STATE: ${freelancerSocket.readyState}`)
+			if (document.documentElement.clientWidth < 600) { /* Run only on mobile devices!! */
+				// scripts
+				let lat;
+				let lon;
 
-				function success(position) {
-					lat  = position.coords.latitude;
-					lon = position.coords.longitude;			  
-					//console.log(`Latitude: ${lat} °, Longitude: ${lon} °`);
+				(function geoFindMe() {
+					//console.log(`STATE: ${freelancerSocket.readyState}`)
 
-			}
+					function success(position) {
+						lat  = position.coords.latitude;
+						lon = position.coords.longitude;			  
+						//console.log(`Latitude: ${lat} °, Longitude: ${lon} °`);
 
-				let csrf = document.getElementsByName("csrfmiddlewaretoken");
-				csrf_value = csrf[0].getAttribute("value");
+				}
+
+					let csrf = document.getElementsByName("csrfmiddlewaretoken");
+					csrf_value = csrf[0].getAttribute("value");
+					
+					$.ajax({
+						url: "{% url 'geo:freelancer-location' %}",
+						type: "POST",
+						data: {
+							csrfmiddlewaretoken: csrf_value,
+							user_id: user_id,
+							lat: lat,
+							lon: lon
+						},
+						success: function(response) {
+							//$('#chatRoom').html(response);
+							console.log(`AJAX OK. USER ${user_id}`)
+						}
+					})								
+		
 				
-				$.ajax({
-					url: "{% url 'geo:freelancer-location' %}",
-					type: "POST",
-					data: {
-						csrfmiddlewaretoken: csrf_value,
-						user_id: user_id,
-						lat: lat,
-						lon: lon
-					},
-					success: function(response) {
-						//$('#chatRoom').html(response);
-						console.log(`AJAX OK. USER ${user_id}`)
+					function error() {
+					console.log('Unable to retrieve your location');
 					}
-				})								
-	
-			  
-				function error() {
-				  console.log('Unable to retrieve your location');
-				}
-			  
-				if(!navigator.geolocation) {
-					console.log('Geolocation is not supported by your browser');
-				} else {
-				  navigator.geolocation.getCurrentPosition(success, error);
-				}
-
-				setTimeout(geoFindMe, 5000);
 				
-				console.log(`LOCATION: LON ${lon}  LAT ${lat}`)
-			})();	
+					if(!navigator.geolocation) {
+						console.log('Geolocation is not supported by your browser');
+					} else {
+					navigator.geolocation.getCurrentPosition(success, error);
+					}
+
+					setTimeout(geoFindMe, 5000);
+					
+					console.log(`LOCATION: LON ${lon}  LAT ${lat}`)
+				})();	
 			//$(window).on('load',geoFindMe);
+			}
 		</script>
 		{% endif %}
 
