@@ -637,6 +637,9 @@ def b_statistics(request, b_id):
 def freelancers(request, b_id):
     context = {}
 
+    context['business_location_lat'] = request.user.business.location[0]
+    context['business_location_lon'] = request.user.business.location[1]
+    
     # Extracting the freelancers that worked with the business in the past
     b_freelancers = []
     b_relationships = User.objects.get(pk=b_id).relationships

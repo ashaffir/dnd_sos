@@ -445,6 +445,7 @@
 					} else if (order_status == 'STARTED' && data.data.freelancer == user_id){
 						console.log(`ORDER STARTED - Freelancer ${user_id}`)
 						update_freelancer_notifications();
+						window.open("{% url 'dndsos_dashboard:f-active-deliveries' f_id=user.pk %}");
 					
 					// When a business removes the offer after freelancer's acceptance
 					} else if (order_status == 'ARCHIVED' && data.data.freelancer == user_id){

@@ -8,4 +8,12 @@ class ContactUs(admin.ModelAdmin):
     search_fields = ('name','email')
     ordering = ('-created',)
 
-admin.site.register(ContentPage)
+# admin.site.register(ContentPage)
+
+@admin.register(ContentPage)
+class ContentPage(admin.ModelAdmin):
+    list_display = ('name','section','active',)
+    search_fields = ('name','section',)
+    ordering = ('name',)
+
+

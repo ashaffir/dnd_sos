@@ -16,7 +16,7 @@
     {% for order in orders|dictsort:'updated' %}
     <tr class="">
         <td>{{ order.updated }}</td>
-        <td id="business_{{ order.order_id }}">{{ order.business.employer.business_name }}</td>
+        <td id="business_{{ order.order_id }}">{{ order.business.business.business_name }}</td>
         <td id="pickupAddress_{{ order.order_id }}">{{ order.pick_up_address }}</td>
         <td id="dropoffAddress_{{ order.order_id }}">{{ order.drop_off_address }}</td>
         <td id="notes">{{ order.notes }}</td>

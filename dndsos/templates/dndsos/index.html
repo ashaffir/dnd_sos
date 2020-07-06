@@ -45,7 +45,7 @@
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
           <div class="unit-4 d-block">
             <div class="unit-4-icon mb-3">
-              <span class="icon-wrap"><span class="text-primary icon-autorenew"></span></span>
+              <span class="icon-wrap"><span class="text-primary icon-people"></span></span>
             </div>
             <div>
               <h3>Unlimited Delivery Workforce</h3>
@@ -58,7 +58,7 @@
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
           <div class="unit-4 d-block">
             <div class="unit-4-icon mb-3">
-              <span class="icon-wrap"><span class="text-primary icon-store_mall_directory"></span></span>
+              <span class="icon-wrap"><span class="text-primary icon-payment"></span></span>
             </div>
             <div>
               <h3>Pay as you Go</h3>
@@ -71,7 +71,7 @@
         <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" >
           <div class="unit-4 d-block">
             <div class="unit-4-icon mb-3">
-              <span class="icon-wrap"><span class="text-primary icon-shopping_basket"></span></span>
+              <span class="icon-wrap"><span class="text-primary icon-timer"></span></span>
             </div>
             <div>
               <h3>Real-time response</h3>
@@ -241,198 +241,69 @@
         <!--Accordion wrapper-->
           <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 
+            {% for faq_b in faq_business %}
             <!-- Accordion card -->
             <div class="card">
           
               <!-- Card header -->
               <div class="card-header" role="tab" id="headingOne1">
-                <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                <a data-toggle="collapse" data-parent="#accordionEx" href="#b_collapse{{ forloop.counter }}" aria-expanded="true"
                   aria-controls="collapseOne1">
                   <h5 class="mb-0">
-                    Collapsible Group Item #1 <i class="fas fa-angle-down rotate-icon"></i>
+                    {{ faq_b.name }} <i class="fas fa-angle-down rotate-icon"></i>
                   </h5>
                 </a>
               </div>
           
               <!-- Card body -->
-              <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+              <div id="b_collapse{{ forloop.counter }}" class="collapse" role="tabpanel" aria-labelledby="headingOne1"
                 data-parent="#accordionEx">
                 <div class="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                  wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                  eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                  nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                  farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                  labore sustainable VHS.
+                  {{ faq_b.content|safe }}
                 </div>
               </div>
           
             </div>
-            <!-- Accordion card -->
-          
-            <!-- Accordion card -->
-            <div class="card">
-          
-              <!-- Card header -->
-              <div class="card-header" role="tab" id="headingTwo2">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
-                  aria-expanded="false" aria-controls="collapseTwo2">
-                  <h5 class="mb-0">
-                    Collapsible Group Item #2 <i class="fas fa-angle-down rotate-icon"></i>
-                  </h5>
-                </a>
-              </div>
-          
-              <!-- Card body -->
-              <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
-                data-parent="#accordionEx">
-                <div class="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                  wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                  eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                  nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                  farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                  labore sustainable VHS.
-                </div>
-              </div>
-          
-            </div>
-            <!-- Accordion card -->
-          
-            <!-- Accordion card -->
-            <div class="card">
-          
-              <!-- Card header -->
-              <div class="card-header" role="tab" id="headingThree3">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
-                  aria-expanded="false" aria-controls="collapseThree3">
-                  <h5 class="mb-0">
-                    Collapsible Group Item #3 <i class="fas fa-angle-down rotate-icon"></i>
-                  </h5>
-                </a>
-              </div>
-          
-              <!-- Card body -->
-              <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
-                data-parent="#accordionEx">
-                <div class="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                  wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                  eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                  nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                  farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                  labore sustainable VHS.
-                </div>
-              </div>
-          
-            </div>
-            <!-- Accordion card -->
-          
+            <!-- END Accordion card -->
+          {% endfor %}
           </div>
-        <!-- Accordion wrapper -->
+        <!-- END Accordion wrapper -->
         </div>
-        <!-- End Business Pane -->
+        <!-- End Business FAQ Pane -->
 
         <!-- Freelancer FAQ pane -->
         <div class="tab-pane fade" id="freelancer_faq" role="tabpanel" aria-labelledby="home-tab">
           <!--Accordion wrapper-->
             <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
   
+              {% for faq_f in faq_freelancer %}
               <!-- Accordion card -->
               <div class="card">
             
                 <!-- Card header -->
                 <div class="card-header" role="tab" id="headingOne1">
-                  <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                  <a data-toggle="collapse" data-parent="#accordionEx" href="#f_collapse{{ forloop.counter }}" aria-expanded="false"
                     aria-controls="collapseOne1">
                     <h5 class="mb-0">
-                      Where can I see my delivery earnings? <i class="fas fa-angle-down rotate-icon"></i>
+                      {{ faq_f.name|safe }} <i class="fas fa-angle-down rotate-icon"></i>
                     </h5>
                   </a>
                 </div>
             
                 <!-- Card body -->
-                <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                <div id="f_collapse{{ forloop.counter }}" class="collapse" role="tabpanel" aria-labelledby="headingOne1"
                   data-parent="#accordionEx">
                   <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                    labore sustainable VHS.
+                    {{ faq_f.content|safe }}
                   </div>
                 </div>
             
               </div>
-              <!-- Accordion card -->
-            
-              <!-- Accordion card -->
-              <div class="card">
-            
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingTwo2">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
-                    aria-expanded="false" aria-controls="collapseTwo2">
-                    <h5 class="mb-0">
-                      Item #5 <i class="fas fa-angle-down rotate-icon"></i>
-                    </h5>
-                  </a>
-                </div>
-            
-                <!-- Card body -->
-                <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
-                  data-parent="#accordionEx">
-                  <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                    labore sustainable VHS.
-                  </div>
-                </div>
-            
-              </div>
-              <!-- Accordion card -->
-            
-              <!-- Accordion card -->
-              <div class="card">
-            
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingThree3">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
-                    aria-expanded="false" aria-controls="collapseThree3">
-                    <h5 class="mb-0">
-                      Item #6 <i class="fas fa-angle-down rotate-icon"></i>
-                    </h5>
-                  </a>
-                </div>
-            
-                <!-- Card body -->
-                <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
-                  data-parent="#accordionEx">
-                  <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                    labore sustainable VHS.
-                  </div>
-                </div>
-            
-              </div>
-              <!-- Accordion card -->
+              <!--END Accordion card -->
+              {% endfor %}
             
             </div>
-          <!-- Accordion wrapper -->
+          <!-- END Accordion wrapper -->
           </div>
   
         <!-- END Freelancer FAQ pane -->

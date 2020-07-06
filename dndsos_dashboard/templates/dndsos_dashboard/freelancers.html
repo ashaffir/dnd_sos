@@ -7,6 +7,33 @@
 
 {% block content %}
 {% include 'dndsos_dashboard/partials/_message-sent-modal.html' %}
+<link rel="stylesheet" href="//unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="//unpkg.com/leaflet/dist/leaflet.js"></script>
+<style>
+    /* Reference: http://www.javascriptkit.com/dhtmltutors/cssmediaqueries2.shtml */
+    @media screen and (min-width: 1024px){
+        .freelancers-map {
+            max-width: 1000px; 
+            height: 500px; 
+            margin-left: 2rem;
+        }
+    }
+    @media screen and (max-device-width: 480px) and (orientation: portrait){
+        .freelancers-map {
+            max-width: 400px; 
+            height: 500px; 
+            margin-left: 0rem;
+        }
+      }
+
+    @media screen and (max-device-width: 740px) and (orientation: landscape){
+        .freelancers-map {
+            max-width: 400px; 
+            height: 500px; 
+            margin-left: 1rem;
+        }
+      }
+</style>
 
 
 <section role="main" class="content-body">
@@ -32,6 +59,9 @@
             <div class="tabs">
                 <ul class="nav nav-tabs tabs-primary">
                     <li class="active">
+                        <a href="#freelancers_map" data-toggle="tab">Freelancers Map</a>
+                    </li>
+                    <li class="">
                         <a href="#select_tab" data-toggle="tab">Select Freelancers</a>
                     </li>
                     <li >
@@ -39,6 +69,135 @@
                     </li>
                 </ul>
                 <div class="tab-content">
+
+                    <!-- Freelancers Map tab -->
+                    <div id="freelancers_map" class="tab-pane active">
+
+                        <form action="" method="POST" enctype="multipart/form-data" id="b_select_freelancers" name="select_freelancers">
+                            {% csrf_token %}
+                            <div class="row" >
+                                <div class="col-md-4">
+                                    <h4>Pick Available Freelancers From Your Pool</h4>
+                                    <p>There  {% if num_freelancers_due_payment > 1 %}  are {% else %} is {% endif %}{{ num_freelancers_due_payment }} freelancers in your pool.</p>
+                                    <!-- <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button> -->
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 1rem;">
+                                <div class="col-md-3">
+                                    <i class="fa fa-circle" style="color: #e36159;"></i><span> Means you need to pay them.</span>
+                                </div>
+                            </div>
+    
+                            <hr>
+                
+                            <div class="row">
+                                <!-- Map -->
+                                <div class="freelancers-map" id="m"></div>
+                            </div>
+
+                        </form>
+                    </div> 
+                    <!-- End Business freelancers tab -->
+                    
+                    <!-- Freelancers Tab -->
+                    <div id="select_tab" class="tab-pane">
+                        <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
+                            {% csrf_token %}
+                            <div class="row" >
+                                <div class="col-md-4">
+                                    <h4>Pick Available Freelancers in range {{ max_range }} km</h4>
+                                    <p>There  {% if total_freelancers > 1 %}  are {% else %} is {% endif %}{{ total_freelancers }} freelancers available.</p>
+                                    <button type="submit" class="btn btn-warning mobile-bottom-margin" name="sort_by_city" type="button">Reset Filter</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-md">
+                                        <label for="range_selector" style="margin-right: 2rem;">Range from freelancer </label>
+                                        <select name="range" id="range_selector">
+                                            <option value="1.0">--------</option>
+                                            <option value="1.0">1 km</option>
+                                            <option value="5.0">5 km</option>
+                                            <option value="10.0">10 km</option>
+                                            <option value="15.0">15 km</option>
+                                            <option value="20.0">20 km</option>
+
+                                        </select>
+                                        <label for="vehicle_selector" style="margin: 2rem;">Filter by Vehicle </label>
+                                        <select name="vehicle" id="vehicle_selector">
+                                            <option value="">--------------------</option>
+                                            {% for vehicle in vehicles %}
+                                            <option value="{{ vehicle }}">{{ vehicle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <span class="input-group-btn left">
+                                            <button type="submit" class="btn btn-success" name="filter" type="button">Filter!</button>
+                                        </span>
+                                    </div>                    
+                                </div>
+                                <div class="col-md-2 left">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                {% for freelancer in freelancers %}
+                                    <div class="col-md-4">
+										<section class="panel">
+											<header class="panel-heading bg-primary">
+												<div class="panel-heading-profile-picture">
+													<img src="{{ freelancer.profile_pic.url }}">
+												</div>
+											</header>
+											<div class="panel-body">
+												<h4 class="text-semibold mt-sm">{{ freelancer.name }}</h4>
+												<p>Short bio: {{ freelancer.bio }} </p>
+												<p>Vehicle: {{ freelancer.vehicle }} </p>
+												<hr class="solid short">
+
+                                                <div class="row">
+                                                    <!-- Request Freelancer Button -->
+                                                    <div class="col-md-12 text-center" >
+
+                                                        <!-- Select Freelancer modal -->
+                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#selectFreelancer_{{ freelancer.pk }}">Request Freelancer</a>
+
+                                                        <div class="modal fade" id="selectFreelancer_{{ freelancer.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                        <h4 class="modal-title" id="myModalLabel">Which order would you like the freelancer for?</h4>
+                                                                    </div>
+                                                                    <div class="modal-body form-group">
+                                                                         <select class="form-control" name="open_orders" id="open_orders_{{ freelancer.pk }}">
+                                                                             <option value="">---------</option>
+                                                                             {% for order in orders %}
+                                                                                <option value="{{ order.order_id  }}">{{ order.drop_off_address }}</option>
+                                                                             {% endfor %}
+                                                                         </select>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" 
+                                                                            id="freelancer_{{ freelancer.pk }}" 
+                                                                            onclick="request_specific_freelancer('{{ freelancer.pk }}',false)" 
+                                                                            class="btn btn-primary">Confirm
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+											</div>
+										</section>
+                                    </div> 
+                                {% endfor %}
+                            </div>
+                            </form>
+                    </div>
+                    <!-- End Freelancers tab -->
+
+                    <!-- Business Freelancers tab -->
                     <div id="manage_tab" class="tab-pane ">
 
                         <form action="" method="POST" enctype="multipart/form-data" id="b_select_freelancers" name="select_freelancers">
@@ -146,102 +305,7 @@
 
                         </form>
                     </div> 
-                    <div id="select_tab" class="tab-pane active" active>
-                        <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
-                            {% csrf_token %}
-                            <div class="row" >
-                                <div class="col-md-4">
-                                    <h4>Pick Available Freelancers in range {{ max_range }} km</h4>
-                                    <p>There  {% if total_freelancers > 1 %}  are {% else %} is {% endif %}{{ total_freelancers }} freelancers available.</p>
-                                    <button type="submit" class="btn btn-warning mobile-bottom-margin" name="sort_by_city" type="button">Reset Filter</button>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group mb-md">
-                                        <label for="range_selector" style="margin-right: 2rem;">Range from freelancer </label>
-                                        <select name="range" id="range_selector">
-                                            <option value="1.0">--------</option>
-                                            <option value="1.0">1 km</option>
-                                            <option value="5.0">5 km</option>
-                                            <option value="10.0">10 km</option>
-                                            <option value="15.0">15 km</option>
-                                            <option value="20.0">20 km</option>
-
-                                        </select>
-                                        <label for="vehicle_selector" style="margin: 2rem;">Filter by Vehicle </label>
-                                        <select name="vehicle" id="vehicle_selector">
-                                            <option value="">--------------------</option>
-                                            {% for vehicle in vehicles %}
-                                            <option value="{{ vehicle }}">{{ vehicle }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        <span class="input-group-btn left">
-                                            <button type="submit" class="btn btn-success" name="filter" type="button">Filter!</button>
-                                        </span>
-                                    </div>                    
-                                </div>
-                                <div class="col-md-2 left">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                {% for freelancer in freelancers %}
-                                    <div class="col-md-4">
-										<section class="panel">
-											<header class="panel-heading bg-primary">
-												<div class="panel-heading-profile-picture">
-													<img src="{{ freelancer.profile_pic.url }}">
-												</div>
-											</header>
-											<div class="panel-body">
-												<h4 class="text-semibold mt-sm">{{ freelancer.name }}</h4>
-												<p>Short bio: {{ freelancer.bio }} </p>
-												<p>Vehicle: {{ freelancer.vehicle }} </p>
-												<hr class="solid short">
-
-                                                <div class="row">
-                                                    <!-- Request Freelancer Button -->
-                                                    <div class="col-md-12 text-center" >
-
-                                                        <!-- Select Freelancer modal -->
-                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#selectFreelancer_{{ freelancer.pk }}">Request Freelancer</a>
-
-                                                        <div class="modal fade" id="selectFreelancer_{{ freelancer.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                                        <h4 class="modal-title" id="myModalLabel">Which order would you like the freelancer for?</h4>
-                                                                    </div>
-                                                                    <div class="modal-body form-group">
-                                                                         <select class="form-control" name="open_orders" id="open_orders_{{ freelancer.pk }}">
-                                                                             <option value="">---------</option>
-                                                                             {% for order in orders %}
-                                                                                <option value="{{ order.order_id  }}">{{ order.drop_off_address }}</option>
-                                                                             {% endfor %}
-                                                                         </select>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" 
-                                                                            id="freelancer_{{ freelancer.pk }}" 
-                                                                            onclick="request_specific_freelancer('{{ freelancer.pk }}',false)" 
-                                                                            class="btn btn-primary">Confirm
-                                                                        </button>
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-											</div>
-										</section>
-                                    </div> 
-                                {% endfor %}
-                            </div>
-                            </form>
-                        </div>
-
+                    <!-- End Business freelancers tab -->
                     </div>
                 </div>
             </div>
@@ -297,6 +361,19 @@
         }
     };
     
+</script>
+
+<script type="text/javascript">
+    var m = L.map('m').setView([{{ business_location_lat }}, {{ business_location_lon }}], 14); 
+    L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(m);
+    const century21icon = L.icon({
+        iconUrl: "{% static 'assets/images/scooter-icon.png' %}",
+        iconSize: [30, 30]
+        });
+
+    {% for e in freelancers %}
+        L.marker([{{ e.location.x }}, {{ e.location.y }}], {icon: century21icon}).addTo(m).bindPopup('{{e.name}}');
+    {% endfor %}
 </script>
 
 {% endblock js %}

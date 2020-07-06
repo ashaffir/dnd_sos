@@ -99,13 +99,17 @@ class Employer(models.Model):
 
     is_approved = models.BooleanField(default=False)
 
+    @property
+    def lat_lng(self):
+        return list(getattr(self.location, 'coords', [])[::-1])
+
+
     class Meta:
         verbose_name = _('Business Profile')
         verbose_name_plural = _('Business Profiles')
 
     def __str__(self):
         return self.email
-
 
 def id_path(instance, filename):
     return f'documents/{instance.pk}.id_doc.{filename}'

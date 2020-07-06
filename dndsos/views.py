@@ -21,6 +21,9 @@ def home(request):
         else:
             messages.error(request, 'Please fill out the required fields before submitting the form.')
 
+    context['faq_freelancer'] = ContentPage.objects.filter(section='faq_freelancer')
+    context['faq_business'] = ContentPage.objects.filter(section='faq_business')
+
     context['form'] = form
     
     return render(request, 'dndsos/index.html', context)
