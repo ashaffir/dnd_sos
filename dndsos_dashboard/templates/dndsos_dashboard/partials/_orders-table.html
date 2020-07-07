@@ -1,18 +1,18 @@
 <thead>
     <tr>
         <th>Updated</th>
-        <th>Destination</th>
+        <th>Order Destination</th>
         <!-- <th>Notes</th> -->
         <th>Allocated Freelancer</th>
-        <th>Order Status</th>
         <th>Picked Up</th>
+        <th>Order Status</th>
         <th>Messages</th>
-        <th>Payments</th>
+        <!-- <th>Payments</th> -->
         <th></th>
     </tr>
 </thead>
 <tbody>
-    {% for order in orders|dictsort:'updated' %}
+    {% for order in orders|dictsortreversed:'updated' %}
     <tr class="gradeX special-height">
         <td>{{ order.updated }}</td>
         <td>{{ order.drop_off_address }}</td>
@@ -20,32 +20,51 @@
         
         <!-- Order allocation -->
         {% if order.freelancer %}
-        <td style="background-color:green; color: white">{{order.freelancer.email}} / {{order.freelancer.phone_number}}</td>
+        <td class="success center">
+            <p style="padding-top: 1em;">{{order.freelancer.freelancer.name}} / {{order.freelancer.freelancer.phone}}</p>
+        </td>
         {% else %}
-        <td style="background-color:orange; color: white">Not Allocated</td>
+        <td style="background-color:orange; color: white; text-align:center;padding-top:1em"><i class="fa fa-2x fa-exclamation-triangle"></i> Not Allocated</td>
         {% endif %}
+
+        <!-- Pick up status change -->
+        {% if order.status == 'STARTED' %}
+            <td class="actions" style='text-align:center'>
+                <button style="margin: 0%;" class="btn btn-success" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up? <i class="fa fa-truck"></i></button>
+            </td>
+        {% elif order.status == 'REQUESTED' or order.status == 'RE_REQUESTED' %}
+        <td class="center">
+            <i class="fa fa-2x fa-exclamation" style="color: red;"></i>
+        </td>
+        {% else %}
+            <td class="actions success center">
+                <i class="fa fa-check fa-2x"></i>
+            </td>
+        {% endif %}
+
+        <!-- Order Status -->                
         {% if order.status == 'REQUESTED' or order.status == 'REJECTED' or order.status == 'RE_REQUESTED' %}
-            <td style="background-color: rgb(220, 235, 15); color: rgb(0, 0, 0); text-align:center" >
-            <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for a Freelancer...</label>                                    
+            <td class="info center" style="padding-top: 1em;" >
+                <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for a Freelancer...</label>                                    
         {% elif order.status == 'STARTED' %}
-            <td style="background-color: rgb(199, 109, 25); color:white; text-align:center">
-                <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for pickup...</label>
+            <td class="info center">
+                <label for="dispached" id="orderStatus" status='{{ order.status }}' style="padding-top:1em">Waiting for pickup...</label>
             </td>
         {% elif order.status == 'IN_PROGRESS' %}
-            <td style="background-color: rgb(5, 97, 202); color:white; text-align:center">
+            <td class="primary center">
                 <div class="row">
-                    <div class="col-md-6" style="border-right: solid white;">
+                    <div class="col-md-6" style="border-right: solid white; padding-top:1em">
                         <label for="dispached" id="orderStatus" status='{{ order.status }}'>Being delivered...</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="padding-top:1em">
                         {{ order.trip_completed }} % completed.
                     </div>
                 </div>
                 
             </td>
         {% elif order.status == 'COMPLETED' %}
-            <td>
-                <label for="completed" id="orderStatus" status='{{ order.status }}'>Delivered</label>
+            <td class="center success">
+                <label for="completed" id="orderStatus" status='{{ order.status }}'><i class="fa fa-check-square-o fa-2x"></i> Delivered</label>
             </td>
         {% elif order.status == 'SETTLED' %}
             <td>
@@ -57,15 +76,6 @@
             </td>
         {% endif %}
 
-        <!-- Order Status -->
-        <td class="actions" style='text-align:center'>
-            {% if order.status == 'STARTED' %}
-                <button style="margin: 0%;" class="btn btn-success" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up <i class="fa fa-truck"></i></button>
-            {% else %}
-            {% endif %}
-
-        </td>
-
         <!-- Messages -->
         <td class="actions" style='text-align:center'>
             {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' or order.status == 'STARTED' %}
@@ -75,13 +85,13 @@
         </td>
 
         <!-- Payments -->
-        <td class="actions" style='text-align:center'>
+        <!-- <td class="actions" style='text-align:center'>
             {% if order.status == 'COMPLETED' %}
                 {% include './_payment-modal.html' with order=order %}
             {% else %}
             {% endif %}
 
-        </td>
+        </td> -->
 
         <!-- Delete/cancel -->
         <td class="actions" style='text-align:center'>

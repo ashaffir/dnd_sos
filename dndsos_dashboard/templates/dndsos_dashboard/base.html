@@ -957,6 +957,7 @@
 				broadcast_order = function(order_id, pick_up_address, drop_off_address /*,notes*/){
 					console.log('REQUESTING FREELANCER...')
 					// Broadcast a request for an excisting order
+					$("#broadcastSent").modal("show");
 					businessSocket.send(JSON.stringify({
 						'type': 'update.order', 
 						'data': {
