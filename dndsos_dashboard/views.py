@@ -685,7 +685,7 @@ def freelancers(request, b_id):
             else:
                 filtered_freelancers = Employee.objects.all()
         else:
-            filtered_freelancers = Employee.objects.all(is_approved=True)
+            filtered_freelancers = Employee.objects.filter(is_approved=True)
 
     else:
         max_range = DEFAULT_FREELANCER_RANGE
@@ -712,8 +712,9 @@ def freelancers(request, b_id):
                 freelancers_in_range.append(freelancer)
         except Exception as e:
             print(f'Freelancer {freelancer} does not have location. EX: {e}')
+    # End Freelancers locations
 
-
+    # Filter freelancers
     freelancers = []
     if filtered_freelancers:
         for fl in filtered_freelancers:
