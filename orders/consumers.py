@@ -193,6 +193,11 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         order.chat = {
             'messages': []
         }
+
+        order.selected_freelancers = {
+            'selected': []
+        }
+
         order.new_message = {
             'freelancer':'',
             'business':''
@@ -531,11 +536,9 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
             elif event == 'Direct Invitation':
                 print(f'======> DIRECT INVITATION: {replying_fl}')
-                if not order_instance.selected_freelancers:
-                    order_instance.selected_freelancers = [replying_fl]
-                else:
-                    if replying_fl not in order_instance.selected_freelancers:
-                        order_instance.selected_freelancers.append(replying_fl)
+                print(f'======> selected_freelancers: {order_instance.selected_freelancers}')
+                if replying_fl not in order_instance.selected_freelancers:
+                    order_instance.selected_freelancers['selected'].append(replying_fl)
                 
                 order_instance.save()
                 order = order_instance

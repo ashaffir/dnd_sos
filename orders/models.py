@@ -69,17 +69,17 @@ class Order(models.Model):
     notes = models.TextField(max_length=500, blank=True, null=True)
 
     # List of freelancers that were directly chosen by the business (in case there are more than one)
-    selected_freelancers = ArrayField(
-        ArrayField(
-            models.CharField(max_length=10000, null=True, blank=True),
-            size=400
-        ),
-        size=1,
-        null=True,
-        blank=True
-    )
+    # selected_freelancers = ArrayField(
+    #     ArrayField(
+    #         models.CharField(max_length=10000, null=True, blank=True),
+    #         size=400
+    #     ),
+    #     size=1,
+    #     null=True,
+    #     blank=True
+    # )
 
-    # selected_freelancers = JSONField(blank=True, null=True, default={})
+    selected_freelancers = JSONField(blank=True, null=True)
 
 
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)

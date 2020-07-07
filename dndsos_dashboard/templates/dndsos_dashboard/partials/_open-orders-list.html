@@ -5,7 +5,7 @@
 {% for order in open_orders %}
 <div class="col-md-4">
     <section class="panel text-center">
-        {% if user.pk|slugify in order.selected_freelancers %}
+        {% if user.pk|slugify in order.selected_freelancers.selected %}
             <header class="panel-heading bg-secondary">
                 <div class="">
                     <i class="fa fa-exclamation fa-2x"> You were invited by {{ order.business.business.business_name }}</i>
