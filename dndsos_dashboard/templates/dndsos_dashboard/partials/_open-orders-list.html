@@ -17,6 +17,10 @@
             <header class="panel-heading bg-primary">
                 <div class="">
                     <i class="fa fa-car fa-2x"> New offer from {{ order.business.business.business_name }}</i>
+                    HHHH
+                    {{order.selected_freelancers}}
+                    SLUG: {{user.pk|slugify}}
+                    PK: {{user.pk}}
                 </div>
             </header>
         {% endif %}
