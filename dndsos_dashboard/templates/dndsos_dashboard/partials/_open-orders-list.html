@@ -8,19 +8,13 @@
         {% if user.pk|slugify in order.selected_freelancers.selected %}
             <header class="panel-heading bg-secondary">
                 <div class="">
-                    <i class="fa fa-exclamation fa-2x"> You were invited by {{ order.business.business.business_name }}</i>
-                    {{order.selected_freelancers}}
-                    {{user.pk|slugify}}
+                    <i class="fa fa-exclamation-triangle fa-2x"> You were invited by {{ order.business.business.business_name }}</i>
                 </div>
             </header>
         {% else %}
             <header class="panel-heading bg-primary">
                 <div class="">
                     <i class="fa fa-car fa-2x"> New offer from {{ order.business.business.business_name }}</i>
-                    HHHH
-                    {{order.selected_freelancers}}
-                    SLUG: {{user.pk|slugify}}
-                    PK: {{user.pk}}
                 </div>
             </header>
         {% endif %}

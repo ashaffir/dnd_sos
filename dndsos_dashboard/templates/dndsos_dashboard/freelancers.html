@@ -100,13 +100,12 @@
                             {% csrf_token %}
                             <div class="row" >
                                 <div class="col-md-4">
-                                    <h4>Pick Available Freelancers in range {{ max_range }} km</h4>
-                                    <p>There  {% if total_freelancers > 1 %}  are {% else %} is {% endif %}{{ total_freelancers }} freelancers available.</p>
-                                    <button type="submit" class="btn btn-warning mobile-bottom-margin" name="sort_by_city" type="button">Reset Filter</button>
+                                    <h4>Pick Available Carriers in range {{ max_range }} km</h4>
+                                    <p>There  {% if total_freelancers > 1 %}  are {% else %} is {% endif %}{{ total_freelancers }} carriers available.</p>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group mb-md">
-                                        <label for="range_selector" style="margin-right: 2rem;">Range from freelancer </label>
+                                        <label for="range_selector" style="margin-right: 2rem;">Range from carrier </label>
                                         <select name="range" id="range_selector">
                                             <option value="1.0">--------</option>
                                             <option value="1.0">1 km</option>
@@ -134,7 +133,7 @@
                             <hr>
                             <div class="row">
                                 {% for freelancer in freelancers %}
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
 										<section class="panel">
 											<header class="panel-heading bg-primary">
 												<div class="panel-heading-profile-picture">
