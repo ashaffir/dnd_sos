@@ -8,7 +8,9 @@
         {% if user.pk|slugify in order.selected_freelancers %}
             <header class="panel-heading bg-secondary">
                 <div class="">
-                    <i class="fa fa-exclamation fa-2x"> You were invited by {{ order.business.employer.business_name }}</i>
+                    <i class="fa fa-exclamation fa-2x"> You were invited by {{ order.business.business.business_name }}</i>
+                    {{order.selected_freelancers}}
+                    {{user.pk|slugify}}
                 </div>
             </header>
         {% else %}
