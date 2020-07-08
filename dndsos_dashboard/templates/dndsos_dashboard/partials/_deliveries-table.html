@@ -27,7 +27,7 @@
                 <button class="btn btn-outline-success" type="button" name="orderDelivered" id="orderDelivered" value="{{ order.order_id }}" disabled><i class="fa fa-check fa-2x" style="color:green;"></i></button>
             {% elif order.status == 'STARTED'  %}
                 <!-- Waiting for the pickup -->
-                <i class="fa fa-exclamation fa-2x" style="color: red;"></i>
+                <i class="fa fa-exclamation-triangle fa-2x" style="color: red;"></i>
             {% else %}
                 <button class="btn btn-success" onclick="delivered('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" type="button" name="orderDelivered" id="orderDelivered" value="{{ order.order_id }}">Delivered?<i class="fa fa-trash"></i></button>
             {% endif %}

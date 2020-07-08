@@ -382,6 +382,7 @@
 
 			{% include 'dndsos_dashboard/partials/_f-offer-modal.html' %}
 			{% include 'dndsos_dashboard/partials/_f-offer-removed-modal.html' %}
+			{% include 'dndsos_dashboard/partials/_order-delivered-modal.html' %}
 
 			<!-- ------------------ -->
 			<!-- FREELANCER -->
@@ -415,6 +416,7 @@
 
 					let pick_up_address = data.data.pick_up_address;
 					let drop_off_address = data.data.drop_off_address;
+					$("#new_offer_delivery_type").html(data.data.order_type)
 					$("#pick_up_address").html(pick_up_address);
 					$("#drop_off_address").html(drop_off_address);
 					//$("#new_offer_notes").html(data.data.notes);
@@ -424,13 +426,13 @@
 						console.log(`NEW ORDER`);
 						$("#newOfferAlert").modal("show");
 						update_freelancer_notifications();
-					}
-
-
-					if (order_status == 'RE_REQUESTED' && current_order_id != order_id) {
-						$("#newOfferAlert").modal("show");
+					} else if (order_status == 'RE_REQUESTED' && current_order_id != order_id) {
+						//$("#newOfferAlert").modal("show");
+						update_freelancer_notifications();
+					} else if (order_status == 'RE_REQUESTED' &&  freelancer == user_id) {
 						update_freelancer_notifications();
 					}
+
 					{% endif %}
 					current_order_id = order_id
 
@@ -445,7 +447,8 @@
 					} else if (order_status == 'STARTED' && data.data.freelancer == user_id){
 						console.log(`ORDER STARTED - Freelancer ${user_id}`)
 						update_freelancer_notifications();
-						window.open("{% url 'dndsos_dashboard:f-active-deliveries' f_id=user.pk %}");
+						// Move to "Active Deliveries" page (same tab)
+						window.location.replace("{% url 'dndsos_dashboard:f-active-deliveries' f_id=user.pk %}")
 					
 					// When a business removes the offer after freelancer's acceptance
 					} else if (order_status == 'ARCHIVED' && data.data.freelancer == user_id){
@@ -460,7 +463,12 @@
 						console.log('ORDER CANCELED (no freelancer)')
 						$('#newOfferAlert').modal('hide');
 						update_freelancer_notifications();
-					
+
+					// When freelancer tries to accept an order that was already allocated
+					} else if (order_status == 'COMPLETED' && data.data.freelancer == user_id){
+						console.log('DELIVERED!!!!!!!!!')
+						$('#orderDeliveredModal').modal("show");
+						update_freelancer_notifications();						
 					} else {
 						console.log('Updating tables...');
 						update_freelancer_notifications();
@@ -610,6 +618,7 @@
 			$.ajax({
 				url: "{% url 'orders:open-orders-list' %}",
 				success: function(response){
+					console.log('GGGGGGG')
 					$('#openOrdersList').html(response);
 				}
 			})

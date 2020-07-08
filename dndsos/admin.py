@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ContactUs, ContentPage
+from .models import ContactUs, ContentPage, FreelancerFeedback
 
 @admin.register(ContactUs)
 class ContactUs(admin.ModelAdmin):
@@ -16,4 +16,7 @@ class ContentPage(admin.ModelAdmin):
     search_fields = ('name','section',)
     ordering = ('name',)
 
-
+@admin.register(FreelancerFeedback)
+class FreelancerFeedback(admin.ModelAdmin):
+    list_display = ('freelancer','overall',)
+    search_field = ('freelancer')

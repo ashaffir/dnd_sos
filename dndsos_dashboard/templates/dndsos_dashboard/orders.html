@@ -3,6 +3,30 @@
 
 {% block content %}
 {% include 'dndsos_dashboard/partials/_message-sent-modal.html' %}
+{% include 'dndsos_dashboard/partials/_rating-confirm.html' with order=order %}
+
+<style>
+    table.orders td:nth-child(8) {
+        width: 100px;
+        position: relative;
+    }
+    table.orders td:nth-child(8) div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 18px;
+        z-index: 100;
+    }
+    table.orders td:nth-child(8) img {
+        position: relative;
+        top: 2rem;
+        left: 0;
+        width: 15%;
+        z-index: 110;
+    }
+
+
+</style>
 
 <style>
     td {
@@ -43,7 +67,7 @@
                 </div>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table  table-bordered table-striped mb-none display" id="ordersTable">
+                    <table class="table  table-bordered table-striped mb-none display orders" id="ordersTable">
 
                         <!-- Orders table dynamically updated -->
                         

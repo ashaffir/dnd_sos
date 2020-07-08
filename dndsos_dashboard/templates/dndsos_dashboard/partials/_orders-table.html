@@ -1,3 +1,4 @@
+{% load static %}
 <thead>
     <tr>
         <th>Updated</th>
@@ -6,13 +7,16 @@
         <th>Allocated Freelancer</th>
         <th>Picked Up</th>
         <th>Order Status</th>
-        <th>Messages</th>
+        <th>Price</th>
+        <th>Contact Carrier</th>
+        <th>Carrier Feedback</th>
         <!-- <th>Payments</th> -->
         <th></th>
     </tr>
 </thead>
 <tbody>
     {% for order in orders|dictsortreversed:'updated' %}
+
     <tr class="gradeX special-height">
         <td>{{ order.updated }}</td>
         <td>{{ order.drop_off_address }}</td>
@@ -21,7 +25,7 @@
         <!-- Order allocation -->
         {% if order.freelancer %}
         <td class="success center">
-            <p style="padding-top: 1em;">{{order.freelancer.freelancer.name}} / {{order.freelancer.freelancer.phone}}</p>
+            <p style="padding-top: 1em;">{{order.freelancer.freelancer.name}} / <a href="tel:{{ order.freelancer.freelancer.phone }}" style="color: white;"><i class="fa fa-phone-square fa-2x" ></i> {{order.freelancer.freelancer.phone}}</a></p>
         </td>
         {% else %}
         <td style="background-color:orange; color: white; text-align:center;padding-top:1em"><i class="fa fa-2x fa-exclamation-triangle"></i> Not Allocated</td>
@@ -30,7 +34,7 @@
         <!-- Pick up status change -->
         {% if order.status == 'STARTED' %}
             <td class="actions" style='text-align:center'>
-                <button style="margin: 0%;" class="btn btn-success" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up? <i class="fa fa-truck"></i></button>
+                <button style="margin: 0%;" class="btn btn-warning" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up? <i class="fa fa-truck"></i></button>
             </td>
         {% elif order.status == 'REQUESTED' or order.status == 'RE_REQUESTED' %}
         <td class="center" style="padding-top: 1em;">
@@ -63,7 +67,7 @@
                 
             </td>
         {% elif order.status == 'COMPLETED' %}
-            <td class="center success">
+            <td class="center success" style="padding-top: 1em;">
                 <label for="completed" id="orderStatus" status='{{ order.status }}'><i class="fa fa-check-square-o fa-2x"></i> Delivered</label>
             </td>
         {% elif order.status == 'SETTLED' %}
@@ -76,11 +80,41 @@
             </td>
         {% endif %}
 
+        <!-- Price -->
+        <td class="actions" style='text-align:center'>
+            {{ order.price }} {{ currency }}
+        </td>
+        
         <!-- Messages -->
         <td class="actions" style='text-align:center'>
             {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' or order.status == 'STARTED' %}
                 {% include './_b-message-modal.html' with order=order %}
             {% else %}
+            {% endif %}
+        </td>
+
+        <!-- Feedback -->
+        <td class="actions" style='text-align:center'>
+            <!--  include 'dndsos_dashboard/partials/_star-ratings-1.html' with order=order   -->
+            <!-- <div style="width: calc(20% *  {{ order.freelancer_rating }} ">                
+            </div> -->
+            <!-- <img src="{% static 'assets/images/stars.png' %}" alt="" title="{{ order.freelancer_rating }}"> -->
+            {% if order.freelancer_rating %}
+                <div>
+                    <table>
+                        <tr>
+                                {% with ''|center:order.freelancer_rating as range %}
+                                <td >
+                                    {% for star in range %}
+                                        <img src="{% static 'assets/images/goldstar.png' %}" alt="" title="{{ order.freelancer_rating }}">
+                                    {% endfor %}    
+                                </td>
+                                {% endwith %}
+                        </tr>
+                    </table>
+                </div>
+            {% elif order.freelancer.freelancer %}
+                <input type="button" class="btn btn-primary" onclick="rateFreelancer('{{ order.order_id }}')" value="✭">
             {% endif %}
         </td>
 
@@ -127,6 +161,16 @@
     </tr>
     {% endfor %}
 </tbody>
+
+<script>
+    rateFreelancer = function(order_id){
+        console.log(`ORDER: ${order_id}`)
+        submit = document.getElementById('rateFreelancer')
+        submit.value = order_id
+        $(`#ratingConfirm`).modal("show")
+    }
+
+</script>
 
 <!-- 
 Handing the cancelling of an offer by the business

@@ -184,11 +184,11 @@
                                             <div class="summary">
                                                 <h4 class="title">Total Profit</h4>
                                                 <div class="info">
-                                                    <strong class="amount">$ {{ total_profit }}</strong>
+                                                    <strong class="amount">$ {{ daily_profit }}</strong>
                                                 </div>
                                             </div>
                                             <div class="summary-footer">
-                                                <a class="text-muted text-uppercase">(withdraw)</a>
+                                                <a href="{% url 'dndsos_dashboard:f-deliveries' f_id=user.pk %}" class="text-muted text-uppercase">(details)</a>
                                             </div>
                                         </div>
                                     </div>

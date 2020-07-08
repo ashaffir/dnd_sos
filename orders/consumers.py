@@ -18,6 +18,7 @@ from django.db.models import Q
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
 from core.models import User, Employer, Employee
+from payments.models import Payment
 
 from geo.models import UserLocation
 
@@ -120,6 +121,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             data = {
                     'order_id': order_id,
                     'business': business,
+                    'freelancer': freelancer_id,
+                    'status': 'RE_REQUESTED',
                     'title': 'Direct Invitation'
                 }
 
@@ -268,8 +271,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     'business': order.business.pk,
                     'freelancer': active_freelancer,
                     'drop_off_address': order.drop_off_address,
-                    'business_name': order.business.email,
-                    'created': str(order.created),
+                    'business_name': order.business.business.business_name,
+                    'created': str(order.created.date()) + ' | ' + str(str(order.created.time()).split('.')[0]),
                     'status': 'ARCHIVED'
                 }
                 await self.channel_layer.group_send(group='freelancers', message={
@@ -406,6 +409,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             business_location = geolocator.geocode(business_address)
             business_coords = (business_location.latitude, business_location.longitude)
             order_to_business_distance = distance(business_coords, order_coords).km
+            order_to_business_distance_meters = order_to_business_distance * 1000
         except Exception as e:
             logger.error(f'''Fail getting business location. ERROR: {e}
                             business address: {business_address}
@@ -413,6 +417,10 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                         ''')
             order_to_business_distance = 1000
 
+        # Calculating the price for the order
+        if order_to_business_distance_meters:
+            price = settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT
+        content['price'] = round(price,2)
         content['distance_to_business'] = round(order_to_business_distance,2)
 
         if not business.location:
@@ -523,7 +531,14 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     freelancers_list.append(freelancer.pk)
                     business.relationships['freelancers'] = list(set(freelancers_list))
 
-                
+                Payment.objects.create(
+                    date = datetime.now(),
+                    order = order_instance,
+                    freelancer = freelancer.freelancer,
+                    business = business.business,
+                    amount = order_instance.price
+                )
+
                 freelancer.save()
                 business.save()
 
@@ -536,7 +551,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
             elif event == 'Direct Invitation':
                 print(f'======> DIRECT INVITATION: {replying_fl}')
-                print(f'======> selected_freelancers: {order_instance.selected_freelancers}')
                 if replying_fl not in order_instance.selected_freelancers:
                     order_instance.selected_freelancers['selected'].append(replying_fl)
                 

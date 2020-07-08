@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.db import models
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField, JSONField
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from django.contrib.gis.db import models as geomodels
 from django.contrib.gis.db.models import PointField
@@ -68,19 +69,10 @@ class Order(models.Model):
 
     notes = models.TextField(max_length=500, blank=True, null=True)
 
+    price = models.FloatField(null=True, blank=True)
+
     # List of freelancers that were directly chosen by the business (in case there are more than one)
-    # selected_freelancers = ArrayField(
-    #     ArrayField(
-    #         models.CharField(max_length=10000, null=True, blank=True),
-    #         size=400
-    #     ),
-    #     size=1,
-    #     null=True,
-    #     blank=True
-    # )
-
     selected_freelancers = JSONField(blank=True, null=True)
-
 
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)
 
@@ -100,6 +92,9 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         related_name='business_orders'
     )
+
+    freelancer_rating = models.IntegerField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
+    business_rating = models.IntegerField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
 
     chat = JSONField(blank=True, null=True)
     new_message = JSONField(blank=True, null=True)

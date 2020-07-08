@@ -87,6 +87,7 @@ class Employer(models.Model):
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
 
+    business_total_rating = models.FloatField(null=True, blank=True)
 
     b_freelancers = models.CharField(max_length=500, null=True, blank=True)
  
@@ -161,9 +162,10 @@ class Employee(models.Model):
     '''
     trips = JSONField(null=True, blank=True)
 
-
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
     id_doc = models.FileField(null=True, blank=True, upload_to=id_path)
+
+    freelancer_total_rating = models.FloatField(null=True, blank=True)
 
     newsletter_optin = models.BooleanField(default=True)
 

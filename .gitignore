@@ -8,6 +8,9 @@ ngrok
 ## VENV
 venv*
 
+## Migrations
+*/migrations
+
 ## Media
 media/*
 themes/*

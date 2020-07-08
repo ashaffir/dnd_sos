@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'payments',
     'dndsos_dashboard',
     'orders.apps.OrdersConfig',
-    
+
     'django_extensions',
     'ckeditor',
     'crispy_forms',
@@ -227,3 +227,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Isracard section
 ISRACARD_SECRET_KEY = ''
+
+# Default pricing structure
+DEFAULT_BASE_PRICE = config['DEFAULT_BASE_PRICE']
+DEFAULT_UNIT_PRICE = config['DEFAULT_UNIT_PRICE']
+DEFAULT_CURRENCY = config['DEFAULT_CURRENCY']
+DISTANCE_UNIT = config['DISTANCE_UNIT']
+DISTANCE_DIM = config['DISTANCE_DIM']

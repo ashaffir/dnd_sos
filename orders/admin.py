@@ -8,8 +8,8 @@ from .models import Order
 class OrderAdmin(OSMGeoAdmin):
     fields = ( # changed
         'order_id', 'order_type','order_city_name', 'pick_up_address', 'drop_off_address', 'status','order_location',
-        'distance_to_business','trip_completed',
-        'freelancer', 'business',
+        'distance_to_business','trip_completed', 'price',
+        'freelancer','freelancer_rating', 'business','business_rating',
         'selected_freelancers',
         'trip',
         'chat', 

@@ -138,11 +138,11 @@
                                             <div class="summary">
                                                 <h4 class="title">Total Daily Cost</h4>
                                                 <div class="info">
-                                                    <strong class="amount">$ {{ total_cost }}</strong>
+                                                    <strong class="amount">$ {{ daily_cost }}</strong>
                                                 </div>
                                             </div>
                                             <div class="summary-footer">
-                                                <a class="text-muted text-uppercase">(details)</a>
+                                                <a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}" class="text-muted text-uppercase">(details)</a>
                                             </div>
                                         </div>
                                     </div>

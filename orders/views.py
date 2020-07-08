@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.conf import settings
 
 from rest_framework import generics, permissions, status, views, viewsets 
 from rest_framework.response import Response
@@ -37,6 +38,7 @@ def orders_table(request):
         else:
             pass
     
+    context['currency'] = settings.DEFAULT_CURRENCY
     context['orders'] = orders
     return render(request, 'dndsos_dashboard/partials/_orders-table.html', context)
 

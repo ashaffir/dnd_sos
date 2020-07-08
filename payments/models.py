@@ -2,7 +2,8 @@ from django.db import models
 from dndsos_dashboard.models import TimeStampedUUIDModel
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import User
+from core.models import User, Employee, Employer
+from orders.models import Order
 
 class Card(TimeStampedUUIDModel):
     card_holder = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -21,3 +22,16 @@ class Card(TimeStampedUUIDModel):
     def __str__(self):
         return "{} ({})".format(self.name, self.card_number)
 
+class Payment(models.Model):
+    date = models.DateTimeField(auto_now=True)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    freelancer = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    business = models.ForeignKey(Employer, on_delete=models.CASCADE)
+    amount = models.FloatField(null=True, blank=True)
+    payment_received = models.BooleanField(default=False)
+    payment_date = models.DateTimeField(null=True, blank=True)
+    paid_freelancer = models.BooleanField(default=False)
+    payment_freelancer_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.order.pk)

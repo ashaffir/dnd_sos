@@ -38,7 +38,7 @@ urlpatterns = [
     path('payments/', include('payments.urls')),
 
     path('api/sign_up/', SignUpView.as_view(), name='sign_up'),
-    
+
 # Password:
     # https://docs.djangoproject.com/en/3.0/topics/auth/default/
     

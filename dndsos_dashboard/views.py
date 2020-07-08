@@ -98,6 +98,13 @@ def b_dashboard(request, b_id):
     
     context['num_daily_orders'] = len(daily_orders)
 
+    # Daily cost
+    daily_cost = 0
+    for order in daily_orders:
+        daily_cost += order.price
+
+    context['daily_cost'] = round(daily_cost,2)
+
     if request.user.relationships:
         context['num_active_freelancers'] = len(request.user.relationships['freelancers'])
 
@@ -157,6 +164,13 @@ def f_dashboard(request, f_id):
     daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
     
     context['num_daily_orders'] = len(daily_orders)
+
+    # Daily profit
+    daily_profit = 0
+    for order in daily_orders:
+        daily_profit += order.price
+
+    context['daily_profit'] = daily_profit
 
     f_businesses = []
     f_relationships = User.objects.get(pk=f_id).relationships
@@ -379,6 +393,35 @@ def orders(request, b_id):
     context['freelancers'] = Employee.objects.all()
 
     context['cities'] = CityModel.objects.all()
+
+    if request.method == 'POST':
+        if 'rateFreelancer' in request.POST:
+            freelancer_rating = request.POST.get('f_rating')
+            order_id = request.POST.get('rateFreelancer')
+            order = Order.objects.get(pk=order_id)
+
+            if freelancer_rating:
+                order.freelancer_rating = freelancer_rating
+                order.save()
+
+                # Calculating overall freelancer rating
+                freelancer = Employee.objects.get(pk=order.freelancer.freelancer.pk)
+                freelancer_orders = Order.objects.filter(freelancer=order.freelancer.freelancer.pk)
+
+                if len(freelancer_orders) > 0:
+                    total_rating = 0
+                    for order in freelancer_orders:
+                        total_rating += order.freelancer_rating
+                    
+                    total_rating = round(total_rating/len(freelancer_orders),2)
+                    freelancer.freelancer_total_rating = total_rating
+                    freelancer.save()
+
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            
+
+        else:
+            pass
 
     # business_name = business_profile.business_name
     # business_city = business_profile.city

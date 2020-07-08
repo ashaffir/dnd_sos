@@ -1,7 +1,9 @@
 
 from ckeditor.fields import RichTextField
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from django.db import models
+from core.models import Employee, Employer
 
 class ContactUs(models.Model):
     fname = models.CharField(max_length=100, blank=True, null=True)
@@ -31,3 +33,14 @@ class Faq(models.Model):
 
 	def __str__(self):
 	 return self.name
+
+# NOT USED
+class FreelancerFeedback(models.Model):
+	freelancer = models.OneToOneField(Employee, on_delete=models.CASCADE)
+	overall = models.IntegerField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
+	communication = models.IntegerField(null=True, blank=True)
+	response_time = models.IntegerField(null=True, blank=True)
+	recommend = models.IntegerField(null=True, blank=True)
+
+	def __str__(self):
+	 return f'{self.freelancer.name} | {self.freelancer.pk}'
