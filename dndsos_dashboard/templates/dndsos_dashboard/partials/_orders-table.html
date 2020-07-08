@@ -113,7 +113,7 @@
                         </tr>
                     </table>
                 </div>
-            {% elif order.freelancer.freelancer %}
+            {% elif order.freelancer.freelancer and order.status == 'COMPLETED' %}
                 <input type="button" class="btn btn-primary" onclick="rateFreelancer('{{ order.order_id }}')" value="✭">
             {% endif %}
         </td>

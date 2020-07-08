@@ -24,7 +24,7 @@ def distance_calculator(order):
         print(f'DISTANCE between carrier and order drop off address: {order_range_to_freelancer} meters')
 
         if order_business_distance > order_range_to_freelancer:
-            trip_completed = round((order_business_distance - order_range_to_freelancer) / order_business_distance, 2) * 100
+            trip_completed = 100 * (order_business_distance - order_range_to_freelancer) / order_business_distance
             print(f'Carrier has completed {trip_completed}% of the trip.')
         else:
             print(f'Carrier did not start moving.')

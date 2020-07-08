@@ -33,7 +33,7 @@ def orders_table(request):
         if order.status == 'IN_PROGRESS':
             # Calculated completed distance
             trip_completed = distance_calculator(order)
-            order.trip_completed = trip_completed
+            order.trip_completed = round(trip_completed)
             order.save()
         else:
             pass
