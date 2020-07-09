@@ -16,13 +16,51 @@
             max-width: 1000px; 
             height: 500px; 
             margin-left: 2rem;
+            z-index: 1;
+        }
+
+        .total-ratings {
+            background-color: gold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            z-index: 1;
+        }
+        .panel-body .stars img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80%;
+            z-index: 2;
         }
     }
-    @media screen and (max-device-width: 480px) and (orientation: portrait){
+    @media screen and (max-device-width: 360px) and (orientation: portrait){
         .freelancers-map {
             max-width: 400px; 
             height: 500px; 
             margin-left: 0rem;
+            z-index: 1;
+        }
+
+        .total-ratings {
+            background-color: gold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 45px;
+            z-index: 1;
+        }
+        .panel-body .stars img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80%;
+            z-index: 2;
+        }
+
+        .row .stars {
+            margin-bottom: 1rem;
         }
       }
 
@@ -31,6 +69,7 @@
             max-width: 400px; 
             height: 500px; 
             margin-left: 1rem;
+            z-index: 1;
         }
       }
 </style>
@@ -226,25 +265,6 @@
                             </div> -->
  
                             <hr>
-                            <style>
-                                .total-ratings {
-                                    background-color: gold;
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                    height: 25px;
-                                    z-index: 100;
-                                }
-                                .panel-body .stars img {
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                    width: 80%;
-                                    z-index: 110;
-                                }
-                            
-                            
-                            </style>                            
                 
                             <div class="row">
                                 {% for freelancer in b_freelancers %}
@@ -274,7 +294,7 @@
                                                         <img src="{% static 'assets/images/stars.png' %}" alt="" title="{{ freelancer.freelancer.freelancer_total_rating }}">
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <div class="row stars">
                                                     <div class="col-md-6"></div>
                                                     <div class="col-md-6">
                                                         <p><b>({{ freelancer.freelancer.freelancer_total_rating }}/5)</b></p>
@@ -282,6 +302,7 @@
                                                 </div>
 
 												<hr class="solid short">
+                                               
                                                 <div class="row">
                                                     <!-- Request Freelancer Button -->
                                                     <div class="col-md-12 text-center" >
