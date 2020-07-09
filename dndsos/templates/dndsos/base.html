@@ -68,15 +68,15 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
 
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a id="home_url" onclick="home()" href="/#home-section" class="nav-link">Home</a></li>
-                <li><a id="features-section" onclick="features()" href="/#features-section" class="nav-link">Features</a></li>
-                <li><a id="how-it-works-section" onclick="how_it_works()" href="/#how-it-works-section" class="nav-link">How it Works</a></li>
-                <li><a id="faq" onclick="faq()" href="/#faq" class="nav-link">FAQ</a></li>
+                <li><a id="home-link" onclick="home()" href="/#home-section" class="nav-link">Home</a></li>
+                <li><a id="features-link" onclick="features()"  href="/#features-section" class="nav-link">Features</a></li>
+                <li><a id="how-link" onclick="how()"  href="/#how-it-works-section" class="nav-link">How it Works</a></li>
+                <li><a id="faq-link" onclick="faq()" href="/#faq" class="nav-link">FAQ</a></li>
                 <!-- <li><a href="/#about-section" class="nav-link">About Us</a></li> -->
                 <!-- <li><a href="/#testimonials-section" class="nav-link">Testimonials</a></li> -->
                 <!-- <li><a href="/#blog-section" class="nav-link">Blog</a></li> -->
-                <li><a id="pricing" onclick="pricing()" href="/#pricing" class="nav-link">Pricing</a></li>
-                <li><a id="contact-section" onclick="contact()" href="/#contact-section" class="nav-link">Contact</a></li>
+                <li><a id="pricing-link" onclick="pricing()"  href="/#pricing" class="nav-link">Pricing</a></li>
+                <li><a id="contact-link" onclick="contact()" href="/#contact-section" class="nav-link">Contact</a></li>
                 {% if user.is_authenticated %}
                   {% if user.is_employer %}
                     <!-- <li><a class="btn btn-success text-white" href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li> -->
@@ -95,27 +95,27 @@
 
           <script>
             home = function(e){
-              link = document.querySelector('#home_url').getAttribute('href')
+              link = document.querySelector('#home-link').getAttribute('href')
               window.open(link,"_self")
             }
             features = function(e){
-              link = document.querySelector('#features-section').getAttribute('href')
+              link = document.querySelector('#features-link').getAttribute('href')
               window.open(link,"_self")
             }
-            how_it_works = function(e){
-              link = document.querySelector('#how-it-works-section').getAttribute('href')
+            how = function(e){
+              link = document.querySelector('#how-link').getAttribute('href')
               window.open(link,"_self")
             }
             faq = function(e){
-              link = document.querySelector('#faq').getAttribute('href')
+              link = document.querySelector('#faq-link').getAttribute('href')
               window.open(link,"_self")
             }
             pricing = function(e){
-              link = document.querySelector('#pricing').getAttribute('href')
+              link = document.querySelector('#pricing-link').getAttribute('href')
               window.open(link,"_self")
             }
             contact = function(e){
-              link = document.querySelector('#contact-section').getAttribute('href')
+              link = document.querySelector('#contact-link').getAttribute('href')
               window.open(link,"_self")
             }
 

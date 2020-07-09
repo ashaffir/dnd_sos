@@ -196,23 +196,6 @@
   <style>
 
     /* Reference: http://www.javascriptkit.com/dhtmltutors/cssmediaqueries2.shtml */
-
-    .mobile-image {
-      display: none;
-    }
-    @media only screen and (max-width : 480px) {
-      .mobile-image{
-        display: block;
-        max-width: 400%;
-      }
-   }
-
-   @media only screen and (max-width : 320px) {
-    .mobile-image{
-      display: block;
-      max-width: 400%;
-      }
-  }
   </style>
 
   <div class="site-section bg-light" id="faq">
@@ -223,15 +206,15 @@
         </div>
       </div>
 
-      <ul class="nav md-tabs responsive" style="text-align:center">
+      <ul class="nav md-tabs responsive center" style="text-align:center">
         
-        <li class="active nav-item waves-effect waves-light" style="width: 50%; text-align: center">
-          <a class="btn btn-primary font-weight-bold m-5 fas fa-store fa-2x text-white" href="#business_faq" data-toggle="tab" aria-selected="true"><img class="mobile-image" src="{% static 'assets/images/shop-white.png' %}" alt=""><span class="d-none d-sm-block text-white"> Businesses</span></a>
+        <li class="active nav-item waves-effect waves-light center" style="width: 50%; text-align: center">
+          <a class="btn btn-primary font-weight-bold text-white m-2" href="#business_faq" data-toggle="tab" aria-selected="true"><img class=" center mobile-image" style="max-width: 20%;" src="{% static 'assets/images/shop-white.png' %}" alt=""><span class="d-none d-sm-block text-white"> Businesses</span></a>
         </li>
 
         <li class="active nav-item waves-effect waves-light" style="width: 50%;">
-          <a class="btn btn-warning font-weight-bold m-5 fas fa-motorcycle fa-2x" href="#freelancer_faq" data-toggle="tab" style="text-align:center; color:white">
-            <img class="mobile-image" src="{% static 'assets/images/scooter.png' %}" alt="">
+          <a class="btn btn-warning font-weight-bold m-2" href="#freelancer_faq" data-toggle="tab" style="text-align:center; color:white">
+            <img class="center mobile-image" style="max-width: 20%;" src="{% static 'assets/images/scooter.png' %}" alt="">
             <span class="d-none d-sm-block text-light">Carriers </span>
           </a>
         </li>
