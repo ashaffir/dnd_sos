@@ -6,14 +6,23 @@
 {% block title %} dilvur - Login{% endblock %}
 
 {% block content %}
+
+<style>
+  @media screen and (max-device-width: 360px) and (orientation: portrait){
+    .mobile-header {
+        margin-top: 2rem;
+    }
+  }
+</style>
+
 <div class="mt-2">
   {% block head_title %}{% trans "Login" %}{% endblock %}
 </div>
 <div class="container">
   <div class="row justify-content-center form-group">
-    <div class="col-lg-7 mb-5 mt-5">
+    <div class="col-lg-7 mt-5">
       
-          <h2 class="h4 text-black mb-5" style="color: black;">{% trans "Login" %}</h2> 
+          <h2 class="h4 text-black mb-3 mobile-header" style="color: black;">{% trans "Login" %}</h2> 
 
           <form class="login" method="POST" action="{% url 'core:login' %}">
         {% csrf_token %}
@@ -29,5 +38,4 @@
     </div>
   </div>    
 </div>
-
 {% endblock %}
