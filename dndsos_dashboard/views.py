@@ -1,6 +1,8 @@
 import logging
 import os
 from datetime import datetime,date
+import phonenumbers
+from email_validator import validate_email, EmailNotValidError
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
@@ -26,7 +28,7 @@ from core.models import Employee, Employer, User
 from core.forms import EmployeeProfileForm, EmployerProfileForm
 from core.decorators import employer_required, employee_required
 
-from .forms import BusinessUpdateForm, FreelancerUpdateForm
+from .forms import BusinessUpdateForm, FreelancerUpdateForm, BankDetailsForm
 from .models import Email
 from orders.models import Order
 from .utilities import send_mail
@@ -193,7 +195,11 @@ def b_profile(request, b_id):
 
     context['cities'] = CityModel.objects.all()
 
+    form = BusinessUpdateForm(instance=user_profile)
+
     if request.method == 'POST':
+
+        # form = BusinessUpdateForm(request.POST,request.FILES, instance=user_profile)
 
         if 'update_profile' in request.POST:
             new_name = request.POST.get("name")
@@ -284,7 +290,7 @@ def b_profile(request, b_id):
     context['complete'] = round(field_count/len(required_fields)*100)
     context['email'] = request.user.email
     context['profile'] = user_profile
-    context['form'] = BusinessUpdateForm()
+    context['form'] = form
     return render(request, 'dndsos_dashboard/b-profile.html', context)
 
 @login_required
@@ -293,65 +299,83 @@ def f_profile(request, f_id):
     context['freelancer'] = True
     user_profile = Employee.objects.get(user=request.user.id)
     context['cities'] = CityModel.objects.all()
+    context['countries'] = ['IL', 'USA']
+
+    form = FreelancerUpdateForm(instance=user_profile)
 
     if request.method == 'POST':
-
-        new_name = request.POST.get("name")
-        new_vehicle = request.POST.get("vehicle")
-        new_phone = request.POST.get("phone")
-        new_bio = request.POST.get("bio")
-        new_city = request.POST.get("city")
-        new_hours = request.POST.get("active_hours")
-        profile_pic = request.FILES.get("profile_pic")
-        id_doc = request.FILES.get("id_doc")
-
-        if new_name:
-            user_profile.name = new_name
-
-        if new_vehicle:
-            user_profile.vehicle = new_vehicle
-
-        if new_phone:
-            user_profile.phone = new_phone
-
-        if new_bio:
-            user_profile.bio = new_bio
-
-        if new_city:
-            user_profile.city = new_city
-
-        if new_hours:
-            user_profile.active_hours = new_hours
-
-        if id_doc:
-            user_profile.id_doc = request.FILES.get("id_doc")
-
-        if not profile_pic:
-            profile_pic = request.FILES.get("old_profile_pic")
-        else:
-            user_profile.profile_pic = profile_pic
-
-        user_profile.email = request.user.email
         
-        try:
-            user_profile.save()
+        if 'updateProfile' in request.POST:
+            form = FreelancerUpdateForm(request.POST,request.FILES, instance=user_profile)            
             
-            # if id_doc:
-            #     path = user_profile.id_doc
-            #     print(f'PATH: {path}')
-            #     filename = request.FILES.get("id_doc").name
-            #     os.rename('documents/' + filename, f"documents/{f_id}.{filename}")
+            phone = request.POST.get('phone')
+            country = request.POST.get('country')
 
-            messages.success(request,'You have successfully updated your profile.')
-        except Exception as e:
-            messages.success(request,f'There was an error updating your profile. ERRRO: {e}')
+            try:
+                p = phonenumbers.parse(phone, country)
+                z = phonenumbers.is_valid_number(p)
+            except Exception as e:
+                messages.error(request, f'Input phone is not valid. ERROR: {e}')
+                return redirect(request.META['HTTP_REFERER'])
+
+            if form.is_valid():
+                # new_name = request.POST.get("name")
+    
+                # if not profile_pic:
+                #     profile_pic = request.FILES.get("old_profile_pic")
+                # else:
+                #     user_profile.profile_pic = profile_pic
+
+                try:
+                    form.save()
+                    
+                    messages.success(request,'You have successfully updated your profile.')
+                except Exception as e:
+                    messages.success(request,f'There was an error updating your profile. ERRRO: {e}')
+            else:
+                for error in form.errors:
+                    messages.error(request, f'Error: {error}')
+                print('ERROR PROFILE FORM')
+        
+        elif request.POST.get('paypal_account'): 
+            paypal_account = request.POST.get('paypal_account')
+            try:
+                valid = validate_email(paypal_account)
+                user_profile.paypal_account = paypal_account
+                user_profile.save()
+                messages.success(request,'You have successfully updated a payment method.')
+                return redirect(request.META['HTTP_REFERER'])
+            except EmailNotValidError as e:
+                messages.error(request,f'You have entered a non-valid email. Error: {e}')
+                return redirect(request.META['HTTP_REFERER'])
+
+        elif 'phonePayment' in request.POST: 
+            user_profile.payment_via_phone = True
+            user_profile.save()
+            messages.success(request,'You have successfully updated a payment method.')
+            return redirect(request.META['HTTP_REFERER'])
+
+        elif 'makePreferred_paypal' in request.POST: 
+            user_profile.preferred_payment_method = 'PayPal'
+            user_profile.save()
+            messages.success(request,'You have successfully set a default payment method.')
+            return redirect(request.META['HTTP_REFERER'])
+        elif 'makePreferred_bank' in request.POST: 
+            user_profile.preferred_payment_method = 'Bank'
+            user_profile.save()
+            messages.success(request,'You have successfully set a default payment method.')
+            return redirect(request.META['HTTP_REFERER'])
+        elif 'makePreferred_phone' in request.POST: 
+            user_profile.preferred_payment_method = 'Phone'
+            user_profile.save()
+            messages.success(request,'You have successfully set a default payment method.')
+            return redirect(request.META['HTTP_REFERER'])
 
     # Check profile completion
     required_fields = {
         'name': False,
         'vehicle': False,
         'phone': False,
-        'city': False,
         'id_doc':False,
         }    
 
@@ -372,7 +396,7 @@ def f_profile(request, f_id):
     context['complete'] = round(field_count/len(required_fields)*100)
     context['email'] = request.user.email
     context['profile'] = user_profile
-    context['form'] = FreelancerUpdateForm()
+    context['form'] = form
 
     return render(request, 'dndsos_dashboard/f-profile.html', context)
 
@@ -422,97 +446,6 @@ def orders(request, b_id):
 
         else:
             pass
-
-    # business_name = business_profile.business_name
-    # business_city = business_profile.city
-    # business_street = business_profile.street
-    # business_building = business_profile.building_number
-
-    # if business_street != '' and business_street is not None:
-    #     if business_city != '' and business_city is not None:
-    #         if business_building != '' and business_building is not None:
-    #             pick_up_address = business_name + ', ' + business_building + ' ' + business_street + ' street, ' + business_city
-    # else:
-    #     messages.error(request, 'Please fill our your business address details before adding orders')
-    #     return redirect('dndsos_dashboard:b-profile', b_id=request.user.pk)
-
-    # business_orders = Order.objects.filter(business=request.user.pk).order_by('-created')
-    # context['orders'] = business_orders
-
-
-    # if request.method == 'POST':
-    #     #TODO: Clean up code. There are limited POST from this page...the add-order is from JS/WS
-
-    #     if 'addOrder' in request.POST:
-    #         print(f'POST: {request.POST}')
-
-    #         try:
-    #             new_order = Order.objects.create(
-    #                 business=business_id,
-    #                 pick_up_address=pick_up_address,
-    #                 drop_off_address=request.POST.get('drop_off_address'),
-    #                 notes=request.POST.get('notes')
-    #             )
-    #             messages.success(request,'Your order was saved.')
-    #         except Exception as e:
-    #             messages.error(request,f'Failed to save your order. ERROR>> {e}')
-    #             return HttpResponseRedirect(request.path_info)
-
-
-            # Sending emails to the relevant Freelancers
-            #################
-            # relevant_freelancers = Employee.objects.filter(city=order_city)
-
-            # for fl in relevant_freelancers:
-            #     try:    
-            #         mail_context = {
-            #             'domain': request._current_scheme_host,
-            #             'fl_name': fl.name,
-            #             'fl_id': fl.pk,
-            #             'email_title': mail_title,
-            #             'ordering_business': business_name,
-            #             'ordering_business_city': business_city,
-            #             'ordering_business_street': business_street,
-            #             'ordering_business_building': business_building,
-            #             'order_id': order_id,
-            #             'oid': new_order.pk,
-            #             'order_city': order_city,
-            #             'order_type': order_product_type,
-            #             'order_notes': order_notes
-            #             # 'email_body': mail_body,
-            #             # 'lang': language,
-            #             }
-
-            #         send_mail(subject=mail_subject, email_template_name=None,
-            #                 context=mail_context, to_email=[fl.email], 
-            #                 html_email_template_name='dndsos_dashboard/emails/delivery_order_email.html')
-
-            #     except Exception as ex:
-            #         messages.error(request, f"mail not sent -- Email configurations required. ERROR: {ex}")
-            #         return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
-
-            # return redirect('dndsos_dashboard:orders', b_id=request.user.pk)
- 
-        # elif 'cancel_b_order' in request.POST:
-        #     order = Order.objects.get(order_id=request.POST.get('cancel_b_order'))
-        #     if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED':
-        #         print(f'CANCEL B ORDER: {order.notes}')
-        #         messages.error(request, 'Please pay for the delivery before archiving the order.')
-        #     else:
-        #         order.status = 'ARCHIVED'
-        #         order.save()            
-
-        # elif 'orderDelete' in request.POST:
-        #     delete_order_id = request.POST.get(f'orderDelete')
-        #     order = Order.objects.get(order_id=delete_order_id)
-
-        #     if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED':
-        #         messages.error(request, 'Please pay for the delivery before archiving the order.')
-        #     else:
-        #         order.status = 'ARCHIVED'
-        #         order.save()            
-        # else:
-        #     print('No Order form detected.')
 
     return render(request, 'dndsos_dashboard/orders.html', context)
 
@@ -860,6 +793,65 @@ def f_messages_list(request, f_id):
     
     context['orders'] = orders_chat
     return render(request, 'dndsos_dashboard/partials/_f-messages-list.html', context)
+
+@login_required
+def f_bank_details(request, f_id):
+    context = {}
+    
+    form = BankDetailsForm(request.POST or None)
+    
+    freelancer = Employee.objects.get(pk=f_id)
+
+    if not freelancer.bank_details:
+        freelancer.bank_details = {
+            'f_name':'',
+            'l_name':'',
+            'full_name_in_native_language':'',
+            'name_on_the_account':'',
+            'address':'',
+            'city':'',
+            'country':'',
+            'phone_number':'',
+            'account_ownership':'',
+            'national_id_number':'',
+            'iban':'',
+            'swift':'',
+            'account_number':''
+        }
+
+    if request.method == 'POST':
+        try:
+            if form.is_valid():
+
+                freelancer.bank_details = {
+                'f_name':form.cleaned_data["first_name"],
+                'l_name':form.cleaned_data["last_name"],
+                'full_name_in_native_language':form.cleaned_data["full_name_in_native_language"],
+                'name_on_the_account':form.cleaned_data["name_on_the_account"],
+                'address':form.cleaned_data["address"],
+                'city':form.cleaned_data["city"],
+                'country':form.cleaned_data["country"],
+                'phone_number':form.cleaned_data["phone_number"],
+                'account_ownership':form.cleaned_data["account_ownership"],
+                'national_id_number':form.cleaned_data["national_id_number"],
+                'iban':form.cleaned_data["iban"],
+                'swift':form.cleaned_data["swift"],
+                'account_number':form.cleaned_data["account_number"]
+                }
+                
+                freelancer.save()
+                messages.success(request, "Bank details were updated successfully")
+                return redirect('dndsos_dashboard:f-profile', f_id=f_id)
+            else:
+                for error in form.errors:
+                    messages.error(request, f"Error updating bank details. {error}")
+                print('ERROR Bank details')
+        except Exception as e:
+            messages.error(request, f'Exception: {e}')
+
+    context['form'] = form
+
+    return render(request, 'dndsos_dashboard/f-bank-details.html', context)
 
 def email_test(request):
     return render(request, 'dndsos_dashboard/emails/delivery_order_email.html')

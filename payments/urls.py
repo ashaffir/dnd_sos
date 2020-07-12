@@ -12,5 +12,4 @@ urlpatterns = [
     path('remove-card/', payments_views.remove_card, name='remove-card'),
     path('charge/', payments_views.charge, name='charge'),
 
-
 ]

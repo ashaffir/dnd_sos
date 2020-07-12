@@ -1,3 +1,4 @@
+import phonenumbers
 from django import forms
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
@@ -7,7 +8,7 @@ from django.contrib.auth import get_user_model
 # from django_select2 import ModelSelect2Widget 
 
 from orders.models import Order
-from core.models import Employer, Employee
+from core.models import Employer, Employee, BankDetails
 
 class BusinessUpdateForm(forms.ModelForm):
 
@@ -52,8 +53,16 @@ class BusinessUpdateForm(forms.ModelForm):
         }
 
 class FreelancerUpdateForm(forms.ModelForm):
-    phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}))
-    city = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}))
+    # phone = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}))
+    
+    country = forms.ChoiceField(
+        required=True, 
+        widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Country'}),
+        choices=(
+            ('IL', 'Israel'),
+            ('USA', 'USA'),
+        ))
+
     vehicle = forms.ChoiceField(
         label=_('Vehicle'), 
         required=False, 
@@ -65,19 +74,33 @@ class FreelancerUpdateForm(forms.ModelForm):
             ('Motorcycle', _("Motorcycle")),
             ('Other', _("Other")),
         ))
+    
     active_hours = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=Employee.ACTIVE_HOURS)
+
+    def clean_phone_number(self):
+            phone_number = self.cleaned_data.get("phone")
+            z = phonenumbers.parse(phone_number, self.cleaned_data.get('country'))
+            
+            if not phonenumbers.is_valid_number(z):
+                raise forms.ValidationError("Phone number not valid")
+            return z.national_number
 
     class Meta:
         model = Employee
         fields = [
             'name',
-            'vehicle',
-            'phone',
-            'bio',
             'city',
-            'newsletter_optin',
+            'country',
+            'bio',
+            'email',
+            'phone',
+            'vehicle',
+            'active_hours',
+            'profile_pic',
             'id_doc',
-        ]
+            'newsletter_optin',
+            ]
+        
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name'}),
             'vehicle': forms.Select(attrs={'class': 'form-control'}),
@@ -86,3 +109,52 @@ class FreelancerUpdateForm(forms.ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}),
             # 'newsletter_optin': forms.CheckboxInput(attrs={'class': 'form-control checkbox-custom checkbox-primary'})
         }
+
+
+class BankDetailsForm(forms.Form):
+    # Owner details
+    COUNTRIES = (
+        (('IL'), ('Israel')),
+        (('USA'), ('USA')),
+    )
+    first_name = forms.CharField(max_length=100, required=False)
+    last_name = forms.CharField(max_length=100, required=False)
+    full_name_in_native_language = forms.CharField(max_length=100, required=True)
+    name_on_the_account = forms.CharField(max_length=100, required=True)
+    address = forms.CharField(max_length=100, required=True)
+    city = forms.CharField(max_length=100, required=True)
+    country = forms.ChoiceField(required=True, choices=COUNTRIES)
+    phone_number = forms.CharField(max_length=100)
+    national_id_number = forms.CharField(max_length=100, required=False)
+
+    # Bank Details
+    iban = forms.CharField(max_length=100, required=True)
+    swift = forms.CharField(max_length=100)
+    account_number = forms.CharField(max_length=100, required=True)
+    account_ownership = forms.BooleanField()
+
+    def clean_phone_number(self):
+            phone_number = self.cleaned_data.get("phone_number")
+            z = phonenumbers.parse(phone_number, self.cleaned_data.get('country'))
+            
+            if not phonenumbers.is_valid_number(z):
+                raise forms.ValidationError("Phone number not valid")
+            return z.national_number
+
+    # class Meta:
+    #     model = BankDetails
+    #     fields = [
+    #         'first_name',
+    #         'last_name',
+    #         'full_name_in_native_language',
+    #         'name_on_the_account',
+    #         'address',
+    #         'city',
+    #         'country',
+    #         'phone_number',
+    #         'account_ownership',
+    #         'national_id_number',
+    #         'iban',
+    #         'swift',
+    #         'account_number',
+    #     ]

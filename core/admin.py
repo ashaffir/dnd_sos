@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.models import User, Employer, Employee, Asset, AssignedAsset
+from core.models import User, Employer, Employee, Asset, AssignedAsset, BankDetails
 from django.contrib.gis.admin import OSMGeoAdmin
 
 @admin.register(Employer)
@@ -44,7 +44,7 @@ class User(admin.ModelAdmin):
     list_display = ['pk','email','is_employer','is_employee']
     search_fields = ('username','email')
 
-# admin.site.register(User)
+admin.site.register(BankDetails)
 # admin.site.register(Employer)
 # admin.site.register(Employee)
 # admin.site.register(Asset)

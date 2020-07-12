@@ -22,6 +22,7 @@ class ContentPage(models.Model):
 	content = RichTextField(max_length=100000, null=True)
 	section = models.CharField(max_length=100, null=True)
 	active = models.BooleanField(default=True)
+	image = models.CharField(max_length=200, null=True)
 
 	def __str__(self):
 	 return self.name

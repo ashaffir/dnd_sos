@@ -23,6 +23,9 @@ def home(request):
 
     context['faq_freelancer'] = ContentPage.objects.filter(section='faq_freelancer')
     context['faq_business'] = ContentPage.objects.filter(section='faq_business')
+    context['pricing_business'] = ContentPage.objects.get(section='pricing_business')
+    context['pricing_freelancers'] = ContentPage.objects.get(section='pricing_freelancers')
+    context['why_section'] = ContentPage.objects.filter(section='why-section')
 
     context['form'] = form
     

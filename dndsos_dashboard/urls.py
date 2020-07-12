@@ -32,6 +32,7 @@ urlpatterns = [
     path('freelancer/<int:f_id>/f-messages', dndsos_dashboard_views.f_messages, name='f-messages'),
     path('freelancer/<int:f_id>/f-chat-room', dndsos_dashboard_views.f_chat_room, name='f-chat-room'),
     path('freelancer/<int:f_id>/f-messages-list', dndsos_dashboard_views.f_messages_list, name='f-messages-list'),
+    path('freelancer/<int:f_id>/f-bank-details', dndsos_dashboard_views.f_bank_details, name='f-bank-details'),
         
     path('order/', dndsos_dashboard_views.order_input, name='order-input'),
     path('order/<str:order_id>/', dndsos_dashboard_views.order, name='order'),

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.conf import settings
 
 from .models import Card
+from core.models import Employee
 
 def enter_credit_card(request):
     context = {}
@@ -76,8 +77,6 @@ def remove_card(request):
         cards = []
     # return render(request, "payments/add-card.html", {'cards': cards})
     return redirect(request.META['HTTP_REFERER'])
-
-
 
 def charge(request):
     context = {}

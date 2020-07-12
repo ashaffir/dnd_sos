@@ -9,7 +9,7 @@ ngrok
 venv*
 
 ## Migrations
-*/migrations
+*/migrations/*
 
 ## Media
 media/*
@@ -109,3 +109,5 @@ local_settings.py
 
 .env
 db.sqlite3
+payments/migrations/0001_initial.py
+dndsos/migrations/0001_initial.py

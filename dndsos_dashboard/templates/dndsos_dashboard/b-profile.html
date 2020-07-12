@@ -86,7 +86,6 @@
 												<p><b>Phone</b>: {{ profile.phone }}</p>
 												<!-- <p><b>Business Type</b>: {{ profile.business_type }}</p> -->
 												<p><b>Business Category</b>: {{ profile.business_category }}</p>
-												<p><b>Bio: </b> {{ profile.bio }}</p>
 												<p><b>Address:</b> {{ profile.building_number }} {{ profile.street }}, {{ profile.city }}</p>
 											</div>
 										</section>
@@ -106,9 +105,11 @@
 											</div>
 											<div class="widget-content-expanded">
 												<ul class="simple-todo-list">
-													{% for required_field, is_completed in required_fields.items %}
-													<li class="{% if is_completed %}completed{% else %}{% endif %}">{{ required_field }} </li>
-													{% endfor %}
+													<li class="{% if required_fields.business_name %}completed{% else %}{% endif %}">Name </li>
+													<li class="{% if required_fields.phone %}completed{% else %}{% endif %}">Phone </li>
+													<li class="{% if required_fields.city %}completed{% else %}{% endif %}">City </li>
+													<li class="{% if required_fields.street %}completed{% else %}{% endif %}">Street </li>
+													<li class="{% if required_fields.building_number %}completed{% else %}{% endif %}">Building Number </li>
 												</ul>
 											</div>
 										</div>
@@ -158,6 +159,9 @@
 
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">Street</label>
+																{% if user.business.street %}
+																	<h4>{{ user.business.street }}</h4>
+																{% endif %}
 																<!-- <div class="col-md-8">{{ form.street }}</div> -->
 																<div class="col-md-8" id="streets">
 																	

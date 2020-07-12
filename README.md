@@ -48,6 +48,14 @@ https://stackoverflow.com/questions/1317714/how-can-i-filter-a-date-of-a-datetim
 ### Passwords
 https://www.youtube.com/watch?v=qjlZWBbX7-o
 
+### Validations
+#### Email validations: 
+https://pypi.org/project/email-validator/
+
+#### Phones
+https://pypi.org/project/phonenumbers/
+
+
 ### GEO Location:
 #### In the chat/templates/room.html
 * Get location of the browser/device: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
@@ -103,6 +111,8 @@ https://tinyurl.com/y9rdrqce
 
 #### GEOPY for locating coords and addresses (used in e.g order_location) and distances
 https://pypi.org/project/geopy/ 
+
+
 
 
 
