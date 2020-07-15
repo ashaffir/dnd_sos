@@ -1,10 +1,21 @@
+import json
+import sys
+import urllib.parse
+import requests
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
 
 from .models import Card
 from core.models import Employee
+
+
 
 def enter_credit_card(request):
     context = {}
@@ -117,3 +128,61 @@ def charge(request):
         pass
 
     return render(request, 'payments/charge.html')
+
+'''
+iCredit API:
+
+https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/help
+
+'''
+# @csrf_exempt
+# @require_POST
+def ipn_listener(request):
+    context = {}
+    
+    VERIFY_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/Verify'
+    VERIFY_PROD = 'https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/Verify'
+
+    SALEDETAIL_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/SaleDetails'
+    SALEDETAIL_PROD = 'https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/SaleDetails'
+    
+    # Post back to iCredit for validation
+
+    sale_params = {
+	    "SaleId":"1627aea5-8e0a-4371-9022-9b504344e724",
+	    "SalePrivateToken":"1627aea5-8e0a-4371-9022-9b504344e724"
+    }
+
+    sale_headers = {
+            'content-type': 'application/x-www-form-urlencoded',
+            'user-agent': 'Python-IPN-Verification-Script'
+            }
+
+    r = requests.post(SALEDETAIL_TEST, params=sale_params, headers=sale_headers, verify=True)
+    if r.status_code == 200:
+        context['sale_details'] = r.text
+
+
+    # Verify request
+    verify_headers = {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36'
+        }
+
+
+    payload = '{ \
+        "GroupPrivateToken":"80283c37-1e16-4fe3-8977-203d5180d1fa", \
+        "SaleId": "ec52aaf8-743f-4e89-a74b-6646e11610f6", \
+        "TotalAmount": 150.90\
+        }'
+    
+    try:
+        vr = requests.post(VERIFY_PROD, data=payload, headers=verify_headers)
+        print(f'VR: {vr.text}')
+        context['verified'] = vr.text
+    except Exception as e:
+        print(f'ERROR: {e}')
+        context['verified'] = e
+    
+    return render(request, 'payments/iCredit.html', context)
+    # return HttpResponse(status=200)

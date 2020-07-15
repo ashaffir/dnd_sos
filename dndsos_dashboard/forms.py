@@ -36,7 +36,7 @@ class BusinessUpdateForm(forms.ModelForm):
         fields = [
             'business_name',
             'business_category',
-            'phone',
+            # 'phone',
             'street',
             'building_number',
             'city',
@@ -93,7 +93,7 @@ class FreelancerUpdateForm(forms.ModelForm):
             'country',
             'bio',
             'email',
-            'phone',
+            # 'phone',
             'vehicle',
             'active_hours',
             'profile_pic',
@@ -104,7 +104,7 @@ class FreelancerUpdateForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name'}),
             'vehicle': forms.Select(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}),
+            # 'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}),
             'bio': forms.Textarea(attrs={'class': 'form-control ', 'rows':'3','cols':'50', 'placeholder': 'Bio'}),
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}),
             # 'newsletter_optin': forms.CheckboxInput(attrs={'class': 'form-control checkbox-custom checkbox-primary'})

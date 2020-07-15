@@ -55,6 +55,12 @@ https://pypi.org/project/email-validator/
 #### Phones
 https://pypi.org/project/phonenumbers/
 
+### Webhooks (IPN Listener)
+https://www.youtube.com/watch?v=IFUAervc790
+
+### Twilio
+https://django-twilio.readthedocs.io/en/latest/index.html
+https://www.twilio.com/docs/verify/api?code-sample=code-step-1-create-a-verification-service&code-language=Python&code-sdk-version=6.x
 
 ### GEO Location:
 #### In the chat/templates/room.html

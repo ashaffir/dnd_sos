@@ -1,4 +1,6 @@
 
+from rest_framework.routers import DefaultRouter
+
 from django.contrib import admin
 from django.urls import path, include
 from dndsos_dashboard import views as dndsos_dashboard_views
@@ -18,6 +20,7 @@ urlpatterns = [
     path('business/<int:b_id>/b-messages', dndsos_dashboard_views.b_messages, name='b-messages'),
     path('business/<int:b_id>/b-chat-room', dndsos_dashboard_views.b_chat_room, name='b-chat-room'),
     path('business/<int:b_id>/b-messages-list', dndsos_dashboard_views.b_messages_list, name='b-messages-list'),
+    path('business/<int:b_id>/b-phone-verify', dndsos_dashboard_views.b_phone_verify, name='b-phone-verify'),
 
     # path('add-order', dndsos_dashboard_views.add_order, name='add-order'),
     path('add-freelancer', dndsos_dashboard_views.add_freelancer, name='add-freelancer'),
@@ -33,6 +36,7 @@ urlpatterns = [
     path('freelancer/<int:f_id>/f-chat-room', dndsos_dashboard_views.f_chat_room, name='f-chat-room'),
     path('freelancer/<int:f_id>/f-messages-list', dndsos_dashboard_views.f_messages_list, name='f-messages-list'),
     path('freelancer/<int:f_id>/f-bank-details', dndsos_dashboard_views.f_bank_details, name='f-bank-details'),
+    path('freelancer/<int:f_id>/f-phone-verify', dndsos_dashboard_views.f_phone_verify, name='f-phone-verify'),
         
     path('order/', dndsos_dashboard_views.order_input, name='order-input'),
     path('order/<str:order_id>/', dndsos_dashboard_views.order, name='order'),

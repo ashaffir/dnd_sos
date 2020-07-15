@@ -415,13 +415,17 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                             business address: {business_address}
                             business location: {business_location}
                         ''')
-            order_to_business_distance = 1000
+            order_to_business_distance_meters = 1000
 
         # Calculating the price for the order
-        if order_to_business_distance_meters:
+        if order_to_business_distance_meters != 1000:
             price = settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT
-        content['price'] = round(price,2)
-        content['distance_to_business'] = round(order_to_business_distance,2)
+            content['price'] = round(price,2)
+            content['distance_to_business'] = round(order_to_business_distance,2)
+        else:
+            content['price'] = 'Error Price Calculation'
+            content['distance_to_business'] = 'Error Distance Calculations'
+
 
         if not business.location:
             business.location = Point(business_location.longitude,business_location.latitude, srid=4326)

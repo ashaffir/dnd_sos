@@ -1,0 +1,39 @@
+{% extends 'dndsos_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+  <!-- Phone verification Success -->
+<section role="main" class="content-body">
+  <!--Header-->
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <h4 class="heading">Your phone is verified.</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3"></div>
+            <div class="col-md-4 center">
+              <i class="fa fa-check fa-4x animated rotateIn" style="color: green;"></i>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3"></div>
+          {% if user.is_employee %}
+            <a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">Back to profile</a>
+          {% else %}
+            <a href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">Back to profile</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+</section>      
+{% endblock content %}

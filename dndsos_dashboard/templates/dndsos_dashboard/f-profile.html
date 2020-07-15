@@ -89,7 +89,7 @@
 											</div>
 											<div class="widget-content-collapsed">
 												<div class="progress progress-xs light">
-													<div class="progress-bar" role="progressbar" aria-valuenow="{{ complete }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete }}%;">
+													<div class="{% if complete < 100 %} progress-bar-danger {% else %} progress-bar-success {% endif %}" role="progressbar" aria-valuenow="{{ complete }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete }}%; ">
 														{{ complete }}
 													</div>
 												</div>
@@ -120,10 +120,21 @@
 																<label class="col-md-3 control-label" for="">Name</label>
 																<div class="col-md-8">{{ form.name }}</div>	
 															</div>
+
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">Phone Number</label>
-																<div class="col-md-8">{{ form.phone }}</div>	
+																{% if user.freelancer.phone %}
+																<div class="col-md-4" style="margin-top: 1%;">
+																	{{ user.freelancer.phone  }}
+																</div>
+																{% else %}
+																<div class="col-md-4">
+																	<input class="form-control" type="text" name="phoneNumber" placeholder="Phone (with country prefix)">
+																</div>
+																<button class="btn btn-primary" name="addPhone" type="submit">Add Phone</button>
+																{% endif %}
 															</div>
+
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">eMail</label>
 																<div class="col-md-8" style="padding-top: 0.5rem;">{{ user }}</div>	
@@ -289,6 +300,13 @@
 			$('#exampleModal').modal({show:true});
 			//$('#message').modal('hide');
 		});
+	</script>
+
+	<script>
+		$('sendPhoneVerify').on('submit', function(e){
+			e.preventDefault();
+			$("#phoneVerifyModal").modal("show");
+		})
 	</script>
 
 {% endblock content %}

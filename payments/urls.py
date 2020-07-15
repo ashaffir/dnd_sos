@@ -11,5 +11,6 @@ urlpatterns = [
     path('add-card/', payments_views.add_card, name='add-card'),
     path('remove-card/', payments_views.remove_card, name='remove-card'),
     path('charge/', payments_views.charge, name='charge'),
+    path('ipn-listener/', payments_views.ipn_listener, name='ipn-listener'),
 
 ]

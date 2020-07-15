@@ -4,6 +4,9 @@ from datetime import datetime,date
 import phonenumbers
 from email_validator import validate_email, EmailNotValidError
 
+from django_twilio.decorators import twilio_view
+from twilio.rest import Client
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -11,6 +14,7 @@ from django.contrib.auth import logout, get_user_model
 from django.http import HttpResponse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth.models import User
 
 from django.contrib import  messages
@@ -205,7 +209,7 @@ def b_profile(request, b_id):
             new_name = request.POST.get("name")
             new_business_name = request.POST.get("business_name")
             new_business_category = request.POST.get("business_category")
-            new_phone = request.POST.get("phone")
+            # new_phone = request.POST.get("phone")
             new_bio = request.POST.get("bio")
             new_building = request.POST.get("building_number")
 
@@ -237,8 +241,8 @@ def b_profile(request, b_id):
             if new_business_category:
                 user_profile.business_category = new_business_category
 
-            if new_phone:
-                user_profile.phone = new_phone
+            # if new_phone:
+            #     user_profile.phone = new_phone
 
             if new_bio:
                 user_profile.bio = new_bio
@@ -258,6 +262,18 @@ def b_profile(request, b_id):
                 messages.success(request,'You have successfully updated your profile.')
             except Exception as e:
                 messages.success(request,f'There was ann error processing your request. ERROR: {e}')
+        
+        elif 'addPhone' in request.POST:
+                    phone = request.POST.get('phoneNumber')
+                    request.session['phone'] = phone
+                    sent_sms_status = phone_verify(request, action='send_verification_code', phone=phone, code=None)
+                    if sent_sms_status:
+                        print('>>>>>>> SENT SMS <<<<<<<<')
+                        return redirect('dndsos_dashboard:b-phone-verify', b_id=request.user.pk)
+                    else:
+                        print(f'>>>>>>> FAILE TO SEND SMS <<<<<<<< Error: {sent_sms_status}')
+                        return render(request, 'dndsos_dashboard/failed-phone-verification.html')
+                                    
         elif 'add_credit_card' in request.POST:
             pass        
 
@@ -308,15 +324,15 @@ def f_profile(request, f_id):
         if 'updateProfile' in request.POST:
             form = FreelancerUpdateForm(request.POST,request.FILES, instance=user_profile)            
             
-            phone = request.POST.get('phone')
-            country = request.POST.get('country')
+            # phone = request.POST.get('phone')
+            # country = request.POST.get('country')
 
-            try:
-                p = phonenumbers.parse(phone, country)
-                z = phonenumbers.is_valid_number(p)
-            except Exception as e:
-                messages.error(request, f'Input phone is not valid. ERROR: {e}')
-                return redirect(request.META['HTTP_REFERER'])
+            # try:
+            #     p = phonenumbers.parse(phone, country)
+            #     z = phonenumbers.is_valid_number(p)
+            # except Exception as e:
+            #     messages.error(request, f'Input phone is not valid. ERROR: {e}')
+            #     return redirect(request.META['HTTP_REFERER'])
 
             if form.is_valid():
                 # new_name = request.POST.get("name")
@@ -337,6 +353,24 @@ def f_profile(request, f_id):
                     messages.error(request, f'Error: {error}')
                 print('ERROR PROFILE FORM')
         
+        elif 'addPhone' in request.POST:
+            phone = request.POST.get('phoneNumber')
+            request.session['phone'] = phone
+            sent_sms_status = phone_verify(request, action='send_verification_code', phone=phone, code=None)
+            if sent_sms_status:
+                print('>>>>>>> SENT SMS <<<<<<<<')
+                return redirect('dndsos_dashboard:f-phone-verify', f_id=request.user.pk)
+            else:
+                print(f'>>>>>>> FAILE TO SEND SMS <<<<<<<< Error: {sent_sms_status}')
+                return render(request, 'dndsos_dashboard/failed-phone-verification.html')
+            
+        # elif 'phoneVerify' in request.POST:
+        #     phone = request.POST.get('phoneNumber')
+        #     verification_status = phone_verify(action='send_verification_code', phone=phone, code=None)
+        #     if verification_status == 'approved':
+        #         return redirect('dndsos_dashboard/f_profile', f_id=request.user.pk)
+        #     else:
+        #         return redirect('dndsos_dashboard/failed-phone-verification.html')
         elif request.POST.get('paypal_account'): 
             paypal_account = request.POST.get('paypal_account')
             try:
@@ -852,6 +886,98 @@ def f_bank_details(request, f_id):
     context['form'] = form
 
     return render(request, 'dndsos_dashboard/f-bank-details.html', context)
+
+# @twilio_view
+@csrf_exempt
+def f_phone_verify(request, f_id):
+    context = {}
+    phone = request.session['phone']
+    context['phone'] = request.session['phone']
+
+    if request.method == 'POST':
+        code = request.POST.get('phone_code')
+        try:
+            verification_status = phone_verify(request,action='verify_code', phone=phone, code=code)
+            if verification_status == 'approved':
+                freelancer =  Employee.objects.get(pk=f_id)
+                freelancer.phone = phone
+                freelancer.save()
+                return render(request,'dndsos_dashboard/phone-verified-success.html')
+            else:
+                print(f'>>> Failed verify the phone. Error: {verification_status}')
+                return render(request,'dndsos_dashboard/failed-phone-verification.html')
+        except Exception as e:
+            print(f'Failed verify the phone. Error: {e}')
+            return render(request,'dndsos_dashboard/failed-phone-verification.html')
+    else:
+        return render(request, 'dndsos_dashboard/phone-verify.html')
+
+@csrf_exempt
+def b_phone_verify(request, b_id):
+    context = {}
+    phone = request.session['phone']
+    context['phone'] = request.session['phone']
+
+    if request.method == 'POST':
+        code = request.POST.get('phone_code')
+        try:
+            verification_status = phone_verify(request,action='verify_code', phone=phone, code=code)
+            if verification_status == 'approved':
+                business =  Employer.objects.get(pk=b_id)
+                business.phone = phone
+                business.save()
+                return render(request,'dndsos_dashboard/phone-verified-success.html')
+            else:
+                print(f'>>> Failed verify the phone. Error: {verification_status}')
+                return render(request,'dndsos_dashboard/failed-phone-verification.html')
+        except Exception as e:
+            print(f'Failed verify the phone. Error: {e}')
+            return render(request,'dndsos_dashboard/failed-phone-verification.html')
+    else:
+        return render(request, 'dndsos_dashboard/phone-verify.html')
+
+# @twilio_view
+@csrf_exempt
+def phone_verify(request,action,phone, code):
+    context = {}
+    account_sid = settings.TWILIO_ACCOUNT_SID
+    auth_token = settings.TWILIO_AUTH_TOKEN
+    client = Client(account_sid, auth_token)
+
+    # Create a service if there is none. Only once.
+    # service = client.verify.services.create(
+    #                     friendly_name='Actappon Verify Service'
+    #                     )
+
+    # context['service'] = service
+    verify_service_sid = 'VA65cfa1690f666e975f9df686792ee279'
+
+    if action == 'send_verification_code':
+        # Verification code to sent to the registrar => $$$$
+        try:
+            verification = client.verify \
+                            .services(verify_service_sid) \
+                            .verifications \
+                            .create(to=phone, channel='sms')
+
+            context['verification'] = verification
+        except Exception as e:
+            print('Fail sending the confirmation code.')
+            return False 
+        
+        return True
+
+    elif action == 'verify_code':
+        # Checking the code entered by the user
+        try:
+            verification_check = client.verify \
+                                    .services(verify_service_sid) \
+                                    .verification_checks \
+                                    .create(to=phone, code=code)
+            context['verification_status'] = verification_check.status
+            return verification_check.status
+        except Exception as e:
+            return e
 
 def email_test(request):
     return render(request, 'dndsos_dashboard/emails/delivery_order_email.html')

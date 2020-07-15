@@ -98,7 +98,7 @@
 											</div>
 											<div class="widget-content-collapsed">
 												<div class="progress progress-xs light">
-													<div class="progress-bar" role="progressbar" aria-valuenow="{{ complete }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete }}%;">
+													<div class="{% if complete < 100 %} progress-bar-danger {% else %} progress-bar-success {% endif %}" role="progressbar" aria-valuenow="{{ complete }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete }}%;">
 														{{ complete }}
 													</div>
 												</div>
@@ -136,12 +136,21 @@
 
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label " for="">Business Category</label>
-																<div class="col-md-8">{{ form.business_category }}</div>	
+																<div class="col-md-4">{{ form.business_category }}</div>	
 															</div>
 														
 															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">Phone</label>
-																<div class="col-md-8">{{ form.phone }}</div>
+																<label class="col-md-3 control-label" for="">Phone Number</label>
+																{% if user.business.phone %}
+																<div class="col-md-4" style="margin-top: 1%;">
+																	{{ user.business.phone  }}
+																</div>
+																{% else %}
+																<div class="col-md-4">
+																	<input class="form-control" type="text" name="phoneNumber" placeholder="Phone (with country prefix)">
+																</div>
+																<button class="btn btn-primary" name="addPhone" type="submit">Add Phone</button>
+																{% endif %}
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
@@ -160,9 +169,12 @@
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">Street</label>
 																{% if user.business.street %}
-																	<h4>{{ user.business.street }}</h4>
+																	<div style="font-size: 1.5rem;padding-top:0.7rem">{{ user.business.street }}</div>
 																{% endif %}
 																<!-- <div class="col-md-8">{{ form.street }}</div> -->
+															</div>
+															<div class="row" style="margin-top: 1%;">
+																<div class="col-md-3"></div>
 																<div class="col-md-8" id="streets">
 																	
 																	<!-- Loaded from Ajax -->
@@ -185,7 +197,7 @@
 													<div class="row">
 														<div class="col-3"></div>
 														<div class="col-md-3 col-md-offset-3">
-															<img src="{% if user.profile.profile_pic %}{{user.profile.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" style='max-width:50%' id="preview" name="old_profile_pic" alt="Avatar">
+															<img src="{% if user.business.profile_pic %}{{user.business.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" style='max-width:50%' id="preview" name="old_profile_pic" alt="Avatar">
 															<span class="">
 																<input type="file" id="profile_pic"  onchange="preview_image()" name="profile_pic">
 															</span>

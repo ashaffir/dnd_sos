@@ -59,3 +59,4 @@ geopy==1.22.0
 django-ckeditor==5.9.0
 phonenumbers==8.12.6
 email-validator==1.1.1
+twilio==6.44.0
