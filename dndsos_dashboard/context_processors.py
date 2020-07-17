@@ -42,15 +42,14 @@ def checkOS(request):
         context['platform'] = 'mac'
         return context
 
+def pageLanguage(request):
+    context = {}
+    if 'he' in request.path_info:
+        context['language'] = 'he'
+    else:
+        context['language'] = 'en'
 
-# def requested_freelancer(request):
-#     context = {}
-#     try:
-#         context['freelacner_requested'] = request.session['freelacner_requested']
-#     except Exception as e:
-#         print(f'Context ERROR: {e}')
-
-#     return context
+    return context
 
 
 def debugMode(request):

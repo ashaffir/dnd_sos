@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load static %}
+    <div class="modal fade" id="updateCardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Update credit card!</h4>
+                </div>
+                <div class="modal-body">
+                     <section class="panel">
+                        <!-- <header class="panel-heading">
+                            <p>Fill out the information for the credit card.</p>              
+                        </header> -->
+                        <div class="panel-body">
+                            <iframe src="{{ icredit_form_url }}" frameborder="0" allowtransparency="true" onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));' style="height:700px;width:100%;border:none;overflow:hidden;" frameborder="0" allowfullscreen>
+                            </iframe>
+                        </div>
+                        <!-- <div class="modal-footer">
+                            <button id="cancel_f_order" value="{{ order_id }}" name="cancel_f_order" type="submit" class="btn btn-primary">Confirm</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                        </div> -->
+                     </section>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Vendor -->
+{% block orders_js %}
+
+{% endblock orders_js %}

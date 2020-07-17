@@ -91,6 +91,7 @@ os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -122,6 +123,7 @@ TEMPLATES = [
                 'dndsos_dashboard.context_processors.debugMode',
                 'dndsos_dashboard.context_processors.freelancer_available',
                 'dndsos_dashboard.context_processors.checkOS',
+                'dndsos_dashboard.context_processors.pageLanguage',
                 
                 # 'dndsos_dashboard.context_processors.requested_freelancer',                
             ],
@@ -251,3 +253,23 @@ TWILIO_ACCOUNT_SID = config['TWILIO_ACCOUNT_SID']
 TWILIO_AUTH_TOKEN = config['TWILIO_AUTH_TOKEN']
 # DJANGO_TWILIO_FORGERY_PROTECTION = True
 # DJANGO_TWILIO_BLACKLIST_CHECK = False
+
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'he'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+LANGUAGES = [
+    ('en','English'),
+    ('he','Hebrew'),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]

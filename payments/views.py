@@ -3,7 +3,7 @@ import sys
 import urllib.parse
 import requests
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
@@ -13,13 +13,177 @@ from django.views.decorators.http import require_POST
 
 
 from .models import Card
-from core.models import Employee
+from core.models import Employee, Employer
+from orders.models import Order
 
+HEADERS = {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36'
+        }
 
+'''
+iCredit API:
 
-def enter_credit_card(request):
+https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/help
+
+'''
+
+def credit_card_form(request):
+    '''
+    Collection of a credit card information in the business profile
+    '''
     context = {}
-    return render(request, 'payments/enter_credit_card.html', context)
+    b_id = request.user.pk
+    GET_URL_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl'
+    GET_URL_PROD = 'https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl'
+
+    payload = '{ \
+        "GroupPrivateToken":"7a81fc4b-1b18-4add-b730-d434a9f5120a", \
+        "RedirectURL": "https://71de2855413d.ngrok.io/payments/success-card-collection/' + f'{str(b_id)}' + '", \
+        "IPNURL": "https://71de2855413d.ngrok.io/payments/ipn-listener-card-info/", \
+        "CustomerLastName":"test", \
+        "EmailAddress":"alfred.shaffir@gmail.com", \
+        "SaleType": 3, \
+        "HideItemList":true, \
+        "Items": [ \
+            {\
+            "UnitPrice": "10",\
+            "Quantity": "1",\
+            "Description": "collect only"\
+            }\
+            ],\
+        "Custom1":' + f"{request.user.pk}" +'}'
+
+    try:
+        get_card_form = requests.post(GET_URL_TEST, data=payload, headers=HEADERS)
+    except Exception as e:
+        print(f'ERROR getting card information: {e}')
+        context['error'] = e
+
+    print(f">>> OUTBOUND: ***************{get_card_form.json()['PrivateSaleToken']}****************")
+    icredit_form_url = get_card_form.json()['URL']
+    private_token = get_card_form.json()['PrivateSaleToken']
+    public_token = get_card_form.json()['PublicSaleToken']
+
+    return icredit_form_url,private_token, public_token
+
+@csrf_exempt
+@require_POST
+def ipn_listener_card_info(request):
+    print(f">>> IPN TOKEN : ***************{request.POST.get('Custom1')}****************")
+    sale_id = request.POST.get('SaleId')
+    group_private_token = request.POST.get('GroupPrivateToken')
+    transaction_token = request.POST.get('TransactionToken')
+    business_pk = request.POST.get('Custom1')
+    request.session['business_pk'] = business_pk
+    return HttpResponse(status=200)
+
+def lock_delivery_price(order):
+    '''
+    When freelanceer accepts a delivery order, the price for that delivery is locked on the 
+    businesse's credit card (not charged until delivery)
+    '''
+    context = {}
+    # order = Order.objects.get(pk=order_id)
+    order_price = order.price
+
+    b_id = order.business.business.pk
+    b_credit_card_token = order.business.business.credit_card_token
+
+    SALE_CHARGE_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/SaleChargeToken'
+    SALE_CHARGE_PROD = 'https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/SaleChargeToken'
+
+    # payload = '{ \
+    #         "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e", \
+    #         "CreditcardToken": "' + f'{b_credit_card_token}' + '", \
+    #         "IPNURL": "https://71de2855413d.ngrok.io/payments/ipn-listener-lock-price/", \
+    #         "CustomerLastName": "none", \
+    #         "CustomerFirstName": "none", \
+    #         "Address": "none", \
+    #         "City": "none", \
+    #         "EmailAddress": "alfred.shaffir@gmail.com", \
+    #         "NumberOfPayments": 1, \
+    #         "SaleType": 2, \
+    #         "Items": [ \
+    #             { \
+    #             "UnitPrice": "' + f'{order_price}' + '", \
+    #             "Quantity": "1", \
+    #             "Description": "delivery" \
+    #             } \
+    #         ] \
+    #     }'
+
+    payload = '{ \
+            "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e", \
+            "CreditcardToken": "7e4aa02b-365a-42fe-806b-e4751c478052", \
+            "IPNURL": "https://71de2855413d.ngrok.io/payments/ipn-listener-lock-price/", \
+            "CustomerLastName": "none", \
+            "CustomerFirstName": "none", \
+            "Address": "none", \
+            "City": "none", \
+            "EmailAddress": "alfred.shaffir@gmail.com", \
+            "NumberOfPayments": 1, \
+            "SaleType": 2, \
+            "Items": [ \
+                { \
+                "UnitPrice": "' + f'{order_price}' + '", \
+                "Quantity": "1", \
+                "Description": "delivery" \
+                } \
+            ] \
+        }'
+
+    try:
+        sales_charge = requests.post(SALE_CHARGE_TEST, data=payload, headers=HEADERS)
+    except Exception as e:
+        print(f'ERROR locking order price: {e}')
+        context['error'] = e
+
+    private_sale_token = sales_charge.json()['PrivateSaleToken']
+
+    print(f">>> OUTBOUND LOCK. TOKEN:{sales_charge.json()['PrivateSaleToken']}  PRICE: {order_price} ****************")    
+
+    return private_sale_token
+
+@csrf_exempt
+@require_POST
+def ipn_listener_lock_price(request):
+    print(f">>> IPN LOCK PRICE TX ID: ***************{request.POST.get('CustomerTransactionId')}****************")
+    transaction_auth_num = request.POST.get('TransactionAuthNum')
+    customer_transaction_id = request.POST.get('CustomerTransactionId')
+
+    return HttpResponse(status=200)
+
+
+def complete_charge(private_sale_token):
+    '''
+    Completing the waiting transaction once the order is delivered/confirmed-delivered
+    '''
+    CHARGE_PENDING_SALE_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/ChargePendingSale'
+    CHARGE_PENDING_SALE_PROD = 'https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/ChargePendingSale'
+
+    payload = '{"SalePrivateToken":"' + f'{private_sale_token}' + '"}'
+    
+    try:
+        complete_charge = requests.post(CHARGE_PENDING_SALE_TEST, data=payload, headers=HEADERS)
+        return complete_charge.json()
+    except Exception as e:
+        print(f'ERROR completing the charge: {e}')
+        context['error'] = e
+        return e
+
+
+
+def success_card_collection(request, b_id):
+    context = {}
+    business = Employer.objects.get(pk=b_id)
+    business.credit_card_token = request.GET.get("Token")
+    business.save()
+    return render(request, 'payments/success-card-collection.html', context)
+
+def failed_card_collection(request):
+    context = {}
+    return render(request, 'payments/failed-card-collection.html', context)
 
 
 @login_required
@@ -92,52 +256,11 @@ def remove_card(request):
 def charge(request):
     context = {}
     if request.method == 'POST':
-
-        # customer = stripe.Customer.create(
-        #         name = 'STAM',
-        #         email = request.POST['stripeEmail']
-        #         )
-
-        # payment_method = stripe.PaymentMethod.create(
-        #     type="card",
-        #     card={
-        #         "number": "4242424242424242",
-        #         "exp_month": 3,
-        #         "exp_year": 2021,
-        #         "cvc": "314",
-        #         },
-        #     )
-
-        # attach_pm = stripe.PaymentMethod.attach(
-        #         payment_method.id,
-        #         customer=customer.id,
-        #         )
-
-        # subscription = stripe.Subscription.create(
-        #         customer=customer.id,
-        #         items=[
-        #         {
-        #             # "plan": (SubscriptionPlan.objects.get(id = subscription_id)).plan_id
-        #             # "plan": 'plan_Gs3SvCQ72PTfdx'  # WORKS
-        #             "plan": 'plan_Gs4KkgRfrZ77ht' # NOT WORKING
-        #         }
-        #         ],
-        #         default_payment_method=payment_method.id
-        #     )
-        
         pass
 
     return render(request, 'payments/charge.html')
 
-'''
-iCredit API:
-
-https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/help
-
-'''
-# @csrf_exempt
-# @require_POST
-def ipn_listener(request):
+def ipn_listener_test(request):
     context = {}
     
     VERIFY_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/Verify'
@@ -185,4 +308,3 @@ def ipn_listener(request):
         context['verified'] = e
     
     return render(request, 'payments/iCredit.html', context)
-    # return HttpResponse(status=200)

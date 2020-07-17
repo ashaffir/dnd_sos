@@ -21,6 +21,7 @@ from core.models import User, Employer, Employee
 from payments.models import Payment
 
 from geo.models import UserLocation
+from payments.views import lock_delivery_price, complete_charge
 
 LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
 logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/consumers.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
@@ -255,6 +256,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             elif event.get('data')['event'] == 'Direct Invitation':
                 print('DIRECT INVITE UPDATED')
                 pass
+
 
             elif event.get('data')['event'] == 'Order Settled':
                 print('Order Settled')
@@ -496,6 +498,9 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     order = order_instance
                     order_updated = False
                 else: 
+                    # Locking the price on the business credit card
+                    content['private_sale_token'] = lock_delivery_price(order_instance)
+
                     serializer = OrderSerializer(data=content)
                     serializer.is_valid(raise_exception=True)
                     order = serializer.update(order_instance, serializer.validated_data)
@@ -505,6 +510,9 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 freelancer = Employee.objects.get(pk=accepted_fl)
                 freelancer.is_active = True
                 freelancer.save()
+
+
+                
 
             elif event == 'Freelancer Canceled':
                 print('CANCELED!!!!')
@@ -534,6 +542,15 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     freelancers_list = business.relationships['freelancers']
                     freelancers_list.append(freelancer.pk)
                     business.relationships['freelancers'] = list(set(freelancers_list))
+
+                order_private_sale_token = order_instance.private_sale_token
+
+                complete_charge_information = complete_charge(order_private_sale_token)
+                
+                try:
+                    content['invoice_url'] = complete_charge_information['data']['DocumentURL']
+                except Exception as e:
+                    print('>> Failed generating invoice. ERROR: {e}')
 
                 Payment.objects.create(
                     date = datetime.now(),

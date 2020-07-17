@@ -88,11 +88,12 @@ class Employer(models.Model):
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
 
+    credit_card_token = models.CharField(max_length=100, blank=True, null=True)
+
     business_total_rating = models.FloatField(null=True, blank=True)
 
     b_freelancers = models.CharField(max_length=500, null=True, blank=True)
  
-
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
 
     newsletter_optin = models.BooleanField(default=True)

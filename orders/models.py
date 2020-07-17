@@ -76,6 +76,13 @@ class Order(models.Model):
 
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)
 
+    # Payment
+    transaction_auth_num = models.CharField(max_length=100, null=True, blank=True)
+    customer_transaction_id = models.CharField(max_length=100, null=True, blank=True)
+    private_sale_token = models.CharField(max_length=100, null=True, blank=True)
+    invoice_url = models.URLField(null=True, blank=True)
+
+
     freelancer = models.ForeignKey( # new
         # settings.AUTH_USER_MODEL,
         User,

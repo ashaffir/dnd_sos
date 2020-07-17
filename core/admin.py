@@ -14,7 +14,7 @@ class Employer(OSMGeoAdmin):
         )
     
     fields = (  'user', 'business_name', 'business_category',
-                'email', 'phone',
+                'email', 'phone','credit_card_token',
                 'street', 'building_number', 'city', 'lat', 'lon', 'location',
                 'b_freelancers',
                 'profile_pic',

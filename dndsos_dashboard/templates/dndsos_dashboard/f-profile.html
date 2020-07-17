@@ -13,7 +13,7 @@
 
     <section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Freelancer Profile</h2>
+						<h2>Carrier Profile</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -70,7 +70,7 @@
 													<div class="profile-info">
 														<h4 class="name text-semibold">{{ profile.name }}</h4>
 														<div class="profile-footer">
-															<p class="text-left">Freelancer Vehicle: {{ profile.vehicle }}</p>
+															<p class="text-left">Carrier Vehicle: {{ profile.vehicle }}</p>
 														</div>
 													</div>
 												</div>
@@ -80,6 +80,7 @@
 												<p><b>Phone</b>: {{ profile.phone }}</p>
 												<p><b>Vehicle</b>: {{ profile.vehicle }}</p>
 												<p><b>Bio: </b> {{ profile.bio }}</p>
+												<p><b>Rating: </b> {{ profile.rating }}</p>
 											</div>
 										</section>
 										<div class="widget-toggle-expand mb-md">
@@ -153,7 +154,8 @@
 															</div>
 															<div class="row" style="margin-top: 2%;">
 																<label class="col-md-3 control-label" for="">ID Document</label>
-																<div class="col-md-8">{{ form.id_doc }}</div>	
+																<div class="col-md-6">{{ form.id_doc }}</div>
+
 															</div>
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">Active Hours</label>
@@ -202,7 +204,7 @@
 														</h1>
 													</div>
 													<div class="panel-body">
-														<h4>Your Balance: <b>${{ payment_due }}</b></h4>
+														<h4>Your Balance: <b>${{ earnings_due }}</b></h4>
 													</div>
 												</header>
 											</div>

@@ -10,7 +10,7 @@
         <th>Price</th>
         <th>Contact Carrier</th>
         <th>Carrier Feedback</th>
-        <!-- <th>Payments</th> -->
+        <th>Invoice</th>
         <th></th>
     </tr>
 </thead>
@@ -119,13 +119,11 @@
         </td>
 
         <!-- Payments -->
-        <!-- <td class="actions" style='text-align:center'>
-            {% if order.status == 'COMPLETED' %}
-                {% include './_payment-modal.html' with order=order %}
-            {% else %}
+        <td class="actions" style='text-align:center'>
+            {% if order.invoice_url %}
+                <a href="{{ order.invoice_url }}" target="_blank"> <i class="fa fa-file-text-o fa-2x"></i></a>
             {% endif %}
-
-        </td> -->
+        </td>
 
         <!-- Delete/cancel -->
         <td class="actions" style='text-align:center'>

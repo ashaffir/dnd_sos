@@ -7,6 +7,7 @@
         <!-- <th>Notes</th> -->
         <th>Delivered</th>
         <th>Order Status</th>
+        <th>Fees</th>
         <th>Messages</th>
         <!-- <th>Paid for</th> -->
         <th></th>
@@ -59,6 +60,9 @@
                 <label for="dispached">ERROR. PLEASE CHECK WITH ADMIN!!</label>
             </td>
         {% endif %}
+
+        <!-- Order fees -->
+        <td id="order_fees_{{ order.order_id }}">{{ order.price }}</td>
 
         <!-- Messages -->
         <td class="actions center">

@@ -16,12 +16,12 @@
 			<h1>DND SOS <img src="{{ domain }}{% static 'images/dndsos-logo-black.png' %}" alt="Logo" style="max-width: 2rem;"></h1>
 		</div> -->
 		<div class="content-sec">
-			<h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{% trans 'Message from DND-SOS!' %}</h5>
+			<h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{% trans 'Message from Dilvur!' %}</h5>
 			<div>
 				<!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjuXqngtXmv1rNogLdpCzdtz7cXqnneVmWSQu928dqNIrO7v-F0g"> -->
 			</div>
 		</div>
-        <p>{% trans 'Dear' %} {{ user.first_name| default:user.username }} , </p>
+        <p>{% trans 'Hi' %}, </p>
         <p> click on the link below to activate your account:</p>
 
 		{% if test %}

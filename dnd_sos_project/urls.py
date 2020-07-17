@@ -23,11 +23,14 @@ from django.contrib.auth import views as auth_views
 
 from dndsos_dashboard.views import SignUpView
 
-admin.site.site_header = 'DND-SOS'
+admin.site.site_header = 'DILVUR'
 
 app_name = 'dnd_sos_project'
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('admin/', admin.site.urls),
+
     path('', include('dndsos.urls')),
     path('dashboard/', include('dndsos_dashboard.urls')),
     path('core/', include('core.urls')),
@@ -48,9 +51,7 @@ urlpatterns = [
     path('password-reset/done', auth_views.PasswordResetCompleteView.as_view(template_name='core/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='core/reset_password.html'), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='core/password_reset_complete.html'), name='password_reset_complete'),
-    
 
-    path('admin/', admin.site.urls),
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,

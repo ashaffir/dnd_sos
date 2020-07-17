@@ -25,6 +25,9 @@ from django.db.models import Q
 
 from django.contrib.gis.db.models.functions import Distance
 
+# Language translation
+from django.utils.translation import gettext as _
+
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -38,7 +41,7 @@ from orders.models import Order
 from .utilities import send_mail
 from geo.models import Street, CityModel
 from geo.geo_utils import location_calculator
-from payments.views import add_card, remove_card
+from payments.views import add_card, remove_card, credit_card_form
 from payments.models import Card
 
 # from notifier.signals import alert_freelancer_accepted
@@ -176,7 +179,7 @@ def f_dashboard(request, f_id):
     for order in daily_orders:
         daily_profit += order.price
 
-    context['daily_profit'] = daily_profit
+    context['daily_profit'] = round(daily_profit,2)
 
     f_businesses = []
     f_relationships = User.objects.get(pk=f_id).relationships
@@ -200,6 +203,9 @@ def b_profile(request, b_id):
     context['cities'] = CityModel.objects.all()
 
     form = BusinessUpdateForm(instance=user_profile)
+
+    icredit_form_url,private_token, public_token = credit_card_form(request)
+    context['icredit_form_url'] = icredit_form_url
 
     if request.method == 'POST':
 
@@ -283,7 +289,8 @@ def b_profile(request, b_id):
         'phone': False,
         'street': False,
         'building_number':False,
-        'city': False
+        'city': False,
+        'credit_card_token': False
         }    
 
     field_count = 0
@@ -323,34 +330,23 @@ def f_profile(request, f_id):
         
         if 'updateProfile' in request.POST:
             form = FreelancerUpdateForm(request.POST,request.FILES, instance=user_profile)            
-            
-            # phone = request.POST.get('phone')
-            # country = request.POST.get('country')
-
-            # try:
-            #     p = phonenumbers.parse(phone, country)
-            #     z = phonenumbers.is_valid_number(p)
-            # except Exception as e:
-            #     messages.error(request, f'Input phone is not valid. ERROR: {e}')
-            #     return redirect(request.META['HTTP_REFERER'])
 
             if form.is_valid():
-                # new_name = request.POST.get("name")
-    
-                # if not profile_pic:
-                #     profile_pic = request.FILES.get("old_profile_pic")
-                # else:
-                #     user_profile.profile_pic = profile_pic
-
                 try:
-                    form.save()
-                    
+                    form.save()                    
                     messages.success(request,'You have successfully updated your profile.')
                 except Exception as e:
                     messages.success(request,f'There was an error updating your profile. ERRRO: {e}')
             else:
                 for error in form.errors:
                     messages.error(request, f'Error: {error}')
+
+                    # TODO: Fix this workaround. Files are uploaded even when fail extension validation, so 
+                    # the workaround is to rewrite this field.
+                    if error == 'id_doc':
+                        user_profile.id_doc = None
+                        user_profile.save()
+
                 print('ERROR PROFILE FORM')
         
         elif 'addPhone' in request.POST:
@@ -364,20 +360,13 @@ def f_profile(request, f_id):
                 print(f'>>>>>>> FAILE TO SEND SMS <<<<<<<< Error: {sent_sms_status}')
                 return render(request, 'dndsos_dashboard/failed-phone-verification.html')
             
-        # elif 'phoneVerify' in request.POST:
-        #     phone = request.POST.get('phoneNumber')
-        #     verification_status = phone_verify(action='send_verification_code', phone=phone, code=None)
-        #     if verification_status == 'approved':
-        #         return redirect('dndsos_dashboard/f_profile', f_id=request.user.pk)
-        #     else:
-        #         return redirect('dndsos_dashboard/failed-phone-verification.html')
         elif request.POST.get('paypal_account'): 
             paypal_account = request.POST.get('paypal_account')
             try:
                 valid = validate_email(paypal_account)
                 user_profile.paypal_account = paypal_account
                 user_profile.save()
-                messages.success(request,'You have successfully updated a payment method.')
+                messages.success(request,'You have successfully updated a payment method to PayPal.')
                 return redirect(request.META['HTTP_REFERER'])
             except EmailNotValidError as e:
                 messages.error(request,f'You have entered a non-valid email. Error: {e}')
@@ -386,23 +375,23 @@ def f_profile(request, f_id):
         elif 'phonePayment' in request.POST: 
             user_profile.payment_via_phone = True
             user_profile.save()
-            messages.success(request,'You have successfully updated a payment method.')
+            messages.success(request,'You have successfully updated a payment method to Phone Payments.')
             return redirect(request.META['HTTP_REFERER'])
 
         elif 'makePreferred_paypal' in request.POST: 
             user_profile.preferred_payment_method = 'PayPal'
             user_profile.save()
-            messages.success(request,'You have successfully set a default payment method.')
+            messages.success(request,'You have successfully set Paypal as a default payment method.')
             return redirect(request.META['HTTP_REFERER'])
         elif 'makePreferred_bank' in request.POST: 
             user_profile.preferred_payment_method = 'Bank'
             user_profile.save()
-            messages.success(request,'You have successfully set a default payment method.')
+            messages.success(request,'You have successfully set bank transfer as a default payment method.')
             return redirect(request.META['HTTP_REFERER'])
         elif 'makePreferred_phone' in request.POST: 
             user_profile.preferred_payment_method = 'Phone'
             user_profile.save()
-            messages.success(request,'You have successfully set a default payment method.')
+            messages.success(request,'You have successfully set phone-transfer as a default payment method.')
             return redirect(request.META['HTTP_REFERER'])
 
     # Check profile completion
@@ -421,10 +410,19 @@ def f_profile(request, f_id):
 
     if field_count == len(required_fields):
         user_profile.is_approved = True
+        user_profile.save()
     else:
         user_profile.is_approved = False
+        user_profile.save()
+    
+    # Check earnings due
+    daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(status='COMPLETED'))
 
-    user_profile.save()
+    earnings_due = 0
+    for order in daily_orders:
+        earnings_due += order.price
+
+    context['earnings_due'] = round(earnings_due,2) 
 
     context['required_fields'] = required_fields
     context['complete'] = round(field_count/len(required_fields)*100)
@@ -466,14 +464,21 @@ def orders(request, b_id):
                 freelancer = Employee.objects.get(pk=order.freelancer.freelancer.pk)
                 freelancer_orders = Order.objects.filter(freelancer=order.freelancer.freelancer.pk)
 
-                if len(freelancer_orders) > 0:
+                if len(freelancer_orders) > 1:
                     total_rating = 0
+                    ratings = 0
                     for order in freelancer_orders:
-                        total_rating += order.freelancer_rating
+                        if order.freelancer_rating:
+                            total_rating += order.freelancer_rating
+                            ratings += 1
                     
-                    total_rating = round(total_rating/len(freelancer_orders),2)
-                    freelancer.freelancer_total_rating = total_rating
-                    freelancer.save()
+                    total_rating = round(total_rating/ratings,2)
+
+                else:
+                    total_rating = order.freelancer_rating
+
+                freelancer.freelancer_total_rating = total_rating
+                freelancer.save()
 
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             
@@ -854,34 +859,35 @@ def f_bank_details(request, f_id):
         }
 
     if request.method == 'POST':
-        try:
-            if form.is_valid():
+        if 'bankDetailsSubmit' in request.POST:
+            try:
+                if form.is_valid():
 
-                freelancer.bank_details = {
-                'f_name':form.cleaned_data["first_name"],
-                'l_name':form.cleaned_data["last_name"],
-                'full_name_in_native_language':form.cleaned_data["full_name_in_native_language"],
-                'name_on_the_account':form.cleaned_data["name_on_the_account"],
-                'address':form.cleaned_data["address"],
-                'city':form.cleaned_data["city"],
-                'country':form.cleaned_data["country"],
-                'phone_number':form.cleaned_data["phone_number"],
-                'account_ownership':form.cleaned_data["account_ownership"],
-                'national_id_number':form.cleaned_data["national_id_number"],
-                'iban':form.cleaned_data["iban"],
-                'swift':form.cleaned_data["swift"],
-                'account_number':form.cleaned_data["account_number"]
-                }
-                
-                freelancer.save()
-                messages.success(request, "Bank details were updated successfully")
-                return redirect('dndsos_dashboard:f-profile', f_id=f_id)
-            else:
-                for error in form.errors:
-                    messages.error(request, f"Error updating bank details. {error}")
-                print('ERROR Bank details')
-        except Exception as e:
-            messages.error(request, f'Exception: {e}')
+                    freelancer.bank_details = {
+                    'f_name':form.cleaned_data["first_name"],
+                    'l_name':form.cleaned_data["last_name"],
+                    'full_name_in_native_language':form.cleaned_data["full_name_in_native_language"],
+                    'name_on_the_account':form.cleaned_data["name_on_the_account"],
+                    'address':form.cleaned_data["address"],
+                    'city':form.cleaned_data["city"],
+                    'country':form.cleaned_data["country"],
+                    'phone_number':form.cleaned_data["phone_number"],
+                    'account_ownership':form.cleaned_data["account_ownership"],
+                    'national_id_number':form.cleaned_data["national_id_number"],
+                    'iban':form.cleaned_data["iban"],
+                    'swift':form.cleaned_data["swift"],
+                    'account_number':form.cleaned_data["account_number"]
+                    }
+                    
+                    freelancer.save()
+                    messages.success(request, "Bank details were updated successfully")
+                    return redirect('dndsos_dashboard:f-profile', f_id=f_id)
+                else:
+                    for error in form.errors:
+                        messages.error(request, f"Error updating bank details. {error}")
+                    print('ERROR Bank details')
+            except Exception as e:
+                messages.error(request, f'Exception: {e}')
 
     context['form'] = form
 

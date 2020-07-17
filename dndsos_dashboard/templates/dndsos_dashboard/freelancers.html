@@ -1,11 +1,14 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% load leaflet_tags %}
 {% leaflet_css %}
 {% leaflet_js %}
 
 {% block content %}
+{% get_current_language as lang %}
+
 {% include 'dndsos_dashboard/partials/_message-sent-modal.html' %}
 <link rel="stylesheet" href="//unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="//unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -74,10 +77,9 @@
       }
 </style>
 
-
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Freelancers</h2>
+        <h2>{% trans 'Carriers' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -86,7 +88,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Freelancers</span></li>
+                <li><span>{% trans 'Carriers' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -98,13 +100,13 @@
             <div class="tabs">
                 <ul class="nav nav-tabs tabs-primary">
                     <li class="active">
-                        <a href="#freelancers_map" data-toggle="tab">Freelancers Map</a>
+                        <a href="#freelancers_map" data-toggle="tab">{% trans 'Carriers Map' %}</a>
                     </li>
                     <li class="">
-                        <a href="#select_tab" data-toggle="tab">Select Freelancers</a>
+                        <a href="#select_tab" data-toggle="tab">{% trans 'Select Carrier' %}</a>
                     </li>
                     <li >
-                        <a href="#manage_tab" data-toggle="tab">Your Freelancers</a>
+                        <a href="#manage_tab" data-toggle="tab">{% trans 'Your Carriers' %}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -249,7 +251,7 @@
                     <!-- Business Freelancers tab -->
                     <div id="manage_tab" class="tab-pane ">
 
-                        <form action="" method="POST" enctype="multipart/form-data" id="b_select_freelancers" name="select_freelancers">
+                        <form action="" method="POST" enctype="multipart/form-data" id="b_select_freelancers_form" name="select_freelancers">
                             {% csrf_token %}
                             <div class="row" >
                                 <div class="col-md-4">

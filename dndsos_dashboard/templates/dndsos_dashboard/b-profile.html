@@ -110,6 +110,7 @@
 													<li class="{% if required_fields.city %}completed{% else %}{% endif %}">City </li>
 													<li class="{% if required_fields.street %}completed{% else %}{% endif %}">Street </li>
 													<li class="{% if required_fields.building_number %}completed{% else %}{% endif %}">Building Number </li>
+													<li class="{% if required_fields.credit_card_token %}completed{% else %}{% endif %}">Credit Card </li>
 												</ul>
 											</div>
 										</div>
@@ -223,8 +224,22 @@
 
 									<!-- Credit Cards Management -->
 									<div id="add_cc" class="tab-pane">
-
-										<form class="form-horizontal" enctype="multipart/form-data" id="add_card" name="add_card" method="POST" action="{% url 'payments:add-card' %}">
+										{% if user.business.credit_card_token %}
+											<div class="row">
+												<div class="col-md-12">
+													<h4>You already have a credit card in the system.</h4>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<button onclick="updateCard()" class="btn btn-primary" type="button" >Update</button>
+												</div>
+											</div>
+										{% else %}
+											<iframe src="{{ icredit_form_url }}" frameborder="0" allowtransparency="true" onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));' style="height:600px;width:100%;border:none;overflow:hidden;" frameborder="0" allowfullscreen>
+											</iframe>
+										{% endif %}
+										<!-- <form class="form-horizontal" enctype="multipart/form-data" id="add_card" name="add_card" method="POST" action="{% url 'payments:add-card' %}">
 											{% csrf_token %}
 											<div class="row">
 												<div class="col-md-6">
@@ -303,7 +318,7 @@
 												</div>
 											</div>
 
-										</form>
+										</form> -->
 
 									</div>
 									<!-- END Credit Cards Management -->
@@ -331,6 +346,14 @@
 			$('#exampleModal').modal({show:true});
 			//$('#message').modal('hide');
 		});
+	</script>
+	
+	{% include 'payments/partials/_update-card-modal.html' %}
+	
+	<script type="application/javascript">
+		updateCard = function() {
+			$('#updateCardModal').modal('show')
+		}
 	</script>
 
 	<script type="text/javascript">
