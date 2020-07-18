@@ -1,5 +1,8 @@
+{% load i18n %}
+{% get_current_language as lang %}
+
 {% for order in orders %}
-<div class="col-md-4">
+<div class="col-md-4" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <section class="panel panel-featured-left panel-featured-secondary">
         <div class="panel-body">
             <div class="widget-summary">
@@ -12,15 +15,15 @@
                     <div class="summary">
                         <!-- <h4 class="title">Order ID: {{ order.order_id|slugify }}</h4> -->
                         <div class="" >
-                            <p class="" >Order Created: <b>{{ order.created }}</b></p>
-                            <p class="">Customer Address: <b>{{ order.drop_off_address }}</b></p>
+                            <p class="" >{% trans 'Order Created' %}: <b>{{ order.created }}</b></p>
+                            <p class="">{% trans 'Customer Address' %}: <b>{{ order.drop_off_address }}</b></p>
                         </div>
 
                     </div>
                     <div class="summary-footer">
                         <div class="row" >
                             <div class="col-md-12" style="text-align: center;">
-                                <button id="addOrder_'{{ order.order_id }}'" onclick="broadcast_order('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}', '{{ order.notes }}')" class="btn btn-lg btn-success" type="button" drop_off_address='{{ order.drop_off_address }}' name="requestFreelancer" value="{{ order.order_id }}">Reqeuest Freelancer</button>
+                                <button id="addOrder_'{{ order.order_id }}'" onclick="broadcast_order('{{ order.order_id }}', '{{ order.pick_up_address }}', '{{ order.drop_off_address }}', '{{ order.notes }}')" class="btn btn-lg btn-success" type="button" drop_off_address='{{ order.drop_off_address }}' name="requestFreelancer" value="{{ order.order_id }}">{% trans 'Request Carrier' %}</button>
                             </div>
                         </div>
                     </div>

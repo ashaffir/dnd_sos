@@ -1,5 +1,7 @@
 {% load i18n %}
 {% load static %}
+{% get_current_language as lang %}
+
     <!-- <a  href="#modalForm" id="" class="btn btn-primary modal-with-form">Add <i class="fa fa-plus"></i></a> -->
     <!-- <a class="mb-xs mt-xs mr-xs btn btn-primary" data-toggle="modal" data-target="#modalAddOrder">Add new customer order <i class="fa fa-plus"></i></a> -->
 
@@ -8,28 +10,28 @@
     <div class="modal fade" id="newOfferAlert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">New Offer</h4>
+                <div class="modal-header" style="background-color: green; color: white">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans 'Close' %}</span></button>
+                    <center><h4 class="modal-title" id="myModalLabel">{% trans 'New Offer' %}</h4></center>
                 </div>
-                <div class="modal-body">
-                     <p>Offer details:</p>              
+                <div class="modal-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+                     <p>{% trans 'Offer details' %}:</p>              
                      <section class="panel">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Pick up address</label>
+                                <label class="col-sm-3 control-label"><b>{% trans 'Pick up address' %}</b></label>
                                 <div class="col-sm-4" id="pick_up_address">
                                     <!-- From JS in base.html -->
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Drop off address</label>
+                                <label class="col-sm-3 control-label"><b>{% trans 'Drop off address' %}</b></label>
                                 <div class="col-sm-4" id="drop_off_address">
                                     <!-- From JS in base.html -->
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">What is delivered</label>
+                                <label class="col-sm-3 control-label"><b>{% trans 'What is delivered' %}</b></label>
                                 <div class="col-sm-4" id="new_offer_delivery_type">
                                     <!-- From JS in base.html -->
                                 </div>
@@ -37,8 +39,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button id="accept" name="accept" type="button" class="btn btn-success">Confirm</button>
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">Dismiss</button>
+                            <button id="accept" name="accept" type="button" class="btn btn-success">{% trans 'Confirm' %}</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">{% trans 'Dismiss' %}</button>
                         </div>
                      </section>
                 </div>

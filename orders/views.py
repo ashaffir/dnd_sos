@@ -130,6 +130,7 @@ def open_orders(request):
     context = {}
     
     open_orders = Order.objects.filter(freelancer=None).exclude(status='ARCHIVED')
+    context['num_open_orders'] = len(open_orders)
 
     cities = []
     for order in open_orders:
@@ -148,6 +149,7 @@ def open_orders(request):
             context['num_open_orders'] = len(open_orders)
 
     context['cities'] = set(cities)
+
     return render(request, 'dndsos_dashboard/open-orders.html', context)
 
 # Alerts to business about orders that were rejected or that are late

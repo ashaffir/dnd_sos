@@ -1,11 +1,13 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+{% get_current_language as lang %}
 
-<section role="main" class="content-body">
+<section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <header class="page-header">
-        <h2>Business Dashboard</h2>
+        <h2>{% trans 'Business Dashboard' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -14,7 +16,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Dashboard</span></li>
+                <li><span>{% trans 'Dashboard' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -37,7 +39,7 @@
                         <!-- <a href="#" class="fa fa-times"></a> -->
                     </div>
 
-                    <h2 class="panel-title">Order Summary</h2>
+                    <h2 class="panel-title">{% trans 'Order Summary' %}</h2>
                 </header>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -45,10 +47,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Order - Drop-off Address</th>
-                                    <th>Started</th>
-                                    <th>Status</th>
-                                    <th>Duration</th>
+                                    <th>{% trans 'Order - Drop-off Address' %}</th>
+                                    <th>{% trans 'Started' %}</th>
+                                    <th>{% trans 'Status' %}</th>
+                                    <th>{% trans 'Duration' %}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,7 +69,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        {{ order.order_hours }} hour/s and {{ order.order_minutes }} minute/s
+                                        {{ order.order_hours }} hour/s and {{ order.order_minutes }} {% trans 'minute/s' %}
                                         <!-- <div class="progress progress-sm progress-half-rounded m-none mt-xs light">
                                             <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
                                                 100%
@@ -96,7 +98,7 @@
                         <!-- <a href="#" class="fa fa-times"></a> -->
                     </div>
 
-                    <h2 class="panel-title">General Stats</h2>
+                    <h2 class="panel-title">{% trans 'General Stats' %}</h2>
                 </header>
                 <div class="panel-body">
                     <div class="row">
@@ -111,14 +113,14 @@
                                         </div>
                                         <div class="widget-summary-col">
                                             <div class="summary">
-                                                <h4 class="title">Active Orders</h4>
+                                                <h4 class="title">{% trans 'Active Orders' %}</h4>
                                                 <div class="info">
                                                     <strong class="amount">{{ num_orders }}</strong>
                                                     <!-- <span class="text-primary">(14 unread)</span> -->
                                                 </div>
                                             </div>
                                             <div class="summary-footer">
-                                                <a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}" class="text-muted text-uppercase">(view all)</a>
+                                                <a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}" class="text-muted text-uppercase">({% trans 'view all' %})</a>
                                             </div>
                                         </div>
                                     </div>
@@ -136,13 +138,13 @@
                                         </div>
                                         <div class="widget-summary-col">
                                             <div class="summary">
-                                                <h4 class="title">Total Daily Cost</h4>
+                                                <h4 class="title">{% trans 'Total Daily Cost' %}</h4>
                                                 <div class="info">
                                                     <strong class="amount">$ {{ daily_cost }}</strong>
                                                 </div>
                                             </div>
                                             <div class="summary-footer">
-                                                <a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}" class="text-muted text-uppercase">(details)</a>
+                                                <a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}" class="text-muted text-uppercase">({% trans 'details' %})</a>
                                             </div>
                                         </div>
                                     </div>
@@ -160,13 +162,13 @@
                                         </div>
                                         <div class="widget-summary-col">
                                             <div class="summary">
-                                                <h4 class="title">Today's Orders</h4>
+                                                <h4 class="title">{% trans 'Daily Orders' %}</h4>
                                                 <div class="info">
                                                     <strong class="amount">{{ num_daily_orders }}</strong>
                                                 </div>
                                             </div>
                                             <div class="summary-footer">
-                                                <a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}" class="text-muted text-uppercase">(view all)</a>
+                                                <a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}" class="text-muted text-uppercase">({% trans 'view all' %})</a>
                                                 <!-- <a class="text-muted text-uppercase">(statement)</a> -->
                                             </div>
                                         </div>
@@ -185,13 +187,13 @@
                                         </div>
                                         <div class="widget-summary-col">
                                             <div class="summary">
-                                                <h4 class="title">Freelancers Pool</h4>
+                                                <h4 class="title">{% trans 'Carriers Pool' %}</h4>
                                                 <div class="info">
                                                     <strong class="amount">{{ num_active_freelancers }}</strong>
                                                 </div>
                                             </div>
                                             <div class="summary-footer">
-                                                <a href="{% url 'dndsos_dashboard:freelancers' b_id=user.pk %}" class="text-muted text-uppercase">(see all)</a>
+                                                <a href="{% url 'dndsos_dashboard:freelancers' b_id=user.pk %}" class="text-muted text-uppercase">({% trans 'see all' %})</a>
                                             </div>
                                         </div>
                                     </div>

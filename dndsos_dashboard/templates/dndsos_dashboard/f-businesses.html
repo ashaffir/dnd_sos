@@ -1,11 +1,13 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+{% get_current_language as lang %}
 
-<section role="main" class="content-body">
+<section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <header class="page-header">
-        <h2>Businesses</h2>
+        <h2>{% trans 'Businesses' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -14,7 +16,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Businesses</span></li>
+                <li><span>{% trans 'Businesses' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -26,7 +28,7 @@
             <div class="tabs">
                 <ul class="nav nav-tabs tabs-primary">
                     <li class="active">
-                        <a href="#select_tab" data-toggle="tab">Businesses you've worked with</a>
+                        <a href="#select_tab" data-toggle="tab">{% trans 'Businesses you worked with' %}</a>
                     </li>
                 </ul>
                 {% if businesses %}
@@ -38,15 +40,15 @@
                             {% csrf_token %}                                   
                             <div class="row" >
                                 <div class="col-md-4">
-                                    <h4>Check the businesses you've worked with</h4>
-                                    <p>There  {% if num_businesses > 1 %}  are {% else %} is {% endif %}{{ num_businesses }} businesses in your list.</p>
-                                    <button type="submit" class="btn btn-warning mobile-bottom-margin" name="all_cities" type="button">Show all!</button>
+                                    <h4>{% trans 'Check the businesses you worked with' %}</h4>
+                                    <p>{% trans 'There' %}  {% if num_businesses > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ num_businesses }} {% trans 'businesses in your list' %}.</p>
+                                    <button type="submit" class="btn btn-warning mobile-bottom-margin" name="all_cities" type="button">{% trans 'Show all' %}!</button>
                                 </div>
                                 <!-- <div class="col-md-4"></div> -->
                                 <div class="col-md-4">
                                     <div class="input-group mb-md">
                                         <!-- <input type="text" class="form-control" name="city" placeholder="Choose"> -->
-                                        <label for="city_selector" style="margin-right: 2rem;">Filter by City </label>
+                                        <label for="city_selector" style="margin-right: 2rem;">{% trans 'Filter by City' %} </label>
                                         <select name="city" id="city_selector">
                                             <option value="">--------------------</option>
                                             {% for city in cities %}
@@ -54,7 +56,7 @@
                                             {% endfor %}
                                         </select>
                                         <span class="input-group-btn left">
-                                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Filter!</button>
+                                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">{% trans 'Filter' %}!</button>
                                         </span>
                                     </div>                    
                                 </div>
@@ -62,7 +64,7 @@
                         </form>
 
                         <hr>
-                        <div class="row">
+                        <div class="row" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
                             {% for business in businesses %}
                                 <div class="col-md-4">
                                     <section class="panel">
@@ -73,17 +75,17 @@
                                         </header>
                                         <div class="panel-body">
                                             <h4 class="text-semibold mt-sm">{{ business }}</h4>
-                                            <p>Email: {{ business.email }} </p>
-                                            <p>Phone: {{ business.phone }} </p>
-                                            <p>City: {{ business.city }} </p>
+                                            <p>{% trans 'Email' %}: {{ business.email }} </p>
+                                            <p>{% trans 'Phone' %}: {{ business.phone }} </p>
+                                            <p>{% trans 'City' %}: {{ business.city }} </p>
                                             <hr class="solid short">
 
                                             <div class="row center">
                                                 <div class="col-md-6">
-                                                    <a class="btn btn-md btn-primary" href="tel:{{ business.phone }}"><i class="fa fa-phone"></i> Call Business</a>
+                                                    <a class="btn btn-md btn-primary" href="tel:{{ business.phone }}"><i class="fa fa-phone"></i> {% trans 'Call Business' %}</a>
                                                 </div>
                                                 <div class="col-md-6 mobile-top-margin">
-                                                    <a class="btn btn-md btn-primary" href="mailto:{{ business.email }}"><i class="fa fa-envelope"></i> Email Business</a>
+                                                    <a class="btn btn-md btn-primary" href="mailto:{{ business.email }}"><i class="fa fa-envelope"></i> {% trans 'Email Business' %}</a>
                                                 </div>
                                             </div>
 
@@ -97,7 +99,7 @@
                 {% else %}                
                     <div class="tab-content">
                         <div id="select_tab" class="tab-pane active" active>
-                            <h4>There are no businesses here yet.</h4>
+                            <h4>{% trans 'There are no businesses here yet' %}.</h4>
                         </div>
                     </div>
                 {% endif %}

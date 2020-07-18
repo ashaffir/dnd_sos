@@ -1,11 +1,13 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+{% get_current_language as lang %}
 
-<section role="main" class="content-body">
+<section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <header class="page-header">
-        <h2>Order Alerts</h2>
+        <h2>{% trans 'Order Alerts' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -14,7 +16,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Order Alerts</span></li>
+                <li><span>{% trans 'Order Alerts' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -27,15 +29,15 @@
             {% csrf_token %}
             <div class="row" >
                 <div class="col-md-4">
-                    <h4>Orders that are pending freelancer allocation</h4>
-                    <p>There  {% if num_orders > 1 %}  are {% else %} is {% endif %}{{ num_orders }} orders that require your attention .</p>
-                    <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button>
-                                                </div>
-                <div class="col-md-4">
+                    <h4>{% trans 'Orders that are pending carrier allocation' %}</h4>
+                    <p>{% trans 'There' %}  {% if num_orders > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ num_orders }} {% trans 'orders that require your attention' %} .</p>
+                    <!-- <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">{% trans 'Show all' %}!</button> -->
+                </div>
+                <!-- <div class="col-md-4">
                     <div class="input-group mb-md">
                         <input type="text" class="form-control" name="city" placeholder="Enter your city">
                         <span class="input-group-btn">
-                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">Sort!</button>
+                            <button type="submit" class="btn btn-success" name="sort_by_city" type="button">{% trans 'Sort' %}!</button>
                         </span>
                     </div>                    
                 </div>
@@ -43,10 +45,10 @@
                     <div class="input-group mb-md">
                         <input type="text" class="form-control" name="vehicle" placeholder="Preferred vehicle">
                         <span class="input-group-btn">
-                            <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">Sort!</button>
+                            <button type="submit" class="btn btn-success" name="sort_by_vehicle" type="button">{% trans 'Sort' %}!</button>
                         </span>
                     </div>                    
-                </div>
+                </div> -->
             </div>
         </form>
         <hr>

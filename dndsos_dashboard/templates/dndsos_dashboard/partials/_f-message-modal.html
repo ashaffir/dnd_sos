@@ -1,32 +1,34 @@
 {% load i18n %}
 {% load static %}
-<a class="btn btn-primary" data-toggle="modal" data-target="#makePayment_{{ order.order_id }}" style="color: white;">Message <i class="fa fa-send"></i></a>
+{% get_current_language as lang %}
 
-<div class="modal fade" id="makePayment_{{ order.order_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<a class="btn btn-primary" data-toggle="modal" data-target="#makePayment_{{ order.order_id }}" style="color: white;">{% trans 'Message' %} <i class="fa fa-send"></i></a>
+
+<div class="modal fade" id="makePayment_{{ order.order_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Communication with the business</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans 'Close' %}</span></button>
+                <h4 class="modal-title" id="myModalLabel">{% trans 'Communication with the business' %}</h4>
             </div>
             <section class="panel">
                     <div class="panel-body">
                         <div class="row form-group">
                             <div class="col-lg-12 justify-left">
-                                <p style="text-align: left;">Send a message to: {% if order.business.employer.business_name %}  {{ order.business.employer.business_name }} {% else %} {{ order.business }} {% endif %}</p>
+                                <p style="text-align: left;">{% trans 'Send a message to' %}: {% if order.business.business.business_name %}  {{ order.business.business.business_name }} {% else %} {{ order.business }} {% endif %}</p>
                             </div>
 
                             <div class="mb-md hidden-lg hidden-xl"></div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <input id="chat-message-input_{{ order.order_id }}" type="text" size="100%" class="form-control" placeholder="Type your message"><br>
+                                <input id="chat-message-input_{{ order.order_id }}" type="text" size="100%" class="form-control" placeholder="{% trans 'Type your message' %}"><br>
                                 {{ room_name|json_script:"room-name" }}
                             </div>
                         </div>
                     </div>
                     <footer class="panel-footer">
-                        <button type="button" id="chat-message-submit_{{ order.order_id }}" value="Send" class="btn btn-primary">Send</button>
+                        <button type="button" id="chat-message-submit_{{ order.order_id }}" value="Send" class="btn btn-primary">{% trans 'Send' %}</button>
                     </footer>
             </section>       
          </div>

@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% get_current_language as lang %}
 
   <!-- Message Sent Modal -->
   <div class="modal fade" id="broadcastSent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -9,7 +10,7 @@
     <div class="modal-content text-center">
       <!--Header-->
       <div class="modal-header d-flex justify-content-center">
-        <p class="heading">Broadcast Carrier Request Sent</p>
+        <p class="heading">{% trans 'Broadcast Carrier Request Sent' %}</p>
       </div>
 
       <!--Body-->
@@ -21,7 +22,7 @@
 
       <!--Footer-->
       <div class="modal-footer flex-center">
-        <a href="" class="btn  btn-outline-danger">OK</a>
+        <a href="" class="btn  btn-outline-danger">{% trans 'Close' %}</a>
       </div>
     </div>
     <!--/.Content-->

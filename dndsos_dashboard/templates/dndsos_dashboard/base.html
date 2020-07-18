@@ -94,33 +94,6 @@
 
 		<!-- Loader -->
 		<link rel="stylesheet" href="{% static 'assets/stylesheets/loader.css' %}" />
-<!-- 
-		<script type="text/javascript">
-			let loader;
-			function loadNow(opacity){
-				if(opacity <- 0) {
-					displayContent();
-				} else {
-					loader.style.opacity = opacity;
-					window.setTimeout( function(){
-						loadNow(opacity - 0.1)
-					}, 50)
-				}
-			}
-
-			function displayContent() {
-				loader.style.display  = 'none';
-				document.getElementById('content').style.display = 'block';
-			}
-
-			document.addEventListener("DOMContentLoaded", function(){
-				//loader = document.getElementById('loader');
-				loader = document.querySelector('.loading')
-				loadNow(1);
-			});
-		</script> -->
-
-		
 
 	</head>
 	<body>
@@ -141,7 +114,7 @@
 							</div>
 						</div>		
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						{% include 'core/_messages.html' %}
 					</div>
 					<div class="col-md-2">
@@ -162,7 +135,7 @@
 									</form>		
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-5">
 						<div class="header-right">
 				
 							<form action="pages-search-results.html" class="search nav-form">
@@ -181,12 +154,12 @@
 								<li>
 									{% if is_available %}
 										<a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="btn btn-success" 	data-toggle="">
-											<i class="fa fa-bell">Available</i>
+											<i class="fa fa-bell">{% trans 'Available' %}</i>
 											<span class=""></span>
 										</a>
 									{% else %}
 									<a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="btn btn-danger" 	data-toggle="">
-										<i class="fa fa-bell">Unavailable</i>
+										<i class="fa fa-bell">{% trans 'Unavailable' %}</i>
 										<span class=""></span>
 									</a>
 									{% endif %}
@@ -280,12 +253,12 @@
 										{% if user.is_employer %}
 											<a href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}">
 												<i class="fa fa-home" aria-hidden="true"></i>
-												<span>Business Dashboard</span>
+												<span>{% trans 'Business Dashboard' %}</span>
 											</a>
 										{% else %}
 											<a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
 											<i class="fa fa-home" aria-hidden="true"></i>
-											<span>Carrier Dashboard</span>
+											<span>{% trans 'Carrier Dashboard' %}</span>
 										</a>
 										{% endif %}
 									</li>
@@ -296,33 +269,33 @@
 											<a href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">
 										{% endif %}
 											<i class="fa fa-user" aria-hidden="true"></i>
-											<span>Profile</span>
+											<span>{% trans 'Profile' %}</span>
 										</a>
 									</li>
 									{% if user.is_employer %}
 										<li>
 											<a href="{% url 'dndsos_dashboard:freelancers' b_id=user.pk %}">
 												<i class="fa fa-group" aria-hidden="true"></i>
-												<span>Carriers</span>
+												<span>{% trans 'Carriers' %}</span>
 											</a>
 										</li>
 	                                    <li>
                                         	<a href="{% url 'dndsos_dashboard:orders' b_id=user.pk %}">
 												<i class="fa fa-tasks" aria-hidden="true"></i>
-												<span>Orders</span>
+												<span>{% trans 'Orders' %}</span>
 											</a>
     	                                </li>
 	                                    <li>
                                         	<a href="{% url 'dndsos_dashboard:b-alerts' b_id=user.pk %}">
 												<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-												<span>Alerts</span>
+												<span>{% trans 'Alerts' %}</span>
 											</a>
     	                                </li>
 
 	                                    <li>
                                         	<a href="{% url 'dndsos_dashboard:b-messages' b_id=user.pk %}">
 												<i class="fa fa-send" aria-hidden="true"></i>
-												<span>Messages</span>
+												<span>{% trans 'Messages' %}</span>
 											</a>
     	                                </li>
 										<!-- <li>
@@ -335,31 +308,31 @@
 										<li>
 											<a href="{% url 'orders:open-orders' %}">
 												<i class="fa fa-tasks" aria-hidden="true"></i>
-												<span>Open Orders</span>
+												<span>{% trans 'Open Orders' %}</span>
 											</a>
 										</li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-active-deliveries' f_id=user.pk %}">
 												<i class="fa fa-car" aria-hidden="true"></i>
-												<span>Active Deliveries</span>
+												<span>{% trans 'Active Deliveries' %}</span>
 											</a>
 										</li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-deliveries' f_id=user.pk %}">
 												<i class="fa fa-table" aria-hidden="true"></i>
-												<span>Deliveries Summary</span>
+												<span>{% trans 'Deliveries Summary' %}</span>
 											</a>
 										</li>
 										<li>
 											<a href="{% url 'dndsos_dashboard:f-businesses' f_id=user.pk %}">
 												<i class="fa fa-bank" aria-hidden="true"></i>
-												<span>Businesses</span>
+												<span>{% trans 'Businesses' %}</span>
 											</a>
 										</li>
 	                                    <li>
                                         	<a href="{% url 'dndsos_dashboard:f-messages' f_id=user.pk %}">
 												<i class="fa fa-send" aria-hidden="true"></i>
-												<span>Messages</span>
+												<span>{% trans 'Messages' %}</span>
 											</a>
     	                                </li>
 										<!-- <li>

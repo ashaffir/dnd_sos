@@ -1,15 +1,17 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+{% get_current_language as lang %}
 {% include 'dndsos_dashboard/partials/_message-sent-modal.html' %}
 
-<section role="main" class="content-body">
+<section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" /> -->
     
     <header class="page-header">
-        <h2>Deliveries</h2>
+        <h2>{% trans 'Deliveries' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -18,7 +20,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Deliveries</span></li>
+                <li><span>{% trans 'Deliveries' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -29,7 +31,7 @@
     <!-- start: page -->
         <section class="panel">
             <div class="panel-body">
-                <h3 class="">Deliveries Summary Table</h3>
+                <h3 class="">{% trans 'Deliveries Summary Table' %}</h3>
                 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mb-none display" id="deliveriesTable">

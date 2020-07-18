@@ -679,6 +679,7 @@ def freelancers(request, b_id):
 
     context['freelancers_due_payment'] = freelancers_due_payment
     context['num_freelancers_due_payment'] = len(freelancers_due_payment)
+    context['num_b_freelancers'] = len(b_freelancers)
     max_range = DEFAULT_FREELANCER_RANGE
 
     # Filter freelancers

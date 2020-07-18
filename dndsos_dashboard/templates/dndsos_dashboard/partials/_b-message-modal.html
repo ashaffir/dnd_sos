@@ -1,32 +1,34 @@
 {% load i18n %}
 {% load static %}
-<a class="mb-xs mt-xs mr-xs btn btn-primary" data-toggle="modal" data-target="#sendMessage_{{ order.order_id }}" style="color: white; margin:0%">Message <i class="fa fa-send"></i></a>
+{% get_current_language as lang %}
+
+<a class="mb-xs mt-xs mr-xs btn btn-primary" data-toggle="modal" data-target="#sendMessage_{{ order.order_id }}" style="color: white; margin:0%">{% trans 'Message' %} <i class="fa fa-send"></i></a>
 
 <div class="modal fade" id="sendMessage_{{ order.order_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Communication with the freelancer</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans 'Close' %}</span></button>
+                <h4 class="modal-title" id="myModalLabel">{% trans 'Communication with the carrier' %}</h4>
             </div>
             <section class="panel">
                     <div class="panel-body">
                         <div class="row form-group">
                             <div class="col-lg-12 justify-left">
-                                <p style="text-align: left;">Send a message to: {% if order.freelancer.employee.name %}  {{ order.freelancer.employee.name }} {% else %} {{ order.freelancer }} {% endif %}</p>
+                                <p style="text-align: left;">{% trans 'Send a message to' %}: {% if order.freelancer.freelancer.name %}  {{ order.freelancer.freelancer.name }} {% else %} {{ order.freelancer }} {% endif %}</p>
                             </div>
 
                             <div class="mb-md hidden-lg hidden-xl"></div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <input id="chat-message-input_{{ order.order_id }}" type="text" size="100%" class="form-control" placeholder="Type your message"><br>
+                                <input id="chat-message-input_{{ order.order_id }}" type="text" size="100%" class="form-control" placeholder="{% trans 'Type your message' %}"><br>
                                 {{ room_name|json_script:"room-name" }}
                             </div>
                         </div>
                     </div>
                     <footer class="panel-footer">
-                        <button class="btn btn-primary" type="button" id="chat-message-submit_{{ order.order_id }}" value="Send">Send</button>
+                        <button class="btn btn-primary" type="button" id="chat-message-submit_{{ order.order_id }}" value="Send">{% trans 'Send' %}</button>
                     </footer>
             </section>       
          </div>

@@ -1,12 +1,14 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+{% get_current_language as lang %}
 {% include 'dndsos_dashboard/partials/_message-sent-modal.html' %}
 
-<section role="main" class="content-body">
+<section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <header class="page-header">
-        <h2>Active Deliveries</h2>
+        <h2>{% trans 'Active Deliveries' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +17,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Active Deliveries</span></li>
+                <li><span>{% trans 'Active Deliveries' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -27,9 +29,9 @@
         <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
             {% csrf_token %}
             <div class="row" id="activeDeliveriesList">
-                <!-- ---------------- -->
-                <!-- Open orders List -->
-                <!-- ---------------- -->
+                <!-- ---------------------- -->
+                <!-- Active deliveries List -->
+                <!-- ---------------------- -->
             </div>
         </form>
     </div>

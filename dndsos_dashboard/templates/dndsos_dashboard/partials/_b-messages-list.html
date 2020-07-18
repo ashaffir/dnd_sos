@@ -1,16 +1,19 @@
+{% load i18n %}
+{% get_current_language as lang %}
+
 {% for order in orders|dictsort:'created' %}
 {% if order.freelancer %}                     
-    <div class="chat_td panel-body" onclick="showChat('{{ order.order_id }}')">
+    <div class="chat_td panel-body" onclick="showChat('{{ order.order_id }}')" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
         <div class="row">
             <div class="col-md-11 col-11">
-                <h4>Order Details</h4> 
-                <p>Order started: <b>{{ order.created }}</b></p>    
-                <p>Freelancer: <b>{{ order.freelancer.freelancer.name }}</b></p>    
-                <p>Customer address: <b>{{ order.drop_off_address }}</b></p>
+                <h4>{% trans 'Order Details' %}</h4> 
+                <p>{% trans 'Order started' %}: <b>{{ order.created }}</b></p>    
+                <p>{% trans 'Carrier' %}: <b>{{ order.freelancer.freelancer.name }}</b></p>    
+                <p>{% trans 'Customer address' %}: <b>{{ order.drop_off_address }}</b></p>
             </div>
             <div class="col-md-1 col-1 col-sm-1">
                 {% if order.new_message.business %}
-                    <span  class="my_badge my_badge-danger">New</span> 
+                    <span  class="my_badge my_badge-danger">{% trans 'New' %}</span> 
                 {% endif %}
             </div>
             <i class="fa fa-chevron-right fa-2x"></i>

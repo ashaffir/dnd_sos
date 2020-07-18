@@ -1,11 +1,13 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+{% get_current_language as lang %}
 
-<section role="main" class="content-body">
+<section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <header class="page-header">
-        <h2>Open Orders</h2>
+        <h2>{% trans 'Open Orders' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -14,7 +16,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Open Orders</span></li>
+                <li><span>{% trans 'Open Orders' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -28,18 +30,18 @@
             <div class="row" >
                 <div class="col-md-12">
                     {% if is_available %}
-                    <h4>Available orders offered by businesses</h4>
-                    <p>There  {% if num_open_orders > 1 %}  are {% else %} is {% endif %}{{ num_open_orders }} open orders available.</p>
+                    <h4>{% trans 'Available orders offered by businesses' %} {{ stam }}</h4>
+                    <p>{% trans 'There' %} {% if num_open_orders > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ num_open_orders }} {% trans 'open orders available' %}.</p>
                     {% else %}
                     <div class="row">
-                        <h4><i class="fa fa-exclamation-triangle fa-1x" ></i> Your status is <b>Unavailable</b>. Change it to <a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="btn btn-success">Available</a> to see new offers.</h4>
+                        <h4><i class="fa fa-exclamation-triangle fa-1x" ></i> {% trans 'Your status is' %} <b>{% trans 'Unavailable' %}</b>. {% trans 'Change it to' %} <a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="btn btn-success">{% trans 'Available' %}</a> {% trans 'to see new offers' %}.</h4>
                     </div>
                     {% endif %}
                 </div>
             </div>
             <div class="row" style="margin-top: 1rem;">
                 <div class="col-md-3">
-                   <i class="fa fa-circle" style="color: #e36159;"></i><span> Directly requested by the business.</span>
+                   <i class="fa fa-circle" style="color: #e36159;"></i><span> {% trans 'Directly requested by the business' %}.</span>
                 </div>
             </div>
             <hr>

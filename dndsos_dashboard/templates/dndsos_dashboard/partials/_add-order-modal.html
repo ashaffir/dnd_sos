@@ -1,88 +1,90 @@
-{% load i18n %}
 {% load static %}
-    {% if business_profile.is_approved %}
-    <a class="mb-xs mt-xs mr-xs btn btn-primary" data-toggle="modal" data-target="#modalAddOrder">Add new customer order <i class="fa fa-plus"></i></a>
-    {% else %}
-    <h4 style="color: red;"><i class="fa fa-exclamation"></i> Please complete your profile before adding orders. 
-        <a href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">Go to Business Profile</a>
-    </h4>
-    <button class="mb-xs mt-xs mr-xs btn btn-primary" disabled>Add new customer order <i class="fa fa-plus"></i></button>
-    {% endif %}
-    <!-- Modal Form -->
+{% load i18n %}
+{% get_current_language as lang %}
 
-    <div class="modal fade" id="modalAddOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">New Order Form</h4>
-                </div>
-                <div class="modal-body">
-                     <p>Please fill in the customer information</p>              
-                     <section class="panel">
-                        <!-- <header class="panel-heading">
-                            <div class="panel-actions">
-                                <a href="#" class="fa fa-caret-down"></a>
-                                <a href="#" class="fa fa-times"></a>
-                            </div>
+{% if business_profile.is_approved %}
+<a class="mb-xs mt-xs mr-xs btn btn-primary" data-toggle="modal" data-target="#modalAddOrder">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></a>
+{% else %}
+<h4 style="color: red;"><i class="fa fa-exclamation"></i> {% trans 'Please complete your profile before adding orders' %}. 
+    <a href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">{% trans 'Go to Business Profile' %}</a>
+</h4>
+<button class="mb-xs mt-xs mr-xs btn btn-primary" disabled>{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></button>
+{% endif %}
+<!-- Modal Form -->
 
-                            <h2 class="panel-title">Validation Selects</h2>
-                            <p class="panel-subtitle">
-                                Easily validate select tags, does not matter if is single or multiple.
-                            </p>
-                        </header> -->
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">* City</label>
-                                <div class="col-sm-9">
-                                    <select id="city" name="city" class="form-control" required>
-                                        <option value="none">Choose a City</option>
-                                        {% for city in cities %}
-                                            <option value="{{ city.city_symbol }}">{{ city.hebrew_name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <label class="error" for="city"></label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">* Street</label>
-                                <div class="col-sm-4" id="streets">
-                                        <!-- Loaded from Ajax -->
-
-                                        <label class="error" for="street"></label>
-                                </div>
-                                <div class="col-sm-2 pl-3">
-                                    <input class="form-control" type="text" name="building" id="building" placeholder="Number" required>
-                                    <label class="error" for="building"></label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Choose Freelancer/s</label>
-                                <div class="col-sm-9">
-                                    <select id="freelancer" name="freelancer" class="form-control" required>
-                                        <option value="all">Notify all available</option>
-                                        <option value="none">Do not broadcast. I will pick a freelanceer later</option>
-
-                                        <!-- TODO: Add the option to select a freelancer for an order -->
-                                        <!-- {% for freelancer in freelancers %}
-                                            <option value="{{ freelancer.pk }}">{{ freelancer.email }}</option>
-                                        {% endfor %} -->
-
-                                    </select>
-                                    <label class="error" for="freelancer"></label>
-                                </div>
-                            </div>
+<div class="modal fade" id="modalAddOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans 'Close' %}</span></button>
+                <h4 class="modal-title" id="myModalLabel">{% trans 'New Order Form' %}</h4>
+            </div>
+            <div class="modal-body">
+                 <p>{% trans 'Please fill in the customer information' %}</p>              
+                 <section class="panel">
+                    <!-- <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
                         </div>
 
-                        <div class="modal-footer">
-                            <button id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary">Confirm</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <h2 class="panel-title">Validation Selects</h2>
+                        <p class="panel-subtitle">
+                            Easily validate select tags, does not matter if is single or multiple.
+                        </p>
+                    </header> -->
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">* {% trans 'City' %}</label>
+                            <div class="col-sm-9">
+                                <select id="city" name="city" class="form-control" required>
+                                    <option value="none">{% trans 'Choose a City' %}</option>
+                                    {% for city in cities %}
+                                        <option value="{{ city.city_symbol }}">{{ city.hebrew_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label class="error" for="city"></label>
+                            </div>
                         </div>
-                     </section>
-                </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">* {% trans 'Street' %}</label>
+                            <div class="col-sm-4" id="streets">
+                                    <!-- Loaded from Ajax -->
+
+                                    <label class="error" for="street"></label>
+                            </div>
+                            <div class="col-sm-2 pl-3">
+                                <input class="form-control" type="text" name="building" id="building" placeholder="{% trans 'Building Number' %}" required>
+                                <label class="error" for="building"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">{% trans 'Choose Carrier/s' %}</label>
+                            <div class="col-sm-9">
+                                <select id="freelancer" name="freelancer" class="form-control" required>
+                                    <option value="all">{% trans 'Notify all available' %}</option>
+                                    <option value="none">{% trans 'Do not broadcast. I will pick a carrier later' %}</option>
+
+                                    <!-- TODO: Add the option to select a freelancer for an order -->
+                                    <!-- {% for freelancer in freelancers %}
+                                        <option value="{{ freelancer.pk }}">{{ freelancer.email }}</option>
+                                    {% endfor %} -->
+
+                                </select>
+                                <label class="error" for="freelancer"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary">{% trans 'Confirm' %}</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
+                    </div>
+                 </section>
             </div>
         </div>
     </div>
+</div>
 
 
 <script type="text/javascript">

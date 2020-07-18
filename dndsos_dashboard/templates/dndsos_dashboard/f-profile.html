@@ -1,7 +1,10 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+{% get_current_language as lang %}
+
 <link rel="stylesheet" href="{% static 'assets/vendor/dropzone/css/basic.css' %}" />
 <link rel="stylesheet" href="{% static 'assets/vendor/dropzone/css/dropzone.css' %}" />
 <style>
@@ -11,9 +14,9 @@
 	}
 </style>
 
-    <section role="main" class="content-body">
+    <section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
 					<header class="page-header">
-						<h2>Carrier Profile</h2>
+						<h2>{% trans 'Carrier Profile' %}</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -22,7 +25,7 @@
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span> Profile</span></li>
+								<li><span> {% trans 'Profile' %}</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -39,24 +42,24 @@
 							<div class="tabs">
 								<ul class="nav nav-tabs tabs-primary">
 									<li class="active">
-										<a href="#overview" data-toggle="tab">Overview</a>
+										<a href="#overview" data-toggle="tab">{% trans 'Overview' %}</a>
 									</li>
 									<li>
-										<a href="#edit" data-toggle="tab">Edit Profile</a>
+										<a href="#edit" data-toggle="tab">{% trans 'Edit Profile' %}</a>
 									</li>
 									<li>
-										<a href="#payments" data-toggle="tab">Get Paid</a>
+										<a href="#payments" data-toggle="tab">{% trans 'Get Paid' %}</a>
 									</li>
 
 								</ul>
 								<div class="tab-content">
 									<div id="overview" class="tab-pane active">
-										<h4>Profile Information -
+										<h4>{% trans 'Profile Information' %} -
 											{% if profile.is_approved %} 
-											<span style="color: green; border: solid green 2px; padding:0.5rem; border-radius: 2rem  " ><b>Approved</b></span> 
+											<span style="color: green; border: solid green 2px; padding:0.5rem; border-radius: 2rem  " ><b>{% trans 'Approved' %}</b></span> 
 											{% else %}
-											<span style="color: red;" ><b>Not Approved</b> 
-												<span style="font-size: 1.5rem;">(Please complete profile)</span> 
+											<span style="color: red;" ><b>{% trans 'Not Approved' %}</b> 
+												<span style="font-size: 1.5rem;">({% trans 'Please complete profile' %})</span> 
 											</span>
 											{% endif %}
 
@@ -70,23 +73,23 @@
 													<div class="profile-info">
 														<h4 class="name text-semibold">{{ profile.name }}</h4>
 														<div class="profile-footer">
-															<p class="text-left">Carrier Vehicle: {{ profile.vehicle }}</p>
+															<p class="text-left">{% trans 'Carrier Vehicle' %}: {{ profile.vehicle }}</p>
 														</div>
 													</div>
 												</div>
 											</header>
 											<div class="panel-body">
-												<p><b>Email</b>: {{ email }}</p>
-												<p><b>Phone</b>: {{ profile.phone }}</p>
-												<p><b>Vehicle</b>: {{ profile.vehicle }}</p>
-												<p><b>Bio: </b> {{ profile.bio }}</p>
-												<p><b>Rating: </b> {{ profile.rating }}</p>
+												<p><b>{% trans 'Email' %}</b>: {{ email }}</p>
+												<p><b>{% trans 'Phone' %}</b>: {{ profile.phone }}</p>
+												<p><b>{% trans 'Vehicle' %}</b>: {{ profile.vehicle }}</p>
+												<p><b>{% trans 'Bio' %}: </b> {{ profile.bio }}</p>
+												<p><b>{% trans 'Rating' %}: </b> {{ profile.rating }}</p>
 											</div>
 										</section>
 										<div class="widget-toggle-expand mb-md">
 											<div class="widget-header">
-												<h6>Profile Completion ({{ complete }}%)</h6>
-												<div class="widget-toggle">+</div>
+												<h6>{% trans 'Profile Completion' %} ({{ complete }}%)</h6>
+												<!-- <div class="widget-toggle">+</div> -->
 											</div>
 											<div class="widget-content-collapsed">
 												<div class="progress progress-xs light">
@@ -97,10 +100,10 @@
 											</div>
 											<div class="widget-content-expanded">
 												<ul class="simple-todo-list">
-													<li class="{% if required_fields.name %}completed{% else %}{% endif %}">Name </li>
-													<li class="{% if required_fields.vehicle %}completed{% else %}{% endif %}">Vehicle </li>
-													<li class="{% if required_fields.phone %}completed{% else %}{% endif %}">Phone </li>
-													<li class="{% if required_fields.id_doc %}completed{% else %}{% endif %}">ID Document </li>
+													<li class="{% if required_fields.name %}completed{% else %}{% endif %}">{% trans 'Name' %} </li>
+													<li class="{% if required_fields.vehicle %}completed{% else %}{% endif %}">{% trans 'Vehicle' %} </li>
+													<li class="{% if required_fields.phone %}completed{% else %}{% endif %}">{% trans 'Phone' %} </li>
+													<li class="{% if required_fields.id_doc %}completed{% else %}{% endif %}">{% trans 'ID Document' %} </li>
 												</ul>
 											</div>
 										</div>
@@ -111,58 +114,58 @@
 
 										<form class="form-horizontal" enctype="multipart/form-data" name="businessProfile" method="POST">
 											{% csrf_token %}
-											<h4 class="mb-xlg">Personal Information</h4>
+											<h4 class="mb-xlg">{% trans 'Personal Information' %}</h4>
 												<fieldset>
 													{% for non_field_error in form.non_field.errors %}
 														<p class="help is-danger">{{ non_field_error }}</p>
 													{% endfor %}
 														<div class="form-group">
 															<div class="row">
-																<label class="col-md-3 control-label" for="">Name</label>
+																<label class="col-md-3 control-label" for="">{% trans 'Name' %}</label>
 																<div class="col-md-8">{{ form.name }}</div>	
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">Phone Number</label>
+																<label class="col-md-3 control-label" for="">{% trans 'Phone Number' %}</label>
 																{% if user.freelancer.phone %}
 																<div class="col-md-4" style="margin-top: 1%;">
 																	{{ user.freelancer.phone  }}
 																</div>
 																{% else %}
 																<div class="col-md-4">
-																	<input class="form-control" type="text" name="phoneNumber" placeholder="Phone (with country prefix)">
+																	<input class="form-control" type="text" name="phoneNumber" placeholder="{% trans 'Phone' %} ({% trans 'with country prefix' %})">
 																</div>
-																<button class="btn btn-primary" name="addPhone" type="submit">Add Phone</button>
+																<button class="btn btn-primary" name="addPhone" type="submit">{% trans 'Add Phone' %}</button>
 																{% endif %}
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">eMail</label>
+																<label class="col-md-3 control-label" for="">{% trans 'eMail' %}</label>
 																<div class="col-md-8" style="padding-top: 0.5rem;">{{ user }}</div>	
 															</div>
 															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">Vehicle</label>
+																<label class="col-md-3 control-label" for="">{% trans 'Vehicle' %}</label>
 																<div class="col-md-8">{{ form.vehicle }}</div>	
 															</div>
 															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">Short Bio</label>
+																<label class="col-md-3 control-label" for="">{% trans 'Short Bio' %}</label>
 																<div class="col-md-8">{{ form.bio }}</div>	
 															</div>
 															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">Country</label>
+																<label class="col-md-3 control-label" for="">{% trans 'Country' %}</label>
 																<div class="col-md-8">{{ form.country }}</div>	
 															</div>
 															<div class="row" style="margin-top: 2%;">
-																<label class="col-md-3 control-label" for="">ID Document</label>
+																<label class="col-md-3 control-label" for="">{% trans 'ID Document' %}</label>
 																<div class="col-md-6">{{ form.id_doc }}</div>
 
 															</div>
 															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">Active Hours</label>
+																<label class="col-md-3 control-label" for="">{% trans 'Active Hours' %}</label>
 																<div class="col-md-8">{{ form.active_hours }}</div>	
 															</div>
 															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">Newsletter Optin</label>
+																<label class="col-md-3 control-label" for="">{% trans 'Newsletter Optin' %}</label>
 																<div class="col-md-8" style="padding-top: 0.5rem;">{{ form.newsletter_optin }}</div>
 															</div>
 
@@ -179,13 +182,13 @@
 													</div>
 												</fieldset>
 												<hr class="dotted tall">
-												<a class="btn btn-warning" href="{% url 'password_change' %}" role="button">Change Password</a>
+												<a class="btn btn-warning" href="{% url 'password_change' %}" role="button">{% trans 'Change Password' %}</a>
 
 												<div class="panel-footer">
 												<div class="row">
 													<div class="col-md-9 col-md-offset-3">
-														<button name="updateProfile" type="submit" class="btn btn-primary">Submit</button>
-														<button type="reset" class="btn btn-default">Reset</button>
+														<button name="updateProfile" type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
+														<button type="reset" class="btn btn-default">{% trans 'Reset' %}</button>
 													</div>
 												</div>
 											</div>
@@ -200,11 +203,11 @@
 												<header>
 													<div class="panel-header">
 														<h1 class="panel-title" style="margin-top: 2rem;">
-															Balance
+															{% trans 'Balance' %}
 														</h1>
 													</div>
 													<div class="panel-body">
-														<h4>Your Balance: <b>${{ earnings_due }}</b></h4>
+														<h4>{% trans 'Your Balance' %}: <b>${{ earnings_due }}</b></h4>
 													</div>
 												</header>
 											</div>
@@ -217,7 +220,7 @@
 													<header>
 														<div class="panel-header">
 															<h1 class="panel-title" style="margin-top: 2rem;">
-																Payment Methods
+																{% trans 'Payment Methods' %}
 															</h1>
 														</div>
 													</header>
@@ -232,10 +235,10 @@
 																<input name="paypal_account" class="form-control" type="text" placeholder="{% if user.freelancer.paypal_account %} {{ user.freelancer.paypal_account }} {% else %}Enter Paypal account here {% endif %}">
 															</div>
 															<div class="col-md-2">
-																<button type="submit" name="addPaypal" id="addPaypal" class="btn btn-primary ">Update</button>
+																<button type="submit" name="addPaypal" id="addPaypal" class="btn btn-primary ">{% trans 'Update' %}</button>
 															</div>
 															<div class="col-md-1">
-																<button type="submit" name="makePreferred_paypal" class="btn {% if user.freelancer.preferred_payment_method == 'PayPal' %} btn-primary {% else %} btn-secondary {% endif %}" >Preferred</button>
+																<button type="submit" name="makePreferred_paypal" class="btn {% if user.freelancer.preferred_payment_method == 'PayPal' %} btn-primary {% else %} btn-secondary {% endif %}" >{% trans 'Preferred' %}</button>
 															</div>
 														</div>
 
@@ -251,13 +254,13 @@
 																<img src="{% static 'assets/images/bank-transfer.png' %}" alt="bit-logo" style="max-width: 50%;">
 															</div>
 															<div class="col-md-6">
-																<h5>{% if user.freelancer.bank_details %} IBAN: {{ user.freelancer.bank_details.iban }} {% else %} Update your bank details. {% endif %}</h5>
+																<h5>{% if user.freelancer.bank_details %} IBAN: {{ user.freelancer.bank_details.iban }} {% else %} {% trans 'Update your bank details' %}. {% endif %}</h5>
 															</div>
 															<div class="col-md-2">
-																<a href="{% url 'dndsos_dashboard:f-bank-details' f_id=user.pk %}" type="button" name="bankPayments" id="bankPayments" class="btn btn-primary ">Update</a>
+																<a href="{% url 'dndsos_dashboard:f-bank-details' f_id=user.pk %}" type="button" name="bankPayments" id="bankPayments" class="btn btn-primary ">{% trans 'Update' %}</a>
 															</div>
 															<div class="col-md-1">
-																<button type="submit" name="makePreferred_bank" class="btn {% if user.freelancer.preferred_payment_method == 'Bank' %} btn-primary {% else %} btn-secondary {% endif %}" >Preferred</button>
+																<button type="submit" name="makePreferred_bank" class="btn {% if user.freelancer.preferred_payment_method == 'Bank' %} btn-primary {% else %} btn-secondary {% endif %}" >{% trans 'Preferred' %}</button>
 															</div>
 														</div>
 														
@@ -267,10 +270,10 @@
 																<img src="{% static 'assets/images/bit-logo.png' %}" alt="bit-logo" style="max-width: 50%;">
 															</div>
 															<div class="col-md-8">
-																<p> Use my phone number for payments.</p>
+																<p> {% trans 'Use my phone number for payments' %}.</p>
 															</div>
 															<div class="col-md-1">
-																<button type="submit" name="makePreferred_phone" class="btn {% if user.freelancer.preferred_payment_method == 'Phone' %} btn-primary {% else %} btn-secondary {% endif %}" >Preferred</button>
+																<button type="submit" name="makePreferred_phone" class="btn {% if user.freelancer.preferred_payment_method == 'Phone' %} btn-primary {% else %} btn-secondary {% endif %}" >{% trans 'Preferred' %}</button>
 															</div>
 														</div>
 

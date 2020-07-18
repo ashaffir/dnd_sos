@@ -1,16 +1,19 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as lang %}
+
 <thead>
     <tr>
-        <th>Updated</th>
-        <th>Order Destination</th>
+        <th>{% trans 'Updated' %}</th>
+        <th>{% trans 'Order Destination' %}</th>
         <!-- <th>Notes</th> -->
-        <th>Allocated Freelancer</th>
-        <th>Picked Up</th>
-        <th>Order Status</th>
-        <th>Price</th>
-        <th>Contact Carrier</th>
-        <th>Carrier Feedback</th>
-        <th>Invoice</th>
+        <th>{% trans 'Allocated Carrier' %}</th>
+        <th>{% trans 'Picked Up' %}</th>
+        <th>{% trans 'Order Status' %}</th>
+        <th>{% trans 'Price' %}</th>
+        <th>{% trans 'Contact Carrier' %}</th>
+        <th>{% trans 'Carrier Feedback' %}</th>
+        <th>{% trans 'Invoice' %}</th>
         <th></th>
     </tr>
 </thead>
@@ -28,13 +31,13 @@
             <p style="padding-top: 1em;">{{order.freelancer.freelancer.name}} / <a href="tel:{{ order.freelancer.freelancer.phone }}" style="color: white;"><i class="fa fa-phone-square fa-2x" ></i> {{order.freelancer.freelancer.phone}}</a></p>
         </td>
         {% else %}
-        <td style="background-color:orange; color: white; text-align:center;padding-top:1em"><i class="fa fa-2x fa-exclamation-triangle"></i> Not Allocated</td>
+        <td style="background-color:orange; color: white; text-align:center;padding-top:1em"><i class="fa fa-2x fa-exclamation-triangle"></i> {% trans 'Not Allocated' %}</td>
         {% endif %}
 
         <!-- Pick up status change -->
         {% if order.status == 'STARTED' %}
             <td class="actions" style='text-align:center'>
-                <button style="margin: 0%;" class="btn btn-warning" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">Picked-Up? <i class="fa fa-truck"></i></button>
+                <button style="margin: 0%;" class="btn btn-warning" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">{% trans 'Picked-Up' %}? <i class="fa fa-truck"></i></button>
             </td>
         {% elif order.status == 'REQUESTED' or order.status == 'RE_REQUESTED' %}
         <td class="center" style="padding-top: 1em;">
@@ -49,30 +52,30 @@
         <!-- Order Status -->                
         {% if order.status == 'REQUESTED' or order.status == 'REJECTED' or order.status == 'RE_REQUESTED' %}
             <td class="info center" style="padding-top: 1em;" >
-                <label for="dispached" id="orderStatus" status='{{ order.status }}'>Waiting for a Freelancer...</label>                                    
+                <label for="dispached" id="orderStatus" status='{{ order.status }}'>{% trans 'Waiting for a carrier...' %}</label>                                    
         {% elif order.status == 'STARTED' %}
             <td class="info center">
-                <label for="dispached" id="orderStatus" status='{{ order.status }}' style="padding-top:1em">Waiting for pickup...</label>
+                <label for="dispached" id="orderStatus" status='{{ order.status }}' style="padding-top:1em">{% trans 'Waiting for pickup...' %}</label>
             </td>
         {% elif order.status == 'IN_PROGRESS' %}
             <td class="primary center">
                 <div class="row">
                     <div class="col-md-6" style="border-right: solid white; padding-top:1em">
-                        <label for="dispached" id="orderStatus" status='{{ order.status }}'>Being delivered...</label>
+                        <label for="dispached" id="orderStatus" status='{{ order.status }}'>{% trans 'Being delivered...' %}</label>
                     </div>
                     <div class="col-md-6" style="padding-top:1em">
-                        {{ order.trip_completed }} % completed.
+                        {{ order.trip_completed }} % {% trans 'completed' %}.
                     </div>
                 </div>
                 
             </td>
         {% elif order.status == 'COMPLETED' %}
             <td class="center success" style="padding-top: 1em;">
-                <label for="completed" id="orderStatus" status='{{ order.status }}'><i class="fa fa-check-square-o fa-2x"></i> Delivered</label>
+                <label for="completed" id="orderStatus" status='{{ order.status }}'><i class="fa fa-check-square-o fa-2x"></i> {% trans 'Delivered' %}</label>
             </td>
         {% elif order.status == 'SETTLED' %}
             <td>
-                <label for="completed" id="orderStatus" status='{{ order.status }}'>Settled</label>
+                <label for="completed" id="orderStatus" status='{{ order.status }}'>{% trans 'Settled' %}</label>
             </td>
         {% else %}
             <td>
@@ -133,16 +136,16 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Confirmation!</h4>
+                            <h4 class="modal-title" id="myModalLabel">{% trans 'Confirmation' %}!</h4>
                         </div>
                         <div class="modal-body">
                              <section class="panel">
                                 <header class="panel-heading">
-                                    <p>Are you sure you want to cancel this order?</p>              
+                                    <p>{% trans 'Are you sure you want to cancel this order' %}?</p>              
                                 </header>
                                 <div class="modal-footer">
-                                    <button id="cancel_b_order_{{ order.order_id }}" onclick="b_cancel_order('{{ order.order_id }}')" value="{{ order.order_id }}" name="cancel_b_order" type="button" class="btn btn-primary">Confirm</button>
-                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                    <button id="cancel_b_order_{{ order.order_id }}" onclick="b_cancel_order('{{ order.order_id }}')" value="{{ order.order_id }}" name="cancel_b_order" type="button" class="btn btn-primary">{% trans 'Confirm' %}</button>
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal">{% trans 'Close' %}</button>
                                 </div>
                              </section>
                         </div>

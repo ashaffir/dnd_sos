@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as lang %}
 
 {% if is_available %}
 
@@ -8,13 +10,13 @@
         {% if user.pk|slugify in order.selected_freelancers.selected %}
             <header class="panel-heading bg-secondary">
                 <div class="">
-                    <i class="fa fa-exclamation-triangle fa-2x"> You were invited by {{ order.business.business.business_name }}</i>
+                    <i class="fa fa-exclamation-triangle fa-2x"> {% trans 'You were invited by' %} {{ order.business.business.business_name }}</i>
                 </div>
             </header>
         {% else %}
             <header class="panel-heading bg-primary">
                 <div class="">
-                    <i class="fa fa-car fa-2x"> New offer from {{ order.business.business.business_name }}</i>
+                    <i class="fa fa-car fa-2x"> {% trans 'New offer from' %} {{ order.business.business.business_name }}</i>
                 </div>
             </header>
         {% endif %}
@@ -27,15 +29,15 @@
                     <div class="summary">
                         <h4 class="title">{{ order.business.employer.business_name }}</h4>
                         <div class="" >
-                            <p class="">Pick Up Address: <b>{{ order.pick_up_address }}</b></p>
-                            <p class="">Drop Off Address: <b>{{ order.drop_off_address }}</b></p>
+                            <p class="">{% trans 'Pick Up Address' %}: <b>{{ order.pick_up_address }}</b></p>
+                            <p class="">{% trans 'Drop Off Address' %}: <b>{{ order.drop_off_address }}</b></p>
                         </div>
 
                     </div>
                     <div class="summary-footer">
                         <div class="row" >
                             <div class="col-md-12" style="text-align: center;">
-                                <button id="accept_order_{{ order.order_id }}" class="btn btn-lg btn-success" type="button" onclick="accept_order('{{ order.order_id }}')" name="acceptOrder" value="{{ order.order_id }}">Accept</button>
+                                <button id="accept_order_{{ order.order_id }}" class="btn btn-lg btn-success" type="button" onclick="accept_order('{{ order.order_id }}')" name="acceptOrder" value="{{ order.order_id }}">{% trans 'Accept' %}</button>
                             </div>
 
                         </div>
