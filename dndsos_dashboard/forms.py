@@ -117,29 +117,29 @@ class BankDetailsForm(forms.Form):
         (('IL'), ('Israel')),
         (('USA'), ('USA')),
     )
-    first_name = forms.CharField(max_length=100, required=False)
-    last_name = forms.CharField(max_length=100, required=False)
-    full_name_in_native_language = forms.CharField(max_length=100, required=True)
-    name_on_the_account = forms.CharField(max_length=100, required=True)
-    address = forms.CharField(max_length=100, required=True)
-    city = forms.CharField(max_length=100, required=True)
-    country = forms.ChoiceField(required=True, choices=COUNTRIES)
-    phone_number = forms.CharField(max_length=100)
-    national_id_number = forms.CharField(max_length=100, required=False)
+    first_name = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
+    last_name = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
+    national_id_number = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
+    full_name_in_native_language = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
+    name_on_the_account = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class':'form-control'}))
+    address = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
+    city = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
+    country = forms.ChoiceField(required=True, choices=COUNTRIES, widget=forms.Select(attrs={'class':'form-control'}))
+    phone_number = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
 
     # Bank Details
-    iban = forms.CharField(max_length=100, required=True)
-    swift = forms.CharField(max_length=100)
-    account_number = forms.CharField(max_length=100, required=True)
-    account_ownership = forms.BooleanField()
+    iban = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class':'form-control'}))
+    swift = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
+    account_number = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
+    account_ownership = forms.BooleanField(required=True, widget=forms.CheckboxInput(attrs={'class':''}))
 
-    def clean_phone_number(self):
-            phone_number = self.cleaned_data.get("phone_number")
-            z = phonenumbers.parse(phone_number, self.cleaned_data.get('country'))
+    # def clean_phone_number(self):
+    #         phone_number = self.cleaned_data.get("phone_number")
+    #         z = phonenumbers.parse(phone_number, self.cleaned_data.get('country'))
             
-            if not phonenumbers.is_valid_number(z):
-                raise forms.ValidationError("Phone number not valid")
-            return z.national_number
+    #         if not phonenumbers.is_valid_number(z):
+    #             raise forms.ValidationError("Phone number not valid")
+    #         return z.national_number
 
     # class Meta:
     #     model = BankDetails

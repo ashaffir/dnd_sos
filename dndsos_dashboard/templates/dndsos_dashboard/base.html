@@ -114,27 +114,27 @@
 							</div>
 						</div>		
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-5">
 						{% include 'core/_messages.html' %}
 					</div>
-					<div class="col-md-2">
+					<!-- <div class="col-md-2">
 						<div class="header-center">
-									<form action="{% url 'set_language' %}" method="POST">
-										{% csrf_token %}
-										<input type="hidden" name="text" value="{{ redirect_to }}">
-										<select name="language" id="">
-											{% get_available_languages as LANGUAGES %}
-											{% get_language_info_list for LANGUAGES as languages %}
-											{% for language in languages %}
-												<option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
-													{{ language.name_local }} ({{ language.code }})
-												</option>
-											{% endfor %}
-											<input class="btn btn-primary btn-sm" type="submit" value="Go" style="margin-left: 1rem;">
-										</select>
-									</form>		
+							<form action="{% url 'set_language' %}" method="POST">
+								{% csrf_token %}
+								<input type="hidden" name="text" value="{{ redirect_to }}">
+								<select name="language" id="">
+									{% get_available_languages as LANGUAGES %}
+									{% get_language_info_list for LANGUAGES as languages %}
+									{% for language in languages %}
+										<option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+											{{ language.name_local }} ({{ language.code }})
+										</option>
+									{% endfor %}
+									<input class="btn btn-primary btn-sm" type="submit" value="Go" style="margin-left: 1rem;">
+								</select>
+							</form>		
 						</div>
-					</div>
+					</div> -->
 					<div class="col-md-5">
 						<div class="header-right">
 				
@@ -297,7 +297,8 @@
 												<i class="fa fa-send" aria-hidden="true"></i>
 												<span>{% trans 'Messages' %}</span>
 											</a>
-    	                                </li>
+										</li>
+
 										<!-- <li>
 											<a href="{% url 'dndsos_dashboard:b-statistics' b_id=user.pk %}">
 												<i class="fa fa-bar-chart-o" aria-hidden="true"></i>
@@ -342,12 +343,27 @@
 											</a>
 										</li> -->
 									{% endif %}
-								</nav>
-				
+								</nav>					
 							<hr class="separator" />
+							<div class="row">
+								<div class="col-md-2 col-sm-2"></div>
+								<form action="{% url 'set_language' %}" method="POST">
+									{% csrf_token %}
+									<input type="hidden" name="text" value="{{ redirect_to }}">
+									<select name="language" id="">
+										{% get_available_languages as LANGUAGES %}
+										{% get_language_info_list for LANGUAGES as languages %}
+										{% for language in languages %}
+											<option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+												{{ language.name_local }} ({{ language.code }})
+											</option>
+										{% endfor %}
+										<input class="btn btn-primary btn-sm" type="submit" value="Go" style="margin-left: 1rem;">
+									</select>
+								</form>		
+							</div>
 
 						</div>
-				
 					</div>
 				
 				</aside>

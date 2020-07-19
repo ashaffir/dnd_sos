@@ -2,19 +2,19 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block title %}DND SOS - Business Sign Up{% endblock %}
+{% block title %}{% trans 'Dilvur - Business Sign Up' %}{% endblock %}
 
 {% block content %}
 <div class="mt-2">
   {% block head_title %}{% trans "Business Signup" %}{% endblock %}
 </div>
-<div class="container">
+<div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
   <div class="row justify-content-center form-group">
     <div class="col-lg-7 mb-5 mt-5">
       
           <h2 class="h4 text-black mb-5" style="color: black;">{% trans "Business Sign Up" %}</h2> 
 
-          <p>Already have an account? Then please <a href="{% url 'core:login' %}">sign in</a>.</p>
+          <p>{% trans 'Already have an account? Then please' %} <a href="{% url 'core:login' %}">{% trans 'sign in' %}</a>.</p>
 
           <form class="form-horizontal form-bordered" id="signup_form" method="post" action="{% url 'core:employer_signup' %}">
             {% csrf_token %}
@@ -23,7 +23,7 @@
                 <div class="mt-2">
                   {% if field.name == "terms_accepted" %}
                     {{ field }}
-                    <a href="{% url 'dndsos:terms' %}">Accept Terms and Conditions</a>
+                    <a href="{% url 'dndsos:terms' %}">{% trans 'Accept Terms and Conditions' %}</a>
                     <hr>
                   {% else %}
                   <div class="row">
@@ -41,7 +41,7 @@
 
             <button class="btn btn-success text-white" type="submit">{% trans "Sign Up" %} &raquo;</button>
           </form>
-          <a href="{% url 'core:employee_signup' %}">Freelancer? Register here</a>
+          <a href="{% url 'core:employee_signup' %}">{% trans 'Carrier? Register here' %}</a>
   
     </div>
   </div>    

@@ -4,11 +4,11 @@ from django.forms import ModelForm
 from .models import ContactUs
 
 class ContactForm(forms.ModelForm):
-    fname = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control rounded-1', 'placeholder': 'First Name'}))
-    lname = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control rounded-1', 'placeholder': 'Last Name'}))
-    email = forms.EmailField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control rounded-1', 'placeholder': 'eMail'}))
-    subject = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control rounded-1', 'placeholder': 'Subject'}))
-    message = forms.CharField(required=True, widget=forms.Textarea(attrs={'rows': 4, 'cols': 40,'class': 'form-control rounded-1', 'placeholder': 'Message'}))
+    fname = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control rounded-1'}))
+    lname = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control rounded-1'}))
+    email = forms.EmailField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control rounded-1'}))
+    subject = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control rounded-1'}))
+    message = forms.CharField(required=True, widget=forms.Textarea(attrs={'rows': 4, 'cols': 40,'class': 'form-control rounded-1'}))
     
     class Meta:
         model = ContactUs

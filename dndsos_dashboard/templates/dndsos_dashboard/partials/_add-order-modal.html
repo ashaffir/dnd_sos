@@ -12,9 +12,9 @@
 {% endif %}
 <!-- Modal Form -->
 
-<div class="modal fade" id="modalAddOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+<div class="modal fade" id="modalAddOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  >
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans 'Close' %}</span></button>
                 <h4 class="modal-title" id="myModalLabel">{% trans 'New Order Form' %}</h4>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-18 14:05+0300\n"
+"POT-Creation-Date: 2020-07-19 17:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: core/models.py:111
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:23
 msgid "Business Profile"
-msgstr ""
+msgstr "פרופיל בית עסק"
 
 #: core/models.py:112
 msgid "Business Profiles"
@@ -36,51 +36,82 @@ msgstr ""
 msgid "Freelancer Profiles"
 msgstr ""
 
-#: core/templates/core/employee/signup.html:9
-msgid " Freelancer Signup"
-msgstr ""
+#: core/templates/core/employee/signup.html:5
+msgid "Dilvur - Carrier Sign Up"
+msgstr "הרשמת מחלק"
 
-#: core/templates/core/employee/signup.html:16
-msgid "Freelancer Sign Up"
-msgstr ""
+#: core/templates/core/employee/signup.html:11
+msgid " Carrier Signup"
+msgstr "הרשמת מחלק"
 
-#: core/templates/core/employee/signup.html:42
+#: core/templates/core/employee/signup.html:18
+msgid "Carrier Sign Up"
+msgstr "הרשמת מחלק"
+
+#: core/templates/core/employee/signup.html:20
+#: core/templates/core/employer/signup.html:17
+msgid "Already have an account? Then please"
+msgstr "כבר יש לך חשבון? אז בבקשה"
+
+#: core/templates/core/employee/signup.html:20
+#: core/templates/core/employer/signup.html:17
+msgid "sign in"
+msgstr "התחבר"
+
+#: core/templates/core/employee/signup.html:29
+#: core/templates/core/employer/signup.html:26
+msgid "Accept Terms and Conditions"
+msgstr "קבל תנאי Dilvur"
+
+#: core/templates/core/employee/signup.html:44
 #: core/templates/core/employer/signup.html:42
 msgid "Sign Up"
-msgstr ""
+msgstr "הרשמה"
+
+#: core/templates/core/employee/signup.html:46
+msgid "Business? Register here"
+msgstr "בית עֵסֶק? הירשם כאן"
+
+#: core/templates/core/employer/signup.html:5
+msgid "Dilvur - Business Sign Up"
+msgstr "הרשמה בית עסק"
 
 #: core/templates/core/employer/signup.html:9
 msgid "Business Signup"
-msgstr ""
+msgstr "הרשמה בית עסק"
 
 #: core/templates/core/employer/signup.html:15
 msgid "Business Sign Up"
-msgstr ""
+msgstr "הרשמה בית עסק"
+
+#: core/templates/core/employer/signup.html:44
+msgid "Carrier? Register here"
+msgstr "מחלק? הירשם כאן"
 
 #: core/templates/core/password_change.html:47
 msgid "Change password"
-msgstr ""
+msgstr "שנה סיסמא"
 
 #: core/templates/core/password_change.html:50
 msgid "Old password"
-msgstr ""
+msgstr "סיסמה ישנה"
 
 #: core/templates/core/password_change.html:51
 msgid "New password"
-msgstr ""
+msgstr "סיסמה חדשה"
 
 #: core/templates/core/password_change.html:52
 msgid "Confirm password"
-msgstr ""
+msgstr "אשר סיסמה"
 
 #: core/templates/core/password_change.html:60
 #: venv_dnd_sos/lib/python3.7/site-packages/django/forms/widgets.py:397
 msgid "Change"
-msgstr ""
+msgstr "שנה"
 
 #: core/templates/core/password_change_done.html:18
 msgid "Your password was changed."
-msgstr ""
+msgstr "הסיסמה שלך שונתה."
 
 #: core/templates/registration/account_activation_email.html:19
 msgid "Message from Dilvur!"
@@ -90,78 +121,240 @@ msgstr "הודעה מדילבור"
 msgid "Hi"
 msgstr "היי"
 
-#: core/templates/registration/login.html:19
-#: core/templates/registration/login.html:25
+#: core/templates/registration/login.html:20
+#: core/templates/registration/login.html:26
+#: dndsos/templates/dndsos/base.html:108
 msgid "Login"
-msgstr ""
+msgstr "התחבר"
 
-#: core/templates/registration/login.html:30
+#: core/templates/registration/login.html:31
 msgid "Sign In"
-msgstr ""
+msgstr "התחבר"
 
-#: core/templates/registration/login.html:34
+#: core/templates/registration/login.html:35
 msgid "Forgot Password?"
-msgstr ""
+msgstr "שכחת סיסמא?"
 
-#: core/templates/registration/login.html:36
+#: core/templates/registration/login.html:37
 msgid "Don't have an account?"
-msgstr ""
+msgstr "אין לך חשבון?"
+
+#: core/templates/registration/login.html:37
+msgid "Carrier sign up"
+msgstr "הרשמת מחלק"
+
+#: core/templates/registration/login.html:37
+msgid "Business sign up"
+msgstr "הרשמה בית עסק"
 
 #: core/views.py:428
 msgid "Enter password"
-msgstr ""
+msgstr "הזן את הסיסמה"
 
 #: core/views.py:432
 msgid "Minimum password length should be 8"
-msgstr ""
+msgstr "אורך הסיסמא המינימלי צריך להיות 8"
 
 #: core/views.py:436
 msgid "Mismatch password"
-msgstr ""
+msgstr "סיסמתך לא התאימה"
 
 #: core/views.py:446
 msgid "Successfully changed the password, please login again."
-msgstr ""
+msgstr "שינית את הסיסמה בהצלחה, אנא התחבר שוב."
 
 #: core/views.py:481
 msgid "Check your mail inbox to reset password"
-msgstr ""
+msgstr "בדוק את תיבת הדואר שלך כדי לאפס את הסיסמה"
 
 #: core/views.py:491
 msgid "This email is not registered to us. Please register first "
-msgstr ""
+msgstr "דואל זה אינו רשום לנו. אנא הירשם קודם"
 
 #: core/views.py:495
 msgid "Please enter a valid email"
-msgstr ""
+msgstr "אנא הכנס דואל חוקי"
 
 #: core/views.py:499
 msgid "Please do enter the email"
-msgstr ""
+msgstr "אנא הזן את הדואל"
+
+#: dndsos/templates/dndsos/base.html:89
+msgid "Home"
+msgstr "בית"
+
+#: dndsos/templates/dndsos/base.html:90
+msgid "Features"
+msgstr "מאפיינים"
+
+#: dndsos/templates/dndsos/base.html:91
+msgid "How it Works"
+msgstr "איך זה עובד"
+
+#: dndsos/templates/dndsos/base.html:92 dndsos/templates/dndsos/index.html:216
+msgid "FAQ"
+msgstr "שאלות נפוצות"
+
+#: dndsos/templates/dndsos/base.html:96
+msgid "Pricing"
+msgstr "מחירים"
+
+#: dndsos/templates/dndsos/base.html:97
+msgid "Contact"
+msgstr "צור קשר"
+
+#: dndsos/templates/dndsos/base.html:101 dndsos/templates/dndsos/base.html:103
+#: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:19
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:19
+msgid "Dashboard"
+msgstr "לוּחַ מַחווָנִים"
+
+#: dndsos/templates/dndsos/base.html:105
+msgid "Logout"
+msgstr "התנתק"
+
+#: dndsos/templates/dndsos/base.html:230
+msgid "Terms of use"
+msgstr "תנאי שימוש"
+
+#: dndsos/templates/dndsos/base.html:243
+msgid "Copyright"
+msgstr " "
+
+#: dndsos/templates/dndsos/base.html:243
+msgid "All rights reserved"
+msgstr "כל הזכויות שמורות"
+
+#: dndsos/templates/dndsos/index.html:23
+msgid "Dispatch and Delivery Network"
+msgstr "רשת משלוחים ומסירה"
+
+#: dndsos/templates/dndsos/index.html:24
+msgid "Find carriers around you"
+msgstr "מצא ספקים פעילים בסביבת העסק שלך"
+
+#: dndsos/templates/dndsos/index.html:30
+msgid "Register your business"
+msgstr "רשום את העסק שלך"
+
+#: dndsos/templates/dndsos/index.html:36
+msgid "Join as a carrier and earn extra income"
+msgstr "הצטרף כמחלק ותרוויח הכנסה נוספת"
+
+#: dndsos/templates/dndsos/index.html:49
+#, fuzzy
+#| msgid "What is delivered"
+msgid "What is Dilvur"
+msgstr "סוג משלוח"
+
+#: dndsos/templates/dndsos/index.html:72
+msgid "Why"
+msgstr "למה"
+
+#: dndsos/templates/dndsos/index.html:144
+msgid "How it works"
+msgstr "איך זה עובד"
+
+#: dndsos/templates/dndsos/index.html:223
+#: dndsos/templates/dndsos/index.html:328
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:330
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:21
+#: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:10
+#: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:19
+msgid "Businesses"
+msgstr "בתי עסק"
+
+#: dndsos/templates/dndsos/index.html:229
+#: dndsos/templates/dndsos/index.html:341
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:279
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:82
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:91
+msgid "Carriers"
+msgstr "מחלקים"
+
+#: dndsos/templates/dndsos/index.html:319
+msgid "Pricing "
+msgstr "מחירים"
+
+#: dndsos/templates/dndsos/index.html:335
+msgid "Register your Business"
+msgstr "רשום את העסק שלך"
+
+#: dndsos/templates/dndsos/index.html:349
+msgid "Join as Carrier"
+msgstr "הצטרף כמחלק"
+
+#: dndsos/templates/dndsos/index.html:546
+msgid "Get In Touch"
+msgstr "צור קשר"
+
+#: dndsos/templates/dndsos/index.html:561
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:43
+msgid "First Name"
+msgstr "שם פרטי"
+
+#: dndsos/templates/dndsos/index.html:567
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:53
+msgid "Last Name"
+msgstr "שם משפחה"
+
+#: dndsos/templates/dndsos/index.html:578
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:87
+#: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:78
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:82
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:286
+msgid "Email"
+msgstr "אימייל"
+
+#: dndsos/templates/dndsos/index.html:589
+msgid "Subject"
+msgstr "נושא"
+
+#: dndsos/templates/dndsos/index.html:599
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:5
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:5
+msgid "Message"
+msgstr "הודעה"
+
+#: dndsos/templates/dndsos/index.html:612
+msgid "Send Message"
+msgstr "שלח"
+
+#: dndsos/views.py:30
+msgid "Thank you for your interest in Dilvur. We will get back to you shortly."
+msgstr "תודה על התעניינותך ב- DILVUR. נחזור אליך בהקדם."
+
+#: dndsos/views.py:32
+msgid "Please fill out the required fields before submitting the form."
+msgstr "מלא את השדות הדרושים לפני שליחת הטופס."
+
+#: dndsos/views.py:35
+msgid "Please confirm you are not a robot."
+msgstr "אנא אשר שאתה לא רובוט."
 
 #: dndsos_dashboard/forms.py:26
 msgid "Restaurant"
-msgstr ""
+msgstr "מִסעָדָה"
 
 #: dndsos_dashboard/forms.py:27
 msgid "Clothing"
-msgstr ""
+msgstr "הַלבָּשָׁה"
 
 #: dndsos_dashboard/forms.py:28
 msgid "Convenience"
-msgstr ""
+msgstr "מוצרי נוֹחוּת"
 
 #: dndsos_dashboard/forms.py:29
 msgid "Grocery"
-msgstr ""
+msgstr "מַכּוֹלֶת"
 
 #: dndsos_dashboard/forms.py:30
 msgid "Office"
-msgstr ""
+msgstr "משרד"
 
 #: dndsos_dashboard/forms.py:31 dndsos_dashboard/forms.py:75
 msgid "Other"
-msgstr ""
+msgstr "אחר"
 
 #: dndsos_dashboard/forms.py:67
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:84
@@ -194,7 +387,7 @@ msgstr "תבנית דואל"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/active-deliveries.html:11
 #: dndsos_dashboard/templates/dndsos_dashboard/active-deliveries.html:20
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:317
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:318
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:7
 msgid "Active Deliveries"
 msgstr "העברות פעילות"
@@ -258,11 +451,6 @@ msgstr "מיין"
 msgid "Business Dashboard"
 msgstr "לוח מחוונים עסקי"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:19
-#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:19
-msgid "Dashboard"
-msgstr "לוּחַ מַחווָנִים"
-
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:42
 msgid "Order Summary"
 msgstr "סיכום הזמנות"
@@ -301,7 +489,7 @@ msgstr "סטטיסטיקות כלליות"
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:116
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:160
 msgid "Active Orders"
-msgstr "הזמנות פעילות"
+msgstr "הזמנות פתוחות"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:123
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:171
@@ -335,7 +523,7 @@ msgstr "רשימה מלאה"
 #: dndsos_dashboard/templates/dndsos_dashboard/b-messages.html:10
 #: dndsos_dashboard/templates/dndsos_dashboard/b-messages.html:19
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:298
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:335
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:336
 #: dndsos_dashboard/templates/dndsos_dashboard/f-messages.html:10
 #: dndsos_dashboard/templates/dndsos_dashboard/f-messages.html:19
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:14
@@ -391,13 +579,6 @@ msgstr "אנא השלם את הפרופיל"
 msgid "Business category"
 msgstr "קטגורית עסק"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:87
-#: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:78
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:82
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:286
-msgid "Email"
-msgstr "אימייל"
-
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:88
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:110
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:79
@@ -417,6 +598,7 @@ msgid "Business Category"
 msgstr "לוח מחוונים עסקי"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:91
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:93
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-removed-modal.html:33
 msgid "Address"
 msgstr "כתובת"
@@ -434,6 +616,7 @@ msgstr "שם"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:111
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:159
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:103
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:80
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:288
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:38
@@ -466,6 +649,7 @@ msgid "Business Name"
 msgstr "שם העסק"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:145
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:123
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:129
 msgid "Phone Number"
 msgstr "טלפון"
@@ -488,7 +672,9 @@ msgid "Change Password"
 msgstr "שנה סיסמא"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:215
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:175
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:190
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:70
 msgid "Submit"
 msgstr "שלח"
 
@@ -509,13 +695,11 @@ msgstr "עדכון"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:157
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:53
-#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:64
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:37
 msgid "Available"
 msgstr "זמין"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:162
-#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:66
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:37
 msgid "Unavailable"
 msgstr "לא זמין"
@@ -524,12 +708,6 @@ msgstr "לא זמין"
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:10
 msgid "Carrier Dashboard"
 msgstr "לוּחַ מַחווָנִים"
-
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:279
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:82
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:91
-msgid "Carriers"
-msgstr "מחלקים"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:285
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:46
@@ -541,22 +719,16 @@ msgstr "הזמנות"
 msgid "Alerts"
 msgstr "התראות"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:311
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:312
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:10
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:19
 msgid "Open Orders"
 msgstr "הזמנות פעילות"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:323
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:324
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:86
 msgid "Deliveries Summary"
 msgstr "סיכום העברות"
-
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:329
-#: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:10
-#: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:19
-msgid "Businesses"
-msgstr "בתי עסק"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/deliveries.html:14
 #: dndsos_dashboard/templates/dndsos_dashboard/deliveries.html:23
@@ -588,6 +760,48 @@ msgstr ""
 #: dndsos_dashboard/templates/dndsos_dashboard/emails/freelancer_response.html:14
 msgid "The following order was accepted by a freelancer"
 msgstr ""
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:12
+msgid "Bank Details"
+msgstr "פרטי הבנק"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:33
+msgid "Enter your bank details here"
+msgstr "עדכן את פרטי הבנק"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:63
+msgid "National ID Number"
+msgstr "מספר תעודת זהות"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:73
+msgid "Full Name in Native Language"
+msgstr "שם מלא בעברית"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:83
+msgid "Name on the Account"
+msgstr "שם החשבון"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:113
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:155
+msgid "Country"
+msgstr "ארץ"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:134
+msgid "IBAN"
+msgstr "IBAN"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:145
+msgid "SWIFT"
+msgstr "SWIFT"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:155
+msgid "Account Number"
+msgstr "טלפון"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:168
+msgid ""
+"I attest that I am the owner and have full authorization to this bank account"
+msgstr "אני מעיד שאני הבעלים ויש לי הרשאה מלאה לחשבון בנק זה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:31
 msgid "Businesses you worked with"
@@ -641,6 +855,14 @@ msgstr "לא ניתן לשנות את הסטטוס במהלך המסירה"
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:58
 msgid "Change status"
 msgstr "שנה סטָטוּס"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:64
+msgid "Change to Unvailable"
+msgstr "שנה ל-לא זמין"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:66
+msgid "Change to Available"
+msgstr "שנה ל-זמין"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:185
 msgid "Total Profit"
@@ -698,10 +920,6 @@ msgstr "אימייל"
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:151
 msgid "Short Bio"
 msgstr "ביוגרפיה קצרה"
-
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:155
-msgid "Country"
-msgstr "ארץ"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:164
 msgid "Active Hours"
@@ -810,6 +1028,8 @@ msgstr "בקש מחלק"
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_message-sent-modal.html:24
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_order-delivered-modal.html:24
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:148
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:13
+#: payments/templates/payments/partials/_update-card-modal.html:7
 msgid "Close"
 msgstr "סגור"
 
@@ -994,11 +1214,6 @@ msgstr "הקלד את ההודעה שלך"
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:31
 msgid "Send"
 msgstr "שלח"
-
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:5
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:5
-msgid "Message"
-msgstr "הודעה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:12
 msgid "Communication with the carrier"
@@ -1220,6 +1435,18 @@ msgstr "ממתין לאיסוף ..."
 msgid "completed"
 msgstr "הושלמה"
 
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:14
+msgid "Rate your Carrier"
+msgstr "דרג את המחלק שלך"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:19
+msgid "How would you rate the carrier for this order (1 Bad, 5 Excellent)"
+msgstr "כיצד תדרג את המחלק להזמנה זו (1 רע, 5 מעולה)"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:66
+msgid "Anything you would like to add?"
+msgstr "הערות"
+
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/messages_modal.html:15
 #, python-format
 msgid " %(message)s "
@@ -1232,6 +1459,10 @@ msgstr ""
 #: payments/models.py:20
 msgid "Card"
 msgstr ""
+
+#: payments/templates/payments/partials/_update-card-modal.html:8
+msgid "Update credit card"
+msgstr "עדכון כרטיסי אשראי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/_pytest/config/argparsing.py:443
 #, python-format

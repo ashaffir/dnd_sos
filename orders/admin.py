@@ -9,7 +9,7 @@ class OrderAdmin(OSMGeoAdmin):
     fields = ( # changed
         'order_id', 'order_type','order_city_name', 'pick_up_address', 'drop_off_address', 'status','order_location',
         'distance_to_business','trip_completed', 'price','private_sale_token','invoice_url',
-        'freelancer','freelancer_rating', 'business','business_rating',
+        'freelancer','freelancer_rating','freelancer_rating_report', 'business','business_rating',
         'selected_freelancers',
         'trip',
         'chat', 

@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as lang %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +32,7 @@
 
     
   </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" >
   
   <div class="site-wrap"  id="home-section">
 
@@ -55,39 +57,55 @@
     <!-- HEADER -->
     <header class="site-navbar py-md-4 js-sticky-header site-navbar-target" role="banner">
 
-      <div class="container">
+      <div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
         {% include 'core/_messages.html' %}      
+        <div class="row">
+          <div class="col-md-12">
+							<form action="{% url 'set_language' %}" method="POST">
+								{% csrf_token %}
+								<input type="hidden" name="text" value="{{ redirect_to }}">
+								<select name="language" id="">
+									{% get_available_languages as LANGUAGES %}
+									{% get_language_info_list for LANGUAGES as languages %}
+									{% for language in languages %}
+										<option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+											{{ language.name_local }}
+										</option>
+									{% endfor %}
+									<input class="" type="submit" value="Go" style="margin: 1rem;background-color: #8bc34a; color:white; border:0em; border-radius: 3px">
+								</select>
+							</form>		
+          </div>
+        </div>
+
         <div class="row align-items-center">
-          
           <div class="col-10 col-md-10 col-xl-2  d-block d-lg-none">
             <!-- <h6 class="mb-0 site-logo"><a href="{% url 'dndsos:home' %}" class="text-black h2 mb-0">DnD-SOS<span class="text-primary"><img src="{% static 'images/dndsos-logo-black.png' %}" alt="dndsos logo type" style="max-width: 15%;"></span> </a></h6> -->
             <img src="{% static 'assets/images/dilvur-logo-2.png' %}" alt="dilvur logo" style="max-width: 55%;">
           </div>
-
           <div class="col-12 col-md-12 main-menu">
             <nav class="site-navigation position-relative text-right" role="navigation">
-
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a id="home-link" onclick="home()" href="/#home-section" class="nav-link">Home</a></li>
-                <li><a id="features-link" onclick="features()"  href="/#features-section" class="nav-link">Features</a></li>
-                <li><a id="how-link" onclick="how()"  href="/#how-it-works-section" class="nav-link">How it Works</a></li>
-                <li><a id="faq-link" onclick="faq()" href="/#faq" class="nav-link">FAQ</a></li>
+                <li><a id="home-link" onclick="home()" href="/#home-section" class="nav-link">{% trans 'Home' %}</a></li>
+                <li><a id="features-link" onclick="features()"  href="/#features-section" class="nav-link">{% trans 'Features' %}</a></li>
+                <li><a id="how-link" onclick="how()"  href="/#how-it-works-section" class="nav-link">{% trans 'How it Works' %}</a></li>
+                <li><a id="faq-link" onclick="faq()" href="/#faq" class="nav-link">{% trans 'FAQ' %}</a></li>
                 <!-- <li><a href="/#about-section" class="nav-link">About Us</a></li> -->
                 <!-- <li><a href="/#testimonials-section" class="nav-link">Testimonials</a></li> -->
                 <!-- <li><a href="/#blog-section" class="nav-link">Blog</a></li> -->
-                <li><a id="pricing-link" onclick="pricing()"  href="/#pricing" class="nav-link">Pricing</a></li>
-                <li><a id="contact-link" onclick="contact()" href="/#contact-section" class="nav-link">Contact</a></li>
+                <li><a id="pricing-link" onclick="pricing()"  href="/#pricing" class="nav-link">{% trans 'Pricing' %}</a></li>
+                <li><a id="contact-link" onclick="contact()" href="/#contact-section" class="nav-link">{% trans 'Contact' %}</a></li>
                 {% if user.is_authenticated %}
                   {% if user.is_employer %}
                     <!-- <li><a class="btn btn-success text-white" href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li> -->
-                    <li><a id="b_dashboard" onclick="b_dashboard()" class="btn btn-success text-white" href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">Dashboard</a></li>
+                    <li><a id="b_dashboard" onclick="b_dashboard()" class="btn btn-success text-white" href="{% url 'dndsos_dashboard:b-dashboard' b_id=user.pk %}" class="">{% trans 'Dashboard' %}</a></li>
                   {% else %}
-                    <li><a id="f_dashboard" onclick="f_dashboard()" class="btn btn-success text-white" href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="">Dashboard</a></li>
+                    <li><a id="f_dashboard" onclick="f_dashboard()" class="btn btn-success text-white" href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}" class="">{% trans 'Dashboard' %}</a></li>
                   {% endif %}
-                    <li><a id="logout" onclick="logout()" href="{% url 'core:logout' %}" class="btn btn-sm btn-outline-success">Logout</a></li>
+                    <li><a id="logout" onclick="logout()" href="{% url 'core:logout' %}" class="btn btn-sm btn-outline-success">{% trans 'Logout' %}</a></li>
                 {% else %}
                   <!-- <li><a href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">Login</a></li> -->
-                  <li><a id='login' onclick="login()" href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">Login</a></li>
+                  <li><a id='login' onclick="login()" href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">{% trans 'Login' %}</a></li>
                 {% endif %}
               </ul>
             </nav>
@@ -209,8 +227,8 @@
         <div class="row mb-5">
           <div class="col-12">
             <p class="mb-0">
-              <a href="{% url 'dndsos:terms' %}" class="p-3">Terms of use</a>
-              <a href="{% url 'dndsos:privacy' %}" class="p-3">Privacy</a>
+              <a href="{% url 'dndsos:terms' %}" class="p-3">{% trans 'Terms of use' %}</a>
+              <!-- <a href="{% url 'dndsos:privacy' %}" class="p-3">Privacy</a> -->
               <!-- <a href="#" class="p-3"><span class="icon-facebook"></span></a>
               <a href="#" class="p-3"><span class="icon-twitter"></span></a>
               <a href="#" class="p-3"><span class="icon-instagram"></span></a> -->
@@ -222,7 +240,7 @@
             <p class="mb-0">
               <a href="#" id="scroll" style="display: none;"><span></span></a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | DND-SOS Ltd. <i class="icon-heart" aria-hidden="true"></i> by <a href="https://actappon.com" target="_blank" >Actappon</a>
+              {% trans 'Copyright' %} &copy;<script>document.write(new Date().getFullYear());</script> {% trans 'All rights reserved' %} | Dilvur Ltd. <i class="icon-heart" aria-hidden="true"></i> by <a href="https://actappon.com" target="_blank" >Actappon</a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>

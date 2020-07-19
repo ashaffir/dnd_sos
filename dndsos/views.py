@@ -1,9 +1,12 @@
 import json
+import requests
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.contrib import messages
 from django.conf import settings
+from django.utils.translation import gettext as _
 
 from dndsos_dashboard.utilities import send_mail
 from .models import ContactUs, ContentPage
@@ -14,20 +17,42 @@ def home(request):
     form = ContactForm(request.POST or None)
     
     if request.POST:
-        if form.is_valid():
-            form.save()
-            update_admin(request)
-            messages.success(request, 'Thank you for your interest in DND-SOS. \nWe will get back to you shortly.')
+
+        # if settings.DEBUG:
+        #     captcha_ok = True
+        # else:
+        captcha_ok = check_captcha(request)
+
+        if captcha_ok:
+            if form.is_valid():
+                form.save()
+                update_admin(request)
+                messages.success(request, _('Thank you for your interest in Dilvur. We will get back to you shortly.'))
+            else:
+                messages.error(request, _('Please fill out the required fields before submitting the form.'))
+                return redirect(request.META['HTTP_REFERER'])
         else:
-            messages.error(request, 'Please fill out the required fields before submitting the form.')
+            messages.error(request, _('Please confirm you are not a robot.'))
+            return redirect(request.META['HTTP_REFERER'])
+
 
     context['faq_freelancer'] = ContentPage.objects.filter(section='faq_freelancer')
     context['faq_business'] = ContentPage.objects.filter(section='faq_business')
-    context['pricing_business'] = ContentPage.objects.get(section='pricing_business')
-    context['pricing_freelancers'] = ContentPage.objects.get(section='pricing_freelancers')
-    context['why_section'] = ContentPage.objects.filter(section='why-section')
 
+    try:
+        if request.LANGUAGE_CODE == 'he':
+            context['why_section'] = ContentPage.objects.filter(section='why-section', language='Hebrew')
+            context['pricing_business'] = ContentPage.objects.get(section='pricing_business', language='Hebrew')
+            context['pricing_freelancers'] = ContentPage.objects.get(section='pricing_freelancers', language='Hebrew')
+        else:
+            context['why_section'] = ContentPage.objects.filter(section='why-section', language='English')
+            context['pricing_business'] = ContentPage.objects.get(section='pricing_business', language='English')
+            context['pricing_freelancers'] = ContentPage.objects.get(section='pricing_freelancers', language='English')
+    except Exception as e:
+        messages.error(request, f'Missing content in DB! ERROR: {e}')
+    
     context['form'] = form
+    context['site_recaptcha'] = settings.RECAPTCHA_PUBLIC_KEY
     
     return render(request, 'dndsos/index.html', context)
 
@@ -76,3 +101,17 @@ def privacy(request):
     # context['terms_he'] = ContentPage.objects.get(name='terms_he').content
 
     return render(request, 'dndsos/privacy.html', context)    
+
+def check_captcha(request):
+    client_key = request.POST['g-recaptcha-response']
+    secret_key = settings.RECAPTCHA_PRIVATE_KEY
+
+    captcha_data = {
+        'secret':secret_key,
+        'response':client_key
+    }
+
+    r = requests.post('https://www.google.com/recaptcha/api/siteverify',data=captcha_data)
+    response = json.loads(r.text)
+    verify = response['success']
+    return verify

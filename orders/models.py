@@ -101,6 +101,7 @@ class Order(models.Model):
     )
 
     freelancer_rating = models.IntegerField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
+    freelancer_rating_report = models.TextField(max_length=500, null=True, blank=True)
     business_rating = models.IntegerField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
 
     chat = JSONField(blank=True, null=True)

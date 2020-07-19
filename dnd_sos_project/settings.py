@@ -223,6 +223,15 @@ EMAIL_HOST_USER = 'admin@dilvur.com'
 EMAIL_HOST_PASSWORD = config['EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = 'admin@dilvur.com'
 
+# Private Email (Namecheap.com)
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'mail.privateemail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'admin@myretrochic.com'
+# EMAIL_HOST_PASSWORD = '110011'
+# DEFAULT_FROM_EMAIL = 'admin@myretrochic.com'
+
 ADMIN_EMAIL = 'alfred.shaffir@gmail.com'
 
 # use bootstrap friendly message tags
@@ -273,3 +282,8 @@ LANGUAGES = [
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale')
 ]
+
+# CAPTCHA settings
+RECAPTCHA_PUBLIC_KEY = config['RECAPTCHA_SITE_KEY']
+RECAPTCHA_PRIVATE_KEY = config['RECAPTCHA_SECRET_KEY']
+NOCAPTCHA = True

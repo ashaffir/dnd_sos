@@ -2,20 +2,22 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block title %}DND SOS - Freelancer Sign Up{% endblock %}
+{% block title %}{% trans 'Dilvur - Carrier Sign Up' %}{% endblock %}
 
 {% block content %}
+{% get_current_language as lang %}
+
 <div class="mt-2">
-  {% block head_title %}{% trans " Freelancer Signup" %}{% endblock %}
+  {% block head_title %}{% trans " Carrier Signup" %}{% endblock %}
 </div>
-<div class="container">
+<div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
   <div class="row justify-content-center form-group">
     <div class="col-lg-7 mb-5 mt-5">
           {% include 'core/_messages.html' %}      
       
-          <h2 class="h4 text-black mb-5" style="color: black;">{% trans "Freelancer Sign Up" %}</h2> 
+          <h2 class="h4 text-black mb-5" style="color: black;">{% trans "Carrier Sign Up" %}</h2> 
 
-          <p>Already have an account? Then please <a href="{% url 'core:login' %}">sign in</a>.</p>
+          <p>{% trans 'Already have an account? Then please' %} <a href="{% url 'core:login' %}">{% trans 'sign in' %}</a>.</p>
 
           <form class="signup form-group" id="signup_form" method="post" action="{% url 'core:employee_signup' %}">
             {% csrf_token %}
@@ -24,7 +26,7 @@
                 <div class="mt-2">
                   {% if field.name == "terms_accepted" %}
                     {{ field }}
-                    <a href="{% url 'dndsos:terms' %}">Accept Terms and Conditions</a>
+                    <a href="{% url 'dndsos:terms' %}">{% trans 'Accept Terms and Conditions' %}</a>
                     <hr>
                   {% else %}
                   <div class="row">
@@ -41,7 +43,7 @@
             </div>
             <button class="btn btn-success text-white" type="submit">{% trans "Sign Up" %} &raquo;</button>
           </form>
-          <a href="{% url 'core:employer_signup' %}">Business? Register here</a>
+          <a href="{% url 'core:employer_signup' %}">{% trans 'Business? Register here' %}</a>
   
     </div>
   </div>    

@@ -1,12 +1,15 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% get_current_language as lang %}
 
-<section role="main" class="content-body">
+<section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <header class="page-header">
-        <h2>Bank Details</h2>
+        <h2>{% trans 'Bank Details' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +18,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Businesses</span></li>
+                <li><span>{% trans 'Businesses' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -23,22 +26,153 @@
     </header>
 
     <!-- start: page -->
-    <div class="col-md-7 col-lg-7">
+    <div class="col-md-7 col-lg-7" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
         <div class="tabs">
             <ul class="nav nav-tabs tabs-primary">
                 <li class="active">
-                    <a href="#select_tab" data-toggle="tab">Enter your bank details here.</a>
+                    <a href="#select_tab" data-toggle="tab">{% trans 'Enter your bank details here' %}.</a>
                 </li>
             </ul>
             <form action="" name="freelancerBankDetailsForm" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}                                   
                 <div class="tab-content">
-                    <div id="select_tab" class="tab-pane active" active>
-                        {{ form|crispy }}
+                    <div id="select_tab" class="tab-pane active form-group" active>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'First Name' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'Last Name' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'National ID Number' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.national_id_number }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'Full Name in Native Language' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.full_name_in_native_language }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'Name on the Account' %}* 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.name_on_the_account }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'Address' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.address }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'City' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.city }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'Country' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.country }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'Phone Number' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.phone_number }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'IBAN' %}* 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.iban }}
+                                </div>
+                            </div>
+                        </div>                        
+
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'SWIFT' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.swift }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {% trans 'Account Number' %} 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.account_number }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" style="margin-top: 1.5rem;">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    {{ form.account_ownership }}
+                                </div>
+                                <div class="col-md-8">
+                                <p class="text-left">{%trans 'I attest that I am the owner and have full authorization to this bank account' %}</p>
+                    </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-primary" name="bankDetailsSubmit">Submit</button>
+                    <button type="submit" class="btn btn-primary" name="bankDetailsSubmit">{% trans 'Submit' %}</button>
                 </div>
             </form>
         </div>

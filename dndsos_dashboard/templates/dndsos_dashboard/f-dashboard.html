@@ -61,9 +61,9 @@
                                 {% csrf_token %}
                                     <div class="switch switch-lg switch-success">
                                         {% if is_available %}
-                                            <input id="" type="submit" name="is_available" class="btn btn-lg btn-success" value="{% trans 'Available' %}" {% if user.freelancer.is_approved %} {% else %} disabled {% endif %}>
+                                            <input id="" type="submit" name="is_available" class="btn btn-lg btn-danger" value="{% trans 'Change to Unvailable' %}" {% if user.freelancer.is_approved %} {% else %} disabled {% endif %}>
                                         {% else %}                                        
-                                            <input id="" type="submit" name="not_available" class="btn btn-lg btn-danger" value="{% trans 'Unavailable' %}" {% if user.freelancer.is_approved %} {% else %} disabled {% endif %}>
+                                            <input id="" type="submit" name="not_available" class="btn btn-lg btn-success" value="{% trans 'Change to Available' %}" {% if user.freelancer.is_approved %} {% else %} disabled {% endif %}>
                                         {% endif %}                                        
                                     </div>    
                                 </form>

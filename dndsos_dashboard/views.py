@@ -453,11 +453,13 @@ def orders(request, b_id):
     if request.method == 'POST':
         if 'rateFreelancer' in request.POST:
             freelancer_rating = request.POST.get('f_rating')
+            freelancer_rating_report = request.POST.get('f_rating_report')
             order_id = request.POST.get('rateFreelancer')
             order = Order.objects.get(pk=order_id)
 
             if freelancer_rating:
                 order.freelancer_rating = freelancer_rating
+                order.freelancer_rating_report = freelancer_rating_report
                 order.save()
 
                 # Calculating overall freelancer rating

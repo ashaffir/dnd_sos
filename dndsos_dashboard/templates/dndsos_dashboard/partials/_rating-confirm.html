@@ -1,6 +1,8 @@
 {% load i18n %}
 {% load static %}
 
+{% get_current_language as lang %}
+
 <form action="" name="rateFreelancerForm" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -8,13 +10,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Rate your Carrier</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans 'Close' %}</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{% trans 'Rate your Carrier' %}</h4>
                 </div>
                 <div class="modal-body">
                      <section class="panel">
                         <header class="panel-heading">
-                            <h5>How would you rate the carrier for this order (1 Bad, 5 Excellent)?</h5>
+                            <h5>{% trans 'How would you rate the carrier for this order (1 Bad, 5 Excellent)' %}?</h5>
                             <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-2">
@@ -60,8 +62,12 @@
                                 </div>
                             </div>
                         </header>
+                        <div class="modal-body">
+                            <label for="f_rating_report">{% trans 'Anything you would like to add?' %}</label>
+                            <textarea class="form-control" name="f_rating_report" id="f_rating_report" cols="30" rows="5"></textarea>
+                        </div>
                         <div class="modal-footer">
-                            <button id="rateFreelancer" value="" name="rateFreelancer" type="submit" class="btn btn-primary">Confirm</button>
+                            <button id="rateFreelancer" value="" name="rateFreelancer" type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
                             <!-- <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button> -->
                         </div>
                      </section>
