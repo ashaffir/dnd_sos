@@ -47,9 +47,11 @@
    
     <div class="container d-none d-lg-block">
       <div class="row">
-        <div class="col-12 text-center mb-1 mt-1">
-            <!-- <h1 class="mb-0 site-logo"><a href="{% url 'dndsos:home' %}" class="text-black h2 mb-0"><b>DnD-SOS</b><span class="text-primary"><img src="{% static 'images/dndsos-logo-black.png' %}" alt="dndsos logo type" style="max-width: 5%;"></span> </a></h1> -->
-           <a href="{% url 'dndsos:home' %}"> <span class="text-primary"><img src="{% static 'assets/images/dilvur-logo-2.png' %}" alt="dndsos logo type" style="max-width: 30%;"></span></a>
+          <div class="col-11 text-center mb-1 mt-1">
+            <a href="{% url 'dndsos:home' %}"> <span class="text-primary"><img src="{% static 'assets/images/dilvur-logo-2.png' %}" alt="dndsos logo type" style="max-width: 30%;"></span></a>
+          </div>
+          <div class="col-1">
+
           </div>
       </div>
     </div>
@@ -59,34 +61,16 @@
 
       <div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
         {% include 'core/_messages.html' %}      
-        <div class="row">
-          <div class="col-md-12">
-							<form action="{% url 'set_language' %}" method="POST">
-								{% csrf_token %}
-								<input type="hidden" name="text" value="{{ redirect_to }}">
-								<select name="language" id="">
-									{% get_available_languages as LANGUAGES %}
-									{% get_language_info_list for LANGUAGES as languages %}
-									{% for language in languages %}
-										<option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
-											{{ language.name_local }}
-										</option>
-									{% endfor %}
-									<input class="" type="submit" value="Go" style="margin: 1rem;background-color: #8bc34a; color:white; border:0em; border-radius: 3px">
-								</select>
-							</form>		
-          </div>
-        </div>
 
         <div class="row align-items-center">
           <div class="col-10 col-md-10 col-xl-2  d-block d-lg-none">
-            <!-- <h6 class="mb-0 site-logo"><a href="{% url 'dndsos:home' %}" class="text-black h2 mb-0">DnD-SOS<span class="text-primary"><img src="{% static 'images/dndsos-logo-black.png' %}" alt="dndsos logo type" style="max-width: 15%;"></span> </a></h6> -->
             <img src="{% static 'assets/images/dilvur-logo-2.png' %}" alt="dilvur logo" style="max-width: 55%;">
           </div>
+
           <div class="col-12 col-md-12 main-menu">
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a id="home-link" onclick="home()" href="/#home-section" class="nav-link">{% trans 'Home' %}</a></li>
+                <!-- <li><a id="home-link" onclick="home()" href="/#home-section" class="nav-link">{% trans 'Home' %}</a></li> -->
                 <li><a id="features-link" onclick="features()"  href="/#features-section" class="nav-link">{% trans 'Features' %}</a></li>
                 <li><a id="how-link" onclick="how()"  href="/#how-it-works-section" class="nav-link">{% trans 'How it Works' %}</a></li>
                 <li><a id="faq-link" onclick="faq()" href="/#faq" class="nav-link">{% trans 'FAQ' %}</a></li>
@@ -107,6 +91,23 @@
                   <!-- <li><a href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">Login</a></li> -->
                   <li><a id='login' onclick="login()" href="{% url 'core:login' %}" class="btn btn-sm btn-outline-success">{% trans 'Login' %}</a></li>
                 {% endif %}
+                <li style="margin: 2rem;">
+                  <form action="{% url 'set_language' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ redirect_to }}">
+                    <select name="language" id="">
+                      {% get_available_languages as LANGUAGES %}
+                      {% get_language_info_list for LANGUAGES as languages %}
+                      {% for language in languages %}
+                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                          {{ language.name_local }}
+                        </option>
+                      {% endfor %}
+                      <input class="" type="submit" value="Go" style="margin: 1rem;background-color: #8bc34a; color:white; border:0em; border-radius: 3px">
+                    </select>
+                  </form>		        
+                </li>
+
               </ul>
             </nav>
           </div>
