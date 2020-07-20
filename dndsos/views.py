@@ -36,8 +36,6 @@ def home(request):
             return redirect(request.META['HTTP_REFERER'])
 
 
-    context['faq_freelancer'] = ContentPage.objects.filter(section='faq_freelancer')
-    context['faq_business'] = ContentPage.objects.filter(section='faq_business')
 
     try:
         if request.LANGUAGE_CODE == 'he':
@@ -49,6 +47,8 @@ def home(request):
             context['how_2_section'] = ContentPage.objects.get(section='how', language='Hebrew', name='how-2')
             context['how_3_section'] = ContentPage.objects.get(section='how', language='Hebrew', name='how-3')
             context['how_4_section'] = ContentPage.objects.get(section='how', language='Hebrew', name='how-4')
+            context['faq_freelancer'] = ContentPage.objects.filter(section='faq_freelancer', language='Hebrew')
+            context['faq_business'] = ContentPage.objects.filter(section='faq_business', language='Hebrew')
         else:
             context['why_section'] = ContentPage.objects.filter(section='why-section', language='English')
             context['pricing_business'] = ContentPage.objects.get(section='pricing_business', language='English')
@@ -58,6 +58,8 @@ def home(request):
             context['how_2_section'] = ContentPage.objects.get(section='how', language='English', name='how-2')
             context['how_3_section'] = ContentPage.objects.get(section='how', language='English', name='how-3')
             context['how_4_section'] = ContentPage.objects.get(section='how', language='English', name='how-4')
+            context['faq_freelancer'] = ContentPage.objects.filter(section='faq_freelancer', language='English')
+            context['faq_business'] = ContentPage.objects.filter(section='faq_business', language='English')
     except Exception as e:
         messages.error(request, f'Missing content in DB! ERROR: {e}')
     
