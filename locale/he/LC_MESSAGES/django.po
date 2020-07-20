@@ -242,10 +242,8 @@ msgid "Join as a carrier and earn extra income"
 msgstr "הצטרף כמחלק ותרוויח הכנסה נוספת"
 
 #: dndsos/templates/dndsos/index.html:49
-#, fuzzy
-#| msgid "What is delivered"
 msgid "What is Dilvur"
-msgstr "סוג משלוח"
+msgstr "מה זה Dilvur"
 
 #: dndsos/templates/dndsos/index.html:72
 msgid "Why"

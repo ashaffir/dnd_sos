@@ -44,10 +44,12 @@ def home(request):
             context['why_section'] = ContentPage.objects.filter(section='why-section', language='Hebrew')
             context['pricing_business'] = ContentPage.objects.get(section='pricing_business', language='Hebrew')
             context['pricing_freelancers'] = ContentPage.objects.get(section='pricing_freelancers', language='Hebrew')
+            context['what_is_section'] = ContentPage.objects.get(section='what_is', language='Hebrew')
         else:
             context['why_section'] = ContentPage.objects.filter(section='why-section', language='English')
             context['pricing_business'] = ContentPage.objects.get(section='pricing_business', language='English')
             context['pricing_freelancers'] = ContentPage.objects.get(section='pricing_freelancers', language='English')
+            context['what_is_section'] = ContentPage.objects.get(section='what_is', language='English')
     except Exception as e:
         messages.error(request, f'Missing content in DB! ERROR: {e}')
     

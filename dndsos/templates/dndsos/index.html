@@ -42,7 +42,7 @@
   </div>  
 
   <!-- WHAT -->
-  <div class="site-section bg-light" id="about-section">
+  <div class="site-section bg-light" id="about-section" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <div class="container">
       <div class="row mb-5">
         <div class="col-12 text-center">
@@ -51,12 +51,12 @@
       </div>
       <div class="row mb-5">
         <div class="col-lg-6">
-          <img src="{% static 'images/about_1.jpg' %}" alt="Image" class="img-fluid mb-5 mb-lg-0 rounded shadow">
+          <img src="{% static 'assets/images/delivery.png' %}" alt="Image" class="img-fluid mb-5 mb-lg-0">
         </div>
         <div class="col-lg-5 ml-auto pl-lg-5">
-          <h2 class="text-black mb-4">Create interactive prototypes</h2>
-          <p class="mb-4">Eos cumque optio dolores excepturi rerum temporibus magni recusandae eveniet, totam omnis consectetur maxime quibusdam expedita dolorem dolor nobis dicta labore quaerat esse magnam unde, aperiam delectus! At maiores, itaque.</p>
-          <p><a href="#" class="btn btn-primary">Learn More</a></p>
+          <h2 class="text-black mb-4">{{ what_is_section.name }}</h2>
+          <p class="mb-4">{{ what_is_section.content|safe }}</p>
+          <!-- <p><a href="#" class="btn btn-primary">Learn More</a></p> -->
         </div>
       </div>
       
