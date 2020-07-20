@@ -37,14 +37,19 @@ def credit_card_form(request):
     GET_URL_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl'
     GET_URL_PROD = 'https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl'
 
-    payload = '{ \
-        "GroupPrivateToken":"7a81fc4b-1b18-4add-b730-d434a9f5120a", \
-        "RedirectURL": "https://71de2855413d.ngrok.io/payments/success-card-collection/' + f'{str(b_id)}' + '", \
+    GET_URL = GET_URL_TEST if settings.DEBUG else GET_URL_PROD
+
+    REDIRECT_URL = 'https://71de2855413d.ngrok.io/payments/success-card-collection/' if settings.DEBUG else settings.DOMAIN_PROD
+
+    payload_prod = '{ \
+        "GroupPrivateToken":"' + f'{settings.GROUP_PRIVATE_TOKEN}' + '", \
+        "RedirectURL": "' + f'{str(REDIRECT_URL)}' + f'{str(b_id)}' + '", \
         "IPNURL": "https://71de2855413d.ngrok.io/payments/ipn-listener-card-info/", \
         "CustomerLastName":"test", \
         "EmailAddress":"alfred.shaffir@gmail.com", \
         "SaleType": 3, \
         "HideItemList":true, \
+        "DocumentLanguage":"English", \
         "Items": [ \
             {\
             "UnitPrice": "10",\
@@ -54,13 +59,33 @@ def credit_card_form(request):
             ],\
         "Custom1":' + f"{request.user.pk}" +'}'
 
+    payload_test = '{ \
+        "GroupPrivateToken":"7a81fc4b-1b18-4add-b730-d434a9f5120a", \
+        "RedirectURL": "https://71de2855413d.ngrok.io/payments/success-card-collection/' + f'{str(b_id)}' + '", \
+        "IPNURL": "https://71de2855413d.ngrok.io/payments/ipn-listener-card-info/", \
+        "CustomerLastName":"test", \
+        "EmailAddress":"alfred.shaffir@gmail.com", \
+        "SaleType": 3, \
+        "HideItemList":true, \
+        "DocumentLanguage":"English", \
+        "Items": [ \
+            {\
+            "UnitPrice": "10",\
+            "Quantity": "1",\
+            "Description": "collect only"\
+            }\
+            ],\
+        "Custom1":' + f"{request.user.pk}" +'}'
+
+    payload = payload_test if settings.DEBUG else payload_prod
+
     try:
-        get_card_form = requests.post(GET_URL_TEST, data=payload, headers=HEADERS)
+        get_card_form = requests.post(GET_URL, data=payload, headers=HEADERS)
     except Exception as e:
         print(f'ERROR getting card information: {e}')
         context['error'] = e
 
-    print(f">>> OUTBOUND: ***************{get_card_form.json()['PrivateSaleToken']}****************")
+    print(f">>> OUTBOUND: ***************{get_card_form.json()}****************")
     icredit_form_url = get_card_form.json()['URL']
     private_token = get_card_form.json()['PrivateSaleToken']
     public_token = get_card_form.json()['PublicSaleToken']
@@ -70,13 +95,41 @@ def credit_card_form(request):
 @csrf_exempt
 @require_POST
 def ipn_listener_card_info(request):
-    print(f">>> IPN TOKEN : ***************{request.POST.get('Custom1')}****************")
+    print(f">>> IPN TOKEN : ***************{request.POST}****************")
     sale_id = request.POST.get('SaleId')
     group_private_token = request.POST.get('GroupPrivateToken')
     transaction_token = request.POST.get('TransactionToken')
     business_pk = request.POST.get('Custom1')
     request.session['business_pk'] = business_pk
     return HttpResponse(status=200)
+
+
+def get_credit_card_information(token=None):
+    '''
+    Retreiving details about the credit card and store in DB
+    '''
+    GET_CARD_DETAILS_TEST = 'https://testpci.rivhit.co.il/api/RivhitRestAPIService.svc/GetTokenDetails'
+    GET_CARD_DETAILS_PROD = 'https://pci.rivhit.co.il/api/RivhitRestAPIService.svc/GetTokenDetails'
+
+    # credit_box_token = settings.CREDIT_BOX_TOKEN
+
+    credit_box_token = 'd27a5712-53a5-4543-bf3e-7a3c16164ff8' if settings.DEBUG else settings.CREDIT_BOX_TOKEN
+    token = '890387f6-1a66-44be-9181-4f72d78ce30a' if settings.DEBUG else token
+    
+    payload = '{ \
+        "CreditboxToken":"' + f'{credit_box_token}' + '", \
+        "Token": " ' + f'{token}' + '  " \
+        }'
+    
+    try:
+        card_info = requests.post(GET_CARD_DETAILS_TEST, data=payload, headers=HEADERS)
+        print(f"CARD INFO: ***************{card_info.json()}****************")
+        return card_info.json()
+    except Exception as e:
+        print(f'ERROR retreiving credit card information: {e}')
+        context['error'] = e
+        return e
+
 
 def lock_delivery_price(order):
     '''

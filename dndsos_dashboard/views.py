@@ -41,7 +41,7 @@ from orders.models import Order
 from .utilities import send_mail
 from geo.models import Street, CityModel
 from geo.geo_utils import location_calculator
-from payments.views import add_card, remove_card, credit_card_form
+from payments.views import add_card, remove_card, credit_card_form, get_credit_card_information
 from payments.models import Card
 
 # from notifier.signals import alert_freelancer_accepted
@@ -206,6 +206,11 @@ def b_profile(request, b_id):
 
     icredit_form_url,private_token, public_token = credit_card_form(request)
     context['icredit_form_url'] = icredit_form_url
+
+    # To display the last digits of the current credit card
+    card_info = get_credit_card_information(token=public_token)
+    context['card_number'] = card_info['CardNumber'][-4:]
+    context['card_due_date'] = card_info['CardDueDate']
 
     if request.method == 'POST':
 

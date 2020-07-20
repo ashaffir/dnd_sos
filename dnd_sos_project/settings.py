@@ -246,8 +246,11 @@ MESSAGE_TAGS = {
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# Isracard section
+# Isracard/iCredit/Rivhit section
 ISRACARD_SECRET_KEY = ''
+CREDIT_BOX_TOKEN = config['CREDIT_BOX_TOKEN']
+GROUP_PRIVATE_TOKEN = config['GROUP_PRIVATE_TOKEN']
+
 
 # Default pricing structure
 DEFAULT_BASE_PRICE = config['DEFAULT_BASE_PRICE']
@@ -287,3 +290,6 @@ LOCALE_PATHS = [
 RECAPTCHA_PUBLIC_KEY = config['RECAPTCHA_SITE_KEY']
 RECAPTCHA_PRIVATE_KEY = config['RECAPTCHA_SECRET_KEY']
 NOCAPTCHA = True
+
+# domain
+DOMAIN_PROD = 'https://dilvur.com/'

@@ -826,8 +826,11 @@
 				let pick_up_address = building + ' ' + street + ', ' + city
 				
 				addOrder = function(e) {
+					/* LOADER DISPLAY */
+					$('.loading').show()
 
-					$('.inProgress').show()
+					//$('.inProgress').show()
+
 					//const street_e = document.querySelector('#street');
 					//const notes_e = document.querySelector('#notes');
 					let order_city_e = document.querySelector('#city');
@@ -893,7 +896,6 @@
 				})		
 
 					$('#modalAddOrder').modal('hide');
-					//$('.inProgress').hide()
 
 				};
 
@@ -932,6 +934,10 @@
 						async:false,
 						success: function(response) {
 							$("#b_alerts_items").html(response)
+
+							/* Loader hide */
+							$('.loading').hide()
+
 						}		
 					});
 

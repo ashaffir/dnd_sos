@@ -89,6 +89,7 @@ class Employer(models.Model):
     phone = models.CharField(max_length=100, null=True, blank=True)
 
     credit_card_token = models.CharField(max_length=100, blank=True, null=True)
+    # credit_card_info = JSONField(null=True, blank=True) # Will be retreived directly from Rivhit
 
     business_total_rating = models.FloatField(null=True, blank=True)
 

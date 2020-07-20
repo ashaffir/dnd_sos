@@ -230,8 +230,14 @@
 												<div class="col-md-12">
 													<h4>{% trans 'You already have a credit card in the system' %}.</h4>
 												</div>
+												<div class="row" >
+													<div class="col-md-1"></div>
+													<div class="col-md-5" style="margin-top:3rem">
+														<p style="background-color: rgb(240, 247, 247); border:2px solid rgb(14, 109, 73); border-radius:5px; padding:1rem"><i class="fa fa-credit-card"></i>  Card ending with: {{ card_number }}. Exp. Date: {{ card_due_date }}</p>
+													</div>
+												</div>
 											</div>
-											<div class="row">
+											<div class="row" style="margin-top: 2rem;">
 												<div class="col-md-6">
 													<button onclick="updateCard()" class="btn btn-primary" type="button" >{% trans 'Update' %}</button>
 												</div>
