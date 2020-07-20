@@ -148,22 +148,22 @@
         <div class="col-lg-3 border-right p-4">
           <i class="" ><img src="{% static 'assets/images/numbers/png/one.png' %}" style="max-width: 20%;" alt=""></i>
           <img src="{% static 'assets/images/form.png' %}" alt="Image" class="img-fluid">
-          <p> {{ how_1_section }}</p>
+          <p> {{ how_1_section.content|safe }}</p>
         </div>
         <div class="col-lg-3 border-right p-4">
           <i class="" ><img src="{% static 'assets/images/numbers/png/two.png' %}" style="max-width: 20%;" alt=""></i>
           <img src="{% static 'assets/images/broadcast_dnd.png' %}" alt="Image" class="img-fluid">
-          <p>{{ how_2_section }}</p>
+          <p>{{ how_2_section.content|safe }}</p>
         </div>
         <div class="col-lg-3 border-right p-4">
           <i class="" ><img src="{% static 'assets/images/numbers/png/three.png' %}" style="max-width: 20%;" alt=""></i>
           <img src="{% static 'assets/images/carrier-red.png' %}" alt="Image" class="img-fluid">
-          <p>{{ how_3_section }}</p>
+          <p>{{ how_3_section.content|safe }}</p>
         </div>
         <div class="col-lg-3 p-4">
           <i class="" ><img src="{% static 'assets/images/numbers/png/four.png' %}" style="max-width: 20%;" alt=""></i>
           <img src="{% static 'assets/images/track_location.png' %}" alt="Image" class="img-fluid">
-          <p>{{ how_4_section }}</p>
+          <p>{{ how_4_section.content|safe }}</p>
         </div>
 
       </div>
