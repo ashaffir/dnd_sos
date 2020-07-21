@@ -62,6 +62,9 @@ https://www.youtube.com/watch?v=IFUAervc790
 https://django-twilio.readthedocs.io/en/latest/index.html
 https://www.twilio.com/docs/verify/api?code-sample=code-step-1-create-a-verification-service&code-language=Python&code-sdk-version=6.x
 
+### Payments (Isracard, Rivhit, iCredit) API
+https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/help
+
 ### GEO Location:
 #### In the chat/templates/room.html
 * Get location of the browser/device: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API

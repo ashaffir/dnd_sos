@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-19 17:07+0300\n"
+"POT-Creation-Date: 2020-07-21 10:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,20 +19,20 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: core/models.py:111
+#: core/models.py:112
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:23
 msgid "Business Profile"
 msgstr "פרופיל בית עסק"
 
-#: core/models.py:112
+#: core/models.py:113
 msgid "Business Profiles"
 msgstr ""
 
-#: core/models.py:196
+#: core/models.py:197
 msgid "Freelancer Profile"
 msgstr ""
 
-#: core/models.py:197
+#: core/models.py:198
 msgid "Freelancer Profiles"
 msgstr ""
 
@@ -123,7 +123,7 @@ msgstr "היי"
 
 #: core/templates/registration/login.html:20
 #: core/templates/registration/login.html:26
-#: dndsos/templates/dndsos/base.html:108
+#: dndsos/templates/dndsos/base.html:92
 msgid "Login"
 msgstr "התחבר"
 
@@ -179,82 +179,82 @@ msgstr "אנא הכנס דואל חוקי"
 msgid "Please do enter the email"
 msgstr "אנא הזן את הדואל"
 
-#: dndsos/templates/dndsos/base.html:89
+#: dndsos/templates/dndsos/base.html:73
 msgid "Home"
 msgstr "בית"
 
-#: dndsos/templates/dndsos/base.html:90
+#: dndsos/templates/dndsos/base.html:74
 msgid "Features"
 msgstr "מאפיינים"
 
-#: dndsos/templates/dndsos/base.html:91
+#: dndsos/templates/dndsos/base.html:75
 msgid "How it Works"
 msgstr "איך זה עובד"
 
-#: dndsos/templates/dndsos/base.html:92 dndsos/templates/dndsos/index.html:216
+#: dndsos/templates/dndsos/base.html:76 dndsos/templates/dndsos/index.html:261
 msgid "FAQ"
 msgstr "שאלות נפוצות"
 
-#: dndsos/templates/dndsos/base.html:96
+#: dndsos/templates/dndsos/base.html:80
 msgid "Pricing"
 msgstr "מחירים"
 
-#: dndsos/templates/dndsos/base.html:97
+#: dndsos/templates/dndsos/base.html:81
 msgid "Contact"
 msgstr "צור קשר"
 
-#: dndsos/templates/dndsos/base.html:101 dndsos/templates/dndsos/base.html:103
+#: dndsos/templates/dndsos/base.html:85 dndsos/templates/dndsos/base.html:87
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:19
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:19
 msgid "Dashboard"
 msgstr "לוּחַ מַחווָנִים"
 
-#: dndsos/templates/dndsos/base.html:105
+#: dndsos/templates/dndsos/base.html:89
 msgid "Logout"
 msgstr "התנתק"
 
-#: dndsos/templates/dndsos/base.html:230
+#: dndsos/templates/dndsos/base.html:231
 msgid "Terms of use"
 msgstr "תנאי שימוש"
 
-#: dndsos/templates/dndsos/base.html:243
+#: dndsos/templates/dndsos/base.html:244
 msgid "Copyright"
 msgstr " "
 
-#: dndsos/templates/dndsos/base.html:243
+#: dndsos/templates/dndsos/base.html:244
 msgid "All rights reserved"
 msgstr "כל הזכויות שמורות"
 
-#: dndsos/templates/dndsos/index.html:23
+#: dndsos/templates/dndsos/index.html:60
 msgid "Dispatch and Delivery Network"
 msgstr "רשת משלוחים ומסירה"
 
-#: dndsos/templates/dndsos/index.html:24
+#: dndsos/templates/dndsos/index.html:61
 msgid "Find carriers around you"
 msgstr "מצא ספקים פעילים בסביבת העסק שלך"
 
-#: dndsos/templates/dndsos/index.html:30
+#: dndsos/templates/dndsos/index.html:67
 msgid "Register your business"
 msgstr "רשום את העסק שלך"
 
-#: dndsos/templates/dndsos/index.html:36
+#: dndsos/templates/dndsos/index.html:73
 msgid "Join as a carrier and earn extra income"
 msgstr "הצטרף כמחלק ותרוויח הכנסה נוספת"
 
-#: dndsos/templates/dndsos/index.html:49
+#: dndsos/templates/dndsos/index.html:86
 msgid "What is Dilvur"
 msgstr "מה זה Dilvur"
 
-#: dndsos/templates/dndsos/index.html:72
+#: dndsos/templates/dndsos/index.html:109
 msgid "Why"
 msgstr "למה"
 
-#: dndsos/templates/dndsos/index.html:144
+#: dndsos/templates/dndsos/index.html:181
 msgid "How it works"
 msgstr "איך זה עובד"
 
-#: dndsos/templates/dndsos/index.html:223
-#: dndsos/templates/dndsos/index.html:328
+#: dndsos/templates/dndsos/index.html:268
+#: dndsos/templates/dndsos/index.html:372
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:330
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:21
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:10
@@ -262,41 +262,41 @@ msgstr "איך זה עובד"
 msgid "Businesses"
 msgstr "בתי עסק"
 
-#: dndsos/templates/dndsos/index.html:229
-#: dndsos/templates/dndsos/index.html:341
+#: dndsos/templates/dndsos/index.html:274
+#: dndsos/templates/dndsos/index.html:385
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:279
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:82
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:91
 msgid "Carriers"
 msgstr "מחלקים"
 
-#: dndsos/templates/dndsos/index.html:319
+#: dndsos/templates/dndsos/index.html:363
 msgid "Pricing "
 msgstr "מחירים"
 
-#: dndsos/templates/dndsos/index.html:335
+#: dndsos/templates/dndsos/index.html:379
 msgid "Register your Business"
 msgstr "רשום את העסק שלך"
 
-#: dndsos/templates/dndsos/index.html:349
+#: dndsos/templates/dndsos/index.html:393
 msgid "Join as Carrier"
 msgstr "הצטרף כמחלק"
 
-#: dndsos/templates/dndsos/index.html:546
+#: dndsos/templates/dndsos/index.html:590
 msgid "Get In Touch"
 msgstr "צור קשר"
 
-#: dndsos/templates/dndsos/index.html:561
+#: dndsos/templates/dndsos/index.html:605
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:43
 msgid "First Name"
 msgstr "שם פרטי"
 
-#: dndsos/templates/dndsos/index.html:567
+#: dndsos/templates/dndsos/index.html:611
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:53
 msgid "Last Name"
 msgstr "שם משפחה"
 
-#: dndsos/templates/dndsos/index.html:578
+#: dndsos/templates/dndsos/index.html:622
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:87
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:78
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:82
@@ -304,17 +304,17 @@ msgstr "שם משפחה"
 msgid "Email"
 msgstr "אימייל"
 
-#: dndsos/templates/dndsos/index.html:589
+#: dndsos/templates/dndsos/index.html:633
 msgid "Subject"
 msgstr "נושא"
 
-#: dndsos/templates/dndsos/index.html:599
+#: dndsos/templates/dndsos/index.html:643
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:5
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:5
 msgid "Message"
 msgstr "הודעה"
 
-#: dndsos/templates/dndsos/index.html:612
+#: dndsos/templates/dndsos/index.html:656
 msgid "Send Message"
 msgstr "שלח"
 
@@ -593,7 +593,7 @@ msgstr "קטגורית עסק"
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:90
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:140
 msgid "Business Category"
-msgstr "לוח מחוונים עסקי"
+msgstr "סוג בית העסק"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:91
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:93
@@ -628,7 +628,7 @@ msgid "Street"
 msgstr "רחוב"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:113
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:188
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:190
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:57
 msgid "Building Number"
 msgstr "בניין"
@@ -659,33 +659,33 @@ msgstr "טלפון"
 msgid "Add Phone"
 msgstr "טלפון"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:193
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:195
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:168
 msgid "Newsletter Optin"
 msgstr "קבל עדכונים במייל"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:210
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:212
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:185
 msgid "Change Password"
 msgstr "שנה סיסמא"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:215
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:217
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:175
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:190
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:70
 msgid "Submit"
 msgstr "שלח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:216
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:218
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:191
 msgid "Reset"
 msgstr "אִתחוּל"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:231
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:233
 msgid "You already have a credit card in the system"
 msgstr "יש לך כבר כרטיס אשראי במערכת"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:236
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:244
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:238
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:260
 msgid "Update"
@@ -1025,7 +1025,7 @@ msgstr "בקש מחלק"
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-removed-modal.html:42
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_message-sent-modal.html:24
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_order-delivered-modal.html:24
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:148
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:143
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:13
 #: payments/templates/payments/partials/_update-card-modal.html:7
 msgid "Close"
@@ -1041,7 +1041,7 @@ msgstr "לאיזו הזמנה תרצה מחלק"
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:16
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:107
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-modal.html:42
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:147
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:142
 msgid "Confirm"
 msgstr "אשר"
 
@@ -1252,13 +1252,13 @@ msgstr "בקשה נשלחה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:8
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:98
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:139
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:134
 msgid "Confirmation"
 msgstr "אישור"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:13
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:103
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:144
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:139
 msgid "Are you sure you want to cancel this order"
 msgstr "האם אתה בטוח שברצונך לבטל הזמנה זו"
 
@@ -1283,7 +1283,7 @@ msgstr "יעד ההזמנה"
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:11
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:38
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:57
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:74
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:73
 msgid "Delivered"
 msgstr "נמסר"
 
@@ -1307,12 +1307,12 @@ msgid "Go to pickup"
 msgstr "סע לאסוף"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:53
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:64
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:63
 msgid "Being delivered..."
 msgstr "מועבר ..."
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:61
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:78
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:77
 msgid "Settled"
 msgstr "שולם"
 
@@ -1413,25 +1413,33 @@ msgstr "מָשׁוֹב מחלק"
 msgid "Invoice"
 msgstr "חשבונית"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:34
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:33
 msgid "Not Allocated"
 msgstr "לא מוּקצֶה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:40
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:39
 msgid "Picked-Up"
 msgstr "נאסף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:55
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:54
 msgid "Waiting for a carrier..."
 msgstr "ממתין למחלק ..."
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:58
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:57
 msgid "Waiting for pickup..."
 msgstr "ממתין לאיסוף ..."
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:67
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:66
 msgid "completed"
 msgstr "הושלמה"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:122
+msgid "Download the invoice"
+msgstr "הורד את החשבונית"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:151
+msgid "Cancel your order"
+msgstr "בטל את ההזמנה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:14
 msgid "Rate your Carrier"
@@ -2102,27 +2110,27 @@ msgstr ""
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/forms/widgets.py:395
 msgid "Clear"
-msgstr ""
+msgstr "מחק"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/forms/widgets.py:396
 msgid "Currently"
-msgstr ""
+msgstr "נוכחי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/forms/widgets.py:709
 msgid "Unknown"
-msgstr ""
+msgstr "לא ידוע"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/forms/widgets.py:710
 msgid "Yes"
-msgstr ""
+msgstr "כן"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/forms/widgets.py:711
 msgid "No"
-msgstr ""
+msgstr "לא"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/template/defaultfilters.py:788
 msgid "yes,no,maybe"
-msgstr ""
+msgstr "כן,לא, אולי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/template/defaultfilters.py:817
 #: venv_dnd_sos/lib/python3.7/site-packages/django/template/defaultfilters.py:834
@@ -2175,115 +2183,115 @@ msgstr ""
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dateformat.py:150
 msgid "midnight"
-msgstr ""
+msgstr "חצות"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dateformat.py:152
 msgid "noon"
-msgstr ""
+msgstr "צהריים"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:6
 msgid "Monday"
-msgstr ""
+msgstr "שני"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:6
 msgid "Tuesday"
-msgstr ""
+msgstr "שלישי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:6
 msgid "Wednesday"
-msgstr ""
+msgstr "רביעי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:6
 msgid "Thursday"
-msgstr ""
+msgstr "חמישי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:6
 msgid "Friday"
-msgstr ""
+msgstr "שישי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:7
 msgid "Saturday"
-msgstr ""
+msgstr "שבת"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:7
 msgid "Sunday"
-msgstr ""
+msgstr "ראשון"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:10
 msgid "Mon"
-msgstr ""
+msgstr "שני"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:10
 msgid "Tue"
-msgstr ""
+msgstr "שלישי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:10
 msgid "Wed"
-msgstr ""
+msgstr "רביעי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:10
 msgid "Thu"
-msgstr ""
+msgstr "חמישי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:10
 msgid "Fri"
-msgstr ""
+msgstr "שישי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:11
 msgid "Sat"
-msgstr ""
+msgstr "שבת"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:11
 msgid "Sun"
-msgstr ""
+msgstr "ראשון"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:14
 msgid "January"
-msgstr ""
+msgstr "ינואר"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:14
 msgid "February"
-msgstr ""
+msgstr "פברואר"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:14
 msgid "March"
-msgstr ""
+msgstr "מרץ"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:14
 msgid "April"
-msgstr ""
+msgstr "אפריל"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:14
 msgid "May"
-msgstr ""
+msgstr "מאי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:14
 msgid "June"
-msgstr ""
+msgstr "יוני"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:15
 msgid "July"
-msgstr ""
+msgstr "יולי"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:15
 msgid "August"
-msgstr ""
+msgstr "אוגוסט"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:15
 msgid "September"
-msgstr ""
+msgstr "ספטמבר"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:15
 msgid "October"
-msgstr ""
+msgstr "אוקטובר"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:15
 msgid "November"
-msgstr ""
+msgstr "נובמבר"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:16
 msgid "December"
-msgstr ""
+msgstr "דצמבר"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/django/utils/dates.py:19
 msgid "jan"

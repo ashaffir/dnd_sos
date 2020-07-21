@@ -122,13 +122,13 @@
 														<div class="form-group">
 															<div class="row">
 																<label class="col-md-3 control-label" for="">{% trans 'Name' %}</label>
-																<div class="col-md-8">{{ form.name }}</div>	
+																<div class="col-md-4">{{ form.name }}</div>	
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Phone Number' %}</label>
 																{% if user.freelancer.phone %}
-																<div class="col-md-4" style="margin-top: 1%;">
+																<div class="col-md-4 text-center" style="margin-top: 1%;">
 																	{{ user.freelancer.phone  }}
 																</div>
 																{% else %}
@@ -141,32 +141,32 @@
 
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'eMail' %}</label>
-																<div class="col-md-8" style="padding-top: 0.5rem;">{{ user }}</div>	
+																<div class="col-md-4 text-center" style="padding-top: 0.5rem;">{{ user }}</div>	
 															</div>
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Vehicle' %}</label>
-																<div class="col-md-8">{{ form.vehicle }}</div>	
+																<div class="col-md-4">{{ form.vehicle }}</div>	
 															</div>
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Short Bio' %}</label>
-																<div class="col-md-8">{{ form.bio }}</div>	
+																<div class="col-md-4">{{ form.bio }}</div>	
 															</div>
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Country' %}</label>
-																<div class="col-md-8">{{ form.country }}</div>	
+																<div class="col-md-4">{{ form.country }}</div>	
 															</div>
-															<div class="row" style="margin-top: 2%;">
+															<div class="row text-left" style="margin: 2%;" >
 																<label class="col-md-3 control-label" for="">{% trans 'ID Document' %}</label>
-																<div class="col-md-6">{{ form.id_doc }}</div>
+																<div class="col-md-6 text-left" dir="ltr">{{ form.id_doc }}</div>
 
 															</div>
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Active Hours' %}</label>
-																<div class="col-md-8">{{ form.active_hours }}</div>	
+																<div class="col-md-4">{{ form.active_hours }}</div>	
 															</div>
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Newsletter Optin' %}</label>
-																<div class="col-md-8" style="padding-top: 0.5rem;">{{ form.newsletter_optin }}</div>
+																<div class="col-md-1 text-left" style="padding-top: 1rem;">{{ form.newsletter_optin }}</div>
 															</div>
 
 

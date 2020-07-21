@@ -23,8 +23,7 @@
     <tr class="gradeX special-height">
         <td>{{ order.updated }}</td>
         <td>{{ order.drop_off_address }}</td>
-        <!-- <td>{% if order.notes %}{{ order.notes }}{% endif %}</td> -->
-        
+
         <!-- Order allocation -->
         {% if order.freelancer %}
         <td class="success center">
@@ -98,10 +97,6 @@
 
         <!-- Feedback -->
         <td class="actions" style='text-align:center'>
-            <!--  include 'dndsos_dashboard/partials/_star-ratings-1.html' with order=order   -->
-            <!-- <div style="width: calc(20% *  {{ order.freelancer_rating }} ">                
-            </div> -->
-            <!-- <img src="{% static 'assets/images/stars.png' %}" alt="" title="{{ order.freelancer_rating }}"> -->
             {% if order.freelancer_rating %}
                 <div>
                     <table>
@@ -121,10 +116,10 @@
             {% endif %}
         </td>
 
-        <!-- Payments -->
-        <td class="actions" style='text-align:center'>
+        <!-- Invoice -->
+        <td class="actions ttip" style='text-align:center'>
             {% if order.invoice_url %}
-                <a href="{{ order.invoice_url }}" target="_blank"> <i class="fa fa-file-text-o fa-2x"></i></a>
+                <a href="{{ order.invoice_url }}" target="_blank" data-toggle="tooltip" data-placement="top" title="{% trans 'Download the invoice' %}"> <i class="fa fa-file-text-o fa-2x"></i></a>
             {% endif %}
         </td>
 
@@ -153,16 +148,13 @@
                 </div>
             </div>
              
-            <a class="btn btn-danger on-default edit-row" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="modal" data-target="#bCancelOrder_{{ order.order_id }}" {% endif %} style="color: white; margin:0%"><i class="fa fa-trash-o"></i></a>
-
-            <!-- <button onclick="confirm_cancel('{{ order.order_id }}')" class="btn btn-danger on-default edit-row" type="button" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="tooltip" data-placement="top" title="Cancel your order. Please confirm with the accepted freelancer that she/he has received your cancellation." {% endif %}><i class="fa fa-trash-o"></i></button> -->
+            <a class="btn btn-danger on-default edit-row ttip" name="orderCancel" id="{{ order.order_id }}" value="{{ order.order_id }}" {% if order.status == 'IN_PROGRESS' or order.status == 'COMPLETED' %} disabled {% else %} data-toggle="modal" data-target="#bCancelOrder_{{ order.order_id }}" {% endif %} style="color: white; margin:0%" data-toggle="tooltip" data-placement="top" title="{% trans 'Cancel your order' %}"><i class="fa fa-trash-o"></i></a>
 
         </td>
 
     </tr>
     {% endfor %}
 </tbody>
-
 <script>
     rateFreelancer = function(order_id){
         console.log(`ORDER: ${order_id}`)
@@ -173,14 +165,9 @@
 
 </script>
 
-<!-- 
-Handing the cancelling of an offer by the business
-This can happen only if the order is not in states IN_PROGRESS and COMPLETED 
+{% block js %}
+    <script>
+        $('.ttip').tooltip()
+    </script>
 
-<script>
-    confirm_cancel = function (order_id){
-        $(`#cancel_b_order`).val(order_id);
-        $("#bCancelOrder").modal();
-    }
-</script>
--->
+{% endblock js %}

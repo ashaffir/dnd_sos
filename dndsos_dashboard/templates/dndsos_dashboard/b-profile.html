@@ -130,10 +130,10 @@
 													{% for non_field_error in form.non_field.errors %}
 														<p class="help is-danger">{{ non_field_error }}</p>
 													{% endfor %}
-														<div class="form-group";">
+														<div class="form-group">
 															<div class="row">
 																<label class="col-md-3 control-label" for="">{% trans 'Business Name' %}</label>
-																<div class="col-md-8">{{ form.business_name }}</div>	
+																<div class="col-md-4">{{ form.business_name }}</div>	
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
@@ -144,7 +144,7 @@
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Phone Number' %}</label>
 																{% if user.business.phone %}
-																<div class="col-md-4" style="margin-top: 1%;">
+																<div class="col-md-4 text-center" style="margin-top: 1%;">
 																	{{ user.business.phone  }}
 																</div>
 																{% else %}
@@ -158,7 +158,7 @@
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'City' %}</label>
 																<!-- <div class="col-md-8">{{ form.city }}</div> -->
-																<div class="col-md-8">
+																<div class="col-md-4">
 																	<select id="city" name="city" class="form-control" required>
 																		<option value="none">---------------</option>
 																		{% for city in cities %}
@@ -171,13 +171,15 @@
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Street' %}</label>
 																{% if user.business.street %}
-																	<div style="font-size: 1.5rem;padding-top:0.7rem">{{ user.business.street }}</div>
+																	<div class="col-md-4">
+																		<div class="text-center" style="font-size: 1.3rem;padding-top:0.7rem">{{ user.business.street }}</div>
+																	</div>
 																{% endif %}
-																<!-- <div class="col-md-8">{{ form.street }}</div> -->
+
 															</div>
 															<div class="row" style="margin-top: 1%;">
 																<div class="col-md-3"></div>
-																<div class="col-md-8" id="streets">
+																<div class="col-md-4" id="streets">
 																	
 																	<!-- Loaded from Ajax -->
 																	
@@ -186,12 +188,12 @@
 
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Building Number' %}</label>
-																<div class="col-md-8">{{ form.building_number }}</div>
+																<div class="col-md-1">{{ form.building_number }}</div>
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Newsletter Optin' %}</label>
-																<div class="col-md-8">{{ form.newsletter_optin }}</div>
+																<div class="col-md-1 text-left" style="padding-top: 1rem;">{{ form.newsletter_optin }}</div>
 															</div>
 
 														</div>
