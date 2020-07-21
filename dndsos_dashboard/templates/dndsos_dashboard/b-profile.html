@@ -149,9 +149,11 @@
 																</div>
 																{% else %}
 																<div class="col-md-4">
-																	<input class="form-control" type="text" name="phoneNumber" placeholder="Phone (with country prefix)">
+																	<input class="form-control" type="text" name="phoneNumber" placeholder="{% trans 'Phone with country prefix' %}">
 																</div>
-																<button class="btn btn-primary" name="addPhone" type="submit">{% trans 'Add Phone' %}</button>
+																<div class="col-md-2 text-left">
+																	<button class="btn btn-primary" name="addPhone" type="submit">{% trans 'Add Phone' %}</button>
+																</div>
 																{% endif %}
 															</div>
 
