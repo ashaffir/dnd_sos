@@ -18,7 +18,9 @@ themes/*
 *.svg
 
 # Mobile apps
-mobile_apps
+# mobile_apps
+tmp
+archive
 
 ### OSX ###
 .DS_Store
@@ -60,7 +62,7 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-lib/
+# lib/
 lib64/
 parts/
 sdist/

@@ -62,3 +62,67 @@ INFO 2020-07-29 07:01:03,454 - [mHTTP GET /api/user-orders/?limit=1000 200 [0.0
 INFO 2020-07-29 07:01:24,045 - [mHTTP GET /api/user-orders/?limit=1000 200 [0.04, 127.0.0.1:57198][0m
 INFO 2020-07-29 07:03:56,628 - [mHTTP GET /api/user-orders/?format=json 200 [0.05, 127.0.0.1:57379][0m
 INFO 2020-07-29 07:19:34,796 - [mHTTP GET /api/user-orders/?format=json 200 [0.09, 127.0.0.1:58404][0m
+INFO 2020-07-29 08:02:32,853 - [32mHTTP POST /i18n/setlang/ 302 [0.18, 127.0.0.1:61051][0m
+INFO 2020-07-29 08:02:33,673 - [mHTTP GET /dashboard/business/3/orders 200 [0.76, 127.0.0.1:61051][0m
+INFO 2020-07-29 08:02:34,049 - [mHTTP GET /static/assets/stylesheets/theme.css 200 [0.03, 127.0.0.1:61051][0m
+INFO 2020-07-29 08:02:35,282 - [mHTTP GET /orders/orders-table 200 [0.09, 127.0.0.1:61051][0m
+INFO 2020-07-29 08:02:35,328 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61059]
+INFO 2020-07-29 08:02:35,507 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61059]
+INFO 2020-07-29 08:02:35,639 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:61051][0m
+INFO 2020-07-29 08:02:35,739 - [mHTTP GET /orders/business-messages-list 200 [0.08, 127.0.0.1:61051][0m
+INFO 2020-07-29 08:04:04,042 - [mHTTP GET /dashboard/business/3/orders 200 [0.12, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:04,071 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:61059]
+INFO 2020-07-29 08:04:04,517 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61138]
+INFO 2020-07-29 08:04:04,545 - [mHTTP GET /orders/orders-table 200 [0.10, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:04,591 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61138]
+INFO 2020-07-29 08:04:04,760 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:04,835 - [mHTTP GET /orders/business-messages-list 200 [0.06, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:06,313 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.00, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:21,499 - [mHTTP GET /dashboard/business/3/orders 200 [0.15, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:21,523 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:61138]
+INFO 2020-07-29 08:04:21,879 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61159]
+INFO 2020-07-29 08:04:21,943 - [mHTTP GET /orders/orders-table 200 [0.11, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:21,978 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61159]
+INFO 2020-07-29 08:04:22,051 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:22,112 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:23,350 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:48,352 - [mHTTP GET /dashboard/business/3/orders 200 [0.18, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:48,399 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:61159]
+INFO 2020-07-29 08:04:49,010 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61185]
+INFO 2020-07-29 08:04:49,017 - [mHTTP GET /orders/orders-table 200 [0.11, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:49,085 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61185]
+INFO 2020-07-29 08:04:49,280 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:49,361 - [mHTTP GET /orders/business-messages-list 200 [0.07, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:04:50,944 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:24,337 - [mHTTP GET /dashboard/business/3/orders 200 [0.10, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:24,363 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:61185]
+INFO 2020-07-29 08:05:24,761 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61222]
+INFO 2020-07-29 08:05:24,791 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:24,824 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61222]
+INFO 2020-07-29 08:05:24,954 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:25,012 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:26,432 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:47,255 - [mHTTP GET /dashboard/business/3/orders 200 [0.12, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:47,282 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:61222]
+INFO 2020-07-29 08:05:47,702 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61246]
+INFO 2020-07-29 08:05:47,741 - [mHTTP GET /orders/orders-table 200 [0.11, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:47,777 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61246]
+INFO 2020-07-29 08:05:47,822 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:47,896 - [mHTTP GET /orders/business-messages-list 200 [0.06, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:05:49,411 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:13,082 - [mHTTP GET /dashboard/business/3/orders 200 [0.40, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:13,184 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:61246]
+INFO 2020-07-29 08:06:13,864 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61273]
+INFO 2020-07-29 08:06:13,961 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61273]
+INFO 2020-07-29 08:06:13,965 - [mHTTP GET /orders/orders-table 200 [0.14, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:14,104 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:14,179 - [mHTTP GET /orders/business-messages-list 200 [0.06, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:15,868 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:26,230 - [mHTTP GET /dashboard/business/3/orders 200 [0.10, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:26,253 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:61273]
+INFO 2020-07-29 08:06:26,509 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:61295]
+INFO 2020-07-29 08:06:26,566 - [mHTTP GET /orders/orders-table 200 [0.09, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:26,594 - WebSocket CONNECT /ws/orders/ [127.0.0.1:61295]
+INFO 2020-07-29 08:06:26,674 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:26,746 - [mHTTP GET /orders/business-messages-list 200 [0.06, 127.0.0.1:61132][0m
+INFO 2020-07-29 08:06:28,431 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:61132][0m
