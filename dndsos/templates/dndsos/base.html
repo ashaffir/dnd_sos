@@ -95,7 +95,7 @@
                   <form action="{% url 'set_language' %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="text" value="{{ redirect_to }}">
-                    <select name="language" id="">
+                    <select name="language" id="home_lang_selector">
                       {% get_available_languages as LANGUAGES %}
                       {% get_language_info_list for LANGUAGES as languages %}
                       {% for language in languages %}
@@ -165,6 +165,12 @@
     </header>
     <style>
 
+      @media (min-width: 790px) {
+        .main-image {
+          max-width: 50%;
+        }
+
+      }
       @media (max-width: 360){
     
         .special {

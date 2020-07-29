@@ -7,6 +7,10 @@ from django.contrib.gis.db import models as geomodels
 from django.contrib.gis.db.models import PointField
 from django.core.validators import FileExtensionValidator
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 # from orders.models import Order
 
@@ -193,6 +197,10 @@ class Employee(models.Model):
     bank_details = JSONField(null=True, blank=True)
     preferred_payment_method = models.CharField(max_length=100, choices=PAYMENT_METHODS, default='Bank')
 
+    payment_amount = models.FloatField(null=True, blank=True)
+    payment_date = models.DateTimeField(null=True, blank=True)
+    payment_method = models.CharField(max_length=50, choices=PAYMENT_METHODS, null=True, blank=True)
+
     class Meta:
         verbose_name = _('Freelancer Profile')
         verbose_name_plural = _('Freelancer Profiles')
@@ -236,3 +244,7 @@ class BankDetails(models.Model):
     def __str__(self):
         return self.freelancer
 
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)

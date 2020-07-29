@@ -48,12 +48,14 @@ INSTALLED_APPS = [
     'payments',
     'dndsos_dashboard',
     'orders.apps.OrdersConfig',
+    'api',
     # 'verify.apps.VerifyConfig',
 
     'django_extensions',
     'ckeditor',
     'crispy_forms',
     'rest_framework', #https://www.django-rest-framework.org/
+    'rest_framework.authtoken',
     'qr_code', # https://github.com/dprog-philippe-docourt/django-qr-code
     'django_twilio', # Twilio Phone SMS verification
     
@@ -176,12 +178,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # use custom auth model
 AUTH_USER_MODEL = 'core.User'
+USERNAME_FIELD = 'email'
 
 # auth urls
 LOGIN_URL = 'core:login'
 LOGOUT_URL = 'core:logout'
 LOGIN_REDIRECT_URL = 'core:login_redirect'
 LOGOUT_REDIRECT_URL = 'core:home'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication',),
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

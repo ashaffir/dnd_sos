@@ -69,6 +69,14 @@ https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/help
 #### In the chat/templates/room.html
 * Get location of the browser/device: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
 
+# Django Rest FrameWork
+* https://www.django-rest-framework.org/api-guide/authentication/
+
+### API for user and orders
+Basic: https://www.youtube.com/watch?v=263xt_4mBNc
+Authentication tokens: https://www.youtube.com/watch?v=Wq6JqXqOzCE
+GET, UPDATE, DELETE, POST: https://www.youtube.com/watch?v=B65zbFro2pU
+
 
 ## Production Notes
 

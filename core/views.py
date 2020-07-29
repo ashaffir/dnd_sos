@@ -36,16 +36,8 @@ def employer_signup(request):
             user = form.save() # add employer to db with is_active as False
             
             # send employer a accout activation email
-            # current_site = get_current_site(request)
             current_site = request._current_scheme_host
             subject = 'Activate Employer Account'
-            # message = render_to_string('registration/account_activation_email.html', {
-            #     'user': user,
-            #     'domain': current_site,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': account_activation_token.make_token(user)
-            # })
-            # user.email_user(subject, message, from_email=settings.DEFAULT_FROM_EMAIL)
 
             message = {
                 'user': user,
@@ -81,14 +73,6 @@ def employee_signup(request):
             current_site = request._current_scheme_host
             # current_site = get_current_site(request)
             subject = 'Activate Freelancer Account'
-            # message = render_to_string('registration/account_activation_email.html', {
-            #     'user': user,
-            #     'domain': current_site,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': account_activation_token.make_token(user)
-            # })
-            # user.email_user(subject, message, from_email=settings.DEFAULT_FROM_EMAIL)
-
             message = {
                 'user': user,
                 'domain': current_site,

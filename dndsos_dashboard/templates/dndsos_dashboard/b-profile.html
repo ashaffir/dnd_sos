@@ -144,8 +144,11 @@
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Phone Number' %}</label>
 																{% if user.business.phone %}
-																<div class="col-md-4 text-center" style="margin-top: 1%;">
-																	{{ user.business.phone  }}
+																<div class="col-md-4 text-center">
+																	<div class="text-center" style="font-size: 1.3rem;padding-top:0.7rem; padding-bottom:0.7rem;background-color:rgb(240, 247, 247); border-radius: 5px">
+																		{{ user.business.phone  }}
+																	</div>
+
 																</div>
 																{% else %}
 																<div class="col-md-4">
@@ -174,7 +177,7 @@
 																<label class="col-md-3 control-label" for="">{% trans 'Street' %}</label>
 																{% if user.business.street %}
 																	<div class="col-md-4">
-																		<div class="text-center" style="font-size: 1.3rem;padding-top:0.7rem">{{ user.business.street }}</div>
+																		<div class="text-center" style="font-size: 1.3rem;padding-top:0.7rem; padding-bottom:0.7rem; background-color:rgb(240, 247, 247); border-radius: 5px">{{ user.business.street }}</div>
 																	</div>
 																{% endif %}
 

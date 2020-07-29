@@ -16,12 +16,12 @@ from .serializers import OrderSerializer, UserSerializer
 from geo.geo_utils import distance_calculator
 
 
-class TripView(viewsets.ReadOnlyModelViewSet):
-    lookup_field = 'id' 
-    lookup_url_kwarg = 'trip_id' 
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+# class TripView(viewsets.ReadOnlyModelViewSet):
+#     lookup_field = 'id' 
+#     lookup_url_kwarg = 'trip_id' 
+#     permission_classes = (permissions.IsAuthenticated,)
+#     queryset = Order.objects.all()
+#     serializer_class = OrderSerializer
 
 @login_required
 def orders_table(request):

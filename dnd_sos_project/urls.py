@@ -1,18 +1,3 @@
-"""dnd_sos_project URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
@@ -20,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.contrib.auth import views as auth_views
+from rest_framework.authtoken import views as api_views
 
 from dndsos_dashboard.views import SignUpView
 
@@ -34,14 +20,15 @@ urlpatterns = [
     path('', include('dndsos.urls')),
     path('dashboard/', include('dndsos_dashboard.urls')),
     path('core/', include('core.urls')),
-    path('chat/', include('chat.urls')),
-    path('notifier/', include('notifier.urls')),
+    # path('chat/', include('chat.urls')),
+    # path('notifier/', include('notifier.urls')),
     path('orders/', include('orders.urls')),
     path('geo/', include('geo.urls')),
     path('payments/', include('payments.urls')),
-    # path('verify/', include('verify.urls')),
-
-    path('api/sign_up/', SignUpView.as_view(), name='sign_up'),
+    
+    
+    path('api/', include('api.urls', namespace='api')),
+    path('api-token-auth/', api_views.obtain_auth_token, name='api-token-auth'),
 
 # Password:
     # https://docs.djangoproject.com/en/3.0/topics/auth/default/
