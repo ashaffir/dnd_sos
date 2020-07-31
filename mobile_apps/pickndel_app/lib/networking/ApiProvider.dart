@@ -12,7 +12,13 @@ class ApiProvider {
   Future<dynamic> get(String url) async {
     var responseJson;
     try {
-      final response = await http.get(_baseUrl + url);
+      final response = await http.get(
+        _baseUrl + url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        // body: jsonEncode(userLogin.toDatabaseJson()),
+      );
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -24,7 +30,8 @@ class ApiProvider {
     switch (response.statusCode) {
       case 200:
         // var responseJson = json.decode(response.body.toString());
-        var responseJson = jsonDecode(response.body);
+        var responseJson =
+            jsonDecode(utf8.decode(response.bodyBytes)); //For HEBREW text
         // print('RESPONSE>>> ${responseJson}');
         return responseJson;
       case 400:

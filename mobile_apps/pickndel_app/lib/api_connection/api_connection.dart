@@ -11,7 +11,6 @@ final _tokenEndpoint = "/api/login/";
 final _tokenURL = _base + _tokenEndpoint;
 
 Future<Token> getToken(UserLogin userLogin) async {
-  print(_tokenURL);
   final http.Response response = await http.post(
     _tokenURL,
     headers: <String, String>{
@@ -20,6 +19,7 @@ Future<Token> getToken(UserLogin userLogin) async {
     body: jsonEncode(userLogin.toDatabaseJson()),
   );
   if (response.statusCode == 200) {
+    print('RESPONSE: ${response.body});');
     return Token.fromJson(json.decode(response.body));
   } else {
     print(json.decode(response.body).toString());

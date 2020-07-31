@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_login/bloc/authentication_bloc.dart';
 
+import '../repository/user_repository.dart';
+import 'login_page.dart';
+
 class LogoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,12 @@ class LogoutPage extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<AuthenticationBloc>(context)
                         .add(LoggedOut());
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginPage(
+                                  userRepository: UserRepository(),
+                                )));
                   },
                   shape: StadiumBorder(
                     side: BorderSide(

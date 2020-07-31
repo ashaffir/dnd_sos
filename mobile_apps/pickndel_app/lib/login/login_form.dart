@@ -24,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
       listener: (context, state) {
         if (state is LoginFaliure) {
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text('${state.error}'),
+            content: Text('Failed to login: ${state.error}'),
             backgroundColor: Colors.red,
           ));
         }
@@ -51,7 +51,7 @@ class _LoginFormState extends State<LoginForm> {
                       obscureText: true,
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.85,
+                      width: MediaQuery.of(context).size.width * 0.55,
                       height: MediaQuery.of(context).size.width * 0.22,
                       child: Padding(
                         padding: EdgeInsets.only(top: 30.0),

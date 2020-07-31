@@ -5,6 +5,11 @@ from rest_framework.validators import UniqueTogetherValidator
 from core.models import User, Employee, Employer
 from dndsos.models import ContactUs
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()

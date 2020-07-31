@@ -16,7 +16,9 @@ from core.models import User, Employee, Employer
 from orders.models import Order
 from dndsos.models import ContactUs
 
-from .serializers import UserSerializer, LoginSerializer, ContactsSerializer, BusinessSerializer, UsernameSerializer
+from .serializers import (UserSerializer, LoginSerializer, 
+                        ContactsSerializer, BusinessSerializer, 
+                        UsernameSerializer,UserProfileSerializer,)
 from orders.serializers import OrderSerializer
 from .permissions import IsOwnerOrReadOnly # Custom permission
 
@@ -65,6 +67,35 @@ class ContactView(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     
     # permission_classes = (IsAdminUser,)
+
+class UserProfile(viewsets.ModelViewSet):
+    pass
+
+
+@api_view(['GET',])
+@permission_classes((IsAuthenticated,))
+def user_profile(request):
+    '''
+    returns user profile information
+    '''
+
+    try:
+        print(f'>>> DATA: {request.user.pk}')
+        user = Employer.objects.get(pk=request.user.pk)
+        print(f'USER: {user}')
+    except Exception as e:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = UserProfileSerializer(user, data=request.data)
+        data = {}
+        if serializer.is_valid():
+            data = serializer.data
+            print(f'>>> Token: {Token.objects.get(user_id=request.user.pk)}')
+        else:
+            data = serializer.errors
+
+        return Response(data)
 
 @api_view(['GET',])
 def all_users(request):

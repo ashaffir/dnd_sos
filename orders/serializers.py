@@ -28,6 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 class OrderSerializer(serializers.ModelSerializer):
+    business_name = serializers.SlugRelatedField(read_only=True, slug_field='business_name')
     class Meta:
         model = Order
         fields = '__all__'

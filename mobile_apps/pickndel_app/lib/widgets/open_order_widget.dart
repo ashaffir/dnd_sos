@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'global.dart';
+import '../common/global.dart';
 
 class OpenOrderWidget extends StatelessWidget {
   final String order_id;

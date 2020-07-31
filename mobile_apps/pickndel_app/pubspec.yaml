@@ -1,5 +1,5 @@
 name: bloc_login
-description: A new Flutter project.
+description: Pickup and Delivery Network.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -28,11 +28,25 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  flutter_localizations:
+    sdk: flutter
+  flutter_launcher_icons: ^0.7.3
+  flutter_launcher_name: ^0.0.1
+  url_launcher:
+  shared_preferences: ^0.5.8
+  splashscreen:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+    android: "launcher_icon"
+    ios: true
+    image_path: "assets/images/pickndel-logotype.png"
+
+flutter_launcher_name:
+  name: "PickNdel"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -49,6 +63,12 @@ flutter:
   assets:
    - assets/images/logo.png
    - assets/json/test.json
+   - assets/images/dilvur-logo.jpg
+   - assets/images/dilvur-logo.png
+   - assets/images/pickndel-logo.png
+   - assets/images/pickndel-logo-1.png
+   - assets/images/pickndel-logotype.png
+ 
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

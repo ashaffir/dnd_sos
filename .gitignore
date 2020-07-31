@@ -112,3 +112,4 @@ local_settings.py
 db.sqlite3
 payments/migrations/0001_initial.py
 dndsos/migrations/0001_initial.py
+*.bak

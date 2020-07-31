@@ -3,18 +3,21 @@ import 'package:flutter/material.dart';
 Color darkGreyColor = new Color(0xFF212128);
 Color lightBlueColor = new Color(0xFF8787A0);
 Color redColor = new Color(0xFFDC4F64);
+Color greenColor = new Color(0xFFDC4F64);
+
+Color mainBackground = new Color(0xFF202020);
 
 TextStyle intrayTitleStyle = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
     color: darkGreyColor,
-    fontSize: 50);
+    fontSize: 20);
 
 TextStyle bigLightBlueTitle = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
     color: lightBlueColor,
-    fontSize: 50);
+    fontSize: 30);
 
 TextStyle darkTodoTitle = new TextStyle(
     fontFamily: 'Avenir',

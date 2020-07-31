@@ -6,7 +6,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from .views import (UserRecordView, registration_view, 
                     LoginView, LogoutView,
                     OrdersView, ContactView, order_update_view, order_view,
-                    all_user_orders, all_businesses, all_users)
+                    all_user_orders, all_businesses, all_users, user_profile)
 
 router = routers.DefaultRouter()
 router.register('user-orders', OrdersView)
@@ -23,4 +23,5 @@ urlpatterns = [
     path('all-user-orders/', all_user_orders , name='all-user-orders'),
     path('all-businesses/', all_businesses , name='all-businesses'),
     path('all-users/', all_users , name='all-users'),
+    path('user-profile/', user_profile , name='user-profile'),
 ]

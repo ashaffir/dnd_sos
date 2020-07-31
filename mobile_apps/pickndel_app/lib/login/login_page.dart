@@ -13,22 +13,32 @@ class LoginPage extends StatelessWidget {
   LoginPage({Key key, @required this.userRepository})
       : assert(userRepository != null),
         super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login | Home Hub'),
+        title: Text('PickNdel Login'),
       ),
       body: BlocProvider(
-        create: (context) {
-          return LoginBloc(
-            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-            userRepository: userRepository,
-          );
-        },
-        child: LoginForm(),
-      ),
+          create: (context) {
+            return LoginBloc(
+              authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+              userRepository: userRepository,
+            );
+          },
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(3.0),
+              ),
+              // Image.asset(
+              //   'assets/images/pickndel-logo-1.png',
+              //   width: MediaQuery.of(context).size.width * 0.30,
+              // ),
+              LoginForm(),
+            ],
+          )),
     );
   }
 }

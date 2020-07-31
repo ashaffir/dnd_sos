@@ -12,8 +12,9 @@ class DatabaseProvider {
 
   Database _database;
 
-  Future <Database> get database async {
-    if (_database != null){
+  Future<Database> get database async {
+    print('Acecessing DB...');
+    if (_database != null) {
       return _database;
     }
     _database = await createDatabase();
@@ -37,17 +38,15 @@ class DatabaseProvider {
     Database database,
     int oldVersion,
     int newVersion,
-  ){
-    if (newVersion > oldVersion){}
+  ) {
+    if (newVersion > oldVersion) {}
   }
 
   void initDB(Database database, int version) async {
-    await database.execute(
-      "CREATE TABLE $userTable ("
-      "id INTEGER PRIMARY KEY, "
-      "username TEXT, "
-      "token TEXT "
-      ")"
-    );
+    await database.execute("CREATE TABLE $userTable ("
+        "id INTEGER PRIMARY KEY, "
+        "username TEXT, "
+        "token TEXT "
+        ")");
   }
 }

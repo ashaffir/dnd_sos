@@ -1,3 +1,5 @@
+import 'package:bloc_login/model/user_profile.dart';
+import 'package:bloc_login/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
@@ -5,15 +7,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_login/repository/user_repository.dart';
 
 import 'package:bloc_login/bloc/authentication_bloc.dart';
-import 'package:bloc_login/splash/splash.dart';
+import 'package:bloc_login/ui/splash.dart';
 import 'package:bloc_login/login/login_page.dart';
 import 'package:bloc_login/home/home.dart';
 import 'package:bloc_login/common/common.dart';
 
+import 'bloc/authentication_bloc.dart';
 import 'login/logout_page.dart';
 import 'orders/active_orders_page.dart';
 import 'orders/open_orders_page.dart';
-import 'orders/open_orders_screen.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -55,6 +59,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale("en", ""),
+        const Locale("he", ""),
+      ],
       theme: ThemeData(
         primarySwatch: Colors.red,
         brightness: Brightness.dark,
@@ -66,6 +78,7 @@ class App extends StatelessWidget {
           }
           if (state is AuthenticationAuthenticated) {
             return HomePage();
+            // return UserProfile();
           }
           if (state is AuthenticationUnauthenticated) {
             return LoginPage(
@@ -81,6 +94,7 @@ class App extends StatelessWidget {
         '/logout': (context) => LogoutPage(),
         '/open-orders': (context) => GetOrders(),
         '/active-orders': (context) => ActiveOrdersPage(),
+        '/order-accepted': (context) => OrderAccepted(),
       },
     );
   }
