@@ -10,6 +10,9 @@ class UserDao {
     final db = await dbProvider.database;
 
     var result = db.insert(userTable, user.toDatabaseJson());
+    print('RESULT: ${user.username}');
+    print('RESULT ID: ${user.userId}');
+    print('RESULT isEmployee: ${user.isEmployee}');
     return result;
   }
 
@@ -24,6 +27,8 @@ class UserDao {
     try {
       final data = await db.query(userTable, where: 'id = ?', whereArgs: [id]);
       User user = User.fromDatabaseJson(data[id]);
+      print('User FROM DB: ${user.isEmployee}');
+      // String username = user.username;
       return user;
     } catch (error) {
       print('ERROR Getting User: $error');

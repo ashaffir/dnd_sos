@@ -2,7 +2,7 @@ import 'package:bloc_login/networking/ApiProvider.dart';
 import 'dart:async';
 import 'package:bloc_login/model/open_orders.dart';
 
-class OpenOrdersRepository {
+class OpenOrdersRepositoryNOT {
   ApiProvider _provider = ApiProvider();
 
   Future<OpenOrders> fetchOpenOrdersData() async {

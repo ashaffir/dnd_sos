@@ -1,3 +1,5 @@
+import 'package:bloc_login/model/order.dart';
+import 'package:bloc_login/model/user_model.dart';
 import 'package:bloc_login/networking/CustomException.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -9,12 +11,13 @@ import 'CustomException.dart';
 class ApiProvider {
   final String _baseUrl = "https://361e3bca5a39.ngrok.io/api/";
 
-  Future<dynamic> get(String url) async {
+  Future<dynamic> get(String url, User user) async {
     var responseJson;
     try {
       final response = await http.get(
-        _baseUrl + url,
+        _baseUrl + url + user.userId.toString(),
         headers: <String, String>{
+          "Authorization": "Token ${user.token}",
           'Content-Type': 'application/json; charset=UTF-8',
         },
         // body: jsonEncode(userLogin.toDatabaseJson()),
@@ -24,6 +27,28 @@ class ApiProvider {
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
+  }
+
+  Future<dynamic> put(String url, Order order, User user, String status) async {
+    var postResponseJson;
+    try {
+      final response = await http.put(
+        _baseUrl + url,
+        headers: <String, String>{
+          "Authorization": "Token ${user.token}",
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'order_id': order.order_id,
+          'status': status,
+          'freelancer': user.userId
+        }),
+      );
+      postResponseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return postResponseJson;
   }
 
   dynamic _response(http.Response response) {

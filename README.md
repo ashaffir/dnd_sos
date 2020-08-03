@@ -129,6 +129,12 @@ https://tinyurl.com/y9rdrqce
 #### GEOPY for locating coords and addresses (used in e.g order_location) and distances
 https://pypi.org/project/geopy/ 
 
+### Language support
+django-admin makemessages -l he
+
+- Edit the .po file in the locale directory, and then:
+
+django-admin compilemessages
 
 
 

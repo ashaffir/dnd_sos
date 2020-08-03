@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:bloc_login/networking/Response.dart';
 import 'package:bloc_login/repository/open_orders_repository.dart';
 import 'package:bloc_login/model/open_orders.dart';
+import 'package:bloc_login/repository/order_repository.dart';
 
 class OpenOrdersBloc {
-  OpenOrdersRepository _openOrdersRepository;
+  // OpenOrdersRepository _openOrdersRepository;
+  OrderRepository _openOrdersRepository;
   StreamController _openOrdersListController;
 
   StreamSink<Response<OpenOrders>> get openOrdersListSink =>
@@ -16,7 +18,7 @@ class OpenOrdersBloc {
 
   OpenOrdersBloc() {
     _openOrdersListController = StreamController<Response<OpenOrders>>();
-    _openOrdersRepository = OpenOrdersRepository();
+    _openOrdersRepository = OrderRepository();
     fetchOpenOrders();
   }
 
@@ -24,6 +26,7 @@ class OpenOrdersBloc {
     openOrdersListSink.add(Response.loading('Getting Open Orders.'));
     try {
       OpenOrders openOrds = await _openOrdersRepository.fetchOpenOrdersData();
+      print('>> Fetching: $openOrds');
       openOrdersListSink.add(Response.completed(openOrds));
     } catch (e) {
       openOrdersListSink.add(Response.error(e.toString()));

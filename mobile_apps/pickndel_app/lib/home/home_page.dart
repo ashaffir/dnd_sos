@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../dao/user_dao.dart';
-import '../dao/user_dao.dart';
-import '../dao/user_dao.dart';
-import '../dao/user_dao.dart';
-import '../database/user_database.dart';
-import '../database/user_database.dart';
 import '../model/user_model.dart';
-import 'bottom_nav_bar.dart';
+import '../ui/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,11 +15,11 @@ class _HomePageState extends State<HomePage> {
       future: UserDao().getUser(0),
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.hasData) {
-          print('SNAPSH: ${snapshot.data.username}');
+          return getHomePage(snapshot.data);
         } else {
           print("No data");
         }
-        return getHomePage(snapshot.data);
+        return CircularProgressIndicator();
       },
     );
   }
@@ -33,22 +28,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    build(context);
+    // build(context);
   }
-
-  // Future getCurrentUser(int id) async {
-  //   User currentUser = User();
-  //   UserDao userDao = UserDao();
-  //   print('ID: $id');
-  //   try {
-  //     print('P: 1');
-  //     currentUser = await userDao.getUser(id);
-  //     print('CURRENT: $currentUser');
-  //   } catch (e) {
-  //     print('NO FUCKING DATA. $e');
-  //   }
-  //   return currentUser;
-  // }
 
   Widget getHomePage(User currentUser) {
     return Scaffold(
@@ -70,7 +51,16 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(left: 30.0),
                 child: Text(
-                  'Welcome: ${currentUser.token}',
+                  'Welcome: ${currentUser.userId}',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 30.0),
+                child: Text(
+                  'Carrier: ${currentUser.isEmployee}',
                   style: TextStyle(
                     fontSize: 24.0,
                   ),

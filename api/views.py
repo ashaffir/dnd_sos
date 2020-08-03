@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
 
@@ -10,6 +11,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.pagination import (LimitOffsetPagination, PageNumberPagination,)
 
 from core.models import User, Employee, Employer
@@ -21,6 +23,21 @@ from .serializers import (UserSerializer, LoginSerializer,
                         UsernameSerializer,UserProfileSerializer,)
 from orders.serializers import OrderSerializer
 from .permissions import IsOwnerOrReadOnly # Custom permission
+
+class NewLoginViewSet(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        print(f'Login RESPONSE: token: {token} \n user: {user.pk}\n is_employee: {user.is_employee}')
+        return Response({'token': token.key,
+                         "user":user.pk,
+                         "is_employee": 1 if user.is_employee else 0,
+                         })
+
 
 class LoginView(APIView):
     
@@ -38,6 +55,38 @@ class LogoutView(APIView):
     def post(self, request):
         django_logout(request)
         return Response(status=204)
+
+class OpenOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerializer
+    authentication_classes = [TokenAuthentication,]
+    # queryset = Order.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        query = self.request.GET.get('q')
+        print(f'Q: {query}')
+        if query:
+            queryset_list = queryset_list.filter(
+                Q(status='REQUESTED') |
+                Q(status='RE_REQUESTED')
+            )
+        return queryset_list
+
+class ActiveOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerializer
+    authentication_classes = [TokenAuthentication,]
+    # queryset = Order.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        user = self.request.GET.get('user')
+        print(f'User: {user}')
+        if user:
+            queryset_list = queryset_list.filter(
+                Q(freelancer=user) & 
+                (Q(status='STARTED') | Q(status="IN_PROGRESS")) 
+            )
+        return queryset_list
 
 
 class OrdersView(viewsets.ModelViewSet):
@@ -82,7 +131,8 @@ def user_profile(request):
     try:
         print(f'>>> DATA: {request.user.pk}')
         user = Employer.objects.get(pk=request.user.pk)
-        print(f'USER: {user}')
+        user_token = Token.objects.get(user_id=request.user.pk)
+
     except Exception as e:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
@@ -146,24 +196,28 @@ def all_businesses(request):
 
 @api_view(['GET',])
 @permission_classes((IsAuthenticated,))
-def open_order_view(request):
+def open_orders_view(request):
     '''
     View open orders
     '''
     try:
-        open_orders = Order.objects.get(order_id=request.data['order_id'])
+        open_orders = Order.objects.filter(Q(status='REQUESTED') | Q(status='RE_REQUESTED'))
     except Order.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         serializer = OrderSerializer(open_orders, data=request.data)
-        data = {}
-        if serializer.is_valid():
-            data = serializer.data
-            data['response'] = 'Update successful'
-        else:
-            data = serializer.errors
-        
+        orders = []
+        for order in open_orders:
+            if serializer.is_valid():
+                ser_order = serializer.data
+                orders.append(ser_order)
+            else:
+                print(f'ERROR: {serializer.errors}')
+                data = serializer.errors
+        # data['response'] = 'Update successful'
+        data = json.dumps(orders)
+        print(data)
         return Response(data)
 
 
@@ -206,8 +260,11 @@ def order_update_view(request):
         serializer = OrderSerializer(update_order, data=request.data)
         data = {}
         if serializer.is_valid():
-            updated_order = serializer.save()
-            data['response'] = 'Update successful'
+            if update_order.status == 'REQUESTED' or update_order.status == 'RE_REQUESTED':
+                updated_order = serializer.save()
+                data['response'] = 'Update successful'
+            else:
+                data['response'] = 'Update failed'
         else:
             data = serializer.errors
         

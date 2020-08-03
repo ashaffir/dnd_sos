@@ -28,11 +28,13 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 class OrderSerializer(serializers.ModelSerializer):
-    business_name = serializers.SlugRelatedField(read_only=True, slug_field='business_name')
+    # business_name = serializers.SlugRelatedField(read_only=True, slug_field='business_name')
     class Meta:
         model = Order
-        fields = '__all__'
-        read_only_fields = ('id', 'created', 'updated',)
+        fields = ('order_id','status','pick_up_address', 
+                'drop_off_address', 'distance_to_business',
+                'price', 'order_type','business', 'freelancer',)
+        # read_only_fields = ('id', 'created', 'updated',)
 
 class ReadOnlyOrderSerializer(serializers.ModelSerializer):
     freelancer_ser = UserSerializer(read_only=True)

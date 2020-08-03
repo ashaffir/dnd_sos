@@ -1,11 +1,11 @@
-import 'orders.dart';
+import 'order.dart';
 
-class OpenOrders {
+class Orders {
   List<Order> orders;
 
-  OpenOrders({this.orders});
+  Orders({this.orders});
 
-  OpenOrders.fromJson(Map<String, dynamic> json) {
+  Orders.fromJson(Map<String, dynamic> json) {
     if (json['questions'] != null) {
       orders = new List<Order>();
       json['orders'].forEach((v) {

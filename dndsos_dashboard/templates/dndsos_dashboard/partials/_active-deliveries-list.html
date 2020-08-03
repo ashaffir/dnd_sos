@@ -3,7 +3,7 @@
 {% get_current_language as lang %}
 
 <div class="row" >
-    <div class="col-md-4">
+    <div class="col-md-4 col-lg-4 col-xl-4">
         <h4>{% trans 'Active Deliveries' %}</h4>
         <p>{% trans 'There' %} {% if num_active_deliveries == 0 %} {% trans 'are no active deliveries' %}. {% elif num_active_deliveries > 1 %}  {% trans 'are' %} {{ num_active_deliveries }} {% trans 'active deliveries' %}. {% else %} {% trans 'is' %} {{ num_active_deliveries }} {% trans 'active delivery' %}.{% endif %}</p>
     </div>
@@ -11,7 +11,7 @@
 <hr>
 
 {% for order in active_deliveries %}
-<div class="col-md-6 col-lg-6 col-xl-3">
+<div class="col-md-4 col-lg-4 col-xl-4">
     <section class="panel">
         {% if order.status == 'STARTED' %}
             <header class="panel-heading bg-secondary">

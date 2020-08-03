@@ -1,6 +1,8 @@
-import 'package:bloc_login/bloc/order_bloc.dart';
-import 'package:bloc_login/home/bottom_nav_bar.dart';
-import 'package:bloc_login/model/orders.dart';
+import 'package:bloc_login/dao/user_dao.dart';
+import 'package:bloc_login/model/user_model.dart';
+import 'package:bloc_login/orders/order_bloc.dart';
+import 'package:bloc_login/ui/bottom_nav_bar.dart';
+import 'package:bloc_login/model/order.dart';
 import 'package:bloc_login/common/global.dart';
 import 'package:bloc_login/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
@@ -8,17 +10,24 @@ import 'package:bloc_login/networking/Response.dart';
 import 'package:bloc_login/model/open_orders.dart';
 
 class GetOrders extends StatefulWidget {
+  final String ordersType;
+
+  GetOrders(this.ordersType);
+
   @override
   _GetOrdersState createState() => _GetOrdersState();
 }
 
 class _GetOrdersState extends State<GetOrders> {
-  OrderBloc _bloc;
+  OrdersBloc _bloc;
+  String pageTitle;
 
   @override
   void initState() {
     super.initState();
-    _bloc = OrderBloc();
+    _bloc = OrdersBloc(widget.ordersType);
+    pageTitle =
+        widget.ordersType == 'openOrders' ? 'Open Orders' : 'Active Orders';
   }
 
   @override
@@ -27,14 +36,14 @@ class _GetOrdersState extends State<GetOrders> {
       appBar: AppBar(
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        title: Text('Open Orders',
+        title: Text(pageTitle,
             style: TextStyle(color: Colors.white, fontSize: 20)),
         backgroundColor: Color(0xFF333333),
       ),
       backgroundColor: Color(0xFF333333),
       body: RefreshIndicator(
-        onRefresh: () => _bloc.fetchOrder(),
-        child: StreamBuilder<Response<OpenOrders>>(
+        onRefresh: () => _bloc.fetchOrder(widget.ordersType),
+        child: StreamBuilder<Response<Orders>>(
           stream: _bloc.orderDataStream,
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot != null) {
@@ -47,10 +56,16 @@ class _GetOrdersState extends State<GetOrders> {
                   return OrdersList(ordersList: snapshot.data.data);
                   break;
                 case Status.ERROR:
-                  return Error(
-                    errorMessage: snapshot.data.message,
-                    // onRetryPressed: () => _bloc.fetchOrder(),
-                  );
+                  {
+                    if (snapshot.data.data == null) {
+                      return EmptyList();
+                    } else {
+                      return Error(
+                        errorMessage: snapshot.data.message,
+                        // onRetryPressed: () => _bloc.fetchOrder(),
+                      );
+                    }
+                  }
                   break;
               }
             }
@@ -70,13 +85,12 @@ class _GetOrdersState extends State<GetOrders> {
 }
 
 class OrdersList extends StatelessWidget {
-  final OpenOrders ordersList;
+  final Orders ordersList;
 
   const OrdersList({Key key, this.ordersList}) : super(key: key);
 
 // REFERENCE - Alert dialog: https://www.youtube.com/watch?v=FGfhnS6skMQ
-  Future<String> orderAcceptAlert(BuildContext context, String order_id,
-      String pick_up_address, String drop_off_address) {
+  Future<String> orderAcceptAlert(BuildContext context, Order order) {
     // To handle inputs from the dialiog, if there are any...
     TextEditingController customController = TextEditingController();
 
@@ -125,15 +139,16 @@ class OrdersList extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.30,
                           child: RaisedButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => OrderAccepted(
-                                      order_id: order_id,
-                                      pick_up_address: pick_up_address,
-                                      drop_off_address: drop_off_address,
-                                    ),
-                                  ));
+                              // Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      OrderAccepted(order: order),
+                                ),
+                                (Route<dynamic> route) =>
+                                    false, // No Back option for this page
+                              );
                             },
                             child: Text(
                               "Confirm",
@@ -150,34 +165,6 @@ class OrdersList extends StatelessWidget {
             ),
           );
         });
-    // return showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       // return Dialog()
-    //       return AlertDialog(
-    //         title: Center(child: Text('Are you sure?')),
-    //         // content: TextField(
-    //         //   controller: customController,
-    //         // ),
-    //         actions: <Widget>[
-    //           // ButtonBar()
-    //           FlatButton(
-    //             child: Text("Close"),
-    //             onPressed: () {
-    //               Navigator.of(context).pop();
-    //             },
-    //           ),
-    //           RaisedButton(
-    //             elevation: 5.0,
-    //             child: Text('Confirm'),
-    //             onPressed: () {
-    //               Navigator.of(context).pop(customController.text.toString());
-    //             },
-    //           )
-    //         ],
-    //       );
-    //     });
-    // END ALERT
   }
 
   @override
@@ -188,6 +175,7 @@ class OrdersList extends StatelessWidget {
         itemCount: ordersList.orders.length,
         itemBuilder: (context, index) {
           Order order = ordersList.orders[index];
+          Future<User> user = UserDao().getUser(0);
           return Center(
             child: Card(
               child: Column(
@@ -222,11 +210,7 @@ class OrdersList extends StatelessWidget {
                               style: whiteButtonTitle,
                             ),
                             onPressed: () {
-                              orderAcceptAlert(
-                                  context,
-                                  order.order_id,
-                                  order.pick_up_address,
-                                  order.drop_off_address);
+                              orderAcceptAlert(context, order);
 
                               // Just move the "accept" screen
                               // Navigator.pushReplacementNamed(
@@ -305,6 +289,28 @@ class Error extends StatelessWidget {
             child: Text('Retry', style: TextStyle(color: Colors.black)),
             onPressed: onRetryPressed,
           )
+        ],
+      ),
+    );
+  }
+}
+
+class EmptyList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Order list is Empty.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+          SizedBox(height: 8),
         ],
       ),
     );

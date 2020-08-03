@@ -52,6 +52,9 @@ void main() {
 }
 
 class App extends StatelessWidget {
+  final String openOrders = "openOrders";
+  final String activeOrders = "activeOrders";
+
   final UserRepository userRepository;
 
   App({Key key, @required this.userRepository}) : super(key: key);
@@ -92,8 +95,8 @@ class App extends StatelessWidget {
       ),
       routes: {
         '/logout': (context) => LogoutPage(),
-        '/open-orders': (context) => GetOrders(),
-        '/active-orders': (context) => ActiveOrdersPage(),
+        '/open-orders': (context) => GetOrders(openOrders),
+        '/active-orders': (context) => GetOrders(activeOrders),
         '/order-accepted': (context) => OrderAccepted(),
       },
     );

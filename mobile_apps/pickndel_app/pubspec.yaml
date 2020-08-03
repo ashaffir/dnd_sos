@@ -35,6 +35,7 @@ dependencies:
   url_launcher:
   shared_preferences: ^0.5.8
   splashscreen:
+  flutter_colored_progress_indicators: ^1.2.0
 
 dev_dependencies:
   flutter_test:

@@ -1,18 +1,66 @@
-import 'package:bloc_login/home/bottom_nav_bar.dart';
+import 'package:bloc_login/model/order.dart';
+import 'package:bloc_login/repository/order_repository.dart';
+import 'package:bloc_login/ui/bottom_nav_bar.dart';
+import 'package:bloc_login/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class OrderAccepted extends StatelessWidget {
-  final String order_id;
-  final String pick_up_address;
-  final String drop_off_address;
-
-  const OrderAccepted(
-      {this.order_id, this.pick_up_address, this.drop_off_address});
+class OrderAccepted extends StatefulWidget {
+  final Order order;
+  OrderAccepted({this.order});
 
   @override
+  _OrderAcceptedState createState() => _OrderAcceptedState();
+}
+
+class _OrderAcceptedState extends State<OrderAccepted> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  String orderUpdated;
+
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: updateOrderAccepted(widget.order),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          print('ORDER ACCEPTED: ${snapshot.data["response"]}');
+
+          if (snapshot.data["response"] == "Update successful") {
+            return getOrderAcceptedPage(widget.order);
+          } else if (snapshot.data["response"] == "Update failed") {
+            return orderAcceptErrorPage();
+          } else {
+            return orderAcceptErrorPage();
+          }
+        } else {
+          print("No data:");
+        }
+        print('WAITING FOR UPDATE');
+        String loaderText = "Updating Order...";
+        // return CircularProgressIndicator();
+
+        // return CircularProgressIndicator(
+        //   backgroundColor: Colors.white,
+        //   valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
+        // );
+
+        return ColoredProgressDemo(loaderText);
+      },
+    );
+  }
+
+  Future updateOrderAccepted(Order order) async {
+    print('UPDATINNG ORDER...');
+    final orderUpdated = await OrderRepository().updateOrder(order, 'STARTED');
+    print('orderUpdated: $orderUpdated');
+    return orderUpdated;
+  }
+
+  Widget getOrderAcceptedPage(Order order) {
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
@@ -35,52 +83,45 @@ class OrderAccepted extends StatelessWidget {
               flex: 2,
             ),
             Text(
-              'From: $pick_up_address',
+              'From: ${order.pick_up_address}',
               style: whiteTitle,
             ),
             Spacer(
               flex: 2,
             ),
             Text(
-              "To: $drop_off_address",
+              "To: ${order.drop_off_address}",
               style: whiteTitle,
             )
           ],
         ),
-        // child: Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: <Widget>[
-        //     Text(
-        //       "Go to pick up!",
-        //       style: bigLightBlueTitle,
-        //     ),
-        //     Container(
-        //       child: Column(
-        //         children: [
-        //           Text(
-        //             'From $pick_up_address',
-        //             style: whiteTitle,
-        //           ),
-        //           Spacer(),
-        //           Text(
-        //             "To: $drop_off_address",
-        //             style: whiteTitle,
-        //           )
-        //         ],
-        //       ),
-        //     )
-        //   ],
-        // ),
       ),
+      bottomNavigationBar: BottomNavBar(),
+    );
+  }
 
-      //   child: Column(
-      //     children: <Widget>[
-      //       Text('Go To pick up!'),
-      //       Text('Pick Up Address: $pick_up_address'),
-      //       Text('Drop Off Address: $drop_off_address')
-      //     ],
-      //   ),
-      // ),
+  Widget orderAcceptErrorPage() {
+    return new Scaffold(
+      backgroundColor: mainBackground,
+      appBar: AppBar(
+        title: Text('Order Accepted'),
+      ),
+      body: Container(
+        padding: EdgeInsets.only(left: 50),
+        height: 160,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Spacer(
+              flex: 4,
+            ),
+            Text(
+              "This order is no longer available!",
+              style: bigLightBlueTitle,
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavBar(),
     );
   }
