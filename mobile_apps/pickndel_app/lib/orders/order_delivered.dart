@@ -4,17 +4,16 @@ import 'package:bloc_login/ui/bottom_nav_bar.dart';
 import 'package:bloc_login/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class OrderAccepted extends StatefulWidget {
+class OrderDelivered extends StatefulWidget {
   final Order order;
-  OrderAccepted({this.order});
+  OrderDelivered({this.order});
 
   @override
-  _OrderAcceptedState createState() => _OrderAcceptedState();
+  _OrderDeliveredState createState() => _OrderDeliveredState();
 }
 
-class _OrderAcceptedState extends State<OrderAccepted> {
+class _OrderDeliveredState extends State<OrderDelivered> {
   @override
   void initState() {
     super.initState();
@@ -24,40 +23,42 @@ class _OrderAcceptedState extends State<OrderAccepted> {
 
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: updateOrderAccepted(widget.order),
+      future: updateOrderDelivered(widget.order),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          print('ORDER ACCEPTED: ${snapshot.data["response"]}');
+          print('ORDER DELIVERED: ${snapshot.data["response"]}');
 
           if (snapshot.data["response"] == "Update successful") {
-            return getOrderAcceptedPage(widget.order);
+            return getOrderDeliveredPage(widget.order);
           } else if (snapshot.data["response"] == "Update failed") {
-            return orderAcceptErrorPage();
+            return orderDeliveredErrorPage();
           } else {
-            return orderAcceptErrorPage();
+            return orderDeliveredErrorPage();
           }
         } else {
           print("No data:");
         }
         print('WAITING FOR UPDATE');
         String loaderText = "Updating Order...";
+
         return ColoredProgressDemo(loaderText);
       },
     );
   }
 
-  Future updateOrderAccepted(Order order) async {
-    print('UPDATINNG ORDER...');
-    final orderUpdated = await OrderRepository().updateOrder(order, 'STARTED');
+  Future updateOrderDelivered(Order order) async {
+    print('Updating order delivered...');
+    final orderUpdated =
+        await OrderRepository().updateOrder(order, 'COMPLETED');
     print('orderUpdated: $orderUpdated');
     return orderUpdated;
   }
 
-  Widget getOrderAcceptedPage(Order order) {
+  Widget getOrderDeliveredPage(Order order) {
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Accepted'),
+        title: Text('Order Delivered'),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 50),
@@ -69,23 +70,23 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               flex: 4,
             ),
             Text(
-              "Go to pick up!",
+              "Good Job!!!",
               style: bigLightBlueTitle,
             ),
             Spacer(
               flex: 2,
             ),
-            Text(
-              'From: ${order.pick_up_address}',
-              style: whiteTitle,
-            ),
-            Spacer(
-              flex: 2,
-            ),
-            Text(
-              "To: ${order.drop_off_address}",
-              style: whiteTitle,
-            )
+            // Text(
+            //   'From: ${order.pick_up_address}',
+            //   style: whiteTitle,
+            // ),
+            // Spacer(
+            //   flex: 2,
+            // ),
+            // Text(
+            //   "To: ${order.drop_off_address}",
+            //   style: whiteTitle,
+            // )
           ],
         ),
       ),
@@ -93,11 +94,11 @@ class _OrderAcceptedState extends State<OrderAccepted> {
     );
   }
 
-  Widget orderAcceptErrorPage() {
+  Widget orderDeliveredErrorPage() {
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Accepted'),
+        title: Text('Order Delivered'),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 50),
@@ -109,7 +110,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               flex: 4,
             ),
             Text(
-              "This order is no longer available!",
+              "There was a problem updating this order",
               style: bigLightBlueTitle,
             ),
           ],
@@ -117,21 +118,5 @@ class _OrderAcceptedState extends State<OrderAccepted> {
       ),
       bottomNavigationBar: BottomNavBar(),
     );
-  }
-}
-
-// TODO: Add the pick and drop addresses coordinates
-
-class MapUtils {
-  MapUtils._();
-
-  static Future<void> openMap(double latitude, double longitude) async {
-    String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleUrl)) {
-      await launch(googleUrl);
-    } else {
-      throw 'Could not open the map.';
-    }
   }
 }

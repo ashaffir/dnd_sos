@@ -42,12 +42,14 @@ class LogoutPage extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<AuthenticationBloc>(context)
                         .add(LoggedOut());
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LoginPage(
-                                  userRepository: UserRepository(),
-                                )));
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LoginPage(
+                                userRepository: UserRepository(),
+                              )),
+                      (Route<dynamic> route) => false,
+                    );
                   },
                   shape: StadiumBorder(
                     side: BorderSide(

@@ -259,12 +259,29 @@ def order_update_view(request):
     if request.method == 'PUT':
         serializer = OrderSerializer(update_order, data=request.data)
         data = {}
+        old_status = update_order.status
+        new_status = request.data["status"]
         if serializer.is_valid():
-            if update_order.status == 'REQUESTED' or update_order.status == 'RE_REQUESTED':
-                updated_order = serializer.save()
-                data['response'] = 'Update successful'
+            if new_status:
+
+                if (new_status == 'STARTED' and old_status == 'REQUESTED') or  (new_status == 'STARTED' and old_status == 'RE_REQUESTED'):
+                    updated_order = serializer.save()
+                    data['response'] = 'Update successful'
+                elif new_status == 'COMPLETED' and old_status == 'IN_PROGRESS':
+                    updated_order = serializer.save()
+                    data['response'] = 'Update successful'
+                elif new_status == 'REJECTED' and old_status == 'STARTED':
+                    # request.data['freelancer'] = None
+                    print(f'REQ: {request.data}')
+                    print(f'SER: {serializer}')
+                    updated_order = serializer.save()
+                    update_order.freelancer = None
+                    update_order.save()
+                    data['response'] = 'Update successful'
+                else:
+                    data['response'] = f'Update failed. Wrong order status. in: {new_status} current: {old_status}'
             else:
-                data['response'] = 'Update failed'
+                data['response'] = "Update failed. Missing status parameter."
         else:
             data = serializer.errors
         
