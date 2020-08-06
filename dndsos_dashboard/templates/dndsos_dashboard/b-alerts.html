@@ -31,6 +31,8 @@
                 <div class="col-md-4">
                     <h4>{% trans 'Orders that are pending carrier allocation' %}</h4>
                     <p>{% trans 'There' %}  {% if num_orders > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ num_orders }} {% trans 'orders that require your attention' %} .</p>
+                    <p><i class="fa fa-exclamation-circle" style="color: rgb(81, 81, 213);"></i> {% trans 'Means the order was not allocated yet' %}</p>
+                    <p><i class="fa fa-exclamation-circle" style="color: rgb(216, 76, 76);"></i> {% trans 'Means the order was rejected' %}</p>
                     <!-- <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">{% trans 'Show all' %}!</button> -->
                 </div>
                 <!-- <div class="col-md-4">

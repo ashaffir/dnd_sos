@@ -7,7 +7,7 @@
         <div class="panel-body">
             <div class="widget-summary">
                 <div class="widget-summary-col widget-summary-col-icon">
-                    <div class="summary-icon bg-secondary">
+                    <div class="summary-icon {% if order.status == "REJECTED" %} bg-secondary {% else %} bg-primary {% endif %}">
                         <i class="fa fa-exclamation"></i>
                     </div>
                 </div>
