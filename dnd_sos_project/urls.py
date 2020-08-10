@@ -9,7 +9,7 @@ from rest_framework.authtoken import views as api_views
 
 from dndsos_dashboard.views import SignUpView
 
-admin.site.site_header = 'DILVUR'
+admin.site.site_header = 'PickNdell'
 
 app_name = 'dnd_sos_project'
 

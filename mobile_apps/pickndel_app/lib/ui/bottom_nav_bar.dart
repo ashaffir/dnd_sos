@@ -1,9 +1,16 @@
+import 'package:bloc_login/common/helper.dart';
 import 'package:bloc_login/dao/user_dao.dart';
+import 'package:bloc_login/login/logout_page.dart';
+import 'package:bloc_login/model/api_model.dart';
 import 'package:bloc_login/model/user_model.dart';
+import 'package:bloc_login/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 
 // Reference: https://www.youtube.com/watch?v=DNCV1K5eVMw
 class BottomNavBar extends StatefulWidget {
+  final UserRepository userRepository;
+  BottomNavBar({this.userRepository});
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
@@ -68,7 +75,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/logout');
+              // Navigator.pushReplacementNamed(context, '/logout');
+              push(context, LogoutPage(userRepository: widget.userRepository));
             },
           )
         ],

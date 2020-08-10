@@ -1,6 +1,8 @@
 import 'package:bloc_login/model/order.dart';
+import 'package:bloc_login/model/user_location.dart';
 import 'package:bloc_login/model/user_model.dart';
 import 'package:bloc_login/networking/CustomException.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
@@ -27,6 +29,29 @@ class ApiProvider {
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
+  }
+
+  Future<dynamic> putLocation(
+      String url, User user, UserLocation location) async {
+    var postResponseJson;
+
+    try {
+      final response = await http.put(
+        _baseUrl + url,
+        headers: <String, String>{
+          "Authorization": "Token ${user.token}",
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'lat': location.latitude,
+          'lon': location.longitude,
+        }),
+      );
+      postResponseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return postResponseJson;
   }
 
   Future<dynamic> put(String url, Order order, User user, String status) async {

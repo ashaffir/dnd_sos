@@ -1,4 +1,3 @@
-import 'package:bloc_login/model/user_profile.dart';
 import 'package:bloc_login/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +12,8 @@ import 'package:bloc_login/home/home.dart';
 import 'package:bloc_login/common/common.dart';
 
 import 'bloc/authentication_bloc.dart';
+import 'home/home_page_isolate.dart';
 import 'login/logout_page.dart';
-import 'orders/active_orders_page.dart.NOT';
 import 'orders/get_orders_page.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -38,10 +37,9 @@ class SimpleBlocDelegate extends BlocDelegate {
   }
 }
 
-void main() {
+void main() async {
   BlocSupervisor.delegate = SimpleBlocDelegate();
   final userRepository = UserRepository();
-
   runApp(BlocProvider<AuthenticationBloc>(
     create: (context) {
       return AuthenticationBloc(userRepository: userRepository)
@@ -77,24 +75,30 @@ class App extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationUnintialized) {
+            print('--------- 1 -----------');
             return SplashPage();
-          }
-          if (state is AuthenticationAuthenticated) {
-            return HomePage();
-            // return UserProfile();
-          }
-          if (state is AuthenticationUnauthenticated) {
+          } else if (state is AuthenticationAuthenticated) {
+            // return HomePage();
+            print('--------- 2 -----------');
+            print('Loading Home page...');
+            return HomePageIsolate(
+              userRepository: userRepository,
+            );
+          } else if (state is AuthenticationUnauthenticated) {
+            print('--------- 3 -----------');
             return LoginPage(
               userRepository: userRepository,
             );
-          }
-          if (state is AuthenticationLoading) {
+          } else if (state is AuthenticationLoading) {
+            print('--------- 4 -----------');
             return LoadingIndicator();
           }
         },
       ),
       routes: {
-        '/logout': (context) => LogoutPage(),
+        '/logout': (context) => LogoutPage(
+              userRepository: userRepository,
+            ),
         '/open-orders': (context) => GetOrders(openOrders),
         '/active-orders': (context) => GetOrders(activeOrders),
         '/order-accepted': (context) => OrderAccepted(),

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-02 22:55+0300\n"
+"POT-Creation-Date: 2020-08-09 18:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "Freelancer Profiles"
 msgstr ""
 
 #: core/templates/core/employee/signup.html:5
-msgid "Dilvur - Carrier Sign Up"
+msgid "PickNdell - Carrier Sign Up"
 msgstr "הרשמת מחלק"
 
 #: core/templates/core/employee/signup.html:11
@@ -61,7 +61,7 @@ msgstr "התחבר"
 #: core/templates/core/employee/signup.html:29
 #: core/templates/core/employer/signup.html:26
 msgid "Accept Terms and Conditions"
-msgstr "קבל תנאי Dilvur"
+msgstr "קבל תנאי PickNdell"
 
 #: core/templates/core/employee/signup.html:44
 #: core/templates/core/employer/signup.html:42
@@ -73,8 +73,8 @@ msgid "Business? Register here"
 msgstr "בית עֵסֶק? הירשם כאן"
 
 #: core/templates/core/employer/signup.html:5
-msgid "Dilvur - Business Sign Up"
-msgstr "הרשמה בית עסק"
+msgid "PickNdell - Business Sign Up"
+msgstr "הרשמת בית עסק"
 
 #: core/templates/core/employer/signup.html:9
 msgid "Business Signup"
@@ -114,12 +114,25 @@ msgid "Your password was changed."
 msgstr "הסיסמה שלך שונתה."
 
 #: core/templates/registration/account_activation_email.html:19
-msgid "Message from Dilvur!"
-msgstr "הודעה מדילבור"
+msgid "Message from PickNdell!"
+msgstr "הודעה פיקאנדל"
 
 #: core/templates/registration/account_activation_email.html:24
 msgid "Hi"
 msgstr "היי"
+
+#: core/templates/registration/account_activation_email.html:25
+msgid "click on the link below to activate your account"
+msgstr "לחץ על הקישור למטה כדי להפעיל את חשבונך"
+
+#: core/templates/registration/account_activation_email.html:28
+#: core/templates/registration/account_activation_email.html:30
+msgid "Activate account"
+msgstr "הפעל חשבון"
+
+#: core/templates/registration/account_activation_email.html:35
+msgid "If you have received this email by mistake, please ignore it"
+msgstr "אם קיבלת דואל זה בטעות, אנא התעלם ממנו"
 
 #: core/templates/registration/login.html:20
 #: core/templates/registration/login.html:26
@@ -319,8 +332,8 @@ msgid "Send Message"
 msgstr "שלח"
 
 #: dndsos/views.py:30
-msgid "Thank you for your interest in Dilvur. We will get back to you shortly."
-msgstr "תודה על התעניינותך ב- DILVUR. נחזור אליך בהקדם."
+msgid "Thank you for your interest in PickNdell. We will get back to you shortly."
+msgstr "תודה על התעניינותך ב- PickNdell. נחזור אליך בהקדם."
 
 #: dndsos/views.py:32
 msgid "Please fill out the required fields before submitting the form."
@@ -434,13 +447,21 @@ msgid "orders that require your attention"
 msgstr "הזמנות הדורשות את תשומת ליבך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:34
+msgid "Means the order was not allocated yet"
+msgstr ""
+
+#: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:35
+msgid "Means the order was rejected"
+msgstr ""
+
+#: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:36
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:45
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:260
 msgid "Show all"
 msgstr "רשימה מלאה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:40
-#: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:48
+#: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:42
+#: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:50
 msgid "Sort"
 msgstr "מיין"
 
@@ -653,8 +674,6 @@ msgid "Phone Number"
 msgstr "טלפון"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:155
-#, fuzzy
-#| msgid "with country prefix"
 msgid "Phone with country prefix"
 msgstr "עם קידומת מדינה"
 
@@ -1145,10 +1164,8 @@ msgid "Drop Off Address"
 msgstr "כתובת למסירת הזמנה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:35
-#, fuzzy
-#| msgid "Businesses Pool"
 msgid "Business Phone"
-msgstr "עסקים שעבדת איתם"
+msgstr "טלפון בית העסק"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:41
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:43
@@ -1189,8 +1206,6 @@ msgid "Notify all available"
 msgstr "הודע לכל הזמינים"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:66
-#, fuzzy
-#| msgid "Do not broadcast. I will pick a freelanceer later"
 msgid "Do not broadcast. I will pick a carrier later"
 msgstr "אל תשדר. אני אבחר מחלק בהמשך"
 
@@ -1309,8 +1324,6 @@ msgid "Fees"
 msgstr "עמלה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:45
-#, fuzzy
-#| msgid "Waiting for a carrier..."
 msgid "Waiting for a Carrier..."
 msgstr "ממתין למחלק ..."
 

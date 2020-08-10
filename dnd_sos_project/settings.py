@@ -229,9 +229,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'admin@dilvur.com'
+EMAIL_HOST_USER = 'info@pickndell.com'
 EMAIL_HOST_PASSWORD = config['EMAIL_HOST_PASSWORD']
-DEFAULT_FROM_EMAIL = 'admin@dilvur.com'
+DEFAULT_FROM_EMAIL = 'info@pickndell.com'
 
 # Private Email (Namecheap.com)
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -302,4 +302,4 @@ RECAPTCHA_PRIVATE_KEY = config['RECAPTCHA_SECRET_KEY']
 NOCAPTCHA = True
 
 # domain
-DOMAIN_PROD = 'https://dilvur.com/'
+DOMAIN_PROD = 'https://pickndell.com'

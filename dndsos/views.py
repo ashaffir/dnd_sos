@@ -27,7 +27,7 @@ def home(request):
             if form.is_valid():
                 form.save()
                 update_admin(request)
-                messages.success(request, _('Thank you for your interest in Dilvur. We will get back to you shortly.'))
+                messages.success(request, _('Thank you for your interest in PickNdell. We will get back to you shortly.'))
             else:
                 messages.error(request, _('Please fill out the required fields before submitting the form.'))
                 return redirect(request.META['HTTP_REFERER'])

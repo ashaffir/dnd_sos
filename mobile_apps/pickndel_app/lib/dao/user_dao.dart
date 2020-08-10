@@ -13,6 +13,8 @@ class UserDao {
     print('RESULT: ${user.username}');
     print('RESULT ID: ${user.userId}');
     print('RESULT isEmployee: ${user.isEmployee}');
+    print('RESULT businessName: ${user.businessName}');
+    print('RESULT vehicle: ${user.vehicle}');
     return result;
   }
 

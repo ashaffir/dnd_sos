@@ -25,7 +25,6 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is AppStarted) {
-
       final bool hasToken = await userRepository.hasToken();
 
       if (hasToken) {
@@ -38,9 +37,7 @@ class AuthenticationBloc
     if (event is LoggedIn) {
       yield AuthenticationLoading();
 
-      await userRepository.persistToken(
-        user: event.user
-      );
+      await userRepository.persistToken(user: event.user);
       yield AuthenticationAuthenticated();
     }
 

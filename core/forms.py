@@ -21,7 +21,7 @@ class EmployerSignupForm(UserCreationForm):
         
         # create employer profile for user
         # business_name = self.cleaned_data.get('business_name')
-        no_of_emp = self.cleaned_data.get('number_of_employees')
+        # no_of_emp = self.cleaned_data.get('number_of_employees')
         employer = Employer.objects.create(
             user=user,
             # business_name=business_name

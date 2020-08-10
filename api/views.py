@@ -1,6 +1,9 @@
 import json
+from datetime import date
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
+from django.contrib.gis.geos import fromstr, Point
+
 
 # from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions
@@ -24,6 +27,34 @@ from .serializers import (UserSerializer, LoginSerializer,
 from orders.serializers import OrderSerializer
 from .permissions import IsOwnerOrReadOnly # Custom permission
 
+
+today = date.today()
+
+class UserLocationViewSet(APIView):
+    authentication_classes = (TokenAuthentication,)
+
+    def put(self, request, *args, **kwargs):
+        lat = float(self.request.data['lat'])
+        lon = float(self.request.data['lon'])
+        try:
+            user_id = self.request.GET.get('user')
+            user = Employee.objects.get(pk=user_id)
+        except Exception as e:
+            return Response({'response':'Bad user ID'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user_location = Point(lat,lon)
+            user.location = user_location
+            user.save()
+        except Exception as e:
+            return Response({'response':'Bad coordinates'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'response':'Location updated'},status=200)
+
+
+
+
+
 class NewLoginViewSet(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
@@ -32,11 +63,65 @@ class NewLoginViewSet(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+
+        is_employee = User.objects.get(pk=user.pk).is_employee
         print(f'Login RESPONSE: token: {token} \n user: {user.pk}\n is_employee: {user.is_employee}')
-        return Response({'token': token.key,
-                         "user":user.pk,
-                         "is_employee": 1 if user.is_employee else 0,
-                         })
+
+        if is_employee:
+            user_profile = Employee.objects.get(pk=user.pk)
+            active_orders = Order.objects.filter(
+                (Q(freelancer=user.pk) & Q(updated__contains=today)) & 
+                (Q(status='STARTED') | Q(status='IN_PROGRESS')))
+            
+            num_active_orders = len(active_orders)
+            
+            daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
+             # Daily profit
+            daily_profit = 0
+            for order in daily_orders:
+                daily_profit += order.price
+
+            daily_profit = round(daily_profit,2)
+
+
+            return Response({'token': token.key,
+                            "user":user.pk,
+                            "is_employee": 1 if user.is_employee else 0,
+                            "vehicle": user_profile.vehicle,
+                            "freelancer_total_rating": user_profile.freelancer_total_rating,
+                            "is_approved": 1 if user_profile.is_approved else 0,
+                            "num_active_orders":num_active_orders,
+                            "daily_profit": daily_profit
+                            })
+        else:
+            user_profile = Employer.objects.get(pk=user.pk)
+            orders_in_progress = active_orders = Order.objects.filter(
+                (Q(business=user.pk) & Q(updated__contains=today)) & 
+                (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
+            
+            num_orders_in_progress = len(orders_in_progress)
+
+            daily_orders = Order.objects.filter(business=user.pk, created__contains=today)
+            num_daily_orders = len(daily_orders)
+
+            # Daily cost
+            daily_cost = 0.0
+            for order in daily_orders:
+                daily_cost += order.price
+
+            daily_cost = round(daily_cost,2)
+
+            return Response({'token': token.key,
+                            "user":user.pk,
+                            "is_employee": 1 if user.is_employee else 0,
+                            "business_name": user_profile.business_name,
+                            "business_category": user_profile.business_category,
+                            "is_approved": 1 if user_profile.is_approved else 0,
+                            "num_daily_orders": num_daily_orders,
+                            "daily_cost": daily_cost,
+                            "num_orders_in_progress": num_orders_in_progress
+                            })
+
 
 
 class LoginView(APIView):

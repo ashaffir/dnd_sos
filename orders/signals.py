@@ -1,24 +1,54 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver, Signal
 from django.core.signals import request_finished
+from django.conf import settings
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
 # from django.contrib.auth.models import User
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
+from dndsos_dashboard.utilities import send_mail
 from core.models import User, Employee, Employer
+from core.tokens import account_activation_token
+from core.forms import EmployeeSignupForm, EmployerSignupForm
 # from dndsos_dashboard.models import FreelancerProfile
 # from orders.models import Order
 
 @receiver(post_save, sender=User)
 def announce_new_user(sender, instance, created, **kwargs):
     if created:
-        print(f'=========== SIGNAL: New User ===============: {instance.username}')
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            "gossip", {"type": "user.gossip",
-                       "event": "New User",
-                       "username": instance.username})
+        print(f'=========== SIGNAL: New User ===============: {instance}')
+        user = User.objects.all().last()
+        user.is_active = False
+        user.save()
+
+        print(f'USER: {user.pk}')
+        # form = EmployerSignupForm(instance)
+    
+        # user = form.save() # add employer to db with is_active as False
+
+        # send an accout activation email
+        if instance.is_employer:
+            employer = Employer.objects.create(user=user, email=instance.email)
+        else:
+            employee = Employee.objects.create(user=user)
+
+        current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+        subject = 'Activate Employer Account'
+
+        message = {
+            'user': user,
+            'domain': current_site,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user)
+        }
+
+        send_mail(subject, email_template_name=None,
+                context=message, to_email=[user.email],
+                html_email_template_name='registration/account_activation_email.html')
+
 
 # @receiver(post_save, sender=Order)
 # def signal_order_update(sender, instance, update_fields, **kwargs):        

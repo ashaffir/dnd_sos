@@ -1,5 +1,3 @@
-import 'package:bloc_login/dao/user_dao.dart';
-import 'package:bloc_login/model/user_model.dart';
 import 'package:bloc_login/orders/order_bloc.dart';
 import 'package:bloc_login/orders/order_delivered.dart';
 import 'package:bloc_login/orders/order_rejected.dart';
@@ -35,6 +33,13 @@ class _GetOrdersState extends State<GetOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _bloc.fetchOrder(widget.ordersType);
+        },
+        backgroundColor: Colors.white,
+        child: new Icon(Icons.refresh),
+      ),
       appBar: AppBar(
         elevation: 0.0,
         automaticallyImplyLeading: false,
@@ -229,7 +234,6 @@ class OrdersList extends StatelessWidget {
         itemCount: ordersList.orders.length,
         itemBuilder: (context, index) {
           Order order = ordersList.orders[index];
-          // Future<User> user = UserDao().getUser(0);
           if (ordersType == 'openOrders') {
             return Center(
               child: Card(

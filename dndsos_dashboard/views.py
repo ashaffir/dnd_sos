@@ -72,6 +72,13 @@ def order(request, order_id):
 def b_dashboard(request, b_id):
     context = {}
 
+    try:
+        is_active = Employer.objects.get(pk=b_id)
+    except Exception as e:
+        messages.error(request, 'Please activate your account.')
+        return redirect('dndsos:home')
+
+
     # Active orders stats
     active_orders = Order.objects.filter(
         (Q(business=request.user.pk) & Q(status='IN_PROGRESS')) |
@@ -123,6 +130,12 @@ def b_dashboard(request, b_id):
 @login_required
 def f_dashboard(request, f_id):
     context = {}
+    try:
+        is_active = Employee.objects.get(pk=f_id)
+    except Exception as e:
+        messages.error(request, 'Please activate your account.')
+        return redirect('dndsos:home')
+
 
     freelancer = Employee.objects.get(user=request.user.pk)
 

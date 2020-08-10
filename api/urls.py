@@ -7,7 +7,8 @@ from .views import (UserRecordView, registration_view,
                     LoginView, LogoutView,
                     OrdersView, ContactView, order_update_view, order_view,
                     all_user_orders, all_businesses, all_users, user_profile,
-                    NewLoginViewSet,open_orders_view,OpenOrdersViewSet,ActiveOrdersViewSet,)
+                    NewLoginViewSet,open_orders_view,OpenOrdersViewSet,ActiveOrdersViewSet,
+                    UserLocationViewSet,)
 
 router = routers.DefaultRouter()
 router.register('user-orders', OrdersView)
@@ -28,6 +29,7 @@ urlpatterns = [
     path('all-businesses/', all_businesses , name='all-businesses'),
     path('all-users/', all_users , name='all-users'),
     path('user-profile/', user_profile , name='user-profile'),
+    path('user-location/', UserLocationViewSet.as_view() , name='user-location'),
     # path('open-orders/', open_orders_view , name='open-orders'),
     
 ]
