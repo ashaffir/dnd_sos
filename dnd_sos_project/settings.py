@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'qr_code', # https://github.com/dprog-philippe-docourt/django-qr-code
     'django_twilio', # Twilio Phone SMS verification
-    
+    "fcm_django",
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -303,3 +304,17 @@ NOCAPTCHA = True
 
 # domain
 DOMAIN_PROD = 'https://pickndell.com'
+
+FCM_DJANGO_SETTINGS = {
+        # "APP_VERBOSE_NAME": "[string for AppConfig's verbose_name]",
+        "APP_VERBOSE_NAME": "pickndell.com.network",
+         # default: _('FCM Django')
+        "FCM_SERVER_KEY": "AAAAMWr-paE:APA91bGk4eiHLV9VNZ1tscqCR2Wy30TUAm1HoqqmWb5D6twBYvniAc9cL7PYfR0hEPhCnBAom5lBgxdI2oZwpKYpQpUTLVe08NhMFQNng1RTMLJ-co3KPU582b365S8-7JBIsmJkSyU2",
+         # true if you want to have only one active device per registered user at a time
+         # default: False
+        "ONE_DEVICE_PER_USER": True,
+         # devices to which notifications cannot be sent,
+         # are deleted upon receiving error response from FCM
+         # default: False
+        "DELETE_INACTIVE_DEVICES": False,
+}

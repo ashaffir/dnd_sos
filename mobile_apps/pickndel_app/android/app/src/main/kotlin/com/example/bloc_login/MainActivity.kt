@@ -1,4 +1,4 @@
-package com.example.bloc_login
+package com.actappon.pickndell
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

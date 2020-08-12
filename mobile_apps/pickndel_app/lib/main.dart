@@ -10,6 +10,7 @@ import 'package:bloc_login/ui/splash.dart';
 import 'package:bloc_login/login/login_page.dart';
 import 'package:bloc_login/home/home.dart';
 import 'package:bloc_login/common/common.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'bloc/authentication_bloc.dart';
 import 'home/home_page_isolate.dart';
@@ -42,10 +43,11 @@ void main() async {
   final userRepository = UserRepository();
   runApp(BlocProvider<AuthenticationBloc>(
     create: (context) {
+      print('STARTING APP.........');
       return AuthenticationBloc(userRepository: userRepository)
         ..add(AppStarted());
     },
-    child: App(userRepository: userRepository),
+    child: Phoenix(child: App(userRepository: userRepository)),
   ));
 }
 
@@ -59,50 +61,51 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale("en", ""),
-        const Locale("he", ""),
-      ],
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        brightness: Brightness.dark,
-      ),
-      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-          if (state is AuthenticationUnintialized) {
-            print('--------- 1 -----------');
-            return SplashPage();
-          } else if (state is AuthenticationAuthenticated) {
-            // return HomePage();
-            print('--------- 2 -----------');
-            print('Loading Home page...');
-            return HomePageIsolate(
-              userRepository: userRepository,
-            );
-          } else if (state is AuthenticationUnauthenticated) {
-            print('--------- 3 -----------');
-            return LoginPage(
-              userRepository: userRepository,
-            );
-          } else if (state is AuthenticationLoading) {
-            print('--------- 4 -----------');
-            return LoadingIndicator();
-          }
-        },
-      ),
-      routes: {
-        '/logout': (context) => LogoutPage(
-              userRepository: userRepository,
-            ),
-        '/open-orders': (context) => GetOrders(openOrders),
-        '/active-orders': (context) => GetOrders(activeOrders),
-        '/order-accepted': (context) => OrderAccepted(),
-      },
-    );
+    return RepositoryProvider(
+        create: (context) => UserRepository(),
+        child: MaterialApp(
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale("en", ""),
+            const Locale("he", ""),
+          ],
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            brightness: Brightness.dark,
+          ),
+          home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state is AuthenticationUninitialized) {
+                return SplashPage();
+              } else if (state is AuthenticationAuthenticated) {
+                // return HomePage();
+                print('Loading Home page...');
+                return HomePageIsolate(
+                  userRepository: userRepository,
+                );
+              } else if (state is AuthenticationUnauthenticated) {
+                return LoginPage(
+                  userRepository: userRepository,
+                );
+              } else if (state is AuthenticationLoading) {
+                return LoadingIndicator();
+              }
+            },
+          ),
+          routes: {
+            '/logout': (context) => LogoutPage(
+                  userRepository: userRepository,
+                ),
+            '/login': (context) => LoginPage(
+                  userRepository: null,
+                ),
+            '/open-orders': (context) => GetOrders(openOrders),
+            '/active-orders': (context) => GetOrders(activeOrders),
+            '/order-accepted': (context) => OrderAccepted(),
+          },
+        ));
   }
 }

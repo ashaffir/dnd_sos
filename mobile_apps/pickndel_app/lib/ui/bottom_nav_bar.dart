@@ -1,6 +1,5 @@
-import 'package:bloc_login/common/helper.dart';
 import 'package:bloc_login/dao/user_dao.dart';
-import 'package:bloc_login/login/logout_page.dart';
+import 'package:bloc_login/home/home_page_isolate.dart';
 import 'package:bloc_login/model/api_model.dart';
 import 'package:bloc_login/model/user_model.dart';
 import 'package:bloc_login/repository/user_repository.dart';
@@ -48,7 +47,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
+              // Navigator.pushReplacementNamed(context, '/');
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => HomePageIsolate()));
             },
           ),
           IconButton(
@@ -75,8 +78,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
-              // Navigator.pushReplacementNamed(context, '/logout');
-              push(context, LogoutPage(userRepository: widget.userRepository));
+              Navigator.pushReplacementNamed(context, '/logout');
             },
           )
         ],

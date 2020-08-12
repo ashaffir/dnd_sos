@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "212248470945",
+    "firebase_url": "https://pickndell.firebaseio.com",
+    "project_id": "pickndell",
+    "storage_bucket": "pickndell.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212248470945:android:1780be36b103e796e6d7e0",
+        "android_client_info": {
+          "package_name": "com.actappon.pickndell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212248470945-o41v802033oolacf3niihcv0uva4o5q9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzzVey5XCN3Bvdb3PbVHcMXr1Q23iWOcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212248470945-o41v802033oolacf3niihcv0uva4o5q9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

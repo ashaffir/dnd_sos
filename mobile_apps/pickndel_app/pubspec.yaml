@@ -43,6 +43,12 @@ dependencies:
   flushbar: ^1.10.4
   url_launcher: ^5.5.0
   provider: ^4.3.2
+  firebase_messaging: ^6.0.16
+  firebase_core: ^0.4.5
+  firebase_auth: ^0.16.1
+  cloud_firestore: ^0.13.7
+  flutter_phoenix: ^0.1.0
+  get: ^3.4.4
 
   ##TEST
   image_picker: ^0.6.5
@@ -56,9 +62,9 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-    android: "launcher_icon"
-    ios: true
-    image_path: "assets/images/pickndell-icon.png"
+  image_path: "assets/images/pickndell-icon.png"
+  android: true
+  ios: true
 
 flutter_launcher_name:
   name: "PickNdell"

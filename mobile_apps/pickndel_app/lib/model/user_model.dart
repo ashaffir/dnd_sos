@@ -14,6 +14,7 @@ class User {
   double dailyCost;
 
   // Carrier
+  String name;
   String vehicle;
   double rating;
   double dailyProfit;
@@ -25,6 +26,7 @@ class User {
       this.token,
       this.isEmployee,
       this.userId,
+      this.name,
       this.businessName,
       this.businessCategory,
       this.isApproved,
@@ -42,6 +44,7 @@ class User {
       token: data['token'],
       isEmployee: data['isEmployee'],
       userId: data['userId'],
+      name: data['name'],
       businessName: data['businessName'],
       businessCategory: data['businessCategory'],
       isApproved: data['isApproved'],
@@ -59,6 +62,7 @@ class User {
         "token": this.token,
         "isEmployee": this.isEmployee,
         "userId": this.userId,
+        "name": this.name,
         "businessName": this.businessName,
         "businessCategory": this.businessCategory,
         "isApproved": this.isApproved,

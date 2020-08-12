@@ -12,6 +12,7 @@ class Token {
   String token;
   int userId;
   int isEmployee;
+  String name;
   String businessName;
   String businessCategory;
   int isApproved;
@@ -27,6 +28,7 @@ class Token {
       {this.token,
       this.isEmployee,
       this.userId,
+      this.name,
       this.businessName,
       this.businessCategory,
       this.isApproved,
@@ -43,6 +45,7 @@ class Token {
         token: json['token'],
         isEmployee: json['is_employee'],
         userId: json['user'],
+        name: json['name'],
         businessName: json['business_name'],
         businessCategory: json['business_category'],
         isApproved: json['is_approved'],

@@ -1,3 +1,5 @@
+from fcm_django.models import FCMDevice
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver, Signal
 from django.core.signals import request_finished
@@ -14,7 +16,7 @@ from core.models import User, Employee, Employer
 from core.tokens import account_activation_token
 from core.forms import EmployeeSignupForm, EmployerSignupForm
 # from dndsos_dashboard.models import FreelancerProfile
-# from orders.models import Order
+from orders.models import Order
 
 @receiver(post_save, sender=User)
 def announce_new_user(sender, instance, created, **kwargs):
@@ -49,9 +51,26 @@ def announce_new_user(sender, instance, created, **kwargs):
                 context=message, to_email=[user.email],
                 html_email_template_name='registration/account_activation_email.html')
 
+@receiver(post_save, sender=Order)
+def signal_order_update(sender, instance, update_fields, **kwargs):        
+    print('>>>>> Sending new order for all!')
+    devices = FCMDevice.objects.all()
+    devices.send_message(title="New Order available", body="There is a new order from...")
+    # fcm_send_topic_message(topic_name='My topic', message_body='Hello', message_title='A message')
+    # device = FCMDevice.objects.all().first()
+    # device.send_message(title='title', body='message')
 
-# @receiver(post_save, sender=Order)
-# def signal_order_update(sender, instance, update_fields, **kwargs):        
+
+
+
+
+
+
+
+
+    # devices.send_message(title="Title", body="Message", data={"test": "test"})
+    # devices.send_message(data={"test": "test"})
+
 #     business_id = instance.business_id
 #     print(f'>>>>>>> SIGNAL >>> Order Status Change: {instance.status}. ID: {instance.order_id}')  
     

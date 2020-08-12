@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'dart:ui';
+import 'dart:convert';
 
 import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/location_settings.dart';
 import 'package:bloc_login/common/global.dart';
-import 'package:bloc_login/location/file_manager.dart';
 import 'package:bloc_login/location/location_callback_handler.dart';
 import 'package:bloc_login/location/location_service_repository.dart';
 import 'package:bloc_login/model/user_location.dart';
+import 'package:bloc_login/networking/messaging.dart';
 import 'package:bloc_login/repository/location_repository.dart';
 import 'package:bloc_login/repository/user_repository.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:location_permissions/location_permissions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dao/user_dao.dart';
 import '../model/user_model.dart';
@@ -37,7 +40,23 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
   LocationDto lastLocation;
   DateTime lastTimeLocation;
 
+// User related
+  var userData;
   bool isEmployee;
+
+  void _getUserInfo() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var userJson = localStorage.getString('user');
+    var user = json.decode(userJson);
+    setState(() {
+      userData = user;
+    });
+  }
+
+  // Push notifications
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  String notificationTitle;
+  String notificationHelper;
 
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -56,7 +75,22 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
   @override
   void initState() {
     super.initState();
+    MessagesHandler();
+    // Push Notifications
+    // _firebaseMessaging.configure(onMessage: (message) async {
+    //   setState(() {
+    //     print('$message');
+    //     notificationTitle = message['notification']['title'];
+    //     notificationHelper = 'You have a new notification!';
+    //   });
+    // }, onResume: (message) async {
+    //   setState(() {
+    //     notificationTitle = message['data']['title'];
+    //     notificationHelper = 'You have a background notification!';
+    //   });
+    // });
 
+    // Location tracking
     if (IsolateNameServer.lookupPortByName(
             LocationServiceRepository.isolateName) !=
         null) {
@@ -235,7 +269,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                         padding: EdgeInsets.only(left: 30.0, top: 20.0),
                       ),
                       Text(
-                        'User Name:',
+                        currentUser.isEmployee == 1
+                            ? 'User Name: '
+                            : 'Business:',
                         style: TextStyle(fontSize: 20.0),
                       ),
                       Padding(
@@ -243,12 +279,12 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ),
                       Text(
                         currentUser.isEmployee == 1
-                            ? '${currentUser.username}'
+                            ? '${currentUser.name}'
                             : '${currentUser.businessName}',
                         style: TextStyle(
                           fontSize: 20.0,
                         ),
-                      )
+                      ),
                     ],
                   ),
                   Padding(
@@ -262,7 +298,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       Text(
                         currentUser.isEmployee == 1
                             ? 'Registered Vehicle:'
-                            : 'Business Type:',
+                            : 'Type:',
                         style: TextStyle(fontSize: 20.0),
                       ),
                       Padding(
@@ -293,8 +329,12 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ),
                       Text(
                         currentUser.isEmployee == 1
-                            ? '${currentUser.activeOrders}'
-                            : '${currentUser.numOrdersInProgress}',
+                            ? currentUser.activeOrders != null
+                                ? '${currentUser.activeOrders}'
+                                : '0'
+                            : currentUser.numOrdersInProgress != null
+                                ? '${currentUser.numOrdersInProgress}'
+                                : '0',
                         style: TextStyle(fontSize: 20.0),
                       )
                     ],
@@ -302,6 +342,14 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   Padding(
                     padding: EdgeInsets.only(left: 30.0, top: 20.0),
                   ),
+                  // Text('Alert: $notificationHelper'),
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                  // ),
+                  // Text('Conent: $notificationTitle'),
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                  // ),
                   currentUser.isEmployee == 1
                       ? Row(
                           children: [

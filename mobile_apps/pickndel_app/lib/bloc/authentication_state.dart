@@ -5,10 +5,14 @@ abstract class AuthenticationState extends Equatable {
   List<Object> get props => [];
 }
 
-class AuthenticationUnintialized extends AuthenticationState {}
+// waiting to see if the user is authenticated or not on app start.
+class AuthenticationUninitialized extends AuthenticationState {}
 
+// successfully authenticated
 class AuthenticationAuthenticated extends AuthenticationState {}
 
+//not authenticated
 class AuthenticationUnauthenticated extends AuthenticationState {}
 
+// waiting to persist/delete a token
 class AuthenticationLoading extends AuthenticationState {}

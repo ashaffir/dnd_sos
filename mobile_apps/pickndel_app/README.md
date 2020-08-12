@@ -18,3 +18,16 @@ samples, guidance on mobile development, and a full API reference.
 
 # Reference:
 * Login: https://dev.to/amartyadev/flutter-app-authentication-with-django-backend-1-21cp
+
+# REFERENCE: Push notification
+* Firebase messageing (push notification) installation notes:
+- Video: https://www.youtube.com/watch?v=PrnxksGQ210
+- Issue with the Java application class: https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine 
+
+# REFERENCE: icon change
+- In addition to the replacement of the image in the yaml file run:
+
+> flutter pub run flutter_launcher_icons:main
+
+# REFERENCE: Login page with BLOC: 
+- https://medium.com/flutter-community/flutter-login-tutorial-with-flutter-bloc-ea606ef701ad

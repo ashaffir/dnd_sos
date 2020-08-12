@@ -5,10 +5,11 @@ import 'package:bloc_login/networking/CustomException.dart';
 import 'package:bloc_login/networking/Response.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc_login/model/api_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // final _base = "https://home-hub-app.herokuapp.com";
 // final _tokenEndpoint = "/api-token-auth/";
-final _base = "https://361e3bca5a39.ngrok.io";
+final _base = "https://bf3831159b95.ngrok.io";
 final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";
 
@@ -29,6 +30,35 @@ Future<Token> getToken(UserLogin userLogin) async {
   } else {
     print(json.decode(response.body).toString());
     throw Exception(json.decode(response.body));
+  }
+}
+
+class CallApi {
+  final String _url = 'https://bf3831159b95.ngrok.io/api/';
+
+  postData(data, apiUrl) async {
+    var fullUrl = _url + apiUrl;
+    final http.Response response = await http.post(fullUrl,
+        body: jsonEncode(data), headers: _setHeaders());
+    print('RESPONSE: ${response.body});');
+    // return Token.fromJson(json.decode(response.body));
+    return response;
+  }
+
+  getData(apiUrl) async {
+    var fullUrl = _url + apiUrl + await _getToken();
+    return await http.get(fullUrl, headers: _setHeaders());
+  }
+
+  _setHeaders() => {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      };
+
+  _getToken() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    return '?token=$token';
   }
 }
 

@@ -7,8 +7,6 @@ import 'dart:convert';
 import 'package:bloc_login/api_connection/api_connection.dart';
 import 'package:bloc_login/common/global.dart';
 import 'package:bloc_login/common/helper.dart';
-import 'package:bloc_login/home/profile.dart';
-import 'package:bloc_login/login/login_form.dart';
 import 'package:bloc_login/login/login_page.dart';
 import 'package:bloc_login/login/message_page.dart';
 import 'package:bloc_login/repository/user_repository.dart';

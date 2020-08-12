@@ -18,7 +18,7 @@ class AuthenticationBloc
       : assert(UserRepository != null);
 
   @override
-  AuthenticationState get initialState => AuthenticationUnintialized();
+  AuthenticationState get initialState => AuthenticationUninitialized();
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -44,7 +44,7 @@ class AuthenticationBloc
     if (event is LoggedOut) {
       yield AuthenticationLoading();
 
-      await userRepository.delteToken(id: 0);
+      await userRepository.deleteToken(id: 0);
 
       yield AuthenticationUnauthenticated();
     }

@@ -77,7 +77,7 @@ class NewLoginViewSet(ObtainAuthToken):
             
             daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
              # Daily profit
-            daily_profit = 0
+            daily_profit = 0.0
             for order in daily_orders:
                 daily_profit += order.price
 
@@ -87,6 +87,7 @@ class NewLoginViewSet(ObtainAuthToken):
             return Response({'token': token.key,
                             "user":user.pk,
                             "is_employee": 1 if user.is_employee else 0,
+                            "name": user_profile.name,
                             "vehicle": user_profile.vehicle,
                             "freelancer_total_rating": user_profile.freelancer_total_rating,
                             "is_approved": 1 if user_profile.is_approved else 0,

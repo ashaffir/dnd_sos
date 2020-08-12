@@ -11,7 +11,7 @@ import 'dart:async';
 import 'CustomException.dart';
 
 class ApiProvider {
-  final String _baseUrl = "https://361e3bca5a39.ngrok.io/api/";
+  final String _baseUrl = "https://bf3831159b95.ngrok.io/api/";
 
   Future<dynamic> get(String url, User user) async {
     var responseJson;
