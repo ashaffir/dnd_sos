@@ -111,7 +111,33 @@ def order_signal(sender, instance, update_fields, **kwargs):
                 }
             }
         )
-    
+    elif instance.status == 'REJECTED':
+        print(f'ORDER {instance.order_id} updated with status: REJECTED')
+        order_data = ReadOnlyOrderSerializer(instance).data        
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            str(instance.order_id), {
+                'type': 'echo.message',
+                'data': {
+                    'data': order_data
+                }
+            }
+        )
+
+    elif instance.status == 'COMPLETED':
+        print(f'ORDER {instance.order_id} updated with status: DELIVERED (COMPLETED)')
+        order_data = ReadOnlyOrderSerializer(instance).data        
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            str(instance.order_id), {
+                'type': 'echo.message',
+                'data': {
+                    'data': order_data
+                }
+            }
+        )
+
+
     else:
         print(f'DEFAULT: ORDER {instance.order_id} updated with status: {instance.status}')
 

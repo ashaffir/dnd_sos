@@ -1,15 +1,19 @@
+{% load i18n %}
+{% get_current_language as lang %}
+
 <a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
     <i class="fa fa-bell"></i>
     <span class="badge">{{ num_alerts }}</span>
 </a>
 
-<div class="dropdown-menu notification-menu">
+<div class="dropdown-menu notification-menu" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <div class="notification-title">
-        <span class="pull-right label label-default">{{ num_alerts }}</span>
-        Pending Orders!
+        <span class="pull-right label label-default" style="all:unset">{{ num_alerts }}</span>
+        {% trans 'Rejected Orders' %}!
     </div>
 
-    <div class="content" >
+{% load i18n %}
+    <div class="content" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
 
             
         <ul>
@@ -19,8 +23,7 @@
                     <div class="image">
                         <i class="fa fa-exclamation bg-danger"></i>
                     </div>
-                    <span class="message">From {{ order.pick_up_address }}</span>
-                    <span class="message">To {{ order.frop_off_address }}</span>
+                    <span class="message">{% trans 'To' %} {{ order.drop_off_address }}</span>
                 </a>
             </li>
             {% endfor %}
@@ -30,7 +33,7 @@
         <hr />
 
         <div class="text-right">
-            <a href="{% url 'dndsos_dashboard:b-alerts' b_id=user.pk %}" class="view-more">View All</a>
+            <a href="{% url 'dndsos_dashboard:b-alerts' b_id=user.pk %}" class="view-more">{% trans 'View All' %}</a>
         </div>
     </div>
 </div>
