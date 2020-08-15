@@ -1,17 +1,19 @@
 import 'package:bloc_login/common/global.dart';
-import 'package:bloc_login/ui/bottom_nav_bar.dart';
+import 'package:bloc_login/home/home_page_isolate.dart';
+import 'package:bloc_login/model/order.dart';
+import 'package:bloc_login/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_login/bloc/authentication_bloc.dart';
-
-import '../repository/user_repository.dart';
-import 'login_page.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 class MessagePage extends StatelessWidget {
   final String messageType;
-  final String message;
+  var data;
+  var message;
+  final Order order;
 
-  MessagePage({this.messageType, this.message});
+  MessagePage({this.messageType, this.message, this.data, this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,9 @@ class MessagePage extends StatelessWidget {
       appBar: AppBar(
         title: messageType == "Registration"
             ? Text('Confirmation')
-            : Text('$message'),
+            : messageType == "push"
+                ? Text('${message["title"]}')
+                : Text('$message'),
       ),
       body: Container(
         child: Padding(
@@ -37,48 +41,126 @@ class MessagePage extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 30.0),
-                  child: Text('Thank you.', style: whiteTitle),
+                  child: messageType == "Registration"
+                      ? Text('Thank you.', style: whiteTitle)
+                      : messageType == "push"
+                          ? Text(
+                              '${message["body"]}',
+                              style: whiteTitle,
+                            )
+                          : Text('$message'),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, top: 30.0),
-                  child: Text(
-                    'We have sent you an activation email. Please check your email box and to activate your account.',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                    ),
-                  ),
+                  child: messageType == "Registration"
+                      ? Text(
+                          'We have sent you an activation email. Please check your email box and to activate your account.',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                          ),
+                        )
+                      : messageType == "push"
+                          ? Column(children: [
+                              Text(
+                                  'Pick up address: ${data["pick_up_address"]}'),
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 20.0),
+                              ),
+                              Text(
+                                  'Drop off address: ${data["drop_off_address"]}'),
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 20.0),
+                              ),
+                            ])
+                          : Text('$message'),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Container(
                     // width: MediaQuery.of(context).size.width * 0.85,
                     // height: MediaQuery.of(context).size.width * 0.16,
-                    child: RaisedButton(
-                      child: Text(
-                        'Go to Login',
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                      onPressed: () {
-                        BlocProvider.of<AuthenticationBloc>(context)
-                            .add(LoggedOut());
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginPage(
-                                    userRepository: UserRepository(),
-                                  )),
-                          (Route<dynamic> route) => false,
-                        );
-                      },
-                      shape: StadiumBorder(
-                        side: BorderSide(
-                          color: Colors.black,
-                          width: 2,
-                        ),
-                      ),
-                    ),
+                    child: messageType == "Registration"
+                        ? RaisedButton(
+                            child: Text(
+                              'Go to Login',
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                            onPressed: () {
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(LoggedOut());
+                              Phoenix.rebirth(context);
+                            },
+                            shape: StadiumBorder(
+                              side: BorderSide(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                          )
+                        : messageType == "push"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ButtonBar(
+                                    children: <Widget>[
+                                      Padding(padding: EdgeInsets.all(5.0)),
+                                      SizedBox(
+                                        width: 80,
+                                        child: RaisedButton(
+                                          color: Colors.green,
+                                          child: Text(
+                                            "Accept",
+                                            style: whiteButtonTitle,
+                                          ),
+                                          onPressed: () {
+                                            print('Accepted Order');
+                                            String newStatus = "STARTED";
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                // HomePageIsolate(),
+                                                if (messageType ==
+                                                    "Registration") {
+                                                  return OrderAccepted(
+                                                      order: order);
+                                                } else if (messageType ==
+                                                    "push") {
+                                                  return OrderAccepted(
+                                                      orderId: order.order_id);
+                                                } else {
+                                                  print('ERROR Message type');
+                                                }
+                                              }),
+                                              (Route<dynamic> route) =>
+                                                  false, // No Back option for this page
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Padding(padding: EdgeInsets.all(5.0)),
+                                      SizedBox(
+                                        width: 80,
+                                        child: RaisedButton(
+                                          color: Colors.red[200],
+                                          child: Text(
+                                            "Ignore",
+                                            style: whiteButtonTitle,
+                                          ),
+                                          onPressed: () {
+                                            print('Ignored');
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Text('$message'),
                   ),
                 ),
               ],

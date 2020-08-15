@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:bloc_login/bloc/authentication_bloc.dart';
 import 'package:bloc_login/common/helper.dart';
 import 'package:bloc_login/login/registration.dart';
@@ -25,8 +27,15 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  bool _isLoading = false;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   LoginBloc get _loginBloc => widget.loginBloc;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +46,12 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
         LoginState state,
       ) {
         if (state is LoginFaliure) {
+          _isLoading = false;
           _onWidgetDidBuild(() {
             Scaffold.of(context).showSnackBar(
               SnackBar(
-                content: Text('${state.error}'),
+                // content: Text('${state.error}'),
+                content: Text('Wrong credentials used. Please try again.'),
                 backgroundColor: Colors.red,
               ),
             );
@@ -119,9 +130,17 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     ],
                   ),
                   RaisedButton(
-                    onPressed:
-                        state is! LoginLoading ? _onLoginButtonPressed : null,
-                    child: Text('Login'),
+                    onPressed: () {
+                      if (!_formKey.currentState.validate()) {
+                        return;
+                      } else {
+                        if (state is! LoginLoading) {
+                          _onLoginButtonPressed();
+                        }
+                      }
+                    },
+                    child: Text(!_isLoading ? 'Login' : 'Logging in...'),
+                    color: !_isLoading ? Colors.red : Colors.grey,
                   ),
                   Container(
                     child: state is LoginLoading
@@ -167,6 +186,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
   }
 
   _onLoginButtonPressed() {
+    setState(() {
+      _isLoading = true;
+    });
     _loginBloc.add(LoginButtonPressed(
       username: _usernameController.text,
       password: _passwordController.text,

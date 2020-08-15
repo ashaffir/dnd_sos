@@ -54,7 +54,8 @@ class ApiProvider {
     return postResponseJson;
   }
 
-  Future<dynamic> put(String url, Order order, User user, String status) async {
+  Future<dynamic> put(
+      String url, String orderId, User user, String status) async {
     var postResponseJson;
     try {
       final response = await http.put(
@@ -63,11 +64,8 @@ class ApiProvider {
           "Authorization": "Token ${user.token}",
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({
-          'order_id': order.order_id,
-          'status': status,
-          'freelancer': user.userId
-        }),
+        body: jsonEncode(
+            {'order_id': orderId, 'status': status, 'freelancer': user.userId}),
       );
       postResponseJson = _response(response);
     } on SocketException {

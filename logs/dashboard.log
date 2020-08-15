@@ -1,58 +1,22 @@
-INFO 2020-08-11 08:25:38,360 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
-INFO 2020-08-11 08:25:38,361 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
-INFO 2020-08-11 08:25:38,361 - Listening on TCP address 127.0.0.1:8000
-INFO 2020-08-11 13:01:20,937 - [32mHTTP GET /admin/fcm_django/fcmdevice/add/ 302 [0.77, 127.0.0.1:60408][0m
-INFO 2020-08-11 13:01:21,549 - [mHTTP GET /admin/login/?next=/admin/fcm_django/fcmdevice/add/ 200 [0.46, 127.0.0.1:60408][0m
-INFO 2020-08-11 14:41:07,949 - [mHTTP POST /api/login/ 200 [0.43, 127.0.0.1:50719][0m
-INFO 2020-08-11 14:58:19,417 - [mHTTP GET /api/open-orders/?q=open2 200 [0.05, 127.0.0.1:51803][0m
-INFO 2020-08-11 14:58:22,504 - [mHTTP GET /api/active-orders/?user=2 200 [0.02, 127.0.0.1:51808][0m
-INFO 2020-08-11 15:43:59,968 - [mHTTP POST /api/login/ 200 [1.16, 127.0.0.1:55446][0m
-INFO 2020-08-11 16:07:15,883 - [mHTTP POST /api/login/ 200 [0.21, 127.0.0.1:57131][0m
-INFO 2020-08-11 16:10:03,072 - [mHTTP POST /api/login/ 200 [0.17, 127.0.0.1:57321][0m
-INFO 2020-08-11 16:10:42,177 - [mHTTP POST /api/login/ 200 [0.15, 127.0.0.1:57363][0m
-INFO 2020-08-11 16:24:40,594 - [mHTTP POST /api/login/ 200 [0.16, 127.0.0.1:58268][0m
-INFO 2020-08-11 16:26:30,456 - [mHTTP POST /api/login/ 200 [0.14, 127.0.0.1:58385][0m
-INFO 2020-08-11 16:27:50,429 - [mHTTP POST /api/login/ 200 [0.14, 127.0.0.1:58475][0m
-INFO 2020-08-11 16:29:51,879 - [mHTTP POST /api/login/ 200 [0.14, 127.0.0.1:58616][0m
-INFO 2020-08-11 16:32:51,189 - [mHTTP POST /api/login/ 200 [0.15, 127.0.0.1:58820][0m
-INFO 2020-08-11 16:34:22,713 - [mHTTP POST /api/login/ 200 [0.22, 127.0.0.1:58928][0m
-INFO 2020-08-11 16:41:20,720 - [mHTTP POST /api/login/ 200 [0.21, 127.0.0.1:59412][0m
-INFO 2020-08-11 16:41:25,991 - [mHTTP GET /api/open-orders/?q=open2 200 [0.07, 127.0.0.1:59421][0m
-INFO 2020-08-11 16:42:47,053 - [mHTTP POST /api/login/ 200 [0.13, 127.0.0.1:59514][0m
-INFO 2020-08-11 16:43:14,183 - [mHTTP POST /api/login/ 200 [0.13, 127.0.0.1:59547][0m
-INFO 2020-08-11 17:23:12,886 - [mHTTP POST /api/login/ 200 [0.17, 127.0.0.1:62249][0m
-INFO 2020-08-11 17:24:36,582 - [mHTTP POST /api/login/ 200 [0.18, 127.0.0.1:62351][0m
-INFO 2020-08-11 18:56:41,770 - [mHTTP POST /api/login/ 200 [0.74, 127.0.0.1:52560][0m
-INFO 2020-08-11 19:00:01,394 - [mHTTP POST /api/login/ 200 [0.16, 127.0.0.1:52799][0m
-INFO 2020-08-11 19:29:36,386 - [mHTTP POST /api/login/ 200 [0.30, 127.0.0.1:54981][0m
-INFO 2020-08-11 19:38:46,322 - [mHTTP POST /api/login/ 200 [0.18, 127.0.0.1:55630][0m
-INFO 2020-08-12 08:10:56,752 - [mHTTP GET /api/open-orders/?q=open2 200 [0.56, 127.0.0.1:61037][0m
-INFO 2020-08-12 09:14:23,674 - [mHTTP POST /api/login/ 200 [0.20, 127.0.0.1:65134][0m
-INFO 2020-08-12 09:33:20,530 - [mHTTP POST /api/login/ 200 [0.17, 127.0.0.1:50009][0m
-INFO 2020-08-12 09:41:49,353 - [mHTTP POST /api/login/ 200 [0.25, 127.0.0.1:50569][0m
-INFO 2020-08-12 09:42:35,816 - [mHTTP POST /api/login/ 200 [0.14, 127.0.0.1:50627][0m
-INFO 2020-08-12 09:44:29,118 - [mHTTP POST /api/login/ 200 [0.14, 127.0.0.1:50750][0m
-INFO 2020-08-12 10:08:26,244 - [mHTTP POST /api/login/ 200 [0.19, 127.0.0.1:52321][0m
-INFO 2020-08-12 10:08:46,567 - [mHTTP POST /api/login/ 200 [0.13, 127.0.0.1:52345][0m
-INFO 2020-08-12 10:39:29,606 - [mHTTP GET /api/open-orders/?q=open2 200 [0.12, 127.0.0.1:54380][0m
-INFO 2020-08-12 10:39:33,880 - [mHTTP GET /api/active-orders/?user=2 200 [0.03, 127.0.0.1:54387][0m
-INFO 2020-08-12 10:51:56,754 - [mHTTP POST /api/login/ 200 [0.19, 127.0.0.1:55199][0m
-INFO 2020-08-12 11:00:43,471 - [mHTTP POST /api/login/ 200 [0.28, 127.0.0.1:55821][0m
-INFO 2020-08-12 11:00:50,975 - [mHTTP GET /api/open-orders/?q=open2 200 [0.04, 127.0.0.1:55832][0m
-INFO 2020-08-12 11:01:08,637 - [mHTTP POST /api/login/ 200 [0.13, 127.0.0.1:55851][0m
-INFO 2020-08-12 11:06:39,728 - [mHTTP POST /api/login/ 200 [0.19, 127.0.0.1:56232][0m
-INFO 2020-08-12 11:59:10,005 - [mHTTP POST /api/login/ 200 [0.24, 127.0.0.1:59816][0m
-INFO 2020-08-12 11:59:15,320 - [mHTTP POST /api/login/ 200 [0.14, 127.0.0.1:59823][0m
-INFO 2020-08-12 12:23:41,257 - [mHTTP POST /api/login/ 200 [0.29, 127.0.0.1:61482][0m
-INFO 2020-08-12 12:26:37,484 - [mHTTP POST /api/login/ 200 [0.19, 127.0.0.1:61680][0m
-INFO 2020-08-12 12:45:35,117 - [mHTTP POST /api/login/ 200 [0.18, 127.0.0.1:63015][0m
-INFO 2020-08-12 13:58:03,212 - [mHTTP GET /api/open-orders/?q=open2 200 [0.13, 127.0.0.1:51702][0m
-INFO 2020-08-12 14:03:01,582 - [mHTTP POST /api/login/ 200 [0.24, 127.0.0.1:52078][0m
-INFO 2020-08-12 14:03:13,160 - [mHTTP GET /api/active-orders/?user=2 200 [0.06, 127.0.0.1:52093][0m
-INFO 2020-08-12 14:03:17,024 - [mHTTP GET /api/open-orders/?q=open2 200 [0.03, 127.0.0.1:52100][0m
-INFO 2020-08-12 14:03:36,388 - [mHTTP POST /api/login/ 200 [0.14, 127.0.0.1:52123][0m
-INFO 2020-08-12 14:05:50,694 - [mHTTP PUT /api/user-location/?user=2 200 [0.10, 127.0.0.1:52266][0m
-INFO 2020-08-12 14:08:19,678 - [mHTTP POST /api/login/ 200 [0.18, 127.0.0.1:52484][0m
-INFO 2020-08-12 14:09:03,060 - [mHTTP POST /api/login/ 200 [0.16, 127.0.0.1:52532][0m
-INFO 2020-08-12 14:09:05,986 - [mHTTP GET /api/active-orders/?user=3 200 [0.03, 127.0.0.1:52539][0m
-INFO 2020-08-12 14:09:08,153 - [mHTTP GET /api/open-orders/?q=open3 200 [0.03, 127.0.0.1:52542][0m
+INFO 2020-08-15 20:03:15,742 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+INFO 2020-08-15 20:03:15,742 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+INFO 2020-08-15 20:03:15,743 - Listening on TCP address 127.0.0.1:8000
+INFO 2020-08-15 20:04:42,303 - [mHTTP GET /api/open-orders/?q=open86 200 [0.13, 127.0.0.1:60754][0m
+INFO 2020-08-15 20:04:48,638 - [mHTTP GET /dashboard/business/3/orders 200 [0.25, 127.0.0.1:60790][0m
+INFO 2020-08-15 20:04:49,639 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:60800]
+INFO 2020-08-15 20:04:49,849 - [mHTTP GET /orders/orders-table 200 [0.33, 127.0.0.1:60790][0m
+INFO 2020-08-15 20:04:49,965 - WebSocket CONNECT /ws/orders/ [127.0.0.1:60800]
+INFO 2020-08-15 20:04:50,181 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:60790][0m
+INFO 2020-08-15 20:04:50,374 - [mHTTP GET /orders/business-messages-list 200 [0.08, 127.0.0.1:60790][0m
+INFO 2020-08-15 20:04:52,463 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:60790][0m
+INFO 2020-08-15 20:05:00,800 - [mHTTP PUT /api/order-update/ 200 [0.06, 127.0.0.1:60917][0m
+INFO 2020-08-15 20:05:00,900 - [mHTTP GET /orders/business-alerts-list 200 [0.07, 127.0.0.1:60791][0m
+INFO 2020-08-15 20:05:00,958 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.12, 127.0.0.1:60919][0m
+INFO 2020-08-15 20:05:00,986 - [mHTTP GET /orders/business-messages-list 200 [0.15, 127.0.0.1:60920][0m
+INFO 2020-08-15 20:05:01,102 - [mHTTP GET /orders/orders-table 200 [0.28, 127.0.0.1:60790][0m
+INFO 2020-08-15 20:05:33,107 - [mHTTP GET /api/open-orders/?q=open86 200 [0.06, 127.0.0.1:61097][0m
+INFO 2020-08-15 20:05:37,156 - [mHTTP PUT /api/order-update/ 200 [0.05, 127.0.0.1:61123][0m
+INFO 2020-08-15 20:05:37,270 - [mHTTP GET /orders/business-alerts-list 200 [0.08, 127.0.0.1:60920][0m
+INFO 2020-08-15 20:05:37,314 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.12, 127.0.0.1:60791][0m
+INFO 2020-08-15 20:05:37,366 - [mHTTP GET /orders/business-messages-list 200 [0.18, 127.0.0.1:60919][0m
+INFO 2020-08-15 20:05:37,466 - [mHTTP GET /orders/orders-table 200 [0.28, 127.0.0.1:60790][0m

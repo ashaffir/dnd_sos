@@ -10,6 +10,7 @@ class UserLogin {
 
 class Token {
   String token;
+  String fcmToken;
   int userId;
   int isEmployee;
   String name;
@@ -26,6 +27,7 @@ class Token {
 
   Token(
       {this.token,
+      this.fcmToken,
       this.isEmployee,
       this.userId,
       this.name,
@@ -43,6 +45,7 @@ class Token {
   factory Token.fromJson(Map<String, dynamic> json) {
     return Token(
         token: json['token'],
+        fcmToken: json['fcm_token'],
         isEmployee: json['is_employee'],
         userId: json['user'],
         name: json['name'],

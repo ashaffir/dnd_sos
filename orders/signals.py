@@ -17,6 +17,7 @@ from core.tokens import account_activation_token
 from core.forms import EmployeeSignupForm, EmployerSignupForm
 # from dndsos_dashboard.models import FreelancerProfile
 from orders.models import Order
+from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
 
 @receiver(post_save, sender=User)
 def announce_new_user(sender, instance, created, **kwargs):
@@ -51,22 +52,32 @@ def announce_new_user(sender, instance, created, **kwargs):
                 context=message, to_email=[user.email],
                 html_email_template_name='registration/account_activation_email.html')
 
-@receiver(post_save, sender=Order)
-def signal_order_update(sender, instance, update_fields, **kwargs):        
-    print('>>>>> Sending new order for all!')
-    devices = FCMDevice.objects.all()
-    devices.send_message(title="New Order available", body="There is a new order from...")
+# REFERENCE: FCM: https://github.com/xtrinch/fcm-django
+@receiver(post_save, sender=Order)   
+def order_signal(sender, instance, update_fields, **kwargs):      
+    if kwargs['created']:
+        print(f'=========== SIGNAL: New Order ===============: {instance.business.business.business_name}')
+        devices = FCMDevice.objects.all()
+        devices.send_message(
+            title="New Order available", 
+            body=f"New order from {instance.business.business.business_name}", 
+            data={
+                'order_id': str(instance.order_id),
+                'pick_up_address': instance.pick_up_address, 
+                "drop_off_address": instance.drop_off_address, 
+                'price':instance.price, 
+                'created':str(instance.created), 
+                'updated':str(instance.updated), 
+                'order_type':instance.order_type, 
+                'order_city_name':instance.order_city_name, 
+                'order_street_name':instance.order_street_name, 
+                'distance_to_business':instance.distance_to_business, 
+                'status':instance.status
+                })
+    
     # fcm_send_topic_message(topic_name='My topic', message_body='Hello', message_title='A message')
     # device = FCMDevice.objects.all().first()
     # device.send_message(title='title', body='message')
-
-
-
-
-
-
-
-
 
     # devices.send_message(title="Title", body="Message", data={"test": "test"})
     # devices.send_message(data={"test": "test"})
@@ -74,26 +85,37 @@ def signal_order_update(sender, instance, update_fields, **kwargs):
 #     business_id = instance.business_id
 #     print(f'>>>>>>> SIGNAL >>> Order Status Change: {instance.status}. ID: {instance.order_id}')  
     
-#     if instance.status == 'STARTED':
-#         # print(f''''
-#         # >>>>>>> SIGNAL: Order STARTED: {instance.order_id}  
-#         # update: {instance.status} type: {type(instance.status)}
-#         # update: {instance.order_id} type: {type(instance.order_id)}
-#         # update: {instance.business_id} type: {type(instance.business_id)}
-#         # ''')
-#         channel_layer = get_channel_layer()
-#         async_to_sync(channel_layer.group_send)(
-#             str(instance.order_id), {
-#                 # 'type':"order.accepted",
-#                 'type':"update.order",
-#                 'data': {
-#                     'event': 'Order Accepted',
-#                     'order_id': str(instance.order_id), 
-#                     'business_id': business_id,
-#                     'status': str(instance.status)
-#                 }
-#             }
-#         )
+    elif instance.status == 'STARTED':
+        print(f'ORDER {instance.order_id} updated with status: STARTED')
+
+        # print(f''''
+        # >>>>>>> SIGNAL: Order STARTED: {instance.order_id}  
+        # update: {instance.status} type: {type(instance.status)}
+        # update: {instance.order_id} type: {type(instance.order_id)}
+        # update: {instance.business_id} type: {type(instance.business_id)}
+        # ''')
+        order_data = ReadOnlyOrderSerializer(instance).data
+        
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            str(instance.order_id), {
+                # 'type':"order.accepted",
+                # 'type':"update.order",
+                'type': 'echo.message',
+                'data': {
+                    # 'event': 'Order Accepted',
+                    # 'order_id': str(instance.order_id), 
+                    # 'business_id': business_id,
+                    # 'status': str(instance.status)
+                    'data': order_data
+                }
+            }
+        )
+    
+    else:
+        print(f'DEFAULT: ORDER {instance.order_id} updated with status: {instance.status}')
+
+
 #     elif instance.status == 'REQUESTED':
 #         channel_layer = get_channel_layer()
 #         async_to_sync(channel_layer.group_send)(

@@ -3,7 +3,8 @@ from datetime import date
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
 from django.contrib.gis.geos import fromstr, Point
-
+from fcm_django.models import FCMDevice
+from django.core import serializers as djangoSerializers
 
 # from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions
@@ -63,6 +64,10 @@ class NewLoginViewSet(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+        try:
+            fcm_token = FCMDevice.objects.filter(user=user.pk).first().registration_id
+        except Exception as e:
+            fcm_token = '0'
 
         is_employee = User.objects.get(pk=user.pk).is_employee
         print(f'Login RESPONSE: token: {token} \n user: {user.pk}\n is_employee: {user.is_employee}')
@@ -85,6 +90,7 @@ class NewLoginViewSet(ObtainAuthToken):
 
 
             return Response({'token': token.key,
+                            'fcm_token':fcm_token,
                             "user":user.pk,
                             "is_employee": 1 if user.is_employee else 0,
                             "name": user_profile.name,
@@ -113,6 +119,7 @@ class NewLoginViewSet(ObtainAuthToken):
             daily_cost = round(daily_cost,2)
 
             return Response({'token': token.key,
+                            'fcm_token':fcm_token,
                             "user":user.pk,
                             "is_employee": 1 if user.is_employee else 0,
                             "business_name": user_profile.business_name,
@@ -349,12 +356,13 @@ def order_update_view(request):
         new_status = request.data["status"]
         if serializer.is_valid():
             if new_status:
-
                 if (new_status == 'STARTED' and old_status == 'REQUESTED') or  (new_status == 'STARTED' and old_status == 'RE_REQUESTED'):
                     updated_order = serializer.save()
+                    data = serializer.data
                     data['response'] = 'Update successful'
                 elif new_status == 'COMPLETED' and old_status == 'IN_PROGRESS':
                     updated_order = serializer.save()
+                    data = serializer.data
                     data['response'] = 'Update successful'
                 elif new_status == 'REJECTED' and old_status == 'STARTED':
                     # request.data['freelancer'] = None
@@ -363,6 +371,7 @@ def order_update_view(request):
                     updated_order = serializer.save()
                     update_order.freelancer = None
                     update_order.save()
+                    data = serializer.data
                     data['response'] = 'Update successful'
                 else:
                     data['response'] = f'Update failed. Wrong order status. in: {new_status} current: {old_status}'

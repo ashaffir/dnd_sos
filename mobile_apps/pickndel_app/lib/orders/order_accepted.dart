@@ -8,29 +8,37 @@ import 'package:url_launcher/url_launcher.dart';
 
 class OrderAccepted extends StatefulWidget {
   final Order order;
-  OrderAccepted({this.order});
+  final String orderId;
+
+  OrderAccepted({this.order, this.orderId});
 
   @override
   _OrderAcceptedState createState() => _OrderAcceptedState();
 }
 
 class _OrderAcceptedState extends State<OrderAccepted> {
+  var updatedOrderId;
   @override
   void initState() {
     super.initState();
+    try {
+      updatedOrderId = widget.order.order_id;
+    } catch (e) {
+      updatedOrderId = widget.orderId;
+    }
   }
 
   String orderUpdated;
 
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: updateOrderAccepted(widget.order),
+      future: updateOrderAccepted(updatedOrderId),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          print('ORDER ACCEPTED: ${snapshot.data["response"]}');
+          print('ORDER ACCEPTED: ${snapshot.data}');
 
           if (snapshot.data["response"] == "Update successful") {
-            return getOrderAcceptedPage(widget.order);
+            return getOrderAcceptedPage(snapshot.data);
           } else if (snapshot.data["response"] == "Update failed") {
             return orderAcceptErrorPage();
           } else {
@@ -46,14 +54,15 @@ class _OrderAcceptedState extends State<OrderAccepted> {
     );
   }
 
-  Future updateOrderAccepted(Order order) async {
+  Future updateOrderAccepted(dynamic updateOrderId) async {
     print('UPDATINNG ORDER...');
-    final orderUpdated = await OrderRepository().updateOrder(order, 'STARTED');
+    final orderUpdated =
+        await OrderRepository().updateOrder(updateOrderId, 'STARTED');
     print('orderUpdated: $orderUpdated');
     return orderUpdated;
   }
 
-  Widget getOrderAcceptedPage(Order order) {
+  Widget getOrderAcceptedPage(dynamic order) {
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
@@ -76,14 +85,14 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               flex: 2,
             ),
             Text(
-              'From: ${order.pick_up_address}',
+              'From: ${order["pick_up_address"]}',
               style: whiteTitle,
             ),
             Spacer(
               flex: 2,
             ),
             Text(
-              "To: ${order.drop_off_address}",
+              "To: ${order["drop_off_address"]}",
               style: whiteTitle,
             )
           ],

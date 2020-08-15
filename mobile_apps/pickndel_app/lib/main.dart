@@ -8,7 +8,6 @@ import 'package:bloc_login/repository/user_repository.dart';
 import 'package:bloc_login/bloc/authentication_bloc.dart';
 import 'package:bloc_login/ui/splash.dart';
 import 'package:bloc_login/login/login_page.dart';
-import 'package:bloc_login/home/home.dart';
 import 'package:bloc_login/common/common.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 

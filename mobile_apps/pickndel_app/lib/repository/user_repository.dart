@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:bloc_login/model/user_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc_login/model/api_model.dart';
@@ -10,13 +12,42 @@ import 'package:bloc_login/dao/user_dao.dart';
 
 class UserRepository {
   final userDao = UserDao();
+  FirebaseMessaging _fcm = FirebaseMessaging();
+  String fcmToken;
+  String deviceOs;
 
   Future<User> authenticate({
     @required String username,
     @required String password,
   }) async {
+    // Login Authentication
     UserLogin userLogin = UserLogin(username: username, password: password);
-    Token token = await getToken(userLogin);
+    Token token = await serverAuthentication(userLogin);
+    StreamSubscription iosSubscription;
+
+    // Setting FCM token
+    if (token.fcmToken == '0') {
+      // If iOS, need to ask for permission to share device Token ID
+      if (Platform.isIOS) {
+        iosSubscription = _fcm.onIosSettingsRegistered.listen((data) async {
+          fcmToken = await _fcm.getToken();
+        });
+        _fcm.requestNotificationPermissions(
+            IosNotificationSettings(sound: true, badge: true, alert: true));
+      } else {
+        fcmToken = await _fcm.getToken();
+      }
+
+      deviceOs = Platform.operatingSystem;
+      var fcmRegistrationReponse = await fcmTokenRegistration(
+          fcmToken: fcmToken, osType: deviceOs, userToken: token.token);
+
+      print('>>>> REGISTERED FCM TOKEN: $fcmToken');
+    } else {
+      print('>>>> ERROR REGISTRING FCM TOKEN: $fcmToken');
+    }
+
+    // Retreiving user information from the server
     User user = User(
         id: 0,
         username: username,

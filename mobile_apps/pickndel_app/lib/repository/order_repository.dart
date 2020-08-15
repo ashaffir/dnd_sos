@@ -31,11 +31,11 @@ class OrderRepository {
     //REFERENCE: ERROR https://stackoverflow.com/questions/51854891/error-listdynamic-is-not-a-subtype-of-type-mapstring-dynamic
   }
 
-  Future updateOrder(Order order, String status) async {
+  Future updateOrder(String orderId, String status) async {
     var _url = "order-update/";
     try {
       var user = await UserDao().getUser(0);
-      var response = await _provider.put(_url, order, user, status);
+      var response = await _provider.put(_url, orderId, user, status);
       print('>>> POST RESPONSE: $response');
       return response;
     } catch (e) {

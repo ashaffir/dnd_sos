@@ -9,7 +9,8 @@ import 'package:bloc_login/common/global.dart';
 import 'package:bloc_login/location/location_callback_handler.dart';
 import 'package:bloc_login/location/location_service_repository.dart';
 import 'package:bloc_login/model/user_location.dart';
-import 'package:bloc_login/networking/messaging.dart';
+import 'package:bloc_login/networking/message_testing.dart';
+import 'package:bloc_login/networking/messaging_widget.dart';
 import 'package:bloc_login/repository/location_repository.dart';
 import 'package:bloc_login/repository/user_repository.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -75,8 +76,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
   @override
   void initState() {
     super.initState();
-    MessagesHandler();
-    // Push Notifications
+
+    /////////////// Push Notifications ///////////////
     // _firebaseMessaging.configure(onMessage: (message) async {
     //   setState(() {
     //     print('$message');
@@ -90,7 +91,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     //   });
     // });
 
-    // Location tracking
+    /////////////// Device location tracking ///////////////
+
     if (IsolateNameServer.lookupPortByName(
             LocationServiceRepository.isolateName) !=
         null) {
@@ -241,6 +243,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              MessagingWidget(),
+              // MessagingWidgetTest(),
               Image.asset(
                 'assets/images/pickndell-logo-white.png',
                 width: MediaQuery.of(context).size.width * 0.70,

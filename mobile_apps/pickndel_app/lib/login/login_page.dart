@@ -51,36 +51,8 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text('PickNdel Login'),
       ),
-      // body: BlocProvider(
-      //     create: (context) {
-      //       return LoginBloc(
-      //         authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-      //         userRepository: widget.userRepository,
-      //         // userRepository: Provider.of<UserRepository>(context),
-      //       );
-      //     },
       body: LoginFormScreen(
           authenticationBloc: _authenticationBloc, loginBloc: _loginBloc),
-      // child: SingleChildScrollView(
-      //   child: Column(
-      //     children: <Widget>[
-      //       Image.asset(
-      //         'assets/images/pickndell-logo-white.png',
-      //         width: MediaQuery.of(context).size.width * 0.70,
-      //         // height: MediaQuery.of(context).size.height * 0.50,
-      //         // width: 300,
-      //       ),
-      //       Padding(
-      //         padding: EdgeInsets.all(10.0),
-      //       ),
-      //       Text(
-      //         'Login Form',
-      //         style: whiteTitle,
-      //       ),
-      //       LoginForm(),
-      //     ],
-      //   ),
-      // )),
     );
   }
 

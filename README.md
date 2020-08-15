@@ -1,7 +1,7 @@
 ##  References
 
 ### Signals
-https://www.youtube.com/watch?v=Kc1Q_ayAeQk
+https://www.youtube.com/watch?v=Kc1Q_ayAeQk (Basic tutorial)
 https://www.youtube.com/watch?v=T6PyDm79PFo&t=170s
 
 https://docs.djangoproject.com/en/3.0/topics/signals/

@@ -12,11 +12,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 final _base = "https://bf3831159b95.ngrok.io";
 final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";
+final _fcmRegistratioEndpoint = "/api/devices/";
 
 final _tokenURL = _base + _tokenEndpoint;
 final _registrationURL = _base + _registrationEndpoint;
+final _fcmRegistratioURL = _base + _fcmRegistratioEndpoint;
 
-Future<Token> getToken(UserLogin userLogin) async {
+/////////// Login ///////////
+Future<Token> serverAuthentication(UserLogin userLogin) async {
   final http.Response response = await http.post(
     _tokenURL,
     headers: <String, String>{
@@ -33,34 +36,58 @@ Future<Token> getToken(UserLogin userLogin) async {
   }
 }
 
-class CallApi {
-  final String _url = 'https://bf3831159b95.ngrok.io/api/';
+/////////// FCM token registration ///////////
+Future<dynamic> fcmTokenRegistration(
+    {String fcmToken, String osType, String userToken}) async {
+  var postResponseJson;
 
-  postData(data, apiUrl) async {
-    var fullUrl = _url + apiUrl;
-    final http.Response response = await http.post(fullUrl,
-        body: jsonEncode(data), headers: _setHeaders());
-    print('RESPONSE: ${response.body});');
-    // return Token.fromJson(json.decode(response.body));
-    return response;
+  try {
+    final http.Response response = await http.post(
+      _fcmRegistratioURL,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $userToken',
+      },
+      body: jsonEncode({
+        "registration_id": fcmToken,
+        "type": osType,
+      }),
+    );
+    postResponseJson = _response(response);
+  } on SocketException {
+    throw FetchDataException('No Internet connection');
   }
-
-  getData(apiUrl) async {
-    var fullUrl = _url + apiUrl + await _getToken();
-    return await http.get(fullUrl, headers: _setHeaders());
-  }
-
-  _setHeaders() => {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-      };
-
-  _getToken() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var token = localStorage.getString('token');
-    return '?token=$token';
-  }
+  return postResponseJson;
 }
+
+// class CallApi {
+//   final String _url = 'https://bf3831159b95.ngrok.io/api/';
+
+//   postData(data, apiUrl) async {
+//     var fullUrl = _url + apiUrl;
+//     final http.Response response = await http.post(fullUrl,
+//         body: jsonEncode(data), headers: _setHeaders());
+//     print('RESPONSE: ${response.body});');
+//     // return Token.fromJson(json.decode(response.body));
+//     return response;
+//   }
+
+//   getData(apiUrl) async {
+//     var fullUrl = _url + apiUrl + await _getToken();
+//     return await http.get(fullUrl, headers: _setHeaders());
+//   }
+
+//   _setHeaders() => {
+//         'Content-type': 'application/json',
+//         'Accept': 'application/json',
+//       };
+
+//   _getToken() async {
+//     SharedPreferences localStorage = await SharedPreferences.getInstance();
+//     var token = localStorage.getString('token');
+//     return '?token=$token';
+//   }
+// }
 
 Future<dynamic> createUser(
     {String email, String password1, String password2, String userType}) async {
@@ -102,6 +129,12 @@ Future<dynamic> createUser(
 dynamic _response(http.Response response) {
   switch (response.statusCode) {
     case 200:
+      // var responseJson = json.decode(response.body.toString());
+      var responseJson =
+          jsonDecode(utf8.decode(response.bodyBytes)); //For HEBREW text
+      // print('RESPONSE>>> $responseJson');
+      return responseJson;
+    case 201:
       // var responseJson = json.decode(response.body.toString());
       var responseJson =
           jsonDecode(utf8.decode(response.bodyBytes)); //For HEBREW text

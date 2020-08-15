@@ -1,0 +1,161 @@
+// REFERENCE: Firebase cloud messages - push notifications: https://www.youtube.com/watch?v=2TSm2YGBT1s
+import 'dart:io';
+import 'dart:async';
+
+import 'package:bloc_login/dao/user_dao.dart';
+import 'package:bloc_login/model/notification_message.dart';
+import 'package:bloc_login/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+class MessagesHandler extends StatefulWidget {
+  @override
+  _MessagesHandlerState createState() => _MessagesHandlerState();
+}
+
+class _MessagesHandlerState extends State<MessagesHandler> {
+  // Firestore _db = Firestore.instance;
+  FirebaseMessaging _fcm = FirebaseMessaging();
+  String deviceOs;
+
+  List<NotificationMessage> messages;
+  static Future<dynamic> myBackgroundMessageHandler(
+      Map<String, dynamic> message) {
+    if (message.containsKey('data')) {
+      // Handle data message
+      final dynamic data = message['data'];
+    }
+
+    if (message.containsKey('notification')) {
+      // Handle notification message
+      final dynamic notification = message['notification'];
+    }
+
+    // Or do other work.
+  }
+
+  _fcmListeners() {
+    _fcm.configure(
+        onMessage: (Map<String, dynamic> message) async {
+          print('>>>>>>>>>>>>>>> onMessage <<<<<<<<<<<<<<<: $message');
+          _setMessage(message);
+
+          // Show push notification in a snackbar
+          print('SNACKBAR>>>>>>>>>>>');
+          final snackbar = SnackBar(
+            content: Text(message['notificatiom']['title']),
+            action: SnackBarAction(
+              label: 'Check',
+              onPressed: () {},
+            ),
+          );
+
+          Scaffold.of(context).showSnackBar(snackbar);
+
+          //////// Show push notification in a dialog box ///////////
+          // showDialog(
+          //     context: context,
+          //     builder: (context) => AlertDialog(
+          //           content: ListTile(
+          //             title: Text(message['notification']['title']),
+          //             subtitle: Text(message['notification']['body']),
+          //           ),
+          //           actions: <Widget>[
+          //             FlatButton(
+          //               child: Text('OK'),
+          //               onPressed: () {
+          //                 Navigator.of(context).pop();
+          //               },
+          //             )
+          //           ],
+          //         ));
+        },
+        onBackgroundMessage: myBackgroundMessageHandler,
+        onResume: (Map<String, dynamic> message) async {
+          print('>>>>>>>>>>>>>>> onResume <<<<<<<<<<<<<<<: $message');
+          _setMessage(message);
+        },
+        onLaunch: (Map<String, dynamic> message) async {
+          print('>>>>>>>>>>>>>>> onLaunch <<<<<<<<<<<<<<<: $message');
+          _setMessage(message);
+        });
+  }
+
+  // Get user token and save to the Firestore DB
+  // _saveDeviceToken() async {
+  //   User currentUser = await UserDao().getUser(0);
+  //   String uid = currentUser.userId.toString();
+  //   String username = currentUser.username;
+
+  //   // Get token for this device ans save to Firestore
+  //   String _fcmToken = await _fcm.getToken();
+  //   if (_fcmToken != null) {
+  //     var _tokenRef = _db
+  //         .collection('users')
+  //         .document(username)
+  //         .collection('tokens')
+  //         .document(_fcmToken);
+
+  //     await _tokenRef.setData({
+  //       'token': _fcmToken,
+  //       'createdAt': FieldValue.serverTimestamp(), //optional
+  //       'platform': Platform.operatingSystem // optional
+  //     });
+  //   }
+  // }
+
+  _setMessage(Map<String, dynamic> message) {
+    final notification = message['notification'];
+    final data = message['data'];
+    final String title = notification['title'];
+    final String body = notification['body'];
+    final String mMessage = data['message'];
+    setState(() {
+      NotificationMessage m =
+          NotificationMessage(title: title, message: mMessage, body: body);
+      messages.add(m);
+    });
+  }
+
+  StreamSubscription iosSubscription;
+
+  //////// INIT STATE /////////////
+  @override
+  void initState() {
+    super.initState();
+    _fcmListeners();
+
+    print(">> Check IOS << ");
+    //////// Check IOS ///////////
+
+    // if (Platform.isIOS) {
+    //   iosSubscription = _fcm.onIosSettingsRegistered.listen((data) {
+    //     _saveDeviceToken();
+    //   });
+    //   _fcm.requestNotificationPermissions(
+    //       IosNotificationSettings(sound: true, badge: true, alert: true));
+    // } else {
+    //   _saveDeviceToken();
+    // }
+
+    //////// Firebase Cloud Messaging Config ///////////
+
+    _fcm.subscribeToTopic('carriers');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+  // Widget build(BuildContext context) {
+  //   ListView(children: messages.map(buildMessage).toList());
+  // }
+
+  // Widget buildMessage(NotificationMessage message) => ListTile(
+  //     title: Text(message.title),
+  //     subtitle: Text(
+  //       message.body,
+  //     ));
+}

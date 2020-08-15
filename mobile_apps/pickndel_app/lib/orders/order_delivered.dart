@@ -48,8 +48,9 @@ class _OrderDeliveredState extends State<OrderDelivered> {
 
   Future updateOrderDelivered(Order order) async {
     print('Updating order delivered...');
+    var orderId = order.order_id;
     final orderUpdated =
-        await OrderRepository().updateOrder(order, 'COMPLETED');
+        await OrderRepository().updateOrder(orderId, 'COMPLETED');
     print('orderUpdated: $orderUpdated');
     return orderUpdated;
   }

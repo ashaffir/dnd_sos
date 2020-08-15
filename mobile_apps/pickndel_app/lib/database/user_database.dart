@@ -13,19 +13,19 @@ class DatabaseProvider {
   Database _database;
 
   Future<Database> get database async {
-    print('Acecessing User DB >> $_database ...');
+    // print('Acecessing User DB >> $_database ...');
     if (_database != null) {
       return _database;
     }
     _database = await createDatabase();
-    print('Creating a new DB...');
+    // print('Creating a new DB...');
     return _database;
   }
 
   createDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "User.db");
-    print('Creating DB at PATH: $path');
+    print('Creating New DB at PATH: $path');
 
     var database = await openDatabase(
       path,

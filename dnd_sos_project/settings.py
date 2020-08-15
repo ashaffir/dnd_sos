@@ -307,7 +307,7 @@ DOMAIN_PROD = 'https://pickndell.com'
 
 FCM_DJANGO_SETTINGS = {
         # "APP_VERBOSE_NAME": "[string for AppConfig's verbose_name]",
-        "APP_VERBOSE_NAME": "pickndell.com.network",
+        "APP_VERBOSE_NAME": "com.actappon.pickndell",
          # default: _('FCM Django')
         "FCM_SERVER_KEY": "AAAAMWr-paE:APA91bGk4eiHLV9VNZ1tscqCR2Wy30TUAm1HoqqmWb5D6twBYvniAc9cL7PYfR0hEPhCnBAom5lBgxdI2oZwpKYpQpUTLVe08NhMFQNng1RTMLJ-co3KPU582b365S8-7JBIsmJkSyU2",
          # true if you want to have only one active device per registered user at a time

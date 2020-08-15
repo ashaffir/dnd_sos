@@ -1,5 +1,5 @@
 import uuid
-
+import json
 from django.urls import reverse
 from django.db import models
 from django.conf import settings
@@ -112,7 +112,6 @@ class Order(models.Model):
 
     def get_absolute_url(self):
         return reverse('trip:trip_detail', kwargs={'trip_id': self.order_id})
-
 
 class ChatMessage(models.Model):
     freelancer = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='freelancer_messages')

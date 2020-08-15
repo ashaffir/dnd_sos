@@ -10,6 +10,13 @@ from .views import (UserRecordView, registration_view,
                     NewLoginViewSet,open_orders_view,OpenOrdersViewSet,ActiveOrdersViewSet,
                     UserLocationViewSet,)
 
+# Firebase Cloud Messageing (FCM)
+from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'devices', FCMDeviceAuthorizedViewSet)
+
 router = routers.DefaultRouter()
 router.register('user-orders', OrdersView)
 router.register('contacts', ContactView)
@@ -31,5 +38,9 @@ urlpatterns = [
     path('user-profile/', user_profile , name='user-profile'),
     path('user-location/', UserLocationViewSet.as_view() , name='user-location'),
     # path('open-orders/', open_orders_view , name='open-orders'),
-    
+
+    # FCM
+    path('devices/', FCMDeviceAuthorizedViewSet.as_view({'post': 'create'}), name='create_fcm_device'),
+
+
 ]

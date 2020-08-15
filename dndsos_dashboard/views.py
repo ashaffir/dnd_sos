@@ -12,7 +12,6 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, get_user_model
 from django.http import HttpResponse
-from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth.models import User
@@ -43,8 +42,6 @@ from geo.models import Street, CityModel
 from geo.geo_utils import location_calculator
 from payments.views import add_card, remove_card, credit_card_form, get_credit_card_information
 from payments.models import Card
-
-# from notifier.signals import alert_freelancer_accepted
 
 from .serializers import UserSerializer
 

@@ -11,6 +11,9 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.layers import get_channel_layer
 
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
 from django.contrib.gis.geos import Point, fromstr
 from django.conf import settings
 from django.db.models import Q
@@ -331,9 +334,17 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             )
 
 
-
+    @staticmethod
+    @receiver(post_save, sender=Order)
+    async def order_accepted_signal(sender, instance, created, **kwargs):
+        print('SENDING SIGNAL MESSAGE.................')
+        # await self.channel_layer.group_send(group=order_id, message={
+        #     'type': 'echo.message',
+        #     'data': data
+        # })
     # async def order_accepted(self, event):
     #     print('>>> ORDER ACCEPTED: ',event)
+
     #     order, order_updated = await self._update_order(event.get('data'))
     #     order_id = f'{order.order_id}'
     #     order_data = ReadOnlyOrderSerializer(order).data

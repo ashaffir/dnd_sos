@@ -38,7 +38,7 @@
             <td class="actions" style='text-align:center'>
                 <button style="margin: 0%;" class="btn btn-warning" type="button" onclick="pickedup('{{ order.order_id }}','{{ order.pick_up_address }}', '{{ order.drop_off_address }}')" name="pickedUp" id="pickedUp_{{ order.order_id }}" value="{{ order.order_id }}">{% trans 'Picked-Up' %}? <i class="fa fa-truck"></i></button>
             </td>
-        {% elif order.status == 'REQUESTED' or order.status == 'RE_REQUESTED' %}
+        {% elif order.status == 'REQUESTED' or order.status == 'RE_REQUESTED' or order.status == 'REJECTED' %}
         <td class="center" style="padding-top: 1em;">
             <i class="fa fa-2x fa-exclamation-triangle" style="color: red;"></i>
         </td>

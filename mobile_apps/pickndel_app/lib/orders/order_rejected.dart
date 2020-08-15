@@ -48,7 +48,9 @@ class _OrderRejectedState extends State<OrderRejected> {
 
   Future updateOrderRejected(Order order) async {
     print('Updating order delivered...');
-    final orderUpdated = await OrderRepository().updateOrder(order, 'REJECTED');
+    var orderId = order.order_id;
+    final orderUpdated =
+        await OrderRepository().updateOrder(orderId, 'REJECTED');
     print('orderUpdated: $orderUpdated');
     return orderUpdated;
   }
