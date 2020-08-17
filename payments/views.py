@@ -39,12 +39,12 @@ def credit_card_form(request):
 
     GET_URL = GET_URL_TEST if settings.DEBUG else GET_URL_PROD
 
-    REDIRECT_URL = 'https://bf3831159b95.ngrok.io/payments/success-card-collection/' if settings.DEBUG else settings.DOMAIN_PROD
+    REDIRECT_URL = 'https://8c1d164fa909.ngrok.io/payments/success-card-collection/' if settings.DEBUG else settings.DOMAIN_PROD
 
     payload_prod = '{ \
         "GroupPrivateToken":"' + f'{settings.GROUP_PRIVATE_TOKEN}' + '", \
         "RedirectURL": "' + f'{str(REDIRECT_URL)}' + f'{str(b_id)}' + '", \
-        "IPNURL": "https://bf3831159b95.ngrok.io/payments/ipn-listener-card-info/", \
+        "IPNURL": "https://8c1d164fa909.ngrok.io/payments/ipn-listener-card-info/", \
         "CustomerLastName":"test", \
         "EmailAddress":"alfred.shaffir@gmail.com", \
         "SaleType": 3, \
@@ -61,8 +61,8 @@ def credit_card_form(request):
 
     payload_test = '{ \
         "GroupPrivateToken":"7a81fc4b-1b18-4add-b730-d434a9f5120a", \
-        "RedirectURL": "https://bf3831159b95.ngrok.io/payments/success-card-collection/' + f'{str(b_id)}' + '", \
-        "IPNURL": "https://bf3831159b95.ngrok.io/payments/ipn-listener-card-info/", \
+        "RedirectURL": "https://8c1d164fa909.ngrok.io/payments/success-card-collection/' + f'{str(b_id)}' + '", \
+        "IPNURL": "https://8c1d164fa909.ngrok.io/payments/ipn-listener-card-info/", \
         "CustomerLastName":"test", \
         "EmailAddress":"alfred.shaffir@gmail.com", \
         "SaleType": 3, \
@@ -149,7 +149,7 @@ def lock_delivery_price(order):
     # payload = '{ \
     #         "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e", \
     #         "CreditcardToken": "' + f'{b_credit_card_token}' + '", \
-    #         "IPNURL": "https://bf3831159b95.ngrok.io/payments/ipn-listener-lock-price/", \
+    #         "IPNURL": "https://8c1d164fa909.ngrok.io/payments/ipn-listener-lock-price/", \
     #         "CustomerLastName": "none", \
     #         "CustomerFirstName": "none", \
     #         "Address": "none", \
@@ -169,7 +169,7 @@ def lock_delivery_price(order):
     payload = '{ \
             "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e", \
             "CreditcardToken": "7e4aa02b-365a-42fe-806b-e4751c478052", \
-            "IPNURL": "https://bf3831159b95.ngrok.io/payments/ipn-listener-lock-price/", \
+            "IPNURL": "https://8c1d164fa909.ngrok.io/payments/ipn-listener-lock-price/", \
             "CustomerLastName": "none", \
             "CustomerFirstName": "none", \
             "Address": "none", \

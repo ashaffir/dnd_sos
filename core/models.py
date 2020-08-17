@@ -157,7 +157,7 @@ class Employee(models.Model):
     active_hours = models.CharField(max_length=100, blank=True, null=True)
     
     is_available = models.BooleanField(default=False) # Available for delivering ("open for business")
-    is_active = models.BooleanField(default=False) # Is currently delivering or accepted delivery and going to pick up
+    is_delivering = models.BooleanField(default=False) # Is currently delivering or accepted delivery and going to pick up
     
     # current_order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, default=-1)
 

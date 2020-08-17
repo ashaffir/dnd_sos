@@ -1,36 +1,78 @@
-INFO 2020-08-15 20:21:49,551 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
-INFO 2020-08-15 20:21:49,551 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
-INFO 2020-08-15 20:21:49,552 - Listening on TCP address 127.0.0.1:8000
-INFO 2020-08-15 20:21:51,345 - [mHTTP GET /dashboard/business/3/orders 200 [0.25, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:21:51,987 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:50299]
-INFO 2020-08-15 20:21:52,215 - [mHTTP GET /orders/orders-table 200 [0.32, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:21:52,285 - WebSocket CONNECT /ws/orders/ [127.0.0.1:50299]
-INFO 2020-08-15 20:21:52,434 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:21:52,527 - [mHTTP GET /orders/business-messages-list 200 [0.07, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:21:54,292 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:22:03,147 - [mHTTP PUT /api/order-update/ 200 [0.08, 127.0.0.1:50410][0m
-INFO 2020-08-15 20:22:03,301 - [mHTTP GET /orders/business-alerts-list 200 [0.10, 127.0.0.1:50286][0m
-INFO 2020-08-15 20:22:03,374 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.15, 127.0.0.1:50420][0m
-INFO 2020-08-15 20:22:03,424 - [mHTTP GET /orders/business-messages-list 200 [0.20, 127.0.0.1:50421][0m
-INFO 2020-08-15 20:22:03,542 - [mHTTP GET /orders/orders-table 200 [0.34, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:22:12,114 - [mHTTP GET /api/open-orders/?q=open86 200 [0.04, 127.0.0.1:50472][0m
-INFO 2020-08-15 20:22:18,656 - [mHTTP PUT /api/order-update/ 200 [0.15, 127.0.0.1:50510][0m
-INFO 2020-08-15 20:22:18,830 - [mHTTP GET /orders/business-alerts-list 200 [0.16, 127.0.0.1:50421][0m
-INFO 2020-08-15 20:22:18,840 - [mHTTP GET /orders/business-messages-list 200 [0.17, 127.0.0.1:50420][0m
-INFO 2020-08-15 20:22:18,844 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.17, 127.0.0.1:50286][0m
-INFO 2020-08-15 20:22:19,078 - [mHTTP GET /orders/orders-table 200 [0.42, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:22:23,658 - [mHTTP GET /orders/business-alerts-list 200 [0.10, 127.0.0.1:50286][0m
-INFO 2020-08-15 20:22:23,679 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.12, 127.0.0.1:50421][0m
-INFO 2020-08-15 20:22:23,738 - [mHTTP GET /orders/business-messages-list 200 [0.18, 127.0.0.1:50420][0m
-INFO 2020-08-15 20:22:23,851 - [mHTTP GET /orders/business-alerts-list 200 [0.12, 127.0.0.1:50421][0m
-INFO 2020-08-15 20:22:23,877 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.15, 127.0.0.1:50286][0m
-INFO 2020-08-15 20:22:23,938 - [mHTTP GET /orders/orders-table 200 [0.46, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:22:24,031 - [mHTTP GET /orders/business-messages-list 200 [0.29, 127.0.0.1:50553][0m
-INFO 2020-08-15 20:22:24,202 - [mHTTP GET /orders/orders-table 200 [0.26, 127.0.0.1:50286][0m
-INFO 2020-08-15 20:22:24,410 - [mHTTP GET /orders/orders-table 200 [0.20, 127.0.0.1:50553][0m
-INFO 2020-08-15 20:22:28,324 - [mHTTP GET /api/active-orders/?user=86 200 [0.07, 127.0.0.1:50585][0m
-INFO 2020-08-15 20:22:36,908 - [mHTTP PUT /api/order-update/ 200 [0.05, 127.0.0.1:50632][0m
-INFO 2020-08-15 20:22:37,022 - [mHTTP GET /orders/business-alerts-list 200 [0.09, 127.0.0.1:50286][0m
-INFO 2020-08-15 20:22:37,057 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.12, 127.0.0.1:50421][0m
-INFO 2020-08-15 20:22:37,115 - [mHTTP GET /orders/business-messages-list 200 [0.18, 127.0.0.1:50285][0m
-INFO 2020-08-15 20:22:37,212 - [mHTTP GET /orders/orders-table 200 [0.28, 127.0.0.1:50553][0m
+INFO 2020-08-17 14:41:20,044 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+INFO 2020-08-17 14:41:20,044 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+INFO 2020-08-17 14:41:20,045 - Listening on TCP address 127.0.0.1:8000
+INFO 2020-08-17 14:41:35,122 - [mHTTP GET /admin/core/employee/87/change/ 200 [0.29, 127.0.0.1:51683][0m
+INFO 2020-08-17 14:41:35,170 - [36mHTTP GET /static/admin/js/vendor/jquery/jquery.js 304 [0.02, 127.0.0.1:51685][0m
+INFO 2020-08-17 14:41:35,171 - [36mHTTP GET /static/admin/js/admin/DateTimeShortcuts.js 304 [0.02, 127.0.0.1:51688][0m
+INFO 2020-08-17 14:41:35,171 - [36mHTTP GET /static/admin/js/jquery.init.js 304 [0.02, 127.0.0.1:51686][0m
+INFO 2020-08-17 14:41:35,172 - [36mHTTP GET /static/admin/js/core.js 304 [0.02, 127.0.0.1:51689][0m
+INFO 2020-08-17 14:41:35,174 - [36mHTTP GET /static/admin/js/calendar.js 304 [0.02, 127.0.0.1:51687][0m
+INFO 2020-08-17 14:41:35,190 - [36mHTTP GET /static/admin/js/admin/RelatedObjectLookups.js 304 [0.01, 127.0.0.1:51685][0m
+INFO 2020-08-17 14:41:35,190 - [mHTTP GET /admin/jsi18n/ 200 [0.04, 127.0.0.1:51683][0m
+INFO 2020-08-17 14:41:35,192 - [36mHTTP GET /static/admin/js/urlify.js 304 [0.01, 127.0.0.1:51688][0m
+INFO 2020-08-17 14:41:35,199 - [36mHTTP GET /static/admin/js/actions.js 304 [0.02, 127.0.0.1:51686][0m
+INFO 2020-08-17 14:41:35,200 - [36mHTTP GET /static/admin/js/vendor/xregexp/xregexp.js 304 [0.01, 127.0.0.1:51687][0m
+INFO 2020-08-17 14:41:35,204 - [36mHTTP GET /static/admin/js/prepopulate.js 304 [0.02, 127.0.0.1:51689][0m
+INFO 2020-08-17 14:41:35,217 - [36mHTTP GET /static/admin/js/prepopulate_init.js 304 [0.01, 127.0.0.1:51683][0m
+INFO 2020-08-17 14:41:35,218 - [36mHTTP GET /static/admin/js/change_form.js 304 [0.02, 127.0.0.1:51685][0m
+INFO 2020-08-17 14:41:35,263 - [36mHTTP GET /static/admin/img/icon-addlink.svg 304 [0.02, 127.0.0.1:51686][0m
+INFO 2020-08-17 14:41:35,264 - [36mHTTP GET /static/admin/img/icon-changelink.svg 304 [0.02, 127.0.0.1:51688][0m
+INFO 2020-08-17 14:41:35,295 - [36mHTTP GET /static/admin/img/gis/move_vertex_on.svg 304 [0.01, 127.0.0.1:51687][0m
+INFO 2020-08-17 14:41:37,489 - [mHTTP GET /dashboard/business/3/orders 200 [0.16, 127.0.0.1:51694][0m
+INFO 2020-08-17 14:41:38,104 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:51699]
+INFO 2020-08-17 14:41:38,164 - [mHTTP GET /orders/orders-table 200 [0.09, 127.0.0.1:51694][0m
+INFO 2020-08-17 14:41:38,203 - WebSocket CONNECT /ws/orders/ [127.0.0.1:51699]
+INFO 2020-08-17 14:41:38,285 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:51694][0m
+INFO 2020-08-17 14:41:38,338 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:51694][0m
+INFO 2020-08-17 14:41:39,591 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:51694][0m
+INFO 2020-08-17 14:41:45,554 - [mHTTP PUT /api/order-update/ 200 [0.03, 127.0.0.1:51715][0m
+INFO 2020-08-17 14:41:45,618 - [mHTTP GET /orders/business-alerts-list 200 [0.05, 127.0.0.1:51695][0m
+INFO 2020-08-17 14:41:45,628 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.05, 127.0.0.1:51718][0m
+INFO 2020-08-17 14:41:45,645 - [mHTTP GET /orders/business-messages-list 200 [0.07, 127.0.0.1:51717][0m
+INFO 2020-08-17 14:41:45,647 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:51694][0m
+INFO 2020-08-17 14:41:52,497 - [mHTTP GET /api/open-orders/?q=open87 200 [0.02, 127.0.0.1:51729][0m
+INFO 2020-08-17 14:41:56,011 - [mHTTP GET /api/active-orders/?user=87 200 [0.02, 127.0.0.1:51734][0m
+INFO 2020-08-17 15:33:21,325 - [mHTTP GET /api/open-orders/?q=open87 200 [0.40, 127.0.0.1:53536][0m
+INFO 2020-08-17 15:33:26,503 - [mHTTP GET /api/active-orders/?user=87 200 [0.03, 127.0.0.1:53542][0m
+INFO 2020-08-17 15:33:49,487 - [mHTTP GET /dashboard/business/3/orders 200 [0.15, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:33:49,517 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:51699]
+INFO 2020-08-17 15:33:49,913 - [mHTTP GET /orders/orders-table 200 [0.06, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:33:49,963 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53567]
+INFO 2020-08-17 15:33:50,023 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53567]
+INFO 2020-08-17 15:33:50,179 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:33:50,231 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:33:51,548 - [mHTTP GET /static/assets/images/dndsos-logo-white.png 200 [0.01, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:33:55,378 - [mHTTP GET /geo/city-streets/?city=1081 200 [0.06, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:33:58,659 - [mHTTP GET /orders/orders-table 200 [0.11, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:34:00,431 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:53561][0m
+INFO 2020-08-17 15:34:00,460 - [mHTTP GET /orders/business-messages-list 200 [0.07, 127.0.0.1:53590][0m
+INFO 2020-08-17 15:34:00,461 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.07, 127.0.0.1:53591][0m
+INFO 2020-08-17 15:34:00,466 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:34:11,481 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:53591][0m
+INFO 2020-08-17 15:34:11,503 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.07, 127.0.0.1:53590][0m
+INFO 2020-08-17 15:34:11,522 - [mHTTP GET /orders/orders-table 200 [0.09, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:34:11,607 - [mHTTP GET /orders/business-alerts-list 200 [0.05, 127.0.0.1:53590][0m
+INFO 2020-08-17 15:34:11,625 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.07, 127.0.0.1:53561][0m
+INFO 2020-08-17 15:34:11,643 - [mHTTP GET /orders/orders-table 200 [0.09, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:34:11,658 - [mHTTP GET /orders/business-messages-list 200 [0.10, 127.0.0.1:53591][0m
+INFO 2020-08-17 15:34:16,544 - [mHTTP GET /geo/city-streets/?city=1108 200 [0.04, 127.0.0.1:53591][0m
+INFO 2020-08-17 15:34:18,772 - [mHTTP GET /orders/orders-table 200 [0.08, 127.0.0.1:53591][0m
+INFO 2020-08-17 15:34:20,156 - [mHTTP GET /orders/business-alerts-list 200 [0.08, 127.0.0.1:53560][0m
+INFO 2020-08-17 15:34:20,173 - [mHTTP GET /dashboard/business/3/b-alerts-items 200 [0.09, 127.0.0.1:53590][0m
+INFO 2020-08-17 15:34:20,187 - [mHTTP GET /orders/business-messages-list 200 [0.11, 127.0.0.1:53561][0m
+INFO 2020-08-17 15:34:20,189 - [mHTTP GET /orders/orders-table 200 [0.11, 127.0.0.1:53591][0m
+INFO 2020-08-17 15:35:18,588 - [mHTTP GET /admin/core/ 200 [0.04, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:35:19,430 - [mHTTP GET /admin/ 200 [0.06, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:35:21,937 - [mHTTP GET /admin/orders/order/ 200 [0.09, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:35:22,013 - [mHTTP GET /admin/jsi18n/ 200 [0.05, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:35:58,336 - [mHTTP GET /admin/orders/order/357a1903-68f3-49ea-93a6-b0ffd0e0cf58/change/ 200 [0.13, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:35:58,393 - [mHTTP GET /admin/jsi18n/ 200 [0.03, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:36:04,143 - [mHTTP GET /admin/orders/order/ 200 [0.09, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:36:14,418 - [mHTTP GET /admin/orders/order/056eb5eb-a556-479c-92cf-5034f75767a0/change/ 200 [0.11, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:36:14,466 - [mHTTP GET /admin/jsi18n/ 200 [0.02, 127.0.0.1:53654][0m
+INFO 2020-08-17 15:58:06,912 - [mHTTP GET /admin/orders/ 200 [0.08, 127.0.0.1:54618][0m
+INFO 2020-08-17 15:58:08,422 - [mHTTP GET /admin/ 200 [0.06, 127.0.0.1:54618][0m
+INFO 2020-08-17 15:58:09,989 - [mHTTP GET /admin/core/employer/ 200 [0.08, 127.0.0.1:54618][0m
+INFO 2020-08-17 15:58:10,047 - [mHTTP GET /admin/jsi18n/ 200 [0.02, 127.0.0.1:54618][0m
+INFO 2020-08-17 15:58:13,190 - [mHTTP GET /admin/core/employer/3/change/ 200 [0.11, 127.0.0.1:54618][0m
+INFO 2020-08-17 15:58:13,238 - [mHTTP GET /admin/jsi18n/ 200 [0.02, 127.0.0.1:54624][0m

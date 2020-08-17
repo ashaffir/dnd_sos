@@ -1,8 +1,8 @@
 import 'dart:isolate';
 
-import 'package:bloc_login/bloc/authentication_bloc.dart';
-import 'package:bloc_login/common/helper.dart';
-import 'package:bloc_login/login/registration.dart';
+import 'package:pickndell/bloc/authentication_bloc.dart';
+import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/login/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:bloc_login/repository/user_repository.dart';
-import 'package:bloc_login/model/user_model.dart';
+import 'package:pickndell/repository/user_repository.dart';
+import 'package:pickndell/model/user_model.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';

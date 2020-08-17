@@ -1,4 +1,4 @@
-import 'package:bloc_login/common/global.dart';
+import 'package:pickndell/common/global.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 

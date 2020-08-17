@@ -1,10 +1,10 @@
-import 'package:bloc_login/common/global.dart';
-import 'package:bloc_login/home/home_page_isolate.dart';
-import 'package:bloc_login/model/order.dart';
-import 'package:bloc_login/orders/order_accepted.dart';
+import 'package:pickndell/common/global.dart';
+import 'package:pickndell/home/home_page_isolate.dart';
+import 'package:pickndell/model/order.dart';
+import 'package:pickndell/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc_login/bloc/authentication_bloc.dart';
+import 'package:pickndell/bloc/authentication_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 class MessagePage extends StatelessWidget {

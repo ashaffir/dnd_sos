@@ -32,13 +32,16 @@ def orders_table(request):
     for order in orders:
         if order.status == 'IN_PROGRESS':
             # Calculated completed distance
-            trip_completed = distance_calculator(order)
-            order.trip_completed = round(trip_completed)
-            order.save()
+            try:
+                trip_completed = distance_calculator(order)
+                order.trip_completed = round(trip_completed)
+                order.save()
+            except Exception as e:
+                print(f'Distance was not claculated for order: {order}')
         else:
             pass
     
-    context['currency'] = settings.DEFAULT_CURRENCY
+    context['currency'] = '₪' if request.LANGUAGE_CODE == 'he' else '$'
     context['orders'] = orders
     return render(request, 'dndsos_dashboard/partials/_orders-table.html', context)
 

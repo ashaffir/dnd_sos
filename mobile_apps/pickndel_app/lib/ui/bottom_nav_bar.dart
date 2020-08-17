@@ -1,8 +1,8 @@
-import 'package:bloc_login/dao/user_dao.dart';
-import 'package:bloc_login/home/home_page_isolate.dart';
-import 'package:bloc_login/model/api_model.dart';
-import 'package:bloc_login/model/user_model.dart';
-import 'package:bloc_login/repository/user_repository.dart';
+import 'package:pickndell/dao/user_dao.dart';
+import 'package:pickndell/home/home_page_isolate.dart';
+import 'package:pickndell/model/api_model.dart';
+import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 
 // Reference: https://www.youtube.com/watch?v=DNCV1K5eVMw
@@ -47,11 +47,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
-              // Navigator.pushReplacementNamed(context, '/');
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => HomePageIsolate()));
+              Navigator.pushReplacementNamed(context, '/');
+              // Navigator.push(
+              //     context,
+              //     new MaterialPageRoute(
+              //         builder: (context) => HomePageIsolate()));
             },
           ),
           IconButton(
@@ -100,6 +100,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
+              print('GOIFN');
               Navigator.pushReplacementNamed(context, '/');
             },
           ),
@@ -109,7 +110,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/open-orders');
+              Navigator.pushReplacementNamed(context, '/rejected-orders');
             },
           ),
           IconButton(
@@ -118,7 +119,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/active-orders');
+              Navigator.pushReplacementNamed(context, '/business-orders');
             },
           ),
           IconButton(

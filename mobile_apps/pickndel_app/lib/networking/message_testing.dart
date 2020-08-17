@@ -1,4 +1,4 @@
-import 'package:bloc_login/model/notification_message.dart';
+import 'package:pickndell/model/notification_message.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 

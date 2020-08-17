@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:bloc_login/dao/user_dao.dart';
-import 'package:bloc_login/model/user_model.dart';
+import 'package:pickndell/dao/user_dao.dart';
+import 'package:pickndell/model/user_model.dart';
 
 class Profile extends InheritedWidget {
   User userData;

@@ -5,14 +5,14 @@ import 'dart:convert';
 import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/location_settings.dart';
-import 'package:bloc_login/common/global.dart';
-import 'package:bloc_login/location/location_callback_handler.dart';
-import 'package:bloc_login/location/location_service_repository.dart';
-import 'package:bloc_login/model/user_location.dart';
-import 'package:bloc_login/networking/message_testing.dart';
-import 'package:bloc_login/networking/messaging_widget.dart';
-import 'package:bloc_login/repository/location_repository.dart';
-import 'package:bloc_login/repository/user_repository.dart';
+import 'package:pickndell/common/global.dart';
+import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/location/location_callback_handler.dart';
+import 'package:pickndell/location/location_service_repository.dart';
+import 'package:pickndell/model/user_location.dart';
+import 'package:pickndell/networking/messaging_widget.dart';
+import 'package:pickndell/repository/location_repository.dart';
+import 'package:pickndell/repository/user_repository.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:location_permissions/location_permissions.dart';
@@ -37,8 +37,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
   String logStr = '';
   bool isRunning;
   bool isTracking = false;
-  bool isTrackinggg = false;
-  LocationDto lastLocation;
+  // LocationDto lastLocation;
   DateTime lastTimeLocation;
 
 // User related
@@ -112,6 +111,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
   }
 
   Future<void> initPlatformState() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
     print('Initializing...');
     await BackgroundLocator.initialize();
     // logStr = await FileManager.readLogFile();
@@ -121,6 +121,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
       isRunning = _isRunning;
     });
     print('Running ${isRunning.toString()}');
+    await localStorage.setBool('locationTracking', isRunning);
   }
 
   Future<void> updateUI(LocationDto data) async {
@@ -135,14 +136,14 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
       await updateLocation.updateUserLocation(userLocation);
     }
 
-    setState(() {
-      if (data != null) {
-        lastLocation = data;
-        lastTimeLocation = DateTime.now();
-        print('-------User: ${currentUser.userId}  $data ---------');
-      }
-      // logStr = log;
-    });
+    // setState(() {
+    //   if (data != null) {
+    //     lastLocation = data;
+    //     lastTimeLocation = DateTime.now();
+    //     print('-------User: ${currentUser.userId}  $data ---------');
+    //   }
+    //   // logStr = log;
+    // });
   }
 
   Future<bool> _checkLocationPermission() async {
@@ -169,43 +170,53 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     }
   }
 
-  void _toggleTracking() {
-    if (isTracking == false) {
-      setState(() {
-        isTracking = true;
-        _onStart();
-      });
-    } else if (isTracking) {
-      setState(() {
-        isTracking = false;
-        onStop();
-      });
-    }
-  }
+  // void _toggleTracking() async {
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   if (isTracking == false) {
+  //     setState(() {
+  //       isTracking = true;
+  //       _onStart();
+  //     });
+  //   } else if (isTracking) {
+  //     setState(() {
+  //       isTracking = false;
+  //       onStop();
+  //     });
+  //   }
+  //   await localStorage.setBool('locationTracking', isTracking);
+  // }
 
   void _onStart() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    LocationRepository updateAvailability = LocationRepository();
     if (await _checkLocationPermission()) {
       print('GOT PERMISSIONS!!');
       _startLocator();
       setState(() {
         isRunning = true;
         lastTimeLocation = null;
-        lastLocation = null;
+        // lastLocation = null;
 
         print('isRunning: $isRunning');
       });
     } else {
       // show error
     }
+    await localStorage.setBool('locationTracking', isRunning);
+    await updateAvailability.updateAvailability(isRunning);
   }
 
-  void onStop() {
+  void onStop() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    LocationRepository updateAvailability = LocationRepository();
     BackgroundLocator.unRegisterLocationUpdate();
     setState(() {
       isRunning = false;
       //  lastTimeLocation = null;
 //      lastLocation = null;
     });
+    await localStorage.setBool('locationTracking', isRunning);
+    await updateAvailability.updateAvailability(isRunning);
   }
 
   void _startLocator() {
@@ -372,11 +383,29 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                 Transform.scale(
                                   scale: 2.0,
                                   child: Switch(
-                                    value: isTracking,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _toggleTracking();
-                                      });
+                                    value: isRunning,
+                                    onChanged: (running) {
+                                      // Check account approved first
+                                      if (currentUser.isApproved == 1) {
+                                        if (running) {
+                                          _onStart();
+                                        } else if (!running) {
+                                          onStop();
+                                        }
+                                        // setState(() {
+                                        //   _toggleTracking();
+                                        // });
+                                      } else {
+                                        showAlertDialog(
+                                            context: context,
+                                            title:
+                                                'Your account is not approved yet',
+                                            content:
+                                                'Please complete your profile at https://pickndell.com',
+                                            url:
+                                                'https://pickndell.com/core/login');
+                                        print('NOT APPROVED');
+                                      }
                                     },
                                     activeTrackColor: Colors.lightGreenAccent,
                                     activeColor: Colors.green,
@@ -386,7 +415,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                 Padding(
                                   padding: EdgeInsets.only(top: 20.0),
                                 ),
-                                Text(isTracking ? "Available" : "Unavailable"),
+                                Text(isRunning ? "Available" : "Unavailable"),
                               ],
                             ),
                           ],

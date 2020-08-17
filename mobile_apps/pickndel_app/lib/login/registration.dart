@@ -4,12 +4,12 @@
 // REFERENCE: Dropdown text: https://www.youtube.com/watch?v=L3E4LNSrSWM
 import 'dart:convert';
 
-import 'package:bloc_login/api_connection/api_connection.dart';
-import 'package:bloc_login/common/global.dart';
-import 'package:bloc_login/common/helper.dart';
-import 'package:bloc_login/login/login_page.dart';
-import 'package:bloc_login/login/message_page.dart';
-import 'package:bloc_login/repository/user_repository.dart';
+import 'package:pickndell/api_connection/api_connection.dart';
+import 'package:pickndell/common/global.dart';
+import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/login/login_page.dart';
+import 'package:pickndell/login/message_page.dart';
+import 'package:pickndell/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flushbar/flushbar.dart';

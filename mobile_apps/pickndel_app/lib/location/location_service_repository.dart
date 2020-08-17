@@ -4,8 +4,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:background_locator/location_dto.dart';
-import 'package:bloc_login/model/user_location.dart';
-import 'package:bloc_login/repository/location_repository.dart';
+import 'package:pickndell/model/user_location.dart';
+import 'package:pickndell/repository/location_repository.dart';
 
 // import './file_manager.dart';
 

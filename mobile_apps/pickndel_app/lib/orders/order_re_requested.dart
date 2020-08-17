@@ -5,15 +5,15 @@ import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
 
-class OrderRejected extends StatefulWidget {
+class OrderReRequested extends StatefulWidget {
   final Order order;
-  OrderRejected({this.order});
+  OrderReRequested({this.order});
 
   @override
-  _OrderRejectedState createState() => _OrderRejectedState();
+  _OrderReRequestedState createState() => _OrderReRequestedState();
 }
 
-class _OrderRejectedState extends State<OrderRejected> {
+class _OrderReRequestedState extends State<OrderReRequested> {
   @override
   void initState() {
     super.initState();
@@ -23,17 +23,17 @@ class _OrderRejectedState extends State<OrderRejected> {
 
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: updateOrderRejected(widget.order),
+      future: updateOrderReRequested(widget.order),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          print('ORDER REJECTED: ${snapshot.data["response"]}');
+          print('ORDER RE-REQUESTED: ${snapshot.data["response"]}');
 
           if (snapshot.data["response"] == "Update successful") {
-            return getOrderRejectedPage(widget.order);
+            return getOrderReRequestedPage(widget.order);
           } else if (snapshot.data["response"] == "Update failed") {
-            return orderRejectedErrorPage();
+            return orderReRequestedErrorPage();
           } else {
-            return orderRejectedErrorPage();
+            return orderReRequestedErrorPage();
           }
         } else {
           print("No data:");
@@ -46,20 +46,20 @@ class _OrderRejectedState extends State<OrderRejected> {
     );
   }
 
-  Future updateOrderRejected(Order order) async {
-    print('Updating order delivered...');
+  Future updateOrderReRequested(Order order) async {
+    print('Broadcasting order re-request...');
     var orderId = order.order_id;
     final orderUpdated =
-        await OrderRepository().updateOrder(orderId, 'REJECTED');
+        await OrderRepository().updateOrder(orderId, 'RE_REQUESTED');
     print('orderUpdated: $orderUpdated');
     return orderUpdated;
   }
 
-  Widget getOrderRejectedPage(Order order) {
+  Widget getOrderReRequestedPage(Order order) {
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Delivered'),
+        title: Text('Order Broadcast'),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 50),
@@ -71,7 +71,7 @@ class _OrderRejectedState extends State<OrderRejected> {
               flex: 4,
             ),
             Text(
-              "Order Canceled.",
+              "Order Broadcast Completed.",
               style: bigLightBlueTitle,
             ),
             Spacer(
@@ -84,11 +84,11 @@ class _OrderRejectedState extends State<OrderRejected> {
     );
   }
 
-  Widget orderRejectedErrorPage() {
+  Widget orderReRequestedErrorPage() {
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Delivered'),
+        title: Text('Order Broadcast'),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 50),

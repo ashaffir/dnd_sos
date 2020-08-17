@@ -54,7 +54,7 @@ def freelancer_location(request):
 
     print(f"active_orders ***************{len(active_orders)}****************")
     if len(active_orders) == 0:
-        freelancer.is_active = False
+        freelancer.is_delivering = False
         freelancer.save()
         
     # Tracking location of an available freelancer

@@ -31,7 +31,7 @@ class OrderSerializer(serializers.ModelSerializer):
     # business_name = serializers.SlugRelatedField(read_only=True, slug_field='business_name')
     class Meta:
         model = Order
-        fields = ('order_id','status','pick_up_address', 
+        fields = ('order_id','status','pick_up_address','created', 'updated', 
                 'drop_off_address', 'distance_to_business',
                 'price', 'order_type','business', 'freelancer',)
         # read_only_fields = ('id', 'created', 'updated',)

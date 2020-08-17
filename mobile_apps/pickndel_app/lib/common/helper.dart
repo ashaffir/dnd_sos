@@ -1,9 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:pickndell/bloc/authentication_bloc.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import './constants.dart';
+
+String timeConvert(String dateTime) {
+  String convertedTime = dateTime.split('T')[0] +
+      " " +
+      dateTime.split('T')[1].split(':')[0] +
+      ":" +
+      dateTime.split('T')[1].split(':')[1];
+  return convertedTime;
+}
 
 String validateName(String value) {
   String patttern = r'(^[a-zA-Z ]*$)';
@@ -94,8 +107,17 @@ hideProgress() async {
   await progressDialog.hide();
 }
 
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not open $url';
+  }
+}
+
 //helper method to show alert dialog
-showAlertDialog(BuildContext context, String title, String content) {
+showAlertDialog(
+    {BuildContext context, String title, String content, String url}) {
   // set up the AlertDialog
   Widget okButton = FlatButton(
     child: Text("OK"),
@@ -103,11 +125,26 @@ showAlertDialog(BuildContext context, String title, String content) {
       Navigator.pop(context);
     },
   );
+
+  // This button will log out the user so that he will need to log back in to update the profile
+  Widget urlButton = FlatButton(
+    child: Text('Go to Website'),
+    color: Colors.green,
+    onPressed: () {
+      BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+      Phoenix.rebirth(context);
+      if (url != '') {
+        launchURL(url);
+      }
+    },
+  );
+
   AlertDialog alert = AlertDialog(
     title: Text(title),
     content: Text(content),
     actions: [
       okButton,
+      url != '' ? urlButton : null,
     ],
   );
 

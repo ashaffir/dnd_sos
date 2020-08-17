@@ -8,7 +8,7 @@ from .views import (UserRecordView, registration_view,
                     OrdersView, ContactView, order_update_view, order_view,
                     all_user_orders, all_businesses, all_users, user_profile,
                     NewLoginViewSet,open_orders_view,OpenOrdersViewSet,ActiveOrdersViewSet,
-                    UserLocationViewSet,)
+                    UserLocationViewSet,BusinessOrdersViewSet,BusinessRejectedOrdersViewSet, UserAvailable,)
 
 # Firebase Cloud Messageing (FCM)
 from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
@@ -22,6 +22,8 @@ router.register('user-orders', OrdersView)
 router.register('contacts', ContactView)
 router.register('open-orders', OpenOrdersViewSet, basename='api')
 router.register('active-orders', ActiveOrdersViewSet, basename='api')
+router.register('business-orders', BusinessOrdersViewSet, basename='api')
+router.register('rejected-orders', BusinessRejectedOrdersViewSet, basename='api')
 
 app_name = 'api'
 urlpatterns = [
@@ -37,6 +39,7 @@ urlpatterns = [
     path('all-users/', all_users , name='all-users'),
     path('user-profile/', user_profile , name='user-profile'),
     path('user-location/', UserLocationViewSet.as_view() , name='user-location'),
+    path('user-availability/', UserAvailable.as_view() , name='user-availability'),
     # path('open-orders/', open_orders_view , name='open-orders'),
 
     # FCM

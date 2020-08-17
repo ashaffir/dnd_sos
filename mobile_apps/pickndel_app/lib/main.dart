@@ -1,15 +1,16 @@
-import 'package:bloc_login/orders/order_accepted.dart';
+import 'package:pickndell/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc_login/repository/user_repository.dart';
+import 'package:pickndell/repository/user_repository.dart';
 
-import 'package:bloc_login/bloc/authentication_bloc.dart';
-import 'package:bloc_login/ui/splash.dart';
-import 'package:bloc_login/login/login_page.dart';
-import 'package:bloc_login/common/common.dart';
+import 'package:pickndell/bloc/authentication_bloc.dart';
+import 'package:pickndell/ui/splash.dart';
+import 'package:pickndell/login/login_page.dart';
+import 'package:pickndell/common/common.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/authentication_bloc.dart';
 import 'home/home_page_isolate.dart';
@@ -48,11 +49,18 @@ void main() async {
     },
     child: Phoenix(child: App(userRepository: userRepository)),
   ));
+
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+  final userInfo = await userRepository.userDao.getUser(0);
+  int isEmployee = userInfo.isEmployee;
+  await localStorage.setInt('isEmployee', isEmployee);
 }
 
 class App extends StatelessWidget {
   final String openOrders = "openOrders";
   final String activeOrders = "activeOrders";
+  final String businessOrders = "businessOrders";
+  final String rejectedOrders = "rejectedOrders";
 
   final UserRepository userRepository;
 
@@ -103,6 +111,8 @@ class App extends StatelessWidget {
                 ),
             '/open-orders': (context) => GetOrders(openOrders),
             '/active-orders': (context) => GetOrders(activeOrders),
+            '/business-orders': (context) => GetOrders(businessOrders),
+            '/rejected-orders': (context) => GetOrders(rejectedOrders),
             '/order-accepted': (context) => OrderAccepted(),
           },
         ));

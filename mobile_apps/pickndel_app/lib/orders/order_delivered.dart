@@ -1,7 +1,7 @@
-import 'package:bloc_login/model/order.dart';
-import 'package:bloc_login/repository/order_repository.dart';
-import 'package:bloc_login/ui/bottom_nav_bar.dart';
-import 'package:bloc_login/ui/progress_indicator.dart';
+import 'package:pickndell/model/order.dart';
+import 'package:pickndell/repository/order_repository.dart';
+import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
 

@@ -1,7 +1,7 @@
-import 'package:bloc_login/model/order.dart';
-import 'package:bloc_login/model/user_location.dart';
-import 'package:bloc_login/model/user_model.dart';
-import 'package:bloc_login/networking/CustomException.dart';
+import 'package:pickndell/model/order.dart';
+import 'package:pickndell/model/user_location.dart';
+import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/networking/CustomException.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -11,7 +11,7 @@ import 'dart:async';
 import 'CustomException.dart';
 
 class ApiProvider {
-  final String _baseUrl = "https://bf3831159b95.ngrok.io/api/";
+  final String _baseUrl = "https://8c1d164fa909.ngrok.io/api/";
 
   Future<dynamic> get(String url, User user) async {
     var responseJson;
@@ -29,6 +29,28 @@ class ApiProvider {
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
+  }
+
+  Future<dynamic> putAvailability(
+      String url, User user, bool availability) async {
+    var postResponseJson;
+
+    try {
+      final response = await http.put(
+        _baseUrl + url,
+        headers: <String, String>{
+          "Authorization": "Token ${user.token}",
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'available': availability,
+        }),
+      );
+      postResponseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return postResponseJson;
   }
 
   Future<dynamic> putLocation(

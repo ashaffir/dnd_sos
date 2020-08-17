@@ -35,7 +35,7 @@ class Employee(OSMGeoAdmin):
         'vehicle',
         'is_approved',
         'is_available',
-        'is_active',
+        'is_delivering',
         )
     search_fields = ('bio','city','business_name',)
 

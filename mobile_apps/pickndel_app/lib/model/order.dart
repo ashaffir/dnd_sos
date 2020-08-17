@@ -1,3 +1,5 @@
+import 'package:pickndell/common/helper.dart';
+
 class Order {
   String order_id;
   String created;
@@ -26,9 +28,14 @@ class Order {
   });
 
   Order.fromJson(Map<String, dynamic> json) {
+    String createdString = json['created'];
+    String updateString = json['updated'];
+
     order_id = json['order_id'];
-    created = json['created'];
-    updated = json['updated'];
+
+    created = timeConvert(json['created']);
+    updated = timeConvert(json['updated']);
+
     pick_up_address = json['pick_up_address'];
     drop_off_address = json['drop_off_address'];
     order_type = json['order_type'];
@@ -38,6 +45,8 @@ class Order {
     price = json['price'];
     status = json['status'];
   }
+
+// Order.activeDuration()
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

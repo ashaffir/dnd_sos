@@ -1,6 +1,6 @@
-import 'package:bloc_login/login/message_page.dart';
-import 'package:bloc_login/model/notification_message.dart';
-import 'package:bloc_login/model/order.dart';
+import 'package:pickndell/login/message_page.dart';
+import 'package:pickndell/model/notification_message.dart';
+import 'package:pickndell/model/order.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
-import 'package:bloc_login/dao/user_dao.dart';
-import 'package:bloc_login/model/open_orders.dart';
-import 'package:bloc_login/networking/ApiProvider.dart';
-import 'package:bloc_login/model/order.dart';
+import 'package:pickndell/dao/user_dao.dart';
+import 'package:pickndell/model/open_orders.dart';
+import 'package:pickndell/networking/ApiProvider.dart';
+import 'package:pickndell/model/order.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -11,11 +11,17 @@ class OrderRepository {
   Future<Orders> fetchOrderDetails(String ordersType) async {
     var _openOrdersUrl = "open-orders/?q=open";
     var _activeOrdersUrl = "active-orders/?user=";
+    var _businessOrdersUrl = "business-orders/?user=";
+    var _rejectedOrdersUrl = "rejected-orders/?user=";
 
     var _user = await UserDao().getUser(0);
     var _response = ordersType == 'openOrders'
         ? await _provider.get(_openOrdersUrl, _user)
-        : await _provider.get(_activeOrdersUrl, _user);
+        : ordersType == 'activeOrders'
+            ? await _provider.get(_activeOrdersUrl, _user)
+            : ordersType == 'businessOrders'
+                ? await _provider.get(_businessOrdersUrl, _user)
+                : await _provider.get(_rejectedOrdersUrl, _user);
 
     Orders od = Orders();
     od.orders = [];

@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:bloc_login/model/open_orders.dart';
-import 'package:bloc_login/networking/Response.dart';
-import 'package:bloc_login/repository/order_repository.dart';
+import 'package:pickndell/model/open_orders.dart';
+import 'package:pickndell/networking/Response.dart';
+import 'package:pickndell/repository/order_repository.dart';
 
 class OrdersBloc {
   final String ordersType;
@@ -24,8 +24,12 @@ class OrdersBloc {
   fetchOrder(String ordersType) async {
     if (ordersType == 'openOrders') {
       orderDataSink.add(Response.loading('Getting Open Orders'));
-    } else {
+    } else if (ordersType == 'activeOrders') {
       orderDataSink.add(Response.loading('Getting Active Orders'));
+    } else if (ordersType == 'businessOrders') {
+      orderDataSink.add(Response.loading('Getting Business Orders'));
+    } else {
+      orderDataSink.add(Response.loading('Getting Rejected Orders'));
     }
     try {
       Orders orderDetails =

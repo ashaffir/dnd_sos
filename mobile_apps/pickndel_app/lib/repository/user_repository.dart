@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:bloc_login/model/user_model.dart';
+import 'package:pickndell/model/user_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:bloc_login/model/api_model.dart';
-import 'package:bloc_login/api_connection/api_connection.dart';
-import 'package:bloc_login/dao/user_dao.dart';
+import 'package:pickndell/model/api_model.dart';
+import 'package:pickndell/api_connection/api_connection.dart';
+import 'package:pickndell/dao/user_dao.dart';
 
 // REFERENCE: Inherited idget
 

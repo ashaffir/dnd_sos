@@ -266,9 +266,11 @@ GROUP_PRIVATE_TOKEN = config['GROUP_PRIVATE_TOKEN']
 # Default pricing structure
 DEFAULT_BASE_PRICE = config['DEFAULT_BASE_PRICE']
 DEFAULT_UNIT_PRICE = config['DEFAULT_UNIT_PRICE']
-DEFAULT_CURRENCY = config['DEFAULT_CURRENCY']
-DISTANCE_UNIT = config['DISTANCE_UNIT']
-DISTANCE_DIM = config['DISTANCE_DIM']
+# DEFAULT_CURRENCY = config['DEFAULT_CURRENCY']
+
+DISTANCE_UNIT = config['DISTANCE_UNIT'] # for pricing each unit
+DISTANCE_DIM = config['DISTANCE_DIM'] # m
+MAX_DISTANCE = config['MAX_DISTANCE'] # KM
 
 # Twilio settings
 # https://django-twilio.readthedocs.io/en/latest/index.html

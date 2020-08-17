@@ -52,7 +52,23 @@ class UserLocationViewSet(APIView):
 
         return Response({'response':'Location updated'},status=200)
 
+class UserAvailable(APIView):
+    authentications_classes = (TokenAuthentication,)
+    def put(self, request, *arg, **kwargs):
+        try:
+            user_id = self.request.GET.get('user')
+            user = Employee.objects.get(pk=user_id)
+        except Exception as e:
+            return Response({'response':'Bad user ID'}, status=status.HTTP_400_BAD_REQUEST)
 
+        try:
+            user.is_available = self.request.data['available']
+            user.save()
+        except Exception as e:
+            print(f'Failed updated user availability')
+            return Response({'response':'User availability not updated'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'response':'Availability updated'},status=200)
 
 
 
@@ -181,6 +197,41 @@ class ActiveOrdersViewSet(viewsets.ModelViewSet):
             )
         return queryset_list
 
+class BusinessOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerializer
+    authentication_classes = [TokenAuthentication,]
+    # queryset = Order.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        user = self.request.GET.get('user')
+        print(f'User: {user}')
+        if user:
+            queryset_list = queryset_list.filter(
+                Q(business=user) & 
+                (
+                    Q(status='STARTED') | 
+                    Q(status="IN_PROGRESS") | 
+                    Q(status="REQUESTED") |
+                    Q(status="RE_REQUESTED") 
+                    ) 
+            )
+        return queryset_list
+
+class BusinessRejectedOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerializer
+    authentication_classes = [TokenAuthentication,]
+    # queryset = Order.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        user = self.request.GET.get('user')
+        print(f'User: {user}')
+        if user:
+            queryset_list = queryset_list.filter(
+                Q(business=user) & (Q(status="REJECTED")) 
+            )
+        return queryset_list
 
 class OrdersView(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
@@ -360,6 +411,10 @@ def order_update_view(request):
                     updated_order = serializer.save()
                     data = serializer.data
                     data['response'] = 'Update successful'
+                elif new_status == 'IN_PROGRESS' and old_status == 'STARTED':
+                    updated_order = serializer.save()
+                    data = serializer.data
+                    data['response'] = 'Update successful'
                 elif new_status == 'COMPLETED' and old_status == 'IN_PROGRESS':
                     updated_order = serializer.save()
                     data = serializer.data
@@ -371,6 +426,10 @@ def order_update_view(request):
                     updated_order = serializer.save()
                     update_order.freelancer = None
                     update_order.save()
+                    data = serializer.data
+                    data['response'] = 'Update successful'
+                elif new_status == 'RE_REQUESTED':
+                    updated_order = serializer.save()
                     data = serializer.data
                     data['response'] = 'Update successful'
                 else:

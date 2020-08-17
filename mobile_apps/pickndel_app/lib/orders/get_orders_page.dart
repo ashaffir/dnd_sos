@@ -1,17 +1,20 @@
-import 'package:bloc_login/orders/order_bloc.dart';
-import 'package:bloc_login/orders/order_delivered.dart';
-import 'package:bloc_login/orders/order_rejected.dart';
-import 'package:bloc_login/ui/bottom_nav_bar.dart';
-import 'package:bloc_login/model/order.dart';
-import 'package:bloc_login/common/global.dart';
-import 'package:bloc_login/orders/order_accepted.dart';
+import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/orders/order_bloc.dart';
+import 'package:pickndell/orders/order_delivered.dart';
+import 'package:pickndell/orders/order_picked_up.dart';
+import 'package:pickndell/orders/order_re_requested.dart';
+import 'package:pickndell/orders/order_rejected.dart';
+import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/model/order.dart';
+import 'package:pickndell/common/global.dart';
+import 'package:pickndell/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
-import 'package:bloc_login/networking/Response.dart';
-import 'package:bloc_login/model/open_orders.dart';
+import 'package:pickndell/networking/Response.dart';
+import 'package:pickndell/model/open_orders.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetOrders extends StatefulWidget {
   final String ordersType;
-
   GetOrders(this.ordersType);
 
   @override
@@ -21,13 +24,36 @@ class GetOrders extends StatefulWidget {
 class _GetOrdersState extends State<GetOrders> {
   OrdersBloc _bloc;
   String pageTitle;
+  bool locationTracking;
+
+  Future<bool> _checkTrackingStatus() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    locationTracking = await localStorage.get('locationTracking');
+    if (locationTracking == null) {
+      return false;
+    } else {
+      return locationTracking;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    _checkTrackingStatus();
     _bloc = OrdersBloc(widget.ordersType);
-    pageTitle =
-        widget.ordersType == 'openOrders' ? 'Open Orders' : 'Active Orders';
+    if (widget.ordersType == 'openOrders') {
+      pageTitle = 'Open Orders';
+    } else if (widget.ordersType == 'activeOrders') {
+      pageTitle = 'Active Orders';
+    } else if (widget.ordersType == 'businessOrders') {
+      pageTitle = 'Current Open Orders';
+    } else if (widget.ordersType == 'rejectedOrders') {
+      pageTitle = 'Orders Require Your Attention';
+    } else {
+      pageTitle = '';
+    }
+    // pageTitle =
+    //     widget.ordersType == 'openOrders' ? 'Open Orders' : 'Active Orders';
   }
 
   @override
@@ -60,8 +86,10 @@ class _GetOrdersState extends State<GetOrders> {
                   break;
                 case Status.COMPLETED:
                   return OrdersList(
-                      ordersList: snapshot.data.data,
-                      ordersType: widget.ordersType);
+                    ordersList: snapshot.data.data,
+                    ordersType: widget.ordersType,
+                    locationTracking: locationTracking,
+                  );
                   break;
                 case Status.ERROR:
                   {
@@ -95,8 +123,10 @@ class _GetOrdersState extends State<GetOrders> {
 class OrdersList extends StatelessWidget {
   final Orders ordersList;
   final String ordersType;
+  final bool locationTracking;
 
-  const OrdersList({Key key, this.ordersList, this.ordersType})
+  const OrdersList(
+      {Key key, this.ordersList, this.ordersType, this.locationTracking})
       : super(key: key);
 
 // REFERENCE - Alert dialog: https://www.youtube.com/watch?v=FGfhnS6skMQ
@@ -192,29 +222,90 @@ class OrdersList extends StatelessWidget {
                                     ),
                                   )
                                 // Order Rejected
-                                : SizedBox(
-                                    // width: 320.0,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.30,
-                                    child: RaisedButton(
-                                      onPressed: () {
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                OrderRejected(order: order),
+                                : newStatus == "REJECTED"
+                                    ? SizedBox(
+                                        // width: 320.0,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.30,
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OrderRejected(order: order),
+                                              ),
+                                              (Route<dynamic> route) =>
+                                                  false, // No Back option for this page
+                                            );
+                                          },
+                                          child: Text(
+                                            "Confirm Cancelation",
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
-                                          (Route<dynamic> route) =>
-                                              false, // No Back option for this page
-                                        );
-                                      },
-                                      child: Text(
-                                        "Confirm Cancelation",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      color: Colors.red,
-                                    ),
-                                  ),
+                                          color: Colors.red,
+                                        ),
+                                      )
+                                    // RE_REQUESTED by business
+                                    : newStatus == "RE_REQUESTED"
+                                        ? SizedBox(
+                                            // width: 320.0,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.30,
+                                            child: RaisedButton(
+                                              onPressed: () {
+                                                Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        OrderReRequested(
+                                                            order: order),
+                                                  ),
+                                                  (Route<dynamic> route) =>
+                                                      false, // No Back option for this page
+                                                );
+                                              },
+                                              child: Text(
+                                                "Confirm Broadcast",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              color: Colors.red[300],
+                                            ),
+                                          )
+                                        :
+                                        // Picked up. IN_PROGRESS
+                                        SizedBox(
+                                            // width: 320.0,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.30,
+                                            child: RaisedButton(
+                                              onPressed: () {
+                                                Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        OrderPickedup(
+                                                            order: order),
+                                                  ),
+                                                  (Route<dynamic> route) =>
+                                                      false, // No Back option for this page
+                                                );
+                                              },
+                                              child: Text(
+                                                "Confirm Pick Up",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              color: Colors.green[400],
+                                            ),
+                                          ),
                       ],
                     )
                   ],
@@ -234,6 +325,10 @@ class OrdersList extends StatelessWidget {
         itemCount: ordersList.orders.length,
         itemBuilder: (context, index) {
           Order order = ordersList.orders[index];
+
+          ////////// Freelancer Open Orders ///////////////
+          ///
+
           if (ordersType == 'openOrders') {
             return Center(
               child: Card(
@@ -266,8 +361,19 @@ class OrdersList extends StatelessWidget {
                               ),
                               onPressed: () {
                                 print('Accepted Order');
-                                String newStatus = "STARTED";
-                                orderAlert(context, order, newStatus);
+                                print('TRACKING>>>>> $locationTracking');
+                                if (locationTracking) {
+                                  String newStatus = "STARTED";
+                                  orderAlert(context, order, newStatus);
+                                } else {
+                                  showAlertDialog(
+                                      context: context,
+                                      title: 'Tracking is off',
+                                      content:
+                                          'Please switch to Available status before accepting orders',
+                                      url: '');
+                                  print('No tracking!!!');
+                                }
 
                                 // Just move the "accept" screen
                                 // Navigator.pushReplacementNamed(
@@ -309,7 +415,10 @@ class OrdersList extends StatelessWidget {
                 ),
               ),
             );
-          } else {
+
+            ////////// Freelancer Active Orders ///////////////
+            ///
+          } else if (ordersType == 'activeOrders') {
             if (order.status == 'STARTED') {
               // Order accepted
               return Center(
@@ -401,7 +510,7 @@ class OrdersList extends StatelessWidget {
                         subtitle: Text('To: ${order.drop_off_address}'),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           // Text('Fee: ${order.price}'),
                           ButtonBar(
@@ -423,6 +532,305 @@ class OrdersList extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            ////////// Business Orders ///////////////
+            ///
+          } else if (ordersType == 'businessOrders') {
+            // Business Orders
+            if (order.status == 'STARTED') {
+              // Order accepted
+              return Center(
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              'Waiting for pick up',
+                              style: TextStyle(
+                                backgroundColor: Colors.blue[500],
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ListTile(
+                        // leading: Icon(Icons.album),
+                        leading: CircleAvatar(
+                          radius: 25,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blueGrey,
+                          child: Text(order.order_type.toString()),
+                        ),
+                        title: Text('From: ${order.pick_up_address}'),
+                        subtitle: Text('To: ${order.drop_off_address}'),
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Created: ${order.created}'),
+                            Text('Updated: ${order.updated}'),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          // Text('Fee: ${order.price}'),
+                          ButtonBar(
+                            children: <Widget>[
+                              Padding(padding: EdgeInsets.all(5.0)),
+                              RaisedButton(
+                                color: Colors.green,
+                                child: Text(
+                                  "Report Pick Up",
+                                  style: whiteButtonTitle,
+                                ),
+                                onPressed: () {
+                                  print('Picked up!!');
+                                  String newStatus = "IN_PROGRESS";
+                                  orderAlert(context, order, newStatus);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else if (order.status == 'REQUESTED' ||
+                order.status == 'RE_REQUESTED') {
+              // In progress orders
+              return Center(
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              'New. Waiting for Carrier Allocation',
+                              style: TextStyle(
+                                backgroundColor: Colors.red[300],
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ListTile(
+                        // leading: Icon(Icons.album),
+                        leading: CircleAvatar(
+                          radius: 25,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blueGrey,
+                          child: Text(order.order_type.toString()),
+                        ),
+                        title: Text('From: ${order.pick_up_address}'),
+                        subtitle: Text('To: ${order.drop_off_address}'),
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Created: ${order.created}'),
+                            Text('Updated: ${order.updated}'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else if (order.status == 'IN_PROGRESS') {
+              // In progress orders
+              return Center(
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              'Picked up. Waiting Delivery',
+                              style: TextStyle(
+                                backgroundColor: Colors.blue[300],
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ListTile(
+                        // leading: Icon(Icons.album),
+                        leading: CircleAvatar(
+                          radius: 25,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blueGrey,
+                          child: Text(order.order_type.toString()),
+                        ),
+                        title: Text('From: ${order.pick_up_address}'),
+                        subtitle: Text('To: ${order.drop_off_address}'),
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Created: ${order.created}'),
+                            Text('Updated: ${order.updated}'),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            //////////// BUSINESS REJECTED PAGE ////////////
+            ///
+          } else {
+            // Business Orders
+            if (order.status == 'REJECTED') {
+              // Order accepted
+              return Center(
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              'Rejected order',
+                              style: TextStyle(
+                                backgroundColor: Colors.red[500],
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ListTile(
+                        // leading: Icon(Icons.album),
+                        leading: CircleAvatar(
+                          radius: 25,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blueGrey,
+                          child: Text(order.order_type.toString()),
+                        ),
+                        title: Text('From: ${order.pick_up_address}'),
+                        subtitle: Text('To: ${order.drop_off_address}'),
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Created: ${order.created}'),
+                            Text('Updated: ${order.updated}'),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          // Text('Fee: ${order.price}'),
+                          ButtonBar(
+                            children: <Widget>[
+                              Padding(padding: EdgeInsets.all(5.0)),
+                              RaisedButton(
+                                color: Colors.green,
+                                child: Text(
+                                  "Request Carrier",
+                                  style: whiteButtonTitle,
+                                ),
+                                onPressed: () {
+                                  print('Request Carrier');
+                                  String newStatus = 'RE_REQUESTED';
+                                  orderAlert(context, order, newStatus);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              // In progress orders
+              return Center(
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              'Please check.',
+                              style: TextStyle(
+                                backgroundColor: Colors.red[300],
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ListTile(
+                        // leading: Icon(Icons.album),
+                        leading: CircleAvatar(
+                          radius: 25,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blueGrey,
+                          child: Text(order.order_type.toString()),
+                        ),
+                        title: Text('From: ${order.pick_up_address}'),
+                        subtitle: Text('To: ${order.drop_off_address}'),
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     // Text('Fee: ${order.price}'),
+                      //     ButtonBar(
+                      //       children: <Widget>[
+                      //         Padding(padding: EdgeInsets.all(5.0)),
+                      //         RaisedButton(
+                      //           color: Colors.green,
+                      //           child: Text(
+                      //             "Report Delivered",
+                      //             style: whiteButtonTitle,
+                      //           ),
+                      //           onPressed: () {
+                      //             print('Delivered!!');
+                      //             String newStatus = "COMPLETED";
+                      //             orderAlert(context, order, newStatus);
+                      //           },
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),

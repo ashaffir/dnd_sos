@@ -1,5 +1,5 @@
-import 'package:bloc_login/database/user_database.dart';
-import 'package:bloc_login/model/user_model.dart';
+import 'package:pickndell/database/user_database.dart';
+import 'package:pickndell/model/user_model.dart';
 
 import '../model/user_model.dart';
 

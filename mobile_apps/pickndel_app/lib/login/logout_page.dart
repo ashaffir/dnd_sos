@@ -1,6 +1,7 @@
-import 'package:bloc_login/bloc/authentication_bloc.dart';
-import 'package:bloc_login/repository/user_repository.dart';
-import 'package:bloc_login/ui/bottom_nav_bar.dart';
+import 'package:background_locator/background_locator.dart';
+import 'package:pickndell/bloc/authentication_bloc.dart';
+import 'package:pickndell/repository/user_repository.dart';
+import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +35,7 @@ class LogoutPage extends StatelessWidget {
                   child: RaisedButton(
                       child: Text('logout'),
                       onPressed: () {
+                        BackgroundLocator.unRegisterLocationUpdate();
                         BlocProvider.of<AuthenticationBloc>(context)
                             .add(LoggedOut());
                         Phoenix.rebirth(context);

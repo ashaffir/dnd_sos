@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:bloc_login/networking/CustomException.dart';
-import 'package:bloc_login/networking/Response.dart';
+import 'package:pickndell/networking/CustomException.dart';
 import 'package:http/http.dart' as http;
-import 'package:bloc_login/model/api_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pickndell/model/api_model.dart';
 
 // final _base = "https://home-hub-app.herokuapp.com";
 // final _tokenEndpoint = "/api-token-auth/";
-final _base = "https://bf3831159b95.ngrok.io";
+final _base = "https://8c1d164fa909.ngrok.io";
 final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";
 final _fcmRegistratioEndpoint = "/api/devices/";
@@ -61,7 +59,7 @@ Future<dynamic> fcmTokenRegistration(
 }
 
 // class CallApi {
-//   final String _url = 'https://bf3831159b95.ngrok.io/api/';
+//   final String _url = 'https://8c1d164fa909.ngrok.io/api/';
 
 //   postData(data, apiUrl) async {
 //     var fullUrl = _url + apiUrl;

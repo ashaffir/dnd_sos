@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc_login/location/location_stream.dart';
-import 'package:bloc_login/repository/location_repository.dart';
+import 'package:pickndell/location/location_stream.dart';
+import 'package:pickndell/repository/location_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
