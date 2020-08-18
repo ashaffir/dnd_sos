@@ -14,7 +14,7 @@ class BusinessUpdateForm(forms.ModelForm):
 
     # Adding these for the "required=False" so that it wont be mandatory to fill out everything in the form
     phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}))
-    building_number = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Building number'}))
+    building_number = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     street = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Street'}))
     city = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}))
     business_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Business Name'}))

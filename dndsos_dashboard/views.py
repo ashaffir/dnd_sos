@@ -259,6 +259,10 @@ def b_profile(request, b_id):
             if new_business_name:
                 user_profile.business_name = new_business_name
 
+                business_user = User.objects.get(pk=b_id)
+                business_user.first_name = new_business_name
+                business_user.save()
+
             if new_business_category:
                 user_profile.business_category = new_business_category
 
@@ -950,6 +954,8 @@ def b_phone_verify(request, b_id):
                 business =  Employer.objects.get(pk=b_id)
                 business.phone = phone
                 business.save()
+                
+                # Patch: updating the business phone for the API calls.
                 business_user = User.objects.get(pk=b_id)
                 business_user.phone_number = phone
                 business_user.save()

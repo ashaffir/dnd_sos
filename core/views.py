@@ -369,7 +369,7 @@ def activate_account(request, uidb64, token):
         user_profile.email = user.email
         user_profile.save()
 
-        messages.success(request, 'You have successfully confirmed your email. Log in to proceed.')
+        messages.success(request, _('You have successfully confirmed your email. Log in to proceed.'))
         return redirect('core:login')
         # else:
         #     messages.info(request, 'Set a password for your Employee account.')
