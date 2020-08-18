@@ -37,7 +37,8 @@ def employer_signup(request):
             
             # send employer a accout activation email
             # current_site = request._current_scheme_host
-            current_site = request.META['HTTP_HOST']
+            # current_site = request.META['HTTP_HOST']
+            current_site = 'https://pickndell.com'
 
             subject = _('Activate Employer Account')
 
