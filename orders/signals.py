@@ -38,7 +38,9 @@ def announce_new_user(sender, instance, created, **kwargs):
         else:
             employee = Employee.objects.create(user=user)
 
-        current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+        # current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+        current_site = request._current_scheme_host
+
         subject = 'Activate Employer Account'
 
         message = {

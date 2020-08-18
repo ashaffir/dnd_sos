@@ -36,10 +36,7 @@ def employer_signup(request):
             user = form.save() # add employer to db with is_active as False
             
             # send employer a accout activation email
-            # current_site = request._current_scheme_host
-            # current_site = request.META['HTTP_HOST']
-            current_site = 'https://pickndell.com'
-
+            current_site = request._current_scheme_host
             subject = _('Activate Employer Account')
 
             message = {
@@ -73,9 +70,8 @@ def employee_signup(request):
             user = form.save() # add freelancer to db with is_active as False
             
             # send freelancer a accout activation email
-            # current_site = request._current_scheme_host
+            current_site = request._current_scheme_host
             # current_site = get_current_site(request)
-            current_site = request.META['HTTP_HOST']
             subject = _('Activate Freelancer Account')
             message = {
                 'user': user,
