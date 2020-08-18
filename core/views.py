@@ -36,8 +36,10 @@ def employer_signup(request):
             user = form.save() # add employer to db with is_active as False
             
             # send employer a accout activation email
-            current_site = request._current_scheme_host
-            subject = 'Activate Employer Account'
+            # current_site = request._current_scheme_host
+            current_site = request.META['HTTP_HOST']
+
+            subject = _('Activate Employer Account')
 
             message = {
                 'user': user,
@@ -70,9 +72,10 @@ def employee_signup(request):
             user = form.save() # add freelancer to db with is_active as False
             
             # send freelancer a accout activation email
-            current_site = request._current_scheme_host
+            # current_site = request._current_scheme_host
             # current_site = get_current_site(request)
-            subject = 'Activate Freelancer Account'
+            current_site = request.META['HTTP_HOST']
+            subject = _('Activate Freelancer Account')
             message = {
                 'user': user,
                 'domain': current_site,
@@ -86,8 +89,8 @@ def employee_signup(request):
 
 
 
-            messages.success(request, 'An accout activation link has been sent to your email: ' + user.email +
-                                '. Go to your email and click the link to activate your account.')
+            messages.success(request, _('An accout activation link has been sent to your email): ' + user.email +
+                                _('. Go to your email and click the link to activate your account.')))
             return redirect('dndsos:home')
         else:
             messages.error(request, 'Error')
@@ -111,7 +114,7 @@ def employer_profile(request):
     if request.method == 'POST':
         if form.is_valid():
             user = form.save()
-            messages.success(request, "Profile has been updated successfully")
+            messages.success(request, _("Profile has been updated successfully"))
             return redirect('core:employer_profile')
         
     return render(request, 'core/employer/profile.html', {'form': form})
@@ -292,7 +295,7 @@ def employee_profile(request):
         if form.is_valid():
             user = form.save()
             
-            messages.success(request, 'Your profile has been updated.')
+            messages.success(request, _('Your profile has been updated.'))
             
     return render(request, 'core/employee/profile.html', {'form': form})
 
@@ -376,12 +379,12 @@ def activate_account(request, uidb64, token):
         #     return redirect('core:employee_set_password', uid=user.id)
     
     # invalid link
-    messages.error(request, 'Account activation link is invalid or has expired. Contact system administratior for assistance')
+    messages.error(request, _('Account activation link is invalid or has expired. Contact system administratior for assistance'))
     return redirect('core:home')
 
 # account activation email sent
 def account_activation_sent(request):
-    return HttpResponse('<p>An activation link has been sent to your Email</p>')
+    return HttpResponse(_('<p>An activation link has been sent to your Email</p>'))
 
 
 # upon activating account, employee should set password
@@ -394,7 +397,7 @@ def employee_set_password(request, uid):
             user = form.save()
             login(request, user)
             
-            messages.success(request, 'Welcome '+user.email+'. Your account is now operational')
+            messages.success(request, _('Welcome ')+user.email+_('. Your account is now operational'))
             return redirect('core:login_redirect')
     else:
         form = SetPasswordForm(user)
