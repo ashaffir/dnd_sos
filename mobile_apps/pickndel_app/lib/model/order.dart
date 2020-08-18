@@ -12,6 +12,7 @@ class Order {
   double distance_to_business;
   double price;
   String status;
+  String business_phone;
 
   Order({
     this.order_id,
@@ -25,6 +26,7 @@ class Order {
     this.distance_to_business,
     this.price,
     this.status,
+    this.business_phone,
   });
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -44,6 +46,8 @@ class Order {
     distance_to_business = json['distance_to_business'];
     price = json['price'];
     status = json['status'];
+
+    business_phone = json['business']['phone_number'];
   }
 
 // Order.activeDuration()

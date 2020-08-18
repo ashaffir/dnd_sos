@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import Order
+from core.models import Employer, User
 
 class UserSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
@@ -27,14 +28,33 @@ class UserSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ('id',)
 
+
+class EmployerSerializer(serializers.ModelSerializer):
+    business = UserSerializer()
+    class Meta:
+        model = User
+        fields = ('business',)
+
 class OrderSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Order
+        fields = ('order_id','status','pick_up_address','created', 'updated', 
+                'drop_off_address', 'distance_to_business',
+                'price', 'order_type','business', 'freelancer',)
+
+class OrderAPISerializer(serializers.ModelSerializer):
     # business_name = serializers.SlugRelatedField(read_only=True, slug_field='business_name')
+    
     class Meta:
         model = Order
         fields = ('order_id','status','pick_up_address','created', 'updated', 
                 'drop_off_address', 'distance_to_business',
                 'price', 'order_type','business', 'freelancer',)
         # read_only_fields = ('id', 'created', 'updated',)
+        # fields = '__all__'
+        depth=1   
+
 
 class ReadOnlyOrderSerializer(serializers.ModelSerializer):
     freelancer_ser = UserSerializer(read_only=True)

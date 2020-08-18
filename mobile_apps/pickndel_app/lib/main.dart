@@ -89,7 +89,6 @@ class App extends StatelessWidget {
                 return SplashPage();
               } else if (state is AuthenticationAuthenticated) {
                 // return HomePage();
-                print('Loading Home page...');
                 return HomePageIsolate(
                   userRepository: userRepository,
                 );

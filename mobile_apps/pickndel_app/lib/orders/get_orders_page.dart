@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:pickndell/networking/Response.dart';
 import 'package:pickndell/model/open_orders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GetOrders extends StatefulWidget {
   final String ordersType;
@@ -347,7 +348,7 @@ class OrdersList extends StatelessWidget {
                       subtitle: Text('To: ${order.drop_off_address}'),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text('Fee: ${order.price}'),
                         ButtonBar(
@@ -457,9 +458,22 @@ class OrdersList extends StatelessWidget {
                           // Text('Fee: ${order.price}'),
                           ButtonBar(
                             children: <Widget>[
+                              RaisedButton.icon(
+                                icon: Icon(Icons.phone),
+                                color: Colors.blue,
+                                shape: StadiumBorder(
+                                    side: BorderSide(color: Colors.black)),
+                                onPressed: () {
+                                  print('CALL');
+                                  launch(('tel://${order.business_phone}'));
+                                },
+                                label: Text('Call Business'),
+                              ),
                               Padding(padding: EdgeInsets.all(5.0)),
                               RaisedButton(
                                 color: Colors.red,
+                                shape: StadiumBorder(
+                                    side: BorderSide(color: Colors.black)),
                                 child: Text(
                                   "Cancel Delivery",
                                   style: whiteButtonTitle,

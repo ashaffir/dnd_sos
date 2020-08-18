@@ -25,7 +25,7 @@ from dndsos.models import ContactUs
 from .serializers import (UserSerializer, LoginSerializer, 
                         ContactsSerializer, BusinessSerializer, 
                         UsernameSerializer,UserProfileSerializer,)
-from orders.serializers import OrderSerializer
+from orders.serializers import OrderSerializer, OrderAPISerializer
 from .permissions import IsOwnerOrReadOnly # Custom permission
 
 
@@ -166,7 +166,8 @@ class LogoutView(APIView):
         return Response(status=204)
 
 class OpenOrdersViewSet(viewsets.ModelViewSet):
-    serializer_class = OrderSerializer
+    # serializer_class = OrderSerializer
+    serializer_class = OrderAPISerializer
     authentication_classes = [TokenAuthentication,]
     # queryset = Order.objects.all()
 
@@ -182,7 +183,7 @@ class OpenOrdersViewSet(viewsets.ModelViewSet):
         return queryset_list
 
 class ActiveOrdersViewSet(viewsets.ModelViewSet):
-    serializer_class = OrderSerializer
+    serializer_class = OrderAPISerializer
     authentication_classes = [TokenAuthentication,]
     # queryset = Order.objects.all()
 
@@ -198,7 +199,7 @@ class ActiveOrdersViewSet(viewsets.ModelViewSet):
         return queryset_list
 
 class BusinessOrdersViewSet(viewsets.ModelViewSet):
-    serializer_class = OrderSerializer
+    serializer_class = OrderAPISerializer
     authentication_classes = [TokenAuthentication,]
     # queryset = Order.objects.all()
 
@@ -219,7 +220,7 @@ class BusinessOrdersViewSet(viewsets.ModelViewSet):
         return queryset_list
 
 class BusinessRejectedOrdersViewSet(viewsets.ModelViewSet):
-    serializer_class = OrderSerializer
+    serializer_class = OrderAPISerializer
     authentication_classes = [TokenAuthentication,]
     # queryset = Order.objects.all()
 

@@ -7,7 +7,9 @@ import 'package:pickndell/model/api_model.dart';
 
 // final _base = "https://home-hub-app.herokuapp.com";
 // final _tokenEndpoint = "/api-token-auth/";
-final _base = "https://8c1d164fa909.ngrok.io";
+
+// final _base = "https://8c1d164fa909.ngrok.io";
+final _base = "https://pickndell.com";
 final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";
 final _fcmRegistratioEndpoint = "/api/devices/";

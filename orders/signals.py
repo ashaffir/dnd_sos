@@ -56,7 +56,7 @@ def announce_new_user(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Order)   
 def order_signal(sender, instance, update_fields, **kwargs):      
     if kwargs['created']:
-        print(f'=========== SIGNAL: New Order ===============: {instance.business.business.business_name}')
+        print(f'=========== SIGNAL: New Order ===============: {instance}')
         devices = FCMDevice.objects.all()
         devices.send_message(
             title="New Order available", 

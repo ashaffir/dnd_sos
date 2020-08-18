@@ -950,6 +950,9 @@ def b_phone_verify(request, b_id):
                 business =  Employer.objects.get(pk=b_id)
                 business.phone = phone
                 business.save()
+                business_user = User.objects.get(pk=b_id)
+                business_user.phone_number = phone
+                business_user.save()
                 return render(request,'dndsos_dashboard/phone-verified-success.html')
             else:
                 print(f'>>> Failed verify the phone. Error: {verification_status}')

@@ -100,7 +100,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
-              print('GOIFN');
               Navigator.pushReplacementNamed(context, '/');
             },
           ),

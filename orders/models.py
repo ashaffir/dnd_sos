@@ -82,7 +82,6 @@ class Order(models.Model):
     private_sale_token = models.CharField(max_length=100, null=True, blank=True)
     invoice_url = models.URLField(null=True, blank=True)
 
-
     freelancer = models.ForeignKey( # new
         # settings.AUTH_USER_MODEL,
         User,
