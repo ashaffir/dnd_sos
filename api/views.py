@@ -168,7 +168,8 @@ class LogoutView(APIView):
 class OpenOrdersViewSet(viewsets.ModelViewSet):
     # serializer_class = OrderSerializer
     serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     # queryset = Order.objects.all()
 
     def get_queryset(self, *args, **kwargs):
@@ -185,6 +186,8 @@ class OpenOrdersViewSet(viewsets.ModelViewSet):
 class ActiveOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
     authentication_classes = [TokenAuthentication,]
+    permission_classes = (IsAuthenticated,)
+
     # queryset = Order.objects.all()
 
     def get_queryset(self, *args, **kwargs):
@@ -201,6 +204,8 @@ class ActiveOrdersViewSet(viewsets.ModelViewSet):
 class BusinessOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
     authentication_classes = [TokenAuthentication,]
+    permission_classes = (IsAuthenticated,)
+
     # queryset = Order.objects.all()
 
     def get_queryset(self, *args, **kwargs):
@@ -222,6 +227,8 @@ class BusinessOrdersViewSet(viewsets.ModelViewSet):
 class BusinessRejectedOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
     authentication_classes = [TokenAuthentication,]
+    permission_classes = (IsAuthenticated,)
+
     # queryset = Order.objects.all()
 
     def get_queryset(self, *args, **kwargs):
@@ -236,6 +243,7 @@ class BusinessRejectedOrdersViewSet(viewsets.ModelViewSet):
 
 class OrdersView(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
+    permission_classes = (IsAuthenticated,)
 
     # permission_classes = (IsAuthenticated,)
     # authentication_classes = [TokenAuthentication,SessionAuthentication, BasicAuthentication]
@@ -260,7 +268,7 @@ class ContactView(viewsets.ModelViewSet):
     serializer_class = ContactsSerializer
     # permission_classes = (IsAuthenticated,)
     
-    # permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdminUser,)
 
 class UserProfile(viewsets.ModelViewSet):
     pass
@@ -293,6 +301,7 @@ def user_profile(request):
         return Response(data)
 
 @api_view(['GET',])
+@permission_classes((IsAdminUser,))
 def all_users(request):
     '''
     Returns all users
@@ -317,6 +326,7 @@ def all_users(request):
  
 
 @api_view(['GET',])
+@permission_classes([IsAdminUser,])
 def all_businesses(request):
     '''
     Returns the list of all businesses' names
@@ -443,7 +453,7 @@ def order_update_view(request):
         return Response(data)
 
 @api_view(['GET',])
-# @permission_classes((IsAuthenticated,))
+@permission_classes((IsAdminUser,))
 def all_user_orders(request):
     '''
     User orders
