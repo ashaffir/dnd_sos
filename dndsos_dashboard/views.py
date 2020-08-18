@@ -259,9 +259,11 @@ def b_profile(request, b_id):
             if new_business_name:
                 user_profile.business_name = new_business_name
 
+                # Patch: updating the business name for the API
                 business_user = User.objects.get(pk=b_id)
                 business_user.first_name = new_business_name
                 business_user.save()
+                ###
 
             if new_business_category:
                 user_profile.business_category = new_business_category
@@ -352,10 +354,17 @@ def f_profile(request, f_id):
 
             if form.is_valid():
                 try:
-                    form.save()                    
-                    messages.success(request,'You have successfully updated your profile.')
+                    form.save()
+
+                    # Patch: updating the name for the API access
+                    user_freelancer = User.objects.get(pk=f_id)                  
+                    user_freelancer.first_name = form.cleaned_data.get("name")
+                    user_freelancer.save()
+                    #####
+
+                    messages.success(request,_('You have successfully updated your profile.'))
                 except Exception as e:
-                    messages.success(request,f'There was an error updating your profile. ERRRO: {e}')
+                    messages.success(request,f'_(There was an error updating your profile. ERRRO): {e}')
             else:
                 for error in form.errors:
                     messages.error(request, f'Error: {error}')
@@ -930,6 +939,13 @@ def f_phone_verify(request, f_id):
                 freelancer =  Employee.objects.get(pk=f_id)
                 freelancer.phone = phone
                 freelancer.save()
+
+                # Patch: updating the freelancer phone for the API calls.
+                freelancer_user = User.objects.get(pk=f_id)
+                freelancer_user.phone_number = phone
+                freelancer_user.save()
+                ###
+
                 return render(request,'dndsos_dashboard/phone-verified-success.html')
             else:
                 print(f'>>> Failed verify the phone. Error: {verification_status}')
@@ -959,6 +975,8 @@ def b_phone_verify(request, b_id):
                 business_user = User.objects.get(pk=b_id)
                 business_user.phone_number = phone
                 business_user.save()
+                ###
+
                 return render(request,'dndsos_dashboard/phone-verified-success.html')
             else:
                 print(f'>>> Failed verify the phone. Error: {verification_status}')
