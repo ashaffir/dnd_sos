@@ -13,6 +13,9 @@ class Order {
   double price;
   String status;
   String business_phone;
+  String business_name;
+  String courier_phone;
+  String courier_name;
 
   Order({
     this.order_id,
@@ -27,6 +30,9 @@ class Order {
     this.price,
     this.status,
     this.business_phone,
+    this.business_name,
+    this.courier_name,
+    this.courier_phone,
   });
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -47,7 +53,19 @@ class Order {
     price = json['price'];
     status = json['status'];
 
-    business_phone = json['business']['phone_number'];
+    try {
+      business_phone = json['business']['phone_number'];
+      business_name = json['business']['first_name'];
+    } catch (e) {
+      print('ORDER business ERROR: $e');
+    }
+
+    try {
+      courier_phone = json['freelancer']['phone_number'];
+      courier_name = json['freelancer']['first_name'];
+    } catch (e) {
+      print('ORDER courier ERROR: $e');
+    }
   }
 
 // Order.activeDuration()

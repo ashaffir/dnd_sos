@@ -23,6 +23,7 @@ samples, guidance on mobile development, and a full API reference.
 * Firebase cloud messageing (FCM, push notification) installation notes:
 - Video: https://www.youtube.com/watch?v=PrnxksGQ210
 - firebase_messaging flutter plugin: https://pub.dev/packages/firebase_messaging
+- firebase messaging with flutter tutorial: https://www.djamware.com/post/5e4b26e26cdeb308204b427f/flutter-tutorial-firebase-cloud-messaging-fcm-push-notification
 - Issue with the Java application class: https://stackoverflow.com/questions/59446933/pluginregistry-cannot-be-converted-to-flutterengine 
 
 * Apple:
@@ -47,3 +48,10 @@ REFERENCE: name change
 
 # REFERENCE: Login page with BLOC: 
 - https://medium.com/flutter-community/flutter-login-tutorial-with-flutter-bloc-ea606ef701ad
+
+REFERENCE: build apk (https://www.youtube.com/watch?v=7MrXU-fhacU)
+> flutter build apk --build-name=1.0.1 --build-number=1
+The apk files are place at: build/app/outputs/apk/release/
+
+REFERENCE: Android app deployment on to the Google Play
+- https://www.youtube.com/watch?v=7MrXU-fhacU

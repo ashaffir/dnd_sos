@@ -336,14 +336,30 @@ class OrdersList extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                    ),
+                    Text('Owner: ${order.business_name}'),
                     ListTile(
                       // leading: Icon(Icons.album),
                       leading: CircleAvatar(
-                        radius: 25,
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blueGrey,
-                        child: Text(order.order_type.toString()),
-                      ),
+                          radius: 25,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blueGrey,
+                          child: order.order_type.toString() == 'Documents'
+                              ? Icon(Icons.collections_bookmark)
+                              : order.order_type.toString() == 'Food'
+                                  ? Icon(Icons.restaurant)
+                                  : order.order_type.toString() == 'Tools'
+                                      ? Icon(Icons.fitness_center)
+                                      : order.order_type.toString() ==
+                                              'Furniture'
+                                          ? Icon(Icons.weekend)
+                                          : order.order_type.toString() ==
+                                                  'Clothes'
+                                              ? Icon(Icons.wc)
+                                              : Icon(Icons.whatshot)),
+
                       title: Text('From: ${order.pick_up_address}'),
                       subtitle: Text('To: ${order.drop_off_address}'),
                     ),
@@ -440,13 +456,27 @@ class OrdersList extends StatelessWidget {
                           ),
                         ],
                       ),
+                      Padding(padding: EdgeInsets.only(top: 10.0)),
+                      Text('Owner: ${order.business_name}'),
                       ListTile(
                         // leading: Icon(Icons.album),
                         leading: CircleAvatar(
                           radius: 25,
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.blueGrey,
-                          child: Text(order.order_type.toString()),
+                          child: order.order_type.toString() == 'Documents'
+                              ? Icon(Icons.collections_bookmark)
+                              : order.order_type.toString() == 'Food'
+                                  ? Icon(Icons.restaurant)
+                                  : order.order_type.toString() == 'Tools'
+                                      ? Icon(Icons.fitness_center)
+                                      : order.order_type.toString() ==
+                                              'Furniture'
+                                          ? Icon(Icons.weekend)
+                                          : order.order_type.toString() ==
+                                                  'Clothes'
+                                              ? Icon(Icons.wc)
+                                              : Icon(Icons.whatshot),
                         ),
                         title: Text('From: ${order.pick_up_address}'),
                         subtitle: Text('To: ${order.drop_off_address}'),
@@ -464,7 +494,6 @@ class OrdersList extends StatelessWidget {
                                 shape: StadiumBorder(
                                     side: BorderSide(color: Colors.black)),
                                 onPressed: () {
-                                  print('CALL');
                                   launch(('tel://${order.business_phone}'));
                                 },
                                 label: Text('Call Business'),
@@ -512,16 +541,32 @@ class OrdersList extends StatelessWidget {
                           ),
                         ],
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                      ),
+                      Text('Owner: ${order.business_name}'),
                       ListTile(
                         // leading: Icon(Icons.album),
                         leading: CircleAvatar(
-                          radius: 25,
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.blueGrey,
-                          child: Text(order.order_type.toString()),
-                        ),
-                        title: Text('From: ${order.pick_up_address}'),
-                        subtitle: Text('To: ${order.drop_off_address}'),
+                            radius: 25,
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blueGrey,
+                            child: order.order_type.toString() == 'Documents'
+                                ? Icon(Icons.collections_bookmark)
+                                : order.order_type.toString() == 'Food'
+                                    ? Icon(Icons.restaurant)
+                                    : order.order_type.toString() == 'Tools'
+                                        ? Icon(Icons.fitness_center)
+                                        : order.order_type.toString() ==
+                                                'Furniture'
+                                            ? Icon(Icons.weekend)
+                                            : order.order_type.toString() ==
+                                                    'Clothes'
+                                                ? Icon(Icons.wc)
+                                                : Icon(Icons.whatshot)),
+                        // title: Text('From: ${order.pick_up_address}'),
+                        title: Text('Delivery To: ${order.drop_off_address}'),
+                        // subtitle: Text('To: ${order.drop_off_address}'),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -529,6 +574,16 @@ class OrdersList extends StatelessWidget {
                           // Text('Fee: ${order.price}'),
                           ButtonBar(
                             children: <Widget>[
+                              RaisedButton.icon(
+                                icon: Icon(Icons.phone),
+                                color: Colors.blue,
+                                shape: StadiumBorder(
+                                    side: BorderSide(color: Colors.black)),
+                                onPressed: () {
+                                  launch(('tel://${order.business_phone}'));
+                                },
+                                label: Text('Call Business'),
+                              ),
                               Padding(padding: EdgeInsets.all(5.0)),
                               RaisedButton(
                                 color: Colors.green,
@@ -582,7 +637,19 @@ class OrdersList extends StatelessWidget {
                           radius: 25,
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.blueGrey,
-                          child: Text(order.order_type.toString()),
+                          child: order.order_type.toString() == 'Documents'
+                              ? Icon(Icons.collections_bookmark)
+                              : order.order_type.toString() == 'Food'
+                                  ? Icon(Icons.restaurant)
+                                  : order.order_type.toString() == 'Tools'
+                                      ? Icon(Icons.fitness_center)
+                                      : order.order_type.toString() ==
+                                              'Furniture'
+                                          ? Icon(Icons.weekend)
+                                          : order.order_type.toString() ==
+                                                  'Clothes'
+                                              ? Icon(Icons.wc)
+                                              : Icon(Icons.whatshot),
                         ),
                         title: Text('From: ${order.pick_up_address}'),
                         subtitle: Text('To: ${order.drop_off_address}'),
@@ -605,6 +672,16 @@ class OrdersList extends StatelessWidget {
                           ButtonBar(
                             children: <Widget>[
                               Padding(padding: EdgeInsets.all(5.0)),
+                              RaisedButton.icon(
+                                icon: Icon(Icons.phone),
+                                color: Colors.blue,
+                                shape: StadiumBorder(
+                                    side: BorderSide(color: Colors.black)),
+                                onPressed: () {
+                                  launch(('tel://${order.courier_phone}'));
+                                },
+                                label: Text('Call Courier'),
+                              ),
                               RaisedButton(
                                 color: Colors.green,
                                 child: Text(
@@ -652,7 +729,19 @@ class OrdersList extends StatelessWidget {
                           radius: 25,
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.blueGrey,
-                          child: Text(order.order_type.toString()),
+                          child: order.order_type.toString() == 'Documents'
+                              ? Icon(Icons.collections_bookmark)
+                              : order.order_type.toString() == 'Food'
+                                  ? Icon(Icons.restaurant)
+                                  : order.order_type.toString() == 'Tools'
+                                      ? Icon(Icons.fitness_center)
+                                      : order.order_type.toString() ==
+                                              'Furniture'
+                                          ? Icon(Icons.weekend)
+                                          : order.order_type.toString() ==
+                                                  'Clothes'
+                                              ? Icon(Icons.wc)
+                                              : Icon(Icons.whatshot),
                         ),
                         title: Text('From: ${order.pick_up_address}'),
                         subtitle: Text('To: ${order.drop_off_address}'),
@@ -697,7 +786,19 @@ class OrdersList extends StatelessWidget {
                           radius: 25,
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.blueGrey,
-                          child: Text(order.order_type.toString()),
+                          child: order.order_type.toString() == 'Documents'
+                              ? Icon(Icons.collections_bookmark)
+                              : order.order_type.toString() == 'Food'
+                                  ? Icon(Icons.restaurant)
+                                  : order.order_type.toString() == 'Tools'
+                                      ? Icon(Icons.fitness_center)
+                                      : order.order_type.toString() ==
+                                              'Furniture'
+                                          ? Icon(Icons.weekend)
+                                          : order.order_type.toString() ==
+                                                  'Clothes'
+                                              ? Icon(Icons.wc)
+                                              : Icon(Icons.whatshot),
                         ),
                         title: Text('From: ${order.pick_up_address}'),
                         subtitle: Text('To: ${order.drop_off_address}'),
@@ -709,6 +810,16 @@ class OrdersList extends StatelessWidget {
                           children: [
                             Text('Created: ${order.created}'),
                             Text('Updated: ${order.updated}'),
+                            RaisedButton.icon(
+                              icon: Icon(Icons.phone),
+                              color: Colors.blue,
+                              shape: StadiumBorder(
+                                  side: BorderSide(color: Colors.black)),
+                              onPressed: () {
+                                launch(('tel://${order.courier_phone}'));
+                              },
+                              label: Text('Call Courier'),
+                            ),
                           ],
                         ),
                       )
@@ -745,11 +856,22 @@ class OrdersList extends StatelessWidget {
                       ListTile(
                         // leading: Icon(Icons.album),
                         leading: CircleAvatar(
-                          radius: 25,
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.blueGrey,
-                          child: Text(order.order_type.toString()),
-                        ),
+                            radius: 25,
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blueGrey,
+                            child: order.order_type.toString() == 'Documents'
+                                ? Icon(Icons.collections_bookmark)
+                                : order.order_type.toString() == 'Food'
+                                    ? Icon(Icons.restaurant)
+                                    : order.order_type.toString() == 'Tools'
+                                        ? Icon(Icons.fitness_center)
+                                        : order.order_type.toString() ==
+                                                'Furniture'
+                                            ? Icon(Icons.weekend)
+                                            : order.order_type.toString() ==
+                                                    'Clothes'
+                                                ? Icon(Icons.wc)
+                                                : Icon(Icons.whatshot)),
                         title: Text('From: ${order.pick_up_address}'),
                         subtitle: Text('To: ${order.drop_off_address}'),
                       ),
@@ -814,11 +936,22 @@ class OrdersList extends StatelessWidget {
                       ListTile(
                         // leading: Icon(Icons.album),
                         leading: CircleAvatar(
-                          radius: 25,
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.blueGrey,
-                          child: Text(order.order_type.toString()),
-                        ),
+                            radius: 25,
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blueGrey,
+                            child: order.order_type.toString() == 'Documents'
+                                ? Icon(Icons.collections_bookmark)
+                                : order.order_type.toString() == 'Food'
+                                    ? Icon(Icons.restaurant)
+                                    : order.order_type.toString() == 'Tools'
+                                        ? Icon(Icons.fitness_center)
+                                        : order.order_type.toString() ==
+                                                'Furniture'
+                                            ? Icon(Icons.weekend)
+                                            : order.order_type.toString() ==
+                                                    'Clothes'
+                                                ? Icon(Icons.wc)
+                                                : Icon(Icons.whatshot)),
                         title: Text('From: ${order.pick_up_address}'),
                         subtitle: Text('To: ${order.drop_off_address}'),
                       ),

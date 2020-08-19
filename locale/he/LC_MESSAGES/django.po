@@ -115,7 +115,7 @@ msgstr "הסיסמה שלך שונתה."
 
 #: core/templates/registration/account_activation_email.html:19
 msgid "Message from PickNdell!"
-msgstr "הודעה פיקאנדל"
+msgstr "הודעה מפיקאנדל"
 
 #: core/templates/registration/account_activation_email.html:24
 msgid "Hi"
