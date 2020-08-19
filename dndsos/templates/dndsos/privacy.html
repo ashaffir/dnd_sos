@@ -1,11 +1,20 @@
 {% extends 'dndsos/base.html' %}
+{% load i18n %}
+{% get_current_language as lang %}
+
 {% load static %}
 {% block content %}
-<div class="container">
+<div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <div text-align:center " class="special">
-        <div style="margin-top: 15%;">
-            {{ privacy | safe }} 
-        </div>
+        {% if lang == 'he' %}
+            <div style="margin-top: 15%;">
+                {{ privacy_he | safe }} 
+            </div>
+        {% else %}
+            <div style="margin-top: 15%;">
+                {{ privacy | safe }} 
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock content %}

@@ -105,7 +105,7 @@ def terms(request):
     context['terms'] = ContentPage.objects.get(name='terms').content
 
     try:
-        context['terms'] = ContentPage.objects.get(name='terms_he').content
+        context['terms_he'] = ContentPage.objects.get(name='terms_he').content
     except Exception as e:
         messages.warning(request, 'Terms HE is not ready.')
 
@@ -115,7 +115,7 @@ def privacy(request):
     context = {}
     context['privacy'] = ContentPage.objects.get(name='privacy').content
     try:
-        context['privacy'] = ContentPage.objects.get(name='privacy_he').content
+        context['privacy_he'] = ContentPage.objects.get(name='privacy_he').content
     except Exception as e:
         messages.warning(request, 'Privacy HE is not ready.')
 
@@ -125,7 +125,7 @@ def c_addendum(request):
     context = {}
     context['c_addendum'] = ContentPage.objects.get(name='c_addendum').content
     try:
-        context['c_addendum'] = ContentPage.objects.get(name='c_addendum_he').content
+        context['c_addendum_he'] = ContentPage.objects.get(name='c_addendum_he').content
     except Exception as e:
         messages.warning(request, 'Courier Addendum HE is not ready.')
 
