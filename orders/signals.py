@@ -35,16 +35,16 @@ def announce_new_user(sender, instance, created, **kwargs):
 
         # send an accout activation email
         # if instance.is_employer:
-        #     employer = Employer.objects.create(user=user, email=instance.email)
+        #     employer = Employer.objects.get_or_create(user=user)
         # else:
-        #     employee = Employee.objects.create(user=user)
+        #     employee = Employee.objects.get_or_create(user=user)
 
         if platform.system() == 'Darwin': # MAC
             current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
         else:
             current_site = settings.DOMAIN_PROD
 
-        subject = 'Activate Employer Account'
+        subject = 'Activate PickNdell Account'
 
         message = {
             'user': user,

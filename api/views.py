@@ -75,11 +75,15 @@ class UserAvailable(APIView):
 class NewLoginViewSet(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
+        
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
+        
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+        
+        # Checking if there is an FCM token for the push notifications
         try:
             fcm_token = FCMDevice.objects.filter(user=user.pk).first().registration_id
         except Exception as e:
@@ -89,7 +93,10 @@ class NewLoginViewSet(ObtainAuthToken):
         print(f'Login RESPONSE: token: {token} \n user: {user.pk}\n is_employee: {user.is_employee}')
 
         if is_employee:
-            user_profile = Employee.objects.get(pk=user.pk)
+            # employee = Employee.objects.get_or_create(user=user)
+
+            user_profile,_ = Employee.objects.get_or_create(pk=user.pk)
+
             active_orders = Order.objects.filter(
                 (Q(freelancer=user.pk) & Q(updated__contains=today)) & 
                 (Q(status='STARTED') | Q(status='IN_PROGRESS')))
@@ -104,20 +111,42 @@ class NewLoginViewSet(ObtainAuthToken):
 
             daily_profit = round(daily_profit,2)
 
+            # When a profile is new, there are no values. To avoid app crash, setting empty fields
+            try:
+                name = user_profile.name
+            except:
+                name = ''
+            
+            try: 
+                vehicle = user_profile.vehicle
+            except:
+                vehicle = ''
+
+            try: 
+                freelancer_total_rating = user_profile.freelancer_total_rating
+            except:
+                freelancer_total_rating = ''
+
+
+            try:
+                is_approved = user_profile.is_approved
+            except:
+                is_approved = ""
+
 
             return Response({'token': token.key,
                             'fcm_token':fcm_token,
                             "user":user.pk,
                             "is_employee": 1 if user.is_employee else 0,
-                            "name": user_profile.name,
-                            "vehicle": user_profile.vehicle,
-                            "freelancer_total_rating": user_profile.freelancer_total_rating,
-                            "is_approved": 1 if user_profile.is_approved else 0,
+                            "name": name,
+                            "vehicle": vehicle,
+                            "freelancer_total_rating": freelancer_total_rating,
+                            "is_approved": 1 if is_approved else 0,
                             "num_active_orders":num_active_orders,
                             "daily_profit": daily_profit
                             })
         else:
-            user_profile = Employer.objects.get(pk=user.pk)
+            user_profile = Employer.objects.get_or_create(pk=user.pk)
             orders_in_progress = active_orders = Order.objects.filter(
                 (Q(business=user.pk) & Q(updated__contains=today)) & 
                 (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
@@ -133,14 +162,31 @@ class NewLoginViewSet(ObtainAuthToken):
                 daily_cost += order.price
 
             daily_cost = round(daily_cost,2)
+            
+            # When a profile is new, there are no values. To avoid app crash, setting empty fields
+            try:
+                business_name = user_profile.business_name
+            except:
+                business_name = ""
+
+            try:
+                business_category = user_profile.business_category
+            except:
+                business_category = ""
+
+            try:
+                is_approved = user_profile.is_approved
+            except:
+                is_approved = ""
+
 
             return Response({'token': token.key,
                             'fcm_token':fcm_token,
                             "user":user.pk,
                             "is_employee": 1 if user.is_employee else 0,
-                            "business_name": user_profile.business_name,
-                            "business_category": user_profile.business_category,
-                            "is_approved": 1 if user_profile.is_approved else 0,
+                            "business_name":  business_name,
+                            "business_category": business_category,
+                            "is_approved": 1 if is_approved else 0,
                             "num_daily_orders": num_daily_orders,
                             "daily_cost": daily_cost,
                             "num_orders_in_progress": num_orders_in_progress
@@ -483,12 +529,20 @@ def registration_view(request):
         serializer = UserSerializer(data=request.data)
         data = {}
         if serializer.is_valid():
+            # Creating the new User account
             account = serializer.save()
             data['response'] = 'Success registration.'
             data['email'] = account.email
             data['username'] = account.username
             token = Token.objects.get(user=account).key
             data['token'] = token
+
+            # Creating the profile
+            if account.is_employer:
+                employer = Employer.objects.get_or_create(pk=account.pk)
+            else:
+                employee = Employee.objects.get_or_create(pk=account.pk)
+
         else:
             data = serializer.errors
         

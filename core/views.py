@@ -36,19 +36,19 @@ def employer_signup(request):
             user = form.save() # add employer to db with is_active as False
             
             # send employer a accout activation email
-            current_site = request._current_scheme_host
-            subject = gettext('Activate PickNdell Account')
+            # current_site = request._current_scheme_host
+            # subject = gettext('Activate PickNdell Account')
 
-            message = {
-                'user': user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user)
-            }
+            # message = {
+            #     'user': user,
+            #     'domain': current_site,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user)
+            # }
 
-            send_mail(subject, email_template_name=None,
-                    context=message, to_email=[user.email],
-                    html_email_template_name='registration/account_activation_email.html')
+            # send_mail(subject, email_template_name=None,
+            #         context=message, to_email=[user.email],
+            #         html_email_template_name='registration/account_activation_email.html')
 
 
             messages.success(request, 'An accout activation link has been sent to your email: ' + user.email +
@@ -70,19 +70,19 @@ def employee_signup(request):
             user = form.save() # add freelancer to db with is_active as False
             
             # send freelancer a accout activation email
-            current_site = request._current_scheme_host
-            # current_site = get_current_site(request)
-            subject = gettext('Activate PickNdell Account')
-            message = {
-                'user': user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user)
-            }
+            # current_site = request._current_scheme_host
 
-            send_mail(subject, email_template_name=None,
-                    context=message, to_email=[user.email],
-                    html_email_template_name='registration/account_activation_email.html')
+            # subject = gettext('Activate PickNdell Account')
+            # message = {
+            #     'user': user,
+            #     'domain': current_site,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user)
+            # }
+
+            # send_mail(subject, email_template_name=None,
+            #         context=message, to_email=[user.email],
+            #         html_email_template_name='registration/account_activation_email.html')
 
 
 
