@@ -137,7 +137,7 @@ def f_dashboard(request, f_id):
     freelancer = Employee.objects.get(user=request.user.pk)
 
     if request.method == 'POST':
-        if freelancer.is_active:
+        if freelancer.is_delivering:
             messages.error(request, "Status can't be changed while in the process of delivery")
             return render(request, 'dndsos_dashboard/f-dashboard.html', context)
 

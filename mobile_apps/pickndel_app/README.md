@@ -43,15 +43,16 @@ com.actappon.pickndell (explicit)
 
 > flutter pub run flutter_launcher_icons:main
 
-REFERENCE: name change
+# REFERENCE: name change
 > flutter pub run flutter_launcher_name:main
 
 # REFERENCE: Login page with BLOC: 
 - https://medium.com/flutter-community/flutter-login-tutorial-with-flutter-bloc-ea606ef701ad
 
-REFERENCE: build apk (https://www.youtube.com/watch?v=7MrXU-fhacU)
-> flutter build apk --build-name=1.0.1 --build-number=1
-The apk files are place at: build/app/outputs/apk/release/
+# REFERENCE: build apk with Andtoid Studio
+- https://www.youtube.com/watch?v=qBEOC5-58s8
+- SDK change: https://www.youtube.com/watch?v=7THufyK-V0Y
+
 
 REFERENCE: Android app deployment on to the Google Play
 - https://www.youtube.com/watch?v=7MrXU-fhacU
