@@ -7,12 +7,12 @@
         <th>{% trans 'Updated' %}</th>
         <th>{% trans 'Order Destination' %}</th>
         <!-- <th>Notes</th> -->
-        <th>{% trans 'Allocated Carrier' %}</th>
+        <th>{% trans 'Allocated Courier' %}</th>
         <th>{% trans 'Picked Up' %}</th>
         <th>{% trans 'Order Status' %}</th>
         <th>{% trans 'Price' %}</th>
-        <th>{% trans 'Contact Carrier' %}</th>
-        <th>{% trans 'Carrier Feedback' %}</th>
+        <th>{% trans 'Contact Courier' %}</th>
+        <th>{% trans 'Courier Feedback' %}</th>
         <th>{% trans 'Invoice' %}</th>
         <th></th>
     </tr>
@@ -51,7 +51,7 @@
         <!-- Order Status -->                
         {% if order.status == 'REQUESTED' or order.status == 'REJECTED' or order.status == 'RE_REQUESTED' %}
             <td class="info center" style="padding-top: 1em;" >
-                <label for="dispached" id="orderStatus" status='{{ order.status }}'>{% trans 'Waiting for a carrier...' %}</label>                                    
+                <label for="dispached" id="orderStatus" status='{{ order.status }}'>{% trans 'Waiting for a courier...' %}</label>                                    
         {% elif order.status == 'STARTED' %}
             <td class="info center">
                 <label for="dispached" id="orderStatus" status='{{ order.status }}' style="padding-top:1em">{% trans 'Waiting for pickup...' %}</label>

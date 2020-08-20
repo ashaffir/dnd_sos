@@ -79,7 +79,7 @@
 
 <section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <header class="page-header">
-        <h2>{% trans 'Carriers' %}</h2>
+        <h2>{% trans 'Couriers' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -88,7 +88,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>{% trans 'Carriers' %}</span></li>
+                <li><span>{% trans 'Couriers' %}</span></li>
             </ol>
     
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
@@ -100,13 +100,13 @@
             <div class="tabs">
                 <ul class="nav nav-tabs tabs-primary">
                     <li class="active">
-                        <a href="#freelancers_map" data-toggle="tab">{% blocktrans %}Carriers Map{% endblocktrans %}</a>
+                        <a href="#freelancers_map" data-toggle="tab">{% blocktrans %}Couriers Map{% endblocktrans %}</a>
                     </li>
                     <li class="">
-                        <a href="#select_tab" data-toggle="tab">{% blocktrans %}Select Carrier{% endblocktrans %}</a>
+                        <a href="#select_tab" data-toggle="tab">{% blocktrans %}Select Couriers{% endblocktrans %}</a>
                     </li>
                     <li >
-                        <a href="#manage_tab" data-toggle="tab">{% blocktrans %}Your Carriers{% endblocktrans %}</a>
+                        <a href="#manage_tab" data-toggle="tab">{% blocktrans %}Your Couriers{% endblocktrans %}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -118,8 +118,8 @@
                             {% csrf_token %}
                             <div class="row" >
                                 <div class="col-md-4">
-                                    <h4>{% trans 'Active carriers around your business' %}</h4>
-                                    <p>{% trans 'There' %}  {% if total_freelancers > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ total_freelancers }} {% trans 'active carriers' %}.</p>
+                                    <h4>{% trans 'Active couriers around your business' %}</h4>
+                                    <p>{% trans 'There' %}  {% if total_freelancers > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ total_freelancers }} {% trans 'active Couriers' %}.</p>
                                     <!-- <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button> -->
                                 </div>
                             </div>
@@ -141,12 +141,12 @@
                             {% csrf_token %}
                             <div class="row" >
                                 <div class="col-md-4">
-                                    <h4>{% trans 'Pick Available Carriers in range' %} {{ max_range }} {% trans 'km' %}</h4>
-                                    <p>{% trans 'There' %}  {% if total_freelancers > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ total_freelancers }} {% trans 'carriers available' %}.</p>
+                                    <h4>{% trans 'Pick Available Couriers in range' %} {{ max_range }} {% trans 'km' %}</h4>
+                                    <p>{% trans 'There' %}  {% if total_freelancers > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ total_freelancers }} {% trans 'Couriers available' %}.</p>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group mb-md">
-                                        <label for="range_selector" style="margin-right: 2rem;">{% trans 'Range from carrier' %}</label>
+                                        <label for="range_selector" style="margin-right: 2rem;">{% trans 'Range from couriers' %}</label>
                                         <select name="range" id="range_selector">
                                             <option value="1.0">--------</option>
                                             <option value="1.0">1 km</option>
@@ -208,7 +208,7 @@
                                                     <div class="col-md-12 text-center" >
 
                                                         <!-- Select Freelancer modal -->
-                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#selectFreelancer_{{ freelancer.pk }}">{% trans 'Request Carrier' %}</a>
+                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#selectFreelancer_{{ freelancer.pk }}">{% trans 'Request Courier' %}</a>
 
                                                         <div class="modal fade" id="selectFreelancer_{{ freelancer.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
@@ -255,8 +255,8 @@
                             {% csrf_token %}
                             <div class="row" >
                                 <div class="col-md-4">
-                                    <h4>{% trans 'Pick Available Carriers From Your Pool' %}</h4>
-                                    <p>{% trans 'There' %}  {% if num_b_freelancers > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ num_b_freelancers }} {% trans 'carriers in your pool' %}.</p>
+                                    <h4>{% trans 'Pick Available Couriers From Your Pool' %}</h4>
+                                    <p>{% trans 'There' %}  {% if num_b_freelancers > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ num_b_freelancers }} {% trans 'Couriers in your pool' %}.</p>
                                     <!-- <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">{% trans 'Show all' %}!</button> -->
                                 </div>
                             </div>
@@ -310,14 +310,14 @@
                                                     <div class="col-md-12 text-center" >
 
                                                         <!-- Select Freelancer modal -->
-                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#b_selectFreelancer_{{ freelancer.pk }}">{% blocktrans %}Request Carrier{% endblocktrans %}</a>
+                                                        <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#b_selectFreelancer_{{ freelancer.pk }}">{% blocktrans %}Request Courier{% endblocktrans %}</a>
 
                                                         <div class="modal fade" id="b_selectFreelancer_{{ freelancer.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans 'Close' %}</span></button>
-                                                                        <h4 class="modal-title" id="myModalLabel">{% trans 'Which order would you like the carrier for' %}?</h4>
+                                                                        <h4 class="modal-title" id="myModalLabel">{% trans 'Which order would you like the courier for' %}?</h4>
                                                                     </div>
                                                                     <div class="modal-body form-group">
                                                                          <select class="form-control" name="open_orders" id="b_open_orders_{{ freelancer.pk }}">

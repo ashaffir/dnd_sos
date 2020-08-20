@@ -14,7 +14,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
 
 from dndsos_dashboard.utilities import send_mail
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext
 
 from .forms import *
 from .models import User, Employer, Employee, Asset, AssignedAsset
@@ -37,7 +37,7 @@ def employer_signup(request):
             
             # send employer a accout activation email
             current_site = request._current_scheme_host
-            subject = _('Activate Employer Account')
+            subject = gettext('Activate PickNdell Account')
 
             message = {
                 'user': user,
@@ -52,7 +52,7 @@ def employer_signup(request):
 
 
             messages.success(request, 'An accout activation link has been sent to your email: ' + user.email +
-                                '. Go to your email and click the link to activate your account.')
+                                '. Check your email and click the link to activate your account.')
             return redirect('dndsos:home')
         else:
             messages.error(request, 'Error')
@@ -72,7 +72,7 @@ def employee_signup(request):
             # send freelancer a accout activation email
             current_site = request._current_scheme_host
             # current_site = get_current_site(request)
-            subject = _('Activate Freelancer Account')
+            subject = gettext('Activate PickNdell Account')
             message = {
                 'user': user,
                 'domain': current_site,
@@ -86,8 +86,8 @@ def employee_signup(request):
 
 
 
-            messages.success(request, _('An accout activation link has been sent to your email): ' + user.email +
-                                _('. Go to your email and click the link to activate your account.')))
+            messages.success(request, gettext('An accout activation link has been sent to your email): ' + user.email +
+                                gettext('. Check your email and click the link to activate your account.')))
             return redirect('dndsos:home')
         else:
             messages.error(request, 'Error')
@@ -111,7 +111,7 @@ def employer_profile(request):
     if request.method == 'POST':
         if form.is_valid():
             user = form.save()
-            messages.success(request, _("Profile has been updated successfully"))
+            messages.success(request, gettext("Profile has been updated successfully"))
             return redirect('core:employer_profile')
         
     return render(request, 'core/employer/profile.html', {'form': form})
@@ -292,7 +292,7 @@ def employee_profile(request):
         if form.is_valid():
             user = form.save()
             
-            messages.success(request, _('Your profile has been updated.'))
+            messages.success(request, gettext('Your profile has been updated.'))
             
     return render(request, 'core/employee/profile.html', {'form': form})
 
@@ -369,19 +369,19 @@ def activate_account(request, uidb64, token):
         user_profile.email = user.email
         user_profile.save()
 
-        messages.success(request, _('You have successfully confirmed your email. Log in to proceed.'))
+        messages.success(request, gettext('You have successfully confirmed your email. Log in to proceed.'))
         return redirect('core:login')
         # else:
         #     messages.info(request, 'Set a password for your Employee account.')
         #     return redirect('core:employee_set_password', uid=user.id)
     
     # invalid link
-    messages.error(request, _('Account activation link is invalid or has expired. Contact system administratior for assistance'))
+    messages.error(request, 'Account activation link is invalid or has expired. Contact system administratior for assistance')
     return redirect('core:home')
 
 # account activation email sent
 def account_activation_sent(request):
-    return HttpResponse(_('<p>An activation link has been sent to your Email</p>'))
+    return HttpResponse(gettext('<p>An activation link has been sent to your Email</p>'))
 
 
 # upon activating account, employee should set password
@@ -394,7 +394,7 @@ def employee_set_password(request, uid):
             user = form.save()
             login(request, user)
             
-            messages.success(request, _('Welcome ')+user.email+_('. Your account is now operational'))
+            messages.success(request, gettext('Welcome ')+user.email+gettext('. Your account is now operational'))
             return redirect('core:login_redirect')
     else:
         form = SetPasswordForm(user)
@@ -409,15 +409,15 @@ def reset_password(request):
         password2 = request.POST.get("new_password2")
         error = False
         if not password1:
-            enter_password_msg = _("Enter password")
+            enter_password_msg = gettext("Enter password")
             messages.error(request, enter_password_msg)
             error =True
         elif len(password1) < 8:
-            pwd_too_short_msg = _("Minimum password length should be 8")
+            pwd_too_short_msg = gettext("Minimum password length should be 8")
             messages.error(request, pwd_too_short_msg)
             error = True
         elif not (password1 == password2):
-            pwd_missmatch_msg = _("Mismatch password")
+            pwd_missmatch_msg = gettext("Mismatch password")
             messages.error(request, )
             error=True
 
@@ -427,7 +427,7 @@ def reset_password(request):
         try:
             user.set_password(password1)
             user.save()
-            changed_pwd_msg = _("Successfully changed the password, please login again.")
+            changed_pwd_msg = gettext("Successfully changed the password, please login again.")
             messages.success(request, changed_pwd_msg)
             logout(request)
             return redirect('core:login')
@@ -462,7 +462,7 @@ def forgot_password(request):
                                   context=context, to_email=[email],
                                   html_email_template_name='core/emails/change-password-email.html')
                         
-                        check_email_message = _("Check your mail inbox to reset password")
+                        check_email_message = gettext("Check your mail inbox to reset password")
                         messages.success(request, check_email_message)
                         return redirect('dndsos:home')
 
@@ -472,15 +472,15 @@ def forgot_password(request):
                     
                     return redirect('core:login')
                 else:
-                    not_registered_message = _("This email is not registered to us. Please register first ")
+                    not_registered_message = gettext("This email is not registered to us. Please register first ")
                     messages.error(request, not_registered_message)
                     return redirect('dndsos:home')
             else:
-                valid_email_message = _("Please enter a valid email")
+                valid_email_message = gettext("Please enter a valid email")
                 messages.error(request, valid_email_message)
                 return redirect('core:forgot-password')
         else:
-            enter_email_msg =  _("Please do enter the email")
+            enter_email_msg =  gettext("Please do enter the email")
             messages.error(request, enter_email_msg)
             return redirect('core:forgot-password')
     else:

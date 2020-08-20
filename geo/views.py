@@ -36,7 +36,7 @@ def freelancer_location(request):
         }
         print(f'Freelancer location is missing. Reason: {e}')
 
-    # Saving the trip point of a carrier throughout the delivery 
+    # Saving the trip point of a Courier throughout the delivery 
     # process for every order he is involved at that moment
     for order in freelancer_in_progress_orders:
         if not order.trip:

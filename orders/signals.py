@@ -1,3 +1,4 @@
+import platform
 from fcm_django.models import FCMDevice
 
 from django.db.models.signals import post_save
@@ -33,13 +34,15 @@ def announce_new_user(sender, instance, created, **kwargs):
         # user = form.save() # add employer to db with is_active as False
 
         # send an accout activation email
-        if instance.is_employer:
-            employer = Employer.objects.create(user=user, email=instance.email)
-        else:
-            employee = Employee.objects.create(user=user)
+        # if instance.is_employer:
+        #     employer = Employer.objects.create(user=user, email=instance.email)
+        # else:
+        #     employee = Employee.objects.create(user=user)
 
-        # current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
-        current_site = settings.DOMAIN_PROD
+        if platform.system() == 'Darwin': # MAC
+            current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+        else:
+            current_site = settings.DOMAIN_PROD
 
         subject = 'Activate Employer Account'
 

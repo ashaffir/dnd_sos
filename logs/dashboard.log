@@ -1,3 +1,99 @@
-INFO 2020-08-19 13:09:36,586 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
-INFO 2020-08-19 13:09:36,586 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
-INFO 2020-08-19 13:09:36,587 - Listening on TCP address 127.0.0.1:8000
+INFO 2020-08-20 14:04:10,077 - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+INFO 2020-08-20 14:04:10,077 - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+INFO 2020-08-20 14:04:10,078 - Listening on TCP address 127.0.0.1:8000
+INFO 2020-08-20 14:04:21,163 - [32mHTTP POST /core/employer/signup/ 302 [7.01, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:21,260 - [mHTTP GET / 200 [0.09, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:41,447 - [32mHTTP GET /core/activate/account/MTE1/5j7-514568d3775f993abe1f/ 302 [0.05, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:41,539 - [mHTTP GET /core/login/ 200 [0.07, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:47,545 - [mHTTP POST /core/login/ 200 [0.14, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:54,119 - [32mHTTP POST /core/login/ 302 [0.12, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:54,143 - [32mHTTP GET /core/login_redirect 302 [0.01, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:54,208 - [mHTTP GET /dashboard/business/115/ 200 [0.06, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:54,544 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53384]
+INFO 2020-08-20 14:04:54,640 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53384]
+INFO 2020-08-20 14:04:54,667 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:04:54,732 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:53320][0m
+INFO 2020-08-20 14:05:08,499 - [mHTTP GET /admin/core/employee/ 200 [0.21, 127.0.0.1:53404][0m
+INFO 2020-08-20 14:05:08,594 - [36mHTTP GET /static/admin/js/vendor/jquery/jquery.js 304 [0.03, 127.0.0.1:53406][0m
+INFO 2020-08-20 14:05:08,595 - [36mHTTP GET /static/admin/js/jquery.init.js 304 [0.02, 127.0.0.1:53408][0m
+INFO 2020-08-20 14:05:08,595 - [36mHTTP GET /static/admin/js/core.js 304 [0.03, 127.0.0.1:53407][0m
+INFO 2020-08-20 14:05:08,596 - [36mHTTP GET /static/admin/js/actions.js 304 [0.02, 127.0.0.1:53409][0m
+INFO 2020-08-20 14:05:08,602 - [36mHTTP GET /static/admin/js/admin/RelatedObjectLookups.js 304 [0.03, 127.0.0.1:53410][0m
+INFO 2020-08-20 14:05:08,616 - [36mHTTP GET /static/admin/js/urlify.js 304 [0.01, 127.0.0.1:53406][0m
+INFO 2020-08-20 14:05:08,617 - [36mHTTP GET /static/admin/js/prepopulate.js 304 [0.01, 127.0.0.1:53408][0m
+INFO 2020-08-20 14:05:08,621 - [mHTTP GET /admin/jsi18n/ 200 [0.06, 127.0.0.1:53404][0m
+INFO 2020-08-20 14:05:08,629 - [36mHTTP GET /static/admin/js/vendor/xregexp/xregexp.js 304 [0.02, 127.0.0.1:53409][0m
+INFO 2020-08-20 14:05:08,762 - [36mHTTP GET /static/admin/img/search.svg 304 [0.01, 127.0.0.1:53407][0m
+INFO 2020-08-20 14:05:08,764 - [36mHTTP GET /static/admin/img/icon-no.svg 304 [0.01, 127.0.0.1:53410][0m
+INFO 2020-08-20 14:05:08,768 - [36mHTTP GET /static/admin/img/icon-yes.svg 304 [0.01, 127.0.0.1:53406][0m
+INFO 2020-08-20 14:05:14,108 - [mHTTP GET /admin/core/employee/ 200 [0.08, 127.0.0.1:53404][0m
+INFO 2020-08-20 14:05:14,145 - [36mHTTP GET /static/admin/js/vendor/jquery/jquery.js 304 [0.01, 127.0.0.1:53409][0m
+INFO 2020-08-20 14:05:14,147 - [36mHTTP GET /static/admin/js/actions.js 304 [0.01, 127.0.0.1:53404][0m
+INFO 2020-08-20 14:05:14,153 - [36mHTTP GET /static/admin/js/core.js 304 [0.01, 127.0.0.1:53410][0m
+INFO 2020-08-20 14:05:14,153 - [36mHTTP GET /static/admin/js/jquery.init.js 304 [0.01, 127.0.0.1:53407][0m
+INFO 2020-08-20 14:05:14,154 - [36mHTTP GET /static/admin/js/admin/RelatedObjectLookups.js 304 [0.01, 127.0.0.1:53406][0m
+INFO 2020-08-20 14:05:14,162 - [36mHTTP GET /static/admin/js/urlify.js 304 [0.02, 127.0.0.1:53409][0m
+INFO 2020-08-20 14:05:14,163 - [mHTTP GET /admin/jsi18n/ 200 [0.03, 127.0.0.1:53408][0m
+INFO 2020-08-20 14:05:14,167 - [36mHTTP GET /static/admin/js/prepopulate.js 304 [0.01, 127.0.0.1:53404][0m
+INFO 2020-08-20 14:05:14,170 - [36mHTTP GET /static/admin/js/vendor/xregexp/xregexp.js 304 [0.01, 127.0.0.1:53410][0m
+INFO 2020-08-20 14:05:14,219 - [36mHTTP GET /static/admin/img/search.svg 304 [0.01, 127.0.0.1:53408][0m
+INFO 2020-08-20 14:05:14,220 - [36mHTTP GET /static/admin/img/icon-no.svg 304 [0.01, 127.0.0.1:53407][0m
+INFO 2020-08-20 14:05:14,222 - [36mHTTP GET /static/admin/img/icon-yes.svg 304 [0.01, 127.0.0.1:53406][0m
+INFO 2020-08-20 14:05:56,374 - [mHTTP GET /admin/core/ 200 [0.05, 127.0.0.1:53404][0m
+INFO 2020-08-20 14:05:57,928 - [mHTTP GET /admin/core/employer/ 200 [0.10, 127.0.0.1:53404][0m
+INFO 2020-08-20 14:05:57,980 - [mHTTP GET /admin/jsi18n/ 200 [0.02, 127.0.0.1:53408][0m
+INFO 2020-08-20 14:06:05,368 - [mHTTP GET /admin/core/employer/115/change/ 200 [0.12, 127.0.0.1:53404][0m
+INFO 2020-08-20 14:06:05,437 - [mHTTP GET /admin/jsi18n/ 200 [0.03, 127.0.0.1:53408][0m
+INFO 2020-08-20 14:06:05,539 - [mHTTP GET /static/admin/img/gis/move_vertex_off.svg 200 [0.00, 127.0.0.1:53408][0m
+INFO 2020-08-20 14:06:16,330 - [mHTTP GET /dashboard/business/115/b-profile/ 200 [0.72, 127.0.0.1:53498][0m
+INFO 2020-08-20 14:06:16,349 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:53384]
+INFO 2020-08-20 14:06:16,610 - [mHTTP GET /static/assets/vendor/dropzone/css/dropzone.css 200 [0.01, 127.0.0.1:53498][0m
+INFO 2020-08-20 14:06:16,613 - [mHTTP GET /static/assets/vendor/fuelux/js/spinner.js 200 [0.01, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:06:16,631 - [mHTTP GET /static/assets/vendor/dropzone/dropzone.js 200 [0.01, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:06:16,910 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53507]
+INFO 2020-08-20 14:06:16,976 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53507]
+INFO 2020-08-20 14:06:17,129 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:06:17,390 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:06:33,909 - [mHTTP GET /geo/city-streets/?city=%D7%90%D7%91%D7%95%20%D7%92%D7%95%D7%A9&type=profile 200 [0.09, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:06:53,761 - [mHTTP POST /dashboard/business/115/b-profile/ 200 [0.64, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:06:53,784 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:53507]
+INFO 2020-08-20 14:06:54,127 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53570]
+INFO 2020-08-20 14:06:54,186 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53570]
+INFO 2020-08-20 14:06:54,497 - [mHTTP GET /orders/business-alerts-list 200 [0.04, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:06:54,554 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:07:14,500 - [mHTTP GET /admin/core/employer/115/change/ 200 [0.11, 127.0.0.1:53599][0m
+INFO 2020-08-20 14:07:14,541 - [36mHTTP GET /static/admin/js/core.js 304 [0.01, 127.0.0.1:53603][0m
+INFO 2020-08-20 14:07:14,542 - [36mHTTP GET /static/admin/js/vendor/jquery/jquery.js 304 [0.01, 127.0.0.1:53601][0m
+INFO 2020-08-20 14:07:14,549 - [36mHTTP GET /static/admin/js/admin/RelatedObjectLookups.js 304 [0.02, 127.0.0.1:53604][0m
+INFO 2020-08-20 14:07:14,550 - [36mHTTP GET /static/admin/js/actions.js 304 [0.02, 127.0.0.1:53605][0m
+INFO 2020-08-20 14:07:14,551 - [36mHTTP GET /static/admin/js/jquery.init.js 304 [0.02, 127.0.0.1:53602][0m
+INFO 2020-08-20 14:07:14,563 - [36mHTTP GET /static/admin/js/prepopulate.js 304 [0.01, 127.0.0.1:53601][0m
+INFO 2020-08-20 14:07:14,564 - [36mHTTP GET /static/admin/js/urlify.js 304 [0.02, 127.0.0.1:53603][0m
+INFO 2020-08-20 14:07:14,569 - [mHTTP GET /admin/jsi18n/ 200 [0.04, 127.0.0.1:53599][0m
+INFO 2020-08-20 14:07:14,574 - [36mHTTP GET /static/admin/js/vendor/xregexp/xregexp.js 304 [0.02, 127.0.0.1:53604][0m
+INFO 2020-08-20 14:07:14,574 - [36mHTTP GET /static/admin/js/change_form.js 304 [0.02, 127.0.0.1:53605][0m
+INFO 2020-08-20 14:07:14,579 - [36mHTTP GET /static/admin/js/prepopulate_init.js 304 [0.02, 127.0.0.1:53602][0m
+INFO 2020-08-20 14:07:14,634 - [36mHTTP GET /static/admin/img/icon-changelink.svg 304 [0.01, 127.0.0.1:53601][0m
+INFO 2020-08-20 14:07:14,636 - [36mHTTP GET /static/admin/img/icon-addlink.svg 304 [0.01, 127.0.0.1:53603][0m
+INFO 2020-08-20 14:07:14,661 - [36mHTTP GET /static/admin/img/gis/move_vertex_off.svg 304 [0.00, 127.0.0.1:53604][0m
+INFO 2020-08-20 14:07:24,421 - [32mHTTP POST /admin/core/employer/115/change/ 302 [0.04, 127.0.0.1:53599][0m
+INFO 2020-08-20 14:07:24,513 - [mHTTP GET /admin/core/employer/ 200 [0.09, 127.0.0.1:53599][0m
+INFO 2020-08-20 14:07:24,569 - [mHTTP GET /admin/jsi18n/ 200 [0.02, 127.0.0.1:53605][0m
+INFO 2020-08-20 14:07:30,521 - [mHTTP GET /dashboard/business/115/b-profile/ 200 [0.59, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:07:30,544 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:53570]
+INFO 2020-08-20 14:07:30,920 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53632]
+INFO 2020-08-20 14:07:30,984 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53632]
+INFO 2020-08-20 14:07:31,136 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:07:31,195 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:08:04,763 - [mHTTP GET /dashboard/business/115/b-profile/ 200 [0.47, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:08:04,786 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:53632]
+INFO 2020-08-20 14:08:05,174 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53682]
+INFO 2020-08-20 14:08:05,237 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53682]
+INFO 2020-08-20 14:08:05,358 - [mHTTP GET /orders/business-alerts-list 200 [0.02, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:08:05,410 - [mHTTP GET /orders/business-messages-list 200 [0.04, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:08:10,405 - [mHTTP GET /dashboard/business/115/ 200 [0.05, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:08:10,420 - WebSocket DISCONNECT /ws/orders/ [127.0.0.1:53682]
+INFO 2020-08-20 14:08:10,711 - WebSocket HANDSHAKING /ws/orders/ [127.0.0.1:53702]
+INFO 2020-08-20 14:08:10,772 - WebSocket CONNECT /ws/orders/ [127.0.0.1:53702]
+INFO 2020-08-20 14:08:10,846 - [mHTTP GET /orders/business-alerts-list 200 [0.03, 127.0.0.1:53499][0m
+INFO 2020-08-20 14:08:10,902 - [mHTTP GET /orders/business-messages-list 200 [0.05, 127.0.0.1:53499][0m

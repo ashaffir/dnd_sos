@@ -258,7 +258,7 @@
 										{% else %}
 											<a href="{% url 'dndsos_dashboard:f-dashboard' f_id=user.pk %}">
 											<i class="fa fa-home" aria-hidden="true"></i>
-											<span>{% trans 'Carrier Dashboard' %}</span>
+											<span>{% trans 'Courier Dashboard' %}</span>
 										</a>
 										{% endif %}
 									</li>
@@ -276,7 +276,7 @@
 										<li>
 											<a href="{% url 'dndsos_dashboard:freelancers' b_id=user.pk %}">
 												<i class="fa fa-group" aria-hidden="true"></i>
-												<span>{% trans 'Carriers' %}</span>
+												<span>{% trans 'Couriers' %}</span>
 											</a>
 										</li>
 	                                    <li>
@@ -846,8 +846,9 @@
 					
 					let order_building = document.querySelector('#building').value;
 					const freelancer = document.querySelector('#freelancer').value;
+					const urgency = document.querySelector('#urgency').value;
 					
-					console.log(`Street : ${order_street_symbol}  City: ${order_city_symbol} Building: ${order_building}`)
+					console.log(`Street : ${order_street_symbol}  City: ${order_city_symbol} Building: ${order_building} Urgency: ${urgency}`)
 
 					if (order_city_symbol === "none" || order_building == "" || order_street_symbol == 'none'){
 						if (order_city_symbol === "none"){
@@ -878,6 +879,7 @@
 							'order_street_symbol': order_street_symbol,
 							'pick_up_address': pick_up_address,
 							'drop_off_address': drop_off_address,
+							'urgency': urgency,
 							//'notes': notes,
 							'select_freelancers':freelancer
 						}

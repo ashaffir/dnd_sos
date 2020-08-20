@@ -362,9 +362,9 @@ def f_profile(request, f_id):
                     user_freelancer.save()
                     #####
 
-                    messages.success(request,_('You have successfully updated your profile.'))
+                    messages.success(request,gettext('You have successfully updated your profile.'))
                 except Exception as e:
-                    messages.success(request,f'_(There was an error updating your profile. ERRRO): {e}')
+                    messages.success(request,f'gettext(There was an error updating your profile. ERRRO): {e}')
             else:
                 for error in form.errors:
                     messages.error(request, f'Error: {error}')

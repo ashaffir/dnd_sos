@@ -2,20 +2,20 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans 'PickNdell - Carrier Sign Up' %}{% endblock %}
+{% block title %}{% trans 'PickNdell - Courier Sign Up' %}{% endblock %}
 
 {% block content %}
 {% get_current_language as lang %}
 
 <div class="" style="margin-top:8rem">
-  {% block head_title %}{% trans " Carrier Signup" %}{% endblock %}
+  {% block head_title %}{% trans " Courier Signup" %}{% endblock %}
 </div>
 <div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
   <div class="row justify-content-center form-group">
     <div class="col-lg-7 mb-5 mt-5">
           {% include 'core/_messages.html' %}      
       
-          <h2 class="h4 text-black mb-5" style="color: black;">{% trans "Carrier Sign Up" %}</h2> 
+          <h2 class="h4 text-black mb-5" style="color: black;">{% trans "Courier Sign Up" %}</h2> 
 
           <p>{% trans 'Already have an account? Then please' %} <a href="{% url 'core:login' %}">{% trans 'sign in' %}</a>.</p>
 

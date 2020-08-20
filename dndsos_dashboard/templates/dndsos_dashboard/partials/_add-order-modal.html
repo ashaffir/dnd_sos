@@ -50,20 +50,31 @@
                             <label class="col-sm-3 control-label">* {% trans 'Street' %}</label>
                             <div class="col-sm-4" id="streets">
                                     <!-- Loaded from Ajax -->
-
+                                    <p>Choose city</p>
                                     <label class="error" for="street"></label>
                             </div>
                             <div class="col-sm-2 pl-3">
-                                <input class="form-control" type="text" name="building" id="building" placeholder="{% trans 'Building Number' %}" required>
+                                <input class="form-control" type="text" name="building" id="building" placeholder="{% trans '#' %}" required>
                                 <label class="error" for="building"></label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">{% trans 'Choose Carrier/s' %}</label>
-                            <div class="col-sm-9">
+                            <label class="col-sm-3 control-label"> <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'Urgency impacts the price' %}"></i> {% trans 'Urgency' %}</label>
+                            <div class="col-sm-4" id="streets">
+                                    <select name="urgency" id="urgency" class="form-control">
+                                        <option value="1">"No rush..."</option>
+                                        <option value="2">"Now!!"</option>
+                                    </select>
+                                    <label class="error" for="street"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">{% trans 'Choose Courier/s' %}</label>
+                            <div class="col-sm-8">
                                 <select id="freelancer" name="freelancer" class="form-control" required>
                                     <option value="all">{% trans 'Notify all available' %}</option>
-                                    <option value="none">{% trans 'Do not broadcast. I will pick a carrier later' %}</option>
+                                    <option value="none">{% trans 'Do not broadcast. I will pick a courier later' %}</option>
 
                                     <!-- TODO: Add the option to select a freelancer for an order -->
                                     <!-- {% for freelancer in freelancers %}

@@ -27,12 +27,12 @@ def home(request):
             if form.is_valid():
                 form.save()
                 update_admin(request)
-                messages.success(request, _('Thank you for your interest in PickNdell. We will get back to you shortly.'))
+                messages.success(request, gettext('Thank you for your interest in PickNdell. We will get back to you shortly.'))
             else:
-                messages.error(request, _('Please fill out the required fields before submitting the form.'))
+                messages.error(request, gettext('Please fill out the required fields before submitting the form.'))
                 return redirect(request.META['HTTP_REFERER'])
         else:
-            messages.error(request, _('Please confirm you are not a robot.'))
+            messages.error(request, gettext('Please confirm you are not a robot.'))
             return redirect(request.META['HTTP_REFERER'])
 
 

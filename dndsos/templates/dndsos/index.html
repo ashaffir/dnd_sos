@@ -192,7 +192,7 @@
         </div>
         <div class="col-lg-3 border-right p-4">
           <i class="" ><img src="{% static 'assets/images/numbers/png/three.png' %}" style="max-width: 20%;" alt=""></i>
-          <img src="{% static 'assets/images/courier-red.png' %}" alt="Image" class="img-fluid">
+          <img src="{% static 'assets/images/carrier-red.png' %}" alt="Image" class="img-fluid">
           <p>{{ how_3_section.content|safe }}</p>
         </div>
         <div class="col-lg-3 p-4">
@@ -244,6 +244,7 @@
   </style>
 
   <!-- FAQ -->
+  <!-- ################### -->
   <div class="site-section" id="faq" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <div class="container">
       <div class="row mb-1">
@@ -261,7 +262,7 @@
         <li class=" nav-item waves-effect waves-light tab" style="width: 50%;">
           <a (click)="function2()" class="btn btn-warning font-weight-bold m-2" href="#freelancer_faq" data-toggle="tab" style="text-align:center; color:white">
             <img class="center mobile-image" style="max-width: 20%;" src="{% static 'assets/images/scooter.png' %}" alt="">
-            <span class="d-none d-sm-block text-light">{% trans 'couriers' %} </span></a>
+            <span class="d-none d-sm-block text-light">{% trans 'Couriers' %} </span></a>
         </li>
       
       </ul>

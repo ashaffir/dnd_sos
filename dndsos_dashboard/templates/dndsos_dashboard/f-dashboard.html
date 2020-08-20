@@ -7,7 +7,7 @@
 
 <section role="main" class="content-body" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <header class="page-header">
-        <h2>{% trans 'Carrier Dashboard' %}</h2>
+        <h2>{% trans 'Courier Dashboard' %}</h2>
     
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -41,7 +41,7 @@
                             <h4>{% trans 'Change your availability status here' %}.</h4>
                             {% else %} 
                             <h4 style="color: red;"><i class="fa fa-exclamation"></i> {% trans 'Please complete your profile before changing the availability status' %}. 
-                                <a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">{% trans 'Go to Carrier Profile' %}</a>
+                                <a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">{% trans 'Go to Courier Profile' %}</a>
                             </h4>                            
                             {% endif %}
                         </div>
