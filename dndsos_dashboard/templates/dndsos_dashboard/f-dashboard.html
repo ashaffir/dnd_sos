@@ -33,19 +33,21 @@
         <!-- Projects Stats -->
         <div class="col-lg-6 col-md-12">
             <div class="row">
-                <div class="col-md-12 center">
+                <div class="col-md-12">
                     {% if user.is_employee %}
                     <div class="row">
-                        <div class="col-md-8" style="margin-top: 0.5em;">
+                        <div class="col-md-8">
                             {% if user.freelancer.is_approved %} 
-                            <h4>{% trans 'Change your availability status here' %}.</h4>
+                            <h3>{% trans 'Your availability status is:' %} {% if user.freelancer.is_available %} <b>{% trans 'Available' %}</b> {% else %} <b>{% trans 'Unavailable' %}</b> {% endif %}</h3>
                             {% else %} 
                             <h4 style="color: red;"><i class="fa fa-exclamation"></i> {% trans 'Please complete your profile before changing the availability status' %}. 
                                 <a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">{% trans 'Go to Courier Profile' %}</a>
                             </h4>                            
                             {% endif %}
+                            <h5>{%trans 'User PickNdell mobile application to change your availabilty status' %}.</h5>
+                            <h5>Don't have it yet? <a href="{% static '/downloads/pickndell_mobile_android.apk' %}" download="">Download app here</a></h5>
                         </div>
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             {% if user.freelancer.is_active %}
                             <h6>{% trans 'Status cannot be changed while in the process of delivering' %}</h6>
                             <div class="row">
@@ -55,7 +57,6 @@
                                 </form>
                             </div>
                             {% else %}
-                            <div class="row">{% trans 'Change status' %}</div>
                             <div class="row">
                                 <form action="" enctype="multipart/form-data" method="POST" id="availability" name="availability">
                                 {% csrf_token %}
@@ -69,7 +70,7 @@
                                 </form>
                             </div>
                             {% endif %}
-                        </div>
+                        </div> -->
                     </div>
                 {%endif%}
         
@@ -142,7 +143,7 @@
                         <!-- <a href="#" class="fa fa-times"></a> -->
                     </div>
 
-                    <h2 class="panel-title">{% trans 'General Stats' %}</h2>
+                    <h3 class="panel-title">{% trans 'General Stats' %}</h3>
                 </header>
                 <div class="panel-body">
                     <div class="row">

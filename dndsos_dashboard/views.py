@@ -246,8 +246,13 @@ def b_profile(request, b_id):
             else:
                 pass
 
+            # Setting the business location coordinates
             try:
                 user_profile.location, user_profile.lon, user_profile.lat = location_calculator(new_city,new_street, new_building, 'israel')
+                if not user_profile.location or not user_profile.lon or not user_profile.lat:
+                    print('Failed to update business address')
+                    messages.error(request, 'This address is not valid please try again or a nearby location.')
+                    return redirect(request.META['HTTP_REFERER'])
             except:
                 pass
 

@@ -19,9 +19,9 @@ def business_type(request):
 def freelancer_available(request):
     context = {}
     try:
-        freelancer = Employee.objects.get(user=request.user.pk)
+        freelancer = Employee.objects.get(pk=request.user.pk)
         context['is_available'] = freelancer.is_available
-        context['is_active'] = freelancer.is_active
+        context['is_active'] = freelancer.is_delivering
     except:
         context['is_available'] = False
         context['is_active'] = False
