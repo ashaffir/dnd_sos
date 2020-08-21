@@ -62,7 +62,11 @@
             <a href="{% url 'core:employee_signup' %}" class="text-warning h5 btn btn-outline-warning"> {% trans 'Join and earn extra income as a courier' %} </a>
           </div>
           <div class="row">
-            <a href="{% static '/downloads/pickndell_mobile_android.apk' %}"><img src="{% static 'images/google-play-badge.png' %}" alt="pickndell mobile app" style="max-width: 30%;"></a>
+            {% if debug %}
+              <a href="{% static '/downloads/pickndell_mobile_android.apk' %}">Download app</a>
+            {% else %}
+              <a href="{% static '/downloads/pickndell_mobile_android.apk' %}"><img src="{% static 'images/google-play-badge.png' %}" alt="pickndell mobile app" style="max-width: 30%;"></a>
+            {% endif %}
           </div>
         </div>
       </div>
