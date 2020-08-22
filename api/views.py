@@ -146,11 +146,12 @@ class NewLoginViewSet(ObtainAuthToken):
                             "daily_profit": daily_profit
                             })
         else:
-            user_profile = Employer.objects.get_or_create(pk=user.pk)
+            user_profile, _ = Employer.objects.get_or_create(pk=user.pk)
             orders_in_progress = active_orders = Order.objects.filter(
                 (Q(business=user.pk) & Q(updated__contains=today)) & 
                 (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
             
+            print(f'USER PROF: {user_profile.business_name}')
             num_orders_in_progress = len(orders_in_progress)
 
             daily_orders = Order.objects.filter(business=user.pk, created__contains=today)
@@ -179,8 +180,7 @@ class NewLoginViewSet(ObtainAuthToken):
             except:
                 is_approved = ""
 
-
-            return Response({'token': token.key,
+            login_response = {'token': token.key,
                             'fcm_token':fcm_token,
                             "user":user.pk,
                             "is_employee": 1 if user.is_employee else 0,
@@ -190,7 +190,10 @@ class NewLoginViewSet(ObtainAuthToken):
                             "num_daily_orders": num_daily_orders,
                             "daily_cost": daily_cost,
                             "num_orders_in_progress": num_orders_in_progress
-                            })
+                            }
+            print(f'>>>>> Login response: {login_response}')
+
+            return Response(login_response)
 
 
 
