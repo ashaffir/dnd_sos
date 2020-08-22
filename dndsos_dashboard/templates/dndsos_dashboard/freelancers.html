@@ -114,24 +114,127 @@
                     <!-- Freelancers Map tab -->
                     <div id="freelancers_map" class="tab-pane active">
 
-                        <form action="" method="POST" enctype="multipart/form-data" id="b_select_freelancers" name="select_freelancers">
-                            {% csrf_token %}
-                            <div class="row" >
+                        <!-- <form action="" method="POST" enctype="multipart/form-data" id="b_select_freelancers" name="select_freelancers">
+                            {% csrf_token %} -->
+                            <!-- <div class="row" >
                                 <div class="col-md-4">
                                     <h4>{% trans 'Active couriers around your business' %}</h4>
                                     <p>{% trans 'There' %}  {% if total_freelancers > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ total_freelancers }} {% trans 'active Couriers' %}.</p>
-                                    <!-- <button type="submit" class="btn btn-warning" name="sort_by_city" type="button">Show all!</button> -->
                                 </div>
-                            </div>
+                            </div> -->
+                            <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
+                                {% csrf_token %}    
+                                <div class="row" >
+                                    <div class="col-md-4">
+                                        <h4>{% trans 'Pick Available Couriers in range' %} {{ max_range }} {% trans 'km' %}</h4>
+                                        <p>{% trans 'There' %}  {% if total_freelancers > 1 %}  {% trans 'are' %} {% else %} {% trans 'is' %} {% endif %}{{ total_freelancers }} {% trans 'Couriers available' %}.</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-md">
+                                            <label for="range_selector" style="margin-right: 2rem;">{% trans 'Range from couriers' %}</label>
+                                            <select name="range" id="range_selector">
+                                                <option value="1.0">--------</option>
+                                                <option value="1.0">1 km</option>
+                                                <option value="5.0">5 km</option>
+                                                <option value="10.0">10 km</option>
+                                                <option value="15.0">15 km</option>
+                                                <option value="20.0">20 km</option>
     
-                            <hr>
-                
-                            <div class="row">
-                                <!-- Map -->
-                                <div class="freelancers-map" id="m"></div>
-                            </div>
+                                            </select>
+                                            <label for="vehicle_selector" style="margin: 2rem;">{% trans 'Filter by Vehicle' %} </label>
+                                            <select name="vehicle" id="vehicle_selector">
+                                                <option value="">--------------------</option>
+                                                {% for vehicle in vehicles %}
+                                                {% blocktrans %} <option value="{{ vehicle }}">{{ vehicle }}</option>{% endblocktrans %}
+                                                {% endfor %}
+                                            </select>
+                                            <span class="input-group-btn left">
+                                                <button type="submit" class="btn btn-success" name="filter" type="button">{% trans 'Filter' %}!</button>
+                                            </span>
+                                        </div>                    
+                                    </div>
+                                    <div class="col-md-2 left">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- Map -->
+                                    <div class="freelancers-map" id="m"></div>
+                                </div>
 
-                        </form>
+                                <hr>
+                                <div class="row">
+                                    {% for freelancer in freelancers %}
+                                        <div class="col-md-3">
+                                            <section class="panel">
+                                                <header class="panel-heading bg-primary">
+                                                    <div class="panel-heading-profile-picture">
+                                                        <img src="{{ freelancer.profile_pic.url }}">
+                                                    </div>
+                                                </header>
+                                                <div class="panel-body">
+                                                    <h4 class="text-semibold mt-sm">{{ freelancer.name }}</h4>
+                                                    <p>{% trans 'Short bio' %}: {{ freelancer.bio }} </p>
+                                                    <p>{% trans 'Vehicle' %}: {{ freelancer.vehicle }} </p>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <p>{% trans 'Average Rating' %}: </p>
+                                                        </div>
+                                                        <div class="col-md-6 stars">
+                                                            <div class="total-ratings" style="width: calc(16% *  {{ freelancer.freelancer_total_rating }} "></div>
+                                                            <img src="{% static 'assets/images/stars.png' %}" alt="" title="{{ freelancer.freelancer_total_rating }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6"></div>
+                                                        <div class="col-md-6">
+                                                            <p><b>({{ freelancer.freelancer_total_rating }}/5)</b></p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <hr class="solid short">
+    
+                                                    <div class="row">
+                                                        <!-- Request Freelancer Button -->
+                                                        <div class="col-md-12 text-center" >
+    
+                                                            <!-- Select Freelancer modal -->
+                                                            <a class="mb-xs mt-xs mr-xs btn btn-success" data-toggle="modal" data-target="#selectFreelancer_{{ freelancer.pk }}">{% trans 'Request Courier' %}</a>
+    
+                                                            <div class="modal fade" id="selectFreelancer_{{ freelancer.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans 'Close' %}</span></button>
+                                                                            <h4 class="modal-title" id="myModalLabel">{% trans 'Which order would you like the freelancer for' %}?</h4>
+                                                                        </div>
+                                                                        <div class="modal-body form-group">
+                                                                             <select class="form-control" name="open_orders" id="open_orders_{{ freelancer.pk }}">
+                                                                                 <option value="">---------</option>
+                                                                                 {% for order in orders %}
+                                                                                    <option value="{{ order.order_id  }}">{{ order.drop_off_address }}</option>
+                                                                                 {% endfor %}
+                                                                             </select>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" 
+                                                                                id="freelancer_{{ freelancer.pk }}" 
+                                                                                onclick="request_specific_freelancer('{{ freelancer.pk }}',false)" 
+                                                                                class="btn btn-primary">{% trans 'Confirm' %}
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div> 
+                                    {% endfor %}
+                                </div>
+                                </form>
                     </div> 
                     <!-- End Business freelancers tab -->
                     
