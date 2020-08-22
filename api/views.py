@@ -35,8 +35,17 @@ class UserLocationViewSet(APIView):
     authentication_classes = (TokenAuthentication,)
 
     def put(self, request, *args, **kwargs):
-        lat = float(self.request.data['lat'])
-        lon = float(self.request.data['lon'])
+
+        # Checking Point is translated differently on Linux and Mac
+        # for Mac:
+        if platform.system() == 'Darwin':
+            lat = float(self.request.data['lat'])
+            lon = float(self.request.data['lon'])
+        # On Linux is revered
+        else:
+            lat = float(self.request.data['lon'])
+            lon = float(self.request.data['lat'])
+
         try:
             user_id = self.request.GET.get('user')
             user = Employee.objects.get(pk=user_id)
