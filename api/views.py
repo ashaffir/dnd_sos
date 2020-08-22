@@ -74,7 +74,7 @@ class UserAvailable(APIView):
 
 class NewLoginViewSet(ObtainAuthToken):
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
 
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
