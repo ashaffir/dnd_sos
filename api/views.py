@@ -1,3 +1,4 @@
+import platform
 import json
 from datetime import date
 from django.contrib.auth import login as django_login, logout as django_logout
