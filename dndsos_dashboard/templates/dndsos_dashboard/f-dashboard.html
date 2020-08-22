@@ -41,10 +41,11 @@
                             <h3>{% trans 'Your availability status is:' %} {% if user.freelancer.is_available %} <b>{% trans 'Available' %}</b> {% else %} <b>{% trans 'Unavailable' %}</b> {% endif %}</h3>
                             {% else %} 
                             <h4 style="color: red;"><i class="fa fa-exclamation"></i> {% trans 'Please complete your profile before changing the availability status' %}. 
-                                <a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">{% trans 'Go to Courier Profile' %}</a>
                             </h4>                            
+                            <h4><a class="btn" style="border:solid 2px green" href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">{% trans 'Go to Courier Profile' %}</a>
+                            </h4>
                             {% endif %}
-                            <h5>{%trans 'User PickNdell mobile application to change your availabilty status' %}.</h5>
+                            <h5>{%trans 'Use PickNdell mobile application to change your availabilty status' %}.</h5>
                             <h5>Don't have it yet? <a href="{% static '/downloads/pickndell_mobile_android.apk' %}" download="">Download app here</a></h5>
                         </div>
                         <!-- <div class="col-md-4">
