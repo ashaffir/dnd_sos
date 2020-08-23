@@ -33,8 +33,8 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = [
         '127.0.0.1',
-        'www.dndsos.com',
-        'dndsos.com'
+        'www.pickndell.com',
+        'pickndell.com'
     ]
 
 
