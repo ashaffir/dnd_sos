@@ -1,3 +1,4 @@
+import os
 import platform
 from fcm_django.models import FCMDevice
 
@@ -20,6 +21,11 @@ from core.forms import EmployeeSignupForm, EmployerSignupForm
 # from dndsos_dashboard.models import FreelancerProfile
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
+# Create and configure logger
+import logging
+LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
+logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/signals.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
+logger = logging.getLogger()
 
 @receiver(post_save, sender=User)
 def announce_new_user(sender, instance, created, **kwargs):
@@ -63,10 +69,14 @@ def announce_new_user(sender, instance, created, **kwargs):
 def order_signal(sender, instance, update_fields, **kwargs):      
     if kwargs['created']:
         print(f'=========== SIGNAL: New Order ===============: {instance}')
+        logger.info(f'=========== SIGNAL: New Order ===============: {instance}')
         
         # Check for active and approved freelancers in range
         relevant_freelancers = Employee.objects.filter(Q(is_approved=True) & Q(is_available=True) & Q(is_delivering=False))
         print(f'Sending to relevant freelancers >>  {relevant_freelancers}')
+        logger.info(f'Sending to relevant freelancers >>  {relevant_freelancers}')
+
+
         for freelancer in relevant_freelancers:
             device = FCMDevice.objects.filter(user=freelancer.pk).first()
             device.send_message(
