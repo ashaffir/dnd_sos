@@ -430,7 +430,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                         ''')
             order_to_business_distance_meters = 1000
 
-        # Calculating the price for the order
+        # Calculating the price for the order (price calculation)
         if order_to_business_distance_meters != 1000:
             price = settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT
             content['price'] = round(price,2)

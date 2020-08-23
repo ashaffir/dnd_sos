@@ -8,6 +8,7 @@ from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 # from django.contrib.auth.models import User
+from django.db.models import Q
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
@@ -62,23 +63,28 @@ def announce_new_user(sender, instance, created, **kwargs):
 def order_signal(sender, instance, update_fields, **kwargs):      
     if kwargs['created']:
         print(f'=========== SIGNAL: New Order ===============: {instance}')
-        devices = FCMDevice.objects.all()
-        devices.send_message(
-            title="New Order available", 
-            body=f"New order from {instance.business.business.business_name}", 
-            data={
-                'order_id': str(instance.order_id),
-                'pick_up_address': instance.pick_up_address, 
-                "drop_off_address": instance.drop_off_address, 
-                'price':instance.price, 
-                'created':str(instance.created), 
-                'updated':str(instance.updated), 
-                'order_type':instance.order_type, 
-                'order_city_name':instance.order_city_name, 
-                'order_street_name':instance.order_street_name, 
-                'distance_to_business':instance.distance_to_business, 
-                'status':instance.status
-                })
+        
+        # Check for active and approved freelancers in range
+        relevant_freelancers = Employee.objects.filter(Q(is_approved=True) & Q(is_available=True) & Q(is_delivering=False))
+        print(f'Sending to relevant freelancers >>  {relevant_freelancers}')
+        for freelancer in relevant_freelancers:
+            device = FCMDevice.objects.filter(user=freelancer.pk).first()
+            device.send_message(
+                title="New Order available", 
+                body=f"New order from {instance.business.business.business_name}", 
+                data={
+                    'order_id': str(instance.order_id),
+                    'pick_up_address': instance.pick_up_address, 
+                    "drop_off_address": instance.drop_off_address, 
+                    'price':instance.price, 
+                    'created':str(instance.created), 
+                    'updated':str(instance.updated), 
+                    'order_type':instance.order_type, 
+                    'order_city_name':instance.order_city_name, 
+                    'order_street_name':instance.order_street_name, 
+                    'distance_to_business':instance.distance_to_business, 
+                    'status':instance.status
+                    })
     
     # fcm_send_topic_message(topic_name='My topic', message_body='Hello', message_title='A message')
     # device = FCMDevice.objects.all().first()

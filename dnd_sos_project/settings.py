@@ -320,3 +320,5 @@ FCM_DJANGO_SETTINGS = {
          # default: False
         "DELETE_INACTIVE_DEVICES": False,
 }
+
+PICKNDELL_COMMISSION = 0.05
