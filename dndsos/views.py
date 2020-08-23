@@ -1,21 +1,25 @@
 import json
 import requests
+import logging
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.contrib import messages
 from django.conf import settings
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext
+from django.http import HttpResponse
 
 from dndsos_dashboard.utilities import send_mail
 from .models import ContactUs, ContentPage
 from .forms import ContactForm
 
+logger = logging.getLogger(__file__)
+
 def home(request):
     context = {}
     form = ContactForm(request.POST or None)
-    
+    logger.info('STATAMTMAMTAT')
     if request.POST:
 
         # if settings.DEBUG:

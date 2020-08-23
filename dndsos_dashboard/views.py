@@ -45,10 +45,8 @@ from payments.models import Card
 
 from .serializers import UserSerializer
 
-
-LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
-logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/dashboard.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
-logger = logging.getLogger()
+logger = logging.getLogger(__file__)
+    
 
 DEFAULT_FREELANCER_RANGE = 1.0 # Default distance beween business and available freelancers
 

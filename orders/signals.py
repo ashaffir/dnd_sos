@@ -23,9 +23,12 @@ from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
 # Create and configure logger
 import logging
-LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
-logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/signals.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
-logger = logging.getLogger()
+# LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
+# logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/signals.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
+# logger = logging.getLogger()
+
+logger = logging.getLogger(__file__)
+
 
 @receiver(post_save, sender=User)
 def announce_new_user(sender, instance, created, **kwargs):

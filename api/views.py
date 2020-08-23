@@ -1,5 +1,7 @@
 import platform
 import json
+import logging
+
 from datetime import date
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
@@ -28,6 +30,8 @@ from .serializers import (UserSerializer, LoginSerializer,
                         UsernameSerializer,UserProfileSerializer,)
 from orders.serializers import OrderSerializer, OrderAPISerializer
 from .permissions import IsOwnerOrReadOnly # Custom permission
+
+logger = logging.getLogger(__file__)
 
 
 today = date.today()
