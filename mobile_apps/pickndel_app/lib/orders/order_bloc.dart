@@ -23,13 +23,13 @@ class OrdersBloc {
 
   fetchOrder(String ordersType) async {
     if (ordersType == 'openOrders') {
-      orderDataSink.add(Response.loading('Getting Open Orders'));
+      orderDataSink.add(Response.loading(''));
     } else if (ordersType == 'activeOrders') {
-      orderDataSink.add(Response.loading('Getting Active Orders'));
+      orderDataSink.add(Response.loading(''));
     } else if (ordersType == 'businessOrders') {
-      orderDataSink.add(Response.loading('Getting Business Orders'));
+      orderDataSink.add(Response.loading(''));
     } else {
-      orderDataSink.add(Response.loading('Getting Rejected Orders'));
+      orderDataSink.add(Response.loading(''));
     }
     try {
       Orders orderDetails =

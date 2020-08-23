@@ -13,7 +13,7 @@ class User {
   int numOrdersInProgress;
   double dailyCost;
 
-  // Carrier
+  // Courier
   String name;
   String vehicle;
   double rating;

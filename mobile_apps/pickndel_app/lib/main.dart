@@ -1,3 +1,6 @@
+import 'package:pickndell/app_localizations.dart';
+import 'package:pickndell/home/welcome.dart';
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 
@@ -51,9 +54,13 @@ void main() async {
   ));
 
   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  final userInfo = await userRepository.userDao.getUser(0);
-  int isEmployee = userInfo.isEmployee;
-  await localStorage.setInt('isEmployee', isEmployee);
+  try {
+    final userInfo = await userRepository.userDao.getUser(0);
+    int isEmployee = userInfo.isEmployee;
+    await localStorage.setInt('isEmployee', isEmployee);
+  } catch (e) {
+    print('Main page access USER repository');
+  }
 }
 
 class App extends StatelessWidget {
@@ -71,14 +78,14 @@ class App extends StatelessWidget {
     return RepositoryProvider(
         create: (context) => UserRepository(),
         child: MaterialApp(
+          //////////// LANGUAGE SUPPORT ///////////
           localizationsDelegates: [
+            ExampleLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: [
-            const Locale("en", ""),
-            const Locale("he", ""),
-          ],
+          supportedLocales: ExampleLocalizations.supportedLocales,
+          //////////// END LANGUAGE ///////////
           theme: ThemeData(
             primarySwatch: Colors.red,
             brightness: Brightness.dark,
@@ -88,7 +95,10 @@ class App extends StatelessWidget {
               if (state is AuthenticationUninitialized) {
                 return SplashPage();
               } else if (state is AuthenticationAuthenticated) {
-                // return HomePage();
+                // return WelcomePage(
+                //   userRepository: userRepository,
+                // );
+
                 return HomePageIsolate(
                   userRepository: userRepository,
                 );
@@ -96,6 +106,7 @@ class App extends StatelessWidget {
                 return LoginPage(
                   userRepository: userRepository,
                 );
+                // WelcomePage();
               } else if (state is AuthenticationLoading) {
                 return LoadingIndicator();
               }

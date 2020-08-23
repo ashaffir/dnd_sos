@@ -1,4 +1,5 @@
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/orders/order_bloc.dart';
 import 'package:pickndell/orders/order_delivered.dart';
 import 'package:pickndell/orders/order_picked_up.dart';
@@ -42,23 +43,24 @@ class _GetOrdersState extends State<GetOrders> {
     super.initState();
     _checkTrackingStatus();
     _bloc = OrdersBloc(widget.ordersType);
-    if (widget.ordersType == 'openOrders') {
-      pageTitle = 'Open Orders';
-    } else if (widget.ordersType == 'activeOrders') {
-      pageTitle = 'Active Orders';
-    } else if (widget.ordersType == 'businessOrders') {
-      pageTitle = 'Current Open Orders';
-    } else if (widget.ordersType == 'rejectedOrders') {
-      pageTitle = 'Orders Require Your Attention';
-    } else {
-      pageTitle = '';
-    }
+    // if (widget.ordersType == 'openOrders') {
+    //   pageTitle = 'Open Orders';
+    // } else if (widget.ordersType == 'activeOrders') {
+    //   pageTitle = 'Active Orders';
+    // } else if (widget.ordersType == 'businessOrders') {
+    //   pageTitle = 'Current Open Orders';
+    // } else if (widget.ordersType == 'rejectedOrders') {
+    //   pageTitle = 'Orders Require Your Attention';
+    // } else {
+    //   pageTitle = '';
+    // }
     // pageTitle =
     //     widget.ordersType == 'openOrders' ? 'Open Orders' : 'Active Orders';
   }
 
   @override
   Widget build(BuildContext context) {
+    final translations = ExampleLocalizations.of(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -70,7 +72,16 @@ class _GetOrdersState extends State<GetOrders> {
       appBar: AppBar(
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        title: Text(pageTitle,
+        title: Text(
+            widget.ordersType == 'openOrders'
+                ? translations.orders_title_open
+                : widget.ordersType == 'activeOrders'
+                    ? translations.orders_title_active
+                    : widget.ordersType == 'businessOrders'
+                        ? translations.orders_title_business
+                        : widget.ordersType == 'rejectedOrders'
+                            ? translations.orders_title_rejected
+                            : '---',
             style: TextStyle(color: Colors.white, fontSize: 20)),
         backgroundColor: Color(0xFF333333),
       ),
@@ -139,6 +150,7 @@ class OrdersList extends StatelessWidget {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
+          final translations = ExampleLocalizations.of(context);
           return Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)), //this right here
@@ -153,7 +165,7 @@ class OrdersList extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        'Are you sure?',
+                        translations.orders_confirm + "?",
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -169,7 +181,7 @@ class OrdersList extends StatelessWidget {
                               Navigator.pop(context);
                             },
                             child: Text(
-                              "Cancel",
+                              translations.orders_cancel,
                               style: TextStyle(color: Colors.white),
                             ),
                             color: Colors.transparent,
@@ -193,10 +205,10 @@ class OrdersList extends StatelessWidget {
                                     );
                                   },
                                   child: Text(
-                                    "Confirm",
+                                    translations.orders_confirm_button,
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  color: Colors.red,
+                                  color: Colors.green,
                                 ),
                               )
                             : newStatus == "COMPLETED" // Order delivered
@@ -216,7 +228,7 @@ class OrdersList extends StatelessWidget {
                                         );
                                       },
                                       child: Text(
-                                        "Confirm Delivery",
+                                        translations.orders_confirm_delivery,
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       color: Colors.green[800],
@@ -242,7 +254,7 @@ class OrdersList extends StatelessWidget {
                                             );
                                           },
                                           child: Text(
-                                            "Confirm Cancelation",
+                                            translations.orders_cancel_confirm,
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -271,7 +283,8 @@ class OrdersList extends StatelessWidget {
                                                 );
                                               },
                                               child: Text(
-                                                "Confirm Broadcast",
+                                                translations
+                                                    .orders_confirm_broadcast,
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -300,7 +313,7 @@ class OrdersList extends StatelessWidget {
                                                 );
                                               },
                                               child: Text(
-                                                "Confirm Pick Up",
+                                                translations.orders_pick_up,
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -319,6 +332,8 @@ class OrdersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final translations = ExampleLocalizations.of(context);
+
     print('TYPE: $ordersType');
     return new Scaffold(
       backgroundColor: Color(0xFF202020),
@@ -339,7 +354,8 @@ class OrdersList extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                     ),
-                    Text('Owner: ${order.business_name}'),
+                    Text(
+                        translations.orders_owner + ': ${order.business_name}'),
                     ListTile(
                       // leading: Icon(Icons.album),
                       leading: CircleAvatar(
@@ -360,20 +376,22 @@ class OrdersList extends StatelessWidget {
                                               ? Icon(Icons.wc)
                                               : Icon(Icons.whatshot)),
 
-                      title: Text('From: ${order.pick_up_address}'),
-                      subtitle: Text('To: ${order.drop_off_address}'),
+                      title: Text(translations.orders_from +
+                          ': ${order.pick_up_address}'),
+                      subtitle: Text(translations.orders_to +
+                          ': ${order.drop_off_address}'),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('Fee: ${order.price}'),
+                        Text(translations.orders_fare + ': ${order.price}'),
                         ButtonBar(
                           children: <Widget>[
                             Padding(padding: EdgeInsets.all(5.0)),
                             RaisedButton(
                               color: Colors.green,
                               child: Text(
-                                "Accept",
+                                translations.orders_accept,
                                 style: whiteButtonTitle,
                               ),
                               onPressed: () {
@@ -385,9 +403,10 @@ class OrdersList extends StatelessWidget {
                                 } else {
                                   showAlertDialog(
                                       context: context,
-                                      title: 'Tracking is off',
-                                      content:
-                                          'Please switch to Available status before accepting orders',
+                                      title: translations
+                                          .orders_alert_tracking_title,
+                                      content: translations
+                                          .orders_alert_tracking_content,
                                       url: '');
                                   print('No tracking!!!');
                                 }
@@ -447,7 +466,7 @@ class OrdersList extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              'Go to pickup',
+                              translations.orders_message_pickup,
                               style: TextStyle(
                                 backgroundColor: Colors.red[400],
                                 fontSize: 20,
@@ -457,7 +476,8 @@ class OrdersList extends StatelessWidget {
                         ],
                       ),
                       Padding(padding: EdgeInsets.only(top: 10.0)),
-                      Text('Owner: ${order.business_name}'),
+                      Text(translations.orders_owner +
+                          ': ${order.business_name}'),
                       ListTile(
                         // leading: Icon(Icons.album),
                         leading: CircleAvatar(
@@ -478,8 +498,10 @@ class OrdersList extends StatelessWidget {
                                               ? Icon(Icons.wc)
                                               : Icon(Icons.whatshot),
                         ),
-                        title: Text('From: ${order.pick_up_address}'),
-                        subtitle: Text('To: ${order.drop_off_address}'),
+                        title: Text(translations.orders_from +
+                            ': ${order.pick_up_address}'),
+                        subtitle: Text(translations.orders_to +
+                            ': ${order.drop_off_address}'),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -496,7 +518,7 @@ class OrdersList extends StatelessWidget {
                                 onPressed: () {
                                   launch(('tel://${order.business_phone}'));
                                 },
-                                label: Text('Call Business'),
+                                label: Text(translations.orders_call_sender),
                               ),
                               Padding(padding: EdgeInsets.all(5.0)),
                               RaisedButton(
@@ -504,7 +526,7 @@ class OrdersList extends StatelessWidget {
                                 shape: StadiumBorder(
                                     side: BorderSide(color: Colors.black)),
                                 child: Text(
-                                  "Cancel Delivery",
+                                  translations.orders_cancel_delivery,
                                   style: whiteButtonTitle,
                                 ),
                                 onPressed: () {
@@ -532,7 +554,7 @@ class OrdersList extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              'Make Delivery',
+                              translations.orders_make_delivery,
                               style: TextStyle(
                                 backgroundColor: Colors.green,
                                 fontSize: 20,
@@ -544,7 +566,8 @@ class OrdersList extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: 10),
                       ),
-                      Text('Owner: ${order.business_name}'),
+                      Text(translations.orders_owner +
+                          ': ${order.business_name}'),
                       ListTile(
                         // leading: Icon(Icons.album),
                         leading: CircleAvatar(
@@ -565,7 +588,8 @@ class OrdersList extends StatelessWidget {
                                                 ? Icon(Icons.wc)
                                                 : Icon(Icons.whatshot)),
                         // title: Text('From: ${order.pick_up_address}'),
-                        title: Text('Delivery To: ${order.drop_off_address}'),
+                        title: Text(translations.orders_delivery_to +
+                            ': ${order.drop_off_address}'),
                         // subtitle: Text('To: ${order.drop_off_address}'),
                       ),
                       Row(
@@ -582,13 +606,13 @@ class OrdersList extends StatelessWidget {
                                 onPressed: () {
                                   launch(('tel://${order.business_phone}'));
                                 },
-                                label: Text('Call Business'),
+                                label: Text(translations.orders_call_sender),
                               ),
                               Padding(padding: EdgeInsets.all(5.0)),
                               RaisedButton(
                                 color: Colors.green,
                                 child: Text(
-                                  "Report Delivered",
+                                  translations.orders_report_delivered,
                                   style: whiteButtonTitle,
                                 ),
                                 onPressed: () {
@@ -622,7 +646,7 @@ class OrdersList extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              'Waiting for pick up',
+                              translations.orders_status_waiting_pickup,
                               style: TextStyle(
                                 backgroundColor: Colors.blue[500],
                                 fontSize: 20,
@@ -651,16 +675,20 @@ class OrdersList extends StatelessWidget {
                                               ? Icon(Icons.wc)
                                               : Icon(Icons.whatshot),
                         ),
-                        title: Text('From: ${order.pick_up_address}'),
-                        subtitle: Text('To: ${order.drop_off_address}'),
+                        title: Text(translations.orders_from +
+                            ': ${order.pick_up_address}'),
+                        subtitle: Text(translations.orders_to +
+                            ': ${order.drop_off_address}'),
                       ),
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Created: ${order.created}'),
-                            Text('Updated: ${order.updated}'),
+                            Text(translations.orders_created +
+                                ': ${order.created}'),
+                            Text(translations.orders_update +
+                                ': ${order.updated}'),
                           ],
                         ),
                       ),
@@ -680,12 +708,12 @@ class OrdersList extends StatelessWidget {
                                 onPressed: () {
                                   launch(('tel://${order.courier_phone}'));
                                 },
-                                label: Text('Call Courier'),
+                                label: Text(translations.orders_call_courier),
                               ),
                               RaisedButton(
                                 color: Colors.green,
                                 child: Text(
-                                  "Report Pick Up",
+                                  translations.orders_report_pickup,
                                   style: whiteButtonTitle,
                                 ),
                                 onPressed: () {
@@ -714,7 +742,7 @@ class OrdersList extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              'New. Waiting for Carrier Allocation',
+                              translations.orders_status_waiting_allocaiton,
                               style: TextStyle(
                                 backgroundColor: Colors.red[300],
                                 fontSize: 20,
@@ -743,16 +771,20 @@ class OrdersList extends StatelessWidget {
                                               ? Icon(Icons.wc)
                                               : Icon(Icons.whatshot),
                         ),
-                        title: Text('From: ${order.pick_up_address}'),
-                        subtitle: Text('To: ${order.drop_off_address}'),
+                        title: Text(translations.orders_from +
+                            ': ${order.pick_up_address}'),
+                        subtitle: Text(translations.orders_to +
+                            ': ${order.drop_off_address}'),
                       ),
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Created: ${order.created}'),
-                            Text('Updated: ${order.updated}'),
+                            Text(translations.orders_created +
+                                ': ${order.created}'),
+                            Text(translations.orders_update +
+                                ': ${order.updated}'),
                           ],
                         ),
                       ),
@@ -771,7 +803,7 @@ class OrdersList extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              'Picked up. Waiting Delivery',
+                              translations.orders_status_waiting_delivery,
                               style: TextStyle(
                                 backgroundColor: Colors.blue[300],
                                 fontSize: 20,
@@ -800,16 +832,20 @@ class OrdersList extends StatelessWidget {
                                               ? Icon(Icons.wc)
                                               : Icon(Icons.whatshot),
                         ),
-                        title: Text('From: ${order.pick_up_address}'),
-                        subtitle: Text('To: ${order.drop_off_address}'),
+                        title: Text(translations.orders_from +
+                            ': ${order.pick_up_address}'),
+                        subtitle: Text(translations.orders_to +
+                            ': ${order.drop_off_address}'),
                       ),
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Created: ${order.created}'),
-                            Text('Updated: ${order.updated}'),
+                            Text(translations.orders_created +
+                                ': ${order.created}'),
+                            Text(translations.orders_update +
+                                ': ${order.updated}'),
                             RaisedButton.icon(
                               icon: Icon(Icons.phone),
                               color: Colors.blue,
@@ -818,7 +854,7 @@ class OrdersList extends StatelessWidget {
                               onPressed: () {
                                 launch(('tel://${order.courier_phone}'));
                               },
-                              label: Text('Call Courier'),
+                              label: Text(translations.orders_call_courier),
                             ),
                           ],
                         ),
@@ -844,7 +880,7 @@ class OrdersList extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              'Rejected order',
+                              translations.orders_status_rejected,
                               style: TextStyle(
                                 backgroundColor: Colors.red[500],
                                 fontSize: 20,
@@ -872,16 +908,20 @@ class OrdersList extends StatelessWidget {
                                                     'Clothes'
                                                 ? Icon(Icons.wc)
                                                 : Icon(Icons.whatshot)),
-                        title: Text('From: ${order.pick_up_address}'),
-                        subtitle: Text('To: ${order.drop_off_address}'),
+                        title: Text(translations.orders_from +
+                            ': ${order.pick_up_address}'),
+                        subtitle: Text(translations.orders_to +
+                            ': ${order.drop_off_address}'),
                       ),
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Created: ${order.created}'),
-                            Text('Updated: ${order.updated}'),
+                            Text(translations.orders_created +
+                                ': ${order.created}'),
+                            Text(translations.orders_update +
+                                ': ${order.updated}'),
                           ],
                         ),
                       ),
@@ -896,11 +936,11 @@ class OrdersList extends StatelessWidget {
                               RaisedButton(
                                 color: Colors.green,
                                 child: Text(
-                                  "Request Carrier",
+                                  translations.orders_request_courier,
                                   style: whiteButtonTitle,
                                 ),
                                 onPressed: () {
-                                  print('Request Carrier');
+                                  print('Request Courier');
                                   String newStatus = 'RE_REQUESTED';
                                   orderAlert(context, order, newStatus);
                                 },
@@ -924,7 +964,7 @@ class OrdersList extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              'Please check.',
+                              translations.orders_check,
                               style: TextStyle(
                                 backgroundColor: Colors.red[300],
                                 fontSize: 20,
@@ -952,8 +992,10 @@ class OrdersList extends StatelessWidget {
                                                     'Clothes'
                                                 ? Icon(Icons.wc)
                                                 : Icon(Icons.whatshot)),
-                        title: Text('From: ${order.pick_up_address}'),
-                        subtitle: Text('To: ${order.drop_off_address}'),
+                        title: Text(translations.orders_from +
+                            ': ${order.pick_up_address}'),
+                        subtitle: Text(translations.orders_to +
+                            ': ${order.drop_off_address}'),
                       ),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.center,
@@ -1030,12 +1072,13 @@ class Error extends StatelessWidget {
 class EmptyList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final translations = ExampleLocalizations.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Order list is Empty.',
+            translations.orders_empty_list,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,

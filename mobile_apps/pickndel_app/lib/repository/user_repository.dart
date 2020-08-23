@@ -25,28 +25,31 @@ class UserRepository {
     Token token = await serverAuthentication(userLogin);
     StreamSubscription iosSubscription;
 
-    // Setting FCM token
-    if (token.fcmToken == '0') {
-      // If iOS, need to ask for permission to share device Token ID
-      if (Platform.isIOS) {
-        iosSubscription = _fcm.onIosSettingsRegistered.listen((data) async {
+    try {
+      // Setting FCM token
+      if (token.fcmToken == '0') {
+        // If iOS, need to ask for permission to share device Token ID
+        if (Platform.isIOS) {
+          iosSubscription = _fcm.onIosSettingsRegistered.listen((data) async {
+            fcmToken = await _fcm.getToken();
+          });
+          _fcm.requestNotificationPermissions(
+              IosNotificationSettings(sound: true, badge: true, alert: true));
+        } else {
           fcmToken = await _fcm.getToken();
-        });
-        _fcm.requestNotificationPermissions(
-            IosNotificationSettings(sound: true, badge: true, alert: true));
+        }
+
+        deviceOs = Platform.operatingSystem;
+        var fcmRegistrationReponse = await fcmTokenRegistration(
+            fcmToken: fcmToken, osType: deviceOs, userToken: token.token);
+
+        print('>>>> REGISTERED NEW FCM TOKEN: $fcmToken');
       } else {
-        fcmToken = await _fcm.getToken();
+        print('>>>> FCM TOKEN EXISTS: $fcmToken');
       }
-
-      deviceOs = Platform.operatingSystem;
-      var fcmRegistrationReponse = await fcmTokenRegistration(
-          fcmToken: fcmToken, osType: deviceOs, userToken: token.token);
-
-      print('>>>> REGISTERED FCM TOKEN: $fcmToken');
-    } else {
-      print('>>>> ERROR REGISTRING FCM TOKEN: $fcmToken');
+    } catch (e) {
+      print('ERROR FCM TOKEN: $e');
     }
-
     // Retreiving user information from the server
     User user = User(
         id: 0,

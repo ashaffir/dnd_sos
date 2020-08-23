@@ -9,6 +9,7 @@ class Order {
   String order_type;
   String order_city_name;
   String order_street_name;
+  String order_country;
   double distance_to_business;
   double price;
   String status;
@@ -33,6 +34,7 @@ class Order {
     this.business_name,
     this.courier_name,
     this.courier_phone,
+    this.order_country,
   });
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,7 @@ class Order {
     pick_up_address = json['pick_up_address'];
     drop_off_address = json['drop_off_address'];
     order_type = json['order_type'];
+    order_country = json['order_country'];
     order_city_name = json['order_city_name'];
     order_street_name = json['order_street_name'];
     distance_to_business = json['distance_to_business'];
@@ -77,6 +80,7 @@ class Order {
     data['updated'] = this.updated;
     data['pick_up_address'] = this.pick_up_address;
     data['drop_off_address'] = this.drop_off_address;
+    data['order_country'] = this.order_country;
     data['order_type'] = this.order_type;
     data['order_city_name'] = this.order_city_name;
     data['order_street_name'] = this.order_street_name;

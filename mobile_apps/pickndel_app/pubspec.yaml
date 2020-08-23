@@ -11,7 +11,7 @@ description: Pickup and Delivery Network.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -49,6 +49,7 @@ dependencies:
   cloud_firestore: ^0.13.7
   flutter_phoenix: ^0.1.0
   get: ^3.4.4
+  i69n: ^1.1.0
 
   ##TEST
   image_picker: ^0.6.5
@@ -60,6 +61,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner:
 
 flutter_icons:
   image_path: "assets/images/pickndell-icon.png"
@@ -87,6 +90,9 @@ flutter:
    - assets/images/pickndell-logo-1.png
    - assets/images/pickndell-logotype-white.png
    - assets/images/pickndell-logo-white.png
+   - assets/images/mobile-background.jpg
+   - assets/languages/en.json
+   - assets/languages/he.json
  
 
   # An image asset can refer to one or more resolution-specific "variants", see

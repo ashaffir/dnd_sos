@@ -1,0 +1,61 @@
+loginPageTitle: PickNdell Login
+email: email
+password: password
+login: Login
+forgot_password: Forgot your password
+create_account: Create a new account
+alert_email: Please enter a valid email
+alert_password: Please enter password
+logging_in: Logging in...
+
+# Homepage/Profile
+home_title: Home
+home_courier_profile: Courier Profile
+home_sender_profile: Sender Profile
+home_name: Name
+home_vehicle: Vehicle
+home_sender_type: Type
+home_active_orders: Current Active Orders
+home_status: Availability Status
+home_available: Available
+home_unavailable: Unavailable
+
+# Orders
+orders_title_open: Open Orders
+orders_title_active: Active Orders
+orders_title_business: Current Open Orders
+orders_title_rejected: Orders Require Your Attention
+orders_created: Created
+orders_update: Updated
+orders_cancel: Cancel
+orders_cancel_delivery: Cancel Delivery
+orders_cancel_confirm: Confirm Cancellation
+orders_owner: Owner
+orders_accept: Accept
+orders_accpeted_order: Accepted Order
+orders_make_delivery: Make Delivery
+orders_fare: Fare
+orders_confirm_button: Confirm
+orders_confirm: Are you sure
+orders_confirm_delivery: Confirm Delivery
+orders_confirm_broadcast: Confirm Broadcast Order
+orders_pick_up: Confirm Pick Up
+orders_report_pickup: Report Pickup
+orders_from: From
+orders_to: To
+orders_delivery_to: Delivery to
+orders_report_delivered: Report Delivered
+orders_alert_tracking_title: Tracking is off
+orders_alert_tracking_content: Please switch to Available status before accepting orders
+orders_message_pickup: Go to pickup
+orders_call_sender: Call Sender
+orders_call_courier: Call Courier
+orders_status_waiting_pickup: Waiting for pick up
+orders_status_waiting_allocaiton: New. Waiting for courier allocation
+orders_status_waiting_delivery: Picked up. Waiting Delivery
+orders_status_rejected: Rejected Order
+orders_request_courier: Request Courier
+orders_check: Please check
+orders_empty_list: Order list is Empty
+
+

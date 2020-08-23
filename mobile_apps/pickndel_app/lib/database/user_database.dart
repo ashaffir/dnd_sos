@@ -13,12 +13,12 @@ class DatabaseProvider {
   Database _database;
 
   Future<Database> get database async {
-    // print('Acecessing User DB >> $_database ...');
+    print('Acecessing User DB >> $_database ...');
     if (_database != null) {
       return _database;
     }
     _database = await createDatabase();
-    // print('Creating a new DB...');
+    print('Creating a new DB...');
     return _database;
   }
 
@@ -29,7 +29,7 @@ class DatabaseProvider {
 
     var database = await openDatabase(
       path,
-      version: 10,
+      version: 11,
       onCreate: initDB,
       onUpgrade: onUpgrade,
     );

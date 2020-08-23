@@ -142,7 +142,7 @@ class _MessagesHandlerState extends State<MessagesHandler> {
 
     //////// Firebase Cloud Messaging Config ///////////
 
-    _fcm.subscribeToTopic('carriers');
+    _fcm.subscribeToTopic('couriers');
   }
 
   @override

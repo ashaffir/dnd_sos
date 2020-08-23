@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/CustomException.dart';
 import 'package:http/http.dart' as http;
 import 'package:pickndell/model/api_model.dart';
@@ -8,7 +9,7 @@ import 'package:pickndell/model/api_model.dart';
 // final _base = "https://home-hub-app.herokuapp.com";
 // final _tokenEndpoint = "/api-token-auth/";
 
-// final _base = "https://8c1d164fa909.ngrok.io";
+// final _base = "https://88c41a0bdd84.ngrok.io";
 final _base = "https://pickndell.com";
 final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";
@@ -40,7 +41,7 @@ Future<Token> serverAuthentication(UserLogin userLogin) async {
 Future<dynamic> fcmTokenRegistration(
     {String fcmToken, String osType, String userToken}) async {
   var postResponseJson;
-
+  var deviceName = userToken.substring(userToken.length - 5);
   try {
     final http.Response response = await http.post(
       _fcmRegistratioURL,
@@ -51,6 +52,8 @@ Future<dynamic> fcmTokenRegistration(
       body: jsonEncode({
         "registration_id": fcmToken,
         "type": osType,
+        "device_id": userToken,
+        "name": deviceName
       }),
     );
     postResponseJson = _response(response);
@@ -94,10 +97,10 @@ Future<dynamic> createUser(
   var postResponseJson;
   bool is_employee;
   bool is_employer;
-  if (userType == 'Business') {
+  if (userType == 'Sender') {
     is_employer = true;
     is_employee = false;
-  } else if (userType == 'Carrier') {
+  } else if (userType == 'Courier') {
     is_employee = true;
     is_employer = false;
   } else {

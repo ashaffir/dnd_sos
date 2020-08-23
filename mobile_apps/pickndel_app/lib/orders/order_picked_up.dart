@@ -72,7 +72,7 @@ class _OrderPickedupState extends State<OrderPickedup> {
               flex: 4,
             ),
             Text(
-              "You have reported that the order was picked up by the carrier.",
+              "You have reported that the order was picked up by a courier.",
               style: bigLightBlueTitle,
             ),
             Spacer(

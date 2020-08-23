@@ -11,6 +11,7 @@ import 'dart:async';
 import 'CustomException.dart';
 
 class ApiProvider {
+  // final String _baseUrl = "https://88c41a0bdd84.ngrok.io/api/";
   final String _baseUrl = "https://pickndell.com/api/";
 
   Future<dynamic> get(String url, User user) async {
@@ -32,6 +33,7 @@ class ApiProvider {
     return responseJson;
   }
 
+// Updating courier's availability
   Future<dynamic> putAvailability(
       String url, User user, bool availability) async {
     var postResponseJson;
@@ -54,6 +56,7 @@ class ApiProvider {
     return postResponseJson;
   }
 
+// Updating location
   Future<dynamic> putLocation(
       String url, User user, UserLocation location) async {
     var postResponseJson;
@@ -77,6 +80,7 @@ class ApiProvider {
     return postResponseJson;
   }
 
+// Updating Orders
   Future<dynamic> put(
       String url, String orderId, User user, String status) async {
     var postResponseJson;

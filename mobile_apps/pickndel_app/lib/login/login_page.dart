@@ -1,4 +1,5 @@
 import 'package:pickndell/common/global.dart';
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/login_form_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -47,9 +48,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final translations = ExampleLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('PickNdel Login'),
+        title: Text(translations.loginPageTitle),
+        // title: Text('Login Page'),
       ),
       body: LoginFormScreen(
           authenticationBloc: _authenticationBloc, loginBloc: _loginBloc),

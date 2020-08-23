@@ -54,5 +54,18 @@ com.actappon.pickndell (explicit)
 - SDK change: https://www.youtube.com/watch?v=7THufyK-V0Y
 
 
-REFERENCE: Android app deployment on to the Google Play
+# REFERENCE: Android app deployment on to the Google Play
+- https://flutter.dev/docs/deployment/android
+- Change app version: https://stackoverflow.com/questions/53570575/flutter-upgrade-the-version-code-for-play-store
 - https://www.youtube.com/watch?v=7MrXU-fhacU
+
+# REFERENCE: Languages/localization/translations
+- https://medium.com/flutter-community/yet-another-localization-approach-in-flutter-477cf058ba41
+- Procedure for adding translated text (after the setup in the source code):
+* Make sure the hot-builder is running (dynamically updates the changes in the Yaml files):
+> flutter packages pub run build_runner watch --delete-conflicting-outputs
+
+* Add the key for the translated text in each Yaml file (each language)
+* Add the pointer to that key in the code (instead of the text, e.g. translation.loginPageTitle)
+* Restart the app
+

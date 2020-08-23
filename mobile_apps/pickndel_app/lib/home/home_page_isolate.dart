@@ -7,6 +7,7 @@ import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/location_settings.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/location_callback_handler.dart';
 import 'package:pickndell/location/location_service_repository.dart';
 import 'package:pickndell/model/user_location.dart';
@@ -234,7 +235,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
       settings: LocationSettings(
           notificationChannelName: "PickNdell",
           notificationTitle: "You are currently available.",
-          notificationMsg: "Businesses are able to share orders with you.",
+          notificationMsg: "Senders are able to share orders with you.",
           notificationIcon: "assets/images/pickndell-logotype-white.png",
           wakeLockTime: 20,
           autoStop: false,
@@ -244,9 +245,10 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
   }
 
   Widget getHomePageIsolate(User currentUser) {
+    final translations = ExampleLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(translations.home_title),
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -267,8 +269,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
               ),
               Text(
                 currentUser.isEmployee == 1
-                    ? "Carrier Profile"
-                    : "Business Profile",
+                    ? translations.home_courier_profile
+                    : translations.home_sender_profile,
                 style: whiteTitle,
               ),
               Padding(
@@ -284,9 +286,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                         padding: EdgeInsets.only(left: 30.0, top: 20.0),
                       ),
                       Text(
-                        currentUser.isEmployee == 1
-                            ? 'User Name: '
-                            : 'Business:',
+                        translations.home_name + ":",
                         style: TextStyle(fontSize: 20.0),
                       ),
                       Padding(
@@ -294,8 +294,12 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ),
                       Text(
                         currentUser.isEmployee == 1
-                            ? '${currentUser.name}'
-                            : '${currentUser.businessName}',
+                            ? currentUser.name != null
+                                ? '${currentUser.name}'
+                                : " "
+                            : currentUser.businessName != null
+                                ? '${currentUser.businessName}'
+                                : " ",
                         style: TextStyle(
                           fontSize: 20.0,
                         ),
@@ -312,8 +316,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ),
                       Text(
                         currentUser.isEmployee == 1
-                            ? 'Registered Vehicle:'
-                            : 'Type:',
+                            ? translations.home_vehicle + ":"
+                            : translations.home_sender_type + ":",
                         style: TextStyle(fontSize: 20.0),
                       ),
                       Padding(
@@ -321,8 +325,12 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ),
                       Text(
                         currentUser.isEmployee == 1
-                            ? '${currentUser.vehicle}'
-                            : '${currentUser.businessCategory}',
+                            ? currentUser.vehicle != null
+                                ? '${currentUser.vehicle}'
+                                : " "
+                            : currentUser.businessCategory != null
+                                ? '${currentUser.businessCategory}'
+                                : " ",
                         style: TextStyle(fontSize: 20.0),
                       )
                     ],
@@ -336,7 +344,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                         padding: EdgeInsets.only(left: 30.0, top: 20.0),
                       ),
                       Text(
-                        'Current Active Orders:',
+                        translations.home_active_orders + ":",
                         style: TextStyle(fontSize: 20.0),
                       ),
                       Padding(
@@ -372,7 +380,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                               padding: EdgeInsets.only(left: 30.0, top: 20.0),
                             ),
                             Text(
-                              'Availability Status:',
+                              translations.home_status,
                               style: TextStyle(fontSize: 20.0),
                             ),
                             Padding(
@@ -415,7 +423,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                 Padding(
                                   padding: EdgeInsets.only(top: 20.0),
                                 ),
-                                Text(isRunning ? "Available" : "Unavailable"),
+                                Text(isRunning
+                                    ? translations.home_available
+                                    : translations.home_unavailable),
                               ],
                             ),
                           ],

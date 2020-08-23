@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(left: 30.0),
                 child: Text(
-                  'Carrier: ${currentUser.isEmployee}',
+                  'Courier: ${currentUser.isEmployee}',
                   style: TextStyle(
                     fontSize: 24.0,
                   ),

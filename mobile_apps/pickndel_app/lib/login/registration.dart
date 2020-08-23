@@ -41,7 +41,7 @@ class _RegistrationState extends State<Registration> {
 
   String _userType;
   var _registrationTypes = List<DropdownMenuItem>();
-  List<String> _registrationTypeList = ['Business', 'Carrier'];
+  List<String> _registrationTypeList = ['Sender', 'Courier'];
 
   _loadRegistrationTypes() {
     _registrationTypeList.forEach((element) {
@@ -274,7 +274,7 @@ class _RegistrationState extends State<Registration> {
 
   void errorRegistration(BuildContext context, res) {
     // String msg = res["is_employee"] == "This field may not be null."
-    //     ? "Please select Business or Carrier registration."
+    //     ? "Please select Sender or Courier registration."
     //     : res;
     Flushbar(
       // mainButton: FlatButton(

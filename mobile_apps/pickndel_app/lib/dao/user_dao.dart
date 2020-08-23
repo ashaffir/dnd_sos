@@ -9,6 +9,8 @@ class UserDao {
   Future<int> createUser(User user) async {
     final db = await dbProvider.database;
 
+    print('>>>>>>> Writing user to DB.');
+
     var result = db.insert(userTable, user.toDatabaseJson());
     print('RESULT: ${user.username}');
     print('RESULT ID: ${user.userId}');
@@ -33,7 +35,7 @@ class UserDao {
       // String username = user.username;
       return user;
     } catch (error) {
-      print('ERROR Getting User: $error');
+      print('ERROR Getting User (user_dao.dart): $error');
       return null;
     }
   }

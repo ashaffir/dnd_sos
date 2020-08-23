@@ -1,7 +1,9 @@
 import 'dart:isolate';
 
+import 'package:pickndell/app_localizations.dart';
 import 'package:pickndell/bloc/authentication_bloc.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,6 +41,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final translations = ExampleLocalizations.of(context);
     return BlocBuilder<LoginBloc, LoginState>(
       bloc: _loginBloc,
       builder: (
@@ -51,7 +54,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
             Scaffold.of(context).showSnackBar(
               SnackBar(
                 // content: Text('${state.error}'),
-                content: Text('Wrong credentials used. Please try again.'),
+                content: Text(
+                    'Wrong credentials used. Please make sure your account is activated and try again.'),
                 backgroundColor: Colors.red,
               ),
             );
@@ -77,13 +81,15 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
 
                   TextFormField(
                     decoration: InputDecoration(
-                        labelText: 'email', icon: Icon(Icons.person)),
+                        // labelText: 'email', icon: Icon(Icons.person)),
+                        labelText: translations.email,
+                        icon: Icon(Icons.person)),
                     controller: _usernameController,
                     validator: (value) {
                       if (validateEmail(value) == null) {
                         return null;
                       } else {
-                        return "Please enter a valid email";
+                        return translations.alert_email;
                       }
                     },
                   ),
@@ -92,14 +98,16 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
 
                   TextFormField(
                     decoration: InputDecoration(
-                        labelText: 'password', icon: Icon(Icons.security)),
+                        labelText: translations.password,
+                        icon: Icon(Icons.security)),
+                    // labelText: AppLocalizations.of(contex).translate('password'), icon: Icon(Icons.security)),
                     controller: _passwordController,
                     obscureText: true,
                     validator: (value) {
                       if (validatePassword(value) == null) {
                         return null;
                       } else {
-                        return "Please enter password.";
+                        return translations.alert_password;
                       }
                     },
                   ),
@@ -109,18 +117,40 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Padding(padding: EdgeInsets.only(top: 30)),
+                      RaisedButton(
+                        onPressed: () {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          } else {
+                            if (state is! LoginLoading) {
+                              _onLoginButtonPressed();
+                            }
+                          }
+                        },
+                        child: Text(!_isLoading
+                            ? translations.login
+                            : translations.logging_in),
+                        color: !_isLoading ? Colors.red : Colors.grey,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
                         child:
                             // InkWell(
                             FlatButton(
+                          // shape: RoundedRectangleBorder(
+                          //     side: BorderSide(
+                          //         color: Colors.blue,
+                          //         width: 1,
+                          //         style: BorderStyle.solid),
+                          //     borderRadius: BorderRadius.circular(50)),
                           onPressed: _launchURL,
                           child: Text(
-                            'Forgot your password?',
+                            translations.forgot_password,
                             textDirection: TextDirection.ltr,
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 10.0,
+                              fontSize: 15.0,
                               decoration: TextDecoration.none,
                               fontWeight: FontWeight.normal,
                             ),
@@ -128,19 +158,6 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                         ),
                       ),
                     ],
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      if (!_formKey.currentState.validate()) {
-                        return;
-                      } else {
-                        if (state is! LoginLoading) {
-                          _onLoginButtonPressed();
-                        }
-                      }
-                    },
-                    child: Text(!_isLoading ? 'Login' : 'Logging in...'),
-                    color: !_isLoading ? Colors.red : Colors.grey,
                   ),
                   Container(
                     child: state is LoginLoading
@@ -159,7 +176,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                                 builder: (context) => Registration()));
                       },
                       child: Text(
-                        'Create a new account',
+                        translations.create_account,
                         textDirection: TextDirection.ltr,
                         style: TextStyle(
                           color: Colors.white,

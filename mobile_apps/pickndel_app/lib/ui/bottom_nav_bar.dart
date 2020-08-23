@@ -26,7 +26,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             return getBusinessBottomNavBar(snapshot.data);
           }
         } else {
-          print("No data");
+          print(">>>>> No user data for the Nav bar");
         }
         return CircularProgressIndicator();
       },
