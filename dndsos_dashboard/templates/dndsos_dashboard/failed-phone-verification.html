@@ -30,7 +30,11 @@
         <div class="row">
           <div class="col-md-6"></div>
           <div class="col-md-6 text-left">
-            <a href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">{% trans 'Back to profile' %}</a>
+            {% if user.is_employee %}
+              <a href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">{% trans 'Back to profile' %}</a>
+            {% else %}
+              <a href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">{% trans 'Back to profile' %}</a>
+            {% endif %}
           </div>
         </div>
       </div>
