@@ -1,3 +1,4 @@
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
@@ -22,6 +23,7 @@ class _OrderPickedupState extends State<OrderPickedup> {
   String orderUpdated;
 
   Widget build(BuildContext context) {
+    final translations = ExampleLocalizations.of(context);
     return FutureBuilder(
       future: updateOrderPickedup(widget.order),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -39,7 +41,7 @@ class _OrderPickedupState extends State<OrderPickedup> {
           print("No data:");
         }
         print('WAITING FOR UPDATE');
-        String loaderText = "Updating Order...";
+        String loaderText = translations.order_a_updating + "...";
 
         return ColoredProgressDemo(loaderText);
       },
@@ -56,10 +58,11 @@ class _OrderPickedupState extends State<OrderPickedup> {
   }
 
   Widget getOrderPickedupPage(Order order) {
+    final translations = ExampleLocalizations.of(context);
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Picked Up'),
+        title: Text(translations.order_p_picked),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 40, right: 40),
@@ -72,7 +75,7 @@ class _OrderPickedupState extends State<OrderPickedup> {
               flex: 4,
             ),
             Text(
-              "You have reported that the order was picked up by a courier.",
+              translations.order_p_report,
               style: bigLightBlueTitle,
             ),
             Spacer(
@@ -86,10 +89,11 @@ class _OrderPickedupState extends State<OrderPickedup> {
   }
 
   Widget orderPickedupErrorPage() {
+    final translations = ExampleLocalizations.of(context);
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Picked Up'),
+        title: Text(translations.order_p_picked),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 40),
@@ -102,11 +106,11 @@ class _OrderPickedupState extends State<OrderPickedup> {
             //   flex: 4,
             // ),
             Text(
-              "There was a problem updating this order",
+              translations.order_p_problem,
               style: bigLightBlueTitle,
             ),
             Padding(padding: EdgeInsets.only(top: 30.0)),
-            Text('Please contact PickNdell support.')
+            Text(translations.order_p_update_pnd)
           ],
         ),
       ),

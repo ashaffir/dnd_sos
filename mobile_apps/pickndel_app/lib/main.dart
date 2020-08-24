@@ -1,6 +1,7 @@
 import 'package:pickndell/app_localizations.dart';
 import 'package:pickndell/home/welcome.dart';
 import 'package:pickndell/localizations.dart';
+import 'package:pickndell/location/gmap.dart';
 import 'package:pickndell/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 
@@ -102,6 +103,11 @@ class App extends StatelessWidget {
                 return HomePageIsolate(
                   userRepository: userRepository,
                 );
+
+                // return MaterialApp(
+                //   title: 'Flutter Google Maps Demo',
+                //   home: GMap(),
+                // );
               } else if (state is AuthenticationUnauthenticated) {
                 return LoginPage(
                   userRepository: userRepository,

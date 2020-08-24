@@ -316,6 +316,33 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ),
                       Text(
                         currentUser.isEmployee == 1
+                            ? currentUser.rating != 0.0
+                                ? translations.home_courier_rating +
+                                    ": ${currentUser.rating}"
+                                : translations.home_courier_rating +
+                                    ": " +
+                                    translations.home_unrated
+                            : currentUser.rating != null
+                                ? translations.home_sender_rating +
+                                    ": ${currentUser.rating}"
+                                : translations.home_sender_rating +
+                                    ": " +
+                                    translations.home_unrated,
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20.0),
+                  ),
+
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                      ),
+                      Text(
+                        currentUser.isEmployee == 1
                             ? translations.home_vehicle + ":"
                             : translations.home_sender_type + ":",
                         style: TextStyle(fontSize: 20.0),

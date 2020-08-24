@@ -69,3 +69,6 @@ com.actappon.pickndell (explicit)
 * Add the pointer to that key in the code (instead of the text, e.g. translation.loginPageTitle)
 * Restart the app
 
+# REFERENCE: Google maps
+- Flutter plugin: https://pub.dev/packages/google_maps_flutter
+

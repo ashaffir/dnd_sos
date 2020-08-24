@@ -3,10 +3,12 @@
 // REFERENCE: Snackbar/Flushbar: https://www.youtube.com/watch?v=KNpxyyA8MDA
 // REFERENCE: Dropdown text: https://www.youtube.com/watch?v=L3E4LNSrSWM
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/login_page.dart';
 import 'package:pickndell/login/message_page.dart';
 import 'package:pickndell/repository/user_repository.dart';
@@ -41,9 +43,16 @@ class _RegistrationState extends State<Registration> {
 
   String _userType;
   var _registrationTypes = List<DropdownMenuItem>();
-  List<String> _registrationTypeList = ['Sender', 'Courier'];
+  // List<String> _registrationTypeList = ['Sender', 'Courier'];
+  List<String> _registrationTypeList;
 
   _loadRegistrationTypes() {
+    // if (ui.window.locale.languageCode == 'he') {
+    //   _registrationTypeList = ['שולח', 'שליח'];
+    // } else {
+    _registrationTypeList = ['Sender', 'Courier'];
+    // }
+
     _registrationTypeList.forEach((element) {
       setState(() {
         _registrationTypes.add(DropdownMenuItem(
@@ -62,9 +71,11 @@ class _RegistrationState extends State<Registration> {
 
   @override
   Widget build(BuildContext context) {
+    final trans = ExampleLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Join PickNdel'),
+        title: Text(trans.register_join),
       ),
       body: Container(
         child: Form(
@@ -86,7 +97,7 @@ class _RegistrationState extends State<Registration> {
                         padding: EdgeInsets.all(10.0),
                       ),
                       Text(
-                        'Registration Form',
+                        trans.register_form,
                         style: whiteTitle,
                       ),
                       Padding(
@@ -94,7 +105,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       DropdownButtonFormField(
                         decoration: InputDecoration(
-                            labelText: "Registration as:",
+                            labelText: trans.register_as + ":",
                             prefixIcon: Icon(Icons.category)),
                         value: _userType,
                         items: _registrationTypes,
@@ -102,7 +113,7 @@ class _RegistrationState extends State<Registration> {
                           if (dropdownMenue(value) == null) {
                             return null;
                           } else {
-                            return "Please choose a registration type";
+                            return trans.register_alert_as;
                           }
                         },
                         onChanged: (value) {
@@ -118,13 +129,13 @@ class _RegistrationState extends State<Registration> {
                       ),
                       TextFormField(
                         decoration: InputDecoration(
-                            labelText: 'email', icon: Icon(Icons.person)),
+                            labelText: trans.email, icon: Icon(Icons.person)),
                         controller: _mailController,
                         validator: (value) {
                           if (validateEmail(value) == null) {
                             return null;
                           } else {
-                            return "Enter Valid Email";
+                            return trans.alert_email;
                           }
                         },
                         // validator: (String value) {
@@ -137,7 +148,8 @@ class _RegistrationState extends State<Registration> {
 
                       TextFormField(
                         decoration: InputDecoration(
-                            labelText: 'password', icon: Icon(Icons.security)),
+                            labelText: trans.password,
+                            icon: Icon(Icons.security)),
                         controller: _password1Controller,
                         obscureText: true,
                         validator: validatePassword,
@@ -147,7 +159,7 @@ class _RegistrationState extends State<Registration> {
 
                       TextFormField(
                         decoration: InputDecoration(
-                            labelText: 'confirm password',
+                            labelText: trans.register_confirm_pass,
                             icon: Icon(Icons.security)),
                         controller: _password2Controller,
                         obscureText: true,
@@ -178,7 +190,7 @@ class _RegistrationState extends State<Registration> {
                                   FlatButton(
                                       onPressed: _launchURL,
                                       child: Text(
-                                        'I accept PickNdell terms',
+                                        trans.register_terms,
                                         style: TextStyle(color: Colors.blue),
                                       )),
                                 ],
@@ -196,7 +208,7 @@ class _RegistrationState extends State<Registration> {
                         //output from validation will be displayed in state.errorText (above)
                         validator: (value) {
                           if (!checkboxValue) {
-                            return "Please accept PickNdell's terms and conditions";
+                            return trans.register_alert_terms;
                           } else {
                             return null;
                           }
@@ -212,7 +224,9 @@ class _RegistrationState extends State<Registration> {
                               padding: EdgeInsets.only(
                                   top: 8, bottom: 8, left: 10, right: 10),
                               child: Text(
-                                _isLoading ? 'Creating...' : 'Create account',
+                                _isLoading
+                                    ? trans.register_creating + '...'
+                                    : trans.register_create,
                                 textDirection: TextDirection.ltr,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -254,7 +268,7 @@ class _RegistrationState extends State<Registration> {
                                         )));
                           },
                           child: Text(
-                            'Already have an Account',
+                            trans.register_already_have,
                             textDirection: TextDirection.ltr,
                             style: TextStyle(
                               color: Colors.white,
@@ -273,6 +287,7 @@ class _RegistrationState extends State<Registration> {
   }
 
   void errorRegistration(BuildContext context, res) {
+    final trans = ExampleLocalizations.of(context);
     // String msg = res["is_employee"] == "This field may not be null."
     //     ? "Please select Sender or Courier registration."
     //     : res;
@@ -289,8 +304,8 @@ class _RegistrationState extends State<Registration> {
       // boxShadows: [
       //   BoxShadow(color: Colors.white, offset: Offset(3, 3), blurRadius: 3),
       // ],
-      title: 'Error',
-      message: 'Please fill out all fields. $res',
+      title: trans.register_err,
+      message: trans.register_alert_fields + '. $res',
       icon: Icon(
         Icons.info_outline,
         size: 28,

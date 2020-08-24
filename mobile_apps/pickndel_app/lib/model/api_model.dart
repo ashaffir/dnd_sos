@@ -56,7 +56,7 @@ class Token {
         numOrdersInProgress: json['num_orders_in_progress'],
         dailyCost: json['daily_cost'],
         vehicle: json['vehicle'],
-        rating: json['rating'],
+        rating: json['freelancer_total_rating'],
         dailyProfit: json['daily_profit'],
         activeOrders: json['active_orders']);
   }

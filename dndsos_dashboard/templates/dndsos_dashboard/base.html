@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% get_current_language as lang %}
 
 <!doctype html>
 <html class="fixed" >
@@ -880,6 +881,7 @@
 							'pick_up_address': pick_up_address,
 							'drop_off_address': drop_off_address,
 							'urgency': urgency,
+							'country': '{{ lang }}',
 							//'notes': notes,
 							'select_freelancers':freelancer
 						}

@@ -1,3 +1,4 @@
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
@@ -22,6 +23,8 @@ class _OrderRejectedState extends State<OrderRejected> {
   String orderUpdated;
 
   Widget build(BuildContext context) {
+    final translations = ExampleLocalizations.of(context);
+
     return FutureBuilder(
       future: updateOrderRejected(widget.order),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -56,6 +59,8 @@ class _OrderRejectedState extends State<OrderRejected> {
   }
 
   Widget getOrderRejectedPage(Order order) {
+    final translations = ExampleLocalizations.of(context);
+
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
@@ -71,7 +76,7 @@ class _OrderRejectedState extends State<OrderRejected> {
               flex: 4,
             ),
             Text(
-              "Order Canceled.",
+              translations.order_cancel_message,
               style: bigLightBlueTitle,
             ),
             Spacer(
@@ -85,22 +90,25 @@ class _OrderRejectedState extends State<OrderRejected> {
   }
 
   Widget orderRejectedErrorPage() {
+    final translations = ExampleLocalizations.of(context);
+
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Delivered'),
+        title: Text(translations.order_delivered),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 50),
+        // padding: EdgeInsets.only(left: 50),
         height: 160,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Spacer(
               flex: 4,
             ),
             Text(
-              "There was a problem updating this order",
+              translations.order_p_problem,
               style: bigLightBlueTitle,
             ),
           ],

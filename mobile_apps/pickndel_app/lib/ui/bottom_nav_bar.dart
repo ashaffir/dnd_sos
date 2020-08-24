@@ -47,11 +47,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
               size: 44.0,
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
+              // Navigator.pushReplacementNamed(context, '/');
+
               // Navigator.push(
               //     context,
               //     new MaterialPageRoute(
               //         builder: (context) => HomePageIsolate()));
+
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePageIsolate()),
+                  (Route<dynamic> route) => false);
             },
           ),
           IconButton(

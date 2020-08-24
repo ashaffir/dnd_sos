@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-22 16:36+0300\n"
+"POT-Creation-Date: 2020-08-24 20:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -295,14 +295,10 @@ msgid "Find couriers around you"
 msgstr "מצא שליחים פעילים בסביבתך"
 
 #: dndsos/templates/dndsos/index.html:55
-#, fuzzy
-#| msgid "What is delivered"
-msgid "Join and get things delivered?"
-msgstr "סוג משלוח"
+msgid "Join and get things delivered"
+msgstr "הצטרף כדי לשלוח דברים"
 
 #: dndsos/templates/dndsos/index.html:62
-#, fuzzy
-#| msgid "Join as a Courier and earn extra income"
 msgid "Join and earn extra income as a courier"
 msgstr "הצטרף כשליח ותרוויח הכנסה נוספת"
 
@@ -319,14 +315,12 @@ msgid "How it works"
 msgstr "איך זה עובד"
 
 #: dndsos/templates/dndsos/index.html:261
-#, fuzzy
-#| msgid "Businesses"
 msgid "Senders/Businesses"
-msgstr "בתי עסק"
+msgstr "בתי עסק/שולחים"
 
 #: dndsos/templates/dndsos/index.html:267
 #: dndsos/templates/dndsos/index.html:378
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:279
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:280
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:82
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:91
 msgid "Couriers"
@@ -386,16 +380,16 @@ msgstr "הודעה"
 msgid "Send Message"
 msgstr "שלח"
 
-#: dndsos/views.py:30
+#: dndsos/views.py:34
 msgid ""
 "Thank you for your interest in PickNdell. We will get back to you shortly."
 msgstr "תודה על התעניינותך ב- PickNdell. נחזור אליך בהקדם."
 
-#: dndsos/views.py:32
+#: dndsos/views.py:36
 msgid "Please fill out the required fields before submitting the form."
 msgstr "מלא את השדות הדרושים לפני שליחת הטופס."
 
-#: dndsos/views.py:35
+#: dndsos/views.py:39
 msgid "Please confirm you are not a robot."
 msgstr "אנא אשר שאתה לא רובוט."
 
@@ -455,7 +449,7 @@ msgstr "תבנית דואל"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/active-deliveries.html:11
 #: dndsos_dashboard/templates/dndsos_dashboard/active-deliveries.html:20
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:318
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:319
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:7
 msgid "Active Deliveries"
 msgstr "העברות פעילות"
@@ -528,7 +522,7 @@ msgid "Sort"
 msgstr "מיין"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:10
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:256
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:257
 msgid "Business Dashboard"
 msgstr "לוח מחוונים עסקי"
 
@@ -603,8 +597,8 @@ msgstr "רשימה מלאה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-messages.html:10
 #: dndsos_dashboard/templates/dndsos_dashboard/b-messages.html:19
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:298
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:336
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:299
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:337
 #: dndsos_dashboard/templates/dndsos_dashboard/f-messages.html:10
 #: dndsos_dashboard/templates/dndsos_dashboard/f-messages.html:19
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:14
@@ -618,7 +612,7 @@ msgid "Messages Related to Orders"
 msgstr "הודעות הקשורות להזמנות"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:32
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:272
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:273
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:28
 msgid "Profile"
 msgstr "פרופיל"
@@ -776,46 +770,46 @@ msgstr "יש לך כבר כרטיס אשראי במערכת"
 msgid "Update"
 msgstr "עדכון"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:157
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:158
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:41
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:56
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:37
 msgid "Available"
 msgstr "זמין"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:162
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:163
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:41
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:37
 msgid "Unavailable"
 msgstr "לא זמין"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:261
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:262
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:10
 msgid "Courier Dashboard"
 msgstr "לוּחַ מַחווָנִים"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:285
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:286
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:46
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:55
 msgid "Orders"
 msgstr "הזמנות"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:291
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:292
 msgid "Alerts"
 msgstr "התראות"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:312
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:313
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:10
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:19
 msgid "Open Orders"
 msgstr "הזמנות פעילות"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:324
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:325
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:88
 msgid "Deliveries Summary"
 msgstr "סיכום העברות"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/base.html:330
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:331
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:21
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:10
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:19
@@ -1051,7 +1045,8 @@ msgstr "השתמש במספר הטלפון שלי לתשלומים"
 msgid "Failed to verify your phone. Please try again later"
 msgstr "אימות הטלפון שלך נכשל. בבקשה נסה שוב מאוחר יותר"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/failed-phone-verification.html:33
+#: dndsos_dashboard/templates/dndsos_dashboard/failed-phone-verification.html:34
+#: dndsos_dashboard/templates/dndsos_dashboard/failed-phone-verification.html:36
 msgid "Back to profile"
 msgstr "חזרה לפרופיל"
 
@@ -1060,8 +1055,6 @@ msgid "Couriers Map"
 msgstr "מפת שליחים"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:106
-#, fuzzy
-#| msgid "Select Courier"
 msgid "Select Couriers"
 msgstr "בחר שליח"
 
@@ -1070,10 +1063,8 @@ msgid "Your Couriers"
 msgstr "השליחים שלך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:121
-#, fuzzy
-#| msgid "Active Couriers around your business"
 msgid "Active couriers around your business"
-msgstr "ספקים פעילים בסביבת העסק שלך"
+msgstr "שליחים פעילים בסביבת העסק שלך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:122
 msgid "active Couriers"
@@ -1444,6 +1435,7 @@ msgid "Fees"
 msgstr "עמלה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:45
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:54
 msgid "Waiting for a Courier..."
 msgstr "ממתין לשליח ..."
 
@@ -1566,10 +1558,6 @@ msgstr "לא מוּקצֶה"
 msgid "Picked-Up"
 msgstr "נאסף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:54
-msgid "Waiting for a courier..."
-msgstr "ממתין לשליח ..."
-
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:57
 msgid "Waiting for pickup..."
 msgstr "ממתין לאיסוף ..."
@@ -1605,7 +1593,7 @@ msgstr "הערות"
 msgid " %(message)s "
 msgstr ""
 
-#: dndsos_dashboard/views.py:370
+#: dndsos_dashboard/views.py:368
 msgid "You have successfully updated your profile."
 msgstr "הצלחת לעדכן את הפרופיל שלך."
 
@@ -2949,6 +2937,9 @@ msgstr ""
 #, python-format
 msgid "The option '%s' is not a valid option for a QR code."
 msgstr ""
+
+#~ msgid "Waiting for a courier..."
+#~ msgstr "ממתין לשליח ..."
 
 #~| msgid "Activate account"
 #~ msgid "Activate PickNdell Account"

@@ -2,6 +2,7 @@ loginPageTitle: כניסה ל PickNdell
 email: דוא״ל
 password: סיסמא
 login: הכנס
+logout: התנתק
 forgot_password: ?שכחת את הסיסמא
 create_account: צור חשבון
 alert_email: אנא הכנס דואל חוקי
@@ -13,6 +14,9 @@ home_title: עמוד פרופיל
 home_courier_profile: פרופיל שליח
 home_sender_profile: פרופיל שולח
 home_name: שם
+home_courier_rating: דירוג שליח
+home_sender_rating: דירוג שולח
+home_unrated: ללא דירוג
 home_vehicle:  כלי רכב
 home_sender_type: תחום
 home_active_orders: הזמנות פעילות
@@ -50,12 +54,53 @@ orders_alert_tracking_content: אנא עבור למצב זמין לפני שתק
 orders_message_pickup: סע לכתובת האיסוף
 orders_call_sender: התקשר לשולח
 orders_call_courier: התקשר לשליח
-orders_status_waiting_pickup: מחכה לאיסוף
+orders_status_waiting_pickup: "מחכה לאיסוף"
 orders_status_waiting_allocaiton: חדש. ממתין להקצאת שליח
 orders_status_waiting_delivery: נאסף. ממתין למסירה
 orders_status_rejected: מסירה שנדחתה
 orders_request_courier: בקש שליח
 orders_check: אנא בדוק
 orders_empty_list:  רשימת ההזמנות ריקה
+
+# Messages page
+messages_register_title: אשר
+messages_register_thanks: תודה
+messages_register_activation: שלחנו לך דואל להפעלת חשבון. אנא סמן את תיבת הדואל שלך וכדי להפעיל את חשבונך
+messages_register_pickup: כתובת איסוף
+messages_register_drop: כתובת מסירה
+messages_register_button: היכנס לחשבונך
+messages_push_accept: אשר
+messages_push_ignore: בטל
+
+# Update Orders
+order_a_updating: עדכון טבלת ההזמנות
+order_a_accepted: ההזמנה התקבלה
+order_a_go_to: לכו לאסוף את החבילה
+order_a_not_available: הזמנה זו אינה זמינה עוד
+
+# Order Picked up
+order_p_picked: ההזמנה נאספה
+order_p_report: דיווחת שההזמנה נאספה על ידי שליח
+order_p_problem: הייתה בעיה בעדכון ההזמנה הזו
+order_p_update_pnd: אנא צור קשר עם התמיכה של PickNdell
+
+order_cancel_message: ההזמנה בוטלה
+order_delivered: ההזמנה הועברה
+
+# Registration page
+register_join: הצטרף ל- PickNdell
+register_form: טופס הרשמה
+register_as: הרשמה כ
+register_alert_as: בחר סוג רישום
+register_confirm_pass: אשר סיסמה
+register_terms: אני מקבל את תנאי PickNdell
+register_alert_terms: אנא קבל את תנאי PickNdell
+register_creating: יצירת חשבון חדש
+register_create: צור חשבון
+register_already_have: כבר יש לך חשבון
+register_err: שְׁגִיאָה
+register_alert_fields: אנא מלא את כל השדות
+
+
 
 

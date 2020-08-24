@@ -1,3 +1,4 @@
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
@@ -31,6 +32,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
   String orderUpdated;
 
   Widget build(BuildContext context) {
+    final translations = ExampleLocalizations.of(context);
     return FutureBuilder(
       future: updateOrderAccepted(updatedOrderId),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -48,7 +50,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
           print("No data:");
         }
         print('WAITING FOR UPDATE');
-        String loaderText = "Updating Order...";
+        String loaderText = translations.order_a_updating + "...";
         return ColoredProgressDemo(loaderText);
       },
     );
@@ -63,10 +65,12 @@ class _OrderAcceptedState extends State<OrderAccepted> {
   }
 
   Widget getOrderAcceptedPage(dynamic order) {
+    final translations = ExampleLocalizations.of(context);
+
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Accepted'),
+        title: Text(translations.order_a_accepted),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 50),
@@ -78,21 +82,21 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               flex: 4,
             ),
             Text(
-              "Go to pick up!",
+              translations.order_a_go_to + "!",
               style: bigLightBlueTitle,
             ),
             Spacer(
               flex: 2,
             ),
             Text(
-              'From: ${order["pick_up_address"]}',
+              translations.orders_from + ': ${order["pick_up_address"]}',
               style: whiteTitle,
             ),
             Spacer(
               flex: 2,
             ),
             Text(
-              "To: ${order["drop_off_address"]}",
+              translations.orders_to + ": ${order["drop_off_address"]}",
               style: whiteTitle,
             )
           ],
@@ -103,13 +107,15 @@ class _OrderAcceptedState extends State<OrderAccepted> {
   }
 
   Widget orderAcceptErrorPage() {
+    final translations = ExampleLocalizations.of(context);
+
     return new Scaffold(
       backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Accepted'),
+        title: Text(translations.order_a_accepted),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 50),
+        padding: EdgeInsets.only(left: 20),
         height: 160,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -118,7 +124,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               flex: 4,
             ),
             Text(
-              "This order is no longer available!",
+              translations.order_a_not_available + "!",
               style: bigLightBlueTitle,
             ),
           ],

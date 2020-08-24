@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/orders/order_bloc.dart';
@@ -66,9 +67,11 @@ class _GetOrdersState extends State<GetOrders> {
         onPressed: () {
           _bloc.fetchOrder(widget.ordersType);
         },
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.green[100],
         child: new Icon(Icons.refresh),
       ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
       appBar: AppBar(
         elevation: 0.0,
         automaticallyImplyLeading: false,
@@ -384,7 +387,11 @@ class OrdersList extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(translations.orders_fare + ': ${order.price}'),
+                        ui.window.locale.languageCode == 'he'
+                            ? Text(
+                                translations.orders_fare + ': ${order.fare} ₪')
+                            : Text(translations.orders_fare +
+                                ': ${order.fare} \$'),
                         ButtonBar(
                           children: <Widget>[
                             Padding(padding: EdgeInsets.all(5.0)),

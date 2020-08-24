@@ -12,6 +12,7 @@ class Order {
   String order_country;
   double distance_to_business;
   double price;
+  String fare;
   String status;
   String business_phone;
   String business_name;
@@ -29,6 +30,7 @@ class Order {
     this.order_street_name,
     this.distance_to_business,
     this.price,
+    this.fare,
     this.status,
     this.business_phone,
     this.business_name,
@@ -54,6 +56,7 @@ class Order {
     order_street_name = json['order_street_name'];
     distance_to_business = json['distance_to_business'];
     price = json['price'];
+    fare = json['fare'];
     status = json['status'];
 
     try {
@@ -86,6 +89,7 @@ class Order {
     data['order_street_name'] = this.order_street_name;
     data['distance_to_business'] = this.distance_to_business;
     data['price'] = this.price;
+    data['fare'] = this.fare;
     data['status'] = this.status;
     return data;
   }

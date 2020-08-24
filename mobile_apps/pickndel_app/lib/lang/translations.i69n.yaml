@@ -2,6 +2,7 @@ loginPageTitle: PickNdell Login
 email: email
 password: password
 login: Login
+logout: Logout
 forgot_password: Forgot your password
 create_account: Create a new account
 alert_email: Please enter a valid email
@@ -13,6 +14,9 @@ home_title: Home
 home_courier_profile: Courier Profile
 home_sender_profile: Sender Profile
 home_name: Name
+home_courier_rating: Courier Rating
+home_sender_rating: Sender Rating
+home_unrated: Unrated
 home_vehicle: Vehicle
 home_sender_type: Type
 home_active_orders: Current Active Orders
@@ -57,5 +61,50 @@ orders_status_rejected: Rejected Order
 orders_request_courier: Request Courier
 orders_check: Please check
 orders_empty_list: Order list is Empty
+
+# Messages Page
+messages_register_title: Confirmation
+messages_register_thanks: Thank you
+messages_register_activation: We have sent you an activation email. Please check your email box and to activate your account
+messages_register_pickup: Pickup address
+messages_register_drop: Dropoff address
+messages_register_button: Go to Login
+messages_push_accept: Accept
+messages_push_ignore: Ignore 
+
+# Order Accepted
+order_a_updating: Updating Orders Table
+order_a_accepted: Order Accepted
+order_a_go_to: Go to pick up
+order_a_not_available: This order is no longer available
+
+# Order Picked up
+order_p_picked: Order Picked Up
+order_p_report: You have reported that the order was picked up by a courier
+order_p_problem: There was a problem updating this order
+order_p_update_pnd: Please contact PickNdell support
+
+order_cancel_message: Order Canceled
+order_delivered: Order Delivered
+
+# Registration page
+register_join: Join PickNdel
+register_form: Registration Form
+register_as: Registration as
+register_alert_as: Please choose a registration type
+register_confirm_pass: confirm password
+register_terms: I accept PickNdell terms
+register_alert_terms: Please accept PickNdell terms
+register_creating: Creating
+register_create: Create account
+register_already_have: Already have an Account
+register_err: Error
+register_alert_fields: Please fill out all fields
+
+
+ 
+
+
+
 
 
