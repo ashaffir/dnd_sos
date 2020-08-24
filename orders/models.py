@@ -62,6 +62,8 @@ class Order(models.Model):
     order_street_name = models.CharField(max_length=100, null=True, blank=True)
     order_street_symbol = models.IntegerField(null=True, blank=True)
     order_location = geomodels.PointField(null=True, blank=True)
+    order_lat = models.FloatField(null=True, blank=True)
+    order_lon = models.FloatField(null=True, blank=True)
 
     distance_to_business = models.FloatField(null=True, blank=True)
     trip = JSONField(null=True, blank=True)

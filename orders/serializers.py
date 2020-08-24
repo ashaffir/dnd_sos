@@ -40,8 +40,8 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('order_id','status','pick_up_address','created', 'updated', 
-                'drop_off_address', 'distance_to_business',
-                'price', 'order_type','business', 'freelancer',)
+                'drop_off_address', 'distance_to_business','order_location', 'order_lon', 'order_lat',
+                'price','fare', 'order_type','business', 'freelancer',)
 
 class OrderAPISerializer(serializers.ModelSerializer):
     # business_name = serializers.SlugRelatedField(read_only=True, slug_field='business_name')
@@ -49,8 +49,8 @@ class OrderAPISerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('order_id','status','pick_up_address','created', 'updated', 
-                'drop_off_address', 'distance_to_business',
-                'price', 'order_type','business', 'freelancer',)
+                'drop_off_address', 'distance_to_business','order_lon', 'order_lat',
+                'price','fare', 'order_type','business', 'freelancer',)
         # read_only_fields = ('id', 'created', 'updated',)
         # fields = '__all__'
         depth=1   

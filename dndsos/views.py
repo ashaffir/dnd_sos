@@ -19,7 +19,7 @@ logger = logging.getLogger(__file__)
 def home(request):
     context = {}
     form = ContactForm(request.POST or None)
-    logger.info('STATAMTMAMTAT')
+
     if request.POST:
 
         # if settings.DEBUG:

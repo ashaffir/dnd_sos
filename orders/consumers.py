@@ -388,8 +388,12 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             # Checking OS
             if platform.system() == 'Darwin':
                 order_location = Point(location.latitude,location.longitude)
+                order_lat = location.latitude
+                order_lon = location.longitude
             else:
                 order_location = Point(location.longitude, location.latitude)
+                order_lat = location.longitude
+                order_lon = location.latitude
            
             order_coords = (location.latitude,location.longitude)  # The cords for geopy are reversed to GeoDjango Point.
 
@@ -413,6 +417,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 order_coords = None
 
         content['order_location'] = order_location
+        content['order_lon'] = order_lon
+        content['order_lat'] = order_lat
 
         # Calculate distance between drop off address the business
         business = Employer.objects.get(pk=content.get('business'))
@@ -434,9 +440,11 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         if order_to_business_distance_meters != 1000:
             price = settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT
             content['price'] = round(price,2)
+            content['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
             content['distance_to_business'] = round(order_to_business_distance,2)
         else:
             content['price'] = 'Error Price Calculation'
+            content['fare'] = 'Error Fare Calculation'
             content['distance_to_business'] = 'Error Distance Calculations'
 
 
