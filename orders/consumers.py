@@ -384,16 +384,14 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         try:
             drop_off_address = content.get('drop_off_address')
             location = geolocator.geocode(drop_off_address)
+            order_lat = location.latitude
+            order_lon = location.longitude
     
             # Checking OS
             if platform.system() == 'Darwin':
                 order_location = Point(location.latitude,location.longitude)
-                order_lat = location.latitude
-                order_lon = location.longitude
             else:
                 order_location = Point(location.longitude, location.latitude)
-                order_lat = location.longitude
-                order_lon = location.latitude
            
             order_coords = (location.latitude,location.longitude)  # The cords for geopy are reversed to GeoDjango Point.
 
