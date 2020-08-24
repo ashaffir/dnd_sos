@@ -139,9 +139,9 @@ class NewLoginViewSet(ObtainAuthToken):
             try: 
                 freelancer_total_rating = user_profile.freelancer_total_rating
                 if not freelancer_total_rating:
-                    freelancer_total_rating = '0'
+                    freelancer_total_rating = 0.0
             except:
-                freelancer_total_rating = '0'
+                freelancer_total_rating = 0.0
 
 
             try:

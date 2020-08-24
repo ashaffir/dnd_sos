@@ -25,7 +25,7 @@ from django.db.models import Q
 from django.contrib.gis.db.models.functions import Distance
 
 # Language translation
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext
 
 from rest_framework import generics
 from rest_framework.response import Response
