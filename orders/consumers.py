@@ -399,6 +399,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             try:
                 drop_off_address = content.get('drop_off_address').split(',')[1]
                 location = geolocator.geocode(drop_off_address)
+                order_lat = location.latitude
+                order_lon = location.longitude
 
                 # Checking OS
                 if platform.system() == 'Darwin':
@@ -407,12 +409,16 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     order_location = Point(location.longitude, location.latitude)
                 
                 order_coords = (location.latitude,location.longitude)
+    
                 
             except Exception as e:
                 print(f'Failed getting the location for {drop_off_address}')
                 logger.error(f'Failed getting the location for {drop_off_address}')
                 order_location = None
                 order_coords = None
+                order_lat = None
+                order_lon = None
+
 
         content['order_location'] = order_location
         content['order_lon'] = order_lon
@@ -435,15 +441,16 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             order_to_business_distance_meters = 1000
 
         # Calculating the price for the order (price calculation)
-        if order_to_business_distance_meters != 1000:
+        if order_to_business_distance_meters > 1000:
             price = settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT
             content['price'] = round(price,2)
             content['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
             content['distance_to_business'] = round(order_to_business_distance,2)
         else:
-            content['price'] = 'Error Price Calculation'
-            content['fare'] = 'Error Fare Calculation'
-            content['distance_to_business'] = 'Error Distance Calculations'
+            price = settings.DEFAULT_BASE_PRICE
+            content['price'] = round(price,2)
+            content['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
+            content['distance_to_business'] = round(order_to_business_distance,2)
 
 
         if not business.location:
