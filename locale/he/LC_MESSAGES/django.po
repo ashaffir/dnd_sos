@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-24 20:51+0300\n"
+"POT-Creation-Date: 2020-08-24 21:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -925,10 +925,8 @@ msgid "There are no businesses here yet"
 msgstr "עוד לא עבדת עם בית עסק"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:41
-#, fuzzy
-#| msgid "Change your availability status here"
-msgid "Your availability status is:"
-msgstr "שנה את מצב הזמינות שלך כאן"
+msgid "Your availability status is"
+msgstr "מצב הזמינות שלך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:43
 msgid "Please complete your profile before changing the availability status"
@@ -940,7 +938,15 @@ msgstr "עבור אל פרופיל"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:48
 msgid "Use PickNdell mobile application to change your availabilty status"
-msgstr ""
+msgstr "השתמש ביישום הנייד של PickNdell כדי לשנות את סטטוס הזמינות שלך"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:49
+msgid "Dont have it yet"
+msgstr "אין לך אפליקציה של PickNdell"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:49
+msgid "Download app here"
+msgstr "הורד את האפליקציה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:53
 msgid "Status cannot be changed while in the process of delivering"
@@ -1087,10 +1093,8 @@ msgstr "שליחים זמינים"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:134
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:252
-#, fuzzy
-#| msgid "Range from Courier"
 msgid "Range from couriers"
-msgstr "טווח מהשליח"
+msgstr "מרחק מהשליח"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:144
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:262
@@ -1175,8 +1179,6 @@ msgid "Couriers in your pool"
 msgstr "שליחים שעבדת עימם"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:423
-#, fuzzy
-#| msgid "Which order would you like the Courier for"
 msgid "Which order would you like the courier for"
 msgstr "לאיזו הזמנה תרצה שליח"
 
@@ -1305,8 +1307,6 @@ msgid "Notify all available"
 msgstr "הודע לכל הזמינים"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:77
-#, fuzzy
-#| msgid "Do not broadcast. I will pick a Courier later"
 msgid "Do not broadcast. I will pick a courier later"
 msgstr "אל תשדר. אני אבחר שליח בהמשך"
 
@@ -1342,8 +1342,6 @@ msgid "Send"
 msgstr "שלח"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:12
-#, fuzzy
-#| msgid "Communication with the Courier"
 msgid "Communication with the courier"
 msgstr "תקשורת עם השליח"
 
@@ -1579,8 +1577,6 @@ msgid "Rate your Courier"
 msgstr "דרג את השליח שלך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:19
-#, fuzzy
-#| msgid "How would you rate the Courier for this order (1 Bad, 5 Excellent)"
 msgid "How would you rate the courier for this order (1 Bad, 5 Excellent)"
 msgstr "כיצד תדרג את השליח להזמנה זו (1 רע, 5 מעולה)"
 
@@ -2863,11 +2859,9 @@ msgstr ""
 #, fuzzy
 #| msgid "Send a message to"
 msgid "Send test data message"
-msgstr "שלח הודעה אל"
+msgstr "שלח הודעה בדיקה"
 
 #: venv_dnd_sos/lib/python3.7/site-packages/fcm_django/admin.py:97
-#, fuzzy
-#| msgid "Send a message to"
 msgid "Send test data message in bulk"
 msgstr "שלח הודעה אל"
 
@@ -2894,8 +2888,6 @@ msgid "Inactive devices will not be sent notifications"
 msgstr ""
 
 #: venv_dnd_sos/lib/python3.7/site-packages/fcm_django/models.py:26
-#, fuzzy
-#| msgid "Created"
 msgid "Creation date"
 msgstr "תחילת הזמנה"
 
