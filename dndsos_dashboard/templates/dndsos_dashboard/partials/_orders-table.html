@@ -51,7 +51,7 @@
         <!-- Order Status -->                
         {% if order.status == 'REQUESTED' or order.status == 'REJECTED' or order.status == 'RE_REQUESTED' %}
             <td class="info center" style="padding-top: 1em;" >
-                <label for="dispached" id="orderStatus" status='{{ order.status }}'>{% trans 'Waiting for a courier...' %}</label>                                    
+                <label for="dispached" id="orderStatus" status='{{ order.status }}'>{% trans 'Waiting for a Courier...' %}</label>                                    
         {% elif order.status == 'STARTED' %}
             <td class="info center">
                 <label for="dispached" id="orderStatus" status='{{ order.status }}' style="padding-top:1em">{% trans 'Waiting for pickup...' %}</label>

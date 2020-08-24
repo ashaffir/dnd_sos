@@ -1567,8 +1567,6 @@ msgid "Picked-Up"
 msgstr "נאסף"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:54
-#, fuzzy
-#| msgid "Waiting for a Courier..."
 msgid "Waiting for a courier..."
 msgstr "ממתין לשליח ..."
 
