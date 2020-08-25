@@ -1,5 +1,6 @@
 {% load i18n %}
 {% get_current_language as lang %}
+{% load order_tags %}
 
 <thead>
     <tr>
@@ -10,7 +11,7 @@
         <!-- <th>Notes</th> -->
         <th>{% trans 'Delivered' %}</th>
         <th>{% trans 'Order Status' %}</th>
-        <th>{% trans 'Fees' %}</th>
+        <th>{% trans 'Fare' %}</th>
         <th>{% trans 'Messages' %}</th>
         <!-- <th>Paid for</th> -->
         <th></th>
@@ -67,7 +68,13 @@
         {% endif %}
 
         <!-- Order fees -->
-        <td id="order_fees_{{ order.order_id }}">{{ order.price }}</td>
+        {% if lang == 'he' %}
+            <td id="order_fees">{{ order.fare | multiply:usd_ils |round_float }} ₪ </td>
+        {% elif lang == 'en' %}
+            <td id="order_fees">$ {{ order.fare | multiply:1 |round_float }}</td>
+        {% else %}
+            <td id="order_fees">€ {{ order.fare | multiply:usd_ils |round_float }}</td>
+        {% endif %}
 
         <!-- Messages -->
         <td class="actions center">

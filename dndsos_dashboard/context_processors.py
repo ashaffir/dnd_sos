@@ -1,7 +1,9 @@
 import platform
+from forex_python.converter import CurrencyRates # https://github.com/MicroPyramid/forex-python
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from core.models import Employee
+
 
 # @login_required
 def business_type(request):
@@ -55,4 +57,13 @@ def pageLanguage(request):
 def debugMode(request):
     context = {}
     context['debug'] = settings.DEBUG
+    return context
+
+def getCurrencyRates(request):
+    context = {}
+    c = CurrencyRates()
+    usd_ils = c.get_rate('USD', 'ILS')
+    usd_eur = c.get_rate('USD', 'EUR')
+    context['usd_ils'] = usd_ils
+    context['usd_eur'] = usd_eur
     return context

@@ -58,6 +58,48 @@
     })		
 </script>
 
+<!-- <script>
+
+    /////// Price currency converter for table ///////
+
+    let usd_ils_rate = '{{ usd_ils }}'
+    let usd_eur_rate = '{{ usd_eur }}'
+
+    window.addEventListener("load", function(){
+        console.log('CONVERTING');
+        let conv_price;
+        let prices = document.querySelectorAll('[stam="order_fees"]');
+        let leng = prices.length
+        console.log(`LENG: ${leng}`);
+        language = '{{ lang }}'
+        if (language == 'he') {
+            currency = '₪'
+        } else if (language == 'en') {
+            currency = '$'
+        } else {
+            currency = '€'
+        }
+        for (let price of prices) {
+            console.log(`a`);
+
+            price_ele = price.innerHTML;
+            let t_price = price.innerText;
+            let f_price = parseFloat(t_price);
+            if (language == 'he') {
+                conv_price = f_price * usd_ils_rate;
+                price.innerHTML= conv_price.toFixed(1).toString() + ' ' + currency
+            } else if (language == 'en') {
+                conv_price = f_price;
+                price.innerHTML= currency + ' ' + conv_price.toFixed(1).toString()
+            } else {
+                conv_price = f_price * usd_eur_rate;
+                price.innerHTML= currency + ' ' + conv_price.toFixed(1).toString()
+            }
+        }
+
+    });
+
+</script> -->
 
 {% endblock content %}
 

@@ -130,9 +130,20 @@ class NewLoginViewSet(ObtainAuthToken):
                 name = user_profile.name
             except:
                 name = ''
+
+            try: 
+                phone = user_profile.phone
+                if not phone:
+                    phone = 'Not set'
+            except:
+                phone = ''
+
             
             try: 
                 vehicle = user_profile.vehicle
+                if not vehicle:
+                    vehicle = "Not Set"
+
             except:
                 vehicle = ''
 
@@ -155,6 +166,7 @@ class NewLoginViewSet(ObtainAuthToken):
                             "user":user.pk,
                             "is_employee": 1 if user.is_employee else 0,
                             "name": name,
+                            "phone": phone,
                             "vehicle": vehicle,
                             "freelancer_total_rating": freelancer_total_rating,
                             "is_approved": 1 if is_approved else 0,
@@ -186,6 +198,11 @@ class NewLoginViewSet(ObtainAuthToken):
             except:
                 business_name = ""
 
+            try: 
+                phone = user_profile.phone
+            except:
+                phone = ''
+
             try:
                 business_category = user_profile.business_category
             except:
@@ -201,6 +218,7 @@ class NewLoginViewSet(ObtainAuthToken):
                             "user":user.pk,
                             "is_employee": 1 if user.is_employee else 0,
                             "business_name":  business_name,
+                            "phone": phone,
                             "business_category": business_category,
                             "is_approved": 1 if is_approved else 0,
                             "num_daily_orders": num_daily_orders,
@@ -339,7 +357,7 @@ class UserProfile(viewsets.ModelViewSet):
     pass
 
 
-@api_view(['GET',])
+@api_view(['PUT',])
 @permission_classes((IsAuthenticated,))
 def user_profile(request):
     '''

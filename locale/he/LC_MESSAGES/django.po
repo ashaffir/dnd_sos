@@ -69,26 +69,20 @@ msgid "Sign Up"
 msgstr "הרשמה"
 
 #: core/templates/core/employee/signup.html:46
-#, fuzzy
-#| msgid "Business? Register here"
 msgid "Sender/Business? Register here"
-msgstr "בית עֵסֶק? הירשם כאן"
+msgstr "בית עֵסֶק/שולח? הירשם כאן"
 
 #: core/templates/core/employer/signup.html:5
 msgid "PickNdell - Business Sign Up"
 msgstr "הרשמת בית עסק"
 
 #: core/templates/core/employer/signup.html:9
-#, fuzzy
-#| msgid "Business Signup"
 msgid "Sender/Business Signup"
-msgstr "הרשמה בית עסק"
+msgstr "הרשמת שולח/בית עסק"
 
 #: core/templates/core/employer/signup.html:15
-#, fuzzy
-#| msgid "Business Sign Up"
 msgid "Sender/Business Sign Up"
-msgstr "הרשמה בית עסק"
+msgstr "הרשמת שולח/בית עסק"
 
 #: core/templates/core/employer/signup.html:44
 msgid "Courier? Register here"

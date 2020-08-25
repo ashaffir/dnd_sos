@@ -1,6 +1,7 @@
 {% load static %}
 {% load i18n %}
 {% get_current_language as lang %}
+{% load order_tags %}
 
 <thead>
     <tr>
@@ -83,8 +84,14 @@
         {% endif %}
 
         <!-- Price -->
-        <td class="actions" style='text-align:center'>
-            {{ order.price }} {{ currency }}
+        <td class="actions" style='text-align:center' id="price_cell">
+            {% if lang == 'he' %}
+                {{ order.price | multiply:usd_ils | round_float }} ₪
+            {% elif lang == 'en' %}
+                $ {{ order.price | round_float }}
+            {% else %}
+                {{ order.price | multiply:usd_eur | round_float }} ₪
+            {% endif %}
         </td>
         
         <!-- Messages -->
@@ -170,4 +177,5 @@
         $('.ttip').tooltip()
     </script>
 
+    
 {% endblock js %}

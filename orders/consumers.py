@@ -441,8 +441,9 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             order_to_business_distance_meters = 1000
 
         # Calculating the price for the order (price calculation)
+        urgency = int(content['urgency'])
         if order_to_business_distance_meters > 1000:
-            price = settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT
+            price = urgency * (settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT)
             content['price'] = round(price,2)
             content['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
             content['distance_to_business'] = round(order_to_business_distance,2)

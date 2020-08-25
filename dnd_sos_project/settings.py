@@ -127,6 +127,7 @@ TEMPLATES = [
                 'dndsos_dashboard.context_processors.freelancer_available',
                 'dndsos_dashboard.context_processors.checkOS',
                 'dndsos_dashboard.context_processors.pageLanguage',
+                'dndsos_dashboard.context_processors.getCurrencyRates',
                 
                 # 'dndsos_dashboard.context_processors.requested_freelancer',                
             ],
@@ -322,6 +323,9 @@ FCM_DJANGO_SETTINGS = {
 }
 
 PICKNDELL_COMMISSION = 0.05
+
+GOOGLE_MAPS_KEY = config['GOOGLE_MAPS_KEY']
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
