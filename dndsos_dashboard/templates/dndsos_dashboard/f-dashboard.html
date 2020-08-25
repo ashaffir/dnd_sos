@@ -1,7 +1,7 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
 {% load i18n %}
-
+{% load order_tags %}
 {% block content %}
 {% get_current_language as lang %}
 
@@ -186,7 +186,13 @@
                                             <div class="summary">
                                                 <h4 class="title">{% trans 'Total Profit' %}</h4>
                                                 <div class="info">
-                                                    <strong class="amount">$ {{ daily_profit }}</strong>
+                                                    {% if lang == 'he' %}
+                                                        <strong class="amount">{{ daily_profit | multiply:usd_ils |round_float }} ₪</strong>
+                                                    {% elif lang == 'en' %}
+                                                        <strong class="amount">$ {{ daily_profit }}</strong>
+                                                    {% else %}
+                                                        <strong class="amount">€ {{ daily_profit | multiply:usd_eur |round_float }}</strong>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             <div class="summary-footer">

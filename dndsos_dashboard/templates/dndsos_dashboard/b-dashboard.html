@@ -1,6 +1,7 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load order_tags %}
 
 {% block content %}
 {% get_current_language as lang %}
@@ -140,7 +141,13 @@
                                             <div class="summary">
                                                 <h4 class="title">{% trans 'Total Daily Cost' %}</h4>
                                                 <div class="info">
-                                                    <strong class="amount" id="total_daily_cost">$ {{ daily_cost }}</strong>
+                                                    {% if lang == 'he' %}
+                                                        <strong class="amount" id="total_daily_cost">{{ daily_cost | multiply:usd_ils | round_float }} ₪</strong>
+                                                    {% elif lang == 'en' %}
+                                                        <strong class="amount" id="total_daily_cost">$ {{ daily_cost }}</strong>
+                                                    {% else %}
+                                                        <strong class="amount" id="total_daily_cost">€ {{ daily_cost | multiply:usd_eur | round_float }}</strong>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             <div class="summary-footer">
@@ -211,7 +218,7 @@
 {% endblock content %}
 
 {% block js %}
-<script>
+<!-- <script>
     let usd_ils_rate = '{{ usd_ils }}'
     let usd_eur_rate = '{{ usd_eur }}'
 
@@ -252,6 +259,6 @@
 
     });
 
-</script>
+</script> -->
 
 {% endblock js %}
