@@ -23,6 +23,8 @@ class User(AbstractUser):
     
     # denotes whether the user is Employer
     is_employer = models.BooleanField(default=False)
+
+    first_name = models.CharField(_('first name'), max_length=30, blank=True, null=True)
     
     # denotes wether the user is Employee
     is_employee = models.BooleanField(default=False)
@@ -31,7 +33,7 @@ class User(AbstractUser):
     position = models.CharField(max_length=200, default=None, blank=True, null=True)
     
     # phone number
-    phone_number = models.CharField(max_length=15, blank=False, null=True, default=None)
+    phone_number = models.CharField(max_length=15, blank=True, null=True, default=None)
     
     # date of birth
     date_of_birth = models.DateField(default=None, blank=True, null=True)
@@ -50,6 +52,8 @@ class User(AbstractUser):
     
     # require the email to be the unique identifier
     USERNAME_FIELD = 'email'
+
+    vehicle = models.CharField(max_length=50, null=True, blank=True)
 
     relationships = JSONField(null=True, blank=True)
 
@@ -117,7 +121,7 @@ class Employer(models.Model):
         verbose_name_plural = _('Business Profiles')
 
     def __str__(self):
-        return self.email
+        return self.user.username
 
 def id_path(instance, filename):
     return f'documents/{instance.pk}.id_doc.{filename}'

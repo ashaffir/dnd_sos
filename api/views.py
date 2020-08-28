@@ -24,10 +24,11 @@ from rest_framework.pagination import (LimitOffsetPagination, PageNumberPaginati
 from core.models import User, Employee, Employer
 from orders.models import Order
 from dndsos.models import ContactUs
+from dndsos_dashboard.views import phone_verify
 
 from .serializers import (UserSerializer, LoginSerializer, 
                         ContactsSerializer, BusinessSerializer, 
-                        UsernameSerializer,UserProfileSerializer,)
+                        UsernameSerializer, EmployeeProfileSerializer, EmployerProfileSerializer,)
 from orders.serializers import OrderSerializer, OrderAPISerializer
 from .permissions import IsOwnerOrReadOnly # Custom permission
 
@@ -258,12 +259,14 @@ class OpenOrdersViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         queryset_list = Order.objects.all()
         query = self.request.GET.get('q')
-        print(f'Q: {query}')
+        print(f'Open Orders for user: {query}')
         if query:
             queryset_list = queryset_list.filter(
                 Q(status='REQUESTED') |
                 Q(status='RE_REQUESTED')
             )
+        print(f'Open Orders for user {query}: {queryset_list}')
+        
         return queryset_list
 
 class ActiveOrdersViewSet(viewsets.ModelViewSet):
@@ -276,7 +279,7 @@ class ActiveOrdersViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         queryset_list = Order.objects.all()
         user = self.request.GET.get('user')
-        print(f'User: {user}')
+        print(f'Active Orders for User: {user}')
         if user:
             queryset_list = queryset_list.filter(
                 Q(freelancer=user) & 
@@ -357,31 +360,85 @@ class UserProfile(viewsets.ModelViewSet):
     pass
 
 
-@api_view(['PUT',])
+@api_view(['PUT','POST',])
+# @permission_classes((IsAuthenticated,))
 @permission_classes((IsAuthenticated,))
 def user_profile(request):
     '''
     returns user profile information
     '''
 
-    try:
-        print(f'>>> DATA: {request.user.pk}')
-        user = Employer.objects.get(pk=request.user.pk)
-        user_token = Token.objects.get(user_id=request.user.pk)
+    # try:
+        # user = User.objects.get(pk=request.user.pk)
+    if request.data['is_employee'] == 1:
+        user = Employee.objects.get(pk=request.data['user_id'])
+        serializer = EmployeeProfileSerializer(user, data=request.data)
+    else:
+        user = Employer.objects.get(pk=request.data['user_id'])
+        serializer = EmployerProfileSerializer(user, data=request.data)
 
-    except Exception as e:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    # except Exception as e:
+    #     return Response(status=status.HTTP_404_NOT_FOUND)
     
-    if request.method == 'GET':
-        serializer = UserProfileSerializer(user, data=request.data)
+    if request.method == 'POST':
         data = {}
         if serializer.is_valid():
             data = serializer.data
-            print(f'>>> Token: {Token.objects.get(user_id=request.user.pk)}')
+            print('SENDING PROFILE DATA')
         else:
             data = serializer.errors
+            logger.error(f'Failed reading user profile. ERROR: {data}')
 
         return Response(data)
+
+    elif request.method == 'PUT':
+        data = {}
+        if serializer.is_valid():
+            # if (new_status == 'STARTED' and old_status == 'REQUESTED') or  (new_status == 'STARTED' and old_status == 'RE_REQUESTED'):
+            try:
+                if request.data['first_name']:
+                    updated_order = serializer.save()
+                    data = serializer.data
+                    data['response'] = 'Update successful'
+                    print(f'NAME update: {request.data["first_name"]}')
+            except:
+                pass
+            try:
+                if request.data['phone_number']:
+                    updated_order = serializer.save()
+                    data = serializer.data
+                    data['response'] = 'Update successful'
+                    print(f'PHONE update: {request.data["phone_number"]}')
+            except:
+                pass
+            
+            try:
+                if request.data['vehicle']:
+                    updated_order = serializer.save()
+                    data = serializer.data
+                    data['response'] = 'Update successful'
+                    print(f'VEHICLE update: {request.data["vehicle"]}')
+            except:
+                pass
+
+            try:
+                if request.data['email']:
+                    updated_order = serializer.save()
+                    data = serializer.data
+                    data['response'] = 'Update successful'
+                    print(f'EMAIL update: {request.data["email"]}')
+            except:
+                pass
+
+        else:
+            data = serializer.errors
+            logger.error(f'Failed updated user profile. ERROR: {data}')
+
+        return Response(data)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['GET',])
 @permission_classes((IsAdminUser,))
@@ -572,6 +629,7 @@ def registration_view(request):
             data['email'] = account.email
             data['username'] = account.username
             token = Token.objects.get(user=account).key
+            print(f'TOKEN: {token}')
             data['token'] = token
 
             # Creating the profile
@@ -585,6 +643,9 @@ def registration_view(request):
         
         return Response(data)
         
+@api_view(['POST',])
+def phone_verification(request):
+    pass
 
 class UserRecordView(APIView):
     """

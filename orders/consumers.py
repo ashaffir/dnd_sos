@@ -524,7 +524,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     order_updated = False
                 else: 
                     # Locking the price on the business credit card
-                    content['private_sale_token'] = lock_delivery_price(order_instance)
+                    lock_delivery_price(order_instance)
 
                     serializer = OrderSerializer(data=content)
                     serializer.is_valid(raise_exception=True)

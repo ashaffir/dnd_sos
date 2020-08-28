@@ -1,5 +1,6 @@
 import os
 import platform
+from datetime import datetime
 from fcm_django.models import FCMDevice
 
 from django.db.models.signals import post_save
@@ -21,6 +22,10 @@ from core.forms import EmployeeSignupForm, EmployerSignupForm
 # from dndsos_dashboard.models import FreelancerProfile
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
+from payments.views import lock_delivery_price, complete_charge
+from payments.models import Payment
+
+
 # Create and configure logger
 import logging
 # LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
@@ -109,32 +114,36 @@ def order_signal(sender, instance, update_fields, **kwargs):
 #     business_id = instance.business_id
 #     print(f'>>>>>>> SIGNAL >>> Order Status Change: {instance.status}. ID: {instance.order_id}')  
     
-    elif instance.status == 'STARTED':
+    elif instance.status == 'STARTED' and not instance.private_sale_token:
         print(f'ORDER {instance.order_id} updated with status: STARTED')
 
-        # print(f''''
-        # >>>>>>> SIGNAL: Order STARTED: {instance.order_id}  
-        # update: {instance.status} type: {type(instance.status)}
-        # update: {instance.order_id} type: {type(instance.order_id)}
-        # update: {instance.business_id} type: {type(instance.business_id)}
-        # ''')
         order_data = ReadOnlyOrderSerializer(instance).data
         
+        order_instance = Order.objects.get(pk=instance.order_id)
+
+        # Updating WS
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            str(instance.order_id), {
-                # 'type':"order.accepted",
-                # 'type':"update.order",
-                'type': 'echo.message',
-                'data': {
-                    # 'event': 'Order Accepted',
-                    # 'order_id': str(instance.order_id), 
-                    # 'business_id': business_id,
-                    # 'status': str(instance.status)
-                    'data': order_data
+                str(instance.order_id), {
+                    # 'type':"order.accepted",
+                    # 'type':"update.order",
+                    'type': 'echo.message',
+                    'data': {
+                        # 'event': 'Order Accepted',
+                        # 'order_id': str(instance.order_id), 
+                        # 'business_id': business_id,
+                        # 'status': str(instance.status)
+                        'data': order_data
+                    }
                 }
-            }
-        )
+            )
+        print('>>> getting private token')
+        private_sale_token = lock_delivery_price(order_instance)
+        order_instance.private_sale_token = private_sale_token
+        print('>>> saving token')
+        order_instance.save()
+        
+        
     elif instance.status == 'REJECTED':
         print(f'ORDER {instance.order_id} updated with status: REJECTED')
         order_data = ReadOnlyOrderSerializer(instance).data        
@@ -148,9 +157,63 @@ def order_signal(sender, instance, update_fields, **kwargs):
             }
         )
 
-    elif instance.status == 'COMPLETED':
+    elif instance.status == 'COMPLETED' and not instance.invoice_url:
         print(f'ORDER {instance.order_id} updated with status: DELIVERED (COMPLETED)')
         order_data = ReadOnlyOrderSerializer(instance).data        
+        
+        # Updating Credit card processor
+        ###########
+        print('Updating RIVHIT')
+        try:
+            # order_instance = Order.objects.get(pk=instance.order_id)
+            freelancer = User.objects.get(pk=instance.freelancer.pk)
+            business = User.objects.get(pk=instance.business.pk)
+
+            # Updating the involved parties relationships
+            if not freelancer.relationships:
+                freelancer.relationships = {'businesses':[business.pk]}
+            else:
+                businesses_list = freelancer.relationships['businesses']
+                businesses_list.append(business.pk)
+                freelancer.relationships['businesses'] = list(set(businesses_list))
+
+            if not business.relationships:
+                business.relationships = {'freelancers':[freelancer.pk]}
+            else:
+                freelancers_list = business.relationships['freelancers']
+                freelancers_list.append(freelancer.pk)
+                business.relationships['freelancers'] = list(set(freelancers_list))
+
+            order_private_sale_token = instance.private_sale_token
+
+            complete_charge_information = complete_charge(order_private_sale_token)
+            
+            try:
+                invoice_url = complete_charge_information['data']['DocumentURL']
+                instance.invoice_url = invoice_url
+                instance.save()
+                print(f'INVOICE: {invoice_url}')
+
+            except Exception as e:
+                print(f'>> Failed generating invoice URL. ERROR: {e}')
+
+            freelancer.save()
+            business.save()
+
+        except Exception as e:
+            print(f'Failed updating RIVHIT. ERROR: {e}')
+
+        # Log the payment
+        Payment.objects.create(
+            created = datetime.now(),
+            order = instance,
+            freelancer = freelancer.freelancer,
+            business = business.business,
+            amount = instance.price
+        )
+
+        # Updating the WS channels
+        ###########
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             str(instance.order_id), {
@@ -160,7 +223,6 @@ def order_signal(sender, instance, update_fields, **kwargs):
                 }
             }
         )
-
 
     else:
         print(f'DEFAULT: ORDER {instance.order_id} updated with status: {instance.status}')

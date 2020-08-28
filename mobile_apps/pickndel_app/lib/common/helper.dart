@@ -3,11 +3,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/bloc/authentication_bloc.dart';
+import 'package:pickndell/dao/user_dao.dart';
+import 'package:pickndell/database/user_database.dart';
+import 'package:pickndell/model/user_model.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './constants.dart';
+
+// Pic color from Gimp and use as following exmaple (pickndell logo green):
+// color: Color(hexColor('8bc34a')), ...
+hexColor(String colorHexCode) {
+  String colorNew = '0xFF' + colorHexCode;
+  int colorInt = int.parse(colorNew);
+  return colorInt;
+}
 
 String timeConvert(String dateTime) {
   String convertedTime = dateTime.split('T')[0] +
@@ -51,9 +63,10 @@ String validateEmail(String value) {
   Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   RegExp regex = new RegExp(pattern);
-  if (!regex.hasMatch(value))
+  if (!regex.hasMatch(value)) {
+    print("NOT VALIF");
     return 'Enter Valid Email';
-  else
+  } else
     return null;
 }
 
@@ -227,4 +240,38 @@ Widget _getCircularImageProvider(
             ).image,
             image: provider)),
   );
+}
+
+// REFERENCE: Updating row in the DB
+//https://stackoverflow.com/questions/54102043/how-to-do-a-database-update-with-sqflite-in-flutter
+Future<int> rowUpdate({User user, dynamic data}) async {
+  final dbProvider = DatabaseProvider.dbProvider;
+  final userTable = 'userTable';
+
+  final db = await dbProvider.database;
+  // final currentUser = await UserDao().getUser(0);
+  final currentUser = user;
+  int updateCount;
+  if (currentUser.isEmployee == 1) {
+    updateCount = await db.rawUpdate('''
+    UPDATE $userTable 
+    SET name = ?, username = ?, phone = ? , vehicle = ?
+    WHERE id = ?
+    ''', [data['name'], data['email'], data['phone'], data['vehicle'], 0]);
+  } else {
+    updateCount = await db.rawUpdate('''
+    UPDATE $userTable 
+    SET businessName = ?, phone = ?, username = ?, businessCategory = ?
+    WHERE id = ?
+    ''', [
+      data['business_name'],
+      data['phone'],
+      data['email'],
+      data['business_category'],
+      0
+    ]);
+  }
+  print('ROWS UPDATED: $updateCount ');
+
+  return updateCount;
 }

@@ -14,11 +14,12 @@ home_title: עמוד פרופיל
 home_courier_profile: פרופיל שליח
 home_sender_profile: פרופיל שולח
 home_name: שם
+home_phone: טלפון
 home_courier_rating: דירוג שליח
 home_sender_rating: דירוג שולח
 home_unrated: ללא דירוג
 home_vehicle:  כלי רכב
-home_sender_type: תחום
+home_sender_cat: תחום
 home_active_orders: הזמנות פעילות
 home_status: סטטוס זמינות
 home_available: זמין

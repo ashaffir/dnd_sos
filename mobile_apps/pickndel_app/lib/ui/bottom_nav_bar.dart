@@ -1,3 +1,5 @@
+import 'package:pickndell/api_connection/api_connection.dart';
+import 'package:pickndell/common/common.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/model/api_model.dart';
@@ -53,6 +55,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
               //     context,
               //     new MaterialPageRoute(
               //         builder: (context) => HomePageIsolate()));
+
+              // Update user profile
 
               Navigator.pushAndRemoveUntil(
                   context,

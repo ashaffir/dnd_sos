@@ -8,13 +8,14 @@ class Payment(admin.ModelAdmin):
         'paid_freelancer','payment_freelancer_date',
     )
     list_display = ( 
-        'order','freelancer', 'business','amount',
+        'created','order','freelancer', 'business','amount',
     )
     list_filter = (
-        'business','freelancer', 'date',
+        'business','freelancer', 'created',
     )
 
     search_fields = ('order', 'freelancer', 'business',) 
-    ordering = ('-date',)
+    ordering = ('-created',)
 
 admin.site.register(Card)
+# admin.site.register(Payment)

@@ -215,7 +215,7 @@ class _RegistrationState extends State<Registration> {
                         },
                       ),
 
-                      /////////////// SignUp Button ////////////
+                      /////////////// Registration Button ////////////
 
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
@@ -249,7 +249,7 @@ class _RegistrationState extends State<Registration> {
                                       if (_isLoading) {
                                         return null;
                                       } else {
-                                        return _handleLogin();
+                                        return _registerUser();
                                       }
                                     }
                                   }),
@@ -315,7 +315,7 @@ class _RegistrationState extends State<Registration> {
     )..show(context);
   }
 
-  void _handleLogin() async {
+  void _registerUser() async {
     setState(() {
       _isLoading = true;
     });

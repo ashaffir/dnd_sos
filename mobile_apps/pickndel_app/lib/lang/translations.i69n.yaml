@@ -10,15 +10,16 @@ alert_password: Please enter password
 logging_in: Logging in...
 
 # Homepage/Profile
-home_title: Home
+home_title: Profile
 home_courier_profile: Courier Profile
 home_sender_profile: Sender Profile
 home_name: Name
+home_phone: Phone
 home_courier_rating: Courier Rating
 home_sender_rating: Sender Rating
 home_unrated: Unrated
 home_vehicle: Vehicle
-home_sender_type: Type
+home_sender_cat: Category
 home_active_orders: Current Active Orders
 home_status: Availability Status
 home_available: Available
@@ -100,6 +101,12 @@ register_create: Create account
 register_already_have: Already have an Account
 register_err: Error
 register_alert_fields: Please fill out all fields
+
+#Profile
+profile_title: Edit Profile
+profile_submit: Submit Update
+profile_update_in_progress: Update in progress
+profile_delete_account: Delete my Account
 
 
  

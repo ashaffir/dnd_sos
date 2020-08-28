@@ -23,15 +23,18 @@ class Card(TimeStampedUUIDModel):
         return "{} ({})".format(self.name, self.card_number)
 
 class Payment(models.Model):
-    date = models.DateTimeField(auto_now=True)
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
-    freelancer = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    business = models.ForeignKey(Employer, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now=True)
+    order = models.ForeignKey(Order,related_name='payment_order', on_delete=models.CASCADE)
+    freelancer = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='freelancer')
+    business = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='business')
     amount = models.FloatField(null=True, blank=True)
     payment_received = models.BooleanField(default=False)
     payment_date = models.DateTimeField(null=True, blank=True)
     paid_freelancer = models.BooleanField(default=False)
     payment_freelancer_date = models.DateField(null=True, blank=True)
-
-    def __str__(self):
-        return str(self.order.pk)
+    
+    class Meta:
+        verbose_name = _('Payment')
+    
+    # def __str__(self):
+    #     return str(self.order.pk)

@@ -11,8 +11,8 @@ import 'dart:async';
 import 'CustomException.dart';
 
 class ApiProvider {
-  // final String _baseUrl = "https://88c41a0bdd84.ngrok.io/api/";
-  final String _baseUrl = "https://pickndell.com/api/";
+  final String _baseUrl = "https://59f721d4650b.ngrok.io/api/";
+  // final String _baseUrl = "https://pickndell.com/api/";
 
   Future<dynamic> get(String url, User user) async {
     var responseJson;
@@ -112,11 +112,14 @@ class ApiProvider {
       case 400:
         throw BadRequestException(response.body.toString());
       case 401:
-
+        print('ERROR API respose (40*): ${response.statusCode}');
+        throw BadRequestException(response.body.toString());
       case 403:
+        print('ERROR API respose (40*): ${response.statusCode}');
         throw UnauthorisedException(response.body.toString());
       case 500:
-
+        print('ERROR API respose (50*): ${response.statusCode}');
+        throw UnauthorisedException(response.body.toString());
       default:
         throw FetchDataException(
             'Error occured while Communication with Server with StatusCode : ${response.statusCode}');

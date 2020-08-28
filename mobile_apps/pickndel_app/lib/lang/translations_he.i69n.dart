@@ -50,11 +50,12 @@ class Translations_he extends Translations {
   String get home_courier_profile => "פרופיל שליח";
   String get home_sender_profile => "פרופיל שולח";
   String get home_name => "שם";
+  String get home_phone => "טלפון";
   String get home_courier_rating => "דירוג שליח";
   String get home_sender_rating => "דירוג שולח";
   String get home_unrated => "ללא דירוג";
   String get home_vehicle => "כלי רכב";
-  String get home_sender_type => "תחום";
+  String get home_sender_cat => "תחום";
   String get home_active_orders => "הזמנות פעילות";
   String get home_status => "סטטוס זמינות";
   String get home_available => "זמין";
@@ -162,6 +163,8 @@ class Translations_he extends Translations {
         return home_sender_profile;
       case 'home_name':
         return home_name;
+      case 'home_phone':
+        return home_phone;
       case 'home_courier_rating':
         return home_courier_rating;
       case 'home_sender_rating':
@@ -170,8 +173,8 @@ class Translations_he extends Translations {
         return home_unrated;
       case 'home_vehicle':
         return home_vehicle;
-      case 'home_sender_type':
-        return home_sender_type;
+      case 'home_sender_cat':
+        return home_sender_cat;
       case 'home_active_orders':
         return home_active_orders;
       case 'home_status':

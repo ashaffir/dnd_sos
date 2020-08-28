@@ -5,10 +5,19 @@ from rest_framework.validators import UniqueTogetherValidator
 from core.models import User, Employee, Employer
 from dndsos.models import ContactUs
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class EmployeeProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = '__all__'
+        # fields = ['email','name','phone','vehicle',]
+        # fields = '__all__'
+        exclude = ('user', )
+
+class EmployerProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employer
+        # fields = ['email','business_name','phone',]
+        # fields = '__all__'
+        exclude = ('user', )
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()

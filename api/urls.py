@@ -6,7 +6,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from .views import (UserRecordView, registration_view, 
                     LoginView, LogoutView,
                     OrdersView, ContactView, order_update_view, order_view,
-                    all_user_orders, all_businesses, all_users, user_profile,
+                    all_user_orders, all_businesses, all_users, user_profile, phone_verification,
                     NewLoginViewSet,open_orders_view,OpenOrdersViewSet,ActiveOrdersViewSet,
                     UserLocationViewSet,BusinessOrdersViewSet,BusinessRejectedOrdersViewSet, UserAvailable,)
 
@@ -40,7 +40,7 @@ urlpatterns = [
     path('user-profile/', user_profile , name='user-profile'),
     path('user-location/', UserLocationViewSet.as_view() , name='user-location'),
     path('user-availability/', UserAvailable.as_view() , name='user-availability'),
-    # path('open-orders/', open_orders_view , name='open-orders'),
+    path('phone-verification/', phone_verification , name='phone-verification'),
 
     # FCM
     path('devices/', FCMDeviceAuthorizedViewSet.as_view({'post': 'create'}), name='create_fcm_device'),

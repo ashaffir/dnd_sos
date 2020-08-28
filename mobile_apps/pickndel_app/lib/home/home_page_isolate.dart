@@ -5,18 +5,24 @@ import 'dart:convert';
 import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/location_settings.dart';
+import 'package:pickndell/common/common.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/location_callback_handler.dart';
 import 'package:pickndell/location/location_service_repository.dart';
+import 'package:pickndell/login/profile_updated.dart';
 import 'package:pickndell/model/user_location.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
+import 'package:pickndell/orders/get_orders_page.dart';
 import 'package:pickndell/repository/location_repository.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:location_permissions/location_permissions.dart';
+import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dao/user_dao.dart';
@@ -54,42 +60,94 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     });
   }
 
+  var _vehicleTypes = List<DropdownMenuItem>();
+  String _vehicleType;
+  List<String> _vehicleTypeList;
+
+  _loadVehicleTypes() {
+    _vehicleTypeList = ['Car', 'Scooter', 'Bicycle', 'Motorcycle', 'Other'];
+
+    _vehicleTypeList.forEach((element) {
+      setState(() {
+        _vehicleTypes.add(DropdownMenuItem(
+          child: Text(element),
+          value: element,
+        ));
+      });
+    });
+  }
+
+  var _businessCategories = List<DropdownMenuItem>();
+  String _businessCategory;
+  List<String> _businessCategoryList;
+
+  _loadCategoriesTypes() {
+    _businessCategoryList = [
+      'Restaurant',
+      'Cothing',
+      'Convenience',
+      'Grocery',
+      'Office',
+      'Other'
+    ];
+
+    _businessCategoryList.forEach((element) {
+      setState(() {
+        _businessCategories.add(DropdownMenuItem(
+          child: Text(element),
+          value: element,
+        ));
+      });
+    });
+  }
+
   // Push notifications
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String notificationTitle;
   String notificationHelper;
+  bool _updatingProfile;
 
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: UserDao().getUser(0),
-      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-        if (snapshot.hasData) {
-          return getHomePageIsolate(snapshot.data);
-        } else {
-          print("No data");
-        }
-        return CircularProgressIndicator();
-      },
-    );
+    if (_updatingProfile) {
+      String loaderText = "Loading Profile...";
+      return ColoredProgressDemo(loaderText);
+    } else {
+      return FutureBuilder(
+        future: UserDao().getUser(0),
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          if (snapshot.hasData) {
+            return getHomePageIsolate(snapshot.data);
+          } else {
+            print("No data");
+          }
+          return CircularProgressIndicator();
+        },
+      );
+    }
+  }
+
+  Future _checkProfile() async {
+    setState(() {
+      _updatingProfile = true;
+    });
+    User _currentUser = await UserDao().getUser(0);
+    var _getProfileResponse;
+    _getProfileResponse = await getProfile(user: _currentUser);
+    print('GET PROFILE: $_getProfileResponse');
+    await rowUpdate(user: _currentUser, data: _getProfileResponse);
+    setState(() {
+      _updatingProfile = false;
+    });
+
+    return _getProfileResponse;
   }
 
   @override
   void initState() {
     super.initState();
-
-    /////////////// Push Notifications ///////////////
-    // _firebaseMessaging.configure(onMessage: (message) async {
-    //   setState(() {
-    //     print('$message');
-    //     notificationTitle = message['notification']['title'];
-    //     notificationHelper = 'You have a new notification!';
-    //   });
-    // }, onResume: (message) async {
-    //   setState(() {
-    //     notificationTitle = message['data']['title'];
-    //     notificationHelper = 'You have a background notification!';
-    //   });
-    // });
+    _loadVehicleTypes();
+    _loadCategoriesTypes();
+    _checkProfile();
 
     /////////////// Device location tracking ///////////////
 
@@ -136,15 +194,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
       userLocation.longitude = data.longitude;
       await updateLocation.updateUserLocation(userLocation);
     }
-
-    // setState(() {
-    //   if (data != null) {
-    //     lastLocation = data;
-    //     lastTimeLocation = DateTime.now();
-    //     print('-------User: ${currentUser.userId}  $data ---------');
-    //   }
-    //   // logStr = log;
-    // });
   }
 
   Future<bool> _checkLocationPermission() async {
@@ -170,22 +219,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
         break;
     }
   }
-
-  // void _toggleTracking() async {
-  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  //   if (isTracking == false) {
-  //     setState(() {
-  //       isTracking = true;
-  //       _onStart();
-  //     });
-  //   } else if (isTracking) {
-  //     setState(() {
-  //       isTracking = false;
-  //       onStop();
-  //     });
-  //   }
-  //   await localStorage.setBool('locationTracking', isTracking);
-  // }
 
   void _onStart() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -260,21 +293,13 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
               // MessagingWidgetTest(),
               Image.asset(
                 'assets/images/pickndell-logo-white.png',
-                width: MediaQuery.of(context).size.width * 0.70,
-                // height: MediaQuery.of(context).size.height * 0.50,
-                // width: 300,
+                width: MediaQuery.of(context).size.width * 0.40,
               ),
               Padding(
-                padding: EdgeInsets.only(top: 30.0),
-              ),
-              Text(
-                currentUser.isEmployee == 1
-                    ? translations.home_courier_profile
-                    : translations.home_sender_profile,
-                style: whiteTitle,
+                padding: EdgeInsets.only(top: 10.0),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 30.0),
+                padding: EdgeInsets.only(top: 10.0),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,13 +326,116 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                 ? '${currentUser.businessName}'
                                 : " ",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 15.0,
                         ),
                       ),
+                      IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            updateProfile(
+                                context: context, updateField: 'name');
+                            print('EDIT NAME');
+                          }),
                     ],
                   ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                      ),
+                      Text(
+                        translations.home_phone + ":",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                      ),
+                      Text(
+                        currentUser.phone != null
+                            ? '${currentUser.phone}'
+                            : " ",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            updateProfile(
+                                context: context, updateField: 'phone');
+                            print('UPDATE PHONE');
+                          }),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                      ),
+                      Text(
+                        translations.email + ":",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                      ),
+                      Text(
+                        currentUser.username != null
+                            ? '${currentUser.username}'
+                            : " ",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            updateProfile(
+                                context: context, updateField: 'email');
+                            print('EDIT EMAIL');
+                          }),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                      ),
+                      Text(
+                        currentUser.isEmployee == 1
+                            ? translations.home_vehicle + ":"
+                            : translations.home_sender_cat + ":",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                      ),
+                      Text(
+                        currentUser.isEmployee == 1
+                            ? currentUser.vehicle != null
+                                ? '${currentUser.vehicle}'
+                                : " "
+                            : currentUser.businessCategory != null
+                                ? '${currentUser.businessCategory}'
+                                : " ",
+                        style: TextStyle(fontSize: 15.0),
+                      ),
+                      IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            updateProfile(
+                                context: context,
+                                updateField: currentUser.isEmployee == 1
+                                    ? 'vehicle'
+                                    : 'business category');
+                            print('EDIT VEHICLE');
+                          }),
+                    ],
+                  ),
+                  Divider(color: Colors.white),
                   Padding(
-                    padding: EdgeInsets.only(top: 20.0),
+                    padding: EdgeInsets.only(top: 10.0),
                   ),
                   Row(
                     children: [
@@ -328,38 +456,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                 : translations.home_sender_rating +
                                     ": " +
                                     translations.home_unrated,
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 15.0),
                       ),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.0),
-                  ),
-
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
-                      ),
-                      Text(
-                        currentUser.isEmployee == 1
-                            ? translations.home_vehicle + ":"
-                            : translations.home_sender_type + ":",
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
-                      Text(
-                        currentUser.isEmployee == 1
-                            ? currentUser.vehicle != null
-                                ? '${currentUser.vehicle}'
-                                : " "
-                            : currentUser.businessCategory != null
-                                ? '${currentUser.businessCategory}'
-                                : " ",
-                        style: TextStyle(fontSize: 20.0),
-                      )
                     ],
                   ),
                   Padding(
@@ -372,7 +470,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ),
                       Text(
                         translations.home_active_orders + ":",
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 15.0),
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
@@ -385,21 +483,13 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                             : currentUser.numOrdersInProgress != null
                                 ? '${currentUser.numOrdersInProgress}'
                                 : '0',
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 15.0),
                       )
                     ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 30.0, top: 20.0),
                   ),
-                  // Text('Alert: $notificationHelper'),
-                  // Padding(
-                  //   padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                  // ),
-                  // Text('Conent: $notificationTitle'),
-                  // Padding(
-                  //   padding: EdgeInsets.only(left: 30.0, top: 20.0),
-                  // ),
                   currentUser.isEmployee == 1
                       ? Row(
                           children: [
@@ -458,6 +548,28 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           ],
                         )
                       : Row(),
+                  // Row(
+                  //   children: <Widget>[
+                  //     Padding(
+                  //       padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                  //     ),
+                  //     FlatButton(
+                  //         shape: RoundedRectangleBorder(
+                  //             side: BorderSide(
+                  //                 color: Colors.blue,
+                  //                 width: 1,
+                  //                 style: BorderStyle.solid),
+                  //             borderRadius: BorderRadius.circular(50)),
+                  //         onPressed: () {
+                  //           Navigator.pushAndRemoveUntil(
+                  //               context,
+                  //               MaterialPageRoute(
+                  //                   builder: (context) => Profile()),
+                  //               (Route<dynamic> route) => false);
+                  //         },
+                  //         child: Text('Edit Profile'))
+                  //   ],
+                  // )
                 ], //Children
               ),
               Padding(
@@ -471,6 +583,145 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
         userRepository: widget.userRepository,
       ),
       // resizeToAvoidBottomPadding: false,
+    );
+  }
+
+  Future updateProfile({BuildContext context, String updateField}) async {
+    User currentUser = await UserDao().getUser(0);
+    TextEditingController _textInput = TextEditingController();
+    // set up the AlertDialog
+    Widget okButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Change the  $updateField'),
+          content: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  updateField == 'business category'
+                      ? DropdownButtonFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Category' + ":",
+                              prefixIcon: Icon(Icons.business)),
+                          value: _businessCategory,
+                          items: _businessCategories,
+                          validator: (value) {
+                            if (dropdownMenue(value) == null) {
+                              return null;
+                            } else {
+                              return 'Please select the business category';
+                            }
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              print('dropdown: $value');
+                              _businessCategory = value;
+                            });
+                          },
+                        )
+                      : updateField == 'vehicle'
+                          ? DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                  labelText: 'Vehicle' + ":",
+                                  prefixIcon: Icon(Icons.drive_eta)),
+                              value: _vehicleType,
+                              items: _vehicleTypes,
+                              validator: (value) {
+                                if (dropdownMenue(value) == null) {
+                                  return null;
+                                } else {
+                                  return 'Please select the type of vehicle you user';
+                                }
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  print('dropdown: $value');
+                                  _vehicleType = value;
+                                });
+                              },
+                            )
+                          : TextFormField(
+                              controller: _textInput,
+                              decoration: InputDecoration(
+                                  hintText: "Enter new $updateField here",
+                                  prefixIcon: updateField == 'name'
+                                      ? Icon(Icons.person)
+                                      : updateField == 'email'
+                                          ? Icon(Icons.alternate_email)
+                                          : updateField == 'phone'
+                                              ? Icon(Icons.phone)
+                                              : ""),
+                              validator: (value) {
+                                if (value != null) {
+                                  if (updateField == 'email' &&
+                                      validateEmail(value) != null) {
+                                    return 'Please enter a valid value';
+                                  } else if (updateField == 'phone' &&
+                                      validateMobile(value) != null) {
+                                    return 'Please enter a valid value';
+                                  } else if (updateField == 'name' &&
+                                      validateName(value) != null) {
+                                    return 'Please enter a valid value';
+                                  } else if (updateField == 'vehicle' &&
+                                      validateName(value) != null) {
+                                    return 'Please enter a valid value';
+                                  } else if (value == '') {
+                                    return 'Please enter a valid value';
+                                  } else {
+                                    return null;
+                                  }
+                                } else {
+                                  return 'Please enter a valid value';
+                                }
+                              },
+                            ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            okButton,
+            FlatButton(
+                child: Text('Update'),
+                color: Colors.green,
+                onPressed: () {
+                  if (!_formKey.currentState.validate()) {
+                    return;
+                  } else {
+                    print('UPDATED FIELD: $updateField');
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProfileUpdated(
+                            user: currentUser,
+                            updateField: updateField,
+                            value: updateField == 'vehicle'
+                                ? _vehicleType
+                                : updateField == 'business category'
+                                    ? _businessCategory
+                                    : _textInput.text),
+                      ),
+                      (Route<dynamic> route) =>
+                          false, // No Back option for this page
+                    );
+                    print('Updating $updateField');
+                  }
+                }),
+          ],
+        );
+      },
     );
   }
 }

@@ -391,7 +391,7 @@ class OrdersList extends StatelessWidget {
                             ? Text(
                                 translations.orders_fare + ': ${order.fare} ₪')
                             : Text(translations.orders_fare +
-                                ': ${order.fare} \$'),
+                                ': \$ ${order.fare}'),
                         ButtonBar(
                           children: <Widget>[
                             Padding(padding: EdgeInsets.all(5.0)),

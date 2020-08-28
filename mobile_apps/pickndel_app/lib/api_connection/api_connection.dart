@@ -9,15 +9,17 @@ import 'package:pickndell/model/api_model.dart';
 // final _base = "https://home-hub-app.herokuapp.com";
 // final _tokenEndpoint = "/api-token-auth/";
 
-// final _base = "https://88c41a0bdd84.ngrok.io";
-final _base = "https://pickndell.com";
+final _base = "https://59f721d4650b.ngrok.io";
+// final _base = "https://pickndell.com";
 final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";
+final _profileEndpoint = "/api/user-profile/";
 final _fcmRegistratioEndpoint = "/api/devices/";
 
 final _tokenURL = _base + _tokenEndpoint;
 final _registrationURL = _base + _registrationEndpoint;
 final _fcmRegistratioURL = _base + _fcmRegistratioEndpoint;
+final _profileURL = _base + _profileEndpoint;
 
 /////////// Login ///////////
 Future<Token> serverAuthentication(UserLogin userLogin) async {
@@ -64,7 +66,7 @@ Future<dynamic> fcmTokenRegistration(
 }
 
 // class CallApi {
-//   final String _url = 'https://8c1d164fa909.ngrok.io/api/';
+//   final String _url = 'https://59f721d4650b.ngrok.io/api/';
 
 //   postData(data, apiUrl) async {
 //     var fullUrl = _url + apiUrl;
@@ -92,6 +94,8 @@ Future<dynamic> fcmTokenRegistration(
 //   }
 // }
 
+///////////// New user registration /////////////
+///
 Future<dynamic> createUser(
     {String email, String password1, String password2, String userType}) async {
   var postResponseJson;
@@ -129,6 +133,76 @@ Future<dynamic> createUser(
   return postResponseJson;
 }
 
+///////////// Check User profile info /////////////
+///
+Future<dynamic> getProfile({User user}) async {
+  var postResponseJson;
+  String userToken = user.token;
+  try {
+    final http.Response response = await http.post(
+      _profileURL,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $userToken',
+      },
+      // email field is special due to django requirements
+      body:
+          jsonEncode({"user_id": user.userId, "is_employee": user.isEmployee}),
+    );
+    postResponseJson = _response(response);
+  } on SocketException {
+    throw FetchDataException('No Internet connection');
+  }
+  return postResponseJson;
+}
+
+/////////// Update User Profile ///////////
+Future<dynamic> updateUser({
+  User user,
+  String updateField,
+  String value,
+}) async {
+  var postResponseJson;
+
+  String userToken = user.token;
+  print('USER TOKEN: $userToken');
+  print('UPDATE FIELD $updateField');
+  print('UPDATE VALUE $value');
+
+  if (updateField == 'name' && user.isEmployee == 0) {
+    updateField = 'business_name';
+  } else if (updateField == 'business category') {
+    updateField = 'business_category';
+  }
+
+  try {
+    final http.Response response = await http.put(
+      _profileURL,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $userToken',
+      },
+      // email field is special due to django requirements
+      body: updateField == 'email'
+          ? jsonEncode({
+              "email": value,
+              "user_id": user.userId,
+              "is_employee": user.isEmployee
+            })
+          : jsonEncode({
+              "$updateField": value,
+              "email": user.username,
+              "user_id": user.userId,
+              "is_employee": user.isEmployee
+            }),
+    );
+    postResponseJson = _response(response);
+  } on SocketException {
+    throw FetchDataException('No Internet connection');
+  }
+  return postResponseJson;
+}
+
 dynamic _response(http.Response response) {
   switch (response.statusCode) {
     case 200:
@@ -144,37 +218,19 @@ dynamic _response(http.Response response) {
       // print('RESPONSE>>> $responseJson');
       return responseJson;
     case 400:
+      print('ERROR API respose (40*): ${response.statusCode}');
       throw BadRequestException(response.body.toString());
     case 401:
-
+      print('ERROR API respose (40*): ${response.statusCode}');
+      throw BadRequestException(response.body.toString());
     case 403:
+      print('ERROR API respose (40*): ${response.statusCode}');
       throw UnauthorisedException(response.body.toString());
     case 500:
-
+      print('ERROR API respose (50*): ${response.statusCode}');
+      throw UnauthorisedException(response.body.toString());
     default:
       throw FetchDataException(
           'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
   }
 }
-// Future<int> createUser(UserRegistration userRegistration) async {
-// Future<int> createUser1(
-//     {String email, String password1, String password2}) async {
-//   final http.Response response =
-//       await http.post(_registrationURL, headers: <String, String>{
-//     'Content-Type': 'application/json; charset=UTF-8',
-//   },
-//           // body: jsonEncode(userRegistration.toDatabaseJson()),
-//           body: {
-//   "email": email,
-// "username": email,
-// "password1": password1,
-// "password2": password2
-//       });
-//   if (response.statusCode == 200) {
-//     print('RESPONSE: ${response.body});');
-//     return response.statusCode;
-//   } else {
-//     print(json.decode(response.body).toString());
-//     throw Exception(json.decode(response.body));
-//   }
-// }

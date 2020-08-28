@@ -53,6 +53,9 @@ com.actappon.pickndell (explicit)
 - https://www.youtube.com/watch?v=qBEOC5-58s8
 - SDK change: https://www.youtube.com/watch?v=7THufyK-V0Y
 
+Build commands:
+> flutter clean
+> flutter build apk --split-per-abi
 
 # REFERENCE: Android app deployment on to the Google Play
 - https://flutter.dev/docs/deployment/android

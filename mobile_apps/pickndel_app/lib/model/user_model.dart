@@ -15,6 +15,7 @@ class User {
 
   // Courier
   String name;
+  String phone;
   String vehicle;
   double rating;
   double dailyProfit;
@@ -27,6 +28,7 @@ class User {
       this.isEmployee,
       this.userId,
       this.name,
+      this.phone,
       this.businessName,
       this.businessCategory,
       this.isApproved,
@@ -45,6 +47,7 @@ class User {
       isEmployee: data['isEmployee'],
       userId: data['userId'],
       name: data['name'],
+      phone: data['phone'],
       businessName: data['businessName'],
       businessCategory: data['businessCategory'],
       isApproved: data['isApproved'],
@@ -63,6 +66,7 @@ class User {
         "isEmployee": this.isEmployee,
         "userId": this.userId,
         "name": this.name,
+        "phone": this.phone,
         "businessName": this.businessName,
         "businessCategory": this.businessCategory,
         "isApproved": this.isApproved,

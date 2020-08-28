@@ -58,6 +58,7 @@ class UserRepository {
         userId: token.userId,
         isEmployee: token.isEmployee,
         name: token.name,
+        phone: token.phone,
         businessName: token.businessName,
         businessCategory: token.businessCategory,
         isApproved: token.isApproved,
