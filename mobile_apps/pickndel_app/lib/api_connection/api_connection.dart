@@ -15,11 +15,15 @@ final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";
 final _profileEndpoint = "/api/user-profile/";
 final _fcmRegistratioEndpoint = "/api/devices/";
+final _emailVerificationEndpoint = "/api/email-verification/";
+final _phoneVerificationEndpoint = "/api/phone-verification/";
 
 final _tokenURL = _base + _tokenEndpoint;
 final _registrationURL = _base + _registrationEndpoint;
 final _fcmRegistratioURL = _base + _fcmRegistratioEndpoint;
 final _profileURL = _base + _profileEndpoint;
+final _emailVerifyURL = _base + _emailVerificationEndpoint;
+final _phonelVerifyURL = _base + _phoneVerificationEndpoint;
 
 /////////// Login ///////////
 Future<Token> serverAuthentication(UserLogin userLogin) async {
@@ -233,4 +237,58 @@ dynamic _response(http.Response response) {
       throw FetchDataException(
           'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
   }
+}
+
+Future phoneVerificationAPI(
+    {String phone, String code, User user, String action}) async {
+  var emailVerificationReponse;
+  var payload = {
+    "action": action,
+    "is_employee": user.isEmployee,
+    "user_id": user.userId,
+    "phone": phone,
+    "code": code
+  };
+  print('Payload: $payload');
+  try {
+    final response = await http.post(
+      _phonelVerifyURL,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token ${user.token}',
+      },
+      body: jsonEncode(payload),
+    );
+    emailVerificationReponse = _response(response);
+  } on SocketException {
+    throw FetchDataException('No Internet connection');
+  }
+  return emailVerificationReponse;
+}
+
+Future emailVerificationAPI(
+    {String email, String code, User user, String codeDirection}) async {
+  var emailVerificationReponse;
+  var payload = {
+    "check": codeDirection,
+    "is_employee": user.isEmployee,
+    "user_id": user.userId,
+    "email": email,
+    "code": code
+  };
+  print('Payload: $payload');
+  try {
+    final response = await http.post(
+      _emailVerifyURL,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token ${user.token}',
+      },
+      body: jsonEncode(payload),
+    );
+    emailVerificationReponse = _response(response);
+  } on SocketException {
+    throw FetchDataException('No Internet connection');
+  }
+  return emailVerificationReponse;
 }

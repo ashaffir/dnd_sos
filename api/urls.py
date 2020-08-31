@@ -8,7 +8,8 @@ from .views import (UserRecordView, registration_view,
                     OrdersView, ContactView, order_update_view, order_view,
                     all_user_orders, all_businesses, all_users, user_profile, phone_verification,
                     NewLoginViewSet,open_orders_view,OpenOrdersViewSet,ActiveOrdersViewSet,
-                    UserLocationViewSet,BusinessOrdersViewSet,BusinessRejectedOrdersViewSet, UserAvailable,)
+                    UserLocationViewSet,BusinessOrdersViewSet,BusinessRejectedOrdersViewSet, UserAvailable,
+                    email_verification)
 
 # Firebase Cloud Messageing (FCM)
 from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
@@ -30,6 +31,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('users/', UserRecordView.as_view(), name='users'),
     path('register/', registration_view, name='register'),
+    path('email-verification/', email_verification, name='email-verification'),
+    path('phone-verification/', phone_verification , name='phone-verification'),
     # path('login/', obtain_auth_token, name='login'),
     path('login/', NewLoginViewSet.as_view(), name='login'),
     path('order-update/', order_update_view , name='order-update'),
@@ -40,7 +43,6 @@ urlpatterns = [
     path('user-profile/', user_profile , name='user-profile'),
     path('user-location/', UserLocationViewSet.as_view() , name='user-location'),
     path('user-availability/', UserAvailable.as_view() , name='user-availability'),
-    path('phone-verification/', phone_verification , name='phone-verification'),
 
     # FCM
     path('devices/', FCMDeviceAuthorizedViewSet.as_view({'post': 'create'}), name='create_fcm_device'),

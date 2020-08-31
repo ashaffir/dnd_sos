@@ -110,6 +110,8 @@ class Employer(models.Model):
     new_messages = models.IntegerField(default=0)
 
     is_approved = models.BooleanField(default=False)
+    
+    verification_code = models.CharField(max_length=10, null=True, blank=True)
 
     @property
     def lat_lng(self):
@@ -190,6 +192,8 @@ class Employee(models.Model):
 
     is_approved = models.BooleanField(default=False) # He filled up the profile information necessary
 
+    verification_code = models.CharField(max_length=20, null=True, blank=True)
+
     PAYMENT_METHODS = (
         ('Bank', 'Bank'),
         ('Phone', 'Phone'),
@@ -213,8 +217,8 @@ class Employee(models.Model):
         return self.user.username
 
     
-    def __str__(self):
-        return self.user.email
+    # def __str__(self):
+    #     return self.user.email
 
 # company assets, owned by the employer
 class Asset(models.Model):

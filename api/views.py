@@ -1,14 +1,14 @@
 import platform
 import json
 import logging
-
+import random
 from datetime import date
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
 from django.contrib.gis.geos import fromstr, Point
 from fcm_django.models import FCMDevice
 from django.core import serializers as djangoSerializers
-
+from django.conf import settings
 # from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
@@ -25,6 +25,7 @@ from core.models import User, Employee, Employer
 from orders.models import Order
 from dndsos.models import ContactUs
 from dndsos_dashboard.views import phone_verify
+from dndsos_dashboard.utilities import send_mail
 
 from .serializers import (UserSerializer, LoginSerializer, 
                         ContactsSerializer, BusinessSerializer, 
@@ -644,8 +645,104 @@ def registration_view(request):
         return Response(data)
         
 @api_view(['POST',])
+@permission_classes((IsAuthenticated,))
 def phone_verification(request):
-    pass
+    '''
+    1) Receive phone update request from the user
+    2) Send the phone number to Twilio (that sends a code to the user via SMS)
+    3) Receive the code from the user
+    4) Post the code to Twilio with the phone number
+    5) On approved status from Twilio: 
+        a) update the phone in DB 
+        b) send confirmation to the user
+    '''
+    data = {}
+    if request.data['is_employee'] == 1:
+        user = Employee.objects.get(pk=request.data['user_id'])
+    else:
+        user = Employer.objects.get(pk=request.data['user_id'])
+
+    if request.method == 'POST':
+        # Items 1 and 2
+        if request.data['action'] == 'new_phone' :
+            new_phone = request.data['phone']
+            # user.verification_code = new_phone
+            sent_sms_status = phone_verify(request, action='send_verification_code', phone=new_phone, code=None)
+            if sent_sms_status:
+                # user.save()
+                data['response'] = 'Update successful'
+                return Response(data)
+            else:
+                data['response'] = f'Bad phone request. ERROR: {sent_sms_status}'
+                return Response(data)
+
+        # Items 3, 4, 5
+        elif request.data['action'] == "verify_code":
+            user_code = request.data['code']
+            new_phone = request.data['phone']
+            verification_status = phone_verify(request, action='verify_code', phone=new_phone, code=user_code)
+            if verification_status == 'approved':
+                user.phone = new_phone
+                user.save()
+                data['response'] = 'Update successful'
+                return Response(data)
+            else:
+                data['response'] = f'Bad phone request. ERROR: {verification_status}'
+                return Response(data)
+        
+        return Response(status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST',])
+@permission_classes((IsAuthenticated,))
+def email_verification(request):
+    data = {}
+
+    if platform.system() == 'Darwin': # MAC
+        current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+    else:
+        current_site = settings.DOMAIN_PROD
+
+    if request.data['is_employee'] == 1:
+        user = Employee.objects.get(pk=request.data['user_id'])
+    else:
+        user = Employer.objects.get(pk=request.data['user_id'])
+
+    if request.method == 'POST':
+        if (request.data['check'] == 'send_code'):
+            email = request.data['email']
+            verification_code = random.randint(10001,99999)
+            print(f'SENDING EMAIL VRIFICATION CODE {verification_code} EMAIL TO: {email}')
+            subject = 'Verify new email'
+
+            message = {
+                'user': user,
+                'verification_code': verification_code
+            }
+
+            send_mail(subject, email_template_name=None,
+                    context=message, to_email=[email],
+                    html_email_template_name='dndsos/email_verification_email.html')
+            # Saving the code in user profile
+            user.verification_code = verification_code
+            user.save()
+            data['response'] = 'Update successful'
+            return Response(data)
+        elif (request.data['check'] == 'test_result'):
+            server_code = user.verification_code
+            user_code = request.data['code']
+            if user_code == server_code:
+                print(f'Updating email with: {request.data["email"]}')
+                user.email = request.data['email']
+                user.save()
+                data['response'] = 'Update successful'
+                return Response(data)
+            else:
+                data['response'] = "Update failed"
+                return Response(data)
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
+
 
 class UserRecordView(APIView):
     """

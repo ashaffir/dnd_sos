@@ -106,6 +106,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
   String notificationTitle;
   String notificationHelper;
   bool _updatingProfile;
+  bool _emailCodeVerification = false;
 
   Widget build(BuildContext context) {
     if (_updatingProfile) {
@@ -147,6 +148,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     super.initState();
     _loadVehicleTypes();
     _loadCategoriesTypes();
+
+    if (_emailCodeVerification) {}
+
     _checkProfile();
 
     /////////////// Device location tracking ///////////////
@@ -655,11 +659,13 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           : TextFormField(
                               controller: _textInput,
                               decoration: InputDecoration(
-                                  hintText: "Enter new $updateField here",
+                                  hintText: updateField == 'email'
+                                      ? currentUser.username
+                                      : "Enter new $updateField here",
                                   prefixIcon: updateField == 'name'
                                       ? Icon(Icons.person)
                                       : updateField == 'email'
-                                          ? Icon(Icons.alternate_email)
+                                          ? Icon(Icons.email)
                                           : updateField == 'phone'
                                               ? Icon(Icons.phone)
                                               : ""),
@@ -669,8 +675,11 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                       validateEmail(value) != null) {
                                     return 'Please enter a valid value';
                                   } else if (updateField == 'phone' &&
-                                      validateMobile(value) != null) {
-                                    return 'Please enter a valid value';
+                                          validateMobile(value) != null ||
+                                      currentUser.phone.toString() == value) {
+                                    print(
+                                        'CURRENT: ${currentUser.phone.toString()} NEW: $value');
+                                    return 'Please enter a valid new phone';
                                   } else if (updateField == 'name' &&
                                       validateName(value) != null) {
                                     return 'Please enter a valid value';
@@ -700,25 +709,174 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   if (!_formKey.currentState.validate()) {
                     return;
                   } else {
-                    print('UPDATED FIELD: $updateField');
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProfileUpdated(
-                            user: currentUser,
-                            updateField: updateField,
-                            value: updateField == 'vehicle'
-                                ? _vehicleType
-                                : updateField == 'business category'
-                                    ? _businessCategory
-                                    : _textInput.text),
-                      ),
-                      (Route<dynamic> route) =>
-                          false, // No Back option for this page
-                    );
+                    if (updateField == 'email') {
+                      print(
+                          '> STAGE 1) Email update requested. Sending email-verification code');
+                      sendEmailVerificationCode(
+                          user: currentUser,
+                          email: _textInput.text,
+                          direction: 'request');
+                      Navigator.pop(context);
+                      //2) Open a popup with a text field for the code
+                      print('> STAGE 4) Showing verification code entry form.');
+                      String _sentCode = showVerificationAlert(
+                        context: context,
+                        user: currentUser,
+                        title:
+                            'Please enter the five digits you have received in your new email',
+                      );
+                      print('SENT CODE: $_sentCode');
+                      //3) on submission, call ProfileUpdated with the email update field
+                    } else if (updateField == 'phone') {
+                      print(
+                          '> STAGE 1) Phone update requested. Sending the phone number');
+                      sendPhoneVerificationRequest(
+                          user: currentUser,
+                          phone: _textInput.text,
+                          action: 'new_phone');
+                      Navigator.pop(context);
+                      //2) Open a popup with a text field for the code
+                      print('> STAGE 4) Showing verification code entry form.');
+                      String _sentCode = showVerificationAlert(
+                        context: context,
+                        user: currentUser,
+                        title: 'Please enter the code you receive via SMS',
+                      );
+                      print('SENT CODE: $_sentCode');
+                      //3) on submission, call ProfileUpdated with the email update field
+
+                    } else {
+                      print('UPDATED FIELD: $updateField');
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ProfileUpdated(
+                                user: currentUser,
+                                updateField: updateField,
+                                value: updateField == 'vehicle'
+                                    ? _vehicleType
+                                    : updateField == 'business category'
+                                        ? _businessCategory
+                                        : _textInput.text);
+                          },
+                        ),
+                        (Route<dynamic> route) =>
+                            false, // No Back option for this page
+                      );
+                    }
                     print('Updating $updateField');
                   }
                 }),
+          ],
+        );
+      },
+    );
+  }
+
+  Future sendPhoneVerificationRequest(
+      {User user, String phone, String action}) async {
+    var _phoneVerificationApi;
+    _phoneVerificationApi = await phoneVerificationAPI(
+        phone: phone, code: "", user: user, action: 'new_phone');
+  }
+
+  Future<bool> sendEmailVerificationCode(
+      {String email, User user, String direction}) async {
+    bool _codeRequestSent = false;
+    var _emailVerificationApi;
+    if (direction == 'request') {
+      _emailVerificationApi = await emailVerificationAPI(
+          email: email, code: "", user: user, codeDirection: 'send_code');
+    } else {
+      _emailVerificationApi = await emailVerificationAPI(
+          email: email, code: "", user: user, codeDirection: 'test_result');
+    }
+    print(
+        '> STAGE 2)  Email verificaiton code sent. API message: $_emailVerificationApi');
+    _codeRequestSent =
+        _emailVerificationApi == "Update successful" ? true : false;
+
+    // Storing tempporary email
+
+    print('> STAGE 3) Storing temporary email $email in shared preferences.');
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    try {
+      await localStorage.setString('tmpEmail', email);
+    } catch (e) {
+      print('Main page access USER repository');
+    }
+    return _codeRequestSent;
+  }
+
+  // Email change - Code verification
+  showVerificationAlert({BuildContext context, String title, User user}) {
+    final TextEditingController _emailCodeController =
+        new TextEditingController();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext verifContext) {
+        return AlertDialog(
+          title: Text(title),
+          content: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      controller: _emailCodeController,
+                      decoration:
+                          InputDecoration(prefixIcon: Icon(Icons.security)),
+                      validator: (value) {
+                        if (value != null) {
+                          if (validateVerificationCode(value) != null) {
+                            return 'Please enter a valid code';
+                          } else {
+                            return null;
+                          }
+                        }
+                      },
+                    )
+                  ],
+                ),
+              )),
+          actions: [
+            FlatButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.pop(verifContext);
+              },
+            ),
+            FlatButton(
+              child: Text('Submit'),
+              onPressed: () {
+                print('Sending verification code...');
+                if (!_formKey.currentState.validate()) {
+                  return;
+                } else {
+                  print(
+                      '> STAGE 5) Entered code is sent for checking...Switching to form update page ');
+                  Navigator.pushAndRemoveUntil(
+                    verifContext,
+                    MaterialPageRoute(
+                      builder: (profileUpdatecontext) {
+                        return ProfileUpdated(
+                            user: user,
+                            updateField: 'email',
+                            value: _emailCodeController.text,
+                            operation: 'check_code');
+                      },
+                    ),
+                    (Route<dynamic> route) =>
+                        false, // No Back option for this page
+                  );
+                }
+              },
+              color: Colors.green,
+            )
           ],
         );
       },

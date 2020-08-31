@@ -7,6 +7,7 @@ import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/bloc/authentication_bloc.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/database/user_database.dart';
+import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -44,10 +45,21 @@ String validateName(String value) {
 String validateMobile(String value) {
   String patttern = r'(^[0-9]*$)';
   RegExp regExp = new RegExp(patttern);
-  if (value.length == 0) {
+  if (value.length < 8) {
     return "Mobile is Required";
   } else if (!regExp.hasMatch(value)) {
     return "Mobile Number must be digits";
+  }
+  return null;
+}
+
+String validateVerificationCode(String value) {
+  String patttern = r'(^[0-9]{5}$)';
+  RegExp regExp = new RegExp(patttern);
+  if (value.length == 0) {
+    return "Verification code required";
+  } else if (!regExp.hasMatch(value)) {
+    return "Code Number must be five digits";
   }
   return null;
 }
@@ -64,7 +76,7 @@ String validateEmail(String value) {
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   RegExp regex = new RegExp(pattern);
   if (!regex.hasMatch(value)) {
-    print("NOT VALIF");
+    print('EMIL NOT VALID');
     return 'Enter Valid Email';
   } else
     return null;

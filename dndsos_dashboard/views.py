@@ -1016,7 +1016,7 @@ def phone_verify(request,action,phone, code):
 
             context['verification'] = verification
         except Exception as e:
-            print('Fail sending the confirmation code.')
+            print(f'Fail sending the confirmation code. ERROR: {e}')
             return False 
         
         return True

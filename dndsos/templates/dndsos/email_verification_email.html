@@ -1,0 +1,35 @@
+{% load static %}
+{% load i18n %}
+{% autoescape off %}
+{% get_current_language as lang %}
+
+<!doctype html>
+<html lang="en">
+<head>
+</head>
+
+
+<body style="padding: 0px; margin: 0px; background-color: #F7F8F9;">
+
+    <div class="main-wrapper" style="box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; display: block; width: 634px; padding: 30px 30px; background-color: #ffffff; border-radius: 2px; margin: auto;" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+		<!-- <div class="header-sec">
+			<h1>DND SOS <img src="{{ domain }}{% static 'images/dndsos-logo-black.png' %}" alt="Logo" style="max-width: 2rem;"></h1>
+		</div> -->
+		<div class="content-sec">
+			<h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{% trans 'Message from PickNdell!' %}</h5>
+			<div>
+				<!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjuXqngtXmv1rNogLdpCzdtz7cXqnneVmWSQu928dqNIrO7v-F0g"> -->
+			</div>
+		</div>
+        <p>{% trans 'Hi' %}, </p>
+        <p> {% trans 'Please use the code below to activate the new email' %}:</p>
+
+		<h2>{{ verification_code }}</h2>
+
+        <hr>
+        <div>
+            <p><em>{% trans 'If you have received this email by mistake, please ignore it' %}.</p></em>
+        </div>
+</body>
+</html>
+{% endautoescape %}

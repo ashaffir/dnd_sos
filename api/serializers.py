@@ -19,6 +19,9 @@ class EmployerProfileSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         exclude = ('user', )
 
+class emailSerializer(serializers.Serializer):
+    email = serializers.CharField()
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()

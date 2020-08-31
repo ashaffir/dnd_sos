@@ -24,6 +24,7 @@ class EmployerSignupForm(UserCreationForm):
         # no_of_emp = self.cleaned_data.get('number_of_employees')
         employer = Employer.objects.create(
             user=user,
+            email=user,
             # business_name=business_name
             # number_of_employees=no_of_emp
         )
@@ -67,6 +68,7 @@ class EmployeeSignupForm(UserCreationForm):
         vehicle = self.cleaned_data.get('vehicle')
         employee = Employee.objects.create(
             user=user,
+            email=user,
             vehicle=vehicle
         )
         
