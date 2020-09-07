@@ -43,7 +43,7 @@ String validateName(String value) {
 }
 
 String validateMobile(String value) {
-  String patttern = r'(^[0-9]*$)';
+  String patttern = r'(^\+?[0-9]*$)';
   RegExp regExp = new RegExp(patttern);
   if (value.length < 8) {
     return "Mobile is Required";
@@ -62,6 +62,75 @@ String validateVerificationCode(String value) {
     return "Code Number must be five digits";
   }
   return null;
+}
+
+String validateYear(String value) {
+  switch (value) {
+    case '19':
+      return null;
+      break;
+    case '20':
+      return null;
+      break;
+    case '21':
+      return null;
+      break;
+    case '22':
+      return null;
+      break;
+    case '23':
+      return null;
+      break;
+    case '24':
+      return null;
+      break;
+    case '25':
+      return null;
+      break;
+    case '26':
+      return null;
+      break;
+    case '27':
+      return null;
+      break;
+    case '28':
+      return null;
+      break;
+    case '29':
+      return null;
+      break;
+    case '30':
+      return null;
+      break;
+    case '31':
+      return null;
+      break;
+    default:
+      return "Year entered is not valid";
+  }
+}
+
+String validateCvv(String cvvNumber) {
+  if (cvvNumber.length == 3) {
+    return null;
+  } else {
+    return "CVV number is not valid";
+  }
+}
+
+String validateMonth(String value) {
+  if (value.length != 2) {
+    return "Month entered is not valid.";
+  } else if (value[0] != '0') {
+    int month = int.parse(value);
+    if (month > 0 && month < 13) {
+      return null;
+    } else {
+      return "Year entered is not valid";
+    }
+  } else {
+    return null;
+  }
 }
 
 String validatePassword(String value) {
@@ -267,19 +336,29 @@ Future<int> rowUpdate({User user, dynamic data}) async {
   if (currentUser.isEmployee == 1) {
     updateCount = await db.rawUpdate('''
     UPDATE $userTable 
-    SET name = ?, username = ?, phone = ? , vehicle = ?
+    SET name = ?, username = ?, phone = ? , vehicle = ?, isApproved = ?
     WHERE id = ?
-    ''', [data['name'], data['email'], data['phone'], data['vehicle'], 0]);
+    ''', [
+      data['name'],
+      data['email'],
+      data['phone'],
+      data['vehicle'],
+      data['is_approved'],
+      0
+    ]);
   } else {
     updateCount = await db.rawUpdate('''
     UPDATE $userTable 
-    SET businessName = ?, phone = ?, username = ?, businessCategory = ?
+    SET businessName = ?, phone = ?, username = ?, businessCategory = ?, 
+    creditCardToken = ?, isApproved = ?
     WHERE id = ?
     ''', [
       data['business_name'],
       data['phone'],
       data['email'],
       data['business_category'],
+      data['credit_card_token'],
+      data['is_approved'],
       0
     ]);
   }

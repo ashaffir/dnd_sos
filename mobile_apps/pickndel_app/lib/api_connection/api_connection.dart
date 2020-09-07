@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:pickndell/model/credit_card.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/CustomException.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ import 'package:pickndell/model/api_model.dart';
 // final _base = "https://home-hub-app.herokuapp.com";
 // final _tokenEndpoint = "/api-token-auth/";
 
-final _base = "https://59f721d4650b.ngrok.io";
+final _base = "https://ec64b3bbb15e.ngrok.io";
 // final _base = "https://pickndell.com";
 final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";
@@ -17,6 +18,7 @@ final _profileEndpoint = "/api/user-profile/";
 final _fcmRegistratioEndpoint = "/api/devices/";
 final _emailVerificationEndpoint = "/api/email-verification/";
 final _phoneVerificationEndpoint = "/api/phone-verification/";
+final _creditCardUpdateEndpoint = "/api/user-credit-card/";
 
 final _tokenURL = _base + _tokenEndpoint;
 final _registrationURL = _base + _registrationEndpoint;
@@ -24,6 +26,7 @@ final _fcmRegistratioURL = _base + _fcmRegistratioEndpoint;
 final _profileURL = _base + _profileEndpoint;
 final _emailVerifyURL = _base + _emailVerificationEndpoint;
 final _phonelVerifyURL = _base + _phoneVerificationEndpoint;
+final _creditCardURL = _base + _creditCardUpdateEndpoint;
 
 /////////// Login ///////////
 Future<Token> serverAuthentication(UserLogin userLogin) async {
@@ -70,7 +73,7 @@ Future<dynamic> fcmTokenRegistration(
 }
 
 // class CallApi {
-//   final String _url = 'https://59f721d4650b.ngrok.io/api/';
+//   final String _url = 'https://ec64b3bbb15e.ngrok.io/api/';
 
 //   postData(data, apiUrl) async {
 //     var fullUrl = _url + apiUrl;
@@ -160,6 +163,38 @@ Future<dynamic> getProfile({User user}) async {
   return postResponseJson;
 }
 
+///////////// Update Credit Card ///////////
+Future<dynamic> updateCreditCard({User user, CreditCard creditCard}) async {
+  var postResponseJson;
+  String userToken = user.token;
+
+  var data = {
+    "user_id": user.userId,
+    "is_employee": user.isEmployee,
+    "owner_name": user.name,
+    "owner_id": "",
+    "expiry_date": creditCard.expiryDate,
+    "card_number": creditCard.cardNumber
+  };
+
+  print('.... connecting API for credit card update. Sent data: $data  .....');
+  try {
+    final http.Response response = await http.post(
+      _creditCardURL,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $userToken',
+      },
+      // email field is special due to django requirements
+      body: jsonEncode(data),
+    );
+    postResponseJson = _response(response);
+  } on SocketException {
+    throw FetchDataException('No Internet connection');
+  }
+  return postResponseJson;
+}
+
 /////////// Update User Profile ///////////
 Future<dynamic> updateUser({
   User user,
@@ -240,14 +275,19 @@ dynamic _response(http.Response response) {
 }
 
 Future phoneVerificationAPI(
-    {String phone, String code, User user, String action}) async {
+    {String phone,
+    String countryCode,
+    String verificationCode,
+    User user,
+    String action}) async {
   var emailVerificationReponse;
   var payload = {
     "action": action,
     "is_employee": user.isEmployee,
     "user_id": user.userId,
     "phone": phone,
-    "code": code
+    "country_code": countryCode,
+    "verification_code": verificationCode
   };
   print('Payload: $payload');
   try {

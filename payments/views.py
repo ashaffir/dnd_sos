@@ -28,6 +28,41 @@ https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/help
 
 '''
 
+def create_card_token(owner_id, due_date_yymm,card_number):
+    '''
+    Creating credit card token from an API request
+    '''
+    CREATE_TOKEN_TEST =  "https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/CreateToken"    
+    CREATE_TOKEN_PROD = " https://icredit.rivhit.co.il/api/iCreditRestApiService.svc/CreateToken"
+    
+    CREATE_TOKEN_URL = CREATE_TOKEN_TEST if settings.DEBUG else CREATE_TOKEN_PROD
+
+    verify_headers = {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36'
+        }
+
+    credit_box_token = 'd27a5712-53a5-4543-bf3e-7a3c16164ff8' if settings.DEBUG else settings.CREDIT_BOX_TOKEN
+    
+    payload = '{ \
+        "Id":"' + f"{owner_id}" + '", \
+        "Creditbox": "' + f'{credit_box_token}' +  '", \
+        "DueDateYYMM": "' + f'{due_date_yymm}' + '", \
+        "CardNumber": "' + f'{card_number}' + '"\
+        }'
+    
+    try:
+        token_response = requests.post(CREATE_TOKEN_URL, data=payload, headers=verify_headers)
+        print(f'PAYLOAD: {payload}')
+        if not token_response.json()["ErrorMessage"]:
+            return token_response.json()["Token"]
+        else:
+            return 'error'
+    except Exception as e:
+        print(f'ERROR CREDIT CART TOKEN: {e}')
+ 
+
+
 def credit_card_form(request):
     '''
     Collection of a credit card information in the business profile

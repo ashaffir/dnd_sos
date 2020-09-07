@@ -21,9 +21,9 @@
         android:label="PickNdell"
         android:icon="@mipmap/ic_launcher">
 
-        <meta-data 
+        <!-- <meta-data 
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAiL_7eRu-BdVrcB1XzOsdftmLhIYl8jZU"/>
+            android:value="<GOOGLE API KEY>"/> -->
 
 
         <activity

@@ -1,3 +1,4 @@
+import 'package:pickndell/location/place.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_location.dart';
 import 'package:pickndell/model/user_model.dart';
@@ -11,7 +12,7 @@ import 'dart:async';
 import 'CustomException.dart';
 
 class ApiProvider {
-  final String _baseUrl = "https://59f721d4650b.ngrok.io/api/";
+  final String _baseUrl = "https://ec64b3bbb15e.ngrok.io/api/";
   // final String _baseUrl = "https://pickndell.com/api/";
 
   Future<dynamic> get(String url, User user) async {
@@ -101,6 +102,59 @@ class ApiProvider {
     return postResponseJson;
   }
 
+// Get current pricing parameters
+  Future<dynamic> priceParams({User user, String url}) async {
+    var postResponseJson;
+
+    try {
+      final response = await http.post(
+        _baseUrl + url,
+        headers: <String, String>{
+          "Authorization": "Token ${user.token}",
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      postResponseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return postResponseJson;
+  }
+
+// New Order
+  Future<dynamic> postNewOrder(
+      {String url,
+      bool priceOrder,
+      OrderAddress pickupAddress,
+      OrderAddress dropoffAddress,
+      User user,
+      String packageType,
+      String urgency}) async {
+    var postResponseJson;
+    try {
+      final response = await http.post(
+        _baseUrl + url,
+        headers: <String, String>{
+          "Authorization": "Token ${user.token}",
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'pickup_address': pickupAddress,
+          'dropoff_address': dropoffAddress,
+          'user_id': user.userId,
+          'is_employee': user.isEmployee,
+          "package_type": packageType,
+          "urgency": urgency,
+          "price_order": priceOrder
+        }),
+      );
+      postResponseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return postResponseJson;
+  }
+
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
@@ -118,7 +172,7 @@ class ApiProvider {
         print('ERROR API respose (40*): ${response.statusCode}');
         throw UnauthorisedException(response.body.toString());
       case 500:
-        print('ERROR API respose (50*): ${response.statusCode}');
+        print('ERROR ORDER API respose (50*): ${response.statusCode}');
         throw UnauthorisedException(response.body.toString());
       default:
         throw FetchDataException(

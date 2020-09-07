@@ -61,6 +61,7 @@ class UserRepository {
         phone: token.phone,
         businessName: token.businessName,
         businessCategory: token.businessCategory,
+        creditCardToken: token.creditCardToken,
         isApproved: token.isApproved,
         numDailyOrders: token.numDailyOrders,
         numOrdersInProgress: token.numOrdersInProgress,

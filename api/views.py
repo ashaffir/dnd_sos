@@ -1,7 +1,10 @@
+import time
 import platform
 import json
 import logging
 import random
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic, distance
 from datetime import date
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
@@ -27,6 +30,8 @@ from dndsos.models import ContactUs
 from dndsos_dashboard.views import phone_verify
 from dndsos_dashboard.utilities import send_mail
 
+from .utils import clean_phone_number, check_profile_approved
+from payments.views import create_card_token
 from .serializers import (UserSerializer, LoginSerializer, 
                         ContactsSerializer, BusinessSerializer, 
                         UsernameSerializer, EmployeeProfileSerializer, EmployerProfileSerializer,)
@@ -435,9 +440,58 @@ def user_profile(request):
             data = serializer.errors
             logger.error(f'Failed updated user profile. ERROR: {data}')
 
+        check_profile_approved(user.pk, request.data['is_employee'])
+
         return Response(data)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST',])
+@permission_classes((IsAuthenticated,))
+def user_credit_card(request):
+    print(f'REQUEST: {request.data}')
+    data = {}
+    if request.data['is_employee'] == 1:
+        user = Employee.objects.get(pk=request.data['user_id'])
+    else:
+        user = Employer.objects.get(pk=request.data['user_id'])
+
+    if request.method == 'POST':
+        try:
+            owner_name = request.data['owner_name']
+            due_date_yymm = request.data['expiry_date']
+            card_number = "4580000000000000" if settings.DEBUG else request.data['card_number'];
+            owner_id = request.data['owner_id']
+            
+            credit_token = create_card_token(owner_id, due_date_yymm, card_number)
+
+            print(f'''Updating credit card with:
+            one: {owner_name}
+            id: {owner_id}
+            Expiry: {due_date_yymm}
+            Card number: {card_number}
+            Response from iCredit: {credit_token}
+            ''')
+
+        
+        except Exception as e:
+            return Response(f'Fail communication with iCredit. ERROR: {e}')
+
+        # Saving user's new Token
+        try:
+            user.credit_card_token = credit_token
+            user.save()
+            data["response"] = "Update successful"
+            data["credit_card_token"] = credit_token
+            check_profile_approved(user.pk, request.data['is_employee'])
+
+            return Response(data)
+        except Exception as e:
+            logger.error(f'Failed saving the new credit card token. ERROR: {e}')
+            return Response(f'Failed saving the new credit card token. ERROR: {e}')
+
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -538,6 +592,129 @@ def order_view(request):
             data = serializer.errors
         
         return Response(data)
+
+@api_view(['POST',])
+@permission_classes((IsAuthenticated,))
+def price_parameteres(request):
+    data = {}
+    data['base_price'] = settings.DEFAULT_BASE_PRICE
+    data['unit_price'] = settings.DEFAULT_UNIT_PRICE
+    return Response(data)
+
+@api_view(['POST',])
+@permission_classes((IsAuthenticated,))
+def new_order(request):
+    '''
+    New order from Mobile user
+    '''
+
+    data = {}
+
+    if request.data['is_employee'] == 1:
+        user = Employee.objects.get(pk=request.data['user_id'])
+    else:
+        user = Employer.objects.get(pk=request.data['user_id'])
+    
+    if not user.is_approved:
+        return Response('User is not approved')
+
+    '''
+    Calculating the price of an order before registering into the DB
+    '''
+    pickup_address = request.data['pickup_address']['name']
+    pickup_address_id = request.data['pickup_address']['placeId']
+    pickup_address_lat = float(request.data['pickup_address']['lat'])
+    pickup_address_lng = float(request.data['pickup_address']['lng'])
+
+    data['pick_up_address'] = pickup_address
+
+    dropoff_address = request.data['dropoff_address']['name']
+    dropoff_address_id = request.data['dropoff_address']['placeId']
+    dropoff_address_lat = float(request.data['dropoff_address']['lat'])
+    dropoff_address_lng = float(request.data['dropoff_address']['lng'])
+
+    data['drop_off_address'] = dropoff_address
+
+    order_urgency = request.data['urgency']
+    package_type = request.data['package_type']
+
+    geolocator = Nominatim(user_agent="dndsos", timeout=3)
+        
+    try:
+        # Checking OS
+        if platform.system() == 'Darwin':
+            order_location = Point(dropoff_address_lat,dropoff_address_lng)
+        else:
+            order_location = Point(dropoff_address_lng, dropoff_address_lat)
+        
+        order_coords = (dropoff_address_lat,dropoff_address_lng)
+
+        data['order_location'] = order_location
+        data['order_lon'] = dropoff_address_lng
+        data['order_lat'] = dropoff_address_lat
+                
+    except Exception as e:
+        print(f'Failed getting the location for {dropoff_address}')
+        logger.error(f'Failed getting the location for {dropoff_address}')
+        order_location = None
+        order_coords = None
+        order_lat = None
+        order_lon = None
+
+
+        data['order_location'] = order_location
+        data['order_lon'] = dropoff_address_lng
+        data['order_lat'] = dropoff_address_lat
+
+    # Calculate distance between drop off address the sender location
+    try:
+        business_coords = (pickup_address_lat, pickup_address_lng)
+
+        order_to_business_distance = distance(business_coords, order_coords).km
+        order_to_business_distance_meters = order_to_business_distance * 1000
+    except Exception as e:
+        logger.error(f'''Fail getting sender location. ERROR: {e}
+                        pickup  address: {pickup_address}
+                        pickup address ID: {pickup_address_id}
+                    ''')
+        # Setting a default distance to order if address not found
+        settings.DEFAULT_ORDER_TO_BUISINESS_DISTANCE = 1000
+
+    # Calculating the price for the order (price calculation)
+    urgency = 2 if order_urgency == 'Urgent' else 1
+
+    if order_to_business_distance_meters > 1000:
+        price = urgency * (settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT)
+        data['price'] = round(price,2)
+        data['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
+        data['distance_to_business'] = round(order_to_business_distance,2)
+    else:
+        price = settings.DEFAULT_BASE_PRICE
+        data['price'] = float(round(price,2))
+        data['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
+        data['distance_to_business'] = round(order_to_business_distance,2)
+
+    if request.data['price_order']:
+        return Response(data['price'])
+    else:
+        try:
+            user.location = Point(pickup_address_lat,pickup_address_lng)
+            user.address = pickup_address
+            user.lat = pickup_address_lat
+            user.lon = pickup_address_lng
+            user.save()
+        except Exception as e:
+            print('Failed writing sender location to DB.')
+            
+        data['order_type'] = package_type
+        data['business'] = User.objects.get(pk=user.pk)
+
+        Order.objects.create(**data)
+
+        print(f'DATA: {data}')
+        # print(f"REQUEST: {request.data}")
+        return Response('Order Created')
+
 
 @api_view(['PUT',])
 @permission_classes((IsAuthenticated,))
@@ -666,25 +843,66 @@ def phone_verification(request):
         # Items 1 and 2
         if request.data['action'] == 'new_phone' :
             new_phone = request.data['phone']
-            # user.verification_code = new_phone
-            sent_sms_status = phone_verify(request, action='send_verification_code', phone=new_phone, code=None)
-            if sent_sms_status:
-                # user.save()
-                data['response'] = 'Update successful'
+            country_code = request.data['country_code']
+            
+            # Checking phone validity before sending to Twilio
+            valid_new_phone_number = clean_phone_number(new_phone, country_code)
+            
+            if (valid_new_phone_number):
+                print(f'Phone is good: {new_phone}. Country: {country_code}. Sending to Twilio')
+                # sent_sms_status = phone_verify(request, action='send_verification_code', phone=new_phone, code=None)
+                
+                # TESTING
+                timer = 0
+                while timer < 4:
+                    print('sleep...')
+                    time.sleep(1)
+                    timer += 1
+                sent_sms_status = True
+                #################
+
+                if sent_sms_status:
+                    data['response'] = 'Update successful'
+                    return Response(data)
+                else:
+                    print(f'Bad phone request. ERROR: {sent_sms_status}')
+                    data['response'] = f'Bad phone request. ERROR: {sent_sms_status}'
+                    return Response(data)
+                
+                # TESTING
+                # data['response'] = 'Update successful'
                 return Response(data)
             else:
-                data['response'] = f'Bad phone request. ERROR: {sent_sms_status}'
+                print(f'Bad phone number. Phone: {new_phone}')
+                data['response'] = f'Bad phone number.'
                 return Response(data)
+
 
         # Items 3, 4, 5
         elif request.data['action'] == "verify_code":
-            user_code = request.data['code']
+            user_code = request.data['verification_code']
             new_phone = request.data['phone']
-            verification_status = phone_verify(request, action='verify_code', phone=new_phone, code=user_code)
+            
+            # verification_status = phone_verify(request, action='verify_code', phone=new_phone, code=user_code)
+
+
+
+            # TESTING
+            timer = 0
+            while timer < 4:
+                time.sleep(1)
+                timer += 1
+            sent_sms_status = True
+            verification_status = 'approved'
+            #########
+            
             if verification_status == 'approved':
                 user.phone = new_phone
                 user.save()
                 data['response'] = 'Update successful'
+        
+                check_profile_approved(user.pk, request.data['is_employee'])
+
                 return Response(data)
             else:
                 data['response'] = f'Bad phone request. ERROR: {verification_status}'
@@ -726,15 +944,33 @@ def email_verification(request):
             # Saving the code in user profile
             user.verification_code = verification_code
             user.save()
+
+            # user = User.objects.get(pk=request.data['user_id'])
+            # user.email = email
+            # user.username = email
+            # user.save()
+            
             data['response'] = 'Update successful'
             return Response(data)
         elif (request.data['check'] == 'test_result'):
             server_code = user.verification_code
             user_code = request.data['code']
+            new_email = request.data["email"]
             if user_code == server_code:
-                print(f'Updating email with: {request.data["email"]}')
-                user.email = request.data['email']
+                print(f'Updating email with: {new_email}')
+                # Updating Profile
+                user.email = new_email
+                user.username = new_email
                 user.save()
+                
+                # Updating User model
+                user = User.objects.get(pk=request.data['user_id'])
+                user.email = new_email
+                user.username = new_email
+                user.save()
+
+                check_profile_approved(user.pk, request.data['is_employee'])
+
                 data['response'] = 'Update successful'
                 return Response(data)
             else:

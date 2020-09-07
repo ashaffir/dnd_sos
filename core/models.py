@@ -31,7 +31,9 @@ class User(AbstractUser):
     
     # role of the user
     position = models.CharField(max_length=200, default=None, blank=True, null=True)
-    
+
+    address = models.CharField(max_length=200, blank=True, null=True)
+
     # phone number
     phone_number = models.CharField(max_length=15, blank=True, null=True, default=None)
     
@@ -67,7 +69,7 @@ class User(AbstractUser):
 class Employer(models.Model):
     BUSINESS_CATEGORY = (
         ('Restaurant', 'Restaurant'),
-        ('Cothing', 'Clothing'),
+        ('Clothes', 'Clothes'),
         ('Convenience', 'Convenience'),
         ('Grocery', 'Grocery'),
         ('Office', 'Office'),
@@ -89,6 +91,7 @@ class Employer(models.Model):
     building_number = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
     lat = models.FloatField(null=True, blank=True)
     lon = models.FloatField(null=True, blank=True)
     location = PointField(blank=True, null=True)
@@ -156,6 +159,7 @@ class Employee(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True, choices=COUNTRIES)
+    address = models.CharField(max_length=200, blank=True, null=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)

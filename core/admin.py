@@ -15,7 +15,7 @@ class Employer(OSMGeoAdmin):
     
     fields = (  'user', 'business_name', 'business_category',
                 'email', 'phone','credit_card_token',
-                'street', 'building_number', 'city', 'lat', 'lon', 'location',
+                'address','street', 'building_number', 'city', 'lat', 'lon', 'location',
                 'b_freelancers',
                 'profile_pic',
                 'newsletter_optin',
@@ -31,6 +31,7 @@ class Employee(OSMGeoAdmin):
         'pk',
         'user',
         'name',
+        'address',
         'city',
         'vehicle',
         'is_approved',

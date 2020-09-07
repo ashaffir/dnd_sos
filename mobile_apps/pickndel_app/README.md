@@ -72,6 +72,10 @@ Build commands:
 * Add the pointer to that key in the code (instead of the text, e.g. translation.loginPageTitle)
 * Restart the app
 
-# REFERENCE: Google maps
+# REFERENCE: Google maps autocomplete
+- https://developers.google.com/places/web-service/autocomplete
 - Flutter plugin: https://pub.dev/packages/google_maps_flutter
+- Google coordinates: https://medium.com/@usamasiddiqui766/google-places-autocomplete-suggestions-in-flutter-469fd65f4492
+- AutoComplete: https://www.youtube.com/watch?v=rJOkoAmC5GY
+- Plugin for search: https://www.youtube.com/watch?v=sco5RsYgpwc (???)
 

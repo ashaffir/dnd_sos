@@ -84,6 +84,7 @@ def order_signal(sender, instance, update_fields, **kwargs):
         print(f'Sending to relevant freelancers >>  {relevant_freelancers}')
         logger.info(f'Sending to relevant freelancers >>  {relevant_freelancers}')
 
+        print(f'INSTANCE: {instance.business}')
 
         for freelancer in relevant_freelancers:
             device = FCMDevice.objects.filter(user=freelancer.pk).first()

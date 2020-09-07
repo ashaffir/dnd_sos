@@ -3,6 +3,7 @@ import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/database/user_database.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
+import 'package:pickndell/model/credit_card.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
@@ -18,8 +19,14 @@ class ProfileUpdated extends StatefulWidget {
   final String value;
   final User user;
   final String operation;
+  final CreditCard creditCardInfo;
 
-  ProfileUpdated({this.user, this.updateField, this.value, this.operation});
+  ProfileUpdated(
+      {this.user,
+      this.updateField,
+      this.value,
+      this.operation,
+      this.creditCardInfo});
 
   @override
   _ProfileUpdatedState createState() => _ProfileUpdatedState();
@@ -52,19 +59,50 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
     } else {
       updateCount = await db.rawUpdate('''
     UPDATE $userTable 
-    SET businessName = ?, phone = ?, username = ?, businessCategory = ?
+    SET businessName = ?, phone = ?, username = ?, businessCategory = ?, creditCardToken = ?
     WHERE id = ?
     ''', [
         data['business_name'],
         data['phone'],
         data['email'],
         data['business_category'],
+        data['credit_card_token'],
         0
       ]);
     }
     print('ROWS UPDATED: $updateCount ');
 
     return updateCount;
+  }
+
+  Future _updateCreditCard({User user, CreditCard creditCard}) async {
+    var _cardUpdate;
+    _cardUpdate = await updateCreditCard(user: user, creditCard: creditCard);
+    return _cardUpdate;
+  }
+
+  String tphone;
+  Future _checkPhoneVerificationCode(
+      {String code, User user, String operation}) async {
+    tphone = await _getTempPhone();
+    print('In function PHONE: $tphone, CODE: $code');
+    var _codeVerified;
+    _codeVerified = await phoneVerificationAPI(
+        phone: tphone,
+        verificationCode: code,
+        user: user,
+        action: 'verify_code');
+    return _codeVerified;
+  }
+
+  Future<String> _getTempPhone() async {
+    final localStorage = await SharedPreferences.getInstance();
+    final _tempPhone = localStorage.getString('tmpPhone');
+    if (_tempPhone == null) {
+      return "";
+    } else {
+      return _tempPhone;
+    }
   }
 
   String tmail;
@@ -94,8 +132,15 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
       print(
           '> STAGE 6) Sending the code entered by the user. Code: ${widget.value} Email: $tmail');
       return FutureBuilder(
-        future: _checkEmailVerificationCode(
-            user: widget.user, code: widget.value, operation: widget.operation),
+        future: widget.updateField == 'email'
+            ? _checkEmailVerificationCode(
+                user: widget.user,
+                code: widget.value,
+                operation: widget.operation)
+            : _checkPhoneVerificationCode(
+                user: widget.user,
+                code: widget.value,
+                operation: widget.operation),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             print(
@@ -103,11 +148,13 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
 
             if (snapshot.data["response"] == "Update successful") {
               print(
-                  '> STAGE 8) Code verified successfully. Getting the temporary email...');
+                  '> STAGE 8) Code verified successfully. Getting the temporary ${widget.updateField}...');
 
-              var data = {"email": tmail};
+              var data = widget.updateField == 'email'
+                  ? {"email": tmail}
+                  : {'phone': tphone};
 
-              print('> STAGE 9) Updating DB with email: $tmail');
+              print('> STAGE 9) Updating DB with data: $data');
               rowUpdate(data);
 
               print('> STAGE 10) FINISHED PROFILE UPDATED!!!!');
@@ -130,13 +177,20 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
       );
     } else {
       return FutureBuilder(
-        future: updateRemoteProfile(widget.updateField, widget.value),
+        future: widget.updateField == 'credit_card'
+            ? _updateCreditCard(
+                user: widget.user, creditCard: widget.creditCardInfo)
+            : updateRemoteProfile(widget.updateField, widget.value),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             print('PROFILE UPDATED: ${snapshot.data}');
 
             if (snapshot.data["response"] == "Update successful") {
-              rowUpdate(snapshot.data);
+              var data = widget.updateField == 'credit_card'
+                  ? {'credit_card_token': snapshot.data['credit_card_token']}
+                  : snapshot.data;
+
+              rowUpdate(data);
 
               print('FINISHED PROFILE UPDATED!!!!');
               if (widget.updateField == 'name') {

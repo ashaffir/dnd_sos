@@ -1,5 +1,7 @@
 {% extends 'dndsos_dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
+{% get_current_language as lang %}
 
 {% block content %}
   <!-- Phone verification Success -->
@@ -13,7 +15,7 @@
         <div class="row">
           <div class="col-md-3"></div>
           <div class="col-md-6">
-            <h4 class="heading">Your phone is verified.</h4>
+            <h4 class="heading">{% trans 'Your phone is verified' %}.</h4>
           </div>
         </div>
         <div class="row">
@@ -26,9 +28,9 @@
         <div class="row">
           <div class="col-md-3"></div>
           {% if user.is_employee %}
-            <a class="btn" style="border:solid 2px green" href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">Back to profile</a>
+            <a class="btn" style="border:solid 2px green" href="{% url 'dndsos_dashboard:f-profile' f_id=user.pk %}">{% trans 'Back to profile' %}</a>
           {% else %}
-            <a class="btn" style="border:solid 2px green" href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">Back to profile</a>
+            <a class="btn" style="border:solid 2px green" href="{% url 'dndsos_dashboard:b-profile' b_id=user.pk %}">{% trans 'Back to profile' %}</a>
           {% endif %}
         </div>
       </div>

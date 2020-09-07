@@ -5,17 +5,20 @@ import 'dart:convert';
 import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/location_settings.dart';
-import 'package:pickndell/common/common.dart';
-import 'package:pickndell/common/global.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pickndell/common/helper.dart';
-import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';
+import 'package:pickndell/location/credencials.dart';
+import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/location/location_callback_handler.dart';
 import 'package:pickndell/location/location_service_repository.dart';
+import 'package:pickndell/location/place.dart';
+import 'package:pickndell/location/search_bloc.dart';
 import 'package:pickndell/login/profile_updated.dart';
+import 'package:pickndell/model/credit_card_update.dart';
+import 'package:pickndell/orders/new_order.dart';
 import 'package:pickndell/model/user_location.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
-import 'package:pickndell/orders/get_orders_page.dart';
 import 'package:pickndell/repository/location_repository.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -24,6 +27,9 @@ import 'package:flutter/material.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
+import 'package:http/http.dart' as http;
 
 import '../dao/user_dao.dart';
 import '../model/user_model.dart';
@@ -149,6 +155,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     _loadVehicleTypes();
     _loadCategoriesTypes();
 
+    getCountryName();
     if (_emailCodeVerification) {}
 
     _checkProfile();
@@ -285,7 +292,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     final translations = ExampleLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(translations.home_title),
+        title: (currentUser.isApproved == 1)
+            ? Text(translations.home_title)
+            : Text(translations.home_title + ' (Not Complete)'),
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -294,7 +303,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               MessagingWidget(),
-              // MessagingWidgetTest(),
               Image.asset(
                 'assets/images/pickndell-logo-white.png',
                 width: MediaQuery.of(context).size.width * 0.40,
@@ -314,6 +322,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       Padding(
                         padding: EdgeInsets.only(left: 30.0, top: 20.0),
                       ),
+
+                      ////////////// NAME SECTION ////////////////
+                      ///
                       Text(
                         translations.home_name + ":",
                         style: TextStyle(fontSize: 20.0),
@@ -321,17 +332,21 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
                       ),
-                      Text(
-                        currentUser.isEmployee == 1
-                            ? currentUser.name != null
-                                ? '${currentUser.name}'
-                                : " "
-                            : currentUser.businessName != null
-                                ? '${currentUser.businessName}'
-                                : " ",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            currentUser.isEmployee == 1
+                                ? currentUser.name != null
+                                    ? '${currentUser.name}'
+                                    : " "
+                                : currentUser.businessName != null
+                                    ? '${currentUser.businessName}'
+                                    : " ",
+                            style: TextStyle(
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ],
                       ),
                       IconButton(
                           icon: Icon(Icons.edit),
@@ -342,6 +357,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           }),
                     ],
                   ),
+
+                  ////////////// PHONE SECTION ////////////////
+                  ///
                   Row(
                     children: <Widget>[
                       Padding(
@@ -371,6 +389,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           }),
                     ],
                   ),
+
+                  ////////////// EMAIL SECTION ////////////////
+                  ///
                   Row(
                     children: <Widget>[
                       Padding(
@@ -401,6 +422,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                     ],
                   ),
 
+                  ////////////// CATEGORY SECTION ////////////////
+                  ///
                   Row(
                     children: [
                       Padding(
@@ -437,6 +460,60 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           }),
                     ],
                   ),
+
+                  ////////////// CREDICT CARD SECTION ////////////////
+                  ///
+                  currentUser.isEmployee == 0
+                      ? Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                            ),
+                            Text(
+                              'Credit Card' + ":",
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(right: 10.0),
+                            ),
+                            currentUser.creditCardToken != null
+                                ? Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                  )
+                                : IconButton(
+                                    icon: Icon(Icons.control_point,
+                                        color: Colors.orange),
+                                    onPressed: () {
+                                      print('CREDIT CARD');
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CreditCardUpdate(
+                                                  user: currentUser,
+                                                  userRepository:
+                                                      widget.userRepository,
+                                                )),
+                                      );
+                                    }),
+                            IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  print('CREDIT CARD');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CreditCardUpdate(
+                                              user: currentUser,
+                                              userRepository:
+                                                  widget.userRepository,
+                                            )),
+                                  );
+                                }),
+                          ],
+                        )
+                      : Row(),
                   Divider(color: Colors.white),
                   Padding(
                     padding: EdgeInsets.only(top: 10.0),
@@ -552,28 +629,43 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           ],
                         )
                       : Row(),
-                  // Row(
-                  //   children: <Widget>[
-                  //     Padding(
-                  //       padding: EdgeInsets.only(left: 30.0, top: 20.0),
-                  //     ),
-                  //     FlatButton(
-                  //         shape: RoundedRectangleBorder(
-                  //             side: BorderSide(
-                  //                 color: Colors.blue,
-                  //                 width: 1,
-                  //                 style: BorderStyle.solid),
-                  //             borderRadius: BorderRadius.circular(50)),
-                  //         onPressed: () {
-                  //           Navigator.pushAndRemoveUntil(
-                  //               context,
-                  //               MaterialPageRoute(
-                  //                   builder: (context) => Profile()),
-                  //               (Route<dynamic> route) => false);
-                  //         },
-                  //         child: Text('Edit Profile'))
-                  //   ],
-                  // )
+                  currentUser.isEmployee == 0
+                      ? Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                            ),
+                            FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: Colors.green,
+                                        width: 2,
+                                        style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(50)),
+                                onPressed: () {
+                                  if (currentUser.isApproved == 1) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => NewOrder(
+                                                user: currentUser,
+                                                userRepository:
+                                                    widget.userRepository,
+                                              )),
+                                    );
+                                  } else {
+                                    showAlertDialog(
+                                        context: context,
+                                        title: 'Your account is not approved.',
+                                        content:
+                                            "Please complete your profile before ordering deliveries",
+                                        url: '');
+                                  }
+                                },
+                                child: Text('Create a New Order'))
+                          ],
+                        )
+                      : Row(),
                 ], //Children
               ),
               Padding(
@@ -590,6 +682,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     );
   }
 
+//////////////// Update Profile //////////////////
+  ///
   Future updateProfile({BuildContext context, String updateField}) async {
     User currentUser = await UserDao().getUser(0);
     TextEditingController _textInput = TextEditingController();
@@ -603,7 +697,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
 
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-    // show the dialog
+    /////////// Field update Button Dialog /////////////////////
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -677,8 +771,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                   } else if (updateField == 'phone' &&
                                           validateMobile(value) != null ||
                                       currentUser.phone.toString() == value) {
-                                    print(
-                                        'CURRENT: ${currentUser.phone.toString()} NEW: $value');
                                     return 'Please enter a valid new phone';
                                   } else if (updateField == 'name' &&
                                       validateName(value) != null) {
@@ -719,13 +811,13 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       Navigator.pop(context);
                       //2) Open a popup with a text field for the code
                       print('> STAGE 4) Showing verification code entry form.');
-                      String _sentCode = showVerificationAlert(
+                      String _sentEmailCode = showVerificationAlert(
                         context: context,
                         user: currentUser,
+                        updateField: 'email',
                         title:
                             'Please enter the five digits you have received in your new email',
                       );
-                      print('SENT CODE: $_sentCode');
                       //3) on submission, call ProfileUpdated with the email update field
                     } else if (updateField == 'phone') {
                       print(
@@ -734,17 +826,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           user: currentUser,
                           phone: _textInput.text,
                           action: 'new_phone');
-                      Navigator.pop(context);
-                      //2) Open a popup with a text field for the code
-                      print('> STAGE 4) Showing verification code entry form.');
-                      String _sentCode = showVerificationAlert(
-                        context: context,
-                        user: currentUser,
-                        title: 'Please enter the code you receive via SMS',
-                      );
-                      print('SENT CODE: $_sentCode');
-                      //3) on submission, call ProfileUpdated with the email update field
-
                     } else {
                       print('UPDATED FIELD: $updateField');
                       Navigator.pushAndRemoveUntil(
@@ -774,11 +855,52 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     );
   }
 
-  Future sendPhoneVerificationRequest(
+  bool codeRequestSent;
+
+  Future<bool> sendPhoneVerificationRequest(
       {User user, String phone, String action}) async {
+    bool _codeRequestSent;
     var _phoneVerificationApi;
+    print('> STAGE 2) Sending the phone to PND & TW');
+
+    // Getting the country code from memory
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String userCountryCode = localStorage.getString('userCountry');
+
     _phoneVerificationApi = await phoneVerificationAPI(
-        phone: phone, code: "", user: user, action: 'new_phone');
+        phone: phone,
+        countryCode: userCountryCode,
+        verificationCode: "",
+        user: user,
+        action: 'new_phone');
+    _codeRequestSent =
+        _phoneVerificationApi['response'] == "Update successful" ? true : false;
+    print('> STAGE 3) Reponse from TW/PND: $_codeRequestSent');
+    Navigator.pop(context);
+
+    if (_codeRequestSent) {
+      print('> STAGE 5) String the phone in local memeory.');
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      try {
+        await localStorage.setString('tmpPhone', phone);
+      } catch (e) {
+        print('ERROR: Country check page');
+      }
+
+      print('> STAGE 4) Showing verification code entry form.');
+      String sentPhoneCode = showVerificationAlert(
+        context: context,
+        user: user,
+        updateField: 'phone',
+        title: 'Please enter the code you receive via SMS',
+      );
+    } else {
+      print('> STAGE 4.a) BAD Phone entered.');
+      showAlertDialog(
+          context: context, content: '', title: 'Phone not Valid', url: '');
+    }
+
+    return _codeRequestSent;
   }
 
   Future<bool> sendEmailVerificationCode(
@@ -809,9 +931,10 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     return _codeRequestSent;
   }
 
-  // Email change - Code verification
-  showVerificationAlert({BuildContext context, String title, User user}) {
-    final TextEditingController _emailCodeController =
+  // Email/Phone change - Code verification
+  showVerificationAlert(
+      {BuildContext context, String title, User user, String updateField}) {
+    final TextEditingController _verificationCodeController =
         new TextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -827,7 +950,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
-                      controller: _emailCodeController,
+                      controller: _verificationCodeController,
                       decoration:
                           InputDecoration(prefixIcon: Icon(Icons.security)),
                       validator: (value) {
@@ -865,8 +988,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       builder: (profileUpdatecontext) {
                         return ProfileUpdated(
                             user: user,
-                            updateField: 'email',
-                            value: _emailCodeController.text,
+                            updateField: updateField,
+                            value: _verificationCodeController.text,
                             operation: 'check_code');
                       },
                     ),

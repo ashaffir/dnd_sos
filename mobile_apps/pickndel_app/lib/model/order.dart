@@ -94,3 +94,21 @@ class Order {
     return data;
   }
 }
+
+class PriceParams {
+  double basicPrice;
+  double unitPrice;
+
+  PriceParams({this.basicPrice, this.unitPrice});
+  PriceParams.fromJson(Map<String, dynamic> json) {
+    basicPrice = json['basic_price'];
+    unitPrice = json['unit_price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['bais_price'] = this.basicPrice;
+    data['unit_price'] = this.unitPrice;
+    return data;
+  }
+}

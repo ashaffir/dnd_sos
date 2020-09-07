@@ -26,9 +26,7 @@ from payments.models import Payment
 from geo.models import UserLocation
 from payments.views import lock_delivery_price, complete_charge
 
-LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
-logging.basicConfig(filename=os.path.join(settings.BASE_DIR,'logs/consumers.log'),level=logging.INFO,format=LOG_FORMAT, filemode='w')
-logger = logging.getLogger()
+logger = logging.getLogger(__file__)
 
 class OrderConsumer(AsyncJsonWebsocketConsumer):
 
@@ -438,7 +436,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                             business address: {business_address}
                             business location: {business_location}
                         ''')
-            order_to_business_distance_meters = 1000
+            settings.DEFAULT_ORDER_TO_BUISINESS_DISTANCE = 1000
 
         # Calculating the price for the order (price calculation)
         urgency = int(content['urgency'])
@@ -452,17 +450,22 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             content['price'] = round(price,2)
             content['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
             content['distance_to_business'] = round(order_to_business_distance,2)
-
+        
+        print('PRICE  CALCULATED')
+        logger.info(f'Order price calculated')
 
         if not business.location:
             business.location = Point(business_location.longitude,business_location.latitude, srid=4326)
             business.save()
+            print('NEW BUSINESS LOCATION SAVED')
+            logger.info(f'New business location saved')
         else:
             pass
+
         
         business_categories = {
             'Restaurant':'Food',
-            'Cothing': 'Clothing',
+            'Clothes': 'Clothes',
             'Convenience': 'Tools',
             'Grocery': 'Food',
             'Office':'Documents',
@@ -470,11 +473,18 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         }
 
         content['order_type'] = business_categories[business.business_category]
-        
+
         # Creating the new order
         serializer = OrderSerializer(data=content)
+        print('SERIALIZING THE ORDER....')
+        logger.info(f'Start serializing the new order')
+
         serializer.is_valid(raise_exception=True)
+        print('ORDER VALID')
+
         order = serializer.create(serializer.validated_data)
+        print('ORDER CREATED!!!!!')
+        logger.info(f'New order created. Order: {order.order_id}')
         return order
 
     @database_sync_to_async

@@ -1,5 +1,7 @@
 import 'package:pickndell/dao/user_dao.dart';
+import 'package:pickndell/location/place.dart';
 import 'package:pickndell/model/open_orders.dart';
+import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/ApiProvider.dart';
 import 'package:pickndell/model/order.dart';
 import 'dart:async';
@@ -47,6 +49,46 @@ class OrderRepository {
       return response;
     } catch (e) {
       print('REPO ERROR: $e');
+      return e;
+    }
+  }
+
+  Future getPriceParamsRepo({User user}) async {
+    var _url = "price-parameteres/";
+    try {
+      var response = await _provider.priceParams(user: user, url: _url);
+      print('Price Params: $response');
+      return response;
+    } catch (e) {
+      print('ERROR GETTING CURRENT PRICE PARAMS: $e');
+      return e;
+    }
+  }
+
+  Future newOrderRepo(
+      {OrderAddress pickupAddress,
+      OrderAddress dropoffAddress,
+      User user,
+      bool priceOrder,
+      String packageType,
+      String urgency}) async {
+    var _url = "new-order/";
+    ApiProvider _provider = ApiProvider();
+
+    try {
+      // var user = await UserDao().getUser(0);
+      var response = await _provider.postNewOrder(
+          url: _url,
+          pickupAddress: pickupAddress,
+          dropoffAddress: dropoffAddress,
+          user: user,
+          priceOrder: priceOrder,
+          packageType: packageType,
+          urgency: urgency);
+      print('>>> NEW ORDER RESPONSE: $response');
+      return response;
+    } catch (e) {
+      print('NEW ORDER REPO ERROR: $e');
       return e;
     }
   }

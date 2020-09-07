@@ -12,6 +12,7 @@ class User {
   int numDailyOrders;
   int numOrdersInProgress;
   double dailyCost;
+  String creditCardToken;
 
   // Courier
   String name;
@@ -31,6 +32,7 @@ class User {
       this.phone,
       this.businessName,
       this.businessCategory,
+      this.creditCardToken,
       this.isApproved,
       this.numDailyOrders,
       this.numOrdersInProgress,
@@ -50,6 +52,7 @@ class User {
       phone: data['phone'],
       businessName: data['businessName'],
       businessCategory: data['businessCategory'],
+      creditCardToken: data['creditCardToken'],
       isApproved: data['isApproved'],
       numDailyOrders: data['numDailyOrders'],
       numOrdersInProgress: data['numOrdersInProgress'],
@@ -69,6 +72,7 @@ class User {
         "phone": this.phone,
         "businessName": this.businessName,
         "businessCategory": this.businessCategory,
+        "creditCardToken": this.creditCardToken,
         "isApproved": this.isApproved,
         "numDailyOrders": this.numDailyOrders,
         "numOrdersInProgress": this.numOrdersInProgress,

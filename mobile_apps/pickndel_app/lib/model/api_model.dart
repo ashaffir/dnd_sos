@@ -25,6 +25,7 @@ class Token {
   double rating;
   double dailyProfit;
   int activeOrders;
+  String creditCardToken;
 
   Token(
       {this.token,
@@ -42,6 +43,7 @@ class Token {
       this.vehicle,
       this.rating,
       this.dailyProfit,
+      this.creditCardToken,
       this.activeOrders});
 
   factory Token.fromJson(Map<String, dynamic> json) {
@@ -54,6 +56,7 @@ class Token {
         phone: json['phone'],
         businessName: json['business_name'],
         businessCategory: json['business_category'],
+        creditCardToken: json['credit_card_token'],
         isApproved: json['is_approved'],
         numDailyOrders: json['num_daily_orders'],
         numOrdersInProgress: json['num_orders_in_progress'],
