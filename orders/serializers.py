@@ -43,6 +43,7 @@ class OrderSerializer(serializers.ModelSerializer):
                 'drop_off_address', 'distance_to_business','order_location', 'order_lon', 'order_lat',
                 'price','fare','private_sale_token','customer_transaction_id','invoice_url', 'transaction_auth_num',
                 'order_type','business', 'freelancer',)
+                
 
 class OrderAPISerializer(serializers.ModelSerializer):
     # business_name = serializers.SlugRelatedField(read_only=True, slug_field='business_name')

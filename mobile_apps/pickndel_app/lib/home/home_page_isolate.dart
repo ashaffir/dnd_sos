@@ -6,6 +6,7 @@ import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/location_settings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/credencials.dart';
@@ -14,6 +15,8 @@ import 'package:pickndell/location/location_callback_handler.dart';
 import 'package:pickndell/location/location_service_repository.dart';
 import 'package:pickndell/location/place.dart';
 import 'package:pickndell/location/search_bloc.dart';
+import 'package:pickndell/login/image_upload.dart';
+import 'package:pickndell/login/phone_update.dart';
 import 'package:pickndell/login/profile_updated.dart';
 import 'package:pickndell/model/credit_card_update.dart';
 import 'package:pickndell/orders/new_order.dart';
@@ -348,13 +351,63 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           ),
                         ],
                       ),
-                      IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            updateProfile(
-                                context: context, updateField: 'name');
-                            print('EDIT NAME');
-                          }),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                      ),
+
+                      currentUser.isEmployee == 0
+                          ? Row(
+                              children: <Widget>[
+                                currentUser.businessName != null
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: pickndellGreen,
+                                      )
+                                    : IconButton(
+                                        icon: Icon(Icons.control_point),
+                                        color: Colors.orange,
+                                        onPressed: () {
+                                          updateProfile(
+                                              context: context,
+                                              updateField: 'name');
+                                          print('UPDATE NAME');
+                                        }),
+                                IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
+                                      updateProfile(
+                                          context: context,
+                                          updateField: 'name');
+                                      print('EDIT NAME');
+                                    }),
+                              ],
+                            )
+                          : Row(
+                              children: <Widget>[
+                                currentUser.name != null
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: pickndellGreen,
+                                      )
+                                    : IconButton(
+                                        icon: Icon(Icons.control_point),
+                                        color: Colors.orange,
+                                        onPressed: () {
+                                          updateProfile(
+                                              context: context,
+                                              updateField: 'name');
+                                          print('UPDATE NAME');
+                                        }),
+                                IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
+                                      updateProfile(
+                                          context: context,
+                                          updateField: 'name');
+                                      print('EDIT NAME');
+                                    }),
+                              ],
+                            ),
                     ],
                   ),
 
@@ -380,6 +433,22 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           fontSize: 15.0,
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 5.0),
+                      ),
+                      currentUser.phone != null
+                          ? Icon(
+                              Icons.check_circle,
+                              color: pickndellGreen,
+                            )
+                          : IconButton(
+                              icon: Icon(Icons.control_point),
+                              color: Colors.orange,
+                              onPressed: () {
+                                updateProfile(
+                                    context: context, updateField: 'phone');
+                                print('UPDATE PHONE');
+                              }),
                       IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
@@ -412,6 +481,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           fontSize: 15.0,
                         ),
                       ),
+                      Padding(padding: EdgeInsets.only(right: 5.0)),
+                      Icon(Icons.check_circle, color: pickndellGreen),
                       IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
@@ -421,7 +492,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                           }),
                     ],
                   ),
-
                   ////////////// CATEGORY SECTION ////////////////
                   ///
                   Row(
@@ -448,6 +518,98 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                 : " ",
                         style: TextStyle(fontSize: 15.0),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                      ),
+                      currentUser.isEmployee == 1
+                          ? Row(
+                              children: <Widget>[
+                                currentUser.vehicle != null
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: pickndellGreen,
+                                      )
+                                    : IconButton(
+                                        icon: Icon(Icons.control_point),
+                                        color: Colors.orange,
+                                        onPressed: () {
+                                          updateProfile(
+                                              context: context,
+                                              updateField:
+                                                  currentUser.isEmployee == 1
+                                                      ? 'vehicle'
+                                                      : 'business category');
+                                          print('EDIT VEHICLE');
+                                        },
+                                      )
+                              ],
+                            )
+                          : Row(), // Not adding for business yet
+                      IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            updateProfile(
+                                context: context,
+                                updateField: currentUser.isEmployee == 1
+                                    ? 'vehicle'
+                                    : 'business category');
+                            print('EDIT VEHICLE');
+                          }),
+                    ],
+                  ),
+                  ////////////// ID DOCUMENT SECTION ////////////////
+                  ///
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                      ),
+                      Text(
+                        "ID Document:",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                      ),
+                      Text(
+                        currentUser.isEmployee == 1
+                            ? currentUser.vehicle != null
+                                ? '${currentUser.vehicle}'
+                                : " "
+                            : currentUser.businessCategory != null
+                                ? '${currentUser.businessCategory}'
+                                : " ",
+                        style: TextStyle(fontSize: 15.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                      ),
+                      currentUser.isEmployee == 1
+                          ? Row(
+                              children: <Widget>[
+                                currentUser.vehicle == null
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: pickndellGreen,
+                                      )
+                                    : IconButton(
+                                        icon: Icon(Icons.control_point),
+                                        color: Colors.orange,
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ImageUpload(
+                                                      user: currentUser,
+                                                    )),
+                                          );
+                                          print('Add ID Document');
+                                        },
+                                      )
+                              ],
+                            )
+                          : Row(), // Not adding for business yet
                       IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
@@ -461,7 +623,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                     ],
                   ),
 
-                  ////////////// CREDICT CARD SECTION ////////////////
+                  ////////////// CREDICT CARD SECTION (ONLY BUSINESS/SENDER) ////////////////
                   ///
                   currentUser.isEmployee == 0
                       ? Row(
@@ -479,7 +641,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                             currentUser.creditCardToken != null
                                 ? Icon(
                                     Icons.check_circle,
-                                    color: Colors.green,
+                                    color: pickndellGreen,
                                   )
                                 : IconButton(
                                     icon: Icon(Icons.control_point,
@@ -598,9 +760,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                         } else if (!running) {
                                           onStop();
                                         }
-                                        // setState(() {
-                                        //   _toggleTracking();
-                                        // });
                                       } else {
                                         showAlertDialog(
                                             context: context,
@@ -614,7 +773,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                       }
                                     },
                                     activeTrackColor: Colors.lightGreenAccent,
-                                    activeColor: Colors.green,
+                                    activeColor: pickndellGreen,
                                     inactiveTrackColor: Colors.red[400],
                                   ),
                                 ),
@@ -638,7 +797,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                             FlatButton(
                                 shape: RoundedRectangleBorder(
                                     side: BorderSide(
-                                        color: Colors.green,
+                                        color: pickndellGreen,
                                         width: 2,
                                         style: BorderStyle.solid),
                                     borderRadius: BorderRadius.circular(50)),
@@ -658,7 +817,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                         context: context,
                                         title: 'Your account is not approved.',
                                         content:
-                                            "Please complete your profile before ordering deliveries",
+                                            "Please complete your profile before ordering deliveries. \n Name, phone and credit card are mandatory.",
                                         url: '');
                                   }
                                 },
@@ -796,7 +955,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
             okButton,
             FlatButton(
                 child: Text('Update'),
-                color: Colors.green,
+                color: pickndellGreen,
                 onPressed: () {
                   if (!_formKey.currentState.validate()) {
                     return;
@@ -822,13 +981,20 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                     } else if (updateField == 'phone') {
                       print(
                           '> STAGE 1) Phone update requested. Sending the phone number');
-                      sendPhoneVerificationRequest(
-                          user: currentUser,
-                          phone: _textInput.text,
-                          action: 'new_phone');
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return PhoneUpdate(
+                                user: currentUser, newPhone: _textInput.text);
+                          },
+                        ),
+                        (Route<dynamic> route) =>
+                            false, // No Back option for this page
+                      );
                     } else {
                       print('UPDATED FIELD: $updateField');
-                      Navigator.pushAndRemoveUntil(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
@@ -842,8 +1008,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                         : _textInput.text);
                           },
                         ),
-                        (Route<dynamic> route) =>
-                            false, // No Back option for this page
                       );
                     }
                     print('Updating $updateField');
@@ -856,52 +1020,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
   }
 
   bool codeRequestSent;
-
-  Future<bool> sendPhoneVerificationRequest(
-      {User user, String phone, String action}) async {
-    bool _codeRequestSent;
-    var _phoneVerificationApi;
-    print('> STAGE 2) Sending the phone to PND & TW');
-
-    // Getting the country code from memory
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    String userCountryCode = localStorage.getString('userCountry');
-
-    _phoneVerificationApi = await phoneVerificationAPI(
-        phone: phone,
-        countryCode: userCountryCode,
-        verificationCode: "",
-        user: user,
-        action: 'new_phone');
-    _codeRequestSent =
-        _phoneVerificationApi['response'] == "Update successful" ? true : false;
-    print('> STAGE 3) Reponse from TW/PND: $_codeRequestSent');
-    Navigator.pop(context);
-
-    if (_codeRequestSent) {
-      print('> STAGE 5) String the phone in local memeory.');
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      try {
-        await localStorage.setString('tmpPhone', phone);
-      } catch (e) {
-        print('ERROR: Country check page');
-      }
-
-      print('> STAGE 4) Showing verification code entry form.');
-      String sentPhoneCode = showVerificationAlert(
-        context: context,
-        user: user,
-        updateField: 'phone',
-        title: 'Please enter the code you receive via SMS',
-      );
-    } else {
-      print('> STAGE 4.a) BAD Phone entered.');
-      showAlertDialog(
-          context: context, content: '', title: 'Phone not Valid', url: '');
-    }
-
-    return _codeRequestSent;
-  }
 
   Future<bool> sendEmailVerificationCode(
       {String email, User user, String direction}) async {
@@ -998,7 +1116,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   );
                 }
               },
-              color: Colors.green,
+              color: pickndellGreen,
             )
           ],
         );

@@ -29,7 +29,7 @@ class OrderRepository {
     od.orders = [];
     for (var json in _response) {
       od.orders.add(Order.fromJson(json));
-      print('RESE: $json');
+      // print('RESE: $json');
     }
 
     // check order language coming from the API call

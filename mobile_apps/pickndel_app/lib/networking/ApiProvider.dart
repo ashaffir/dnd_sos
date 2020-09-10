@@ -1,3 +1,4 @@
+import 'package:pickndell/common/global.dart';
 import 'package:pickndell/location/place.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_location.dart';
@@ -12,7 +13,7 @@ import 'dart:async';
 import 'CustomException.dart';
 
 class ApiProvider {
-  final String _baseUrl = "https://ec64b3bbb15e.ngrok.io/api/";
+  final String _baseUrl = testServer + "/api/";
   // final String _baseUrl = "https://pickndell.com/api/";
 
   Future<dynamic> get(String url, User user) async {

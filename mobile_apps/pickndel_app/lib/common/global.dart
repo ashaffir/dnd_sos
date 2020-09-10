@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
+// NGROK or other as such
+String testServer = 'https://dangerous-otter-2.loca.lt';
+
 Color darkGreyColor = new Color(0xFF212128);
 Color lightBlueColor = new Color(0xFF8787A0);
 Color redColor = new Color(0xFFDC4F64);
 Color greenColor = new Color(0xFFDC4F64);
+Color pickndellGreen = new Color(0xFF8BC34A);
 
 Color mainBackground = new Color(0xFF202020);
+Color ordersBackground = new Color(0xFF333333);
 
 TextStyle intrayTitleStyle = new TextStyle(
     fontFamily: 'Avenir',
@@ -16,7 +21,7 @@ TextStyle intrayTitleStyle = new TextStyle(
 TextStyle bigLightBlueTitle = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
-    color: lightBlueColor,
+    color: pickndellGreen,
     fontSize: 30);
 
 TextStyle darkTodoTitle = new TextStyle(
@@ -29,7 +34,7 @@ TextStyle whiteTitle = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
     color: Colors.white,
-    fontSize: 20);
+    fontSize: 25);
 
 TextStyle whiteButtonTitle = new TextStyle(
     fontFamily: 'Avenir',

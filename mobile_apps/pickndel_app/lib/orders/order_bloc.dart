@@ -29,7 +29,7 @@ class OrdersBloc {
     } else if (ordersType == 'businessOrders') {
       orderDataSink.add(Response.loading(''));
     } else {
-      orderDataSink.add(Response.loading(''));
+      orderDataSink.add(Response.error('Error loading orders list'));
     }
     try {
       Orders orderDetails =

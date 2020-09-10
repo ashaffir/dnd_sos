@@ -7,6 +7,7 @@ import 'package:pickndell/model/credit_card.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
+import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -226,69 +227,6 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
     return updateResponse;
   }
 
-  // Future emailVerification(String verificationCode) async {
-  //   User currentUser = await UserDao().getUser(0);
-  //   TextEditingController _textInput = TextEditingController();
-  //   // set up the AlertDialog
-  //   Widget okButton = FlatButton(
-  //     child: Text("Cancel"),
-  //     onPressed: () {
-  //       Navigator.pop(context);
-  //     },
-  //   );
-  //   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  //   bool codeVerified = false;
-
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Please insert the code you received in your new email'),
-  //         content: Form(
-  //           key: _formKey,
-  //           child: SingleChildScrollView(
-  //             child: Column(
-  //               children: [
-  //                 TextFormField(
-  //                   controller: _textInput,
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           okButton,
-  //           FlatButton(
-  //               child: Text('Submit'),
-  //               color: Colors.green,
-  //               onPressed: () {
-  //                 if (!_formKey.currentState.validate()) {
-  //                   return;
-  //                 } else {
-  //                   // codeVerified = sendVerificationCode(_textInput);
-  //                   codeVerified = true;
-  //                   if (codeVerified) {
-  //                     Navigator.pushAndRemoveUntil(
-  //                       context,
-  //                       MaterialPageRoute(
-  //                         builder: (context) => ProfileUpdated(
-  //                             user: currentUser,
-  //                             updateField: 'email',
-  //                             value: _textInput.text),
-  //                       ),
-  //                       (Route<dynamic> route) =>
-  //                           false, // No Back option for this page
-  //                     );
-  //                     print('Updating Email');
-  //                   }
-  //                 }
-  //               }),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   Widget getProfileUpdatedPage(dynamic order) {
     final trans = ExampleLocalizations.of(context);
 
@@ -298,22 +236,44 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
         title: Text('Profile Update'),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 50),
-        height: 160,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Spacer(
-              flex: 4,
-            ),
-            Text(
-              'Your profile was successfully updated',
-              style: bigLightBlueTitle,
-            ),
-            Spacer(
-              flex: 2,
-            ),
-          ],
+        padding: EdgeInsets.all(30),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Spacer(
+                flex: 4,
+              ),
+              Text(
+                'Your profile was successfully updated',
+                style: bigLightBlueTitle,
+              ),
+              Spacer(
+                flex: 4,
+              ),
+              FlatButton(
+                child: Text('Back To Main Page'),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HomePageIsolate(
+                          userRepository: UserRepository(),
+                        );
+                      },
+                    ),
+                    (Route<dynamic> route) =>
+                        false, // No Back option for this page
+                  );
+                },
+                color: Colors.green,
+              ),
+              Spacer(
+                flex: 4,
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavBar(),
@@ -346,21 +306,5 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
       ),
       bottomNavigationBar: BottomNavBar(),
     );
-  }
-}
-
-// TODO: Add the pick and drop addresses coordinates
-
-class MapUtils {
-  MapUtils._();
-
-  static Future<void> openMap(double latitude, double longitude) async {
-    String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleUrl)) {
-      await launch(googleUrl);
-    } else {
-      throw 'Could not open the map.';
-    }
   }
 }

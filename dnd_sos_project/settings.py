@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'qr_code', # https://github.com/dprog-philippe-docourt/django-qr-code
     'django_twilio', # Twilio Phone SMS verification
     "fcm_django",
+    'imagekit', # image processing, https://github.com/matthewwithanm/django-imagekit/
 
     'django.contrib.admin',
     'django.contrib.auth',

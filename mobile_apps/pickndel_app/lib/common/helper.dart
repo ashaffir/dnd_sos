@@ -14,7 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import './constants.dart';
 
-// Pic color from Gimp and use as following exmaple (pickndell logo green):
+// Pic color from Gimp and use as following example (pickndell logo green):
 // color: Color(hexColor('8bc34a')), ...
 hexColor(String colorHexCode) {
   String colorNew = '0xFF' + colorHexCode;
@@ -32,7 +32,7 @@ String timeConvert(String dateTime) {
 }
 
 String validateName(String value) {
-  String patttern = r'(^[a-zA-Z ]*$)';
+  String patttern = r"(^[a-zA-Z\u05D0-\u05EA' ]*$)";
   RegExp regExp = new RegExp(patttern);
   if (value.length == 0) {
     return "Name is Required";

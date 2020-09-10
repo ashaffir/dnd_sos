@@ -18,6 +18,8 @@ class Order {
   String business_name;
   String courier_phone;
   String courier_name;
+  double pickUpAddressLat;
+  double pickUpAddressLng;
 
   Order({
     this.order_id,
@@ -37,6 +39,8 @@ class Order {
     this.courier_name,
     this.courier_phone,
     this.order_country,
+    this.pickUpAddressLat,
+    this.pickUpAddressLng,
   });
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -72,6 +76,8 @@ class Order {
     } catch (e) {
       print('ORDER courier ERROR: $e');
     }
+    pickUpAddressLat = json['business']['lat'];
+    pickUpAddressLng = json['business']['lon'];
   }
 
 // Order.activeDuration()
@@ -91,6 +97,8 @@ class Order {
     data['price'] = this.price;
     data['fare'] = this.fare;
     data['status'] = this.status;
+    data['lat'] = this.pickUpAddressLat;
+    data['lon'] = this.pickUpAddressLng;
     return data;
   }
 }

@@ -6,11 +6,12 @@ import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/CustomException.dart';
 import 'package:http/http.dart' as http;
 import 'package:pickndell/model/api_model.dart';
+import 'package:pickndell/common/global.dart';
 
 // final _base = "https://home-hub-app.herokuapp.com";
 // final _tokenEndpoint = "/api-token-auth/";
 
-final _base = "https://ec64b3bbb15e.ngrok.io";
+final _base = testServer;
 // final _base = "https://pickndell.com";
 final _tokenEndpoint = "/api/login/";
 final _registrationEndpoint = "/api/register/";

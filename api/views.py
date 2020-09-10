@@ -17,7 +17,7 @@ from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
@@ -36,7 +36,7 @@ from .serializers import (UserSerializer, LoginSerializer,
                         ContactsSerializer, BusinessSerializer, 
                         UsernameSerializer, EmployeeProfileSerializer, EmployerProfileSerializer,)
 from orders.serializers import OrderSerializer, OrderAPISerializer
-from .permissions import IsOwnerOrReadOnly # Custom permission
+from .permissions import IsOwnerOrReadOnly, IsOwner # Custom permission
 
 logger = logging.getLogger(__file__)
 
@@ -281,7 +281,7 @@ class ActiveOrdersViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
     # queryset = Order.objects.all()
-
+    data = {}
     def get_queryset(self, *args, **kwargs):
         queryset_list = Order.objects.all()
         user = self.request.GET.get('user')
@@ -367,13 +367,11 @@ class UserProfile(viewsets.ModelViewSet):
 
 
 @api_view(['PUT','POST',])
-# @permission_classes((IsAuthenticated,))
 @permission_classes((IsAuthenticated,))
 def user_profile(request):
     '''
     returns user profile information
     '''
-
     # try:
         # user = User.objects.get(pk=request.user.pk)
     if request.data['is_employee'] == 1:
@@ -383,10 +381,9 @@ def user_profile(request):
         user = Employer.objects.get(pk=request.data['user_id'])
         serializer = EmployerProfileSerializer(user, data=request.data)
 
-    # except Exception as e:
-    #     return Response(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'POST':
+        print(f'REQUEST: {request.data}')
         data = {}
         if serializer.is_valid():
             data = serializer.data
@@ -606,16 +603,20 @@ def price_parameteres(request):
 def new_order(request):
     '''
     New order from Mobile user
+    1) The first section is the price structuring and sending baack for sender to approve.
+    2) The second section is the actual creation of the order when the sender approves.
     '''
 
     data = {}
 
+    user = User.objects.get(pk=request.user.pk)
+
     if request.data['is_employee'] == 1:
-        user = Employee.objects.get(pk=request.data['user_id'])
+        user_profile = Employee.objects.get(pk=request.data['user_id'])
     else:
-        user = Employer.objects.get(pk=request.data['user_id'])
+        user_profile = Employer.objects.get(pk=request.data['user_id'])
     
-    if not user.is_approved:
+    if not user_profile.is_approved:
         return Response('User is not approved')
 
     '''
@@ -696,18 +697,24 @@ def new_order(request):
 
     if request.data['price_order']:
         return Response(data['price'])
+    
     else:
         try:
-            user.location = Point(pickup_address_lat,pickup_address_lng)
-            user.address = pickup_address
+            user_profile.location = Point(pickup_address_lat,pickup_address_lng)
+            user_profile.address = pickup_address
+            user_profile.lat = pickup_address_lat
+            user_profile.lon = pickup_address_lng
+            user_profile.save()
+
             user.lat = pickup_address_lat
             user.lon = pickup_address_lng
             user.save()
+
         except Exception as e:
             print('Failed writing sender location to DB.')
             
         data['order_type'] = package_type
-        data['business'] = User.objects.get(pk=user.pk)
+        data['business'] = User.objects.get(pk=user_profile.pk)
 
         Order.objects.create(**data)
 
@@ -728,6 +735,9 @@ def order_update_view(request):
         update_order = Order.objects.get(order_id=request.data['order_id'])
     except Order.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    business = Employer.objects.get(pk=update_order.business.pk)
+    print(f'BUSINESS OWNER: {business} Location: {business.location} Lat: {business.lat} Lon: {business.lon}')
 
     if request.method == 'PUT':
         serializer = OrderSerializer(update_order, data=request.data)
@@ -763,6 +773,11 @@ def order_update_view(request):
                     data['response'] = 'Update successful'
                 else:
                     data['response'] = f'Update failed. Wrong order status. in: {new_status} current: {old_status}'
+
+                data['business_lat'] = business.lat
+                data['business_lon'] = business.lon
+                data['business_phone'] = business.phone
+
             else:
                 data['response'] = "Update failed. Missing status parameter."
         else:
@@ -850,16 +865,18 @@ def phone_verification(request):
             
             if (valid_new_phone_number):
                 print(f'Phone is good: {new_phone}. Country: {country_code}. Sending to Twilio')
-                # sent_sms_status = phone_verify(request, action='send_verification_code', phone=new_phone, code=None)
                 
-                # TESTING
-                timer = 0
-                while timer < 4:
-                    print('sleep...')
-                    time.sleep(1)
-                    timer += 1
-                sent_sms_status = True
-                #################
+                if settings.DEBUG:
+                    timer = 0
+                    while timer < 3:
+                        print('sleep...')
+                        time.sleep(1)
+                        timer += 1
+                    sent_sms_status = True
+                else:
+                    print('Sending SMS code request to Twilio')
+                    sent_sms_status = phone_verify(request, action='send_verification_code', phone=new_phone, code=None)
+
 
                 if sent_sms_status:
                     data['response'] = 'Update successful'
@@ -883,18 +900,20 @@ def phone_verification(request):
             user_code = request.data['verification_code']
             new_phone = request.data['phone']
             
-            # verification_status = phone_verify(request, action='verify_code', phone=new_phone, code=user_code)
 
 
 
-            # TESTING
-            timer = 0
-            while timer < 4:
-                time.sleep(1)
-                timer += 1
-            sent_sms_status = True
-            verification_status = 'approved'
-            #########
+            if settings.DEBUG:
+                timer = 0
+                while timer < 3:
+                    time.sleep(1)
+                    timer += 1
+                sent_sms_status = True
+                verification_status = 'approved'
+            else:
+                print('Sending approval request to Twilio')
+                verification_status = phone_verify(request, action='verify_code', phone=new_phone, code=user_code)
+
             
             if verification_status == 'approved':
                 user.phone = new_phone

@@ -11,7 +11,8 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 # from orders.models import Order
 
 # use a custom auth user model to add extra fields
@@ -33,6 +34,8 @@ class User(AbstractUser):
     position = models.CharField(max_length=200, default=None, blank=True, null=True)
 
     address = models.CharField(max_length=200, blank=True, null=True)
+    lat = models.FloatField(null=True, blank=True)
+    lon = models.FloatField(null=True, blank=True)
 
     # phone number
     phone_number = models.CharField(max_length=15, blank=True, null=True, default=None)
@@ -107,7 +110,10 @@ class Employer(models.Model):
     b_freelancers = models.CharField(max_length=500, null=True, blank=True)
  
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
-
+    profile_pic_thumbnail = ImageSpecField(source='avatar',
+                                      processors=[ResizeToFill(100, 50)],
+                                      format='JPEG',
+                                      options={'quality': 60})
     newsletter_optin = models.BooleanField(default=True)
 
     new_messages = models.IntegerField(default=0)

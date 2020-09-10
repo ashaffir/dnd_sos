@@ -1,6 +1,9 @@
+import 'package:pickndell/common/map_utils.dart';
+import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/repository/order_repository.dart';
+import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +77,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 50),
-        height: 160,
+        height: 260,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -93,12 +96,41 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               style: whiteTitle,
             ),
             Spacer(
-              flex: 2,
+              flex: 3,
             ),
-            Text(
-              translations.orders_to + ": ${order["drop_off_address"]}",
-              style: whiteTitle,
+            Padding(
+              padding: EdgeInsets.only(bottom: 30),
+            ),
+            Row(
+              children: [
+                RaisedButton.icon(
+                  icon: Icon(Icons.navigation),
+                  color: pickndellGreen,
+                  shape: StadiumBorder(side: BorderSide(color: Colors.black)),
+                  onPressed: () {
+                    MapUtils.openMap(
+                        order["business_lat"], order["business_lon"]);
+                  },
+                  label: Text('Navigate'),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                ),
+                RaisedButton.icon(
+                  icon: Icon(Icons.phone),
+                  color: Colors.blue,
+                  shape: StadiumBorder(side: BorderSide(color: Colors.black)),
+                  onPressed: () {
+                    launch(('tel://${order["business_phone"]}'));
+                  },
+                  label: Text(translations.orders_call_sender),
+                ),
+              ],
             )
+            // Text(
+            //   translations.orders_to + ": ${order["drop_off_address"]}",
+            //   style: whiteTitle,
+            // )
           ],
         ),
       ),
@@ -116,37 +148,45 @@ class _OrderAcceptedState extends State<OrderAccepted> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 20),
-        height: 160,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Spacer(
-              flex: 4,
-            ),
-            Text(
-              translations.order_a_not_available + "!",
-              style: bigLightBlueTitle,
-            ),
-          ],
+        height: 260,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Spacer(
+                flex: 4,
+              ),
+              Text(
+                translations.order_a_not_available + "!",
+                style: bigLightBlueTitle,
+              ),
+              Spacer(
+                flex: 4,
+              ),
+              FlatButton(
+                child: Text('Back To Main Page'),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HomePageIsolate(
+                          userRepository: UserRepository(),
+                        );
+                      },
+                    ),
+                    (Route<dynamic> route) =>
+                        false, // No Back option for this page
+                  );
+                },
+                color: Colors.green,
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavBar(),
     );
-  }
-}
-
-// TODO: Add the pick and drop addresses coordinates
-
-class MapUtils {
-  MapUtils._();
-
-  static Future<void> openMap(double latitude, double longitude) async {
-    String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleUrl)) {
-      await launch(googleUrl);
-    } else {
-      throw 'Could not open the map.';
-    }
   }
 }

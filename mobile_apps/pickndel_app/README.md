@@ -79,3 +79,9 @@ Build commands:
 - AutoComplete: https://www.youtube.com/watch?v=rJOkoAmC5GY
 - Plugin for search: https://www.youtube.com/watch?v=sco5RsYgpwc (???)
 
+# REFERENCE: NGROK alternative: 
+- https://localtunnel.github.io/www/
+- Install:
+npm install -g localtunnel
+- Run: 
+lt --port 8000

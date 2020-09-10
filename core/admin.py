@@ -1,8 +1,14 @@
 from django.contrib import admin
+from imagekit.admin import AdminThumbnail
 
 from core.models import User, Employer, Employee, Asset, AssignedAsset, BankDetails
 from django.contrib.gis.admin import OSMGeoAdmin
 
+class PhotoAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'admin_thumbnail')
+    admin_thumbnail = AdminThumbnail(image_field='profile_pic')
+
+# admin.site.register(Employer, PhotoAdmin)
 @admin.register(Employer)
 class Employer(OSMGeoAdmin):
     list_display = (
@@ -23,6 +29,7 @@ class Employer(OSMGeoAdmin):
             )
 
     search_fields = ('bio','city','business_name',)
+    
     # ordering = ('-created',)
 
 @admin.register(Employee)

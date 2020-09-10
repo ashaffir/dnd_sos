@@ -12,6 +12,11 @@ https://channels.readthedocs.io/en/latest/tutorial/index.html
 
 Async-sync shit: https://docs.djangoproject.com/en/3.0/topics/async/
 
+### Redis
+- https://tinyurl.com/y8j73zcg
+sudo apt install redis-server
+sudo systemctl restart redis.service
+sudo systemctl status redis
 
 ### TikTok/Notifiers 
 * https://www.youtube.com/watch?v=G_EM5WM_08Q
@@ -84,7 +89,7 @@ GET, UPDATE, DELETE, POST: https://www.youtube.com/watch?v=B65zbFro2pU
 1) Sources (Git)
 2) Supervisor
 3) Gunicorn
-4) Daphne (https://github.com/django/daphne)
+4) Daphne (https://github.com/django/daphne , https://www.youtube.com/watch?v=EdK15Qcc3Zs)
 5) Nginx
 6) Redis (https://tinyurl.com/y8j73zcg)
 7) Postgres
@@ -130,6 +135,8 @@ https://tinyurl.com/y9rdrqce
 https://pypi.org/project/geopy/ 
 
 ### Language support
+- Django: https://docs.djangoproject.com/en/3.0/topics/i18n/translation/
+
 django-admin makemessages -l he
 
 - Edit the .po file in the locale directory, and then:
