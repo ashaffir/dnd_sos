@@ -143,7 +143,10 @@ django-admin makemessages -l he
 
 django-admin compilemessages
 
-
-
-
+# REFERENCE: NGROK alternative: 
+- https://localtunnel.github.io/www/
+- Install:
+npm install -g localtunnel
+- Run: 
+lt --port 8000
 
