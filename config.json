@@ -1,6 +1,6 @@
 {
 	"SECRET_KEY": "zijbaj^_lv)!8-1ex(&a-00l%t+)fa)b)&)8#hegij@1cuns=(",
-	"POSTGRES_USER": "alfredshaffir",
+	"POSTGRES_USER": "alfreds",
 	"POSTGRES_PASS": "!Q2w3e4r%T",
 	"MAILJET_HOST_USER": "59821dd394d97be74449840fe384c8b5",
 	"MAILJET_HOST_PASSWORD": "7075700fa37924a22ebe6b5ffcdac824",
