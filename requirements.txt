@@ -64,3 +64,4 @@ fcm-django==0.3.4
 pyfcm==1.4.7
 forex-python==1.5
 django-imagekit==4.0.2
+django-twilio==0.13.0.post1

@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "venv_dnd_sos/bin/python"
+    "python.pythonPath": "venv_dnd_sos/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
