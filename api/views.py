@@ -1,3 +1,4 @@
+import base64
 import time
 import platform
 import json
@@ -80,7 +81,8 @@ class UserAvailable(APIView):
             user_id = self.request.GET.get('user')
             user = Employee.objects.get(pk=user_id)
         except Exception as e:
-            return Response({'response':'Bad user ID'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'response':'Bad user ID.'}, status=status.HTTP_400_BAD_REQUEST)
+            logger.error('Bad request for user. Error: {e}')
 
         try:
             user.is_available = self.request.data['available']
@@ -364,6 +366,40 @@ class ContactView(viewsets.ModelViewSet):
 
 class UserProfile(viewsets.ModelViewSet):
     pass
+
+
+from django.core.files.base import ContentFile
+
+@api_view(['POST',])
+# @permission_classes((IsAuthenticated,))
+def user_photo_id(request):
+    data = {}
+    if request.data['is_employee'] == 'true':
+        profile = Employee.objects.get(pk=request.data['user_id'])
+    else:
+        profile = Employer.objects.get(pk=request.data['user_id'])
+        serializer = EmployerProfileSerializer(user, data=request.data)
+
+    country = request.data['country']
+    image_string = request.data["image"]
+    
+    # profile = Employee.objects.get(pk=8)
+    # file_name = settings.MEDIA_ROOT + f'/id_docs/{country}/id_doc_{profile.pk}_{request.data["file_name"]}'
+
+    print('Processing image upload...')    
+    try:
+        print(f'IMAGE TYPE: {type(image_string)}')
+        profile.id_doc = image_string
+        profile.save()
+        print('SAVED TO PROFILE')
+        # data['response'] = 'ID updated'
+        return Response(status.HTTP_202_ACCEPTED)
+    except Exception as e:
+        print(f'Failed saving photo id. ERROR: {e}')
+        logger.error(f'Failed saving photo id. ERROR: {e}')
+        # print(f'DATA: {request.data}')
+        data['response'] = 'Failed updating ID document'
+        return Response(data)
 
 
 @api_view(['PUT','POST',])
@@ -869,7 +905,7 @@ def phone_verification(request):
                 if settings.DEBUG:
                     timer = 0
                     while timer < 3:
-                        print('sleep...')
+                        print('simulating sending to Twilio...')
                         time.sleep(1)
                         timer += 1
                     sent_sms_status = True
@@ -906,6 +942,7 @@ def phone_verification(request):
             if settings.DEBUG:
                 timer = 0
                 while timer < 3:
+                    print('simulating checking SMS...')
                     time.sleep(1)
                     timer += 1
                 sent_sms_status = True

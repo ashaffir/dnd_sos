@@ -67,6 +67,8 @@ class UserRepository {
         numOrdersInProgress: token.numOrdersInProgress,
         dailyCost: token.dailyCost,
         vehicle: token.vehicle,
+        idDoc: token.idDoc,
+        profilePending: token.profilePending,
         rating: token.rating,
         dailyProfit: token.dailyProfit,
         activeOrders: token.activeOrders);

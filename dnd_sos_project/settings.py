@@ -41,13 +41,13 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
-    'core',
     'chat',
     'dndsos',
     'channels',
     'payments',
     'dndsos_dashboard',
     'orders.apps.OrdersConfig',
+    'core.apps.CoreConfig',
     'api',
     # 'verify.apps.VerifyConfig',
 

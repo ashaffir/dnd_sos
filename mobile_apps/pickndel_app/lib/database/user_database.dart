@@ -29,7 +29,7 @@ class DatabaseProvider {
 
     var database = await openDatabase(
       path,
-      version: 20,
+      version: 22,
       onCreate: initDB,
       onUpgrade: onUpgrade,
     );
@@ -56,6 +56,8 @@ class DatabaseProvider {
         "businessCategory TEXT, "
         "creditCardToken TEXT, "
         "vehicle TEXT, "
+        "profilePending INTEGER, "
+        "idDoc TEXT, "
         "isApproved INTEGER, "
         "numDailyOrders INTEGER, "
         "numOrdersInProgress INTEGER, "

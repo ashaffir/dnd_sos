@@ -18,6 +18,8 @@ class User {
   String name;
   String phone;
   String vehicle;
+  String idDoc;
+  int profilePending;
   double rating;
   double dailyProfit;
   int activeOrders;
@@ -38,6 +40,8 @@ class User {
       this.numOrdersInProgress,
       this.dailyCost,
       this.vehicle,
+      this.idDoc,
+      this.profilePending,
       this.rating,
       this.dailyProfit,
       this.activeOrders});
@@ -58,6 +62,8 @@ class User {
       numOrdersInProgress: data['numOrdersInProgress'],
       dailyCost: data['dailyCost'],
       vehicle: data['vehicle'],
+      idDoc: data['idDoc'],
+      profilePending: data['profilePending'],
       rating: data['rating'],
       dailyProfit: data['dailyProfit'],
       activeOrders: data['activeOrders']);
@@ -78,6 +84,8 @@ class User {
         "numOrdersInProgress": this.numOrdersInProgress,
         "dailyCost": this.dailyCost,
         "vehicle": this.vehicle,
+        "idDoc": this.idDoc,
+        "profilePending": this.profilePending,
         "rating": this.rating,
         "dailyProfit": this.dailyProfit,
         "activeOrders": this.activeOrders

@@ -85,3 +85,7 @@ Build commands:
 npm install -g localtunnel
 - Run: 
 lt --port 8000
+
+# REFERENCE: uploading images to the server
+- https://stackoverflow.com/questions/49125191/how-to-upload-images-and-file-to-a-server-in-flutter
+- https://stackoverflow.com/questions/51161862/how-to-send-an-image-to-an-api-in-dart-flutter

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // NGROK or other as such
-String testServer = 'https://dangerous-otter-2.loca.lt';
+String serverDomain = 'https://b0371b1f5370.ngrok.io';
 
 Color darkGreyColor = new Color(0xFF212128);
 Color lightBlueColor = new Color(0xFF8787A0);
@@ -21,7 +21,7 @@ TextStyle intrayTitleStyle = new TextStyle(
 TextStyle bigLightBlueTitle = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
-    color: pickndellGreen,
+    color: Colors.white,
     fontSize: 30);
 
 TextStyle darkTodoTitle = new TextStyle(

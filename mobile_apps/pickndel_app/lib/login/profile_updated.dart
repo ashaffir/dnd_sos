@@ -1,8 +1,13 @@
+import 'package:async/async.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/database/user_database.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
+import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/model/credit_card.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
@@ -13,7 +18,7 @@ import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../common/global.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'dart:io';
 
 class ProfileUpdated extends StatefulWidget {
   final String updateField;
@@ -21,13 +26,15 @@ class ProfileUpdated extends StatefulWidget {
   final User user;
   final String operation;
   final CreditCard creditCardInfo;
+  final File image;
 
   ProfileUpdated(
       {this.user,
       this.updateField,
       this.value,
       this.operation,
-      this.creditCardInfo});
+      this.creditCardInfo,
+      this.image});
 
   @override
   _ProfileUpdatedState createState() => _ProfileUpdatedState();
@@ -43,89 +50,6 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
   String orderUpdated;
   final dbProvider = DatabaseProvider.dbProvider;
   final userTable = 'userTable';
-
-  // REFERENCE: Updating row in the DB
-  //https://stackoverflow.com/questions/54102043/how-to-do-a-database-update-with-sqflite-in-flutter
-  Future<int> rowUpdate(dynamic data) async {
-    final db = await dbProvider.database;
-    // final currentUser = await UserDao().getUser(0);
-    final currentUser = widget.user;
-    int updateCount;
-    if (currentUser.isEmployee == 1) {
-      updateCount = await db.rawUpdate('''
-    UPDATE $userTable 
-    SET name = ?, username = ?, phone = ? , vehicle = ?
-    WHERE id = ?
-    ''', [data['name'], data['email'], data['phone'], data['vehicle'], 0]);
-    } else {
-      updateCount = await db.rawUpdate('''
-    UPDATE $userTable 
-    SET businessName = ?, phone = ?, username = ?, businessCategory = ?, creditCardToken = ?
-    WHERE id = ?
-    ''', [
-        data['business_name'],
-        data['phone'],
-        data['email'],
-        data['business_category'],
-        data['credit_card_token'],
-        0
-      ]);
-    }
-    print('ROWS UPDATED: $updateCount ');
-
-    return updateCount;
-  }
-
-  Future _updateCreditCard({User user, CreditCard creditCard}) async {
-    var _cardUpdate;
-    _cardUpdate = await updateCreditCard(user: user, creditCard: creditCard);
-    return _cardUpdate;
-  }
-
-  String tphone;
-  Future _checkPhoneVerificationCode(
-      {String code, User user, String operation}) async {
-    tphone = await _getTempPhone();
-    print('In function PHONE: $tphone, CODE: $code');
-    var _codeVerified;
-    _codeVerified = await phoneVerificationAPI(
-        phone: tphone,
-        verificationCode: code,
-        user: user,
-        action: 'verify_code');
-    return _codeVerified;
-  }
-
-  Future<String> _getTempPhone() async {
-    final localStorage = await SharedPreferences.getInstance();
-    final _tempPhone = localStorage.getString('tmpPhone');
-    if (_tempPhone == null) {
-      return "";
-    } else {
-      return _tempPhone;
-    }
-  }
-
-  String tmail;
-  Future _checkEmailVerificationCode(
-      {String code, User user, String operation}) async {
-    tmail = await _getTempEmail();
-    print('In function EMAIL: $tmail, CODE: $code');
-    var _codeVerified;
-    _codeVerified = await emailVerificationAPI(
-        email: tmail, code: code, user: user, codeDirection: 'test_result');
-    return _codeVerified;
-  }
-
-  Future<String> _getTempEmail() async {
-    final localStorage = await SharedPreferences.getInstance();
-    final _tempEmail = localStorage.getString('tmpEmail');
-    if (_tempEmail == null) {
-      return "";
-    } else {
-      return _tempEmail;
-    }
-  }
 
   Widget build(BuildContext context) {
     final trans = ExampleLocalizations.of(context);
@@ -178,10 +102,13 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
       );
     } else {
       return FutureBuilder(
-        future: widget.updateField == 'credit_card'
-            ? _updateCreditCard(
-                user: widget.user, creditCard: widget.creditCardInfo)
-            : updateRemoteProfile(widget.updateField, widget.value),
+        future: widget.updateField == 'photo_id'
+            ? _updatePhotoId(user: widget.user, image: widget.image)
+            // ? _uploadImage(widget.image)
+            : widget.updateField == 'credit_card'
+                ? _updateCreditCard(
+                    user: widget.user, creditCard: widget.creditCardInfo)
+                : updateRemoteProfile(widget.updateField, widget.value),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             print('PROFILE UPDATED: ${snapshot.data}');
@@ -199,6 +126,8 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
               } else {
                 return getProfileUpdatedPage(snapshot.data);
               }
+            } else if (snapshot.data['response'] == 'ID updated') {
+              return getProfileUpdatedPage(snapshot.data['response']);
             } else if (snapshot.data["response"] == "Update failed") {
               print('Falied with server response. ');
               return profileUpdatedErrorPage();
@@ -216,6 +145,130 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
         },
       );
     }
+  }
+
+  // REFERENCE: Updating row in the DB
+  //https://stackoverflow.com/questions/54102043/how-to-do-a-database-update-with-sqflite-in-flutter
+  Future<int> rowUpdate(dynamic data) async {
+    final db = await dbProvider.database;
+    // final currentUser = await UserDao().getUser(0);
+    final currentUser = widget.user;
+    int updateCount;
+    if (currentUser.isEmployee == 1) {
+      updateCount = await db.rawUpdate('''
+    UPDATE $userTable 
+    SET name = ?, username = ?, phone = ? , vehicle = ?
+    WHERE id = ?
+    ''', [data['name'], data['email'], data['phone'], data['vehicle'], 0]);
+    } else {
+      updateCount = await db.rawUpdate('''
+    UPDATE $userTable 
+    SET businessName = ?, phone = ?, username = ?, businessCategory = ?, creditCardToken = ?
+    WHERE id = ?
+    ''', [
+        data['business_name'],
+        data['phone'],
+        data['email'],
+        data['business_category'],
+        data['credit_card_token'],
+        0
+      ]);
+    }
+    print('ROWS UPDATED: $updateCount ');
+
+    return updateCount;
+  }
+
+  Future _updateCreditCard({User user, CreditCard creditCard}) async {
+    var _cardUpdate;
+    _cardUpdate = await updateCreditCard(user: user, creditCard: creditCard);
+    return _cardUpdate;
+  }
+
+  Future _updatePhotoId({User user, File image}) async {
+    var _photoIdUpdate;
+    // _photoIdUpdate = await updatePhotoId(user: user, image: image);
+    _photoIdUpdate = await _uploadImage(image);
+    print('6: UPDATE: $_photoIdUpdate');
+    return _photoIdUpdate;
+  }
+
+  String tphone;
+  Future _checkPhoneVerificationCode(
+      {String code, User user, String operation}) async {
+    tphone = await _getTempPhone();
+    print('In function PHONE: $tphone, CODE: $code');
+    var _codeVerified;
+    _codeVerified = await phoneVerificationAPI(
+        phone: tphone,
+        verificationCode: code,
+        user: user,
+        action: 'verify_code');
+    return _codeVerified;
+  }
+
+  Future<String> _getTempPhone() async {
+    final localStorage = await SharedPreferences.getInstance();
+    final _tempPhone = localStorage.getString('tmpPhone');
+    if (_tempPhone == null) {
+      return "";
+    } else {
+      return _tempPhone;
+    }
+  }
+
+  String tmail;
+  Future _checkEmailVerificationCode(
+      {String code, User user, String operation}) async {
+    tmail = await _getTempEmail();
+    print('In function EMAIL: $tmail, CODE: $code');
+    var _codeVerified;
+    _codeVerified = await emailVerificationAPI(
+        email: tmail, code: code, user: user, codeDirection: 'test_result');
+    return _codeVerified;
+  }
+
+  Future<String> _getTempEmail() async {
+    final localStorage = await SharedPreferences.getInstance();
+    final _tempEmail = localStorage.getString('tmpEmail');
+    if (_tempEmail == null) {
+      return "";
+    } else {
+      return _tempEmail;
+    }
+  }
+
+  _uploadImage(File imageFile) async {
+    // open a bytestream
+    print('1');
+    var stream = new http.ByteStream(DelegatingStream(imageFile.openRead()));
+    // get file length
+    var length = await imageFile.length();
+    print('2: length: $length');
+
+    // string to uri
+    var uri = Uri.parse("https://94b6703642d5.ngrok.io/api/user-photo-id/");
+
+    // create multipart request
+    var request = new http.MultipartRequest("POST", uri);
+    print('3: request: $request');
+
+    // multipart that takes file
+    var multipartFile = new http.MultipartFile('image', stream, length,
+        filename: imageFile.path.split("/").last);
+
+    // add file to multipart
+    request.files.add(multipartFile);
+
+    // send
+    var response = await request.send();
+    print('4: request: ${response.statusCode}');
+
+    // listen for response
+    response.stream.transform(utf8.decoder).listen((value) {
+      print('5: value: $value');
+      return value;
+    });
   }
 
   Future updateRemoteProfile(String updateField, String value) async {
@@ -236,20 +289,21 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
         title: Text('Profile Update'),
       ),
       body: Container(
+        height: 300,
         padding: EdgeInsets.all(30),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Spacer(
-                flex: 4,
+              Padding(
+                padding: EdgeInsets.only(top: 30),
               ),
               Text(
                 'Your profile was successfully updated',
                 style: bigLightBlueTitle,
               ),
-              Spacer(
-                flex: 4,
+              Padding(
+                padding: EdgeInsets.only(top: 100),
               ),
               FlatButton(
                 child: Text('Back To Main Page'),
@@ -267,10 +321,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
                         false, // No Back option for this page
                   );
                 },
-                color: Colors.green,
-              ),
-              Spacer(
-                flex: 4,
+                color: pickndellGreen,
               ),
             ],
           ),

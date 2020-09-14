@@ -110,10 +110,10 @@ class Employer(models.Model):
     b_freelancers = models.CharField(max_length=500, null=True, blank=True)
  
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
-    profile_pic_thumbnail = ImageSpecField(source='avatar',
-                                      processors=[ResizeToFill(100, 50)],
-                                      format='JPEG',
-                                      options={'quality': 60})
+    # profile_pic_thumbnail = ImageSpecField(source='avatar',
+    #                                   processors=[ResizeToFill(100, 50)],
+    #                                   format='JPEG',
+    #                                   options={'quality': 60})
     newsletter_optin = models.BooleanField(default=True)
 
     new_messages = models.IntegerField(default=0)
@@ -192,7 +192,7 @@ class Employee(models.Model):
     trips = JSONField(null=True, blank=True)
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
-    id_doc = models.FileField(null=True, blank=True, upload_to=id_path, validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])])
+    id_doc = models.ImageField(null=True, blank=True, upload_to=id_path, validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])])
 
     freelancer_total_rating = models.FloatField(null=True, blank=True)
 
@@ -200,6 +200,7 @@ class Employee(models.Model):
 
     new_messages = models.IntegerField(default=0)
 
+    profile_pending = models.BooleanField(default=False) # He filled up the profile information necessary
     is_approved = models.BooleanField(default=False) # He filled up the profile information necessary
 
     verification_code = models.CharField(max_length=20, null=True, blank=True)

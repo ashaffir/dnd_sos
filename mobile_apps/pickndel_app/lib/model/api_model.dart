@@ -22,6 +22,8 @@ class Token {
   int numOrdersInProgress;
   double dailyCost;
   String vehicle;
+  String idDoc;
+  int profilePending;
   double rating;
   double dailyProfit;
   int activeOrders;
@@ -41,6 +43,8 @@ class Token {
       this.numOrdersInProgress,
       this.dailyCost,
       this.vehicle,
+      this.idDoc,
+      this.profilePending,
       this.rating,
       this.dailyProfit,
       this.creditCardToken,
@@ -62,6 +66,8 @@ class Token {
         numOrdersInProgress: json['num_orders_in_progress'],
         dailyCost: json['daily_cost'],
         vehicle: json['vehicle'],
+        idDoc: json['id_doc'],
+        profilePending: json['profile_pending'],
         rating: json['freelancer_total_rating'],
         dailyProfit: json['daily_profit'],
         activeOrders: json['active_orders']);

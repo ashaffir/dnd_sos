@@ -2,7 +2,6 @@ import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/model/user_location.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/ApiProvider.dart';
-// import 'package:geolocator/geolocator.dart';
 
 class LocationRepository {
   ApiProvider _apiProvider = ApiProvider();

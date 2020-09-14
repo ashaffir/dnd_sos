@@ -1,0 +1,34 @@
+{% load static %}
+{% load i18n %}
+{% autoescape off %}
+{% get_current_language as lang %}
+
+<!doctype html>
+<html lang="en">
+<head>
+</head>
+
+
+<body style="padding: 0px; margin: 0px; background-color: #F7F8F9;">
+
+    <div class="main-wrapper" style="box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; display: block; width: 634px; padding: 30px 30px; background-color: #ffffff; border-radius: 2px; margin: auto;" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+		<div class="content-sec">
+            <div class="row">
+                <div>
+                    <img src="https://pickndell.com/static/assets/images/pickndell-logo-email.png" style="max-width: 30%;">
+                </div>    
+            </div>
+            <div class="row">
+                <h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{% trans 'PickNdell Account Notification' %}</h5>
+            </div>
+		</div>
+        <p>{% trans 'Dear' %} {{ user.name }}, </p>
+        <p>{{ message }}</p>
+
+        <hr>
+        <div>
+            <p><em>{% trans 'If you have received this email by mistake, please ignore it' %}.</p></em>
+        </div>
+</body>
+</html>
+{% endautoescape %}

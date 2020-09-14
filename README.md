@@ -104,7 +104,20 @@ GET, UPDATE, DELETE, POST: https://www.youtube.com/watch?v=B65zbFro2pU
 ** https://tinyurl.com/y783ef6b - UNIX (Notice the GDAL version, might not suit the local one)
 
 And, if/when errors in pip install for GDAL...
+#### On Mac
+- After installing the gdal on the mac:
+brew install gdal
 
+Do:
+gdalinfo --version
+
+- and the version that you get needs to be install ed with pip in the env
+pip install gdal==<3.1.2>
+
+#### On Mac
+brew install postgis
+
+#### On Linux:
 sudo apt-get install gcc libpq-dev -y
 sudo apt-get install python-dev  python-pip -y
 sudo apt-get install python3-dev python3-pip python3-venv python3-wheel -y
@@ -113,9 +126,12 @@ sudo apt-get install postgresql-10-postgis-scripts
 
 *** brew switch openssl 1.0.2s  - solution to openssl issue after installing GDAL
 *** Error in POSTGRES about extension GIS: https://tinyurl.com/yafufges
+psql posgres
+alter role alfreds superuser;
+
 --
 $ psql <db name>
-> CREATE EXTENSION postgis;
+CREATE EXTENSION postgis;
 --
 Notice the changes in the DB Engine in settings, to GIS 
 --
@@ -150,3 +166,5 @@ npm install -g localtunnel
 - Run: 
 lt --port 8000
 
+# REFERENCE: django signals, update_fields
+- https://stackoverflow.com/questions/54578488/django-signals-kwargsupdate-fields-is-always-none-on-model-update-via-djan

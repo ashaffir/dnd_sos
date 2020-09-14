@@ -19,11 +19,11 @@ def check_profile_approved(user_id, is_employee):
         id_doc = user.id_doc
 
         if not name or not phone or not vehicle or not id_doc:
-            user.is_approved = False
+            user.profile_pending = False
             user.save()
             return False
         else:
-            user.is_approved = True
+            user.profile_pending = True
             user.save()
             return True
     else:

@@ -43,9 +43,9 @@ dependencies:
   url_launcher: ^5.5.0
   provider: ^4.3.2
   firebase_messaging: ^6.0.16
-  firebase_core: ^0.4.5
-  firebase_auth: ^0.16.1
-  cloud_firestore: ^0.13.7
+  # firebase_core: ^0.4.5
+  # firebase_auth: ^0.16.1
+  # cloud_firestore: ^0.13.7
   flutter_phoenix: ^0.1.0
   get: ^3.4.4
   i69n: ^1.1.0
@@ -103,6 +103,7 @@ flutter:
    - assets/languages/he.json
    - assets/images/scooter-icon.png
    - assets/images/placeholder.jpg
+   - assets/images/id_card.jpg
  
 
   # An image asset can refer to one or more resolution-specific "variants", see

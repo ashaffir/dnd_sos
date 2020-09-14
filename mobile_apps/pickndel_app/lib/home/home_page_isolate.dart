@@ -15,6 +15,7 @@ import 'package:pickndell/location/location_callback_handler.dart';
 import 'package:pickndell/location/location_service_repository.dart';
 import 'package:pickndell/location/place.dart';
 import 'package:pickndell/location/search_bloc.dart';
+import 'package:pickndell/login/id_upload.dart';
 import 'package:pickndell/login/image_upload.dart';
 import 'package:pickndell/login/phone_update.dart';
 import 'package:pickndell/login/profile_updated.dart';
@@ -297,7 +298,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
       appBar: AppBar(
         title: (currentUser.isApproved == 1)
             ? Text(translations.home_title)
-            : Text(translations.home_title + ' (Not Complete)'),
+            : (currentUser.profilePending == 1)
+                ? Text(translations.home_title + ' (Pending Approval)')
+                : Text(translations.home_title + ' (Not Complete)'),
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -571,23 +574,10 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
                       ),
-                      Text(
-                        currentUser.isEmployee == 1
-                            ? currentUser.vehicle != null
-                                ? '${currentUser.vehicle}'
-                                : " "
-                            : currentUser.businessCategory != null
-                                ? '${currentUser.businessCategory}'
-                                : " ",
-                        style: TextStyle(fontSize: 15.0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
                       currentUser.isEmployee == 1
                           ? Row(
                               children: <Widget>[
-                                currentUser.vehicle == null
+                                currentUser.idDoc != null
                                     ? Icon(
                                         Icons.check_circle,
                                         color: pickndellGreen,
@@ -599,9 +589,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ImageUpload(
+                                                builder: (context) => IdUpload(
                                                       user: currentUser,
+                                                      updateField: 'photo_id',
                                                     )),
                                           );
                                           print('Add ID Document');
@@ -613,12 +603,15 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
-                            updateProfile(
-                                context: context,
-                                updateField: currentUser.isEmployee == 1
-                                    ? 'vehicle'
-                                    : 'business category');
-                            print('EDIT VEHICLE');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => IdUpload(
+                                        user: currentUser,
+                                        updateField: 'photo_id',
+                                      )),
+                            );
+                            print('EDIT ID PHOTO');
                           }),
                     ],
                   ),
@@ -680,6 +673,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   Padding(
                     padding: EdgeInsets.only(top: 10.0),
                   ),
+
+                  //////////////// User Rating  ///////////////
+                  ////////////
                   Row(
                     children: [
                       Padding(
@@ -706,6 +702,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   Padding(
                     padding: EdgeInsets.only(top: 20.0),
                   ),
+                  //////////////// Active Orders  ///////////////
+                  ////////////
                   Row(
                     children: [
                       Padding(
@@ -762,13 +760,17 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                         }
                                       } else {
                                         showAlertDialog(
-                                            context: context,
-                                            title:
-                                                'Your account is not approved yet',
-                                            content:
-                                                'Please complete your profile at https://pickndell.com',
-                                            url:
-                                                'https://pickndell.com/core/login');
+                                          context: context,
+                                          title:
+                                              'Your account is not approved yet',
+                                          content: (currentUser
+                                                      .profilePending ==
+                                                  1)
+                                              ? 'Your account is being reviewed. We will notify you once approved.'
+                                              : 'Please complete your profile first.',
+                                          url: '',
+                                          //     'https://pickndell.com/core/login'
+                                        );
                                         print('NOT APPROVED');
                                       }
                                     },

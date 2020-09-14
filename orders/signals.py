@@ -38,39 +38,40 @@ logger = logging.getLogger(__file__)
 @receiver(post_save, sender=User)
 def announce_new_user(sender, instance, created, **kwargs):
     if created:
-        print(f'=========== SIGNAL: New User ===============: {instance}')
-        user = User.objects.all().last()
-        user.is_active = False
-        user.save()
+        print(f'=========== SIGNAL: New User ===============: {instance.is_staff}')
+        if not instance.is_staff:
+            user = User.objects.all().last()
+            user.is_active = False
+            user.save()
 
-        print(f'USER: {user.pk}')
-        # form = EmployerSignupForm(instance)
-    
-        # user = form.save() # add employer to db with is_active as False
+            print(f'USER: {user.pk}')
+            # form = EmployerSignupForm(instance)
+        
+            # user = form.save() # add employer to db with is_active as False
 
-        # send an accout activation email
-        # if instance.is_employer:
-        #     employer = Employer.objects.get_or_create(user=user)
-        # else:
-        #     employee = Employee.objects.get_or_create(user=user)
+            # send an accout activation email
+            # if instance.is_employer:
+            #     employer = Employer.objects.get_or_create(user=user)
+            # else:
+            #     employee = Employee.objects.get_or_create(user=user)
 
-        if platform.system() == 'Darwin': # MAC
-            current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
-        else:
-            current_site = settings.DOMAIN_PROD
+            if platform.system() == 'Darwin': # MAC
+                current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+            else:
+                current_site = settings.DOMAIN_PROD
 
-        subject = 'Activate PickNdell Account'
+            subject = 'Activate PickNdell Account'
 
-        message = {
-            'user': user,
-            'domain': current_site,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user)
-        }
+            message = {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user)
+            }
 
-        send_mail(subject, email_template_name=None,
-                context=message, to_email=[user.email],
-                html_email_template_name='registration/account_activation_email.html')
+            send_mail(subject, email_template_name=None,
+                    context=message, to_email=[user.email],
+                    html_email_template_name='registration/account_activation_email.html')
 
 # REFERENCE: FCM: https://github.com/xtrinch/fcm-django
 @receiver(post_save, sender=Order)   

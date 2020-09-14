@@ -4,6 +4,20 @@ from imagekit.admin import AdminThumbnail
 from core.models import User, Employer, Employee, Asset, AssignedAsset, BankDetails
 from django.contrib.gis.admin import OSMGeoAdmin
 
+class ProductAdmin(admin.ModelAdmin):
+
+  def save_model(self, request, obj, form, change):
+      update_fields = []
+
+      if change: 
+         if form.initial['tax_rate'] != form.cleaned_data['tax_rate']:
+            update_fields.append('tax_rate')
+            obj.save(update_fields=update_fields)
+         else:
+            obj.save() # on other fields changing
+      else:
+         obj.save() # save if new model created
+
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'admin_thumbnail')
     admin_thumbnail = AdminThumbnail(image_field='profile_pic')
@@ -41,11 +55,24 @@ class Employee(OSMGeoAdmin):
         'address',
         'city',
         'vehicle',
+        'profile_pending',
         'is_approved',
         'is_available',
         'is_delivering',
         )
     search_fields = ('bio','city','business_name',)
+    
+    def save_model(self, request, obj, form, change):
+        update_fields = []
+
+        if change: 
+            if form.initial['is_approved'] != form.cleaned_data['is_approved']:
+                update_fields.append('is_approved')
+                obj.save(update_fields=update_fields)
+            else:
+                obj.save() # on other fields changing
+        else:
+            obj.save() # save if new model created
 
 @admin.register(User)
 class User(admin.ModelAdmin):

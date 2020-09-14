@@ -1,10 +1,8 @@
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/location/place.dart';
-import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_location.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/CustomException.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
@@ -13,7 +11,7 @@ import 'dart:async';
 import 'CustomException.dart';
 
 class ApiProvider {
-  final String _baseUrl = testServer + "/api/";
+  final String _baseUrl = serverDomain + "/api/";
   // final String _baseUrl = "https://pickndell.com/api/";
 
   Future<dynamic> get(String url, User user) async {

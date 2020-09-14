@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/bloc/authentication_bloc.dart';
+import 'package:pickndell/common/global.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/database/user_database.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
@@ -180,10 +181,11 @@ showProgress(BuildContext context, String message, bool isDismissible) async {
   progressDialog.style(
       message: message,
       borderRadius: 10.0,
-      backgroundColor: Color(COLOR_PRIMARY),
+      backgroundColor: mainBackground,
       progressWidget: Container(
           padding: EdgeInsets.all(8.0),
           child: CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
             backgroundColor: Colors.white,
           )),
       elevation: 10.0,
@@ -336,7 +338,8 @@ Future<int> rowUpdate({User user, dynamic data}) async {
   if (currentUser.isEmployee == 1) {
     updateCount = await db.rawUpdate('''
     UPDATE $userTable 
-    SET name = ?, username = ?, phone = ? , vehicle = ?, isApproved = ?
+    SET name = ?, username = ?, phone = ? , vehicle = ?, isApproved = ?, 
+    idDoc = ?, profilePending = ?
     WHERE id = ?
     ''', [
       data['name'],
@@ -344,6 +347,8 @@ Future<int> rowUpdate({User user, dynamic data}) async {
       data['phone'],
       data['vehicle'],
       data['is_approved'],
+      data['id_doc'],
+      data['profile_pending'],
       0
     ]);
   } else {
