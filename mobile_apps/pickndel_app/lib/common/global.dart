@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // NGROK or other as such
-String serverDomain = 'https://b0371b1f5370.ngrok.io';
+String serverDomain = 'https://ed75b747d5ae.ngrok.io';
 
 Color darkGreyColor = new Color(0xFF212128);
 Color lightBlueColor = new Color(0xFF8787A0);

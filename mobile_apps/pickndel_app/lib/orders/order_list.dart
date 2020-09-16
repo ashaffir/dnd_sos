@@ -349,7 +349,9 @@ class OrdersList extends StatelessWidget {
             ///
           } else if (ordersType == 'activeOrders') {
             if (order.status == 'STARTED') {
+              /////////////////
               // Order accepted
+              /////////////////
               return Center(
                 child: Card(
                   child: Column(
@@ -427,9 +429,12 @@ class OrdersList extends StatelessWidget {
                                   style: whiteButtonTitle,
                                 ),
                                 onPressed: () {
-                                  print('Navigate to Business/Sender');
-                                  MapUtils.openMap(order.pickUpAddressLat,
-                                      order.pickUpAddressLng);
+                                  print(
+                                      'STARTED ORDER STATUS: ${order.status}');
+                                  print(
+                                      '>>>>> Navigate to Business/Sender: LAT: ${order.businessLat} LON: ${order.businessLng}');
+                                  MapUtils.openMap(
+                                      order.businessLat, order.businessLng);
                                 },
                               ),
 
@@ -456,7 +461,9 @@ class OrdersList extends StatelessWidget {
                 ),
               );
             } else {
+              //////////////////////
               // In progress orders
+              //////////////////////
               return Center(
                 child: Card(
                   child: InkWell(
@@ -489,7 +496,6 @@ class OrdersList extends StatelessWidget {
                                   Spacer(
                                     flex: 2,
                                   ),
-                                  // Text('TETETE'),
                                   RaisedButton(
                                     color: pickndellGreen,
                                     shape: StadiumBorder(
@@ -567,9 +573,13 @@ class OrdersList extends StatelessWidget {
                                     style: whiteButtonTitle,
                                   ),
                                   onPressed: () {
-                                    print('Navigate to Business/Sender');
-                                    MapUtils.openMap(order.pickUpAddressLat,
-                                        order.pickUpAddressLng);
+                                    print(
+                                        'IN PROGRESS STATUS: ${order.status}');
+                                    print(
+                                        '>>>>> NAVIGATE: LAT: ${order.dropoffAddressLat} LON: ${order.dropoffAddressLng}');
+
+                                    MapUtils.openMap(order.dropoffAddressLat,
+                                        order.dropoffAddressLng);
                                   },
                                 ),
 

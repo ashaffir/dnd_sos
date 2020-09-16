@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,6 +16,7 @@ from .models import Order
 from .serializers import OrderSerializer, UserSerializer
 from geo.geo_utils import distance_calculator
 
+logger = logging.getLogger(__file__)
 
 # class TripView(viewsets.ReadOnlyModelViewSet):
 #     lookup_field = 'id' 
@@ -37,7 +39,8 @@ def orders_table(request):
                 order.trip_completed = round(trip_completed)
                 order.save()
             except Exception as e:
-                print(f'Distance was not claculated for order: {order}')
+                print(f'Distance was not claculated for order: {order}. ERROR: {e}')
+                logger.error(f'Distance was not claculated for order: {order}. ERROR: {e}')
         else:
             pass
     

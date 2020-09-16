@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:pickndell/localizations.dart';
+import 'package:pickndell/login/id_upload.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/orders/order_delivery.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
@@ -88,14 +91,33 @@ class _OrderPageState extends State<OrderPage> {
                   ),
                   onPressed: () {
                     print('Delivered!!');
-                    String newStatus = "COMPLETED";
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OrderDelivery(
+                                user: widget.user,
+                                updateField: 'delivery_photo',
+                                order: widget.order,
+                              )),
+                    );
                     // orderAlert(context, order, newStatus);
                   },
                 ),
               ],
             ),
             Spacer(
-              flex: 15,
+              flex: 10,
+            ),
+            CupertinoActionSheetAction(
+              child: Text("Cancel",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            Spacer(
+              flex: 10,
             ),
           ],
         ),

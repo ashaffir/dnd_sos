@@ -4,13 +4,17 @@ from django.urls import reverse
 from django.db import models
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField, JSONField
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
 
 from django.contrib.gis.db import models as geomodels
 from django.contrib.gis.db.models import PointField
 
 
 from core.models import Employee, Employer, User
+
+
+def delivery_photo_path(instance, filename):
+    return f'documents/orders/order.{instance.pk}.{filename}'
 
 
 class Order(models.Model):
@@ -64,6 +68,8 @@ class Order(models.Model):
     order_location = geomodels.PointField(null=True, blank=True)
     order_lat = models.FloatField(null=True, blank=True)
     order_lon = models.FloatField(null=True, blank=True)
+    business_lat = models.FloatField(null=True, blank=True)
+    business_lon = models.FloatField(null=True, blank=True)
 
     distance_to_business = models.FloatField(null=True, blank=True)
     trip = JSONField(null=True, blank=True)
@@ -78,6 +84,7 @@ class Order(models.Model):
     selected_freelancers = JSONField(blank=True, null=True)
 
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)
+    delivery_photo = models.ImageField(null=True, blank=True, upload_to=delivery_photo_path, validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])])
 
     # Payment
     transaction_auth_num = models.CharField(max_length=100, null=True, blank=True)

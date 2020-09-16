@@ -35,6 +35,7 @@ class OrdersBloc {
       Orders orderDetails =
           await _orderRepository.fetchOrderDetails(ordersType);
       print('OID 1 >>> ${orderDetails.orders[0].order_id}');
+
       if (_isStreaming) orderDataSink.add(Response.completed(orderDetails));
     } catch (e) {
       if (_isStreaming) orderDataSink.add(Response.error(e.toString()));

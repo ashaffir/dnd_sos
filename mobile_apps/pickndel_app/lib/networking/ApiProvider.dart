@@ -26,7 +26,7 @@ class ApiProvider {
         // body: jsonEncode(userLogin.toDatabaseJson()),
       );
       responseJson = _response(response);
-      print('RESPONSE: $responseJson');
+      print('RESPONSE ORDERS API (Truncated): $responseJson');
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }

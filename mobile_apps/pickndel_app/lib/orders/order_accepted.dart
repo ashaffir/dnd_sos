@@ -76,7 +76,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
         title: Text(translations.order_a_accepted),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 50),
+        padding: EdgeInsets.only(left: 30, right: 30),
         height: 260,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -92,7 +92,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               flex: 2,
             ),
             Text(
-              translations.orders_from + ': ${order["pick_up_address"]}',
+              "Location:" + ' ${order["pick_up_address"]}',
               style: whiteTitle,
             ),
             Spacer(

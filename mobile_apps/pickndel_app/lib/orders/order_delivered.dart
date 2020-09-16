@@ -1,5 +1,8 @@
+import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/repository/order_repository.dart';
+import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +79,24 @@ class _OrderDeliveredState extends State<OrderDelivered> {
             ),
             Spacer(
               flex: 2,
+            ),
+            FlatButton(
+              child: Text('Back To Main Page'),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return HomePageIsolate(
+                        userRepository: UserRepository(),
+                      );
+                    },
+                  ),
+                  (Route<dynamic> route) =>
+                      false, // No Back option for this page
+                );
+              },
+              color: pickndellGreen,
             ),
             // Text(
             //   'From: ${order.pick_up_address}',

@@ -10,6 +10,7 @@ import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/database/user_database.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/repository/user_repository.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 

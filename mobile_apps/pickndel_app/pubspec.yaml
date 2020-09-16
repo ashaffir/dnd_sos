@@ -104,6 +104,7 @@ flutter:
    - assets/images/scooter-icon.png
    - assets/images/placeholder.jpg
    - assets/images/id_card.jpg
+   - assets/images/delivery-courier.jpg
  
 
   # An image asset can refer to one or more resolution-specific "variants", see

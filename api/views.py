@@ -10,6 +10,8 @@ from datetime import date
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
 from django.contrib.gis.geos import fromstr, Point
+from django.http import HttpResponse, JsonResponse
+
 from fcm_django.models import FCMDevice
 from django.core import serializers as djangoSerializers
 from django.conf import settings
@@ -275,24 +277,6 @@ class OpenOrdersViewSet(viewsets.ModelViewSet):
             )
         print(f'Open Orders for user {query}: {queryset_list}')
         
-        return queryset_list
-
-class ActiveOrdersViewSet(viewsets.ModelViewSet):
-    serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
-    permission_classes = (IsAuthenticated,)
-
-    # queryset = Order.objects.all()
-    data = {}
-    def get_queryset(self, *args, **kwargs):
-        queryset_list = Order.objects.all()
-        user = self.request.GET.get('user')
-        print(f'Active Orders for User: {user}')
-        if user:
-            queryset_list = queryset_list.filter(
-                Q(freelancer=user) & 
-                (Q(status='STARTED') | Q(status="IN_PROGRESS")) 
-            )
         return queryset_list
 
 class BusinessOrdersViewSet(viewsets.ModelViewSet):
@@ -576,32 +560,52 @@ def all_businesses(request):
         return Response(data)
 
 
+class ActiveOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderAPISerializer
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = (IsAuthenticated,)
 
-@api_view(['GET',])
-@permission_classes((IsAuthenticated,))
-def open_orders_view(request):
-    '''
-    View open orders
-    '''
-    try:
-        open_orders = Order.objects.filter(Q(status='REQUESTED') | Q(status='RE_REQUESTED'))
-    except Order.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    # queryset = Order.objects.all()
+    data = {}
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        user = self.request.GET.get('user')
+        if user:
+            queryset_list = queryset_list.filter(
+                Q(freelancer=user) & 
+                (Q(status='STARTED') | Q(status="IN_PROGRESS")) 
+            )
+        print(f'Active Orders for User: {user}: {queryset_list}')
+        return queryset_list
 
-    if request.method == 'GET':
-        serializer = OrderSerializer(open_orders, data=request.data)
-        orders = []
-        for order in open_orders:
-            if serializer.is_valid():
-                ser_order = serializer.data
-                orders.append(ser_order)
-            else:
-                print(f'ERROR: {serializer.errors}')
-                data = serializer.errors
-        # data['response'] = 'Update successful'
-        data = json.dumps(orders)
-        print(data)
-        return Response(data)
+
+
+
+# @api_view(['GET',])
+# @permission_classes((IsAuthenticated,))
+# def open_orders_view(request):
+#     '''
+#     View open orders
+#     '''
+#     try:
+#         open_orders = Order.objects.filter(Q(status='REQUESTED') | Q(status='RE_REQUESTED'))
+#     except Order.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+
+#     if request.method == 'GET':
+#         serializer = OrderSerializer(open_orders, data=request.data)
+#         orders = []
+#         for order in open_orders:
+#             if serializer.is_valid():
+#                 ser_order = serializer.data
+#                 orders.append(ser_order)
+#             else:
+#                 print(f'ERROR: {serializer.errors}')
+#                 data = serializer.errors
+#         # data['response'] = 'Update successful'
+#         data = json.dumps(orders)
+#         print(data)
+#         return Response(data)
 
 
 @api_view(['GET',])
@@ -689,6 +693,8 @@ def new_order(request):
         data['order_location'] = order_location
         data['order_lon'] = dropoff_address_lng
         data['order_lat'] = dropoff_address_lat
+        data['business_lon'] = pickup_address_lng
+        data['business_lat'] = pickup_address_lat
                 
     except Exception as e:
         print(f'Failed getting the location for {dropoff_address}')
@@ -761,6 +767,37 @@ def new_order(request):
 
 @api_view(['PUT',])
 @permission_classes((IsAuthenticated,))
+def order_delivery(request):
+    try:
+        update_order = Order.objects.get(order_id=request.data['order_id'])
+    except Order.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'PUT':
+        data = {}
+        order = Order.objects.get(pk=request.data['order_id'])
+        old_status = order.status
+        new_status = request.data["status"]
+        if old_status == 'IN_PROGRESS' and new_status == 'COMPLETED':
+            order.status = new_status
+            try:
+                image = request.data['image']
+                order.delivery_photo = image
+            except:
+                print('NO IMAGE')
+                pass
+            
+            order.save()
+            data['response'] = 'Update successful'
+            return Response(data)
+        else:
+            return Response("Wrong status configuration", status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response(status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT',])
+@permission_classes((IsAuthenticated,))
 def order_update_view(request):
     '''
     Update a particular order
@@ -772,6 +809,7 @@ def order_update_view(request):
     except Order.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+    # Identifying the business for the location and the phone
     business = Employer.objects.get(pk=update_order.business.pk)
     print(f'BUSINESS OWNER: {business} Location: {business.location} Lat: {business.lat} Lon: {business.lon}')
 
@@ -793,6 +831,13 @@ def order_update_view(request):
                 elif new_status == 'COMPLETED' and old_status == 'IN_PROGRESS':
                     updated_order = serializer.save()
                     data = serializer.data
+
+                    # Updating delivery photo if exist
+                    try:
+                        update_order.delivery_photo = request.data["image"]
+                        update_order.save()
+                    except:
+                        pass
                     data['response'] = 'Update successful'
                 elif new_status == 'REJECTED' and old_status == 'STARTED':
                     # request.data['freelancer'] = None

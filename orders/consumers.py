@@ -438,6 +438,9 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                         ''')
             settings.DEFAULT_ORDER_TO_BUISINESS_DISTANCE = 1000
 
+        content['business_lat'] = business_location.latitude
+        content['business_lon'] = business_location.longitude
+
         # Calculating the price for the order (price calculation)
         urgency = int(content['urgency'])
         if order_to_business_distance_meters > 1000:

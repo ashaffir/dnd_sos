@@ -255,7 +255,7 @@ def complete_charge(private_sale_token):
     
     try:
         complete_charge = requests.post(CHARGE_PENDING_SALE_TEST, data=payload, headers=HEADERS)
-        print(f'>>>>>>>>>>>>> COMPLETE: {complete_charge}')
+        print(f'>>>>>>>>>>>>> COMPLETE: {complete_charge.json()}')
         return complete_charge.json()
     except Exception as e:
         print(f'ERROR completing the charge: {e}')

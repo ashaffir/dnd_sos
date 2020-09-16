@@ -20,6 +20,10 @@ class Order {
   String courier_name;
   double pickUpAddressLat;
   double pickUpAddressLng;
+  double dropoffAddressLat;
+  double dropoffAddressLng;
+  double businessLat;
+  double businessLng;
 
   Order({
     this.order_id,
@@ -41,6 +45,10 @@ class Order {
     this.order_country,
     this.pickUpAddressLat,
     this.pickUpAddressLng,
+    this.dropoffAddressLat,
+    this.dropoffAddressLng,
+    this.businessLat,
+    this.businessLng,
   });
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -76,8 +84,15 @@ class Order {
     } catch (e) {
       print('ORDER courier ERROR: $e');
     }
+
     pickUpAddressLat = json['business']['lat'];
     pickUpAddressLng = json['business']['lon'];
+
+    dropoffAddressLat = json['order_lat'];
+    dropoffAddressLng = json['order_lon'];
+
+    businessLat = json['business_lat'];
+    businessLng = json['business_lon'];
   }
 
 // Order.activeDuration()
@@ -99,6 +114,10 @@ class Order {
     data['status'] = this.status;
     data['lat'] = this.pickUpAddressLat;
     data['lon'] = this.pickUpAddressLng;
+    data['business_lat'] = this.businessLat;
+    data['business_lon'] = this.businessLng;
+    data['order_lat'] = this.dropoffAddressLat;
+    data['order_lon'] = this.dropoffAddressLng;
     return data;
   }
 }

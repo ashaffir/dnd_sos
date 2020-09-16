@@ -14,6 +14,7 @@ def distance_calculator(order):
     order_business_distance = order.distance_to_business * 1000 # In meters
     
     active_freelancer_id = order.freelancer.pk
+    print(f'ACTIVE: {active_freelancer_id}')
 
     order_location = order.order_location
     
