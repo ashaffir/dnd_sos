@@ -591,7 +591,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     print('>> Failed generating invoice. ERROR: {e}')
 
                 Payment.objects.create(
-                    date = datetime.now(),
+                    payment_date = datetime.now(),
                     order = order_instance,
                     freelancer = freelancer.freelancer,
                     business = business.business,
