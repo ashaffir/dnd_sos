@@ -50,7 +50,7 @@ class Translations implements i69n.I69nMessageBundle {
   String get home_sender_profile => "Sender Profile";
   String get home_name => "Name";
   String get home_phone => "Phone";
-  String get home_courier_rating => "Courier Rating";
+  String get home_courier_rating => "Your Courier Rating";
   String get home_sender_rating => "Sender Rating";
   String get home_unrated => "Unrated";
   String get home_vehicle => "Vehicle";
@@ -85,7 +85,7 @@ class Translations implements i69n.I69nMessageBundle {
   String get orders_report_delivered => "Report Delivered";
   String get orders_alert_tracking_title => "Tracking is off";
   String get orders_alert_tracking_content =>
-      "Please switch to Available status before accepting orders";
+      "Please switch to Available status before accepting orders. You can find the switch on the profile page";
   String get orders_message_pickup => "Go to pickup";
   String get orders_call_sender => "Call Sender";
   String get orders_call_courier => "Call Courier";
@@ -96,7 +96,7 @@ class Translations implements i69n.I69nMessageBundle {
   String get orders_status_rejected => "Rejected Order";
   String get orders_request_courier => "Request Courier";
   String get orders_check => "Please check";
-  String get orders_empty_list => "Order list is Empty";
+  String get orders_empty_list => "This list is Empty";
   String get messages_register_title => "Confirmation";
   String get messages_register_thanks => "Thank you";
   String get messages_register_activation =>

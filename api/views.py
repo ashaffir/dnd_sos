@@ -6,7 +6,7 @@ import logging
 import random
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic, distance
-from datetime import date
+from datetime import date, datetime
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
 from django.contrib.gis.geos import fromstr, Point
@@ -366,14 +366,18 @@ def user_photo_id(request):
 
     country = request.data['country']
     image_string = request.data["image"]
-    
+    id_doc_expiry_str = request.data['id_doc_expiry']
+
+    id_doc_expiry_dt = datetime.strptime(id_doc_expiry_str, '%Y-%m-%d')
+
     # profile = Employee.objects.get(pk=8)
     # file_name = settings.MEDIA_ROOT + f'/id_docs/{country}/id_doc_{profile.pk}_{request.data["file_name"]}'
 
     print('Processing image upload...')    
     try:
-        print(f'IMAGE TYPE: {type(image_string)}')
+        print(f'API: IMAGE TYPE {type(image_string)} Expiry {id_doc_expiry_str}')
         profile.id_doc = image_string
+        profile.id_doc_expiry = id_doc_expiry_dt
         profile.save()
         print('SAVED TO PROFILE')
         # data['response'] = 'ID updated'
@@ -392,6 +396,9 @@ def user_profile(request):
     '''
     returns user profile information
     '''
+
+    data = {}
+
     # try:
         # user = User.objects.get(pk=request.user.pk)
     if request.data['is_employee'] == 1:
@@ -401,12 +408,39 @@ def user_profile(request):
         user = Employer.objects.get(pk=request.data['user_id'])
         serializer = EmployerProfileSerializer(user, data=request.data)
 
-    
+    if request.data['is_employee'] == 1:
+        # Current active orders/deliveries
+        active_orders_today = Order.objects.filter(
+                    (Q(freelancer=user.pk) & Q(updated__contains=today)) & 
+                    (Q(status='STARTED') | Q(status='IN_PROGRESS')))
+                
+        num_active_orders_today = len(active_orders_today)
+
+        active_orders_total = Order.objects.filter(
+                    (Q(freelancer=user.pk) & 
+                    (Q(status='STARTED') | Q(status='IN_PROGRESS'))))
+                
+        num_active_orders_total = len(active_orders_total)
+
+        # Profile calculations
+        daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
+            # Daily profit
+        daily_profit = 0.0
+        for order in daily_orders:
+            daily_profit += order.price
+
+        daily_profit = round(daily_profit,2)
+
+
     if request.method == 'POST':
         print(f'REQUEST: {request.data}')
         data = {}
         if serializer.is_valid():
             data = serializer.data
+            data['num_active_orders_today'] = num_active_orders_today
+            data['num_active_orders_total'] = num_active_orders_total
+            data['daily_profit'] = daily_profit
+
             print('SENDING PROFILE DATA')
         else:
             data = serializer.errors
@@ -415,7 +449,6 @@ def user_profile(request):
         return Response(data)
 
     elif request.method == 'PUT':
-        data = {}
         if serializer.is_valid():
             # if (new_status == 'STARTED' and old_status == 'REQUESTED') or  (new_status == 'STARTED' and old_status == 'RE_REQUESTED'):
             try:
@@ -765,15 +798,16 @@ def new_order(request):
         return Response('Order Created')
 
 
-@api_view(['PUT',])
+@api_view(['POST',])
 @permission_classes((IsAuthenticated,))
 def order_delivery(request):
+
     try:
         update_order = Order.objects.get(order_id=request.data['order_id'])
     except Order.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
-    if request.method == 'PUT':
+    if request.method == 'POST':
         data = {}
         order = Order.objects.get(pk=request.data['order_id'])
         old_status = order.status
@@ -788,8 +822,8 @@ def order_delivery(request):
                 pass
             
             order.save()
-            data['response'] = 'Update successful'
-            return Response(data)
+            # data['response'] = 'Update successful'
+            return Response(status.HTTP_202_ACCEPTED)
         else:
             return Response("Wrong status configuration", status=status.HTTP_400_BAD_REQUEST)
     

@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
 // NGROK or other as such
-String serverDomain = 'https://ed75b747d5ae.ngrok.io';
+String serverDomain = 'https://6b524698e0e9.ngrok.io';
+
+// Sizes
+////////////////////
+
+// Bottom Nav Bar
+const NAVBAR_ICON_SIZE = 35.0;
+
+// Colors
+////////////////////
+
+const FLOATING_RELOAD_BUTTON_COLOR = Colors.white;
+const DEFAUT_TEXT_COLOR = Colors.white;
 
 Color darkGreyColor = new Color(0xFF212128);
 Color lightBlueColor = new Color(0xFF8787A0);
@@ -12,11 +24,19 @@ Color pickndellGreen = new Color(0xFF8BC34A);
 Color mainBackground = new Color(0xFF202020);
 Color ordersBackground = new Color(0xFF333333);
 
+Color bottomNavigationBarColor = pickndellGreen;
+
+// Fonts
+////////////////////
+
 TextStyle intrayTitleStyle = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
-    color: darkGreyColor,
-    fontSize: 20);
+    color: Colors.white,
+    fontSize: 15);
+
+TextStyle userContentStyle =
+    new TextStyle(fontFamily: 'Avenir', color: Colors.white, fontSize: 15);
 
 TextStyle bigLightBlueTitle = new TextStyle(
     fontFamily: 'Avenir',

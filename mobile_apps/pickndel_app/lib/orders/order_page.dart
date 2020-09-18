@@ -39,7 +39,7 @@ class _OrderPageState extends State<OrderPage> {
   Widget build(BuildContext context) {
     final translations = ExampleLocalizations.of(context);
     return new Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
         title: Text('Order Page'),
       ),
@@ -49,7 +49,7 @@ class _OrderPageState extends State<OrderPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Spacer(
-              flex: 1,
+              flex: 2,
             ),
             Text(
               "Order Details",

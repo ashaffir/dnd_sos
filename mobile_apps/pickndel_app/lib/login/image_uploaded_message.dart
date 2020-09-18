@@ -7,17 +7,20 @@ import 'package:pickndell/ui/bottom_nav_bar.dart';
 
 class ImageUploaded extends StatelessWidget {
   final uploadStatus;
+  final imageType;
 
-  ImageUploaded({this.uploadStatus});
+  ImageUploaded({this.uploadStatus, this.imageType});
 
   @override
   Widget build(BuildContext context) {
     final translations = ExampleLocalizations.of(context);
 
     return Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Profile Update'),
+        title: imageType == 'delivery'
+            ? Text('Delivery Confirmaiton')
+            : Text('Profile Update'),
       ),
       body: Container(
         height: 300,
@@ -30,16 +33,21 @@ class ImageUploaded extends StatelessWidget {
                 padding: EdgeInsets.only(top: 30),
               ),
               uploadStatus == "ok"
-                  ? Text(
-                      'Your profile was successfully updated',
-                      style: bigLightBlueTitle,
-                    )
+                  ? imageType == 'delivery'
+                      ? Text(
+                          'Delivery and confirmation photo updated. Good Job!',
+                          style: bigLightBlueTitle,
+                        )
+                      : Text(
+                          'Your profile was successfully updated',
+                          style: bigLightBlueTitle,
+                        )
                   : Text(
-                      'Something went wrong. Please try later',
+                      'Something went wrong. Please try again later',
                       style: bigLightBlueTitle,
                     ),
               Padding(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 50),
               ),
               FlatButton(
                 child: Text('Back To Main Page'),

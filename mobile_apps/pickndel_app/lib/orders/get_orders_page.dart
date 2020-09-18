@@ -1,7 +1,9 @@
 import 'dart:ui' as ui;
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:pickndell/ui/progress_indicator.dart';
+
 import '../common/common.dart';
 import 'package:pickndell/common/helper.dart';
-import 'package:pickndell/common/loading.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/user_model.dart';
@@ -80,7 +82,9 @@ class _GetOrdersState extends State<GetOrders> {
         onPressed: () {
           _bloc.fetchOrder(widget.ordersType);
         },
-        backgroundColor: Colors.green[100],
+        elevation: 2.0,
+        tooltip: 'Refresh list',
+        backgroundColor: FLOATING_RELOAD_BUTTON_COLOR,
         child: new Icon(Icons.refresh),
       ),
       floatingActionButtonLocation:
@@ -110,7 +114,8 @@ class _GetOrdersState extends State<GetOrders> {
             if (snapshot.hasData && snapshot != null) {
               switch (snapshot.data.status) {
                 case Status.LOADING:
-                  return Loading(loadingMessage: snapshot.data.message);
+                  // return Loading(loadingMessage: snapshot.data.message);
+                  return ColoredProgressDemo('Loading Orders...');
                   break;
                 case Status.COMPLETED:
                   return OrdersList(
@@ -138,7 +143,10 @@ class _GetOrdersState extends State<GetOrders> {
           },
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      // bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottmNavigation(
+        userType: 'courier',
+      ),
     );
   }
 

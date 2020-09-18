@@ -193,7 +193,8 @@ class Employee(models.Model):
 
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pics", default = 'profile_pics/no-img.jpg')
     id_doc = models.ImageField(null=True, blank=True, upload_to=id_path, validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])])
-
+    id_doc_expiry = models.DateField(null=True, blank=True)
+    
     freelancer_total_rating = models.FloatField(null=True, blank=True)
 
     newsletter_optin = models.BooleanField(default=True)

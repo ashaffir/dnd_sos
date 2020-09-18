@@ -284,7 +284,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
     final trans = ExampleLocalizations.of(context);
 
     return Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
         title: Text('Profile Update'),
       ),

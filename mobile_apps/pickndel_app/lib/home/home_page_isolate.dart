@@ -16,7 +16,6 @@ import 'package:pickndell/location/location_service_repository.dart';
 import 'package:pickndell/location/place.dart';
 import 'package:pickndell/location/search_bloc.dart';
 import 'package:pickndell/login/id_upload.dart';
-import 'package:pickndell/login/image_upload.dart';
 import 'package:pickndell/login/phone_update.dart';
 import 'package:pickndell/login/profile_updated.dart';
 import 'package:pickndell/model/credit_card_update.dart';
@@ -29,11 +28,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:location_permissions/location_permissions.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../dao/user_dao.dart';
 import '../model/user_model.dart';
@@ -316,9 +317,6 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
               Padding(
                 padding: EdgeInsets.only(top: 10.0),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.0),
-              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -326,14 +324,14 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 30.0),
                       ),
 
                       ////////////// NAME SECTION ////////////////
                       ///
                       Text(
                         translations.home_name + ":",
-                        style: TextStyle(fontSize: 20.0),
+                        style: intrayTitleStyle,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
@@ -341,17 +339,14 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       Row(
                         children: [
                           Text(
-                            currentUser.isEmployee == 1
-                                ? currentUser.name != null
-                                    ? '${currentUser.name}'
-                                    : " "
-                                : currentUser.businessName != null
-                                    ? '${currentUser.businessName}'
-                                    : " ",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                            ),
-                          ),
+                              currentUser.isEmployee == 1
+                                  ? currentUser.name != null
+                                      ? '${currentUser.name}'
+                                      : " "
+                                  : currentUser.businessName != null
+                                      ? '${currentUser.businessName}'
+                                      : " ",
+                              style: userContentStyle),
                         ],
                       ),
                       Padding(
@@ -419,11 +414,11 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   Row(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
                       ),
                       Text(
                         translations.home_phone + ":",
-                        style: TextStyle(fontSize: 20.0),
+                        style: intrayTitleStyle,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
@@ -432,9 +427,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                         currentUser.phone != null
                             ? '${currentUser.phone}'
                             : " ",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                        ),
+                        style: userContentStyle,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 5.0),
@@ -467,11 +460,11 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   Row(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
                       ),
                       Text(
                         translations.email + ":",
-                        style: TextStyle(fontSize: 20.0),
+                        style: intrayTitleStyle,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
@@ -480,9 +473,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                         currentUser.username != null
                             ? '${currentUser.username}'
                             : " ",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                        ),
+                        style: userContentStyle,
                       ),
                       Padding(padding: EdgeInsets.only(right: 5.0)),
                       Icon(Icons.check_circle, color: pickndellGreen),
@@ -500,13 +491,13 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
                       ),
                       Text(
                         currentUser.isEmployee == 1
                             ? translations.home_vehicle + ":"
                             : translations.home_sender_cat + ":",
-                        style: TextStyle(fontSize: 20.0),
+                        style: intrayTitleStyle,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
@@ -519,7 +510,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                             : currentUser.businessCategory != null
                                 ? '${currentUser.businessCategory}'
                                 : " ",
-                        style: TextStyle(fontSize: 15.0),
+                        style: userContentStyle,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
@@ -565,11 +556,11 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
                       ),
                       Text(
                         "ID Document:",
-                        style: TextStyle(fontSize: 20.0),
+                        style: intrayTitleStyle,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
@@ -622,11 +613,11 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ? Row(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                              padding: EdgeInsets.only(left: 30.0, top: 10.0),
                             ),
                             Text(
                               'Credit Card' + ":",
-                              style: TextStyle(fontSize: 20.0),
+                              style: intrayTitleStyle,
                             ),
                             Padding(
                               padding: EdgeInsets.only(right: 10.0),
@@ -695,23 +686,38 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                 : translations.home_sender_rating +
                                     ": " +
                                     translations.home_unrated,
-                        style: TextStyle(fontSize: 15.0),
+                        style: intrayTitleStyle,
                       ),
+                      Padding(padding: EdgeInsets.only(right: 10)),
+
+                      //////////// Courier star ratings: ////////
+                      SmoothStarRating(
+                          rating: currentUser.rating,
+                          isReadOnly: true,
+                          size: 20,
+                          filledIconData: Icons.star,
+                          halfFilledIconData: Icons.star_half,
+                          defaultIconData: Icons.star_border,
+                          borderColor: Colors.white24,
+                          starCount: 5,
+                          allowHalfRating: true,
+                          color: Colors.yellow,
+                          spacing: 0.0),
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 20.0),
+                    padding: EdgeInsets.only(top: 10.0),
                   ),
                   //////////////// Active Orders  ///////////////
                   ////////////
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
                       ),
                       Text(
                         translations.home_active_orders + ":",
-                        style: TextStyle(fontSize: 15.0),
+                        style: intrayTitleStyle,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 10.0),
@@ -724,8 +730,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                             : currentUser.numOrdersInProgress != null
                                 ? '${currentUser.numOrdersInProgress}'
                                 : '0',
-                        style: TextStyle(fontSize: 15.0),
-                      )
+                        style: userContentStyle,
+                      ),
                     ],
                   ),
                   Padding(
@@ -836,9 +842,13 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(
-        userRepository: widget.userRepository,
+      // bottomNavigationBar: BottomNavBar(
+      //   userRepository: widget.userRepository,
+      // ),
+      bottomNavigationBar: BottmNavigation(
+        userType: 'courier',
       ),
+
       // resizeToAvoidBottomPadding: false,
     );
   }
@@ -958,6 +968,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
             FlatButton(
                 child: Text('Update'),
                 color: pickndellGreen,
+                textColor: DEFAUT_TEXT_COLOR,
                 onPressed: () {
                   if (!_formKey.currentState.validate()) {
                     return;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colored_progress_indicators/flutter_colored_progress_indicators.dart';
 
+// LOADING INDICATOR
 class ColoredProgressDemo extends StatefulWidget {
   final String loaderText;
   ColoredProgressDemo(this.loaderText);

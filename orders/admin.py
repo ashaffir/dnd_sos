@@ -11,7 +11,7 @@ class OrderAdmin(OSMGeoAdmin):
         'order_lat', 'order_lon','business_lat', 'business_lon', 'order_location',
         'distance_to_business','trip_completed', 'price','fare','private_sale_token','invoice_url',
         'freelancer','freelancer_rating','freelancer_rating_report', 'business','business_rating',
-        'selected_freelancers',
+        'selected_freelancers', 'delivery_photo',
         'trip',
         'chat', 
         'created', 'updated','new_message',

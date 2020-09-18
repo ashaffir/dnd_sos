@@ -340,7 +340,7 @@ Future<int> rowUpdate({User user, dynamic data}) async {
     updateCount = await db.rawUpdate('''
     UPDATE $userTable 
     SET name = ?, username = ?, phone = ? , vehicle = ?, isApproved = ?, 
-    idDoc = ?, profilePending = ?
+    idDoc = ?, profilePending = ?, rating = ?, activeOrders = ?
     WHERE id = ?
     ''', [
       data['name'],
@@ -350,6 +350,8 @@ Future<int> rowUpdate({User user, dynamic data}) async {
       data['is_approved'],
       data['id_doc'],
       data['profile_pending'],
+      data['freelancer_total_rating'],
+      data['num_active_orders_total'],
       0
     ]);
   } else {

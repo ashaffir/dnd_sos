@@ -70,10 +70,11 @@ class _OrderAcceptedState extends State<OrderAccepted> {
   Widget getOrderAcceptedPage(dynamic order) {
     final translations = ExampleLocalizations.of(context);
 
-    return new Scaffold(
-      backgroundColor: mainBackground,
+    return Scaffold(
+      // backgroundColor: mainBackground,
       appBar: AppBar(
         title: Text(translations.order_a_accepted),
+        backgroundColor: mainBackground,
       ),
       body: Container(
         padding: EdgeInsets.only(left: 30, right: 30),
@@ -102,6 +103,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               padding: EdgeInsets.only(bottom: 30),
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 RaisedButton.icon(
                   icon: Icon(Icons.navigation),
@@ -141,8 +143,8 @@ class _OrderAcceptedState extends State<OrderAccepted> {
   Widget orderAcceptErrorPage() {
     final translations = ExampleLocalizations.of(context);
 
-    return new Scaffold(
-      backgroundColor: mainBackground,
+    return Scaffold(
+      // backgroundColor: mainBackground,
       appBar: AppBar(
         title: Text(translations.order_a_accepted),
       ),

@@ -20,6 +20,8 @@ import '../common/global.dart';
 import 'dart:io';
 
 File _image;
+DateTime selectedDate = DateTime.now();
+String _expiryDate;
 
 class IdUpload extends StatefulWidget {
   final User user;
@@ -36,9 +38,31 @@ class _IdUploadState extends State<IdUpload> {
   GlobalKey<FormState> _key = new GlobalKey();
   String firstName, lastName, email, mobile, password, confirmPassword;
   bool _validate = false;
+  TextEditingController dateCtl = TextEditingController();
+
+  var _idDocTypes = List<DropdownMenuItem>();
+  String _idDocType;
+  List<String> _idDocTypeList;
+
+  _loadidDocTypes() {
+    _idDocTypeList = ['ID', 'Passport', 'Drivers License'];
+
+    _idDocTypeList.forEach((element) {
+      setState(() {
+        _idDocTypes.add(DropdownMenuItem(
+          child: Text(element),
+          value: element,
+        ));
+      });
+    });
+  }
 
   _openGallary(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var picture = await ImagePicker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 50,
+        maxHeight: 500.0,
+        maxWidth: 500.0);
     this.setState(() {
       _imageFile = picture;
     });
@@ -46,7 +70,11 @@ class _IdUploadState extends State<IdUpload> {
   }
 
   _openCamera(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    var picture = await ImagePicker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 50,
+        maxHeight: 500.0,
+        maxWidth: 500.0);
     this.setState(() {
       _imageFile = picture;
     });
@@ -76,6 +104,7 @@ class _IdUploadState extends State<IdUpload> {
 
   @override
   void initState() {
+    _loadidDocTypes();
     super.initState();
   }
 
@@ -138,6 +167,7 @@ class _IdUploadState extends State<IdUpload> {
     request.fields['user_id'] = user.userId.toString();
     request.fields['is_employee'] = user.isEmployee == 1 ? "true" : "false";
     request.fields['country'] = country;
+    request.fields['id_doc_expiry'] = _expiryDate;
 
     // send
     var response = await request.send();
@@ -198,8 +228,11 @@ class _IdUploadState extends State<IdUpload> {
           isDefaultAction: false,
           onPressed: () async {
             Navigator.pop(context);
-            var image =
-                await ImagePicker.pickImage(source: ImageSource.gallery);
+            var image = await ImagePicker.pickImage(
+                source: ImageSource.gallery,
+                imageQuality: 50,
+                maxHeight: 500.0,
+                maxWidth: 500.0);
             setState(() {
               _image = image;
             });
@@ -212,7 +245,11 @@ class _IdUploadState extends State<IdUpload> {
           isDestructiveAction: false,
           onPressed: () async {
             Navigator.pop(context);
-            var image = await ImagePicker.pickImage(source: ImageSource.camera);
+            var image = await ImagePicker.pickImage(
+                source: ImageSource.camera,
+                imageQuality: 50,
+                maxHeight: 500.0,
+                maxWidth: 500.0);
             setState(() {
               _image = image;
             });
@@ -236,7 +273,7 @@ class _IdUploadState extends State<IdUpload> {
         Padding(
           padding:
               // const EdgeInsets.only(left: 8.0, top: 32, right: 8, bottom: 8),
-              const EdgeInsets.all(30),
+              const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
@@ -274,6 +311,64 @@ class _IdUploadState extends State<IdUpload> {
             padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
           ),
         ),
+
+        //////////////// ID document type  ////////////////////////
+        ///
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+              labelText: 'ID Document Type' + ":",
+              prefixIcon: Icon(Icons.portrait)),
+          value: _idDocType,
+          items: _idDocTypes,
+          // validator: (value) {
+          //   if (dropdownMenue(value) == null) {
+          //     return 'Please choose a valid expiry date';
+          //   } else {
+          //     return null;
+          //   }
+          // },
+          onChanged: (value) {
+            setState(() {
+              print('dropdown: $value');
+              _idDocType = value;
+            });
+          },
+        ),
+        //////////////// Expiry date for the document ///////////////
+        ///
+        TextFormField(
+          controller: dateCtl,
+          decoration: InputDecoration(
+            icon: Icon(Icons.calendar_today),
+            labelText: "Document Expiry Date",
+            hintText: "When the ID document expires",
+          ),
+          onTap: () async {
+            DateTime date = DateTime(1900);
+            FocusScope.of(context).requestFocus(new FocusNode());
+
+            date = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(2020),
+              lastDate: DateTime(2050),
+              initialDatePickerMode: DatePickerMode.year,
+              helpText: 'ID expiry date', // Can be used as title
+              cancelText: 'Not now',
+              confirmText: 'Select',
+            );
+            dateCtl.text =
+                date != null ? date.toIso8601String().split("T")[0] : null;
+          },
+          validator: (value) {
+            if (value == null) {
+              return 'Please choose a valid expiry date';
+            }
+            _expiryDate = dateCtl.text;
+            return null;
+          },
+        ),
+
         Padding(
           padding: const EdgeInsets.only(right: 40.0, left: 40.0, top: 40.0),
           child: ConstrainedBox(
@@ -286,7 +381,18 @@ class _IdUploadState extends State<IdUpload> {
               ),
               textColor: Colors.white,
               splashColor: Colors.black,
-              onPressed: _sendToServer,
+              onPressed: () {
+                if (!_key.currentState.validate()) {
+                  print('FAILS');
+                  return;
+                } else {
+                  if (_image == null) {
+                    return;
+                  } else {
+                    _sendToServer();
+                  }
+                }
+              },
               padding: EdgeInsets.only(top: 12, bottom: 12),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
@@ -301,5 +407,69 @@ class _IdUploadState extends State<IdUpload> {
         ),
       ],
     );
+  }
+
+  _selectDate(BuildContext context) async {
+    final ThemeData theme = Theme.of(context);
+    assert(theme.platform != null);
+    switch (theme.platform) {
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+        return buildMaterialDatePicker(context);
+      case TargetPlatform.iOS:
+      case TargetPlatform.macOS:
+        return buildCupertinoDatePicker(context);
+    }
+  }
+
+  /// This builds material date picker in Android
+  buildMaterialDatePicker(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2028),
+      initialDatePickerMode: DatePickerMode.year,
+      helpText: 'ID expiry date', // Can be used as title
+      cancelText: 'Not now',
+      confirmText: 'Select',
+
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark(),
+          child: child,
+        );
+      },
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
+  /// This builds cupertion date picker in iOS
+  buildCupertinoDatePicker(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext builder) {
+          return Container(
+            height: MediaQuery.of(context).copyWith().size.height / 3,
+            color: Colors.white,
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.date,
+              onDateTimeChanged: (picked) {
+                if (picked != null && picked != selectedDate)
+                  setState(() {
+                    selectedDate = picked;
+                  });
+              },
+              initialDateTime: selectedDate,
+              minimumYear: 2000,
+              maximumYear: 2025,
+            ),
+          );
+        });
   }
 }

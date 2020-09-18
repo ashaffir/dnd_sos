@@ -100,11 +100,15 @@ GET, UPDATE, DELETE, POST: https://www.youtube.com/watch?v=B65zbFro2pU
 
 ### GEO (https://tinyurl.com/y8hegdk8)
 * Install GDAL 
+
 ** https://tinyurl.com/y7t4aau6, or https://tinyurl.com/y7t4aau6 - on MAC
 ** https://tinyurl.com/y783ef6b - UNIX (Notice the GDAL version, might not suit the local one)
 
 And, if/when errors in pip install for GDAL...
 #### On Mac
+
+#### Make sure you have the same version in the requrements.txt as the one brew installed!!!!
+
 - After installing the gdal on the mac:
 brew install gdal
 

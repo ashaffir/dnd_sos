@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import json
+import platform
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,6 +29,15 @@ SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+DEBUG_SERVER = False
+
+if platform.system() == 'Darwin':
+    pass
+# On Linux is revered
+else:
+    if DEBUG:
+        DEBUG_SERVER = True
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']

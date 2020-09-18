@@ -10,11 +10,13 @@ def distance_calculator(order):
     Dynamically calculate the distancce between the order drop off address
     and the freelancer that is delivering in reference to the distance between drop off address
     and the business.
+
+    This method is called from the "orders_table" page which is what updates the orders page for business.
     '''
     order_business_distance = order.distance_to_business * 1000 # In meters
     
     active_freelancer_id = order.freelancer.pk
-    print(f'ACTIVE: {active_freelancer_id}')
+    print(f'GEO UTILS >> ACTIVE: {active_freelancer_id}')
 
     order_location = order.order_location
     

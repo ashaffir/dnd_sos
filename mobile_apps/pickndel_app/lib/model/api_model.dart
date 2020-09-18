@@ -70,7 +70,7 @@ class Token {
         profilePending: json['profile_pending'],
         rating: json['freelancer_total_rating'],
         dailyProfit: json['daily_profit'],
-        activeOrders: json['active_orders']);
+        activeOrders: json['num_active_orders_total']);
   }
 }
 

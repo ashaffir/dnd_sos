@@ -946,6 +946,8 @@
 				*/
 				// Handing the dispatch (pick-up) of an offer
 				pickedup = function(id,pup,drop) {
+					/* LOADER DISPLAY */
+					$('.loading').show()
 					console.log(`PICKED UP!!`)
 					let order_id = id;
 					let business_id = "{{ user.pk }}";
@@ -969,6 +971,10 @@
 						url: "{% url 'orders:orders-table' %}",
 						success: function(response) {
 							$('#ordersTable').html(response);
+
+							/* Loader hide */
+							$('.loading').hide()
+
 						}
 					})		
 				}

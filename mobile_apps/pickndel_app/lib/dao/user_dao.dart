@@ -18,6 +18,7 @@ class UserDao {
     print('RESULT businessName: ${user.businessName}');
     print('RESULT vehicle: ${user.vehicle}');
     print('RESULT phone: ${user.phone}');
+    print('RESULT rating: ${user.rating}');
 
     return result;
   }
@@ -33,7 +34,7 @@ class UserDao {
     try {
       final data = await db.query(userTable, where: 'id = ?', whereArgs: [id]);
       User user = User.fromDatabaseJson(data[id]);
-      print('User FROM DB: ${user.profilePending}');
+      print('User FROM DB: ${user.rating}');
       // String username = user.username;
       return user;
     } catch (error) {

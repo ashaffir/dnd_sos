@@ -1,5 +1,6 @@
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/common/common.dart';
+import 'package:pickndell/common/global.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/model/api_model.dart';
@@ -23,7 +24,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.isEmployee == 1) {
-            return getCarrierBottomNavBar(snapshot.data);
+            return getCourierBottomNavBar(snapshot.data);
           } else if (snapshot.data.isEmployee == 0) {
             return getBusinessBottomNavBar(snapshot.data);
           }
@@ -35,18 +36,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
     );
   }
 
-  getCarrierBottomNavBar(User currentUser) {
+  getCourierBottomNavBar(User currentUser) {
     return Container(
-      height: 75.0,
+      height: 65.0,
       padding: EdgeInsets.only(top: 5, bottom: 30),
       color: Colors.green,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          Spacer(
+            flex: 1,
+          ),
           IconButton(
             icon: Icon(
               Icons.home,
-              size: 44.0,
+              size: NAVBAR_ICON_SIZE,
             ),
             onPressed: () {
               // Navigator.pushReplacementNamed(context, '/');
@@ -64,33 +68,45 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   (Route<dynamic> route) => false);
             },
           ),
+          Spacer(
+            flex: 2,
+          ),
           IconButton(
             icon: Icon(
               Icons.notifications_active,
-              size: 44.0,
+              size: NAVBAR_ICON_SIZE,
             ),
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/open-orders');
             },
           ),
+          Spacer(
+            flex: 4,
+          ),
           IconButton(
             icon: Icon(
               Icons.motorcycle,
-              size: 44.0,
+              size: NAVBAR_ICON_SIZE,
             ),
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/active-orders');
             },
           ),
+          Spacer(
+            flex: 2,
+          ),
           IconButton(
             icon: Icon(
               Icons.exit_to_app,
-              size: 44.0,
+              size: NAVBAR_ICON_SIZE,
             ),
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/logout');
             },
-          )
+          ),
+          Spacer(
+            flex: 2,
+          ),
         ],
       ),
     );

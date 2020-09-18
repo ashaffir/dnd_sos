@@ -2,6 +2,7 @@ import json
 import sys
 import urllib.parse
 import requests
+import logging
 
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -15,6 +16,14 @@ from django.views.decorators.http import require_POST
 from .models import Card
 from core.models import Employee, Employer
 from orders.models import Order
+
+logger = logging.getLogger(__file__)
+
+if settings.DEBUG_SERVER:
+    CURRENT_DOMAIN = 'https://pickndell.com'
+else: 
+    CURRENT_DOMAIN = 'https://6b524698e0e9.ngrok.io'
+
 
 HEADERS = {
         'Content-Type': 'application/json',
@@ -74,12 +83,12 @@ def credit_card_form(request):
 
     GET_URL = GET_URL_TEST if settings.DEBUG else GET_URL_PROD
 
-    REDIRECT_URL = 'https://59f721d4650b.ngrok.io/payments/success-card-collection/' if settings.DEBUG else settings.DOMAIN_PROD
+    REDIRECT_URL = 'https://6b524698e0e9.ngrok.io/payments/success-card-collection/' if settings.DEBUG else settings.DOMAIN_PROD + '/payments/success-card-collection/'
 
     payload_prod = '{ \
         "GroupPrivateToken":"' + f'{settings.GROUP_PRIVATE_TOKEN}' + '", \
         "RedirectURL": "' + f'{str(REDIRECT_URL)}' + f'{str(b_id)}' + '", \
-        "IPNURL": "https://59f721d4650b.ngrok.io/payments/ipn-listener-card-info/", \
+        "IPNURL": "https://6b524698e0e9.ngrok.io/payments/ipn-listener-card-info/", \
         "CustomerLastName":"test", \
         "EmailAddress":"alfred.shaffir@gmail.com", \
         "SaleType": 3, \
@@ -96,8 +105,8 @@ def credit_card_form(request):
 
     payload_test = '{ \
         "GroupPrivateToken":"7a81fc4b-1b18-4add-b730-d434a9f5120a", \
-        "RedirectURL": "https://59f721d4650b.ngrok.io/payments/success-card-collection/' + f'{str(b_id)}' + '", \
-        "IPNURL": "https://59f721d4650b.ngrok.io/payments/ipn-listener-card-info/", \
+        "RedirectURL": "https://6b524698e0e9.ngrok.io/payments/success-card-collection/' + f'{str(b_id)}' + '", \
+        "IPNURL": "https://6b524698e0e9.ngrok.io/payments/ipn-listener-card-info/", \
         "CustomerLastName":"test", \
         "EmailAddress":"alfred.shaffir@gmail.com", \
         "SaleType": 3, \
@@ -120,7 +129,7 @@ def credit_card_form(request):
         print(f'ERROR getting card information: {e}')
         context['error'] = e
 
-    print(f">>> OUTBOUND: ***************{get_card_form.json()}****************")
+    print(f">>> Credit card form: OUTBOUND: ***************{get_card_form.json()}****************")
     icredit_form_url = get_card_form.json()['URL']
     private_token = get_card_form.json()['PrivateSaleToken']
     public_token = get_card_form.json()['PublicSaleToken']
@@ -143,6 +152,7 @@ def get_credit_card_information(token=None):
     '''
     Retreiving details about the credit card and store in DB
     '''
+    context = {}
     GET_CARD_DETAILS_TEST = 'https://testpci.rivhit.co.il/api/RivhitRestAPIService.svc/GetTokenDetails'
     GET_CARD_DETAILS_PROD = 'https://pci.rivhit.co.il/api/RivhitRestAPIService.svc/GetTokenDetails'
 
@@ -159,6 +169,7 @@ def get_credit_card_information(token=None):
     try:
         card_info = requests.post(GET_CARD_DETAILS_TEST, data=payload, headers=HEADERS)
         print(f"CARD INFO: ***************{card_info.json()}****************")
+        logger.info(f"CARD INFO: ***************{card_info.json()}****************")
         return card_info.json()
     except Exception as e:
         print(f'ERROR retreiving credit card information: {e}')
@@ -185,7 +196,7 @@ def lock_delivery_price(order):
     # payload = '{ \
     #         "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e", \
     #         "CreditcardToken": "' + f'{b_credit_card_token}' + '", \
-    #         "IPNURL": "https://59f721d4650b.ngrok.io/payments/ipn-listener-lock-price/", \
+    #         "IPNURL": "https://6b524698e0e9.ngrok.io/payments/ipn-listener-lock-price/", \
     #         "CustomerLastName": "none", \
     #         "CustomerFirstName": "none", \
     #         "Address": "none", \
@@ -204,8 +215,8 @@ def lock_delivery_price(order):
 
     payload = '{ \
             "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e", \
-            "CreditcardToken": "7e4aa02b-365a-42fe-806b-e4751c478052", \
-            "IPNURL": "https://59f721d4650b.ngrok.io/payments/ipn-listener-lock-price/", \
+            "CreditcardToken": "ba56dcb2-1f19-4627-b203-4a77a1939f4f", \
+            "IPNURL": "https://6b524698e0e9.ngrok.io/payments/ipn-listener-lock-price/", \
             "CustomerLastName": "none", \
             "CustomerFirstName": "none", \
             "Address": "none", \
@@ -222,8 +233,13 @@ def lock_delivery_price(order):
             ] \
         }'
 
+    # print(f'SALE CHARGE PAYLOAD: \n {payload} ')
+
     try:
         sales_charge = requests.post(SALE_CHARGE_TEST, data=payload, headers=HEADERS)
+        print(f'SALES CHARGE RESPONSE: \n {sales_charge.json()}')
+        logger.info(f'PAYMENTS: SALES CHARGE RESPONSE: \n {sales_charge.json()}')
+        
     except Exception as e:
         print(f'ERROR locking order price: {e}')
         context['error'] = e

@@ -120,6 +120,8 @@ class _OrderDeliveryState extends State<OrderDelivery> {
     // string to uri
     var uri = Uri.parse(serverDomain + "/api/order-delivery/");
 
+    print('URI: $uri');
+
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Token ${user.token}',
@@ -154,7 +156,10 @@ class _OrderDeliveryState extends State<OrderDelivery> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return ImageUploaded(uploadStatus: 'ok');
+              return ImageUploaded(
+                uploadStatus: 'ok',
+                imageType: 'delivery',
+              );
             },
           ),
           (Route<dynamic> route) => false, // No Back option for this page
@@ -164,7 +169,10 @@ class _OrderDeliveryState extends State<OrderDelivery> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return ImageUploaded(uploadStatus: 'fail');
+              return ImageUploaded(
+                uploadStatus: 'fail',
+                imageType: 'delivery',
+              );
             },
           ),
           (Route<dynamic> route) => false, // No Back option for this page
