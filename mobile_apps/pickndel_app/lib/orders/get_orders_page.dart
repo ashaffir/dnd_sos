@@ -3,31 +3,22 @@ import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 
 import '../common/common.dart';
-import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/orders/empty_list.dart';
 import 'package:pickndell/orders/order_bloc.dart';
-import 'package:pickndell/orders/order_delivered.dart';
 import 'package:pickndell/orders/order_list.dart';
-import 'package:pickndell/orders/order_page.dart';
-import 'package:pickndell/orders/order_picked_up.dart';
-import 'package:pickndell/orders/order_re_requested.dart';
-import 'package:pickndell/orders/order_rejected.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
-import 'package:pickndell/model/order.dart';
 import 'package:pickndell/common/global.dart';
-import 'package:pickndell/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 import 'package:pickndell/networking/Response.dart';
 import 'package:pickndell/model/open_orders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class GetOrders extends StatefulWidget {
   final String ordersType;
-  GetOrders(this.ordersType);
+  final User user;
+  GetOrders({this.ordersType, this.user});
 
   @override
   _GetOrdersState createState() => _GetOrdersState();
@@ -119,7 +110,7 @@ class _GetOrdersState extends State<GetOrders> {
                   break;
                 case Status.COMPLETED:
                   return OrdersList(
-                    currentUser: _currentUser,
+                    user: _currentUser,
                     ordersList: snapshot.data.data,
                     ordersType: widget.ordersType,
                     locationTracking: locationTracking,
@@ -143,9 +134,8 @@ class _GetOrdersState extends State<GetOrders> {
           },
         ),
       ),
-      // bottomNavigationBar: BottomNavBar(),
-      bottomNavigationBar: BottmNavigation(
-        userType: 'courier',
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
       ),
     );
   }

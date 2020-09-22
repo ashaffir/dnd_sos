@@ -6,6 +6,7 @@ import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/orders/order_created.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
@@ -230,7 +231,9 @@ class _OrderSummaryState extends State<OrderSummary> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 
@@ -259,7 +262,9 @@ class _OrderSummaryState extends State<OrderSummary> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 }

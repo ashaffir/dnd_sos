@@ -5,7 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/database/user_database.dart';
+import 'package:pickndell/home/home_page.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
+import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/model/credit_card.dart';
@@ -13,7 +15,9 @@ import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/repository/user_repository.dart';
+import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -122,7 +126,10 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
 
               print('FINISHED PROFILE UPDATED!!!!');
               if (widget.updateField == 'name') {
-                return HomePageIsolate();
+                // return HomePageIsolate();
+                return ProfilePage(
+                  user: widget.user,
+                );
               } else {
                 return getProfileUpdatedPage(snapshot.data);
               }
@@ -289,7 +296,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
         title: Text('Profile Update'),
       ),
       body: Container(
-        height: 300,
+        height: 600,
         padding: EdgeInsets.all(30),
         child: SingleChildScrollView(
           child: Column(
@@ -305,29 +312,14 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
               Padding(
                 padding: EdgeInsets.only(top: 100),
               ),
-              FlatButton(
-                child: Text('Back To Main Page'),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomePageIsolate(
-                          userRepository: UserRepository(),
-                        );
-                      },
-                    ),
-                    (Route<dynamic> route) =>
-                        false, // No Back option for this page
-                  );
-                },
-                color: pickndellGreen,
-              ),
+              DashboardButton(),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 
@@ -355,7 +347,9 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 }

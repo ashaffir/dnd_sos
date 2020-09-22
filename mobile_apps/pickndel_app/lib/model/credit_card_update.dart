@@ -9,6 +9,7 @@ import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 
 class CreditCardUpdate extends StatefulWidget {
   final UserRepository userRepository;
@@ -276,8 +277,8 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                       ]),
                 ))),
       ),
-      bottomNavigationBar: BottomNavBar(
-        userRepository: widget.userRepository,
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
       ),
     );
   }

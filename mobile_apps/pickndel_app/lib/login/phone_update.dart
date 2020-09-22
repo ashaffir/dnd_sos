@@ -7,7 +7,9 @@ import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/profile_updated.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/user_repository.dart';
+import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -242,8 +244,8 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(
-        userRepository: UserRepository(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
       ),
     );
   }
@@ -279,31 +281,16 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
             Spacer(
               flex: 5,
             ),
-            FlatButton(
-              child: Text('Back To Main Page'),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return HomePageIsolate(
-                        userRepository: UserRepository(),
-                      );
-                    },
-                  ),
-                  (Route<dynamic> route) =>
-                      false, // No Back option for this page
-                );
-              },
-              color: pickndellGreen,
-            ),
+            DashboardButton(),
             Spacer(
               flex: 5,
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 }

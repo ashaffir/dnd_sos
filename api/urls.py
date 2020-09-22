@@ -9,7 +9,8 @@ from .views import (UserRecordView, registration_view,
                     all_user_orders, all_businesses, all_users, user_profile, phone_verification,
                     NewLoginViewSet,OpenOrdersViewSet,ActiveOrdersViewSet,
                     UserLocationViewSet,BusinessOrdersViewSet,BusinessRejectedOrdersViewSet, UserAvailable,
-                    email_verification, new_order, price_parameteres, user_credit_card, user_photo_id, order_delivery)
+                    email_verification, new_order, price_parameteres, user_credit_card, user_photo_id, order_delivery,
+                    user_profile_image, bank_details)
 
 # Firebase Cloud Messageing (FCM)
 from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
@@ -46,8 +47,10 @@ urlpatterns = [
     path('user-profile/', user_profile , name='user-profile'),
     path('user-credit-card/', user_credit_card , name='user-credit-card'),
     path('user-photo-id/', user_photo_id , name='user-photo-id'),
+    path('user-profile-image/', user_profile_image , name='user-profile-image'),
     path('user-location/', UserLocationViewSet.as_view() , name='user-location'),
     path('user-availability/', UserAvailable.as_view() , name='user-availability'),
+    path('bank-details/', bank_details , name='bank-details'),
 
     # FCM
     path('devices/', FCMDeviceAuthorizedViewSet.as_view({'post': 'create'}), name='create_fcm_device'),

@@ -1,10 +1,13 @@
 import 'package:pickndell/common/map_utils.dart';
+import 'package:pickndell/home/dashboard.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
+import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
@@ -13,8 +16,9 @@ import 'package:url_launcher/url_launcher.dart';
 class OrderAccepted extends StatefulWidget {
   final Order order;
   final String orderId;
+  final User user;
 
-  OrderAccepted({this.order, this.orderId});
+  OrderAccepted({this.order, this.orderId, this.user});
 
   @override
   _OrderAcceptedState createState() => _OrderAcceptedState();
@@ -136,7 +140,9 @@ class _OrderAcceptedState extends State<OrderAccepted> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 
@@ -173,7 +179,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return HomePageIsolate(
+                        return Dashboard(
                           userRepository: UserRepository(),
                         );
                       },
@@ -188,7 +194,9 @@ class _OrderAcceptedState extends State<OrderAccepted> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 }

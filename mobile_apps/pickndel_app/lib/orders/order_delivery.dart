@@ -17,6 +17,7 @@ import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import '../common/global.dart';
 import 'dart:io';
 
@@ -104,7 +105,9 @@ class _OrderDeliveryState extends State<OrderDelivery> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 
@@ -172,6 +175,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
               return ImageUploaded(
                 uploadStatus: 'fail',
                 imageType: 'delivery',
+                user: user,
               );
             },
           ),

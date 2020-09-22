@@ -4,6 +4,7 @@ import 'package:pickndell/location/location_stream.dart';
 import 'package:pickndell/repository/location_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 
 import '../dao/user_dao.dart';
 import '../model/user_model.dart';
@@ -198,7 +199,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(),
       // resizeToAvoidBottomPadding: false,
     );
   }

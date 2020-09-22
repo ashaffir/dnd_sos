@@ -1,13 +1,16 @@
 import 'package:pickndell/model/order.dart';
+import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
 
 class OrderReRequested extends StatefulWidget {
   final Order order;
-  OrderReRequested({this.order});
+  final User user;
+  OrderReRequested({this.order, this.user});
 
   @override
   _OrderReRequestedState createState() => _OrderReRequestedState();
@@ -80,7 +83,9 @@ class _OrderReRequestedState extends State<OrderReRequested> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 
@@ -106,7 +111,9 @@ class _OrderReRequestedState extends State<OrderReRequested> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 }

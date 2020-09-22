@@ -1,14 +1,17 @@
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
+import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
 
 class OrderRejected extends StatefulWidget {
   final Order order;
-  OrderRejected({this.order});
+  final User user;
+  OrderRejected({this.order, this.user});
 
   @override
   _OrderRejectedState createState() => _OrderRejectedState();
@@ -85,7 +88,9 @@ class _OrderRejectedState extends State<OrderRejected> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 
@@ -114,7 +119,9 @@ class _OrderRejectedState extends State<OrderRejected> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 }

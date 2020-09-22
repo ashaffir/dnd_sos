@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:pickndell/location/file_manager.dart';
 import 'package:pickndell/location/geo_helpers.dart';
+import 'package:pickndell/login/message_page.dart';
 import 'package:pickndell/model/credit_card.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/CustomException.dart';
@@ -23,6 +24,7 @@ final _emailVerificationEndpoint = "/api/email-verification/";
 final _phoneVerificationEndpoint = "/api/phone-verification/";
 final _creditCardUpdateEndpoint = "/api/user-credit-card/";
 final _photoIdUpdateEndpoint = "/api/user-photo-id/";
+final _bankDetailsEndpoint = "/api/bank-details/";
 
 final _tokenURL = _base + _tokenEndpoint;
 final _registrationURL = _base + _registrationEndpoint;
@@ -32,6 +34,7 @@ final _emailVerifyURL = _base + _emailVerificationEndpoint;
 final _phonelVerifyURL = _base + _phoneVerificationEndpoint;
 final _creditCardURL = _base + _creditCardUpdateEndpoint;
 final _photoIdURL = _base + _photoIdUpdateEndpoint;
+final _bankDetailsURL = _base + _bankDetailsEndpoint;
 
 /////////// Login ///////////
 Future<Token> serverAuthentication(UserLogin userLogin) async {
@@ -234,6 +237,51 @@ Future<dynamic> updateCreditCard({User user, CreditCard creditCard}) async {
   return postResponseJson;
 }
 
+///////////// Update Bank details ///////////
+Future<dynamic> bankDetails(
+    {User user,
+    String iban,
+    String swiftCode,
+    String bankName,
+    String bankAccount,
+    String idNumber,
+    String nameAccount,
+    String bankBranch}) async {
+  var postResponseJson;
+  String userToken = user.token;
+  String country = await getCountryName();
+
+  var data = {
+    "user_id": user.userId,
+    "is_employee": user.isEmployee,
+    "country": country,
+    "bank_name": bankName,
+    "iban": iban,
+    "swift_code": swiftCode,
+    "bank_branch": bankBranch,
+    "bank_account": bankAccount,
+    "id_number": idNumber,
+    "name_account": nameAccount
+  };
+
+  print('.... Uploading bank account details: $data  .....');
+  try {
+    final http.Response response = await http.post(
+      _bankDetailsURL,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $userToken',
+      },
+      // email field is special due to django requirements
+      body: jsonEncode(data),
+    );
+    postResponseJson = _response(response);
+  } on SocketException {
+    throw FetchDataException('No Internet connection');
+  }
+  return postResponseJson;
+}
+
 /////////// Update User Profile ///////////
 Future<dynamic> updateUser({
   User user,
@@ -304,13 +352,23 @@ dynamic _response(http.Response response) {
     case 403:
       print('ERROR API respose (40*): ${response.statusCode}');
       throw UnauthorisedException(response.body.toString());
+    case 404:
+      print('ERROR API respose (404): ${response.statusCode}');
+      throw UnauthorisedException(response.body.toString());
     case 500:
       print('ERROR API respose (50*): ${response.statusCode}');
       throw UnauthorisedException(response.body.toString());
     default:
       throw FetchDataException(
-          'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+          'There was a problem communicating with the server ');
   }
+}
+
+class Failure {
+  final String message;
+  Failure({this.message});
+  @override
+  String toString() => message;
 }
 
 Future phoneVerificationAPI(

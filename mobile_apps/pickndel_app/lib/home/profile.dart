@@ -1,50 +1,41 @@
+import 'package:async/async.dart';
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 import 'dart:convert';
 
-import 'package:background_locator/background_locator.dart';
-import 'package:background_locator/location_dto.dart';
-import 'package:background_locator/location_settings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/finance/payments.dart';
 import 'package:pickndell/localizations.dart';
-import 'package:pickndell/location/credencials.dart';
 import 'package:pickndell/location/geo_helpers.dart';
-import 'package:pickndell/location/location_callback_handler.dart';
-import 'package:pickndell/location/location_service_repository.dart';
-import 'package:pickndell/location/place.dart';
-import 'package:pickndell/location/search_bloc.dart';
 import 'package:pickndell/login/id_upload.dart';
+import 'package:pickndell/login/image_uploaded_message.dart';
 import 'package:pickndell/login/phone_update.dart';
 import 'package:pickndell/login/profile_updated.dart';
 import 'package:pickndell/model/credit_card_update.dart';
-import 'package:pickndell/orders/new_order.dart';
-import 'package:pickndell/model/user_location.dart';
+import 'package:pickndell/networking/CustomException.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
-import 'package:pickndell/repository/location_repository.dart';
-import 'package:pickndell/repository/user_repository.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:flutter/material.dart';
-import 'package:location_permissions/location_permissions.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-
 import 'package:http/http.dart' as http;
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../dao/user_dao.dart';
 import '../model/user_model.dart';
-import '../ui/bottom_nav_bar.dart';
 import 'dart:isolate';
 
-class ProfilePage extends StatefulWidget {
-  final UserRepository userRepository;
+File _image;
 
-  ProfilePage({this.userRepository});
+class ProfilePage extends StatefulWidget {
+  final User user;
+
+  ProfilePage({this.user});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -144,9 +135,18 @@ class _ProfilePageState extends State<ProfilePage> {
     });
     User _currentUser = await UserDao().getUser(0);
     var _getProfileResponse;
-    _getProfileResponse = await getProfile(user: _currentUser);
-    print('GET PROFILE: $_getProfileResponse');
-    await rowUpdate(user: _currentUser, data: _getProfileResponse);
+    try {
+      _getProfileResponse = await getProfile(user: _currentUser);
+      print('GET PROFILE: $_getProfileResponse');
+    } catch (e) {
+      print('ERROR >> PROFILE: Server Communication Error. ERROR: $e');
+    }
+
+    try {
+      await rowUpdate(user: _currentUser, data: _getProfileResponse);
+    } on NoSuchMethodError {
+      print('Profile: DB update Error');
+    }
     setState(() {
       _updatingProfile = false;
     });
@@ -164,181 +164,182 @@ class _ProfilePageState extends State<ProfilePage> {
     if (_emailCodeVerification) {}
 
     _checkProfile();
-
-    /////////////// Device location tracking ///////////////
-
-    if (IsolateNameServer.lookupPortByName(
-            LocationServiceRepository.isolateName) !=
-        null) {
-      IsolateNameServer.removePortNameMapping(
-          LocationServiceRepository.isolateName);
-    }
-
-    IsolateNameServer.registerPortWithName(
-        port.sendPort, LocationServiceRepository.isolateName);
-
-    port.listen(
-      (dynamic data) async {
-        await updateUI(data);
-      },
-    );
-    initPlatformState();
-  }
-
-  Future<void> initPlatformState() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    print('Initializing...');
-    await BackgroundLocator.initialize();
-    // logStr = await FileManager.readLogFile();
-    print('Initialization done');
-    final _isRunning = await BackgroundLocator.isRegisterLocationUpdate();
-    setState(() {
-      isRunning = _isRunning;
-    });
-    print('Running ${isRunning.toString()}');
-    await localStorage.setBool('locationTracking', isRunning);
-  }
-
-  Future<void> updateUI(LocationDto data) async {
-    // final log = await FileManager.readLogFile();
-    User currentUser = await UserDao().getUser(0);
-    UserLocation userLocation = UserLocation();
-    LocationRepository updateLocation = LocationRepository();
-
-    if (data != null) {
-      userLocation.latitude = data.latitude;
-      userLocation.longitude = data.longitude;
-      await updateLocation.updateUserLocation(userLocation);
-    }
-  }
-
-  Future<bool> _checkLocationPermission() async {
-    final access = await LocationPermissions().checkPermissionStatus();
-    switch (access) {
-      case PermissionStatus.unknown:
-      case PermissionStatus.denied:
-      case PermissionStatus.restricted:
-        final permission = await LocationPermissions().requestPermissions(
-          permissionLevel: LocationPermissionLevel.locationAlways,
-        );
-        if (permission == PermissionStatus.granted) {
-          return true;
-        } else {
-          return false;
-        }
-        break;
-      case PermissionStatus.granted:
-        return true;
-        break;
-      default:
-        return false;
-        break;
-    }
-  }
-
-  void _onStart() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    LocationRepository updateAvailability = LocationRepository();
-    if (await _checkLocationPermission()) {
-      print('GOT PERMISSIONS!!');
-      _startLocator();
-      setState(() {
-        isRunning = true;
-        lastTimeLocation = null;
-        // lastLocation = null;
-
-        print('isRunning: $isRunning');
-      });
-    } else {
-      // show error
-    }
-    await localStorage.setBool('locationTracking', isRunning);
-    await updateAvailability.updateAvailability(isRunning);
-  }
-
-  void onStop() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    LocationRepository updateAvailability = LocationRepository();
-    BackgroundLocator.unRegisterLocationUpdate();
-    setState(() {
-      isRunning = false;
-      //  lastTimeLocation = null;
-//      lastLocation = null;
-    });
-    await localStorage.setBool('locationTracking', isRunning);
-    await updateAvailability.updateAvailability(isRunning);
-  }
-
-  void _startLocator() {
-    Map<String, dynamic> data = {'countInit': 1};
-    BackgroundLocator.registerLocationUpdate(
-      LocationCallbackHandler.callback,
-      initCallback: LocationCallbackHandler.initCallback,
-      initDataCallback: data,
-/*
-        Comment initDataCallback, so service not set init variable,
-        variable stay with value of last run after unRegisterLocationUpdate
- */
-      disposeCallback: LocationCallbackHandler.disposeCallback,
-      androidNotificationCallback: LocationCallbackHandler.notificationCallback,
-      settings: LocationSettings(
-          notificationChannelName: "PickNdell",
-          notificationTitle: "You are currently available.",
-          notificationMsg: "Senders are able to share orders with you.",
-          notificationIcon: "assets/images/pickndell-logotype-white.png",
-          wakeLockTime: 20,
-          autoStop: false,
-          distanceFilter: 10,
-          interval: 5),
-    );
   }
 
   Widget getProfilePage(User currentUser) {
     final translations = ExampleLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: (currentUser.isApproved == 1)
-            ? Text(translations.home_title)
-            : (currentUser.profilePending == 1)
-                ? Text(translations.home_title + ' (Pending Approval)')
-                : Text(translations.home_title + ' (Not Complete)'),
-      ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              MessagingWidget(),
-              Image.asset(
-                'assets/images/pickndell-logo-white.png',
-                width: MediaQuery.of(context).size.width * 0.40,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.0),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   title: (currentUser.isApproved == 1)
+        //       ? Text(translations.home_title)
+        //       : (currentUser.profilePending == 1)
+        //           ? Text(translations.home_title + ' (Pending Approval)')
+        //           : Text(translations.home_title + ' (Not Complete)'),
+        // ),
+        body: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                MessagingWidget(),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                // Image.asset(
+                //   'assets/images/pickndell-logo-white.png',
+                //   width: MediaQuery.of(context).size.width * 0.40,
+                // ),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 30.0),
+                // ),
+                (currentUser.isEmployee == 1)
+                    ? Text(
+                        'Courier Profile',
+                        style: whiteTitle,
+                      )
+                    : Text('Sender Profile', style: whiteTitle),
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ///////////////////// Image Section //////////////
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 8.0, top: 20, right: 8, bottom: 8),
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 65,
+                            backgroundColor: Colors.grey.shade400,
+                            child: ClipOval(
+                              child: SizedBox(
+                                width: 170,
+                                height: 170,
+                                child: _image == null
+                                    ? Image.asset(
+                                        'assets/images/placeholder.jpg',
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.file(
+                                        _image,
+                                        fit: BoxFit.cover,
+                                      ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 80,
+                            right: 0,
+                            child: FloatingActionButton(
+                                backgroundColor: Colors.blue,
+                                child: Icon(Icons.camera_alt),
+                                mini: true,
+                                onPressed: _onCameraClick),
+                          )
+                        ],
                       ),
-
-                      ////////////// NAME SECTION ////////////////
-                      ///
-                      Text(
-                        translations.home_name + ":",
-                        style: intrayTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
-                      Row(
-                        children: [
-                          Text(
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        RaisedButton(
+                            child: Text('Upload Photo'),
+                            color: mainBackground,
+                            shape: StadiumBorder(
+                              side: BorderSide(
+                                color: pickndellGreen,
+                                width: 2,
+                              ),
+                            ),
+                            onPressed: () {
+                              _image == null
+                                  ? showAlertDialog(
+                                      context: context,
+                                      title: 'No Image Selected',
+                                      content:
+                                          "Please select an image to upload.")
+                                  : _sendToServer();
+                            })
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ////////////// NAME SECTION ////////////////
+                        ///
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0),
+                        ),
+                        currentUser.isEmployee == 0
+                            ? Row(
+                                children: <Widget>[
+                                  currentUser.businessName != null
+                                      ? Icon(
+                                          Icons.check_circle,
+                                          color: pickndellGreen,
+                                        )
+                                      : IconButton(
+                                          icon: Icon(Icons.control_point),
+                                          color: Colors.orange,
+                                          onPressed: () {
+                                            updateProfile(
+                                                context: context,
+                                                updateField: 'name');
+                                            print('UPDATE NAME');
+                                          }),
+                                  IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        updateProfile(
+                                            context: context,
+                                            updateField: 'name');
+                                        print('EDIT NAME');
+                                      }),
+                                ],
+                              )
+                            : Row(
+                                children: <Widget>[
+                                  currentUser.name != null
+                                      ? Icon(
+                                          Icons.check_circle,
+                                          color: pickndellGreen,
+                                        )
+                                      : IconButton(
+                                          icon: Icon(Icons.control_point),
+                                          color: Colors.orange,
+                                          onPressed: () {
+                                            updateProfile(
+                                                context: context,
+                                                updateField: 'name');
+                                            print('UPDATE NAME');
+                                          }),
+                                  IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        updateProfile(
+                                            context: context,
+                                            updateField: 'name');
+                                        print('EDIT NAME');
+                                      }),
+                                ],
+                              ),
+                        Text(
+                          translations.home_name + ":",
+                          style: intrayTitleStyle,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.0),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            updateProfile(
+                                context: context, updateField: 'name');
+                          },
+                          child: Text(
                               currentUser.isEmployee == 1
                                   ? currentUser.name != null
                                       ? '${currentUser.name}'
@@ -347,253 +348,215 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ? '${currentUser.businessName}'
                                       : " ",
                               style: userContentStyle),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
+                        ),
+                      ],
+                    ),
 
-                      currentUser.isEmployee == 0
-                          ? Row(
-                              children: <Widget>[
-                                currentUser.businessName != null
-                                    ? Icon(
-                                        Icons.check_circle,
-                                        color: pickndellGreen,
-                                      )
-                                    : IconButton(
-                                        icon: Icon(Icons.control_point),
-                                        color: Colors.orange,
-                                        onPressed: () {
-                                          updateProfile(
-                                              context: context,
-                                              updateField: 'name');
-                                          print('UPDATE NAME');
-                                        }),
-                                IconButton(
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {
-                                      updateProfile(
-                                          context: context,
-                                          updateField: 'name');
-                                      print('EDIT NAME');
-                                    }),
-                              ],
-                            )
-                          : Row(
-                              children: <Widget>[
-                                currentUser.name != null
-                                    ? Icon(
-                                        Icons.check_circle,
-                                        color: pickndellGreen,
-                                      )
-                                    : IconButton(
-                                        icon: Icon(Icons.control_point),
-                                        color: Colors.orange,
-                                        onPressed: () {
-                                          updateProfile(
-                                              context: context,
-                                              updateField: 'name');
-                                          print('UPDATE NAME');
-                                        }),
-                                IconButton(
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {
-                                      updateProfile(
-                                          context: context,
-                                          updateField: 'name');
-                                      print('EDIT NAME');
-                                    }),
-                              ],
-                            ),
-                    ],
-                  ),
-
-                  ////////////// PHONE SECTION ////////////////
-                  ///
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                      ),
-                      Text(
-                        translations.home_phone + ":",
-                        style: intrayTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
-                      Text(
+                    ////////////// PHONE SECTION ////////////////
+                    ///
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                        ),
                         currentUser.phone != null
-                            ? '${currentUser.phone}'
-                            : " ",
-                        style: userContentStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 5.0),
-                      ),
-                      currentUser.phone != null
-                          ? Icon(
-                              Icons.check_circle,
-                              color: pickndellGreen,
-                            )
-                          : IconButton(
-                              icon: Icon(Icons.control_point),
-                              color: Colors.orange,
-                              onPressed: () {
-                                updateProfile(
-                                    context: context, updateField: 'phone');
-                                print('UPDATE PHONE');
-                              }),
-                      IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
+                            ? Icon(
+                                Icons.check_circle,
+                                color: pickndellGreen,
+                              )
+                            : IconButton(
+                                icon: Icon(Icons.control_point),
+                                color: Colors.orange,
+                                onPressed: () {
+                                  updateProfile(
+                                      context: context, updateField: 'phone');
+                                  print('UPDATE PHONE');
+                                }),
+                        IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              updateProfile(
+                                  context: context, updateField: 'phone');
+                              print('UPDATE PHONE');
+                            }),
+                        Text(
+                          translations.home_phone + ":",
+                          style: intrayTitleStyle,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.0),
+                        ),
+                        InkWell(
+                          onTap: () {
                             updateProfile(
                                 context: context, updateField: 'phone');
-                            print('UPDATE PHONE');
-                          }),
-                    ],
-                  ),
+                          },
+                          child: Text(
+                            currentUser.phone != null
+                                ? '${currentUser.phone}'
+                                : " ",
+                            style: userContentStyle,
+                          ),
+                        ),
+                      ],
+                    ),
 
-                  ////////////// EMAIL SECTION ////////////////
-                  ///
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                      ),
-                      Text(
-                        translations.email + ":",
-                        style: intrayTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
-                      Text(
-                        currentUser.username != null
-                            ? '${currentUser.username}'
-                            : " ",
-                        style: userContentStyle,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 5.0)),
-                      Icon(Icons.check_circle, color: pickndellGreen),
-                      IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
+                    ////////////// EMAIL SECTION ////////////////
+                    ///
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                        ),
+                        Icon(Icons.check_circle, color: pickndellGreen),
+                        IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              updateProfile(
+                                  context: context, updateField: 'email');
+                              print('EDIT EMAIL');
+                            }),
+                        Text(
+                          translations.email + ":",
+                          style: intrayTitleStyle,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.0),
+                        ),
+                        InkWell(
+                          onTap: () {
                             updateProfile(
                                 context: context, updateField: 'email');
-                            print('EDIT EMAIL');
-                          }),
-                    ],
-                  ),
-                  ////////////// CATEGORY SECTION ////////////////
-                  ///
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                      ),
-                      Text(
-                        currentUser.isEmployee == 1
-                            ? translations.home_vehicle + ":"
-                            : translations.home_sender_cat + ":",
-                        style: intrayTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
-                      Text(
-                        currentUser.isEmployee == 1
-                            ? currentUser.vehicle != null
-                                ? '${currentUser.vehicle}'
-                                : " "
-                            : currentUser.businessCategory != null
-                                ? '${currentUser.businessCategory}'
+                          },
+                          child: Text(
+                            currentUser.username != null
+                                ? '${currentUser.username}'
                                 : " ",
-                        style: userContentStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
-                      currentUser.isEmployee == 1
-                          ? Row(
-                              children: <Widget>[
-                                currentUser.vehicle != null
-                                    ? Icon(
-                                        Icons.check_circle,
-                                        color: pickndellGreen,
-                                      )
-                                    : IconButton(
-                                        icon: Icon(Icons.control_point),
-                                        color: Colors.orange,
-                                        onPressed: () {
-                                          updateProfile(
-                                              context: context,
-                                              updateField:
-                                                  currentUser.isEmployee == 1
-                                                      ? 'vehicle'
-                                                      : 'business category');
-                                          print('EDIT VEHICLE');
-                                        },
-                                      )
-                              ],
-                            )
-                          : Row(), // Not adding for business yet
-                      IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
+                            style: userContentStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                    ////////////// CATEGORY SECTION ////////////////
+                    ///
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                        ),
+                        currentUser.isEmployee == 1
+                            ? Row(
+                                children: <Widget>[
+                                  currentUser.vehicle != null
+                                      ? Icon(
+                                          Icons.check_circle,
+                                          color: pickndellGreen,
+                                        )
+                                      : IconButton(
+                                          icon: Icon(Icons.control_point),
+                                          color: Colors.orange,
+                                          onPressed: () {
+                                            updateProfile(
+                                                context: context,
+                                                updateField:
+                                                    currentUser.isEmployee == 1
+                                                        ? 'vehicle'
+                                                        : 'business category');
+                                            print('EDIT VEHICLE');
+                                          },
+                                        )
+                                ],
+                              )
+                            : Row(), // Not adding for business yet
+                        IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              updateProfile(
+                                  context: context,
+                                  updateField: currentUser.isEmployee == 1
+                                      ? 'vehicle'
+                                      : 'business category');
+                              print('EDIT VEHICLE');
+                            }),
+                        Text(
+                          currentUser.isEmployee == 1
+                              ? translations.home_vehicle + ":"
+                              : translations.home_sender_cat + ":",
+                          style: intrayTitleStyle,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.0),
+                        ),
+                        InkWell(
+                          onTap: () {
                             updateProfile(
                                 context: context,
                                 updateField: currentUser.isEmployee == 1
                                     ? 'vehicle'
                                     : 'business category');
-                            print('EDIT VEHICLE');
-                          }),
-                    ],
-                  ),
-                  ////////////// ID DOCUMENT SECTION ////////////////
-                  ///
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                      ),
-                      Text(
-                        "ID Document:",
-                        style: intrayTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
-                      currentUser.isEmployee == 1
-                          ? Row(
-                              children: <Widget>[
-                                currentUser.idDoc != null
-                                    ? Icon(
-                                        Icons.check_circle,
-                                        color: pickndellGreen,
-                                      )
-                                    : IconButton(
-                                        icon: Icon(Icons.control_point),
-                                        color: Colors.orange,
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => IdUpload(
-                                                      user: currentUser,
-                                                      updateField: 'photo_id',
-                                                    )),
-                                          );
-                                          print('Add ID Document');
-                                        },
-                                      )
-                              ],
-                            )
-                          : Row(), // Not adding for business yet
-                      IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
+                          },
+                          child: Text(
+                            currentUser.isEmployee == 1
+                                ? currentUser.vehicle != null
+                                    ? '${currentUser.vehicle}'
+                                    : " "
+                                : currentUser.businessCategory != null
+                                    ? '${currentUser.businessCategory}'
+                                    : " ",
+                            style: userContentStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                    ////////////// ID DOCUMENT SECTION ////////////////
+                    ///
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                        ),
+                        currentUser.isEmployee == 1
+                            ? Row(
+                                children: <Widget>[
+                                  currentUser.idDoc != null
+                                      ? Icon(
+                                          Icons.check_circle,
+                                          color: pickndellGreen,
+                                        )
+                                      : IconButton(
+                                          icon: Icon(Icons.control_point),
+                                          color: Colors.orange,
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      IdUpload(
+                                                        user: currentUser,
+                                                        updateField: 'photo_id',
+                                                      )),
+                                            );
+                                            print('Add ID Document');
+                                          },
+                                        )
+                                ],
+                              )
+                            : Row(), // Not adding for business yet
+                        IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => IdUpload(
+                                          user: currentUser,
+                                          updateField: 'photo_id',
+                                        )),
+                              );
+                              print('EDIT ID PHOTO');
+                            }),
+                        InkWell(
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -602,254 +565,127 @@ class _ProfilePageState extends State<ProfilePage> {
                                         updateField: 'photo_id',
                                       )),
                             );
-                            print('EDIT ID PHOTO');
-                          }),
-                    ],
-                  ),
+                          },
+                          child: Text(
+                            "ID Document",
+                            style: intrayTitleStyle,
+                          ),
+                        ),
+                      ],
+                    ),
 
-                  ////////////// CREDICT CARD SECTION (ONLY BUSINESS/SENDER) ////////////////
-                  ///
-                  currentUser.isEmployee == 0
-                      ? Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                            ),
-                            Text(
-                              'Credit Card' + ":",
-                              style: intrayTitleStyle,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(right: 10.0),
-                            ),
-                            currentUser.creditCardToken != null
-                                ? Icon(
-                                    Icons.check_circle,
-                                    color: pickndellGreen,
-                                  )
-                                : IconButton(
-                                    icon: Icon(Icons.control_point,
-                                        color: Colors.orange),
-                                    onPressed: () {
-                                      print('CREDIT CARD');
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CreditCardUpdate(
-                                                  user: currentUser,
-                                                  userRepository:
-                                                      widget.userRepository,
-                                                )),
-                                      );
-                                    }),
-                            IconButton(
-                                icon: Icon(Icons.edit),
-                                onPressed: () {
-                                  print('CREDIT CARD');
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CreditCardUpdate(
-                                              user: currentUser,
-                                              userRepository:
-                                                  widget.userRepository,
-                                            )),
-                                  );
-                                }),
-                          ],
-                        )
-                      : Row(),
-                  Divider(color: Colors.white),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                  ),
-
-                  //////////////// User Rating  ///////////////
-                  ////////////
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
-                      ),
-                      Text(
-                        currentUser.isEmployee == 1
-                            ? currentUser.rating != 0.0
-                                ? translations.home_courier_rating +
-                                    ": ${currentUser.rating}"
-                                : translations.home_courier_rating +
-                                    ": " +
-                                    translations.home_unrated
-                            : currentUser.rating != null
-                                ? translations.home_sender_rating +
-                                    ": ${currentUser.rating}"
-                                : translations.home_sender_rating +
-                                    ": " +
-                                    translations.home_unrated,
-                        style: intrayTitleStyle,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 10)),
-
-                      //////////// Courier star ratings: ////////
-                      SmoothStarRating(
-                          rating: currentUser.rating,
-                          isReadOnly: true,
-                          size: 20,
-                          filledIconData: Icons.star,
-                          halfFilledIconData: Icons.star_half,
-                          defaultIconData: Icons.star_border,
-                          borderColor: Colors.white24,
-                          starCount: 5,
-                          allowHalfRating: true,
-                          color: Colors.yellow,
-                          spacing: 0.0),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                  ),
-                  //////////////// Active Orders  ///////////////
-                  ////////////
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                      ),
-                      Text(
-                        translations.home_active_orders + ":",
-                        style: intrayTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),
-                      Text(
-                        currentUser.isEmployee == 1
-                            ? currentUser.activeOrders != null
-                                ? '${currentUser.activeOrders}'
-                                : '0'
-                            : currentUser.numOrdersInProgress != null
-                                ? '${currentUser.numOrdersInProgress}'
-                                : '0',
-                        style: userContentStyle,
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.0, top: 20.0),
-                  ),
-                  currentUser.isEmployee == 1
-                      ? Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 30.0, top: 20.0),
-                            ),
-                            Text(
-                              translations.home_status,
-                              style: TextStyle(fontSize: 20.0),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(right: 20.0),
-                            ),
-                            Column(
-                              children: [
-                                Transform.scale(
-                                  scale: 2.0,
-                                  child: Switch(
-                                    value: isRunning,
-                                    onChanged: (running) {
-                                      // Check account approved first
-                                      if (currentUser.isApproved == 1) {
-                                        if (running) {
-                                          _onStart();
-                                        } else if (!running) {
-                                          onStop();
-                                        }
-                                      } else {
-                                        showAlertDialog(
-                                          context: context,
-                                          title:
-                                              'Your account is not approved yet',
-                                          content: (currentUser
-                                                      .profilePending ==
-                                                  1)
-                                              ? 'Your account is being reviewed. We will notify you once approved.'
-                                              : 'Please complete your profile first.',
-                                          url: '',
-                                          //     'https://pickndell.com/core/login'
+                    ////////////// CREDICT CARD SECTION (ONLY BUSINESS/SENDER) ////////////////
+                    ///
+                    currentUser.isEmployee == 0
+                        ? Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                              ),
+                              Text(
+                                'Credit Card' + ":",
+                                style: intrayTitleStyle,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 10.0),
+                              ),
+                              currentUser.creditCardToken != null
+                                  ? Icon(
+                                      Icons.check_circle,
+                                      color: pickndellGreen,
+                                    )
+                                  : IconButton(
+                                      icon: Icon(Icons.control_point,
+                                          color: Colors.orange),
+                                      onPressed: () {
+                                        print('CREDIT CARD');
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CreditCardUpdate(
+                                                    user: currentUser,
+                                                  )),
                                         );
-                                        print('NOT APPROVED');
-                                      }
-                                    },
-                                    activeTrackColor: Colors.lightGreenAccent,
-                                    activeColor: pickndellGreen,
-                                    inactiveTrackColor: Colors.red[400],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 20.0),
-                                ),
-                                Text(isRunning
-                                    ? translations.home_available
-                                    : translations.home_unavailable),
-                              ],
-                            ),
-                          ],
-                        )
-                      : Row(),
-                  currentUser.isEmployee == 0
-                      ? Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 30.0, top: 20.0),
-                            ),
-                            FlatButton(
-                                shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                        color: pickndellGreen,
-                                        width: 2,
-                                        style: BorderStyle.solid),
-                                    borderRadius: BorderRadius.circular(50)),
-                                onPressed: () {
-                                  if (currentUser.isApproved == 1) {
+                                      }),
+                              IconButton(
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () {
+                                    print('CREDIT CARD');
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => NewOrder(
+                                          builder: (context) =>
+                                              CreditCardUpdate(
                                                 user: currentUser,
-                                                userRepository:
-                                                    widget.userRepository,
                                               )),
                                     );
-                                  } else {
-                                    showAlertDialog(
-                                        context: context,
-                                        title: 'Your account is not approved.',
-                                        content:
-                                            "Please complete your profile before ordering deliveries. \n Name, phone and credit card are mandatory.",
-                                        url: '');
-                                  }
-                                },
-                                child: Text('Create a New Order'))
-                          ],
-                        )
-                      : Row(),
-                ], //Children
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(34.0, 20.0, 0.0, 0.0),
-              ),
-            ],
+                                  }),
+                            ],
+                          )
+                        : Row(),
+                    Divider(color: Colors.white),
+                    Row(
+                      children: [
+                        Spacer(
+                          flex: 1,
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: 30.0, left: LEFT_MARGINE),
+                        ),
+                        InkWell(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.arrow_back),
+                              Padding(padding: EdgeInsets.only(right: 10.0)),
+                              Text('Back'),
+                            ],
+                          ),
+                          onTap: () {
+                            print('BACK');
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Spacer(
+                          flex: 2,
+                        ),
+                        FlatButton(
+                          child: Text('Payments'),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(BUTTON_BORDER_RADIUS),
+                              side: BorderSide(color: buttonBorderColor)),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PaymentsPage(
+                                        user: currentUser,
+                                      )),
+                            );
+                          },
+                        ),
+                        Spacer(
+                          flex: 1,
+                        ),
+                      ],
+                    ),
+                  ], //Children
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(34.0, 20.0, 0.0, 0.0),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      // bottomNavigationBar: BottomNavBar(
-      //   userRepository: widget.userRepository,
-      // ),
-      bottomNavigationBar: BottmNavigation(
-        userType: 'courier',
-      ),
+        bottomNavigationBar: BottomNavigation(
+          user: currentUser,
+        ),
 
-      // resizeToAvoidBottomPadding: false,
+        // resizeToAvoidBottomPadding: false,
+      ),
     );
   }
 
@@ -1081,6 +917,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: _verificationCodeController,
                       decoration:
                           InputDecoration(prefixIcon: Icon(Icons.security)),
@@ -1106,6 +943,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               child: Text('Submit'),
+              textColor: DEFAUT_TEXT_COLOR,
               onPressed: () {
                 print('Sending verification code...');
                 if (!_formKey.currentState.validate()) {
@@ -1135,5 +973,136 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       },
     );
+  }
+
+  _onCameraClick() {
+    final action = CupertinoActionSheet(
+      message: Text(
+        "Submit Photo ID",
+        style: TextStyle(fontSize: 15.0),
+      ),
+      actions: <Widget>[
+        CupertinoActionSheetAction(
+          child: Text("Choose from gallery",
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+          isDefaultAction: false,
+          onPressed: () async {
+            Navigator.pop(context);
+            var image = await ImagePicker.pickImage(
+                source: ImageSource.gallery,
+                imageQuality: 50,
+                maxHeight: 500.0,
+                maxWidth: 500.0);
+            setState(() {
+              _image = image;
+            });
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: Text("Take a picture",
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+          isDestructiveAction: false,
+          onPressed: () async {
+            Navigator.pop(context);
+            var image = await ImagePicker.pickImage(
+                source: ImageSource.camera,
+                imageQuality: 50,
+                maxHeight: 500.0,
+                maxWidth: 500.0);
+            setState(() {
+              _image = image;
+            });
+          },
+        )
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: Text("Cancel",
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+    showCupertinoModalPopup(context: context, builder: (context) => action);
+  }
+
+  _sendToServer() async {
+    showProgress(context, 'Uploading to PickNdell, Please wait...', false);
+    if (_image != null) {
+      updateProgress('Uploading image, Please wait...');
+      _uploadImage(imageFile: _image, user: widget.user);
+    } else {
+      print('false');
+    }
+  }
+
+  _uploadImage({File imageFile, User user}) async {
+    // open a bytestream
+    var stream = new http.ByteStream(DelegatingStream(imageFile.openRead()));
+    // get file length
+    var length = await imageFile.length();
+
+    // string to uri
+    var uri = Uri.parse(serverDomain + "/api/user-profile-image/");
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Token ${user.token}',
+    };
+
+    // create multipart request
+    var request = new http.MultipartRequest("POST", uri);
+
+    // multipart that takes file
+    var multipartFile = new http.MultipartFile('image', stream, length,
+        filename: imageFile.path.split("/").last);
+
+    // add file to multipart
+    request.files.add(multipartFile);
+
+    //add headers
+    request.headers.addAll(headers);
+
+    //adding params
+    String country = await getCountryName();
+    request.fields['user_id'] = user.userId.toString();
+    request.fields['is_employee'] = user.isEmployee == 1 ? "true" : "false";
+    request.fields['country'] = country;
+
+    // send
+    var response = await request.send();
+
+    // listen for response
+    response.stream.transform(utf8.decoder).listen((value) {
+      if (value == "202") {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ImageUploaded(
+                uploadStatus: 'ok',
+                user: user,
+              );
+            },
+          ),
+          (Route<dynamic> route) => false, // No Back option for this page
+        );
+      } else {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ImageUploaded(
+                uploadStatus: 'fail',
+                user: user,
+              );
+            },
+          ),
+          (Route<dynamic> route) => false, // No Back option for this page
+        );
+      }
+    });
   }
 }

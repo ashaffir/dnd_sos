@@ -39,7 +39,7 @@ class OrdersBloc {
       if (_isStreaming) orderDataSink.add(Response.completed(orderDetails));
     } catch (e) {
       if (_isStreaming) orderDataSink.add(Response.error(e.toString()));
-      print(e);
+      print('ERROR >> ORDER BLOC: Failed to load orders. ERROR: $e');
     }
   }
 

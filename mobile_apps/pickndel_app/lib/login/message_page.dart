@@ -2,19 +2,29 @@ import 'package:pickndell/common/global.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
+import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickndell/bloc/authentication_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 
 class MessagePage extends StatelessWidget {
   final String messageType;
   var data;
   var message;
+  final String content;
   final Order order;
+  final User user;
 
-  MessagePage({this.messageType, this.message, this.data, this.order});
+  MessagePage(
+      {this.messageType,
+      this.message,
+      this.data,
+      this.order,
+      this.user,
+      this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -26,22 +36,40 @@ class MessagePage extends StatelessWidget {
             ? Text(translations.messages_register_title)
             : messageType == "push"
                 ? Text('${message["title"]}')
-                : Text('$message'),
+                : (messageType == 'statusOK' || messageType == "Error")
+                    ? Text("")
+                    : Text('$message'),
       ),
       body: Container(
         child: Padding(
-          padding: const EdgeInsets.only(right: 40, left: 40, bottom: 40.0),
+          padding:
+              const EdgeInsets.only(right: RIGHT_MARGINE, left: LEFT_MARGINE),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Image.asset(
-                  'assets/images/pickndell-logo-white.png',
-                  width: MediaQuery.of(context).size.width * 0.70,
-                  // height: MediaQuery.of(context).size.height * 0.50,
-                  // width: 300,
-                ),
+                Padding(padding: EdgeInsets.only(top: TOP_MARGINE)),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[]),
+                messageType == 'statusOK'
+                    ? Image.asset(
+                        'assets/images/check-icon.png',
+                        width: MediaQuery.of(context).size.width * 0.50,
+                      )
+                    : messageType == 'Error'
+                        ? Image.asset(
+                            'assets/images/crying-icon.png',
+                            width: MediaQuery.of(context).size.width * 0.50,
+                          )
+                        : Image.asset(
+                            'assets/images/pickndell-logo-white.png',
+                            width: MediaQuery.of(context).size.width * 0.70,
+                            // height: MediaQuery.of(context).size.height * 0.50,
+                            // width: 300,
+                          ),
                 Padding(
                   padding: EdgeInsets.only(left: 30.0),
                   child: messageType == "Registration"
@@ -52,10 +80,13 @@ class MessagePage extends StatelessWidget {
                               '${message["body"]}',
                               style: whiteTitle,
                             )
-                          : Text('$message'),
+                          : (messageType == "statusOK" ||
+                                  messageType == "Error")
+                              ? Text("")
+                              : Text('$message'),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 30.0, top: 30.0),
+                  padding: EdgeInsets.only(top: 30.0),
                   child: messageType == "Registration"
                       ? Text(
                           translations.messages_register_activation,
@@ -76,7 +107,17 @@ class MessagePage extends StatelessWidget {
                                 padding: EdgeInsets.only(bottom: 20.0),
                               ),
                             ])
-                          : Text('$message'),
+                          : messageType == "statusOK"
+                              ? Text(
+                                  "Your profile was updated",
+                                  style: whiteTitle,
+                                )
+                              : messageType == "Error"
+                                  ? Text(
+                                      content,
+                                      style: intrayTitleStyle,
+                                    )
+                                  : Text('$message'),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 10),
@@ -130,11 +171,15 @@ class MessagePage extends StatelessWidget {
                                                 if (messageType ==
                                                     "Registration") {
                                                   return OrderAccepted(
-                                                      order: order);
+                                                    order: order,
+                                                    user: user,
+                                                  );
                                                 } else if (messageType ==
                                                     "push") {
                                                   return OrderAccepted(
-                                                      orderId: order.order_id);
+                                                    orderId: order.order_id,
+                                                    user: user,
+                                                  );
                                                 } else {
                                                   print('ERROR Message type');
                                                 }
@@ -164,13 +209,19 @@ class MessagePage extends StatelessWidget {
                                   ),
                                 ],
                               )
-                            : Text('$message'),
+                            : (messageType == 'statusOK' ||
+                                    messageType == "Error")
+                                ? Text("")
+                                : Text('$message'),
                   ),
                 ),
               ],
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigation(
+        user: user,
       ),
     );
   }

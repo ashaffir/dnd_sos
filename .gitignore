@@ -5,7 +5,7 @@
 *credencials.dart
 
 # NGROK
-ngrok
+*ngrok*
 
 ## VENV
 venv*
@@ -20,9 +20,11 @@ themes/*
 *.svg
 
 # Mobile apps
-# mobile_apps
+
+#Other
 tmp
 archive
+material/
 
 ### OSX ###
 .DS_Store

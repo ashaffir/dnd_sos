@@ -8,6 +8,7 @@ import 'package:background_locator/location_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/credencials.dart';
 import 'package:pickndell/location/geo_helpers.dart';
@@ -298,7 +299,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
     return Scaffold(
       appBar: AppBar(
         title: (currentUser.isApproved == 1)
-            ? Text(translations.home_title)
+            ? Text('Home')
             : (currentUser.profilePending == 1)
                 ? Text(translations.home_title + ' (Pending Approval)')
                 : Text(translations.home_title + ' (Not Complete)'),
@@ -674,13 +675,15 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       ),
                       Text(
                         currentUser.isEmployee == 1
-                            ? currentUser.rating != 0.0
+                            ? currentUser.rating != null &&
+                                    currentUser.rating != 0.0
                                 ? translations.home_courier_rating +
                                     ": ${currentUser.rating}"
                                 : translations.home_courier_rating +
                                     ": " +
                                     translations.home_unrated
-                            : currentUser.rating != null
+                            : currentUser.rating != null &&
+                                    currentUser.rating != 0.0
                                 ? translations.home_sender_rating +
                                     ": ${currentUser.rating}"
                                 : translations.home_sender_rating +
@@ -692,7 +695,9 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
 
                       //////////// Courier star ratings: ////////
                       SmoothStarRating(
-                          rating: currentUser.rating,
+                          rating: currentUser.rating != null
+                              ? currentUser.rating
+                              : 0.0,
                           isReadOnly: true,
                           size: 20,
                           filledIconData: Icons.star,
@@ -829,10 +834,36 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                                         url: '');
                                   }
                                 },
-                                child: Text('Create a New Order'))
+                                child: Text('Create a New Order')),
                           ],
                         )
                       : Row(),
+                  FlatButton(
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                              color: pickndellGreen,
+                              width: 2,
+                              style: BorderStyle.solid),
+                          borderRadius: BorderRadius.circular(50)),
+                      onPressed: () {
+                        if (currentUser.isApproved == 1) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage(
+                                      user: currentUser,
+                                    )),
+                          );
+                        } else {
+                          showAlertDialog(
+                              context: context,
+                              title: 'Your account is not approved.',
+                              content:
+                                  "Please complete your profile before ordering deliveries. \n Name, phone and credit card are mandatory.",
+                              url: '');
+                        }
+                      },
+                      child: Text('Edit Profile'))
                 ], //Children
               ),
               Padding(
@@ -842,11 +873,8 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNavBar(
-      //   userRepository: widget.userRepository,
-      // ),
-      bottomNavigationBar: BottmNavigation(
-        userType: 'courier',
+      bottomNavigationBar: BottomNavigation(
+        user: currentUser,
       ),
 
       // resizeToAvoidBottomPadding: false,

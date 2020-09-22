@@ -214,7 +214,12 @@ launchURL(String url) async {
 
 //helper method to show alert dialog
 showAlertDialog(
-    {BuildContext context, String title, String content, String url}) {
+    {BuildContext context,
+    String title,
+    String content,
+    String url,
+    String nameRoute,
+    String buttonText}) {
   // set up the AlertDialog
   Widget okButton = FlatButton(
     child: Text("OK"),
@@ -228,10 +233,21 @@ showAlertDialog(
     child: Text('Go to Website'),
     color: Colors.green,
     onPressed: () {
+      // This is to log out the user if redirects to outside URL
       BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
       Phoenix.rebirth(context);
       if (url != '') {
         launchURL(url);
+      }
+    },
+  );
+
+  Widget redirectButton = FlatButton(
+    child: Text(buttonText != null ? buttonText : "Go"),
+    color: Colors.green,
+    onPressed: () {
+      if (nameRoute != '') {
+        Navigator.pushNamed(context, nameRoute);
       }
     },
   );
@@ -241,7 +257,7 @@ showAlertDialog(
     content: Text(content),
     actions: [
       okButton,
-      url != '' ? urlButton : null,
+      url != null ? urlButton : nameRoute != null ? redirectButton : null,
     ],
   );
 

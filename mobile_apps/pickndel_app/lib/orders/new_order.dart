@@ -17,6 +17,7 @@ import 'package:pickndell/orders/order_summary.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:uuid/uuid.dart';
 
@@ -342,8 +343,8 @@ class _NewOrderState extends State<NewOrder> {
                       ]),
                 ))),
       ),
-      bottomNavigationBar: BottomNavBar(
-        userRepository: widget.userRepository,
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
       ),
     );
   }

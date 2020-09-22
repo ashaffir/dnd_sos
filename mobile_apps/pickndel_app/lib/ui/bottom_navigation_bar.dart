@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:pickndell/common/global.dart';
+import 'package:pickndell/login/logout_page.dart';
+import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/repository/user_repository.dart';
 
-class BottmNavigation extends StatefulWidget {
-  final userType;
+class BottomNavigation extends StatefulWidget {
+  final User user;
 
-  BottmNavigation({this.userType});
+  BottomNavigation({this.user});
 
   @override
-  _BottmNavigationState createState() => _BottmNavigationState();
+  _BottomNavigationState createState() => _BottomNavigationState();
 }
 
-class _BottmNavigationState extends State<BottmNavigation> {
+class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +36,7 @@ class _BottmNavigationState extends State<BottmNavigation> {
                   // size: 44.0,
                 ),
                 onPressed: () {
-                  if (widget.userType == 'courier') {
+                  if (widget.user.isEmployee == 1) {
                     Navigator.pushReplacementNamed(context, '/open-orders');
                   } else {
                     Navigator.pushReplacementNamed(context, '/rejected-orders');
@@ -46,7 +49,7 @@ class _BottmNavigationState extends State<BottmNavigation> {
                   // size: 44.0,
                 ),
                 onPressed: () {
-                  if (widget.userType == 'courier') {
+                  if (widget.user.isEmployee == 1) {
                     Navigator.pushReplacementNamed(context, '/active-orders');
                   } else {
                     Navigator.pushReplacementNamed(context, '/business-orders');
@@ -59,7 +62,15 @@ class _BottmNavigationState extends State<BottmNavigation> {
                   // size: 44.0,
                 ),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/logout');
+                  // Navigator.pushReplacementNamed(context, '/logout');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LogoutPage(
+                              user: widget.user,
+                              userRepository: UserRepository(),
+                            )),
+                  );
                 },
               )
             ],

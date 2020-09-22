@@ -58,6 +58,8 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   flutter_date_pickers: ^0.1.7
   smooth_star_rating: ^1.1.1
+  iban: ^0.2.0
+
 
 
   ##TEST
@@ -107,6 +109,10 @@ flutter:
    - assets/images/placeholder.jpg
    - assets/images/id_card.jpg
    - assets/images/delivery-courier.jpg
+   - assets/images/check-icon.png
+   - assets/images/fail-icon.png
+   - assets/images/crying-icon.png
+   - assets/images/like-face.png
  
 
   # An image asset can refer to one or more resolution-specific "variants", see

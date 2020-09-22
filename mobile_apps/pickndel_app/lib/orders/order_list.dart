@@ -20,14 +20,14 @@ class OrdersList extends StatelessWidget {
   final Orders ordersList;
   final String ordersType;
   final bool locationTracking;
-  final User currentUser;
+  final User user;
 
   const OrdersList(
       {Key key,
       this.ordersList,
       this.ordersType,
       this.locationTracking,
-      this.currentUser})
+      this.user})
       : super(key: key);
 
 // REFERENCE - Alert dialog: https://www.youtube.com/watch?v=FGfhnS6skMQ
@@ -86,8 +86,10 @@ class OrdersList extends StatelessWidget {
                                     Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            OrderAccepted(order: order),
+                                        builder: (context) => OrderAccepted(
+                                          order: order,
+                                          user: user,
+                                        ),
                                       ),
                                       (Route<dynamic> route) =>
                                           false, // No Back option for this page
@@ -110,7 +112,10 @@ class OrdersList extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                OrderDelivered(order: order),
+                                                OrderDelivered(
+                                              order: order,
+                                              user: user,
+                                            ),
                                           ),
                                           (Route<dynamic> route) =>
                                               false, // No Back option for this page
@@ -136,7 +141,10 @@ class OrdersList extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    OrderRejected(order: order),
+                                                    OrderRejected(
+                                                  order: order,
+                                                  user: user,
+                                                ),
                                               ),
                                               (Route<dynamic> route) =>
                                                   false, // No Back option for this page
@@ -165,7 +173,9 @@ class OrdersList extends StatelessWidget {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         OrderReRequested(
-                                                            order: order),
+                                                      order: order,
+                                                      user: user,
+                                                    ),
                                                   ),
                                                   (Route<dynamic> route) =>
                                                       false, // No Back option for this page
@@ -195,7 +205,9 @@ class OrdersList extends StatelessWidget {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         OrderPickedup(
-                                                            order: order),
+                                                      order: order,
+                                                      user: user,
+                                                    ),
                                                   ),
                                                   (Route<dynamic> route) =>
                                                       false, // No Back option for this page
@@ -300,7 +312,8 @@ class OrdersList extends StatelessWidget {
                                           .orders_alert_tracking_title,
                                       content: translations
                                           .orders_alert_tracking_content,
-                                      url: '');
+                                      nameRoute: '/',
+                                      buttonText: 'Change Status');
                                   print('No tracking!!!');
                                 }
 
@@ -472,7 +485,7 @@ class OrdersList extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => OrderPage(
-                              user: currentUser,
+                              user: user,
                               order: order,
                               orderId: order.order_id,
                             ),

@@ -1,4 +1,7 @@
 import 'package:pickndell/app_localizations.dart';
+import 'package:pickndell/home/dashboard.dart';
+import 'package:pickndell/finance/payments.dart';
+import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/home/welcome.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/gmap.dart';
@@ -19,9 +22,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bloc/authentication_bloc.dart';
 import 'home/home_page_isolate.dart';
 import 'login/logout_page.dart';
+import 'model/user_model.dart';
 import 'orders/get_orders_page.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+User userInfo;
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -56,7 +62,7 @@ void main() async {
 
   SharedPreferences localStorage = await SharedPreferences.getInstance();
   try {
-    final userInfo = await userRepository.userDao.getUser(0);
+    userInfo = await userRepository.userDao.getUser(0);
     int isEmployee = userInfo.isEmployee;
     await localStorage.setInt('isEmployee', isEmployee);
   } catch (e) {
@@ -99,9 +105,12 @@ class App extends StatelessWidget {
                 // return WelcomePage(
                 //   userRepository: userRepository,
                 // );
-                return HomePageIsolate(
-                  userRepository: userRepository,
-                );
+
+                // return HomePageIsolate(
+                //   userRepository: userRepository,
+                // );
+
+                return Dashboard();
 
                 // return MaterialApp(
                 //   title: 'Flutter Google Maps Demo',
@@ -124,10 +133,24 @@ class App extends StatelessWidget {
             '/login': (context) => LoginPage(
                   userRepository: null,
                 ),
-            '/open-orders': (context) => GetOrders(openOrders),
-            '/active-orders': (context) => GetOrders(activeOrders),
-            '/business-orders': (context) => GetOrders(businessOrders),
-            '/rejected-orders': (context) => GetOrders(rejectedOrders),
+            '/profile': (context) => ProfilePage(),
+            '/payments': (context) => PaymentsPage(),
+            '/open-orders': (context) => GetOrders(
+                  ordersType: openOrders,
+                  user: userInfo,
+                ),
+            '/active-orders': (context) => GetOrders(
+                  ordersType: activeOrders,
+                  user: userInfo,
+                ),
+            '/business-orders': (context) => GetOrders(
+                  ordersType: businessOrders,
+                  user: userInfo,
+                ),
+            '/rejected-orders': (context) => GetOrders(
+                  ordersType: rejectedOrders,
+                  user: userInfo,
+                ),
             '/order-accepted': (context) => OrderAccepted(),
           },
         ));

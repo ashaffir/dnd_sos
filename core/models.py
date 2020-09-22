@@ -204,7 +204,7 @@ class Employee(models.Model):
     profile_pending = models.BooleanField(default=False) # He filled up the profile information necessary
     is_approved = models.BooleanField(default=False) # He filled up the profile information necessary
 
-    verification_code = models.CharField(max_length=20, null=True, blank=True)
+    verification_code = models.CharField(max_length=20, null=True, blank=True) # Used for email verificaiton
 
     PAYMENT_METHODS = (
         ('Bank', 'Bank'),
@@ -214,11 +214,14 @@ class Employee(models.Model):
     )
     paypal_account = models.CharField(max_length=100, null=True, blank=True)
     payment_via_phone = models.BooleanField(default=False) # E.g. Bit
-    bank_details = JSONField(null=True, blank=True)
+    bank_details = JSONField(null=True, blank=True, default=dict)
     preferred_payment_method = models.CharField(max_length=100, choices=PAYMENT_METHODS, default='Bank')
 
+    balance = models.FloatField(null=True, blank=True)
+
     payment_amount = models.FloatField(null=True, blank=True)
-    payment_date = models.DateTimeField(null=True, blank=True)
+    last_payment_date = models.DateTimeField(null=True, blank=True)
+    next_payment_date = models.DateTimeField(null=True, blank=True)
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHODS, null=True, blank=True)
 
     class Meta:

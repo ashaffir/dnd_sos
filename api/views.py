@@ -224,6 +224,14 @@ class NewLoginViewSet(ObtainAuthToken):
             except:
                 is_approved = ""
 
+            try: 
+                business_total_rating = user_profile.business_total_rating
+                if not business_total_rating:
+                    business_total_rating = 0.0
+            except:
+                business_total_rating = 0.0
+
+
             login_response = {'token': token.key,
                             'fcm_token':fcm_token,
                             "user":user.pk,
@@ -233,6 +241,7 @@ class NewLoginViewSet(ObtainAuthToken):
                             "business_category": business_category,
                             "is_approved": 1 if is_approved else 0,
                             "num_daily_orders": num_daily_orders,
+                            "business_total_rating":business_total_rating,
                             "daily_cost": daily_cost,
                             "num_orders_in_progress": num_orders_in_progress
                             }
@@ -355,7 +364,37 @@ class UserProfile(viewsets.ModelViewSet):
 from django.core.files.base import ContentFile
 
 @api_view(['POST',])
-# @permission_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated,))
+def user_profile_image(request):
+    data = {}
+    if request.data['is_employee'] == 'true':
+        profile = Employee.objects.get(pk=request.data['user_id'])
+    else:
+        profile = Employer.objects.get(pk=request.data['user_id'])
+        serializer = EmployerProfileSerializer(user, data=request.data)
+
+    country = request.data['country']
+    image_string = request.data["image"]
+
+    # profile = Employee.objects.get(pk=8)
+    # file_name = settings.MEDIA_ROOT + f'/id_docs/{country}/id_doc_{profile.pk}_{request.data["file_name"]}'
+
+    print('Processing profile image upload...')    
+    try:
+        profile.profile_pic = image_string
+        profile.save()
+        print('SAVED TO PROFILE')
+        # data['response'] = 'ID updated'
+        return Response(status.HTTP_202_ACCEPTED)
+    except Exception as e:
+        print(f'Failed saving profile image. ERROR: {e}')
+        logger.error(f'Failed saving profile image. ERROR: {e}')
+        # print(f'DATA: {request.data}')
+        data['response'] = 'Failed updating profile image document'
+        return Response(data)
+
+@api_view(['POST',])
+@permission_classes((IsAuthenticated,))
 def user_photo_id(request):
     data = {}
     if request.data['is_employee'] == 'true':
@@ -437,9 +476,11 @@ def user_profile(request):
         data = {}
         if serializer.is_valid():
             data = serializer.data
-            data['num_active_orders_today'] = num_active_orders_today
-            data['num_active_orders_total'] = num_active_orders_total
-            data['daily_profit'] = daily_profit
+            
+            if request.data['is_employee'] == 1:
+                data['num_active_orders_today'] = num_active_orders_today 
+                data['num_active_orders_total'] = num_active_orders_total
+                data['daily_profit'] = daily_profit
 
             print('SENDING PROFILE DATA')
         else:
@@ -499,7 +540,7 @@ def user_profile(request):
 @api_view(['POST',])
 @permission_classes((IsAuthenticated,))
 def user_credit_card(request):
-    print(f'REQUEST: {request.data}')
+    print(f'CREDIT CARD REQUEST: {request.data}')
     data = {}
     if request.data['is_employee'] == 1:
         user = Employee.objects.get(pk=request.data['user_id'])
@@ -542,6 +583,44 @@ def user_credit_card(request):
 
     else:
         return Response(status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST',])
+@permission_classes((IsAuthenticated,))
+def bank_details(request):
+    data = {}
+    if request.method == 'POST':
+        if request.data['is_employee'] == 1:
+            profile = Employee.objects.get(pk=request.data['user_id'])
+        else:
+            profile = Employer.objects.get(pk=request.data['user_id'])
+        
+        profile.bank_details = dict()
+
+        try:
+            iban = request.data['iban']
+            name_account = request.data['name_account']
+
+            try:
+                swift = request.data['swift_code']
+                profile.bank_details['swift'] = swift 
+            except:
+                swift = None
+            profile.bank_details['iban'] = iban
+            profile.bank_details['name_account'] = name_account
+            
+            profile.save()
+
+        except Exception as e:
+            print(f'Bank details not valid. Error: {e}')
+            logger.error(f'Bank details not valid. Error: {e}')
+            return Response('Bank details not valid')
+
+        print('Bank details update successfully!')
+        data['response'] = 'OK'
+        return Response(data, status=status.HTTP_200_OK)
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
+
 
 
 
@@ -845,7 +924,7 @@ def order_update_view(request):
 
     # Identifying the business for the location and the phone
     business = Employer.objects.get(pk=update_order.business.pk)
-    print(f'BUSINESS OWNER: {business} Location: {business.location} Lat: {business.lat} Lon: {business.lon}')
+    print(f'ORDER UPDATE: BUSINESS OWNER: {business} Location: {business.location} Lat: {business.lat} Lon: {business.lon}')
 
     if request.method == 'PUT':
         serializer = OrderSerializer(update_order, data=request.data)

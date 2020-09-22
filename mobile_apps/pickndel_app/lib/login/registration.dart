@@ -351,6 +351,8 @@ class _RegistrationState extends State<Registration> {
   @override
   void dispose() {
     _password2Controller.dispose();
+    _password1Controller.dispose();
+    _mailController.dispose();
     super.dispose();
   }
 

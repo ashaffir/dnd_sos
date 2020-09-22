@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 // NGROK or other as such
-String serverDomain = 'https://6b524698e0e9.ngrok.io';
+String serverDomain = 'https://9d5adbb52f91.ngrok.io';
 
 // Sizes
 ////////////////////
 
 // Bottom Nav Bar
 const NAVBAR_ICON_SIZE = 35.0;
+const RIGHT_MARGINE = 30.0;
+const LEFT_MARGINE = 30.0;
+const TOP_MARGINE = 40.0;
+const BUTTON_BORDER_RADIUS = 15.0;
 
 // Colors
 ////////////////////
@@ -20,6 +24,8 @@ Color lightBlueColor = new Color(0xFF8787A0);
 Color redColor = new Color(0xFFDC4F64);
 Color greenColor = new Color(0xFFDC4F64);
 Color pickndellGreen = new Color(0xFF8BC34A);
+Color buttonBorderColor = new Color(0xFF8BC34A);
+Color buttonTextColor = Colors.white;
 
 Color mainBackground = new Color(0xFF202020);
 Color ordersBackground = new Color(0xFF333333);
@@ -50,7 +56,25 @@ TextStyle darkTodoTitle = new TextStyle(
     color: darkGreyColor,
     fontSize: 30);
 
+TextStyle greenApproved = new TextStyle(
+    fontFamily: 'Avenir',
+    fontWeight: FontWeight.bold,
+    color: pickndellGreen,
+    fontSize: 15);
+
 TextStyle whiteTitle = new TextStyle(
+    fontFamily: 'Avenir',
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    fontSize: 25);
+
+TextStyle whiteTitleH3 = new TextStyle(
+    fontFamily: 'Avenir',
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    fontSize: 20);
+
+TextStyle whiteTitleH2 = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
     color: Colors.white,

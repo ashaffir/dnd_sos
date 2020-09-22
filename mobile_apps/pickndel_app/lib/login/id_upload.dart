@@ -16,6 +16,7 @@ import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import '../common/global.dart';
 import 'dart:io';
 
@@ -131,7 +132,9 @@ class _IdUploadState extends State<IdUpload> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavigation(
+        user: widget.user,
+      ),
     );
   }
 
@@ -179,7 +182,10 @@ class _IdUploadState extends State<IdUpload> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return ImageUploaded(uploadStatus: 'ok');
+              return ImageUploaded(
+                uploadStatus: 'ok',
+                user: user,
+              );
             },
           ),
           (Route<dynamic> route) => false, // No Back option for this page
@@ -189,7 +195,10 @@ class _IdUploadState extends State<IdUpload> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return ImageUploaded(uploadStatus: 'fail');
+              return ImageUploaded(
+                uploadStatus: 'fail',
+                user: user,
+              );
             },
           ),
           (Route<dynamic> route) => false, // No Back option for this page
