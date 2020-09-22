@@ -584,6 +584,45 @@ def user_credit_card(request):
     else:
         return Response(status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def payment_method(request):
+    data = {}
+    if request.method == 'POST':
+
+        if request.data['is_employee'] == 1:
+            profile = Employee.objects.get(pk=request.data['user_id'])
+        else:
+            profile = Employer.objects.get(pk=request.data['user_id'])
+        
+        preferred_payment_method = request.data['payment_method']
+
+        if preferred_payment_method == 'paypal':
+            print(f'PAYPAL: {request.data["paypal"]}')
+            paypal = request.data['paypal']
+            if paypal is not None:
+                profile.preferred_payment_method = 'PayPal'
+                profile.paypal_account = paypal
+                profile.save()
+                data['response'] = "OK"
+            else:
+                data['response'] = 'paypal missing'
+                return Response(data)
+
+        elif preferred_payment_method == 'bank' and profile.bank_details is not None:
+            profile.preferred_payment_method = 'Bank'
+            profile.save()
+            data['response'] = "OK"
+        else:
+            data['response'] = "data missing"
+
+        return Response(data)
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
+
+
+
+
 @api_view(['POST',])
 @permission_classes((IsAuthenticated,))
 def bank_details(request):

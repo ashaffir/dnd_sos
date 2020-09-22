@@ -28,7 +28,6 @@ class ImageUploaded extends StatelessWidget {
             : Text('Profile Update'),
       ),
       body: Container(
-        height: 300,
         padding: EdgeInsets.all(30),
         child: SingleChildScrollView(
           child: Column(
@@ -49,7 +48,19 @@ class ImageUploaded extends StatelessWidget {
                         )
                   : Text(
                       'Something went wrong. Please try again later',
-                      style: bigLightBlueTitle,
+                      style: whiteTitle,
+                    ),
+              Padding(
+                padding: EdgeInsets.only(top: 50),
+              ),
+              uploadStatus == 'ok'
+                  ? Image.asset(
+                      'assets/images/check-icon.png',
+                      width: MediaQuery.of(context).size.width * 0.50,
+                    )
+                  : Image.asset(
+                      'assets/images/error-icon.png',
+                      width: MediaQuery.of(context).size.width * 0.50,
                     ),
               Padding(
                 padding: EdgeInsets.only(top: 50),

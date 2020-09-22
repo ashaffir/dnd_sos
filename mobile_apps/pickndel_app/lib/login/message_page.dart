@@ -61,7 +61,7 @@ class MessagePage extends StatelessWidget {
                       )
                     : messageType == 'Error'
                         ? Image.asset(
-                            'assets/images/crying-icon.png',
+                            'assets/images/fail-icon.png',
                             width: MediaQuery.of(context).size.width * 0.50,
                           )
                         : Image.asset(

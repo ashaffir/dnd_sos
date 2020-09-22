@@ -25,6 +25,7 @@ final _phoneVerificationEndpoint = "/api/phone-verification/";
 final _creditCardUpdateEndpoint = "/api/user-credit-card/";
 final _photoIdUpdateEndpoint = "/api/user-photo-id/";
 final _bankDetailsEndpoint = "/api/bank-details/";
+final _preferredPaymentEndpoint = "/api/payment-method/";
 
 final _tokenURL = _base + _tokenEndpoint;
 final _registrationURL = _base + _registrationEndpoint;
@@ -35,6 +36,7 @@ final _phonelVerifyURL = _base + _phoneVerificationEndpoint;
 final _creditCardURL = _base + _creditCardUpdateEndpoint;
 final _photoIdURL = _base + _photoIdUpdateEndpoint;
 final _bankDetailsURL = _base + _bankDetailsEndpoint;
+final _paymentMethodURL = _base + _preferredPaymentEndpoint;
 
 /////////// Login ///////////
 Future<Token> serverAuthentication(UserLogin userLogin) async {
@@ -223,6 +225,39 @@ Future<dynamic> updateCreditCard({User user, CreditCard creditCard}) async {
   try {
     final http.Response response = await http.post(
       _creditCardURL,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $userToken',
+      },
+      // email field is special due to django requirements
+      body: jsonEncode(data),
+    );
+    postResponseJson = _response(response);
+  } on SocketException {
+    throw FetchDataException('No Internet connection');
+  }
+  return postResponseJson;
+}
+
+///////////// Update Bank details ///////////
+Future<dynamic> updatePaymentMethod(
+    {User user, String paymentMethod, String paypalAccount}) async {
+  var postResponseJson;
+  String userToken = user.token;
+  String country = await getCountryName();
+
+  var data = {
+    "user_id": user.userId,
+    "is_employee": user.isEmployee,
+    "country": country,
+    "payment_method": paymentMethod,
+    "paypal": paypalAccount
+  };
+
+  print('.... Uploading preferred payment method: $data  .....');
+  try {
+    final http.Response response = await http.post(
+      _paymentMethodURL,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Token $userToken',

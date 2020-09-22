@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // NGROK or other as such
-String serverDomain = 'https://9d5adbb52f91.ngrok.io';
+String serverDomain = 'https://2d2bdba2b6d9.ngrok.io';
 
 // Sizes
 ////////////////////
@@ -67,6 +67,12 @@ TextStyle whiteTitle = new TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.white,
     fontSize: 25);
+
+TextStyle whiteTitleH4 = new TextStyle(
+    fontFamily: 'Avenir',
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    fontSize: 17);
 
 TextStyle whiteTitleH3 = new TextStyle(
     fontFamily: 'Avenir',

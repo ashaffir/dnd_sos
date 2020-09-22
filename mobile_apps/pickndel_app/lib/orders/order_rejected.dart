@@ -44,7 +44,7 @@ class _OrderRejectedState extends State<OrderRejected> {
         } else {
           print("No data:");
         }
-        print('WAITING FOR UPDATE');
+        print('WAITING FOR ORDER REJECTED UPDATE');
         String loaderText = "Updating Order...";
 
         return ColoredProgressDemo(loaderText);

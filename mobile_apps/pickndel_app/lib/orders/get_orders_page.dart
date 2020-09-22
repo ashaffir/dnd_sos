@@ -116,17 +116,16 @@ class _GetOrdersState extends State<GetOrders> {
                     locationTracking: locationTracking,
                   );
                   break;
+                case Status.EMPTY:
+                  return EmptyList();
+                  break;
                 case Status.ERROR:
-                  {
-                    if (snapshot.data.data == null) {
-                      return EmptyList();
-                    } else {
-                      return Error(
-                        errorMessage: snapshot.data.message,
-                        // onRetryPressed: () => _bloc.fetchOrder(),
-                      );
-                    }
-                  }
+                  return ErrorPage(
+                    user: widget.user,
+                    errorMessage:
+                        'There is a problem communicating with our server. Please try again later.',
+                    // onRetryPressed: () => _bloc.fetchOrder(),
+                  );
                   break;
               }
             }

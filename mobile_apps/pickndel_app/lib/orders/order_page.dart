@@ -76,20 +76,26 @@ class _OrderPageState extends State<OrderPage> {
             ButtonBar(
               children: <Widget>[
                 RaisedButton.icon(
+                  label: Text(translations.orders_call_sender),
                   icon: Icon(Icons.phone),
                   color: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(BUTTON_BORDER_RADIUS),
+                      side: BorderSide(color: buttonBorderColor)),
                   onPressed: () {
                     // launch(('tel://${order.business_phone}'));
                   },
-                  label: Text(translations.orders_call_sender),
                 ),
                 Padding(padding: EdgeInsets.all(5.0)),
                 RaisedButton(
-                  color: Colors.green,
                   child: Text(
                     translations.orders_report_delivered,
                     style: whiteButtonTitle,
                   ),
+                  color: pickndellGreen,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(BUTTON_BORDER_RADIUS),
+                      side: BorderSide(color: buttonBorderColor)),
                   onPressed: () {
                     print('Delivered!!');
                     Navigator.push(

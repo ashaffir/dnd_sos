@@ -66,6 +66,10 @@ class OrdersList extends StatelessWidget {
                           // width: 320.0,
                           width: MediaQuery.of(context).size.width * 0.30,
                           child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(BUTTON_BORDER_RADIUS),
+                                side: BorderSide(color: buttonBorderColor)),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -82,6 +86,16 @@ class OrdersList extends StatelessWidget {
                             ? SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.30,
                                 child: RaisedButton(
+                                  child: Text(
+                                    translations.orders_confirm_button,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: pickndellGreen,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          BUTTON_BORDER_RADIUS),
+                                      side:
+                                          BorderSide(color: buttonBorderColor)),
                                   onPressed: () {
                                     Navigator.pushAndRemoveUntil(
                                       context,
@@ -95,11 +109,6 @@ class OrdersList extends StatelessWidget {
                                           false, // No Back option for this page
                                     );
                                   },
-                                  child: Text(
-                                    translations.orders_confirm_button,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  color: pickndellGreen,
                                 ),
                               )
                             : newStatus == "COMPLETED" // Order delivered
@@ -107,6 +116,15 @@ class OrdersList extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width *
                                         0.30,
                                     child: RaisedButton(
+                                      child: Text(
+                                        translations.orders_confirm_delivery,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              BUTTON_BORDER_RADIUS),
+                                          side: BorderSide(
+                                              color: buttonBorderColor)),
                                       onPressed: () {
                                         Navigator.pushAndRemoveUntil(
                                           context,
@@ -121,10 +139,6 @@ class OrdersList extends StatelessWidget {
                                               false, // No Back option for this page
                                         );
                                       },
-                                      child: Text(
-                                        translations.orders_confirm_delivery,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
                                       color: pickndellGreen,
                                     ),
                                   )
@@ -294,6 +308,10 @@ class OrdersList extends StatelessWidget {
                           children: <Widget>[
                             Padding(padding: EdgeInsets.all(5.0)),
                             RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      BUTTON_BORDER_RADIUS),
+                                  side: BorderSide(color: buttonBorderColor)),
                               color: pickndellGreen,
                               child: Text(
                                 translations.orders_accept,

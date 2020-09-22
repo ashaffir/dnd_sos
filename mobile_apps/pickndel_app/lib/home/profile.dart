@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/finance/payments.dart';
@@ -1072,37 +1073,53 @@ class _ProfilePageState extends State<ProfilePage> {
     request.fields['country'] = country;
 
     // send
-    var response = await request.send();
-
-    // listen for response
-    response.stream.transform(utf8.decoder).listen((value) {
-      if (value == "202") {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ImageUploaded(
-                uploadStatus: 'ok',
-                user: user,
-              );
-            },
-          ),
-          (Route<dynamic> route) => false, // No Back option for this page
-        );
-      } else {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ImageUploaded(
-                uploadStatus: 'fail',
-                user: user,
-              );
-            },
-          ),
-          (Route<dynamic> route) => false, // No Back option for this page
-        );
-      }
-    });
+    var response;
+    try {
+      response = await request.send();
+      // listen for response
+      response.stream.transform(utf8.decoder).listen((value) {
+        if (value == "202") {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ImageUploaded(
+                  uploadStatus: 'ok',
+                  user: user,
+                );
+              },
+            ),
+            (Route<dynamic> route) => false, // No Back option for this page
+          );
+        } else {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ImageUploaded(
+                  uploadStatus: 'fail',
+                  user: user,
+                );
+              },
+            ),
+            (Route<dynamic> route) => false, // No Back option for this page
+          );
+        }
+      });
+    } catch (e) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 }

@@ -222,7 +222,7 @@ showAlertDialog(
     String buttonText}) {
   // set up the AlertDialog
   Widget okButton = FlatButton(
-    child: Text("OK"),
+    child: Text("Close"),
     onPressed: () {
       Navigator.pop(context);
     },
@@ -236,7 +236,7 @@ showAlertDialog(
       // This is to log out the user if redirects to outside URL
       BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
       Phoenix.rebirth(context);
-      if (url != '') {
+      if (url != null) {
         launchURL(url);
       }
     },
@@ -244,17 +244,22 @@ showAlertDialog(
 
   Widget redirectButton = FlatButton(
     child: Text(buttonText != null ? buttonText : "Go"),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(BUTTON_BORDER_RADIUS),
+        side: BorderSide(color: buttonBorderColor)),
     color: Colors.green,
     onPressed: () {
-      if (nameRoute != '') {
+      if (nameRoute != null) {
         Navigator.pushNamed(context, nameRoute);
+      } else {
+        print('No nameRoute');
       }
     },
   );
 
   AlertDialog alert = AlertDialog(
-    title: Text(title),
-    content: Text(content),
+    title: title != null ? Text(title) : Text(""),
+    content: content != null ? Text(content) : Text(""),
     actions: [
       okButton,
       url != null ? urlButton : nameRoute != null ? redirectButton : null,

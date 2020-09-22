@@ -84,6 +84,7 @@ class ApiProvider {
   Future<dynamic> put(
       String url, String orderId, User user, String status) async {
     var postResponseJson;
+    print('>>>>>>>>>>>> 1 $user <<<<<<<<<<<');
     try {
       final response = await http.put(
         _baseUrl + url,
@@ -94,7 +95,9 @@ class ApiProvider {
         body: jsonEncode(
             {'order_id': orderId, 'status': status, 'freelancer': user.userId}),
       );
+      print('>>>>>>>>>>>> 2 <<<<<<<<<<<');
       postResponseJson = _response(response);
+      print('>>>>>>>>>>>> 3 <<<<<<<<<<<');
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }

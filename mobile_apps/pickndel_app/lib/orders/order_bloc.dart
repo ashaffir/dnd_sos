@@ -38,7 +38,11 @@ class OrdersBloc {
 
       if (_isStreaming) orderDataSink.add(Response.completed(orderDetails));
     } catch (e) {
-      if (_isStreaming) orderDataSink.add(Response.error(e.toString()));
+      // print('EEEEE: ${e.toString().split(" ")[0]}');
+      if (e.toString().split(" ")[0] == 'RangeError') {
+        orderDataSink.add(Response.empty(e.toString()));
+        print('INFO >> ORDER BLOC: Empty orders list. Message: $e');
+      } else if (_isStreaming) orderDataSink.add(Response.error(e.toString()));
       print('ERROR >> ORDER BLOC: Failed to load orders. ERROR: $e');
     }
   }

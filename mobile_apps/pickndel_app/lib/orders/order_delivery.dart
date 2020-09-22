@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
@@ -114,7 +115,6 @@ class _OrderDeliveryState extends State<OrderDelivery> {
   _uploadDeliveryImage({File imageFile, User user, Order order}) async {
     String newStatus = "COMPLETED";
 
-    print('>>> 1 <<<<<');
     // open a bytestream
     var stream = new http.ByteStream(DelegatingStream(imageFile.openRead()));
     // get file length
@@ -150,39 +150,57 @@ class _OrderDeliveryState extends State<OrderDelivery> {
     print('>>>>>> Sending data: ${order.order_id}');
 
     // send
-    var response = await request.send();
+    var response;
+    try {
+      response = await request.send();
 
-    // listen for response
-    response.stream.transform(utf8.decoder).listen((value) {
-      if (value == "202") {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ImageUploaded(
-                uploadStatus: 'ok',
-                imageType: 'delivery',
-              );
-            },
-          ),
-          (Route<dynamic> route) => false, // No Back option for this page
-        );
-      } else {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ImageUploaded(
-                uploadStatus: 'fail',
-                imageType: 'delivery',
-                user: user,
-              );
-            },
-          ),
-          (Route<dynamic> route) => false, // No Back option for this page
-        );
-      }
-    });
+      // listen for response
+      response.stream.transform(utf8.decoder).listen((value) {
+        if (value == "202") {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ImageUploaded(
+                  user: user,
+                  uploadStatus: 'ok',
+                  imageType: 'delivery',
+                );
+              },
+            ),
+            (Route<dynamic> route) => false, // No Back option for this page
+          );
+        } else {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ImageUploaded(
+                  uploadStatus: 'fail',
+                  imageType: 'delivery',
+                  user: user,
+                );
+              },
+            ),
+            (Route<dynamic> route) => false, // No Back option for this page
+          );
+        }
+      });
+    } catch (e) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   _sendToServer() async {
@@ -305,7 +323,18 @@ class _OrderDeliveryState extends State<OrderDelivery> {
               ),
               textColor: Colors.white,
               splashColor: Colors.black,
-              onPressed: _sendToServer,
+              // onPressed: _sendToServer,
+              onPressed: () {
+                if (_image == null) {
+                  showAlertDialog(
+                    context: context,
+                    title: "No image selected",
+                  );
+                } else {
+                  print('$_image');
+                  _sendToServer();
+                }
+              },
               padding: EdgeInsets.only(top: 12, bottom: 12),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),

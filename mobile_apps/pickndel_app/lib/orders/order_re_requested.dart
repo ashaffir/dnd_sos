@@ -41,7 +41,7 @@ class _OrderReRequestedState extends State<OrderReRequested> {
         } else {
           print("No data:");
         }
-        print('WAITING FOR UPDATE');
+        print('WAITING FOR ORDER RE_REQUEST UPDATE');
         String loaderText = "Updating Order...";
 
         return ColoredProgressDemo(loaderText);

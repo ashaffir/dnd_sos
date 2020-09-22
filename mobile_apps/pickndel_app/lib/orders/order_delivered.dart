@@ -1,3 +1,4 @@
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/home/dashboard.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
@@ -46,7 +47,7 @@ class _OrderDeliveredState extends State<OrderDelivered> {
         } else {
           print("No data:");
         }
-        print('WAITING FOR UPDATE');
+        print('WAITING FOR DELIVERY UPDATE');
         String loaderText = "Updating Order...";
 
         return ColoredProgressDemo(loaderText);
@@ -67,10 +68,9 @@ class _OrderDeliveredState extends State<OrderDelivered> {
       Navigator.push(
           context,
           new MaterialPageRoute(
-              builder: (context) => MessagePage(
+              builder: (context) => ErrorPage(
                     user: widget.user,
-                    messageType: "Error",
-                    content:
+                    errorMessage:
                         "We apologize for the inconvenience, but your information was not updated. Please contact PickNdell support or/and try again later.",
                   )));
     }

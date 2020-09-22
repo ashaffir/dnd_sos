@@ -43,7 +43,7 @@ class _OrderPickedupState extends State<OrderPickedup> {
         } else {
           print("No data:");
         }
-        print('WAITING FOR UPDATE');
+        print('WAITING FOR ORDER PICKUP UPDATE');
         String loaderText = translations.order_a_updating + "...";
 
         return ColoredProgressDemo(loaderText);

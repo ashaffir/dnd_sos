@@ -56,7 +56,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
         } else {
           print("No data:");
         }
-        print('WAITING FOR UPDATE');
+        print('WAITING FOR ORDER ACCEPTED UPDATE');
         String loaderText = translations.order_a_updating + "...";
         return ColoredProgressDemo(loaderText);
       },
@@ -66,7 +66,8 @@ class _OrderAcceptedState extends State<OrderAccepted> {
   Future updateOrderAccepted(dynamic updateOrderId) async {
     print('UPDATINNG ORDER...');
     final orderUpdated =
-        await OrderRepository().updateOrder(updateOrderId, 'STARTED');
+        await OrderRepository(user: widget.user, context: context)
+            .updateOrder(updateOrderId, 'STARTED');
     print('orderUpdated: $orderUpdated');
     return orderUpdated;
   }

@@ -113,6 +113,7 @@ flutter:
    - assets/images/fail-icon.png
    - assets/images/crying-icon.png
    - assets/images/like-face.png
+   - assets/images/error-icon.png
  
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/location/place.dart';
 import 'package:pickndell/model/open_orders.dart';
@@ -9,6 +11,11 @@ import 'dart:convert';
 
 class OrderRepository {
   ApiProvider _provider = ApiProvider();
+
+  User user;
+  BuildContext context;
+
+  OrderRepository({this.user, this.context});
 
   Future<Orders> fetchOrderDetails(String ordersType) async {
     var _openOrdersUrl = "open-orders/?q=open";
@@ -43,13 +50,26 @@ class OrderRepository {
   Future updateOrder(String orderId, String status) async {
     var _url = "order-update/";
     try {
-      var user = await UserDao().getUser(0);
+      // var user = await UserDao().getUser(0);
       var response = await _provider.put(_url, orderId, user, status);
-      print('>>> POST RESPONSE: $response');
+      print('>>>UPDATE ORDER POST RESPONSE: $response');
       return response;
     } catch (e) {
-      print('REPO ERROR: $e');
-      return e;
+      print('UPDATE ORDER ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+      ;
     }
   }
 
