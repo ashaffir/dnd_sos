@@ -52,7 +52,7 @@ class OrderRepository {
     try {
       // var user = await UserDao().getUser(0);
       var response = await _provider.put(_url, orderId, user, status);
-      print('>>>UPDATE ORDER POST RESPONSE: $response');
+      // print('>>>UPDATE ORDER POST RESPONSE: $response');
       return response;
     } catch (e) {
       print('UPDATE ORDER ERROR: $e');

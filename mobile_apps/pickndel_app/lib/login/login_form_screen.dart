@@ -2,11 +2,14 @@ import 'dart:isolate';
 
 import 'package:pickndell/app_localizations.dart';
 import 'package:pickndell/bloc/authentication_bloc.dart';
+import 'package:pickndell/common/error_page.dart';
+import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickndell/model/user_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bloc/login_bloc.dart';
@@ -51,14 +54,32 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
         if (state is LoginFaliure) {
           _isLoading = false;
           _onWidgetDidBuild(() {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                // content: Text('${state.error}'),
-                content: Text(
-                    'Wrong credentials used. Please make sure your account is activated and try again.'),
-                backgroundColor: Colors.red,
-              ),
-            );
+            String errorMessage = state.error.split(" ")[0];
+            if (errorMessage == 'FormatException:') {
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  // content: Text('${state.error}'),
+                  content: Text(
+                    'We are experiencing communication issues. Please make sure you are connected to the internet, try again later and/or visit our website.',
+                    style: intrayTitleStyle,
+                  ),
+                  backgroundColor: Colors.red,
+                  duration: const Duration(seconds: 10),
+                ),
+              );
+            } else {
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  // content: Text('${state.error}'),
+                  content: Text(
+                    'Wrong credentials used. Please make sure your account is activated and try again.',
+                    style: intrayTitleStyle,
+                  ),
+                  backgroundColor: Colors.red,
+                  duration: const Duration(seconds: 10),
+                ),
+              );
+            }
           });
         }
 

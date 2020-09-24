@@ -327,11 +327,13 @@ class OrdersList extends StatelessWidget {
                                   showAlertDialog(
                                       context: context,
                                       title: translations
-                                          .orders_alert_tracking_title,
+                                              .orders_alert_tracking_title +
+                                          "❗️",
                                       content: translations
                                           .orders_alert_tracking_content,
                                       nameRoute: '/',
-                                      buttonText: 'Change Status');
+                                      buttonText: 'Change Status',
+                                      buttonBorderColor: Colors.blue);
                                   print('No tracking!!!');
                                 }
 
@@ -538,7 +540,16 @@ class OrdersList extends StatelessWidget {
                                     onPressed: () {
                                       print('Delivered!!');
                                       String newStatus = "COMPLETED";
-                                      orderAlert(context, order, newStatus);
+                                      // orderAlert(context, order, newStatus);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => OrderPage(
+                                              user: user,
+                                              order: order,
+                                              orderId: order.order_id,
+                                            ),
+                                          ));
                                     },
                                   ),
                                 ],

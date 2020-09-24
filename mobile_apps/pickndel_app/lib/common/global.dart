@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // NGROK or other as such
-String serverDomain = 'https://2d2bdba2b6d9.ngrok.io';
+String serverDomain = 'https://d039c492ad56.ngrok.io';
 
 // Sizes
 ////////////////////
@@ -39,6 +39,12 @@ TextStyle intrayTitleStyle = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
     color: Colors.white,
+    fontSize: 15);
+
+TextStyle intrayTitleStyleBlack = new TextStyle(
+    fontFamily: 'Avenir',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
     fontSize: 15);
 
 TextStyle userContentStyle =

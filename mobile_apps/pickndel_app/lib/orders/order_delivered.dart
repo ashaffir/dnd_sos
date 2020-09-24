@@ -9,6 +9,7 @@ import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
@@ -40,9 +41,9 @@ class _OrderDeliveredState extends State<OrderDelivered> {
           if (snapshot.data["response"] == "Update successful") {
             return getOrderDeliveredPage(widget.order);
           } else if (snapshot.data["response"] == "Update failed") {
-            return orderDeliveredErrorPage();
+            return orderDeliveredErrorPage(user: widget.user);
           } else {
-            return orderDeliveredErrorPage();
+            return orderDeliveredErrorPage(user: widget.user);
           }
         } else {
           print("No data:");
@@ -59,8 +60,8 @@ class _OrderDeliveredState extends State<OrderDelivered> {
     print('Updating order delivered...');
     var orderId = order.order_id;
     try {
-      final orderUpdated =
-          await OrderRepository().updateOrder(orderId, 'COMPLETED');
+      final orderUpdated = await OrderRepository(user: widget.user)
+          .updateOrder(orderId, 'COMPLETED');
       print('orderUpdated: $orderUpdated');
       return orderUpdated;
     } catch (e) {
@@ -78,54 +79,35 @@ class _OrderDeliveredState extends State<OrderDelivered> {
 
   Widget getOrderDeliveredPage(Order order) {
     return new Scaffold(
-      backgroundColor: mainBackground,
-      // appBar: AppBar(
-      //   title: Text('Order Delivered'),
-      // ),
       body: Container(
-        padding: EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Good Job!!!",
-              style: bigLightBlueTitle,
-            ),
-            Image.asset(
-              'assets/images/like-face.png',
-              width: MediaQuery.of(context).size.width * 0.50,
-            ),
-
-            FlatButton(
-              child: Text('Back To Main Page'),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Dashboard(
-                        userRepository: UserRepository(),
-                      );
-                    },
-                  ),
-                  (Route<dynamic> route) =>
-                      false, // No Back option for this page
-                );
-              },
-              color: pickndellGreen,
-            ),
-            // Text(
-            //   'From: ${order.pick_up_address}',
-            //   style: whiteTitle,
-            // ),
-            // Spacer(
-            //   flex: 2,
-            // ),
-            // Text(
-            //   "To: ${order.drop_off_address}",
-            //   style: whiteTitle,
-            // )
-          ],
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Spacer(
+                flex: 3,
+              ),
+              Center(
+                child: Text(
+                  "Good Job!!!",
+                  style: whiteTitle,
+                ),
+              ),
+              Spacer(flex: 2),
+              Center(
+                child: Image.asset(
+                  'assets/images/check-icon.png',
+                  width: MediaQuery.of(context).size.width * 0.50,
+                ),
+              ),
+              Spacer(flex: 4),
+              Center(child: DashboardButton()),
+              Spacer(flex: 4),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigation(
@@ -134,12 +116,8 @@ class _OrderDeliveredState extends State<OrderDelivered> {
     );
   }
 
-  Widget orderDeliveredErrorPage() {
+  Widget orderDeliveredErrorPage({User user}) {
     return new Scaffold(
-      backgroundColor: mainBackground,
-      appBar: AppBar(
-        title: Text('Order Delivered'),
-      ),
       body: Container(
         child: Padding(
           padding: EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
@@ -159,13 +137,15 @@ class _OrderDeliveredState extends State<OrderDelivered> {
                 'assets/images/crying-icon.png',
                 width: MediaQuery.of(context).size.width * 0.50,
               ),
-              Spacer(flex: 6),
+              Spacer(flex: 4),
+              DashboardButton(),
+              Spacer(flex: 4),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomNavigation(
-        user: widget.user,
+        user: user,
       ),
     );
   }

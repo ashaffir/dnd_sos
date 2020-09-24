@@ -199,6 +199,12 @@ def order_signal(sender, instance, update_fields, **kwargs):
             except Exception as e:
                 print(f'>> Failed generating invoice URL. ERROR: {e}')
 
+            # Updating Freelance balance:
+            print(f'OPEN BALANCE: {freelancer.freelancer.balance}')
+            freelancer.freelancer.balance += instance.price
+            print(f'CLOSE BALANCE: {freelancer.freelancer.balance}')
+
+            freelancer.freelancer.save()
             freelancer.save()
             business.save()
 

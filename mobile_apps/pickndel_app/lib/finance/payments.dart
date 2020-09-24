@@ -9,6 +9,7 @@ import 'package:pickndell/login/message_page.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentsPage extends StatefulWidget {
   final User user;
@@ -26,6 +27,48 @@ class _PaymentsPageState extends State<PaymentsPage> {
   int _group = 1;
   String _paypal;
   bool _isLoading = false;
+  String country;
+  String countryCode;
+  double usdIls;
+  double usdIlsRate;
+  double usdEur;
+  double usdEurRate;
+
+  void _getCountry() async {
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      country = localStorage.getString('country');
+    } catch (e) {
+      print('*** Error *** Fail getting country code. E: $e');
+      country = 'Israel';
+    }
+    setState(() {
+      countryCode = country;
+    });
+  }
+
+  void _getCurrencyExchange() async {
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      usdIls = localStorage.getDouble('usdIls');
+      usdEur = localStorage.getDouble('usdEur');
+    } catch (e) {
+      print('*** Error *** Failed getting currency rates. E: $e');
+      usdIls = 3.4;
+      usdEur = 0.8;
+    }
+    setState(() {
+      usdIlsRate = usdIls;
+      usdEurRate = usdEur;
+    });
+  }
+
+  @override
+  void initState() {
+    _getCountry();
+    _getCurrencyExchange();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,37 +89,51 @@ class _PaymentsPageState extends State<PaymentsPage> {
                   style: whiteTitle,
                 ),
                 Padding(padding: EdgeInsets.only(top: 40)),
-                Row(
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.only(left: 30, right: 30.0)),
-                    Text(
-                      'Balance',
-                      style: whiteTitleH3,
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 4.0)),
+                  child: SizedBox(
+                    height: 40.0,
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(left: 30, right: 30.0)),
+                        Text(
+                          'Balance',
+                          style: whiteTitleH3,
+                        ),
+                        Spacer(
+                          flex: 1,
+                        ),
+                        countryCode == 'Israel'
+                            ? Text(
+                                ' ₪ ${roundDouble(widget.user.balance * usdIls, 2)}',
+                                style: whiteTitleH2,
+                              )
+                            : Text(
+                                '\$ ${roundDouble(widget.user.balance, 2)}',
+                                style: whiteTitleH2,
+                              ),
+                        Spacer(
+                          flex: 2,
+                        ),
+                      ],
                     ),
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Text(
-                      '\$ 344',
-                      style: whiteTitleH2,
-                    ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                  ],
+                  ),
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 20)),
-                Divider(color: Colors.white),
-                Padding(padding: EdgeInsets.only(top: 30)),
-                Row(
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.only(left: 30, right: 30.0)),
-                    Text('Current payment method:', style: intrayTitleStyle),
-                    Padding(padding: EdgeInsets.only(right: 5.0)),
-                    Text('Bank', style: whiteTitleH4),
-                  ],
+                // Divider(color: Colors.white),
+                SizedBox(
+                  height: 40.0,
+                  child: Row(
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.only(left: 30, right: 30.0)),
+                      Text('Current payment method:', style: intrayTitleStyle),
+                      Padding(padding: EdgeInsets.only(right: 5.0)),
+                      Text('Bank', style: whiteTitleH4),
+                    ],
+                  ),
                 ),
-                Padding(padding: EdgeInsets.only(top: 10)),
                 Divider(color: Colors.white),
                 Padding(padding: EdgeInsets.only(top: 20)),
                 Row(

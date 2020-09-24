@@ -26,6 +26,9 @@ class Token {
   int profilePending;
   double rating;
   double dailyProfit;
+  double balance;
+  double usdIls;
+  double usdEur;
   int activeOrders;
   String creditCardToken;
 
@@ -47,6 +50,9 @@ class Token {
       this.profilePending,
       this.rating,
       this.dailyProfit,
+      this.balance,
+      this.usdIls,
+      this.usdEur,
       this.creditCardToken,
       this.activeOrders});
 
@@ -70,6 +76,9 @@ class Token {
         profilePending: json['profile_pending'],
         rating: json['freelancer_total_rating'],
         dailyProfit: json['daily_profit'],
+        balance: json['balance'],
+        usdIls: json['usd_ils'],
+        usdEur: json['usd_eur'],
         activeOrders: json['num_active_orders_total']);
   }
 }

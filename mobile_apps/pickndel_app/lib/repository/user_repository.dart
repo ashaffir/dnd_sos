@@ -71,6 +71,9 @@ class UserRepository {
         profilePending: token.profilePending,
         rating: token.rating,
         dailyProfit: token.dailyProfit,
+        balance: token.balance,
+        usdIls: token.usdIls,
+        usdEur: token.usdEur,
         activeOrders: token.activeOrders);
     return user;
   }

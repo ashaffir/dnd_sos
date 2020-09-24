@@ -66,17 +66,17 @@ class _OrderDeliveryState extends State<OrderDelivery> {
 
   String state = "";
 
-  Widget _decideImageView() {
-    if (_imageFile == null) {
-      return Text('No image selected');
-    } else {
-      Image.file(
-        _imageFile,
-        width: 400,
-        height: 400,
-      );
-    }
-  }
+  // Widget _decideImageView() {
+  //   if (_imageFile == null) {
+  //     return Text('No image selected');
+  //   } else {
+  //     Image.file(
+  //       _imageFile,
+  //       width: 400,
+  //       height: 400,
+  //     );
+  //   }
+  // }
 
   @override
   void initState() {
@@ -327,9 +327,10 @@ class _OrderDeliveryState extends State<OrderDelivery> {
               onPressed: () {
                 if (_image == null) {
                   showAlertDialog(
-                    context: context,
-                    title: "No image selected",
-                  );
+                      context: context,
+                      title: "No image selected",
+                      content:
+                          "Please take a photo of the delivery before declaring delivery.");
                 } else {
                   print('$_image');
                   _sendToServer();

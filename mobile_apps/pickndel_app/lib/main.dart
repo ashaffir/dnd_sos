@@ -1,4 +1,5 @@
 import 'package:pickndell/app_localizations.dart';
+import 'package:pickndell/finance/payments.dart';
 import 'package:pickndell/home/dashboard.dart';
 import 'package:pickndell/finance/payments.dart';
 import 'package:pickndell/home/profile.dart';

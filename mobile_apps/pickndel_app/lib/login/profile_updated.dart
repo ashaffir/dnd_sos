@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/database/user_database.dart';
-import 'package:pickndell/home/home_page.dart';
+import 'package:pickndell/home/home_page.dart.NA';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';

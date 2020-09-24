@@ -22,6 +22,9 @@ class User {
   int profilePending;
   double rating;
   double dailyProfit;
+  double balance;
+  double usdIls;
+  double usdEur;
   int activeOrders;
 
   User(
@@ -44,6 +47,9 @@ class User {
       this.profilePending,
       this.rating,
       this.dailyProfit,
+      this.balance,
+      this.usdIls,
+      this.usdEur,
       this.activeOrders});
 
   factory User.fromDatabaseJson(Map<String, dynamic> data) => User(
@@ -66,6 +72,9 @@ class User {
       profilePending: data['profilePending'],
       rating: data['rating'],
       dailyProfit: data['dailyProfit'],
+      balance: data['balance'],
+      usdIls: data['usdIls'],
+      usdEur: data['usdEur'],
       activeOrders: data['activeOrders']);
 
   Map<String, dynamic> toDatabaseJson() => {
@@ -88,6 +97,9 @@ class User {
         "profilePending": this.profilePending,
         "rating": this.rating,
         "dailyProfit": this.dailyProfit,
+        "balance": this.balance,
+        "usdIls": this.usdIls,
+        "usdEur": this.usdEur,
         "activeOrders": this.activeOrders
       };
 }

@@ -4,9 +4,12 @@ import platform
 import json
 import logging
 import random
+from datetime import date, datetime
+
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic, distance
-from datetime import date, datetime
+from forex_python.converter import CurrencyRates # https://github.com/MicroPyramid/forex-python
+
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
 from django.contrib.gis.geos import fromstr, Point
@@ -469,11 +472,17 @@ def user_profile(request):
             daily_profit += order.price
 
         daily_profit = round(daily_profit,2)
+    
+        # Currency handling
+        c = CurrencyRates()
+        usd_ils = c.get_rate('USD', 'ILS')
+        usd_eur = c.get_rate('USD', 'EUR')
 
 
     if request.method == 'POST':
         print(f'REQUEST: {request.data}')
         data = {}
+
         if serializer.is_valid():
             data = serializer.data
             
@@ -481,6 +490,10 @@ def user_profile(request):
                 data['num_active_orders_today'] = num_active_orders_today 
                 data['num_active_orders_total'] = num_active_orders_total
                 data['daily_profit'] = daily_profit
+
+            # Currency exchage rates
+            data['usd_ils'] = round(usd_ils,2)
+            data['usd_eur'] = round(usd_eur,2)
 
             print('SENDING PROFILE DATA')
         else:

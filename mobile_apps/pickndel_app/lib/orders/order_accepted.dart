@@ -8,6 +8,7 @@ import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
@@ -173,24 +174,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               Spacer(
                 flex: 4,
               ),
-              FlatButton(
-                child: Text('Back To Main Page'),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Dashboard(
-                          userRepository: UserRepository(),
-                        );
-                      },
-                    ),
-                    (Route<dynamic> route) =>
-                        false, // No Back option for this page
-                  );
-                },
-                color: Colors.green,
-              ),
+              DashboardButton(),
             ],
           ),
         ),

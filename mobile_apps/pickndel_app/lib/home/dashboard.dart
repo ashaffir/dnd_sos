@@ -94,23 +94,47 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
+  String _country;
+
   Future _checkProfile() async {
     setState(() {
       _updatingProfile = true;
     });
     User _currentUser = await UserDao().getUser(0);
+    print('DASHBOARD PROFILE >>>>>: ${_currentUser.usdIls}');
+
     var _getProfileResponse;
+    // print('DASHBOARD PROFILE: $_getProfileResponse');
+
+    // Get user information from the server
     try {
       _getProfileResponse = await getProfile(user: _currentUser);
+      // print('DASHBOARD PROFILE: $_getProfileResponse');
     } catch (e) {
       print('ERROR >> DHASBOARD: Failed to update profile. ERROR: $e');
     }
 
+    // Update local DB with user info
     try {
       await rowUpdate(user: _currentUser, data: _getProfileResponse);
     } catch (e) {
       print('ERROR >> DHASBOARD: Failed to update DB. ERROR: $e');
     }
+
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      _country = await getCountryName();
+      await localStorage.setString('country', _country);
+
+      await localStorage.setDouble('usdIls', _currentUser.usdIls);
+      await localStorage.setDouble('usdEur', _currentUser.usdEur);
+      print('>>> COUNTRY: $_country');
+      print('>>> USD-ILS: ${_currentUser.usdIls}');
+      print('>>> USD-EUR: ${_currentUser.usdEur}');
+    } catch (e) {
+      print('Error: updating user country');
+    }
+
     setState(() {
       _updatingProfile = false;
     });
@@ -398,8 +422,42 @@ class _DashboardState extends State<Dashboard> {
                       ],
                     ),
                     Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                    ),
+                    Divider(color: Colors.white),
+                    SizedBox(
+                      height: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: RIGHT_MARGINE, left: LEFT_MARGINE),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Daily Earnings',
+                              style: whiteTitleH4,
+                            ),
+                            Padding(padding: EdgeInsets.only(right: 10)),
+                            _country == 'Israel'
+                                ? Text(
+                                    ' ₪ ${roundDouble(currentUser.dailyProfit * currentUser.usdIls, 2)}',
+                                    style: whiteTitleH2,
+                                  )
+                                : Text(
+                                    '\$ ${roundDouble(currentUser.dailyProfit, 2)}',
+                                    style: whiteTitleH2,
+                                  ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    Divider(color: Colors.white),
+                    Padding(
                       padding: EdgeInsets.only(left: 30.0, top: 20.0),
                     ),
+                    //////////////// Available Switch ////////////
+                    ///
                     currentUser.isEmployee == 1
                         ? Row(
                             children: [
@@ -460,6 +518,8 @@ class _DashboardState extends State<Dashboard> {
                             ],
                           )
                         : Row(),
+                    //////////////// New Order Button ////////////
+                    ///
                     currentUser.isEmployee == 0
                         ? Row(
                             children: <Widget>[
@@ -467,38 +527,41 @@ class _DashboardState extends State<Dashboard> {
                                 padding: EdgeInsets.only(left: 30.0, top: 20.0),
                               ),
                               FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                          color: pickndellGreen,
-                                          width: 2,
-                                          style: BorderStyle.solid),
-                                      borderRadius: BorderRadius.circular(50)),
-                                  onPressed: () {
-                                    if (currentUser.isApproved == 1) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => NewOrder(
-                                                  user: currentUser,
-                                                  userRepository:
-                                                      widget.userRepository,
-                                                )),
-                                      );
-                                    } else {
-                                      showAlertDialog(
-                                          context: context,
-                                          title:
-                                              'Your account is not approved.',
-                                          content:
-                                              "Please complete your profile before ordering deliveries. \n Name, phone and credit card are mandatory.",
-                                          nameRoute: '/profile',
-                                          buttonText: 'Go to Profile');
-                                    }
-                                  },
-                                  child: Text('Create a New Order')),
+                                child: Text('Create a New Order'),
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: pickndellGreen,
+                                        width: 2,
+                                        style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(50)),
+                                onPressed: () {
+                                  if (currentUser.isApproved == 1) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => NewOrder(
+                                                user: currentUser,
+                                                userRepository:
+                                                    widget.userRepository,
+                                              )),
+                                    );
+                                  } else {
+                                    showAlertDialog(
+                                        context: context,
+                                        title: 'Your account is not approved.',
+                                        content:
+                                            "Please complete your profile before ordering deliveries. \n Name, phone and credit card are mandatory.",
+                                        nameRoute: '/profile',
+                                        buttonText: 'Go to Profile');
+                                  }
+                                },
+                              ),
                             ],
                           )
                         : Row(),
+
+                    /////////////////// Profile Edit Button //////////
+                    ///
                     Row(
                       children: [
                         Padding(

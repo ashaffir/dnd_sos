@@ -89,6 +89,7 @@ lt --port 8000
 # REFERENCE: uploading images to the server
 - https://stackoverflow.com/questions/49125191/how-to-upload-images-and-file-to-a-server-in-flutter
 - https://stackoverflow.com/questions/51161862/how-to-send-an-image-to-an-api-in-dart-flutter
+- Getting the profile pic: https://stackoverflow.com/questions/51338041/how-to-save-image-file-in-flutter-file-selected-using-image-picker-plugin
 
 # REFERENCE: Bottom naviagation bar with hedged area
 - https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013

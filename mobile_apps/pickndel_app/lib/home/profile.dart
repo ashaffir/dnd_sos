@@ -32,6 +32,7 @@ import '../model/user_model.dart';
 import 'dart:isolate';
 
 File _image;
+FileImage _currentProfilePic;
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -160,6 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     _loadVehicleTypes();
     _loadCategoriesTypes();
+    _getProfilePic();
 
     getCountryName();
     if (_emailCodeVerification) {}
@@ -258,13 +260,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             onPressed: () {
-                              _image == null
-                                  ? showAlertDialog(
-                                      context: context,
-                                      title: 'No Image Selected',
-                                      content:
-                                          "Please select an image to upload.")
-                                  : _sendToServer();
+                              if (_image == null) {
+                                showAlertDialog(
+                                    context: context,
+                                    title: 'No Image Selected',
+                                    content:
+                                        "Please select an image to upload.");
+                              } else {
+                                _saveProfilePic();
+                                _sendToServer();
+                              }
                             })
                       ],
                     ),
@@ -651,8 +656,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         Spacer(
                           flex: 2,
                         ),
-                        FlatButton(
-                          child: Text('Payments'),
+                        FlatButton.icon(
+                          icon: Icon(Icons.monetization_on),
+                          label: Text('Payments'),
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(BUTTON_BORDER_RADIUS),
@@ -992,7 +998,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Navigator.pop(context);
             var image = await ImagePicker.pickImage(
                 source: ImageSource.gallery,
-                imageQuality: 50,
+                imageQuality: 60,
                 maxHeight: 500.0,
                 maxWidth: 500.0);
             setState(() {
@@ -1027,6 +1033,16 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
     showCupertinoModalPopup(context: context, builder: (context) => action);
+  }
+
+  _getProfilePic() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _currentProfilePic = FileImage(File(prefs.getString('profilePic')));
+  }
+
+  _saveProfilePic() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('profilePic', _image.path);
   }
 
   _sendToServer() async {

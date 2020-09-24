@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickndell/bloc/authentication_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:pickndell/ui/buttons.dart';
 
 class MessagePage extends StatelessWidget {
   final String messageType;
@@ -215,6 +216,7 @@ class MessagePage extends StatelessWidget {
                                 : Text('$message'),
                   ),
                 ),
+                DashboardButton(),
               ],
             ),
           ),

@@ -13,7 +13,7 @@ import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:math';
 import './constants.dart';
 
 // Pic color from Gimp and use as following example (pickndell logo green):
@@ -22,6 +22,11 @@ hexColor(String colorHexCode) {
   String colorNew = '0xFF' + colorHexCode;
   int colorInt = int.parse(colorNew);
   return colorInt;
+}
+
+double roundDouble(double value, int places) {
+  double mod = pow(10.0, places);
+  return ((value * mod).round().toDouble() / mod);
 }
 
 String timeConvert(String dateTime) {
@@ -219,7 +224,9 @@ showAlertDialog(
     String content,
     String url,
     String nameRoute,
-    String buttonText}) {
+    String buttonText,
+    Color buttonColor,
+    Color buttonBorderColor}) {
   // set up the AlertDialog
   Widget okButton = FlatButton(
     child: Text("Close"),
@@ -231,7 +238,7 @@ showAlertDialog(
   // This button will log out the user so that he will need to log back in to update the profile
   Widget urlButton = FlatButton(
     child: Text('Go to Website'),
-    color: Colors.green,
+    color: pickndellGreen,
     onPressed: () {
       // This is to log out the user if redirects to outside URL
       BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
@@ -247,7 +254,7 @@ showAlertDialog(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(BUTTON_BORDER_RADIUS),
         side: BorderSide(color: buttonBorderColor)),
-    color: Colors.green,
+    color: buttonColor,
     onPressed: () {
       if (nameRoute != null) {
         Navigator.pushNamed(context, nameRoute);
@@ -361,7 +368,8 @@ Future<int> rowUpdate({User user, dynamic data}) async {
     updateCount = await db.rawUpdate('''
     UPDATE $userTable 
     SET name = ?, username = ?, phone = ? , vehicle = ?, isApproved = ?, 
-    idDoc = ?, profilePending = ?, rating = ?, activeOrders = ?
+    idDoc = ?, profilePending = ?, rating = ?, activeOrders = ?,
+    balance = ?, dailyProfit = ?, usdIls = ?, usdEur = ?
     WHERE id = ?
     ''', [
       data['name'],
@@ -373,6 +381,10 @@ Future<int> rowUpdate({User user, dynamic data}) async {
       data['profile_pending'],
       data['freelancer_total_rating'],
       data['num_active_orders_total'],
+      data['balance'],
+      data['daily_profit'],
+      data['usd_ils'],
+      data['usd_eur'],
       0
     ]);
   } else {

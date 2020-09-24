@@ -184,7 +184,7 @@
                                         </div>
                                         <div class="widget-summary-col">
                                             <div class="summary">
-                                                <h4 class="title">{% trans 'Total Profit' %}</h4>
+                                                <h4 class="title">{% trans 'Daily Profit' %}</h4>
                                                 <div class="info">
                                                     {% if lang == 'he' %}
                                                         <strong class="amount">{{ daily_profit | multiply:usd_ils |round_float }} ₪</strong>
@@ -195,6 +195,15 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                    {% if lang == 'he' %}
+                                                        <p>{% trans 'Total Balance' %}: <b>{{ user.freelancer.balance  | multiply:usd_ils |round_float }}  ₪</b></p>
+                                                    {% elif lang == 'en' %}
+                                                    <p>{% trans 'Total Balance' %}: <strong class="amount">$ {{ user.freelancer.balance }}</strong></p>
+                                                    {% else %}
+                                                    <p>{% trans 'Total Balance' %}: <strong class="amount">€ {{ user.freelancer.balance | multiply:usd_eur |round_float }}</strong></p>
+                                                    {% endif %}
+                                                    </div>
                                             <div class="summary-footer">
                                                 <a href="{% url 'dndsos_dashboard:f-deliveries' f_id=user.pk %}" class="text-muted text-uppercase">({% trans 'details' %})</a>
                                             </div>
