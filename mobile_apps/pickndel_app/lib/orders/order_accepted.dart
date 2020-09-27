@@ -134,7 +134,10 @@ class _OrderAcceptedState extends State<OrderAccepted> {
                   label: Text(translations.orders_call_sender),
                 ),
               ],
-            )
+            ),
+            Padding(padding: EdgeInsets.only(top: 30)),
+            DashboardButton(),
+
             // Text(
             //   translations.orders_to + ": ${order["drop_off_address"]}",
             //   style: whiteTitle,

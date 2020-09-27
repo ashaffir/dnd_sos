@@ -134,7 +134,7 @@ class _GetOrdersState extends State<GetOrders> {
         ),
       ),
       bottomNavigationBar: BottomNavigation(
-        user: widget.user,
+        user: _currentUser,
       ),
     );
   }

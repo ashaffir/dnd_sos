@@ -107,11 +107,14 @@ class _PaymentsPageState extends State<PaymentsPage> {
                         ),
                         countryCode == 'Israel'
                             ? Text(
-                                ' ₪ ${roundDouble(widget.user.balance * usdIls, 2)}',
+                                widget.user.balance != null
+                                    ? ' ₪ ${roundDouble(widget.user.balance * usdIls, 2)}'
+                                    : ' ₪ 0.0',
                                 style: whiteTitleH2,
                               )
                             : Text(
-                                '\$ ${roundDouble(widget.user.balance, 2)}',
+                                // '\$ ${roundDouble(widget.user.balance, 2)}',
+                                '\$ ',
                                 style: whiteTitleH2,
                               ),
                         Spacer(
@@ -130,7 +133,11 @@ class _PaymentsPageState extends State<PaymentsPage> {
                       Padding(padding: EdgeInsets.only(left: 30, right: 30.0)),
                       Text('Current payment method:', style: intrayTitleStyle),
                       Padding(padding: EdgeInsets.only(right: 5.0)),
-                      Text('Bank', style: whiteTitleH4),
+                      Text('${widget.user.preferredPaymentMethod}',
+                          style: TextStyle(
+                              color: pickndellGreen,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20)),
                     ],
                   ),
                 ),
@@ -238,14 +245,30 @@ class _PaymentsPageState extends State<PaymentsPage> {
                                   if (_isLoading) {
                                     return null;
                                   } else {
-                                    setState(() {
-                                      _paypal = _paypalAccount.text;
-                                    });
-                                    print('PAYPAL: $_paypal');
-                                    _updatePaymentMethod(
-                                        user: widget.user,
-                                        group: _group,
-                                        paypal: _paypal);
+                                    if (_group == 1) {
+                                      print('PAYPAL: $_paypal');
+                                      setState(() {
+                                        _paypal = _paypalAccount.text;
+                                      });
+                                      _updatePaymentMethod(
+                                          user: widget.user,
+                                          group: _group,
+                                          paypal: _paypal);
+                                    } else {
+                                      print(
+                                          'BANK DETAILS: ${widget.user.bankDetails}');
+                                      if (widget.user.bankDetails == null) {
+                                        showAlertDialog(
+                                            context: context,
+                                            title:
+                                                "Please submit your bank details first.");
+                                      } else {
+                                        print(
+                                            'UPDATE BANK DETAILS: ${widget.user.bankDetails}');
+                                        _updatePaymentMethod(
+                                            user: widget.user, group: _group);
+                                      }
+                                    }
                                   }
                                 }
                               }),
@@ -316,29 +339,33 @@ class _PaymentsPageState extends State<PaymentsPage> {
       if (res['response'] == "OK") {
         print('Sucess updating preferred payment method: $res');
 
-        Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => MessagePage(
-                      user: widget.user,
-                      messageType: "statusOK",
-                      content: "Preferred payment method updated",
-                    )));
+        Navigator.pushAndRemoveUntil(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => MessagePage(
+                    user: widget.user,
+                    messageType: "statusOK",
+                    content: "Preferred payment method updated",
+                  )),
+          (Route<dynamic> route) => false,
+        );
       } else {
         print("Failed registration process. Error: $res");
         errorPaymentMethod(context, res);
       }
     } catch (e) {
       print('PAYMENT METHOD: Failed updating the payment method. ERROR: $e');
-      Navigator.push(
-          context,
-          new MaterialPageRoute(
-              builder: (context) => MessagePage(
-                    user: widget.user,
-                    messageType: "Error",
-                    content:
-                        "We apologize for the inconvenience, but your information was not updated. Please contact PickNdell support or/and try again later.",
-                  )));
+      Navigator.pushAndRemoveUntil(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => MessagePage(
+                  user: widget.user,
+                  messageType: "Error",
+                  content:
+                      "We apologize for the inconvenience, but your information was not updated. Please contact PickNdell support or/and try again later.",
+                )),
+        (Route<dynamic> route) => false,
+      );
     }
 
     setState(() {

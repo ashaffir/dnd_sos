@@ -135,7 +135,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
 
     // multipart that takes file
     var multipartFile = new http.MultipartFile('image', stream, length,
-        filename: imageFile.path.split("/").last);
+        filename: imageFile != null ? imageFile.path.split("/").last : "");
 
     // add file to multipart
     request.files.add(multipartFile);

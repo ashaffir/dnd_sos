@@ -117,7 +117,7 @@ class Translations implements i69n.I69nMessageBundle {
   String get order_p_update_pnd => "Please contact PickNdell support";
   String get order_cancel_message => "Order Canceled";
   String get order_delivered => "Order Delivered";
-  String get register_join => "Join PickNdel";
+  String get register_join => "Join PickNdell";
   String get register_form => "Registration Form";
   String get register_as => "Registration as";
   String get register_alert_as => "Please choose a registration type";

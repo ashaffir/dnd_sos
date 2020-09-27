@@ -10,16 +10,12 @@ import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
-import 'package:pickndell/login/login_page.dart';
 import 'package:pickndell/login/message_page.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flushbar/flushbar.dart';
-import 'package:flushbar/flushbar_helper.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class BankDetailsForm extends StatefulWidget {
   final User user;

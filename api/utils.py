@@ -1,6 +1,11 @@
+import logging
 import phonenumbers
 from django.contrib.auth.forms import UserCreationForm
+from django.conf import settings
 from core.models import User, Employee, Employer
+from dndsos_dashboard.utilities import send_mail
+
+logger = logging.getLogger(__file__)
 
 def clean_phone_number(phone_number, country_code):
     print(f'Checking: {phone_number} Country: {country_code}')
@@ -11,6 +16,7 @@ def clean_phone_number(phone_number, country_code):
     return True
 
 def check_profile_approved(user_id, is_employee):
+    print('Profile Check...')
     if is_employee == 1:
         user =  Employee.objects.get(user=user_id)
         name = user.name
@@ -25,6 +31,7 @@ def check_profile_approved(user_id, is_employee):
         else:
             user.profile_pending = True
             user.save()
+            alert_admin(user_id)
             return True
     else:
         user = Employer.objects.get(user=user_id)
@@ -40,3 +47,25 @@ def check_profile_approved(user_id, is_employee):
             user.is_approved = True
             user.save()
             return True
+
+def alert_admin(user_id):
+    print('Alerting Admin on new pending user account...')
+    user_email = settings.ADMIN_EMAIL
+    subject = 'PickNdell Pending Profile'
+    content = f'''
+        User ID: {user_id}
+    '''
+    message = {
+        # 'user': instance,
+        'message': content
+    }
+
+    try:
+        send_mail(subject, email_template_name=None,
+            context=message, to_email=[user_email],
+            html_email_template_name='core/emails/update_admin_email.html')
+        return True
+    except Exception as e:
+        print(f'Faled sending the Admin alert email on pending account. ERROR: {e}')
+        logger(f'Faled sending the Admin alert email on pending account. ERROR: {e}')
+        return False

@@ -152,7 +152,7 @@ String validateEmail(String value) {
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   RegExp regex = new RegExp(pattern);
   if (!regex.hasMatch(value)) {
-    print('EMIL NOT VALID');
+    print('EMAIL NOT VALID');
     return 'Enter Valid Email';
   } else
     return null;
@@ -162,7 +162,7 @@ String dropdownMenue(String value) {
   if (value == null) {
     return 'Please choose registration type';
   } else {
-    print('bad dropdown: $value');
+    print('Dropdown selected: $value');
     return null;
   }
 }
@@ -226,6 +226,7 @@ showAlertDialog(
     String nameRoute,
     String buttonText,
     Color buttonColor,
+    Color buttonTextColor,
     Color buttonBorderColor}) {
   // set up the AlertDialog
   Widget okButton = FlatButton(
@@ -251,12 +252,16 @@ showAlertDialog(
 
   Widget redirectButton = FlatButton(
     child: Text(buttonText != null ? buttonText : "Go"),
+    textColor: buttonTextColor != null ? buttonTextColor : Colors.white,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(BUTTON_BORDER_RADIUS),
-        side: BorderSide(color: buttonBorderColor)),
-    color: buttonColor,
+        side: BorderSide(
+            color:
+                buttonBorderColor != null ? buttonBorderColor : Colors.white)),
+    color: buttonColor != null ? buttonColor : pickndellGreen,
     onPressed: () {
       if (nameRoute != null) {
+        Navigator.pop(context);
         Navigator.pushNamed(context, nameRoute);
       } else {
         print('No nameRoute');
@@ -369,7 +374,8 @@ Future<int> rowUpdate({User user, dynamic data}) async {
     UPDATE $userTable 
     SET name = ?, username = ?, phone = ? , vehicle = ?, isApproved = ?, 
     idDoc = ?, profilePending = ?, rating = ?, activeOrders = ?,
-    balance = ?, dailyProfit = ?, usdIls = ?, usdEur = ?
+    balance = ?, dailyProfit = ?, usdIls = ?, usdEur = ?, preferredPaymentMethod = ?,
+    bankDetails = ?, accountLevel = ?
     WHERE id = ?
     ''', [
       data['name'],
@@ -385,6 +391,9 @@ Future<int> rowUpdate({User user, dynamic data}) async {
       data['daily_profit'],
       data['usd_ils'],
       data['usd_eur'],
+      data['preferred_payment_method'],
+      data['bank_details'],
+      data['account_level'],
       0
     ]);
   } else {

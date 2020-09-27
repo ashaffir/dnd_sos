@@ -31,6 +31,9 @@ class Token {
   double usdEur;
   int activeOrders;
   String creditCardToken;
+  String preferredPaymentMethod;
+  String bankDetails;
+  String accountLevel;
 
   Token(
       {this.token,
@@ -54,6 +57,9 @@ class Token {
       this.usdIls,
       this.usdEur,
       this.creditCardToken,
+      this.preferredPaymentMethod,
+      this.bankDetails,
+      this.accountLevel,
       this.activeOrders});
 
   factory Token.fromJson(Map<String, dynamic> json) {
@@ -79,6 +85,9 @@ class Token {
         balance: json['balance'],
         usdIls: json['usd_ils'],
         usdEur: json['usd_eur'],
+        bankDetails: json['bank_details'],
+        accountLevel: json['account_level'],
+        preferredPaymentMethod: json['preferredPaymentMethod'],
         activeOrders: json['num_active_orders_total']);
   }
 }

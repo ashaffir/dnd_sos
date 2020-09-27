@@ -10,11 +10,12 @@ import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 
 class ImageUploaded extends StatelessWidget {
+  final context;
   final uploadStatus;
   final imageType;
   final User user;
 
-  ImageUploaded({this.uploadStatus, this.imageType, this.user});
+  ImageUploaded({this.context, this.uploadStatus, this.imageType, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,7 @@ class ImageUploaded extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 50),
               ),
+              // ProfileButton(),
               DashboardButton(),
             ],
           ),

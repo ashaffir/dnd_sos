@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pickndell/common/global.dart';
+import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/login/logout_page.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/user_repository.dart';
@@ -14,6 +15,22 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
+  User _currentUser;
+  User currentUser;
+
+  Future _checkUser() async {
+    _currentUser = await UserDao().getUser(0);
+    setState(() {
+      currentUser = _currentUser;
+    });
+  }
+
+  @override
+  void initState() {
+    _checkUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +41,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.home),
+                icon: Icon(Icons.dashboard),
                 color: Colors.white,
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, '/');
@@ -32,11 +49,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
               ),
               IconButton(
                 icon: Icon(
-                  Icons.notifications_active,
+                  Icons.send,
                   // size: 44.0,
                 ),
                 onPressed: () {
-                  if (widget.user.isEmployee == 1) {
+                  if (currentUser.isEmployee == 1) {
                     Navigator.pushReplacementNamed(context, '/open-orders');
                   } else {
                     Navigator.pushReplacementNamed(context, '/rejected-orders');
@@ -45,11 +62,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
               ),
               IconButton(
                 icon: Icon(
-                  Icons.dashboard,
+                  Icons.notifications_active,
                   // size: 44.0,
                 ),
                 onPressed: () {
-                  if (widget.user.isEmployee == 1) {
+                  if (currentUser.isEmployee == 1) {
                     Navigator.pushReplacementNamed(context, '/active-orders');
                   } else {
                     Navigator.pushReplacementNamed(context, '/business-orders');
@@ -67,7 +84,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => LogoutPage(
-                              user: widget.user,
+                              user: currentUser,
                               userRepository: UserRepository(),
                             )),
                   );

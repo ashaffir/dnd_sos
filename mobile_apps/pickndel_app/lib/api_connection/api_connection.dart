@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/location/file_manager.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/message_page.dart';
@@ -47,6 +48,7 @@ Future<Token> serverAuthentication(UserLogin userLogin) async {
     },
     body: jsonEncode(userLogin.toDatabaseJson()),
   );
+  print('LOGIN RESPONSE: ${response.body}');
   if (response.statusCode == 200) {
     print('RESPONSE: ${response.body});');
     return Token.fromJson(json.decode(response.body));
@@ -179,7 +181,7 @@ Future<dynamic> updatePhotoId({User user, File image}) async {
   String userToken = user.token;
   String country = await getCountryName();
   String base64Image = base64Encode(image.readAsBytesSync());
-  String fileName = image.path.split("/").last;
+  String fileName = image != null ? image.path.split("/").last : "";
 
   var data = {
     "user_id": user.userId,
@@ -337,27 +339,35 @@ Future<dynamic> updateUser({
   }
 
   try {
-    final http.Response response = await http.put(
-      _profileURL,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Token $userToken',
-      },
-      // email field is special due to django requirements
-      body: updateField == 'email'
-          ? jsonEncode({
-              "email": value,
-              "user_id": user.userId,
-              "is_employee": user.isEmployee
-            })
-          : jsonEncode({
-              "$updateField": value,
-              "email": user.username,
-              "user_id": user.userId,
-              "is_employee": user.isEmployee
-            }),
-    );
+    final http.Response response = await http
+        .put(
+          _profileURL,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Token $userToken',
+          },
+          // email field is special due to django requirements
+          body: updateField == 'email'
+              ? jsonEncode({
+                  "email": value,
+                  "user_id": user.userId,
+                  "is_employee": user.isEmployee
+                })
+              : jsonEncode({
+                  "$updateField": value,
+                  "email": user.username,
+                  "user_id": user.userId,
+                  "is_employee": user.isEmployee
+                }),
+        )
+        .timeout(const Duration(seconds: MAX_WAIT_TIME));
     postResponseJson = _response(response);
+  } on TimeoutException catch (e) {
+    print('Timeout. ERROR: $e');
+    return ErrorPage(
+      user: user,
+      errorMessage: "This is taking too long. Please retry later",
+    );
   } on SocketException {
     throw FetchDataException('No Internet connection');
   }

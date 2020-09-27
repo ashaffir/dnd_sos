@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
@@ -36,7 +37,20 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
             print('CONDITION TRUE');
             return phoneUpdatedPage();
           } else {
-            return phoneUpdatedErrorPage();
+            // return phoneUpdatedErrorPage();
+            print('Phone is not valid');
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return ErrorPage(
+                    user: widget.user,
+                    errorMessage: 'Phone number is not valid',
+                  );
+                },
+              ),
+              (Route<dynamic> route) => false, // No Back option for this page
+            );
           }
         } else {
           print("No data around here:");
@@ -85,8 +99,10 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
       // );
     } else {
       print('> STAGE 4.a) BAD Phone entered.');
-      showAlertDialog(
-          context: context, content: '', title: 'Phone not Valid', url: '');
+      // showAlertDialog(
+      //     context: context,
+      //     title: 'Phone not Valid',
+      //     buttonTextColor: Colors.white);
     }
 
     return _codeRequestSent;

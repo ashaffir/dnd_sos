@@ -7,6 +7,7 @@ import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/location_settings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/home/profile.dart';
@@ -25,6 +26,7 @@ import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/exception_page.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,7 +103,7 @@ class _DashboardState extends State<Dashboard> {
       _updatingProfile = true;
     });
     User _currentUser = await UserDao().getUser(0);
-    print('DASHBOARD PROFILE >>>>>: ${_currentUser.usdIls}');
+    // print('DASHBOARD PROFILE >>>>>: ${_currentUser.usdIls}');
 
     var _getProfileResponse;
     // print('DASHBOARD PROFILE: $_getProfileResponse');
@@ -109,7 +111,7 @@ class _DashboardState extends State<Dashboard> {
     // Get user information from the server
     try {
       _getProfileResponse = await getProfile(user: _currentUser);
-      // print('DASHBOARD PROFILE: $_getProfileResponse');
+      print('DASHBOARD PROFILE: ${_getProfileResponse["bank_details"]}');
     } catch (e) {
       print('ERROR >> DHASBOARD: Failed to update profile. ERROR: $e');
     }
@@ -339,11 +341,43 @@ class _DashboardState extends State<Dashboard> {
                                 style: greenApproved,
                               )
                             : (currentUser.profilePending == 1)
-                                ? Text('(Pending Approval)')
-                                : Text('Profile Not Complete'),
+                                ? Text(
+                                    '(Pending Approval)',
+                                    style: TextStyle(
+                                        backgroundColor: Colors.orange),
+                                  )
+                                : Text(
+                                    'Profile Not Complete',
+                                    style:
+                                        TextStyle(backgroundColor: Colors.red),
+                                  ),
                       ],
                     ),
 
+                    /////////////////// Acount Level //////////////
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                        ),
+                        Text(
+                          "Your PickNdell Level" + ":",
+                          style: intrayTitleStyle,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.0),
+                        ),
+                        Text("${currentUser.accountLevel}"),
+                        Padding(padding: EdgeInsets.only(right: 5.0)),
+                        QuestionTooltip(
+                          tooltipMessage:
+                              "The level of the account defines the number of concurrent deliveries you are entitled to do \n Rookie - 1 \n Advanced - 10 \n Expert - Unlimited",
+                        ),
+                      ],
+                    ),
                     //////////////// User Rating  ///////////////
                     ////////////
                     Padding(
@@ -440,6 +474,7 @@ class _DashboardState extends State<Dashboard> {
                             Padding(padding: EdgeInsets.only(right: 10)),
                             _country == 'Israel'
                                 ? Text(
+                                    // 'GAGAGA)',
                                     ' ₪ ${roundDouble(currentUser.dailyProfit * currentUser.usdIls, 2)}',
                                     style: whiteTitleH2,
                                   )
@@ -487,18 +522,19 @@ class _DashboardState extends State<Dashboard> {
                                           }
                                         } else {
                                           showAlertDialog(
-                                              context: context,
-                                              title:
-                                                  'Your account is not approved yet',
-                                              content: (currentUser
-                                                          .profilePending ==
-                                                      1)
-                                                  ? 'Your account is being reviewed. We will notify you once approved.'
-                                                  : 'Please complete your profile first.',
-                                              nameRoute: '/profile',
-                                              buttonText: 'Go to Profile'
-                                              //     'https://pickndell.com/core/login'
-                                              );
+                                            context: context,
+                                            title:
+                                                'Your account is not approved yet',
+                                            content: (currentUser
+                                                        .profilePending ==
+                                                    1)
+                                                ? 'Your account is being reviewed. We will notify you once approved.'
+                                                : 'Please complete your profile first.',
+                                            nameRoute: '/profile',
+                                            buttonText: 'Go to Profile',
+                                            buttonColor: pickndellGreen,
+                                            //     'https://pickndell.com/core/login'
+                                          );
                                           print('NOT APPROVED');
                                         }
                                       },
@@ -586,7 +622,24 @@ class _DashboardState extends State<Dashboard> {
                           },
                         ),
                       ],
-                    )
+                    ),
+                    Divider(
+                      thickness: 2,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: RIGHT_MARGINE, left: LEFT_MARGINE),
+                      child: Row(
+                        children: <Widget>[
+                          Text('Long press on '),
+                          FaIcon(
+                            FontAwesomeIcons.questionCircle,
+                            // size: 25,
+                          ),
+                          Text(' for more information'),
+                        ],
+                      ),
+                    ),
                   ], //Children
                 ),
               ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pickndell/dao/user_dao.dart';
-import 'package:pickndell/home/home_page_isolate.dart';
-import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/common/global.dart';
+import 'package:pickndell/login/login_page.dart';
 import 'package:pickndell/repository/user_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatefulWidget {
   final UserRepository userRepository;
@@ -16,6 +16,16 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return getWelcomePage(widget.userRepository);
+  }
+
+  _saveUserSelection(String userSelection) async {
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      await localStorage.setString('userSelection', userSelection);
+      print('SEVED SEL...');
+    } catch (e) {
+      print('*** Error *** Setting user selection. E: $e');
+    }
   }
 
   Widget getWelcomePage(UserRepository userRepository) {
@@ -45,10 +55,11 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                   onPressed: () {
                     print('Send');
+                    _saveUserSelection('Sender');
                     Navigator.push(
                         context,
                         new MaterialPageRoute(
-                            builder: (context) => HomePageIsolate(
+                            builder: (context) => LoginPage(
                                   userRepository: userRepository,
                                 )));
 
@@ -77,9 +88,16 @@ class _WelcomePageState extends State<WelcomePage> {
                       fontSize: 24,
                     ),
                   ),
-                  color: Colors.brown[900],
+                  color: ordersBackground,
                   onPressed: () {
                     print('Deliver');
+                    _saveUserSelection('Courier');
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => LoginPage(
+                                  userRepository: userRepository,
+                                )));
                     // return getHomePageIsolate(currentUser);
                   },
                   shape: StadiumBorder(

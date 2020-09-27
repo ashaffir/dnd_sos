@@ -74,6 +74,9 @@ class UserRepository {
         balance: token.balance,
         usdIls: token.usdIls,
         usdEur: token.usdEur,
+        bankDetails: token.bankDetails,
+        accountLevel: token.accountLevel,
+        preferredPaymentMethod: token.preferredPaymentMethod,
         activeOrders: token.activeOrders);
     return user;
   }

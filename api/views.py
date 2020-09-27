@@ -422,6 +422,10 @@ def user_photo_id(request):
         profile.id_doc_expiry = id_doc_expiry_dt
         profile.save()
         print('SAVED TO PROFILE')
+
+        # Updating the profile status
+        check_profile_approved(user_id=request.user.pk, is_employee=1)
+
         # data['response'] = 'ID updated'
         return Response(status.HTTP_202_ACCEPTED)
     except Exception as e:
@@ -473,15 +477,20 @@ def user_profile(request):
 
         daily_profit = round(daily_profit,2)
     
-        # Currency handling
-        c = CurrencyRates()
-        usd_ils = c.get_rate('USD', 'ILS')
-        usd_eur = c.get_rate('USD', 'EUR')
-
 
     if request.method == 'POST':
         print(f'REQUEST: {request.data}')
         data = {}
+        # Currency handling
+        try:
+            c = CurrencyRates()
+            usd_ils = c.get_rate('USD', 'ILS')
+            usd_eur = c.get_rate('USD', 'EUR')
+        except Exception as e:
+            print(f'Failed to load currencies. ERROR: {e}')
+            logger.error(f'Failed to load currencies. Setting defaults. ERROR: {e}')
+            usd_ils = 3.5
+            usd_eur = 0.8
 
         if serializer.is_valid():
             data = serializer.data

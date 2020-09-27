@@ -111,7 +111,9 @@ class App extends StatelessWidget {
                 //   userRepository: userRepository,
                 // );
 
-                return Dashboard();
+                return Dashboard(
+                  userRepository: userRepository,
+                );
 
                 // return MaterialApp(
                 //   title: 'Flutter Google Maps Demo',
@@ -121,7 +123,7 @@ class App extends StatelessWidget {
                 return LoginPage(
                   userRepository: userRepository,
                 );
-                // WelcomePage();
+                // return WelcomePage(userRepository: userRepository);
               } else if (state is AuthenticationLoading) {
                 return LoadingIndicator();
               }

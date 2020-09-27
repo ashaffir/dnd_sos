@@ -94,12 +94,12 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                 children: [
                   Image.asset(
                     'assets/images/pickndell-logo-white.png',
-                    width: MediaQuery.of(context).size.width * 0.70,
+                    width: MediaQuery.of(context).size.width * 0.60,
                     // height: MediaQuery.of(context).size.height * 0.50,
                     // width: 300,
                   ),
                   /////////////// Username/Email ////////////
-
+                  Padding(padding: EdgeInsets.only(bottom: 20)),
                   TextFormField(
                     decoration: InputDecoration(
                         // labelText: 'email', icon: Icon(Icons.person)),
@@ -139,43 +139,56 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: 30)),
-                      RaisedButton(
-                        onPressed: () {
-                          if (!_formKey.currentState.validate()) {
-                            return;
-                          } else {
-                            if (state is! LoginLoading) {
-                              _onLoginButtonPressed();
-                            }
-                          }
-                        },
-                        child: Text(!_isLoading
-                            ? translations.login
-                            : translations.logging_in),
-                        color: !_isLoading ? Colors.red : Colors.grey,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RaisedButton(
+                            onPressed: () {
+                              if (!_formKey.currentState.validate()) {
+                                return;
+                              } else {
+                                if (state is! LoginLoading) {
+                                  _onLoginButtonPressed();
+                                }
+                              }
+                            },
+                            child: Text(!_isLoading
+                                ? translations.login
+                                : translations.logging_in),
+                            color: !_isLoading ? Colors.red : Colors.grey,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                side: BorderSide(color: Colors.red)),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
                         child:
                             // InkWell(
+                            Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
                             FlatButton(
-                          // shape: RoundedRectangleBorder(
-                          //     side: BorderSide(
-                          //         color: Colors.blue,
-                          //         width: 1,
-                          //         style: BorderStyle.solid),
-                          //     borderRadius: BorderRadius.circular(50)),
-                          onPressed: _launchURL,
-                          child: Text(
-                            translations.forgot_password,
-                            textDirection: TextDirection.ltr,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                              decoration: TextDecoration.none,
-                              fontWeight: FontWeight.normal,
+                              // shape: RoundedRectangleBorder(
+                              //     side: BorderSide(
+                              //         color: Colors.blue,
+                              //         width: 1,
+                              //         style: BorderStyle.solid),
+                              //     borderRadius: BorderRadius.circular(50)),
+                              onPressed: _launchURL,
+                              child: Text(
+                                translations.forgot_password,
+                                textDirection: TextDirection.ltr,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ],

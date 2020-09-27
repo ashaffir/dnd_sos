@@ -149,6 +149,12 @@ class Employee(models.Model):
         ('Other', 'Other'),
     )
 
+    ACCOUNT_LEVEL = (
+        ('Rookie', 'Rookie'),
+        ('Advanced','Advanced'),
+        ('Expert','Expert'),
+    )
+
     ACTIVE_HOURS = (
         ('08:00-12:00', '08:00-12:00'),
         ('12:00-16:00', '12:00-16:00'),
@@ -196,6 +202,7 @@ class Employee(models.Model):
     id_doc_expiry = models.DateField(null=True, blank=True)
     
     freelancer_total_rating = models.FloatField(null=True, blank=True)
+    account_level = models.CharField(max_length=30,choices=ACCOUNT_LEVEL, default='Rookie')
 
     newsletter_optin = models.BooleanField(default=True)
 
@@ -207,6 +214,7 @@ class Employee(models.Model):
     verification_code = models.CharField(max_length=20, null=True, blank=True) # Used for email verificaiton
 
     PAYMENT_METHODS = (
+        ('None', 'None'),
         ('Bank', 'Bank'),
         ('Phone', 'Phone'),
         ('PayPal', 'PayPal'),
@@ -217,12 +225,12 @@ class Employee(models.Model):
     bank_details = JSONField(null=True, blank=True, default=dict)
     preferred_payment_method = models.CharField(max_length=100, choices=PAYMENT_METHODS, default='Bank')
 
-    balance = models.FloatField(null=True, blank=True)
+    balance = models.FloatField(null=True, blank=True, default=0.0)
 
-    payment_amount = models.FloatField(null=True, blank=True)
+    payment_amount = models.FloatField(null=True, blank=True, default=0.0)
     last_payment_date = models.DateTimeField(null=True, blank=True)
     next_payment_date = models.DateTimeField(null=True, blank=True)
-    payment_method = models.CharField(max_length=50, choices=PAYMENT_METHODS, null=True, blank=True)
+    payment_method = models.CharField(max_length=50, choices=PAYMENT_METHODS, null=True, blank=True, default="None")
 
     class Meta:
         verbose_name = _('Freelancer Profile')

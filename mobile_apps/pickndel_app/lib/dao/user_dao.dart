@@ -34,7 +34,7 @@ class UserDao {
     try {
       final data = await db.query(userTable, where: 'id = ?', whereArgs: [id]);
       User user = User.fromDatabaseJson(data[id]);
-      print('User FROM DB: ${user.rating}');
+      print('User FROM DB: ${user.isEmployee}');
       // String username = user.username;
       return user;
     } catch (error) {

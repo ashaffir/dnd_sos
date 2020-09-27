@@ -10,6 +10,7 @@ import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/finance/payments.dart';
+import 'package:pickndell/home/dashboard.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/id_upload.dart';
@@ -17,7 +18,6 @@ import 'package:pickndell/login/image_uploaded_message.dart';
 import 'package:pickndell/login/phone_update.dart';
 import 'package:pickndell/login/profile_updated.dart';
 import 'package:pickndell/model/credit_card_update.dart';
-import 'package:pickndell/networking/CustomException.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
@@ -32,7 +32,7 @@ import '../model/user_model.dart';
 import 'dart:isolate';
 
 File _image;
-FileImage _currentProfilePic;
+File _currentProfilePic;
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -53,16 +53,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
 // User related
   var userData;
+  User currentUser;
   bool isEmployee;
 
-  void _getUserInfo() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var userJson = localStorage.getString('user');
-    var user = json.decode(userJson);
-    setState(() {
-      userData = user;
-    });
+  _getCurrentUser() async {
+    currentUser = await UserDao().getUser(0);
   }
+
+// User is not being set so the blow is not used
+  // void _getUserInfo() async {
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   var userJson = localStorage.getString('user');
+  //   var user = json.decode(userJson);
+  //   setState(() {
+  //     userData = user;
+  //   });
+  // }
 
   var _vehicleTypes = List<DropdownMenuItem>();
   String _vehicleType;
@@ -109,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String notificationTitle;
   String notificationHelper;
-  bool _updatingProfile;
+  bool _updatingProfile = false;
   bool _emailCodeVerification = false;
 
   Widget build(BuildContext context) {
@@ -162,11 +168,12 @@ class _ProfilePageState extends State<ProfilePage> {
     _loadVehicleTypes();
     _loadCategoriesTypes();
     _getProfilePic();
-
+    _getCurrentUser();
+    // _getUserInfo(); // Not used because the prefs "user" is not set (at dashboard).
     getCountryName();
-    if (_emailCodeVerification) {}
+    // if (_emailCodeVerification) {}
 
-    _checkProfile();
+    // _checkProfile();
   }
 
   Widget getProfilePage(User currentUser) {
@@ -222,15 +229,20 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: SizedBox(
                                 width: 170,
                                 height: 170,
-                                child: _image == null
-                                    ? Image.asset(
-                                        'assets/images/placeholder.jpg',
+                                child: _currentProfilePic != null
+                                    ? Image.file(
+                                        _currentProfilePic,
                                         fit: BoxFit.cover,
                                       )
-                                    : Image.file(
-                                        _image,
-                                        fit: BoxFit.cover,
-                                      ),
+                                    : _image == null
+                                        ? Image.asset(
+                                            'assets/images/placeholder.jpg',
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.file(
+                                            _image,
+                                            fit: BoxFit.cover,
+                                          ),
                               ),
                             ),
                           ),
@@ -274,6 +286,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         ////////////// NAME SECTION ////////////////
                         ///
@@ -282,11 +295,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         currentUser.isEmployee == 0
                             ? Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   currentUser.businessName != null
-                                      ? Icon(
-                                          Icons.check_circle,
+                                      ? IconButton(
+                                          icon: Icon(Icons.check_circle),
                                           color: pickndellGreen,
+                                          onPressed: () {
+                                            print('Name');
+                                          },
                                         )
                                       : IconButton(
                                           icon: Icon(Icons.control_point),
@@ -308,11 +325,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               )
                             : Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   currentUser.name != null
-                                      ? Icon(
-                                          Icons.check_circle,
+                                      ? IconButton(
+                                          icon: Icon(Icons.check_circle),
                                           color: pickndellGreen,
+                                          onPressed: () {
+                                            print('Courier Name');
+                                          },
                                         )
                                       : IconButton(
                                           icon: Icon(Icons.control_point),
@@ -366,9 +387,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           padding: EdgeInsets.only(left: 30.0, top: 10.0),
                         ),
                         currentUser.phone != null
-                            ? Icon(
-                                Icons.check_circle,
+                            ? IconButton(
+                                icon: Icon(Icons.check_circle),
                                 color: pickndellGreen,
+                                onPressed: () {
+                                  print('Phone');
+                                },
                               )
                             : IconButton(
                                 icon: Icon(Icons.control_point),
@@ -410,11 +434,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     ////////////// EMAIL SECTION ////////////////
                     ///
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(left: 30.0, top: 10.0),
                         ),
-                        Icon(Icons.check_circle, color: pickndellGreen),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.check_circle),
+                              color: pickndellGreen,
+                              onPressed: () {
+                                print("Email");
+                              },
+                            ),
+                          ],
+                        ),
                         IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () {
@@ -454,9 +490,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             ? Row(
                                 children: <Widget>[
                                   currentUser.vehicle != null
-                                      ? Icon(
-                                          Icons.check_circle,
+                                      ? IconButton(
+                                          icon: Icon(Icons.check_circle),
                                           color: pickndellGreen,
+                                          onPressed: () {
+                                            print('Category');
+                                          },
                                         )
                                       : IconButton(
                                           icon: Icon(Icons.control_point),
@@ -525,9 +564,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             ? Row(
                                 children: <Widget>[
                                   currentUser.idDoc != null
-                                      ? Icon(
-                                          Icons.check_circle,
+                                      ? IconButton(
+                                          icon: Icon(Icons.check_circle),
                                           color: pickndellGreen,
+                                          onPressed: () {
+                                            print('ID doc');
+                                          },
                                         )
                                       : IconButton(
                                           icon: Icon(Icons.control_point),
@@ -596,9 +638,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 padding: EdgeInsets.only(right: 10.0),
                               ),
                               currentUser.creditCardToken != null
-                                  ? Icon(
-                                      Icons.check_circle,
+                                  ? IconButton(
+                                      icon: Icon(Icons.check_circle),
                                       color: pickndellGreen,
+                                      onPressed: () {
+                                        print('Credit Card');
+                                      },
                                     )
                                   : IconButton(
                                       icon: Icon(Icons.control_point,
@@ -645,12 +690,22 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: <Widget>[
                               Icon(Icons.arrow_back),
                               Padding(padding: EdgeInsets.only(right: 10.0)),
-                              Text('Back'),
+                              Text('Back to dashboard'),
                             ],
                           ),
                           onTap: () {
                             print('BACK');
-                            Navigator.pop(context);
+                            // Navigator.pop(context);
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return Dashboard();
+                                },
+                              ),
+                              (Route<dynamic> route) =>
+                                  false, // No Back option for this page
+                            );
                           },
                         ),
                         Spacer(
@@ -716,7 +771,9 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Change the  $updateField'),
+          title: updateField == 'phone'
+              ? Text('Enter phone with country code, e.g. +972541234567')
+              : Text('Change the  $updateField'),
           content: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -787,7 +844,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       currentUser.phone.toString() == value) {
                                     return 'Please enter a valid new phone';
                                   } else if (updateField == 'name' &&
-                                      validateName(value) != null) {
+                                      // validateName(value) != null) {
+                                      value.isEmpty) {
                                     return 'Please enter a valid value';
                                   } else if (updateField == 'vehicle' &&
                                       validateName(value) != null) {
@@ -816,6 +874,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   if (!_formKey.currentState.validate()) {
                     return;
                   } else {
+                    Navigator.pop(context);
                     if (updateField == 'email') {
                       print(
                           '> STAGE 1) Email update requested. Sending email-verification code');
@@ -850,7 +909,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       );
                     } else {
                       print('UPDATED FIELD: $updateField');
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
@@ -864,6 +923,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         : _textInput.text);
                           },
                         ),
+                        (Route<dynamic> route) => false,
                       );
                     }
                     print('Updating $updateField');
@@ -1036,20 +1096,38 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _getProfilePic() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _currentProfilePic = FileImage(File(prefs.getString('profilePic')));
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      _currentProfilePic = File(prefs.getString('profilePic'));
+      print("PROFILE PIC: $_currentProfilePic");
+    } catch (e) {
+      print('Failed getting profile picture in shared preferences. E: $e');
+    }
   }
 
   _saveProfilePic() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('profilePic', _image.path);
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('profilePic', _image != null ? _image.path : "");
+    } catch (e) {
+      print('No Image found in database. E: $e');
+    }
   }
 
   _sendToServer() async {
     showProgress(context, 'Uploading to PickNdell, Please wait...', false);
     if (_image != null) {
       updateProgress('Uploading image, Please wait...');
-      _uploadImage(imageFile: _image, user: widget.user);
+      try {
+        _uploadImage(imageFile: _image, user: widget.user);
+      } catch (e) {
+        print('Failed uploading the image. ERROR: $e');
+        return ErrorPage(
+          user: widget.user,
+          errorMessage:
+              'There was a problem uploading your image to the server. Please try again later.',
+        );
+      }
     } else {
       print('false');
     }
@@ -1074,7 +1152,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     // multipart that takes file
     var multipartFile = new http.MultipartFile('image', stream, length,
-        filename: imageFile.path.split("/").last);
+        filename: imageFile != null ? imageFile.path.split("/").last : "");
 
     // add file to multipart
     request.files.add(multipartFile);
@@ -1083,7 +1161,13 @@ class _ProfilePageState extends State<ProfilePage> {
     request.headers.addAll(headers);
 
     //adding params
-    String country = await getCountryName();
+    String country;
+    try {
+      country = await getCountryName();
+    } catch (e) {
+      print('Failed getting the country code. ERROR: $e');
+      country = defaultCountry;
+    }
     request.fields['user_id'] = user.userId.toString();
     request.fields['is_employee'] = user.isEmployee == 1 ? "true" : "false";
     request.fields['country'] = country;

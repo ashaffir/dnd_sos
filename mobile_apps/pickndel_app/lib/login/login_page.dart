@@ -1,4 +1,3 @@
-import 'package:pickndell/common/global.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/login_form_screen.dart';
 import 'package:flutter/material.dart';

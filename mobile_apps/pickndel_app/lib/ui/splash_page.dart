@@ -9,25 +9,34 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // body: Center(child: CircularProgressIndicator()),
-        body: Column(
-      children: <Widget>[
-        Image.asset(
-          'assets/images/pickndell-logo-white.png',
-          width: MediaQuery.of(context).size.width * 0.70,
-          // height: MediaQuery.of(context).size.height * 0.50,
-          // width: 300,
-        ),
-        Padding(
-          padding: EdgeInsets.all(10.0),
-        ),
-        Text(
-          'Loading PickNdell...',
-          style: whiteTitle,
-        ),
-      ],
-    ));
+    return SafeArea(
+      child: Scaffold(
+          // body: Center(child: CircularProgressIndicator()),
+          body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/pickndell-logo-white.png',
+                width: MediaQuery.of(context).size.width * 0.70,
+                // height: MediaQuery.of(context).size.height * 0.50,
+                // width: 300,
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+          ),
+          // Text(
+          //   'Loading PickNdell...',
+          //   style: whiteTitle,
+          // ),
+        ],
+      )),
+    );
   }
 }
 

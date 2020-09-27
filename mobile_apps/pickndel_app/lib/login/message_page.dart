@@ -67,12 +67,13 @@ class MessagePage extends StatelessWidget {
                           )
                         : Image.asset(
                             'assets/images/pickndell-logo-white.png',
-                            width: MediaQuery.of(context).size.width * 0.70,
+                            width: MediaQuery.of(context).size.width * 0.60,
                             // height: MediaQuery.of(context).size.height * 0.50,
                             // width: 300,
                           ),
                 Padding(
-                  padding: EdgeInsets.only(left: 30.0),
+                  padding: EdgeInsets.only(
+                      top: 30.0, left: LEFT_MARGINE, right: RIGHT_MARGINE),
                   child: messageType == "Registration"
                       ? Text(translations.messages_register_thanks,
                           style: whiteTitle)
@@ -156,7 +157,7 @@ class MessagePage extends StatelessWidget {
                                       SizedBox(
                                         width: 80,
                                         child: RaisedButton(
-                                          color: Colors.green,
+                                          color: pickndellGreen,
                                           child: Text(
                                             translations.messages_push_accept,
                                             style: whiteButtonTitle,
@@ -216,15 +217,17 @@ class MessagePage extends StatelessWidget {
                                 : Text('$message'),
                   ),
                 ),
-                DashboardButton(),
+                messageType != "Registration" ? DashboardButton() : Text(""),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigation(
-        user: user,
-      ),
+      bottomNavigationBar: messageType == "Registration"
+          ? Text("")
+          : BottomNavigation(
+              user: user,
+            ),
     );
   }
 }

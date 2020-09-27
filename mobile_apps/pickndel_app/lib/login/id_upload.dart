@@ -157,7 +157,7 @@ class _IdUploadState extends State<IdUpload> {
 
     // multipart that takes file
     var multipartFile = new http.MultipartFile('image', stream, length,
-        filename: imageFile.path.split("/").last);
+        filename: imageFile != null ? imageFile.path.split("/").last : "");
 
     // add file to multipart
     request.files.add(multipartFile);
@@ -196,6 +196,7 @@ class _IdUploadState extends State<IdUpload> {
           MaterialPageRoute(
             builder: (context) {
               return ImageUploaded(
+                context: context,
                 uploadStatus: 'fail',
                 user: user,
               );
@@ -237,14 +238,18 @@ class _IdUploadState extends State<IdUpload> {
           isDefaultAction: false,
           onPressed: () async {
             Navigator.pop(context);
-            var image = await ImagePicker.pickImage(
-                source: ImageSource.gallery,
-                imageQuality: 50,
-                maxHeight: 500.0,
-                maxWidth: 500.0);
-            setState(() {
-              _image = image;
-            });
+            try {
+              var image = await ImagePicker.pickImage(
+                  source: ImageSource.gallery,
+                  imageQuality: 50,
+                  maxHeight: 500.0,
+                  maxWidth: 500.0);
+              setState(() {
+                _image = image;
+              });
+            } catch (e) {
+              print('Failed setting image. ERROR: $e');
+            }
           },
         ),
         CupertinoActionSheetAction(
@@ -323,59 +328,72 @@ class _IdUploadState extends State<IdUpload> {
 
         //////////////// ID document type  ////////////////////////
         ///
-        DropdownButtonFormField(
-          decoration: InputDecoration(
-              labelText: 'ID Document Type' + ":",
-              prefixIcon: Icon(Icons.portrait)),
-          value: _idDocType,
-          items: _idDocTypes,
-          // validator: (value) {
-          //   if (dropdownMenue(value) == null) {
-          //     return 'Please choose a valid expiry date';
-          //   } else {
-          //     return null;
-          //   }
-          // },
-          onChanged: (value) {
-            setState(() {
-              print('dropdown: $value');
-              _idDocType = value;
-            });
-          },
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 200,
+              child: DropdownButtonFormField(
+                decoration: InputDecoration(
+                    labelText: 'Document Type' + ":",
+                    prefixIcon: Icon(Icons.portrait)),
+                value: _idDocType,
+                items: _idDocTypes,
+                validator: (value) {
+                  if (value == null) {
+                    return 'Please choose a document type: $value';
+                  } else {
+                    return null;
+                  }
+                },
+                onChanged: (value) {
+                  setState(() {
+                    print('dropdown: $value');
+                    _idDocType = value;
+                  });
+                },
+              ),
+            ),
+          ],
         ),
         //////////////// Expiry date for the document ///////////////
         ///
-        TextFormField(
-          controller: dateCtl,
-          decoration: InputDecoration(
-            icon: Icon(Icons.calendar_today),
-            labelText: "Document Expiry Date",
-            hintText: "When the ID document expires",
-          ),
-          onTap: () async {
-            DateTime date = DateTime(1900);
-            FocusScope.of(context).requestFocus(new FocusNode());
+        SizedBox(
+          width: 200,
+          child: TextFormField(
+            controller: dateCtl,
+            decoration: InputDecoration(
+              icon: Icon(Icons.calendar_today),
+              labelText: "Document Expiry Date",
+              hintText: "When the ID document expires",
+            ),
+            onTap: () async {
+              DateTime date = DateTime(1900);
+              FocusScope.of(context).requestFocus(new FocusNode());
 
-            date = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(2020),
-              lastDate: DateTime(2050),
-              initialDatePickerMode: DatePickerMode.year,
-              helpText: 'ID expiry date', // Can be used as title
-              cancelText: 'Not now',
-              confirmText: 'Select',
-            );
-            dateCtl.text =
-                date != null ? date.toIso8601String().split("T")[0] : null;
-          },
-          validator: (value) {
-            if (value == null) {
-              return 'Please choose a valid expiry date';
-            }
-            _expiryDate = dateCtl.text;
-            return null;
-          },
+              date = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2020),
+                lastDate: DateTime(2050),
+                initialDatePickerMode: DatePickerMode.year,
+                helpText: 'ID expiry date', // Can be used as title
+                cancelText: 'Not now',
+                confirmText: 'Select',
+              );
+              setState(() {
+                dateCtl.text =
+                    date != null ? date.toIso8601String().split("T")[0] : null;
+              });
+            },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please choose a valid expiry date: $value';
+              }
+              _expiryDate = dateCtl.text;
+              return null;
+            },
+          ),
         ),
 
         Padding(
@@ -396,8 +414,14 @@ class _IdUploadState extends State<IdUpload> {
                   return;
                 } else {
                   if (_image == null) {
+                    print('IMAGE IS MISSING');
+                    showAlertDialog(
+                        context: context,
+                        content: "Please choose a photo",
+                        title: "Photo is missing");
                     return;
                   } else {
+                    print('Uploading photo id to server');
                     _sendToServer();
                   }
                 }

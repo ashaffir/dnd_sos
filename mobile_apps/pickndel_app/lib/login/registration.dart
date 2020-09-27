@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:pickndell/api_connection/api_connection.dart';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
@@ -17,6 +18,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+String userSelection;
+String userSelectionState;
 
 class Registration extends StatefulWidget {
   @override
@@ -63,10 +67,25 @@ class _RegistrationState extends State<Registration> {
     });
   }
 
+  _getUserSelection() async {
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      userSelection = localStorage.getString('userSelection');
+    } catch (e) {
+      print('*** Error *** Fail getting user selection. E: $e');
+      userSelection = null;
+    }
+    setState(() {
+      userSelectionState = userSelection != null ? userSelection : "";
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _loadRegistrationTypes();
+    _getUserSelection();
+    print('USER SELECTION: $userSelection');
   }
 
   @override
@@ -81,7 +100,7 @@ class _RegistrationState extends State<Registration> {
         child: Form(
             key: _formKey,
             child: Padding(
-                padding: EdgeInsets.only(left: 40.0, right: 40.0, bottom: 40.0),
+                padding: EdgeInsets.only(left: 40.0, right: 40.0, bottom: 20.0),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,12 +108,21 @@ class _RegistrationState extends State<Registration> {
                     children: <Widget>[
                       Image.asset(
                         'assets/images/pickndell-logo-white.png',
-                        width: MediaQuery.of(context).size.width * 0.70,
+                        width: MediaQuery.of(context).size.width * 0.50,
                         // height: MediaQuery.of(context).size.height * 0.50,
                         // width: 300,
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
+                      Padding(padding: EdgeInsets.only(top: 10)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            userSelectionState != null
+                                ? '$userSelectionState'
+                                : "",
+                            style: whiteTitle,
+                          ),
+                        ],
                       ),
                       Text(
                         trans.register_form,
@@ -122,7 +150,6 @@ class _RegistrationState extends State<Registration> {
                             _userType = value;
                           });
                         },
-                        // hint: Text("Registration as:"),
                       ),
                       Padding(
                         padding: EdgeInsets.all(10.0),
@@ -305,7 +332,8 @@ class _RegistrationState extends State<Registration> {
       //   BoxShadow(color: Colors.white, offset: Offset(3, 3), blurRadius: 3),
       // ],
       title: trans.register_err,
-      message: trans.register_alert_fields + '. $res',
+      message:
+          '${res["email"].toString().replaceAll("[", "").replaceAll("]", "")}',
       icon: Icon(
         Icons.info_outline,
         size: 28,
@@ -320,27 +348,46 @@ class _RegistrationState extends State<Registration> {
       _isLoading = true;
     });
 
-    var res = await createUser(
-        email: _mailController.text,
-        password1: _password1Controller.text,
-        password2: _password2Controller.text,
-        userType: _userType);
+    try {
+      var res = await createUser(
+          email: _mailController.text,
+          password1: _password1Controller.text,
+          password2: _password2Controller.text,
+          userType: _userType);
 
-    if (res['response'] == "Success registration.") {
-      print('Sucess registration: ${res["response"]}');
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', res['token']);
-      localStorage.setString('user', json.encode(res['email']));
+      if (res['response'] == "Success registration.") {
+        print('Sucess registration: ${res["response"]}');
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.setString('token', res['token']);
+        localStorage.setString('user', json.encode(res['email']));
 
-      Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           new MaterialPageRoute(
               builder: (context) => MessagePage(
                     messageType: "Registration",
-                  )));
-    } else {
-      print("Failed registration process. Error: $res");
-      errorRegistration(context, res);
+                  )),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        print("${res['email']}");
+        errorRegistration(context, res);
+      }
+    } catch (e) {
+      print("*** Error *** Failed regitration");
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              // user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
     }
 
     setState(() {

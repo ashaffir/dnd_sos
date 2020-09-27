@@ -29,7 +29,7 @@ class DatabaseProvider {
 
     var database = await openDatabase(
       path,
-      version: 24,
+      version: 27,
       onCreate: initDB,
       onUpgrade: onUpgrade,
     );
@@ -68,6 +68,9 @@ class DatabaseProvider {
         "balance REAL, "
         "usdIls REAL, "
         "usdEur REAL, "
+        "bankDetails TEXT, "
+        "accountLevel TEXT, "
+        "preferredPaymentMethod TEXT, "
         "token TEXT "
         ")");
   }

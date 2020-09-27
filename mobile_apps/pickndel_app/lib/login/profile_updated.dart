@@ -1,22 +1,17 @@
+import 'dart:async';
+
 import 'package:async/async.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:pickndell/api_connection/api_connection.dart';
-import 'package:pickndell/dao/user_dao.dart';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/database/user_database.dart';
-import 'package:pickndell/home/home_page.dart.NA';
-import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';
-import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/model/credit_card.dart';
-import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
-import 'package:pickndell/repository/order_repository.dart';
-import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/buttons.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -206,12 +201,29 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
     tphone = await _getTempPhone();
     print('In function PHONE: $tphone, CODE: $code');
     var _codeVerified;
-    _codeVerified = await phoneVerificationAPI(
-        phone: tphone,
-        verificationCode: code,
-        user: user,
-        action: 'verify_code');
-    return _codeVerified;
+    try {
+      _codeVerified = await phoneVerificationAPI(
+          phone: tphone,
+          verificationCode: code,
+          user: user,
+          action: 'verify_code');
+      return _codeVerified;
+    } catch (e) {
+      print('Failed SMS verification. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Future<String> _getTempPhone() async {
@@ -254,7 +266,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
     print('2: length: $length');
 
     // string to uri
-    var uri = Uri.parse("https://94b6703642d5.ngrok.io/api/user-photo-id/");
+    var uri = Uri.parse("$serverDomain/api/user-photo-id/");
 
     // create multipart request
     var request = new http.MultipartRequest("POST", uri);
@@ -262,7 +274,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
 
     // multipart that takes file
     var multipartFile = new http.MultipartFile('image', stream, length,
-        filename: imageFile.path.split("/").last);
+        filename: imageFile != null ? imageFile.path.split("/").last : "");
 
     // add file to multipart
     request.files.add(multipartFile);
@@ -281,10 +293,15 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
   Future updateRemoteProfile(String updateField, String value) async {
     print('UPDATINNG REMOTE PROFILE. CHANGING $updateField');
     var updateResponse;
-    updateResponse = await updateUser(
-        user: widget.user, value: value, updateField: updateField);
-    print('Field updated: $updateResponse');
-    return updateResponse;
+    try {
+      updateResponse = await updateUser(
+              user: widget.user, value: value, updateField: updateField)
+          .timeout(const Duration(seconds: MAX_WAIT_TIME));
+      print('Field updated: $updateResponse');
+      return updateResponse;
+    } on TimeoutException catch (e) {
+      print('Failed updating remote profile. ERROR: $e');
+    }
   }
 
   Widget getProfileUpdatedPage(dynamic order) {
@@ -309,10 +326,20 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
                 'Your profile was successfully updated',
                 style: bigLightBlueTitle,
               ),
+              Padding(padding: EdgeInsets.only(top: 40)),
+              Center(
+                child: Image.asset(
+                  'assets/images/check-icon.png',
+                  width: MediaQuery.of(context).size.width * 0.50,
+                ),
+              ),
+
               Padding(
                 padding: EdgeInsets.only(top: 100),
               ),
               DashboardButton(),
+
+              // DashboardButton(),
             ],
           ),
         ),

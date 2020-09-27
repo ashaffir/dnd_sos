@@ -49,7 +49,7 @@ class ErrorPage extends StatelessWidget {
               Spacer(
                 flex: 2,
               ),
-              DashboardButton(),
+              user != null ? DashboardButton() : LoginButton(),
               Spacer(
                 flex: 3,
               )
