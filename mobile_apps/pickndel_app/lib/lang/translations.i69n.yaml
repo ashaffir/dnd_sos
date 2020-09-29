@@ -1,13 +1,44 @@
 loginPageTitle: PickNdell Login
 email: email
+usernmane: Username
 password: password
 login: Login
 logout: Logout
+got_to_profile: Go to Profile
 forgot_password: Forgot your password
 create_account: Create a new account
 alert_email: Please enter a valid email
 alert_password: Please enter password
 logging_in: Logging in...
+loading_account: Loading account
+loading_orders: Loading orders
+sender_account: Sender Account
+courier_account: Courier Account
+account_status: Account Status
+active: Active
+pending_approval: Pending Approval
+profile_not_complete: Profile Not Complete
+your_account_not_approved_yet: Your account is not approved yet
+your_account_reviewed: Your account is being reviewed. We will notify you once approved
+complete_profile: Please complete your profile first
+edit_profile: Edit Profile
+long_press_on: Long press on
+for_more_info: for more information
+upload_photo: Upload Photo
+back_to_dashboard: Back to dashboard
+back_to_profile: Back to profile
+change_the_name: Change the name
+change_the_email: Change the email
+change_the_category: Change the category
+change_the_vehicle: Change the vehicle
+enter_with_country_code: Enter phone with country code, e.g.
+enter_here: Enter here
+update: Update
+
+name_not_valid: Name entered is not valid
+month_not_valid: Month not valid
+year_not_valid: Year not valid
+cvv_number_not_valid: CVV not valid
 
 # Homepage/Profile
 home_title: Profile
@@ -19,7 +50,7 @@ home_courier_rating: Courier Rating
 home_sender_rating: Sender Rating
 home_unrated: Unrated
 home_vehicle: Vehicle
-home_sender_cat: Category
+category: Category
 home_active_orders: Current Active Orders
 home_status: Availability Status
 home_available: Available
@@ -32,7 +63,7 @@ orders_title_business: Current Open Orders
 orders_title_rejected: Orders Require Your Attention
 orders_created: Created
 orders_update: Updated
-orders_cancel: Cancel
+orders_cancel: Close
 orders_cancel_delivery: Cancel Delivery
 orders_cancel_confirm: Confirm Cancellation
 orders_owner: Owner
@@ -62,6 +93,16 @@ orders_status_rejected: Rejected Order
 orders_request_courier: Request Courier
 orders_check: Please check
 orders_empty_list: Order list is Empty
+orders_creating_new_order: Creating a new order
+order_new_order_confirmation: New Order Confirmation
+orders_order_cost: Order Cost
+orders_confirm_order: Confirm Order
+orders_confirming_order: Confirming order
+orders_order_confirmed: Order Confirmed
+orders_order_created: Order Created
+order_confirm_archive: Confirm Cancellation
+orders_order_delivery: Order Delivery
+orders_error: Error
 
 # Messages Page
 messages_register_title: Confirmation
@@ -72,7 +113,9 @@ messages_register_drop: Dropoff address
 messages_register_button: Go to Login
 messages_push_accept: Accept
 messages_push_ignore: Ignore 
-
+messages_select_pickup_address: Please select a pickup address
+messages_select_dropoff_address: Please select a dropoff address
+messages_package_type: Please choose the package type
 # Order Accepted
 order_a_updating: Updating Orders Table
 order_a_accepted: Order Accepted
@@ -86,7 +129,9 @@ order_p_problem: There was a problem updating this order
 order_p_update_pnd: Please contact PickNdell support
 
 order_cancel_message: Order Canceled
+order_cenceled_successfuly: Your order was cancelled successfully
 order_delivered: Order Delivered
+orders_update_error: There was an error updating this order. Please try again later
 
 # Registration page
 register_join: Join PickNdel
@@ -108,10 +153,21 @@ profile_submit: Submit Update
 profile_update_in_progress: Update in progress
 profile_delete_account: Delete my Account
 
+#Courier
+your_level: Your PickNdell Level
+level_tooltip: The level of the account defines the number of concurrent deliveries you are entitled to do \n Rookie - 1 \n Advanced - 10 \n Expert - Unlimited
+daily_earnings: Daily Earnings
 
- 
-
-
+# Sender
+daily_cost: Daily Cost
+new_order: Create a New Order
+credit_card: Credit Card
+update_credit_card: Update Credit Card
+credit_card_number: Credit Card Number
+credit_card_number_not_valid: Credit card number is not valid
+restaurant: Restaurant
+package_type: Package Type
+urgency: Urgency
 
 
 

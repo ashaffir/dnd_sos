@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 
@@ -29,6 +30,7 @@ class _GetOrdersState extends State<GetOrders> {
   String pageTitle;
   bool locationTracking;
   User _currentUser;
+  String _country;
 
   Future<bool> _checkTrackingStatus() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -40,6 +42,10 @@ class _GetOrdersState extends State<GetOrders> {
     }
   }
 
+  Future _checkCountry() async {
+    _country = await getCountryName();
+  }
+
   Future _checkUser() async {
     _currentUser = await UserDao().getUser(0);
   }
@@ -49,20 +55,8 @@ class _GetOrdersState extends State<GetOrders> {
     super.initState();
     _checkUser();
     _checkTrackingStatus();
+    _checkCountry();
     _bloc = OrdersBloc(widget.ordersType);
-    // if (widget.ordersType == 'openOrders') {
-    //   pageTitle = 'Open Orders';
-    // } else if (widget.ordersType == 'activeOrders') {
-    //   pageTitle = 'Active Orders';
-    // } else if (widget.ordersType == 'businessOrders') {
-    //   pageTitle = 'Current Open Orders';
-    // } else if (widget.ordersType == 'rejectedOrders') {
-    //   pageTitle = 'Orders Require Your Attention';
-    // } else {
-    //   pageTitle = '';
-    // }
-    // pageTitle =
-    //     widget.ordersType == 'openOrders' ? 'Open Orders' : 'Active Orders';
   }
 
   @override
@@ -96,7 +90,7 @@ class _GetOrdersState extends State<GetOrders> {
             style: TextStyle(color: Colors.white, fontSize: 20)),
         backgroundColor: mainBackground,
       ),
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       body: RefreshIndicator(
         onRefresh: () => _bloc.fetchOrder(widget.ordersType),
         child: StreamBuilder<Response<Orders>>(
@@ -106,7 +100,7 @@ class _GetOrdersState extends State<GetOrders> {
               switch (snapshot.data.status) {
                 case Status.LOADING:
                   // return Loading(loadingMessage: snapshot.data.message);
-                  return ColoredProgressDemo('Loading Orders...');
+                  return ColoredProgressDemo(translations.loading_orders);
                   break;
                 case Status.COMPLETED:
                   return OrdersList(
@@ -114,6 +108,7 @@ class _GetOrdersState extends State<GetOrders> {
                     ordersList: snapshot.data.data,
                     ordersType: widget.ordersType,
                     locationTracking: locationTracking,
+                    country: _country,
                   );
                   break;
                 case Status.EMPTY:

@@ -119,7 +119,7 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
       context: context,
       builder: (BuildContext verifContext) {
         return AlertDialog(
-          backgroundColor: mainBackground,
+          // backgroundColor: mainBackground,
           title: Text(title),
           content: Form(
               key: _formKey,
@@ -191,7 +191,7 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return new Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
         title: Text('Updating Phone'),
       ),
@@ -231,6 +231,12 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
                   Padding(padding: EdgeInsets.only(bottom: 30)),
                   FlatButton(
                     child: Text('Submit'),
+                    shape: StadiumBorder(
+                      side: BorderSide(
+                        color: pickndellGreen,
+                        width: 2,
+                      ),
+                    ),
                     onPressed: () {
                       print('Sending verification code...');
                       if (!_formKey.currentState.validate()) {

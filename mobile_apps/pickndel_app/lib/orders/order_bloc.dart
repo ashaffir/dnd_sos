@@ -28,6 +28,8 @@ class OrdersBloc {
       orderDataSink.add(Response.loading(''));
     } else if (ordersType == 'businessOrders') {
       orderDataSink.add(Response.loading(''));
+    } else if (ordersType == 'rejectedOrders') {
+      orderDataSink.add(Response.loading(''));
     } else {
       orderDataSink.add(Response.error('Error loading orders list'));
     }

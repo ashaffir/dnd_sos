@@ -1,6 +1,9 @@
 import 'package:google_maps_webservice/places.dart';
+import 'package:pickndell/common/error_page.dart';
+import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/credencials.dart';
+import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/location/place.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/orders/order_created.dart';
@@ -9,6 +12,7 @@ import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../common/global.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -36,14 +40,32 @@ class OrderSummary extends StatefulWidget {
 
 class _OrderSummaryState extends State<OrderSummary> {
   var updatedOrderId;
+  String _country;
+  String countryCode;
+
+  void _getCountry() async {
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      _country = localStorage.getString('country');
+      print('COUNTRY: $_country');
+    } catch (e) {
+      print('*** Error *** Fail getting country code. E: $e');
+      _country = 'Israel';
+    }
+    setState(() {
+      countryCode = _country;
+    });
+  }
+
   double _orderPrice;
   @override
   void initState() {
+    _getCountry();
     super.initState();
   }
 
   Widget build(BuildContext context) {
-    final translations = ExampleLocalizations.of(context);
+    final trans = ExampleLocalizations.of(context);
     return FutureBuilder(
       future: processNewOrder(
           user: widget.user,
@@ -68,7 +90,7 @@ class _OrderSummaryState extends State<OrderSummary> {
           print("No data:");
         }
         print('CREATING NEW ORDER');
-        String loaderText = 'Creating a new order' + "...";
+        String loaderText = trans.orders_creating_new_order + "...";
         return ColoredProgressDemo(loaderText);
       },
     );
@@ -112,15 +134,32 @@ class _OrderSummaryState extends State<OrderSummary> {
     dropoffAddress.lng = doLongitude;
 
     // Send information to server to check the price for the order
-    _orderPrice = await OrderRepository().newOrderRepo(
-        user: user,
-        priceOrder: true,
-        pickupAddress: pickupAddress,
-        dropoffAddress: dropoffAddress,
-        urgency: widget.isUrgent,
-        packageType: widget.packageType);
+    try {
+      _orderPrice = await OrderRepository().newOrderRepo(
+          user: user,
+          priceOrder: true,
+          pickupAddress: pickupAddress,
+          dropoffAddress: dropoffAddress,
+          urgency: widget.isUrgent,
+          packageType: widget.packageType);
 
-    return _orderPrice;
+      return _orderPrice;
+    } catch (e) {
+      print('Failed creating new order. ERROR: $e');
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Future updateOrderCreated(dynamic updateOrderId) async {
@@ -135,12 +174,13 @@ class _OrderSummaryState extends State<OrderSummary> {
     final translations = ExampleLocalizations.of(context);
 
     return new Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text(translations.order_a_accepted),
+        title: Text(translations.order_new_order_confirmation),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.only(
+            top: TOP_MARGINE, left: LEFT_MARGINE, right: RIGHT_MARGINE),
         // height: 160,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -150,22 +190,23 @@ class _OrderSummaryState extends State<OrderSummary> {
             ),
             Text(
               translations.orders_from + ': ${widget.pickupAddressName}',
-              style: whiteTitle,
+              style: whiteTitleH3,
             ),
             Spacer(
               flex: 5,
             ),
             Text(
               translations.orders_to + ": ${widget.dropoffAddressName}",
-              style: whiteTitle,
+              style: whiteTitleH3,
             ),
             Spacer(
               flex: 5,
             ),
             Text(
-              // translations.order_a_go_to + "!",
-              'ORDER PRICE: $_orderPrice',
-              style: bigLightBlueTitle,
+              countryCode == 'Israel'
+                  ? '${translations.orders_order_cost}: ₪ ${roundDouble(_orderPrice * widget.user.usdIls, 2)}'
+                  : '${translations.orders_order_cost}: \$ $_orderPrice',
+              style: whiteTitle,
             ),
             Spacer(
               flex: 5,
@@ -173,7 +214,7 @@ class _OrderSummaryState extends State<OrderSummary> {
             RaisedButton(
               padding: EdgeInsets.all(20),
               child: Text(
-                'Confirm Order',
+                translations.orders_confirm_order,
                 style: TextStyle(
                   fontSize: 20,
                 ),

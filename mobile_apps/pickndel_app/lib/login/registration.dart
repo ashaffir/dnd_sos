@@ -19,10 +19,14 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-String userSelection;
-String userSelectionState;
+// String userSelection;
+// String userSelectionState;
+
+bool withDropdown = false;
 
 class Registration extends StatefulWidget {
+  final String userSelection;
+  Registration({this.userSelection});
   @override
   _RegistrationState createState() => _RegistrationState();
 }
@@ -67,25 +71,25 @@ class _RegistrationState extends State<Registration> {
     });
   }
 
-  _getUserSelection() async {
-    try {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      userSelection = localStorage.getString('userSelection');
-    } catch (e) {
-      print('*** Error *** Fail getting user selection. E: $e');
-      userSelection = null;
-    }
-    setState(() {
-      userSelectionState = userSelection != null ? userSelection : "";
-    });
-  }
+  // _getUserSelection() async {
+  //   try {
+  //     SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //     userSelection = localStorage.getString('userSelection');
+  //   } catch (e) {
+  //     print('*** Error *** Fail getting user selection. E: $e');
+  //     userSelection = null;
+  //   }
+  //   setState(() {
+  //     userSelectionState = userSelection != null ? userSelection : "";
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
     _loadRegistrationTypes();
-    _getUserSelection();
-    print('USER SELECTION: $userSelection');
+    // _getUserSelection();
+    // print('USER SELECTION: $userSelection');
   }
 
   @override
@@ -117,8 +121,8 @@ class _RegistrationState extends State<Registration> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            userSelectionState != null
-                                ? '$userSelectionState'
+                            widget.userSelection != null
+                                ? '${widget.userSelection}'
                                 : "",
                             style: whiteTitle,
                           ),
@@ -131,29 +135,36 @@ class _RegistrationState extends State<Registration> {
                       Padding(
                         padding: EdgeInsets.all(10.0),
                       ),
-                      DropdownButtonFormField(
-                        decoration: InputDecoration(
-                            labelText: trans.register_as + ":",
-                            prefixIcon: Icon(Icons.category)),
-                        value: _userType,
-                        items: _registrationTypes,
-                        validator: (value) {
-                          if (dropdownMenue(value) == null) {
-                            return null;
-                          } else {
-                            return trans.register_alert_as;
-                          }
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            print('dropdown: $value');
-                            _userType = value;
-                          });
-                        },
-                      ),
+
+                      ///////////////// Account type selection drowpdown ///////////
+                      ///
+                      if (withDropdown)
+                        DropdownButtonFormField(
+                          decoration: InputDecoration(
+                              labelText: trans.register_as + ":",
+                              prefixIcon: Icon(Icons.category)),
+                          value: _userType,
+                          items: _registrationTypes,
+                          validator: (value) {
+                            if (dropdownMenue(value) == null) {
+                              return null;
+                            } else {
+                              return trans.register_alert_as;
+                            }
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              print('dropdown: $value');
+                              _userType = value;
+                            });
+                          },
+                        ),
                       Padding(
                         padding: EdgeInsets.all(10.0),
                       ),
+
+                      //////////////// Email section ////////////////
+                      ///
                       TextFormField(
                         decoration: InputDecoration(
                             labelText: trans.email, icon: Icon(Icons.person)),
@@ -172,7 +183,7 @@ class _RegistrationState extends State<Registration> {
                       ),
 
                       /////////////// password ////////////
-
+                      ///
                       TextFormField(
                         decoration: InputDecoration(
                             labelText: trans.password,
@@ -183,6 +194,7 @@ class _RegistrationState extends State<Registration> {
                       ),
 
                       /////////////// confirm password ////////////
+                      ///
 
                       TextFormField(
                         decoration: InputDecoration(
@@ -198,6 +210,7 @@ class _RegistrationState extends State<Registration> {
                       ),
 
                       /////////////// Accept Terms ////////////
+                      ///
                       FormField<bool>(
                         builder: (state) {
                           return Column(
@@ -353,7 +366,8 @@ class _RegistrationState extends State<Registration> {
           email: _mailController.text,
           password1: _password1Controller.text,
           password2: _password2Controller.text,
-          userType: _userType);
+          // userType: _userType);
+          userType: widget.userSelection);
 
       if (res['response'] == "Success registration.") {
         print('Sucess registration: ${res["response"]}');

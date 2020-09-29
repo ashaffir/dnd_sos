@@ -33,6 +33,7 @@ import 'dart:isolate';
 
 File _image;
 File _currentProfilePic;
+bool businessCategory = false;
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -94,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
   _loadCategoriesTypes() {
     _businessCategoryList = [
       'Restaurant',
-      'Cothing',
+      'Clothes',
       'Convenience',
       'Grocery',
       'Office',
@@ -204,10 +205,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 // ),
                 (currentUser.isEmployee == 1)
                     ? Text(
-                        'Courier Profile',
+                        translations.home_courier_profile,
                         style: whiteTitle,
                       )
-                    : Text('Sender Profile', style: whiteTitle),
+                    : Text(translations.home_sender_profile, style: whiteTitle),
                 Padding(
                   padding: EdgeInsets.only(top: 10.0),
                 ),
@@ -263,7 +264,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         RaisedButton(
-                            child: Text('Upload Photo'),
+                            child: Text(translations.upload_photo),
                             color: mainBackground,
                             shape: StadiumBorder(
                               side: BorderSide(
@@ -479,120 +480,61 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                     ),
-                    ////////////// CATEGORY SECTION ////////////////
-                    ///
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                        ),
-                        currentUser.isEmployee == 1
-                            ? Row(
-                                children: <Widget>[
-                                  currentUser.vehicle != null
-                                      ? IconButton(
-                                          icon: Icon(Icons.check_circle),
-                                          color: pickndellGreen,
-                                          onPressed: () {
-                                            print('Category');
-                                          },
-                                        )
-                                      : IconButton(
-                                          icon: Icon(Icons.control_point),
-                                          color: Colors.orange,
-                                          onPressed: () {
-                                            updateProfile(
-                                                context: context,
-                                                updateField:
-                                                    currentUser.isEmployee == 1
-                                                        ? 'vehicle'
-                                                        : 'business category');
-                                            print('EDIT VEHICLE');
-                                          },
-                                        )
-                                ],
-                              )
-                            : Row(), // Not adding for business yet
-                        IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              updateProfile(
-                                  context: context,
-                                  updateField: currentUser.isEmployee == 1
-                                      ? 'vehicle'
-                                      : 'business category');
-                              print('EDIT VEHICLE');
-                            }),
-                        Text(
-                          currentUser.isEmployee == 1
-                              ? translations.home_vehicle + ":"
-                              : translations.home_sender_cat + ":",
-                          style: intrayTitleStyle,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 10.0),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            updateProfile(
-                                context: context,
-                                updateField: currentUser.isEmployee == 1
-                                    ? 'vehicle'
-                                    : 'business category');
-                          },
-                          child: Text(
-                            currentUser.isEmployee == 1
-                                ? currentUser.vehicle != null
-                                    ? '${currentUser.vehicle}'
-                                    : " "
-                                : currentUser.businessCategory != null
-                                    ? '${currentUser.businessCategory}'
-                                    : " ",
-                            style: userContentStyle,
-                          ),
-                        ),
-                      ],
-                    ),
+
                     ////////////// ID DOCUMENT SECTION ////////////////
                     ///
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                        ),
-                        currentUser.isEmployee == 1
-                            ? Row(
-                                children: <Widget>[
-                                  currentUser.idDoc != null
-                                      ? IconButton(
-                                          icon: Icon(Icons.check_circle),
-                                          color: pickndellGreen,
-                                          onPressed: () {
-                                            print('ID doc');
-                                          },
-                                        )
-                                      : IconButton(
-                                          icon: Icon(Icons.control_point),
-                                          color: Colors.orange,
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      IdUpload(
-                                                        user: currentUser,
-                                                        updateField: 'photo_id',
-                                                      )),
-                                            );
-                                            print('Add ID Document');
-                                          },
-                                        )
-                                ],
-                              )
-                            : Row(), // Not adding for business yet
-                        IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
+                    if (currentUser.isEmployee == 1)
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                          ),
+                          currentUser.isEmployee == 1
+                              ? Row(
+                                  children: <Widget>[
+                                    currentUser.idDoc != null
+                                        ? IconButton(
+                                            icon: Icon(Icons.check_circle),
+                                            color: pickndellGreen,
+                                            onPressed: () {
+                                              print('ID doc');
+                                            },
+                                          )
+                                        : IconButton(
+                                            icon: Icon(Icons.control_point),
+                                            color: Colors.orange,
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        IdUpload(
+                                                          user: currentUser,
+                                                          updateField:
+                                                              'photo_id',
+                                                        )),
+                                              );
+                                              print('Add ID Document');
+                                            },
+                                          )
+                                  ],
+                                )
+                              : Row(), // Not adding for business yet
+                          IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => IdUpload(
+                                            user: currentUser,
+                                            updateField: 'photo_id',
+                                          )),
+                                );
+                                print('EDIT ID PHOTO');
+                              }),
+                          InkWell(
+                            onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -601,26 +543,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                           updateField: 'photo_id',
                                         )),
                               );
-                              print('EDIT ID PHOTO');
-                            }),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => IdUpload(
-                                        user: currentUser,
-                                        updateField: 'photo_id',
-                                      )),
-                            );
-                          },
-                          child: Text(
-                            "ID Document",
-                            style: intrayTitleStyle,
+                            },
+                            child: Text(
+                              "ID Document",
+                              style: intrayTitleStyle,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
 
                     ////////////// CREDICT CARD SECTION (ONLY BUSINESS/SENDER) ////////////////
                     ///
@@ -629,13 +559,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                              ),
-                              Text(
-                                'Credit Card' + ":",
-                                style: intrayTitleStyle,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(right: 10.0),
                               ),
                               currentUser.creditCardToken != null
                                   ? IconButton(
@@ -672,10 +595,91 @@ class _ProfilePageState extends State<ProfilePage> {
                                               )),
                                     );
                                   }),
+                              Text(
+                                translations.credit_card,
+                                style: intrayTitleStyle,
+                              ),
+                              Padding(padding: EdgeInsets.only(right: 10)),
+                              if (currentUser.creditCardToken != null)
+                                Icon(Icons.credit_card),
                             ],
                           )
                         : Row(),
+                    ////////////// CATEGORY SECTION ////////////////
+                    /// - Currently is not enabled. To enable, change businessCategory to "true"
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            currentUser.vehicle != null ||
+                                    currentUser.businessCategory != null
+                                ? IconButton(
+                                    icon: Icon(Icons.check_circle),
+                                    color: pickndellGreen,
+                                    onPressed: () {
+                                      print('Category');
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: Icon(Icons.control_point),
+                                    color: Colors.orange,
+                                    onPressed: () {
+                                      updateProfile(
+                                          context: context,
+                                          updateField:
+                                              currentUser.isEmployee == 1
+                                                  ? 'vehicle'
+                                                  : 'business category');
+                                      print('EDIT VEHICLE');
+                                    },
+                                  )
+                          ],
+                        ), // Not adding for business yet
+                        IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              updateProfile(
+                                  context: context,
+                                  updateField: currentUser.isEmployee == 1
+                                      ? 'vehicle'
+                                      : 'business category');
+                              print('EDIT VEHICLE');
+                            }),
+                        Text(
+                          currentUser.isEmployee == 1
+                              ? translations.home_vehicle + ":"
+                              : translations.category + " :",
+                          style: intrayTitleStyle,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.0),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            updateProfile(
+                                context: context,
+                                updateField: currentUser.isEmployee == 1
+                                    ? 'vehicle'
+                                    : 'business category');
+                          },
+                          child: Text(
+                            currentUser.isEmployee == 1
+                                ? currentUser.vehicle != null
+                                    ? '${currentUser.vehicle}'
+                                    : " "
+                                : currentUser.businessCategory != null
+                                    ? '${currentUser.businessCategory}'
+                                    : " ",
+                            style: userContentStyle,
+                          ),
+                        ),
+                      ],
+                    ),
                     Divider(color: Colors.white),
+                    Padding(padding: EdgeInsets.only(top: 20.0)),
                     Row(
                       children: [
                         Spacer(
@@ -690,7 +694,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: <Widget>[
                               Icon(Icons.arrow_back),
                               Padding(padding: EdgeInsets.only(right: 10.0)),
-                              Text('Back to dashboard'),
+                              Text(translations.back_to_dashboard),
                             ],
                           ),
                           onTap: () {
@@ -711,23 +715,24 @@ class _ProfilePageState extends State<ProfilePage> {
                         Spacer(
                           flex: 2,
                         ),
-                        FlatButton.icon(
-                          icon: Icon(Icons.monetization_on),
-                          label: Text('Payments'),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(BUTTON_BORDER_RADIUS),
-                              side: BorderSide(color: buttonBorderColor)),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PaymentsPage(
-                                        user: currentUser,
-                                      )),
-                            );
-                          },
-                        ),
+                        if (currentUser.isEmployee == 1)
+                          FlatButton.icon(
+                            icon: Icon(Icons.monetization_on),
+                            label: Text('Payments'),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(BUTTON_BORDER_RADIUS),
+                                side: BorderSide(color: buttonBorderColor)),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PaymentsPage(
+                                          user: currentUser,
+                                        )),
+                              );
+                            },
+                          ),
                         Spacer(
                           flex: 1,
                         ),
@@ -754,11 +759,12 @@ class _ProfilePageState extends State<ProfilePage> {
 //////////////// Update Profile //////////////////
   ///
   Future updateProfile({BuildContext context, String updateField}) async {
+    final trans = ExampleLocalizations.of(context);
     User currentUser = await UserDao().getUser(0);
     TextEditingController _textInput = TextEditingController();
     // set up the AlertDialog
     Widget okButton = FlatButton(
-      child: Text("Cancel"),
+      child: Text(trans.orders_cancel),
       onPressed: () {
         Navigator.pop(context);
       },
@@ -772,8 +778,16 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: updateField == 'phone'
-              ? Text('Enter phone with country code, e.g. +972541234567')
-              : Text('Change the  $updateField'),
+              ? Text('${trans.enter_with_country_code} +972541234567')
+              : updateField == 'name'
+                  ? Text('${trans.change_the_name}')
+                  : updateField == 'email'
+                      ? Text('${trans.change_the_email}')
+                      : updateField == 'business category'
+                          ? Text('${trans.change_the_category}')
+                          : updateField == 'vehicle'
+                              ? Text('${trans.change_the_vehicle}')
+                              : Text(""),
           content: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -826,7 +840,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               decoration: InputDecoration(
                                   hintText: updateField == 'email'
                                       ? currentUser.username
-                                      : "Enter new $updateField here",
+                                      : trans.enter_here,
                                   prefixIcon: updateField == 'name'
                                       ? Icon(Icons.person)
                                       : updateField == 'email'
@@ -867,7 +881,13 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             okButton,
             FlatButton(
-                child: Text('Update'),
+                child: Text(trans.update),
+                shape: StadiumBorder(
+                  side: BorderSide(
+                    color: pickndellGreen,
+                    width: 2,
+                  ),
+                ),
                 color: pickndellGreen,
                 textColor: DEFAUT_TEXT_COLOR,
                 onPressed: () {
@@ -1002,8 +1022,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               )),
           actions: [
-            FlatButton(
-              child: Text("Cancel"),
+            IconButton(
+              icon: Icon(Icons.cancel),
               onPressed: () {
                 Navigator.pop(verifContext);
               },

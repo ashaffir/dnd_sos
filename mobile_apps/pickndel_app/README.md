@@ -93,3 +93,6 @@ lt --port 8000
 
 # REFERENCE: Bottom naviagation bar with hedged area
 - https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
+
+# REFERENCE: Timer/Duration/Delays
+- https://stackoverflow.com/questions/49471063/how-to-run-code-after-some-delay-in-flutter

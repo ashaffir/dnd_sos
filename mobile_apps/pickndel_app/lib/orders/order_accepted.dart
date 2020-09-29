@@ -84,12 +84,11 @@ class _OrderAcceptedState extends State<OrderAccepted> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 30, right: 30),
-        height: 260,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Spacer(
-              flex: 4,
+              flex: 2,
             ),
             Text(
               translations.order_a_go_to + "!",
@@ -105,24 +104,27 @@ class _OrderAcceptedState extends State<OrderAccepted> {
             Spacer(
               flex: 3,
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 30),
-            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
+                Spacer(
+                  flex: 1,
+                ),
                 RaisedButton.icon(
-                  icon: Icon(Icons.navigation),
-                  color: pickndellGreen,
-                  shape: StadiumBorder(side: BorderSide(color: Colors.black)),
+                  label: Text('Navigate'),
+                  icon: Icon(
+                    Icons.navigation,
+                    color: pickndellGreen,
+                  ),
+                  color: Colors.transparent,
+                  shape: StadiumBorder(side: BorderSide(color: pickndellGreen)),
                   onPressed: () {
                     MapUtils.openMap(
                         order["business_lat"], order["business_lon"]);
                   },
-                  label: Text('Navigate'),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 10.0),
+                Spacer(
+                  flex: 1,
                 ),
                 RaisedButton.icon(
                   icon: Icon(Icons.phone),
@@ -133,10 +135,16 @@ class _OrderAcceptedState extends State<OrderAccepted> {
                   },
                   label: Text(translations.orders_call_sender),
                 ),
+                Spacer(
+                  flex: 1,
+                ),
               ],
             ),
             Padding(padding: EdgeInsets.only(top: 30)),
             DashboardButton(),
+            Spacer(
+              flex: 3,
+            ),
 
             // Text(
             //   translations.orders_to + ": ${order["drop_off_address"]}",

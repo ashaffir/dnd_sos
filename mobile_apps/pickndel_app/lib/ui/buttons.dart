@@ -7,10 +7,12 @@ import 'package:pickndell/login/login_page.dart';
 import 'package:pickndell/model/user_model.dart';
 
 class DashboardButton extends StatelessWidget {
+  final String buttonText;
+  DashboardButton({this.buttonText});
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text('Back To Dashboard'),
+      child: buttonText != null ? Text(buttonText) : Text('Back To Dashboard'),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(BUTTON_BORDER_RADIUS),
           side: BorderSide(color: buttonBorderColor)),
@@ -33,11 +35,13 @@ class DashboardButton extends StatelessWidget {
 
 class ProfileButton extends StatelessWidget {
   final User user;
-  ProfileButton({this.user});
+  final String buttonText;
+
+  ProfileButton({this.user, this.buttonText});
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text('Back To Profile'),
+      child: buttonText != null ? Text(buttonText) : Text('Back To Profile'),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(BUTTON_BORDER_RADIUS),
           side: BorderSide(color: buttonBorderColor)),
@@ -61,10 +65,12 @@ class ProfileButton extends StatelessWidget {
 }
 
 class LoginButton extends StatelessWidget {
+  final String buttonText;
+  LoginButton({this.buttonText});
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text('Back To Login'),
+      child: buttonText != null ? Text(buttonText) : Text('Back To Login'),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(BUTTON_BORDER_RADIUS),
           side: BorderSide(color: buttonBorderColor)),
@@ -86,6 +92,8 @@ class LoginButton extends StatelessWidget {
 }
 
 class MyBackButton extends StatelessWidget {
+  final String buttonText;
+  MyBackButton({this.buttonText});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -99,7 +107,7 @@ class MyBackButton extends StatelessWidget {
             children: <Widget>[
               Icon(Icons.arrow_back),
               Padding(padding: EdgeInsets.only(right: 10.0)),
-              Text('Back'),
+              buttonText != null ? Text(buttonText) : Text('Back'),
             ],
           ),
           onTap: () {

@@ -189,7 +189,7 @@ class NewLoginViewSet(ObtainAuthToken):
                             })
         else:
             user_profile, _ = Employer.objects.get_or_create(pk=user.pk)
-            orders_in_progress = active_orders = Order.objects.filter(
+            orders_in_progress = Order.objects.filter(
                 (Q(business=user.pk) & Q(updated__contains=today)) & 
                 (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
             
@@ -370,11 +370,15 @@ from django.core.files.base import ContentFile
 @permission_classes((IsAuthenticated,))
 def user_profile_image(request):
     data = {}
+
+    # print(f'IMAGE REQUEST: {request}')
+
     if request.data['is_employee'] == 'true':
         profile = Employee.objects.get(pk=request.data['user_id'])
     else:
         profile = Employer.objects.get(pk=request.data['user_id'])
-        serializer = EmployerProfileSerializer(user, data=request.data)
+        # serializer = EmployerProfileSerializer(user, data=request.data)
+
 
     country = request.data['country']
     image_string = request.data["image"]
@@ -455,7 +459,7 @@ def user_profile(request):
         serializer = EmployerProfileSerializer(user, data=request.data)
 
     if request.data['is_employee'] == 1:
-        # Current active orders/deliveries
+        # Current active orders/deliveries (Freelancer)
         active_orders_today = Order.objects.filter(
                     (Q(freelancer=user.pk) & Q(updated__contains=today)) & 
                     (Q(status='STARTED') | Q(status='IN_PROGRESS')))
@@ -476,6 +480,31 @@ def user_profile(request):
             daily_profit += order.price
 
         daily_profit = round(daily_profit,2)
+    else:
+        # Current orders in progress (Business)
+        user_profile, _ = Employer.objects.get_or_create(pk=user.pk)
+        orders_in_progress_today = Order.objects.filter(
+                (Q(business=user.pk) & Q(updated__contains=today)) & 
+                (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
+
+        orders_in_progress = Order.objects.filter(Q(business=user.pk) & 
+                (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
+
+
+        print(f'USER PROF: {user_profile.business_name}')
+        num_orders_in_progress = len(orders_in_progress)
+
+        daily_orders = Order.objects.filter(business=user.pk, created__contains=today)
+        num_daily_orders = len(daily_orders)
+
+        # Daily cost
+        daily_cost = 0.0
+        for order in daily_orders:
+            daily_cost += order.price
+
+            daily_cost = round(daily_cost,2)
+            
+
     
 
     if request.method == 'POST':
@@ -499,6 +528,11 @@ def user_profile(request):
                 data['num_active_orders_today'] = num_active_orders_today 
                 data['num_active_orders_total'] = num_active_orders_total
                 data['daily_profit'] = daily_profit
+            else:
+                data['orders_in_progress_today'] = len(orders_in_progress_today)
+                data['num_daily_orders'] = num_daily_orders
+                data['num_orders_in_progress'] = num_orders_in_progress
+                data['daily_cost'] = daily_cost
 
             # Currency exchage rates
             data['usd_ils'] = round(usd_ils,2)
@@ -931,7 +965,13 @@ def new_order(request):
         data['order_type'] = package_type
         data['business'] = User.objects.get(pk=user_profile.pk)
 
-        Order.objects.create(**data)
+        instance = Order.objects.create(**data)
+        print(f'ORDER INSTANCE: {instance}')
+        instance.new_message = {
+            'business': '',
+            'freelancer':''
+            }
+        instance.save()
 
         print(f'DATA: {data}')
         # print(f"REQUEST: {request.data}")
@@ -1026,6 +1066,11 @@ def order_update_view(request):
                     updated_order = serializer.save()
                     data = serializer.data
                     data['response'] = 'Update successful'
+                elif new_status == 'ARCHIVED' and (old_status == 'REQUESTED' or old_status == 'RE_REQUESTED'):
+                    updated_order = serializer.save()
+                    data = serializer.data
+                    data['response'] = 'Update successful'
+
                 else:
                     data['response'] = f'Update failed. Wrong order status. in: {new_status} current: {old_status}'
 

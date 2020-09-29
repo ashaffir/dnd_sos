@@ -9,7 +9,10 @@ import 'package:pickndell/login/message_page.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:pickndell/ui/buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+bool showSection = false;
 
 class PaymentsPage extends StatefulWidget {
   final User user;
@@ -47,26 +50,9 @@ class _PaymentsPageState extends State<PaymentsPage> {
     });
   }
 
-  void _getCurrencyExchange() async {
-    try {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      usdIls = localStorage.getDouble('usdIls');
-      usdEur = localStorage.getDouble('usdEur');
-    } catch (e) {
-      print('*** Error *** Failed getting currency rates. E: $e');
-      usdIls = 3.4;
-      usdEur = 0.8;
-    }
-    setState(() {
-      usdIlsRate = usdIls;
-      usdEurRate = usdEur;
-    });
-  }
-
   @override
   void initState() {
     _getCountry();
-    _getCurrencyExchange();
     super.initState();
   }
 
@@ -89,6 +75,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                   style: whiteTitle,
                 ),
                 Padding(padding: EdgeInsets.only(top: 40)),
+                // if (showSection)
                 Container(
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.white, width: 4.0)),
@@ -108,13 +95,13 @@ class _PaymentsPageState extends State<PaymentsPage> {
                         countryCode == 'Israel'
                             ? Text(
                                 widget.user.balance != null
-                                    ? ' ₪ ${roundDouble(widget.user.balance * usdIls, 2)}'
+                                    ? ' ₪ ${roundDouble(widget.user.balance * widget.user.usdIls, 2)}'
                                     : ' ₪ 0.0',
                                 style: whiteTitleH2,
                               )
                             : Text(
-                                // '\$ ${roundDouble(widget.user.balance, 2)}',
-                                '\$ ',
+                                '\$ ${roundDouble(widget.user.balance, 2)}',
+                                // '\$ ',
                                 style: whiteTitleH2,
                               ),
                         Spacer(
@@ -135,9 +122,17 @@ class _PaymentsPageState extends State<PaymentsPage> {
                       Padding(padding: EdgeInsets.only(right: 5.0)),
                       Text('${widget.user.preferredPaymentMethod}',
                           style: TextStyle(
-                              color: pickndellGreen,
+                              color:
+                                  widget.user.preferredPaymentMethod != 'None'
+                                      ? pickndellGreen
+                                      : Colors.orange,
                               fontWeight: FontWeight.bold,
                               fontSize: 20)),
+                      Padding(padding: EdgeInsets.only(right: 5.0)),
+                      QuestionTooltip(
+                        tooltipMessage:
+                            "Please select your prefered payment method.\n This method will be used to send you payments for your deliveries",
+                      ),
                     ],
                   ),
                 ),
@@ -149,9 +144,13 @@ class _PaymentsPageState extends State<PaymentsPage> {
                     Text('Change Payment Method', style: whiteTitleH3),
                   ],
                 ),
+                ///////////// PayPal Section //////////////
+                ///
                 Row(
                   children: <Widget>[
-                    Padding(padding: EdgeInsets.only(left: 30, right: 30.0)),
+                    Padding(
+                        padding: EdgeInsets.only(
+                            left: LEFT_MARGINE, right: RIGHT_MARGINE)),
                     Radio(
                         value: 1,
                         groupValue: _group,
@@ -183,6 +182,10 @@ class _PaymentsPageState extends State<PaymentsPage> {
                   ],
                 ),
                 Padding(padding: EdgeInsets.only(top: 30)),
+
+                ///////////// Bank Section //////////////
+                ///
+
                 Row(
                   children: <Widget>[
                     Padding(padding: EdgeInsets.only(left: 30, right: 30.0)),

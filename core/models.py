@@ -223,7 +223,7 @@ class Employee(models.Model):
     paypal_account = models.CharField(max_length=100, null=True, blank=True)
     payment_via_phone = models.BooleanField(default=False) # E.g. Bit
     bank_details = JSONField(null=True, blank=True, default=dict)
-    preferred_payment_method = models.CharField(max_length=100, choices=PAYMENT_METHODS, default='Bank')
+    preferred_payment_method = models.CharField(max_length=100, choices=PAYMENT_METHODS, default='None')
 
     balance = models.FloatField(null=True, blank=True, default=0.0)
 

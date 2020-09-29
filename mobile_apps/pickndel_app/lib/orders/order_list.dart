@@ -8,6 +8,7 @@ import 'package:pickndell/model/open_orders.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/orders/order_accepted.dart';
+import 'package:pickndell/orders/order_archived.dart';
 import 'package:pickndell/orders/order_delivered.dart';
 import 'package:pickndell/orders/order_picked_up.dart';
 import 'package:pickndell/orders/order_re_requested.dart';
@@ -21,13 +22,15 @@ class OrdersList extends StatelessWidget {
   final String ordersType;
   final bool locationTracking;
   final User user;
+  final String country;
 
   const OrdersList(
       {Key key,
       this.ordersList,
       this.ordersType,
       this.locationTracking,
-      this.user})
+      this.user,
+      this.country})
       : super(key: key);
 
 // REFERENCE - Alert dialog: https://www.youtube.com/watch?v=FGfhnS6skMQ
@@ -66,6 +69,10 @@ class OrdersList extends StatelessWidget {
                           // width: 320.0,
                           width: MediaQuery.of(context).size.width * 0.30,
                           child: RaisedButton(
+                            child: Text(
+                              translations.orders_cancel,
+                              style: TextStyle(color: Colors.white),
+                            ),
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(BUTTON_BORDER_RADIUS),
@@ -73,21 +80,17 @@ class OrdersList extends StatelessWidget {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text(
-                              translations.orders_cancel,
-                              style: TextStyle(color: Colors.white),
-                            ),
                             color: Colors.transparent,
                           ),
                         ),
                         Spacer(),
                         // Conditions for the new status
-                        newStatus == "STARTED" // Order accepted
+                        newStatus == "ARCHIVED" // Order accepted
                             ? SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.30,
                                 child: RaisedButton(
                                   child: Text(
-                                    translations.orders_confirm_button,
+                                    translations.order_confirm_archive,
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   color: pickndellGreen,
@@ -97,10 +100,11 @@ class OrdersList extends StatelessWidget {
                                       side:
                                           BorderSide(color: buttonBorderColor)),
                                   onPressed: () {
+                                    print('Archiving order ${order.order_id}');
                                     Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => OrderAccepted(
+                                        builder: (context) => OrderArchived(
                                           order: order,
                                           user: user,
                                         ),
@@ -111,15 +115,16 @@ class OrdersList extends StatelessWidget {
                                   },
                                 ),
                               )
-                            : newStatus == "COMPLETED" // Order delivered
+                            : newStatus == "STARTED" // Order accepted
                                 ? SizedBox(
                                     width: MediaQuery.of(context).size.width *
                                         0.30,
                                     child: RaisedButton(
                                       child: Text(
-                                        translations.orders_confirm_delivery,
+                                        translations.orders_confirm_button,
                                         style: TextStyle(color: Colors.white),
                                       ),
+                                      color: pickndellGreen,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                               BUTTON_BORDER_RADIUS),
@@ -129,8 +134,7 @@ class OrdersList extends StatelessWidget {
                                         Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) =>
-                                                OrderDelivered(
+                                            builder: (context) => OrderAccepted(
                                               order: order,
                                               user: user,
                                             ),
@@ -139,23 +143,32 @@ class OrdersList extends StatelessWidget {
                                               false, // No Back option for this page
                                         );
                                       },
-                                      color: pickndellGreen,
                                     ),
                                   )
-                                // Order Rejected
-                                : newStatus == "REJECTED"
+                                : newStatus == "COMPLETED" // Order delivered
                                     ? SizedBox(
-                                        // width: 320.0,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.30,
                                         child: RaisedButton(
+                                          child: Text(
+                                            translations
+                                                .orders_confirm_delivery,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      BUTTON_BORDER_RADIUS),
+                                              side: BorderSide(
+                                                  color: buttonBorderColor)),
                                           onPressed: () {
                                             Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    OrderRejected(
+                                                    OrderDelivered(
                                                   order: order,
                                                   user: user,
                                                 ),
@@ -164,16 +177,11 @@ class OrdersList extends StatelessWidget {
                                                   false, // No Back option for this page
                                             );
                                           },
-                                          child: Text(
-                                            translations.orders_cancel_confirm,
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                          color: Colors.red,
+                                          color: pickndellGreen,
                                         ),
                                       )
-                                    // RE_REQUESTED by business
-                                    : newStatus == "RE_REQUESTED"
+                                    // Order Rejected
+                                    : newStatus == "REJECTED"
                                         ? SizedBox(
                                             // width: 320.0,
                                             width: MediaQuery.of(context)
@@ -186,7 +194,7 @@ class OrdersList extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        OrderReRequested(
+                                                        OrderRejected(
                                                       order: order,
                                                       user: user,
                                                     ),
@@ -197,44 +205,81 @@ class OrdersList extends StatelessWidget {
                                               },
                                               child: Text(
                                                 translations
-                                                    .orders_confirm_broadcast,
+                                                    .orders_cancel_confirm,
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
-                                              color: Colors.red[300],
+                                              color: Colors.red,
                                             ),
                                           )
-                                        :
-                                        // Picked up. IN_PROGRESS
-                                        SizedBox(
-                                            // width: 320.0,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.30,
-                                            child: RaisedButton(
-                                              onPressed: () {
-                                                Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        OrderPickedup(
-                                                      order: order,
-                                                      user: user,
-                                                    ),
+                                        // RE_REQUESTED by business
+                                        : newStatus == "RE_REQUESTED"
+                                            ? SizedBox(
+                                                // width: 320.0,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.30,
+                                                child: RaisedButton(
+                                                  onPressed: () {
+                                                    Navigator
+                                                        .pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            OrderReRequested(
+                                                          order: order,
+                                                          user: user,
+                                                        ),
+                                                      ),
+                                                      (Route<dynamic> route) =>
+                                                          false, // No Back option for this page
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    translations
+                                                        .orders_confirm_broadcast,
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                   ),
-                                                  (Route<dynamic> route) =>
-                                                      false, // No Back option for this page
-                                                );
-                                              },
-                                              child: Text(
-                                                translations.orders_pick_up,
-                                                style: TextStyle(
-                                                    color: Colors.white),
+                                                  color: Colors.red[300],
+                                                ),
+                                              )
+                                            :
+                                            // Picked up. IN_PROGRESS
+                                            SizedBox(
+                                                // width: 320.0,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.30,
+                                                child: RaisedButton(
+                                                  child: Text(
+                                                    translations.orders_pick_up,
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  color: pickndellGreen,
+                                                  shape: StadiumBorder(
+                                                      side: BorderSide(
+                                                          color: Colors.black)),
+                                                  onPressed: () {
+                                                    Navigator
+                                                        .pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            OrderPickedup(
+                                                          order: order,
+                                                          user: user,
+                                                        ),
+                                                      ),
+                                                      (Route<dynamic> route) =>
+                                                          false, // No Back option for this page
+                                                    );
+                                                  },
+                                                ),
                                               ),
-                                              color: pickndellGreen,
-                                            ),
-                                          ),
                       ],
                     )
                   ],
@@ -251,7 +296,7 @@ class OrdersList extends StatelessWidget {
 
     print('TYPE: $ordersType');
     return new Scaffold(
-      backgroundColor: Color(0xFF202020),
+      // backgroundColor: mainBackground,
       body: ListView.builder(
         itemCount: ordersList.orders.length,
         itemBuilder: (context, index) {
@@ -336,37 +381,6 @@ class OrdersList extends StatelessWidget {
                                       buttonBorderColor: Colors.blue);
                                   print('No tracking!!!');
                                 }
-
-                                // Just move the "accept" screen
-                                // Navigator.pushReplacementNamed(
-                                //     context, '/order-accepted');
-
-                                // orderAlert(context).then((onValue) {
-                                //   Navigator.push(
-                                //       context,
-                                //       MaterialPageRoute(
-                                //         builder: (context) => OrderAccepted(
-                                //           order_id: order.order_id,
-                                //           pick_up_address: order.pick_up_address,
-                                //           drop_off_address:
-                                //               order.drop_off_address,
-                                //         ),
-                                //       ));
-                                // });
-
-                                //Open the Alert dialog and swith to "accept" screen
-                                // orderAlert(context).then((onValue) {
-                                //   Navigator.pushReplacementNamed(
-                                //       context, '/order-accepted');
-                                // });
-
-                                //Open the Alert dialog and show Snackbar with alert textmessage
-                                // orderAlert(context).then((onValue) {
-                                //   SnackBar confirmation = SnackBar(
-                                //     content: Text('Confirmed: $onValue'),
-                                //   );
-                                //   Scaffold.of(context).showSnackBar(confirmation);
-                                // });
                               },
                             ),
                           ],
@@ -624,19 +638,6 @@ class OrdersList extends StatelessWidget {
                                         order.dropoffAddressLng);
                                   },
                                 ),
-
-                                // RaisedButton(
-                                //   color: pickndellGreen,
-                                //   child: Text(
-                                //     translations.orders_report_delivered,
-                                //     style: whiteButtonTitle,
-                                //   ),
-                                //   onPressed: () {
-                                //     print('Delivered!!');
-                                //     String newStatus = "COMPLETED";
-                                //     orderAlert(context, order, newStatus);
-                                //   },
-                                // ),
                               ],
                             ),
                           ],
@@ -728,10 +729,13 @@ class OrdersList extends StatelessWidget {
                                 label: Text(translations.orders_call_courier),
                               ),
                               RaisedButton(
-                                color: pickndellGreen,
                                 child: Text(
                                   translations.orders_report_pickup,
                                   style: whiteButtonTitle,
+                                ),
+                                color: pickndellGreen,
+                                shape: StadiumBorder(
+                                  side: BorderSide(width: 2),
                                 ),
                                 onPressed: () {
                                   print('Picked up!!');
@@ -793,17 +797,49 @@ class OrdersList extends StatelessWidget {
                         subtitle: Text(translations.orders_to +
                             ': ${order.drop_off_address}'),
                       ),
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(translations.orders_created +
-                                ': ${order.created}'),
-                            Text(translations.orders_update +
-                                ': ${order.updated}'),
-                          ],
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(translations.orders_created +
+                                    ': ${order.created}'),
+                                Text(translations.orders_update +
+                                    ': ${order.updated}'),
+                                Padding(padding: EdgeInsets.only(top: 10)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(translations.orders_order_cost + ":"),
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 5.0)),
+                                    country == 'Israel' || country == 'ישראל'
+                                        ? Text(
+                                            "${roundDouble(order.price * user.usdIls, 2)} ₪")
+                                        : Text("\$ ${order.price}"),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          RaisedButton(
+                            color: Colors.red,
+                            shape: StadiumBorder(
+                                side: BorderSide(color: Colors.black)),
+                            child: Text(
+                              translations.orders_cancel_delivery,
+                              style: whiteButtonTitle,
+                            ),
+                            onPressed: () {
+                              print('Cancel Order');
+                              String newStatus = 'ARCHIVED';
+                              orderAlert(context, order, newStatus);
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -1014,29 +1050,6 @@ class OrdersList extends StatelessWidget {
                         subtitle: Text(translations.orders_to +
                             ': ${order.drop_off_address}'),
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     // Text('Fee: ${order.price}'),
-                      //     ButtonBar(
-                      //       children: <Widget>[
-                      //         Padding(padding: EdgeInsets.all(5.0)),
-                      //         RaisedButton(
-                      //           color: pickndellGreen,
-                      //           child: Text(
-                      //             "Report Delivered",
-                      //             style: whiteButtonTitle,
-                      //           ),
-                      //           onPressed: () {
-                      //             print('Delivered!!');
-                      //             String newStatus = "COMPLETED";
-                      //             orderAlert(context, order, newStatus);
-                      //           },
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),

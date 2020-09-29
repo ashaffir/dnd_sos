@@ -11,6 +11,7 @@ import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/credit_card.dart';
 import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/networking/CustomException.dart';
 import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
@@ -107,6 +108,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
             : widget.updateField == 'credit_card'
                 ? _updateCreditCard(
                     user: widget.user, creditCard: widget.creditCardInfo)
+                // Updating Name
                 : updateRemoteProfile(widget.updateField, widget.value),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
@@ -295,12 +297,24 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
     var updateResponse;
     try {
       updateResponse = await updateUser(
-              user: widget.user, value: value, updateField: updateField)
-          .timeout(const Duration(seconds: MAX_WAIT_TIME));
+          user: widget.user, value: value, updateField: updateField);
       print('Field updated: $updateResponse');
       return updateResponse;
-    } on TimeoutException catch (e) {
+    } on FetchDataException catch (e) {
       print('Failed updating remote profile. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: widget.user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
     }
   }
 

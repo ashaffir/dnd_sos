@@ -19,7 +19,7 @@ class ErrorPage extends StatelessWidget {
       // appBar: AppBar(
       //   title: Text('Error'),
       // ),
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       body: Center(
         child: Padding(
           padding:

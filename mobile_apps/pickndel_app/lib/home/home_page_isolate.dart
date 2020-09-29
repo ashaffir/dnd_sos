@@ -497,7 +497,7 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
                       Text(
                         currentUser.isEmployee == 1
                             ? translations.home_vehicle + ":"
-                            : translations.home_sender_cat + ":",
+                            : translations.category + ":",
                         style: intrayTitleStyle,
                       ),
                       Padding(

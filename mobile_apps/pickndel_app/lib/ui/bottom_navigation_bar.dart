@@ -56,10 +56,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   if (currentUser.isEmployee == 1) {
                     Navigator.pushReplacementNamed(context, '/open-orders');
                   } else {
-                    Navigator.pushReplacementNamed(context, '/rejected-orders');
+                    Navigator.pushReplacementNamed(context, '/business-orders');
                   }
                 },
               ),
+              Padding(padding: EdgeInsets.all(10)),
               IconButton(
                 icon: Icon(
                   Icons.notifications_active,
@@ -69,7 +70,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   if (currentUser.isEmployee == 1) {
                     Navigator.pushReplacementNamed(context, '/active-orders');
                   } else {
-                    Navigator.pushReplacementNamed(context, '/business-orders');
+                    Navigator.pushReplacementNamed(context, '/rejected-orders');
                   }
                 },
               ),

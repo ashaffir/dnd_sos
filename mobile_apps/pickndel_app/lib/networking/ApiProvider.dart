@@ -84,7 +84,21 @@ class ApiProvider {
   Future<dynamic> put(
       String url, String orderId, User user, String status) async {
     var postResponseJson;
+    var freelancerPayload;
+    var businessPayload;
+    var orderUpdatePayload;
     print('>>>>>>>>>>>> 1 $user <<<<<<<<<<<');
+
+    freelancerPayload = {
+      'order_id': orderId,
+      'status': status,
+      'freelancer': user.userId
+    };
+
+    businessPayload = {'order_id': orderId, 'status': status};
+
+    orderUpdatePayload =
+        user.isEmployee == 1 ? freelancerPayload : businessPayload;
     try {
       final response = await http.put(
         _baseUrl + url,
@@ -92,8 +106,7 @@ class ApiProvider {
           "Authorization": "Token ${user.token}",
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(
-            {'order_id': orderId, 'status': status, 'freelancer': user.userId}),
+        body: jsonEncode(orderUpdatePayload),
       );
       print('>>>>>>>>>>>> 2 <<<<<<<<<<<');
       postResponseJson = _response(response);

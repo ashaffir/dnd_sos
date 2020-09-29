@@ -1,8 +1,10 @@
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
@@ -26,7 +28,7 @@ class _OrderReRequestedState extends State<OrderReRequested> {
 
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: updateOrderReRequested(widget.order),
+      future: updateOrderReRequested(widget.order, widget.user),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           print('ORDER RE-REQUESTED: ${snapshot.data["response"]}');
@@ -49,13 +51,22 @@ class _OrderReRequestedState extends State<OrderReRequested> {
     );
   }
 
-  Future updateOrderReRequested(Order order) async {
+  Future updateOrderReRequested(Order order, User user) async {
     print('Broadcasting order re-request...');
     var orderId = order.order_id;
-    final orderUpdated =
-        await OrderRepository().updateOrder(orderId, 'RE_REQUESTED');
-    print('orderUpdated: $orderUpdated');
-    return orderUpdated;
+    try {
+      final orderUpdated = await OrderRepository(user: user)
+          .updateOrder(orderId, 'RE_REQUESTED');
+      print('orderUpdated: $orderUpdated');
+      return orderUpdated;
+    } catch (e) {
+      print('Faled Re-Requesting the order. ERROR: $e');
+      return ErrorPage(
+        user: user,
+        errorMessage:
+            'There was a problem broadcasting the order. Please try again later.',
+      );
+    }
   }
 
   Widget getOrderReRequestedPage(Order order) {
@@ -65,13 +76,13 @@ class _OrderReRequestedState extends State<OrderReRequested> {
         title: Text('Order Broadcast'),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 50),
-        height: 160,
+        padding: EdgeInsets.only(right: RIGHT_MARGINE, left: LEFT_MARGINE),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Spacer(
-              flex: 4,
+              flex: 2,
             ),
             Text(
               "Order Broadcast Completed.",
@@ -79,6 +90,17 @@ class _OrderReRequestedState extends State<OrderReRequested> {
             ),
             Spacer(
               flex: 2,
+            ),
+            Image.asset(
+              'assets/images/check-icon.png',
+              width: MediaQuery.of(context).size.width * 0.50,
+            ),
+            Spacer(
+              flex: 4,
+            ),
+            DashboardButton(),
+            Spacer(
+              flex: 4,
             ),
           ],
         ),

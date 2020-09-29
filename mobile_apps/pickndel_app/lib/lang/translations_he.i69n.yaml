@@ -1,13 +1,44 @@
 loginPageTitle: כניסה ל PickNdell
 email: דוא״ל
+usernmane: שם משתמש
 password: סיסמא
 login: הכנס
 logout: התנתק
+got_to_profile: עבור לפרופיל
 forgot_password: ?שכחת את הסיסמא
 create_account: צור חשבון
 alert_email: אנא הכנס דואל חוקי
 alert_password: אנא הכנס סיסמה
 logging_in: מתחבר...
+loading_account: טוען חשבון
+loading_orders: טוען הזמנות
+sender_account: חשבון שולח
+courier_account: חשבון שליח
+account_status: מצב חשבון
+active: פעיל
+pending_approval: בבדיקה
+profile_not_complete: פרופיל לא מלא
+your_account_not_approved_yet: חשבונך עדיין לא אושר
+your_account_reviewed: חשבונך נבדק. אנו נודיע לך לאחר אישורך
+complete_profile: אנא השלם תחילה את הפרופיל שלך
+edit_profile: ערוך פרופיל
+long_press_on: לחץ לחיצה ארוכה על
+for_more_info: למידע נוסף
+upload_photo: העלה תמונה
+back_to_dashboard: חזרה לדף הראשי
+back_to_profile: חזרה לפרופיל
+change_the_name: לשנות את השם
+change_the_email: שנה את הדואל
+change_the_category: שנה את הקטגוריה
+change_the_vehicle: שנה את סוג הרכב
+name_not_valid: השם שהוזן אינו חוקי
+month_not_valid: החודש שהוזן לא תקף
+year_not_valid: השנה שהוזנה לא תקפה
+cvv_number_not_valid: CVV אינו תקף
+
+enter_with_country_code: הזן טלפון עם קוד מדינה, למשל
+enter_here: הזן כאן
+update: עדכן
 
 # HomePage/Profile
 home_title: עמוד פרופיל
@@ -19,7 +50,7 @@ home_courier_rating: דירוג שליח
 home_sender_rating: דירוג שולח
 home_unrated: ללא דירוג
 home_vehicle:  כלי רכב
-home_sender_cat: תחום
+category: תחום
 home_active_orders: הזמנות פעילות
 home_status: סטטוס זמינות
 home_available: זמין
@@ -32,7 +63,7 @@ orders_title_business: הזמנות פתוחות
 orders_title_rejected: הזמנות מחייבות את תשומת לבך
 orders_created: התחיל
 orders_update: עודכן
-orders_cancel: בטל
+orders_cancel: סגור
 orders_cancel_delivery: בטל משלוח
 orders_cancel_confirm: אשר את הביטול
 orders_owner: שולח
@@ -62,6 +93,9 @@ orders_status_rejected: מסירה שנדחתה
 orders_request_courier: בקש שליח
 orders_check: אנא בדוק
 orders_empty_list:  רשימת ההזמנות ריקה
+orders_update_error: אירעה שגיאה בעדכון ההזמנה הזו. אנא נסו שוב מאוחר יותר
+orders_order_delivery: הזמן משלוח
+orders_error: הודעת שגיאה
 
 # Messages page
 messages_register_title: אשר
@@ -72,6 +106,19 @@ messages_register_drop: כתובת מסירה
 messages_register_button: היכנס לחשבונך
 messages_push_accept: אשר
 messages_push_ignore: בטל
+messages_select_pickup_address: אנא בחר כתובת איסוף
+messages_select_dropoff_address: אנא בחר כתובת יעד
+messages_package_type: אנא בחר את סוג החבילה
+orders_creating_new_order: יצירת הזמנת משלוח חדשה
+order_new_order_confirmation: אישור הזמנה חדשה
+orders_order_cost: עלות הזמנה
+orders_confirm_order: אשר הזמנה
+orders_confirming_order: אישור הזמנת משלוח
+orders_order_confirmed: ההזמנה אושרה
+orders_order_created: ההזמנה נוצרה
+order_confirm_archive: אשר את הביטול
+
+
 
 # Update Orders
 order_a_updating: עדכון טבלת ההזמנות
@@ -85,6 +132,7 @@ order_p_report: דיווחת שההזמנה נאספה על ידי שליח
 order_p_problem: הייתה בעיה בעדכון ההזמנה הזו
 order_p_update_pnd: אנא צור קשר עם התמיכה של PickNdell
 
+order_cenceled_successfuly: הזמנתך בוטלה בהצלחה
 order_cancel_message: ההזמנה בוטלה
 order_delivered: ההזמנה הועברה
 
@@ -102,6 +150,18 @@ register_already_have: כבר יש לך חשבון
 register_err: שְׁגִיאָה
 register_alert_fields: אנא מלא את כל השדות
 
+# Courier
+your_level: דרגת פיקאנדל
+level_tooltip: רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות \n רוקי - 1 \n מתקדם - 10 \n מומחה - ללא הגבלה
+daily_earnings: רווח יומי
 
-
-
+# Sender
+daily_cost: עלות יומית
+new_order: צור הזמנה חדשה
+credit_card: כרטיס אשראי
+update_credit_card: עדכן כרטיס אשראי
+credit_card_number: מספר כרטיס אשראי
+credit_card_number_not_valid: מספר כרטיס האשראי אינו חוקי
+restaurant: מִסעָדָה
+package_type: סוג האריזה
+urgency: דְחִיפוּת

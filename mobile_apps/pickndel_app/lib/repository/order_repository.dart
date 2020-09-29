@@ -7,7 +7,6 @@ import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/ApiProvider.dart';
 import 'package:pickndell/model/order.dart';
 import 'dart:async';
-import 'dart:convert';
 
 class OrderRepository {
   ApiProvider _provider = ApiProvider();
@@ -81,7 +80,19 @@ class OrderRepository {
       return response;
     } catch (e) {
       print('ERROR GETTING CURRENT PRICE PARAMS: $e');
-      return e;
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
     }
   }
 
@@ -109,7 +120,19 @@ class OrderRepository {
       return response;
     } catch (e) {
       print('NEW ORDER REPO ERROR: $e');
-      return e;
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
     }
   }
 }

@@ -24,7 +24,7 @@ class BusinessUpdateForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=(
             ('Restaurant', _('Restaurant')),
-            ('Cothing', _('Clothing')),
+            ('Clothes', _('Clothes')),
             ('Convenience', _('Convenience')),
             ('Grocery', _('Grocery')),
             ('Office', _('Office')),

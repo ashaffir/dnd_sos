@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/login/login_page.dart';
+import 'package:pickndell/login/registration.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,8 +60,10 @@ class _WelcomePageState extends State<WelcomePage> {
                     Navigator.push(
                         context,
                         new MaterialPageRoute(
-                            builder: (context) => LoginPage(
-                                  userRepository: userRepository,
+                            builder: (context) => Registration(
+                                  userSelection: 'Sender',
+                                  // builder: (context) => LoginPage(
+                                  //       userRepository: userRepository,
                                 )));
 
                     // return getHomePageIsolate(currentUser);
@@ -91,12 +94,13 @@ class _WelcomePageState extends State<WelcomePage> {
                   color: ordersBackground,
                   onPressed: () {
                     print('Deliver');
-                    _saveUserSelection('Courier');
+                    // _saveUserSelection('Courier');
                     Navigator.push(
                         context,
                         new MaterialPageRoute(
-                            builder: (context) => LoginPage(
-                                  userRepository: userRepository,
+                            // builder: (context) => LoginPage(
+                            builder: (context) => Registration(
+                                  userSelection: 'Courier',
                                 )));
                     // return getHomePageIsolate(currentUser);
                   },

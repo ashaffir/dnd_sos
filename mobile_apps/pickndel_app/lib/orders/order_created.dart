@@ -1,4 +1,5 @@
 import 'package:google_maps_webservice/places.dart';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/credencials.dart';
 import 'package:pickndell/location/place.dart';
@@ -7,6 +8,7 @@ import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
+import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
@@ -67,7 +69,7 @@ class _OrderCreatedState extends State<OrderCreated> {
           print("No data:");
         }
         print('CONFIRMING ORDER');
-        String loaderText = 'Confirming order. Stand by' + "...";
+        String loaderText = translations.orders_confirming_order + "...";
         return ColoredProgressDemo(loaderText);
       },
     );
@@ -110,27 +112,46 @@ class _OrderCreatedState extends State<OrderCreated> {
     dropoffAddress.lat = doLatitude;
     dropoffAddress.lng = doLongitude;
 
-    final orderCreatedResponse = await OrderRepository().newOrderRepo(
-        user: user,
-        priceOrder: false,
-        pickupAddress: pickupAddress,
-        dropoffAddress: dropoffAddress,
-        urgency: widget.isUrgent,
-        packageType: widget.packageType);
+    try {
+      final orderCreatedResponse = await OrderRepository(user: user)
+          .newOrderRepo(
+              user: user,
+              priceOrder: false,
+              pickupAddress: pickupAddress,
+              dropoffAddress: dropoffAddress,
+              urgency: widget.isUrgent,
+              packageType: widget.packageType);
 
-    return orderCreatedResponse;
+      return orderCreatedResponse;
+    } catch (e) {
+      print('Failed to confirm new order. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage:
+                  'There was a problem communicating with the server. Please try again later.',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Widget getOrderCreatedPage(dynamic order) {
-    final translations = ExampleLocalizations.of(context);
+    final trans = ExampleLocalizations.of(context);
 
     return new Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Confirmed.'),
+        title: Text(trans.orders_order_confirmed),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 50),
+        padding: EdgeInsets.only(
+            top: TOP_MARGINE, left: LEFT_MARGINE, right: RIGHT_MARGINE),
         // height: 160,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -140,26 +161,28 @@ class _OrderCreatedState extends State<OrderCreated> {
             ),
             Text(
               // translations.order_a_go_to + "!",
-              'ORDER CREATED!',
+              trans.orders_order_created,
               style: bigLightBlueTitle,
             ),
             Spacer(
               flex: 2,
             ),
-            // Text(
-            //   translations.orders_from + ': ${order["pick_up_address"]}',
-            //   style: whiteTitle,
-            // ),
-            // Spacer(
-            //   flex: 2,
-            // ),
-            // Text(
-            //   translations.orders_to + ": ${order["drop_off_address"]}",
-            //   style: whiteTitle,
-            // )
+            Center(
+              child: Image.asset(
+                'assets/images/check-icon.png',
+                width: MediaQuery.of(context).size.width * 0.50,
+              ),
+            ),
             Spacer(
               flex: 2,
-            )
+            ),
+            Center(
+                child: DashboardButton(
+              buttonText: trans.back_to_dashboard,
+            )),
+            Spacer(
+              flex: 4,
+            ),
           ],
         ),
       ),

@@ -44,9 +44,36 @@ def check_profile_approved(user_id, is_employee):
             user.save()
             return False
         else:
-            user.is_approved = True
-            user.save()
-            return True
+            # in case this is an update of a name or phone or credit card
+            if user.is_approved:
+                return True
+            else:
+                user.is_approved = True
+                user.save()
+
+                # Sender notification for the approved account
+                print(f'User profile approved: {user}')
+                user_email = user.email
+                subject = 'Your PickNdell Account is Approved'
+                content = '''
+                Welcome to PickNdell!
+
+                Thank you for using the PickNdell network for delivering and shipping items. 
+                You can now start sending items.
+
+                Please contact us if you have any questions.
+                '''
+                message = {
+                    'user': user,
+                    'message': content
+                }
+
+                send_mail(subject, email_template_name=None,
+                        context=message, to_email=[user_email],
+                        html_email_template_name='core/emails/sender_approved_email.html')
+
+
+                return True
 
 def alert_admin(user_id):
     print('Alerting Admin on new pending user account...')

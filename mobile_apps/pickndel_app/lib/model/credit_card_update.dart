@@ -1,6 +1,7 @@
 import 'package:credit_card_validate/credit_card_validate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/profile_updated.dart';
@@ -44,7 +45,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text('Update Credit Card'),
+        title: Text(trans.update_credit_card),
       ),
       body: Container(
         child: Form(
@@ -56,12 +57,12 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Image.asset(
-                          'assets/images/pickndell-logo-white.png',
-                          width: MediaQuery.of(context).size.width * 0.40,
-                        ),
+                        // Image.asset(
+                        //   'assets/images/pickndell-logo-white.png',
+                        //   width: MediaQuery.of(context).size.width * 0.40,
+                        // ),
                         Padding(
-                          padding: EdgeInsets.only(top: 20.0),
+                          padding: EdgeInsets.only(top: 40.0),
                         ),
 
                         //////// FORM //////
@@ -75,7 +76,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                               TextFormField(
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                    labelText: "Credit Card Number",
+                                    labelText: trans.credit_card_number,
                                     icon: Icon(Icons.credit_card),
                                     contentPadding: EdgeInsets.only(left: 10),
                                     border: OutlineInputBorder(
@@ -87,7 +88,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                                     print('VALID NUMBER');
                                     return null;
                                   } else {
-                                    return 'Credit card number is not valid';
+                                    return trans.credit_card_number_not_valid;
                                   }
                                 },
                                 onChanged: (cardNumber) {
@@ -136,7 +137,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
 
                               TextFormField(
                                 decoration: InputDecoration(
-                                    labelText: "Name",
+                                    labelText: trans.home_name,
                                     icon: Icon(Icons.person),
                                     contentPadding: EdgeInsets.only(left: 10),
                                     border: OutlineInputBorder(
@@ -148,7 +149,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                                     print('VALID NAME');
                                     return null;
                                   } else {
-                                    return "Name entered is not valid";
+                                    return trans.name_not_valid;
                                   }
                                 },
                               ),
@@ -160,6 +161,9 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                                   Container(
                                     width: 100,
                                     child: TextFormField(
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(2),
+                                      ],
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                         labelText: "MM",
@@ -171,7 +175,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                                           print('VALID Month');
                                           return null;
                                         } else {
-                                          return "Month not valid";
+                                          return trans.month_not_valid;
                                         }
                                       },
                                     ),
@@ -182,6 +186,9 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                                   Container(
                                     width: 50,
                                     child: TextFormField(
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(2),
+                                      ],
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                         labelText: "YY",
@@ -192,7 +199,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                                           print('VALID Year');
                                           return null;
                                         } else {
-                                          return 'Not valid';
+                                          return trans.year_not_valid;
                                         }
                                       },
                                     ),
@@ -205,6 +212,9 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                                   Container(
                                     width: 100,
                                     child: TextFormField(
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(3),
+                                      ],
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           labelText: "CVV",
@@ -220,7 +230,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                                           print('VALID CVV NUMBER');
                                           return null;
                                         } else {
-                                          return "Name entered is not valid";
+                                          return trans.cvv_number_not_valid;
                                         }
                                       },
                                     ),
@@ -235,7 +245,7 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                         RaisedButton(
                           padding: EdgeInsets.all(15),
                           child: Text(
-                            'Update Card',
+                            trans.update_credit_card,
                             style: TextStyle(
                               fontSize: 15,
                             ),
@@ -273,6 +283,22 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                               width: 2,
                             ),
                           ),
+                        ),
+                        Padding(padding: EdgeInsets.only(top: 20)),
+                        Divider(color: Colors.white),
+                        Padding(padding: EdgeInsets.only(top: 20)),
+                        InkWell(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.arrow_back),
+                              Padding(padding: EdgeInsets.only(right: 10.0)),
+                              Text(trans.back_to_profile),
+                            ],
+                          ),
+                          onTap: () {
+                            print('BACK');
+                            Navigator.pop(context);
+                          },
                         ),
                       ]),
                 ))),

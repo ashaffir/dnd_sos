@@ -26,7 +26,14 @@ hexColor(String colorHexCode) {
 
 double roundDouble(double value, int places) {
   double mod = pow(10.0, places);
-  return ((value * mod).round().toDouble() / mod);
+  double rounded;
+  if (value != null) {
+    rounded = ((value * mod).round().toDouble() / mod);
+  } else {
+    print('Failed to round double number. E: $e');
+    rounded = 0.0;
+  }
+  return rounded;
 }
 
 String timeConvert(String dateTime) {
@@ -229,8 +236,8 @@ showAlertDialog(
     Color buttonTextColor,
     Color buttonBorderColor}) {
   // set up the AlertDialog
-  Widget okButton = FlatButton(
-    child: Text("Close"),
+  Widget okButton = IconButton(
+    icon: Icon(Icons.cancel),
     onPressed: () {
       Navigator.pop(context);
     },
@@ -272,7 +279,7 @@ showAlertDialog(
   AlertDialog alert = AlertDialog(
     title: title != null ? Text(title) : Text(""),
     content: content != null ? Text(content) : Text(""),
-    actions: [
+    actions: <Widget>[
       okButton,
       url != null ? urlButton : nameRoute != null ? redirectButton : null,
     ],
@@ -400,7 +407,8 @@ Future<int> rowUpdate({User user, dynamic data}) async {
     updateCount = await db.rawUpdate('''
     UPDATE $userTable 
     SET businessName = ?, phone = ?, username = ?, businessCategory = ?, 
-    creditCardToken = ?, isApproved = ?
+    creditCardToken = ?, isApproved = ?, usdIls = ?, usdEur = ?, numOrdersInProgress = ?,
+    dailyCost = ?
     WHERE id = ?
     ''', [
       data['business_name'],
@@ -409,6 +417,10 @@ Future<int> rowUpdate({User user, dynamic data}) async {
       data['business_category'],
       data['credit_card_token'],
       data['is_approved'],
+      data['usd_ils'],
+      data['usd_eur'],
+      data['num_orders_in_progress'],
+      data['daily_cost'],
       0
     ]);
   }

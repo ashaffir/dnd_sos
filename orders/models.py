@@ -114,7 +114,7 @@ class Order(models.Model):
     business_rating = models.IntegerField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
 
     chat = JSONField(blank=True, null=True)
-    new_message = JSONField(blank=True, null=True)
+    new_message = JSONField(blank=True, null=True, default=dict)
 
     def __str__(self):
         return f'{self.order_id}'

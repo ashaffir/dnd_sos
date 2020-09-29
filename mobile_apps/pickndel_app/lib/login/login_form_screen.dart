@@ -5,6 +5,7 @@ import 'package:pickndell/bloc/authentication_bloc.dart';
 import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/home/welcome.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/registration.dart';
 import 'package:flutter/material.dart';
@@ -207,7 +208,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                         Navigator.push(
                             context,
                             new MaterialPageRoute(
-                                builder: (context) => Registration()));
+                                // builder: (context) => Registration()));
+                                builder: (context) => WelcomePage()));
                       },
                       child: Text(
                         translations.create_account,

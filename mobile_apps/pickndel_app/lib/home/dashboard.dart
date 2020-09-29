@@ -1,7 +1,6 @@
 import 'dart:async';
 // import 'dart:html';
 import 'dart:ui';
-import 'dart:convert';
 
 import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
@@ -15,7 +14,6 @@ import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/location/location_callback_handler.dart';
 import 'package:pickndell/location/location_service_repository.dart';
-import 'package:pickndell/networking/CustomException.dart';
 import 'package:pickndell/orders/new_order.dart';
 import 'package:pickndell/model/user_location.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
@@ -27,17 +25,13 @@ import 'package:flutter/material.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/buttons.dart';
-import 'package:pickndell/ui/exception_page.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../dao/user_dao.dart';
 import '../model/user_model.dart';
-import '../ui/bottom_nav_bar.dart';
 import 'dart:isolate';
 
 class Dashboard extends StatefulWidget {
@@ -78,8 +72,9 @@ class _DashboardState extends State<Dashboard> {
   bool _emailCodeVerification = false;
 
   Widget build(BuildContext context) {
+    final trans = ExampleLocalizations.of(context);
     if (_updatingProfile) {
-      String loaderText = "Loading Account...";
+      String loaderText = trans.loading_account + "...";
       return ColoredProgressDemo(loaderText);
     } else {
       return FutureBuilder(
@@ -126,6 +121,9 @@ class _DashboardState extends State<Dashboard> {
     try {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       _country = await getCountryName();
+
+      // await localStorage.getString('userCountry');
+
       await localStorage.setString('country', _country);
 
       await localStorage.setDouble('usdIls', _currentUser.usdIls);
@@ -311,15 +309,15 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 (currentUser.isEmployee == 1)
                     ? Text(
-                        'Courier Account',
+                        translations.courier_account,
                         style: whiteTitle,
                       )
-                    : Text('Sender Account', style: whiteTitle),
+                    : Text(translations.sender_account, style: whiteTitle),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    /////////////////// Acount Status //////////////
+                    /////////////////// Account Username //////////////
                     Padding(
                       padding: EdgeInsets.only(top: 20.0),
                     ),
@@ -329,7 +327,31 @@ class _DashboardState extends State<Dashboard> {
                           padding: EdgeInsets.only(left: 30.0, top: 10.0),
                         ),
                         Text(
-                          "Account Status" + ":",
+                          translations.usernmane + ":",
+                          style: intrayTitleStyle,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.0),
+                        ),
+                        Text(
+                          currentUser.username,
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+
+                    /////////////////// Account Status //////////////
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                        ),
+                        Text(
+                          translations.account_status + ":",
                           style: intrayTitleStyle,
                         ),
                         Padding(
@@ -337,17 +359,17 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         (currentUser.isApproved == 1)
                             ? Text(
-                                "Active",
+                                translations.active,
                                 style: greenApproved,
                               )
                             : (currentUser.profilePending == 1)
                                 ? Text(
-                                    '(Pending Approval)',
+                                    translations.pending_approval,
                                     style: TextStyle(
                                         backgroundColor: Colors.orange),
                                   )
                                 : Text(
-                                    'Profile Not Complete',
+                                    translations.profile_not_complete,
                                     style:
                                         TextStyle(backgroundColor: Colors.red),
                                   ),
@@ -358,26 +380,27 @@ class _DashboardState extends State<Dashboard> {
                     Padding(
                       padding: EdgeInsets.only(top: 20.0),
                     ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 30.0, top: 10.0),
-                        ),
-                        Text(
-                          "Your PickNdell Level" + ":",
-                          style: intrayTitleStyle,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 10.0),
-                        ),
-                        Text("${currentUser.accountLevel}"),
-                        Padding(padding: EdgeInsets.only(right: 5.0)),
-                        QuestionTooltip(
-                          tooltipMessage:
-                              "The level of the account defines the number of concurrent deliveries you are entitled to do \n Rookie - 1 \n Advanced - 10 \n Expert - Unlimited",
-                        ),
-                      ],
-                    ),
+
+                    if (currentUser.isEmployee == 1)
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 30.0, top: 10.0),
+                          ),
+                          Text(
+                            translations.your_level + ":",
+                            style: intrayTitleStyle,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                          ),
+                          Text("${currentUser.accountLevel}"),
+                          Padding(padding: EdgeInsets.only(right: 5.0)),
+                          QuestionTooltip(
+                            tooltipMessage: translations.level_tooltip,
+                          ),
+                        ],
+                      ),
                     //////////////// User Rating  ///////////////
                     ////////////
                     Padding(
@@ -468,18 +491,23 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Daily Earnings',
+                              currentUser.isEmployee == 1
+                                  ? translations.daily_earnings
+                                  : translations.daily_cost,
                               style: whiteTitleH4,
                             ),
                             Padding(padding: EdgeInsets.only(right: 10)),
-                            _country == 'Israel'
+                            _country == 'Israel' || _country == 'ישראל'
                                 ? Text(
-                                    // 'GAGAGA)',
-                                    ' ₪ ${roundDouble(currentUser.dailyProfit * currentUser.usdIls, 2)}',
+                                    currentUser.isEmployee == 1
+                                        ? ' ${roundDouble(currentUser.dailyProfit * currentUser.usdIls, 2)} ₪'
+                                        : ' ${roundDouble(currentUser.dailyCost * currentUser.usdIls, 2)} ₪',
                                     style: whiteTitleH2,
                                   )
                                 : Text(
-                                    '\$ ${roundDouble(currentUser.dailyProfit, 2)}',
+                                    currentUser.isEmployee == 1
+                                        ? '\$ ${roundDouble(currentUser.dailyProfit, 2)}'
+                                        : '\$ ${roundDouble(currentUser.dailyCost, 2)}',
                                     style: whiteTitleH2,
                                   ),
                           ],
@@ -523,15 +551,17 @@ class _DashboardState extends State<Dashboard> {
                                         } else {
                                           showAlertDialog(
                                             context: context,
-                                            title:
-                                                'Your account is not approved yet',
+                                            title: translations
+                                                .your_account_not_approved_yet,
                                             content: (currentUser
                                                         .profilePending ==
                                                     1)
-                                                ? 'Your account is being reviewed. We will notify you once approved.'
-                                                : 'Please complete your profile first.',
+                                                ? translations
+                                                    .your_account_reviewed
+                                                : translations.complete_profile,
                                             nameRoute: '/profile',
-                                            buttonText: 'Go to Profile',
+                                            buttonText:
+                                                translations.got_to_profile,
                                             buttonColor: pickndellGreen,
                                             //     'https://pickndell.com/core/login'
                                           );
@@ -559,11 +589,20 @@ class _DashboardState extends State<Dashboard> {
                     currentUser.isEmployee == 0
                         ? Row(
                             children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                              Spacer(
+                                flex: 3,
                               ),
-                              FlatButton(
-                                child: Text('Create a New Order'),
+                              // Padding(
+                              //   padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                              // ),
+                              RaisedButton(
+                                child: Text(
+                                  translations.new_order,
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.white),
+                                ),
+                                padding: EdgeInsets.all(15),
+                                color: pickndellGreen,
                                 shape: RoundedRectangleBorder(
                                     side: BorderSide(
                                         color: pickndellGreen,
@@ -579,18 +618,23 @@ class _DashboardState extends State<Dashboard> {
                                                 user: currentUser,
                                                 userRepository:
                                                     widget.userRepository,
+                                                country: _country,
                                               )),
                                     );
                                   } else {
                                     showAlertDialog(
                                         context: context,
-                                        title: 'Your account is not approved.',
-                                        content:
-                                            "Please complete your profile before ordering deliveries. \n Name, phone and credit card are mandatory.",
+                                        title: translations
+                                            .your_account_not_approved_yet,
+                                        content: translations.complete_profile,
                                         nameRoute: '/profile',
-                                        buttonText: 'Go to Profile');
+                                        buttonText:
+                                            translations.got_to_profile);
                                   }
                                 },
+                              ),
+                              Spacer(
+                                flex: 1,
                               ),
                             ],
                           )
@@ -598,13 +642,14 @@ class _DashboardState extends State<Dashboard> {
 
                     /////////////////// Profile Edit Button //////////
                     ///
+                    Padding(padding: EdgeInsets.only(top: 20)),
                     Row(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 30),
                         ),
                         FlatButton(
-                          child: Text('Edit Profile'),
+                          child: Text(translations.edit_profile),
                           shape: RoundedRectangleBorder(
                               side: BorderSide(
                                   color: pickndellGreen,
@@ -631,12 +676,12 @@ class _DashboardState extends State<Dashboard> {
                           right: RIGHT_MARGINE, left: LEFT_MARGINE),
                       child: Row(
                         children: <Widget>[
-                          Text('Long press on '),
+                          Text("${translations.long_press_on} "),
                           FaIcon(
                             FontAwesomeIcons.questionCircle,
                             // size: 25,
                           ),
-                          Text(' for more information'),
+                          Text(' ${translations.for_more_info}'),
                         ],
                       ),
                     ),

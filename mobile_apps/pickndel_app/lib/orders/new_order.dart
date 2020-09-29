@@ -1,31 +1,27 @@
-import 'package:background_locator/generated/i18n.dart';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:pickndell/common/helper.dart';
-import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/backend_service.dart';
 import 'package:pickndell/location/credencials.dart';
 import 'package:pickndell/location/place.dart';
-import 'package:pickndell/location/search_bloc.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
-import 'package:pickndell/orders/order_created.dart';
 import 'package:pickndell/orders/order_summary.dart';
 import 'package:pickndell/repository/order_repository.dart';
 import 'package:pickndell/repository/user_repository.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
-import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:uuid/uuid.dart';
 
 class NewOrder extends StatefulWidget {
   final UserRepository userRepository;
   final User user;
+  final String country;
 
-  NewOrder({this.userRepository, this.user});
+  NewOrder({this.userRepository, this.user, this.country});
 
   @override
   _NewOrderState createState() => _NewOrderState();
@@ -74,7 +70,10 @@ class _NewOrderState extends State<NewOrder> {
   List<String> _urgencyOptionsList;
 
   _loadCategoriesTypes() {
-    _businessCategoryList = ['Food', 'Clothes', 'Tools', 'Documents', 'Other'];
+    _businessCategoryList =
+        widget.country == 'Israel' || widget.country == 'ישראל'
+            ? ['אוכל', 'בגדים', 'כלים', 'מסמכים', 'אחר']
+            : ['Food', 'Clothes', 'Tools', 'Documents', 'Other'];
 
     _businessCategoryList.forEach((element) {
       setState(() {
@@ -87,7 +86,10 @@ class _NewOrderState extends State<NewOrder> {
   }
 
   _loadUrgency() {
-    _urgencyOptionsList = ['No Rush', 'Urgent'];
+    _urgencyOptionsList =
+        widget.country == 'Israel' || widget.country == 'ישראל'
+            ? ['לא לחוץ', 'דחוף (מחיר גבוה יותר)']
+            : ['No Rush', 'Urgent'];
 
     _urgencyOptionsList.forEach((element) {
       setState(() {
@@ -109,7 +111,7 @@ class _NewOrderState extends State<NewOrder> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Order'),
+        title: Text(trans.new_order),
       ),
       body: Container(
         child: Form(
@@ -143,7 +145,8 @@ class _NewOrderState extends State<NewOrder> {
                                               // border: OutlineInputBorder(),
                                               prefixIcon: Icon(
                                                   Icons.store_mall_directory),
-                                              hintText: 'Pickup address?'),
+                                              hintText: trans
+                                                  .messages_register_pickup),
                                           onTap: () {
                                             setState(() {
                                               _sessionToken = Uuid().v4();
@@ -172,7 +175,8 @@ class _NewOrderState extends State<NewOrder> {
                                   },
                                   validator: (value) {
                                     if (value.isEmpty) {
-                                      return 'Please select a pickup address';
+                                      return trans
+                                          .messages_select_pickup_address;
                                     }
                                     return null;
                                   }),
@@ -199,7 +203,8 @@ class _NewOrderState extends State<NewOrder> {
                                               // border: OutlineInputBorder(),
                                               prefixIcon:
                                                   Icon(Icons.arrow_forward),
-                                              hintText: 'Dropoff address?'),
+                                              hintText:
+                                                  trans.messages_register_drop),
                                           onTap: () {
                                             setState(() {
                                               _sessionToken = Uuid().v4();
@@ -228,7 +233,8 @@ class _NewOrderState extends State<NewOrder> {
                                   },
                                   validator: (value) {
                                     if (value.isEmpty) {
-                                      return 'Please select a dropoff adderss';
+                                      return trans
+                                          .messages_select_dropoff_address;
                                     }
                                     return null;
                                   }),
@@ -247,7 +253,7 @@ class _NewOrderState extends State<NewOrder> {
                         //////////// Package Type //////////////
                         DropdownButtonFormField(
                           decoration: InputDecoration(
-                              labelText: 'Package Type' + ":",
+                              labelText: trans.package_type + ":",
                               prefixIcon: Icon(Icons.business_center)),
 
                           // Need to change below for relevant drop downs
@@ -257,7 +263,7 @@ class _NewOrderState extends State<NewOrder> {
                             if (value != null) {
                               return null;
                             } else {
-                              return 'Please choose the package type';
+                              return trans.messages_package_type;
                             }
                           },
                           onChanged: (value) {
@@ -272,7 +278,7 @@ class _NewOrderState extends State<NewOrder> {
                         //////////// Urgency //////////////
                         DropdownButtonFormField(
                           decoration: InputDecoration(
-                              labelText: 'Urgency' + ":",
+                              labelText: trans.urgency + ":",
                               prefixIcon: Icon(Icons.access_alarms)),
 
                           // Need to change below for relevant drop downs
@@ -297,7 +303,7 @@ class _NewOrderState extends State<NewOrder> {
                         RaisedButton(
                           padding: EdgeInsets.all(20),
                           child: Text(
-                            'Order Delivery',
+                            trans.orders_order_delivery,
                             style: TextStyle(
                               fontSize: 20,
                             ),
