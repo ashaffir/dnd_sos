@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
-import 'package:pickndell/login/profile_updated.dart';
+import 'package:pickndell/login/profile_update.dart';
 import 'package:pickndell/model/credit_card.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/user_repository.dart';

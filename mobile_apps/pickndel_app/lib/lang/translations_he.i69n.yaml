@@ -27,6 +27,9 @@ for_more_info: למידע נוסף
 upload_photo: העלה תמונה
 back_to_dashboard: חזרה לדף הראשי
 back_to_profile: חזרה לפרופיל
+back_to_login: חזרה לדף הכניסה
+back: חזור
+close: סגור
 change_the_name: לשנות את השם
 change_the_email: שנה את הדואל
 change_the_category: שנה את הקטגוריה
@@ -35,6 +38,22 @@ name_not_valid: השם שהוזן אינו חוקי
 month_not_valid: החודש שהוזן לא תקף
 year_not_valid: השנה שהוזנה לא תקפה
 cvv_number_not_valid: CVV אינו תקף
+choose_gallery: בחר מתוך הגלריה
+submit_photo_id: שלח תמונה של מסמך מזהה
+take_a_picture: צלם תמונה
+uploading_image: מעלה תמונה, אנא המתן
+uploading_to_pickndell: מעלה ל- PickNdell, אנא המתן
+profile_updated: הפרופיל שלך עודכן בהצלחה
+profile_update_title: עדכון פרופיל
+welcome_send: לשׁלוח
+welcome_deliver: להעביר
+verifying_code: אימות קוד
+document_type: סוג מסמך
+select: בחר
+id_expiry_date_picker: תאריך תפוגה של התעודה המזהה
+not_now: לא עכשיו
+cancel: בטל
+submit: שלח
 
 enter_with_country_code: הזן טלפון עם קוד מדינה, למשל
 enter_here: הזן כאן
@@ -55,6 +74,19 @@ home_active_orders: הזמנות פעילות
 home_status: סטטוס זמינות
 home_available: זמין
 home_unavailable: אינו זמין
+rookie: טירון
+advanced: מתקדם
+expert: מומחה
+profile: פרופיל
+updating_profile: מעדכן פרופיל
+sending_code: שולח קוד
+please_enter_sms_code: אנא הזן את הקוד שקיבלת באמצעות SMS
+document_expiry_date: תאריך תפוגה של המסמך
+error_updating_profile: שגיאה בעדכון הפרופיל
+profile_update_error: אירעה שגיאה בעדכון הפרופיל שלך. בבקשה נסו שוב מאוחר יותר
+please_select_vehicle: אנא בחר את סוג הרכב בו אתה משתמש
+updating: מעדכן
+
 
 # Orders
 orders_title_open: הזמנות
@@ -86,7 +118,7 @@ orders_alert_tracking_content: אנא עבור למצב זמין לפני שתק
 orders_message_pickup: סע לכתובת האיסוף
 orders_call_sender: התקשר לשולח
 orders_call_courier: התקשר לשליח
-orders_status_waiting_pickup: "מחכה לאיסוף"
+orders_status_waiting_pickup: מחכה לאיסוף
 orders_status_waiting_allocaiton: חדש. ממתין להקצאת שליח
 orders_status_waiting_delivery: נאסף. ממתין למסירה
 orders_status_rejected: מסירה שנדחתה
@@ -96,6 +128,10 @@ orders_empty_list:  רשימת ההזמנות ריקה
 orders_update_error: אירעה שגיאה בעדכון ההזמנה הזו. אנא נסו שוב מאוחר יותר
 orders_order_delivery: הזמן משלוח
 orders_error: הודעת שגיאה
+orders_delivery_confirmation: אישור משלוח
+orders_delivery_success: המסירה ותמונת האישור עודכנו בהצלחה. עבודה טובה!
+orders_change_status: שנה סטטוס
+
 
 # Messages page
 messages_register_title: אשר
@@ -109,6 +145,12 @@ messages_push_ignore: בטל
 messages_select_pickup_address: אנא בחר כתובת איסוף
 messages_select_dropoff_address: אנא בחר כתובת יעד
 messages_package_type: אנא בחר את סוג החבילה
+messages_communication_error: הייתה בעיה בתקשורת עם השרת. בבקשה נסו שוב מאוחר יותר
+messages_please_choose_docoument_type: אנא בחר סוג מסמך
+messages_hint_expiry_data: מתי תוקף מסמך הזהות פג
+messages_please_choose_valid_expiry_date: אנא בחר תאריך תפוגה תקף
+
+
 orders_creating_new_order: יצירת הזמנת משלוח חדשה
 order_new_order_confirmation: אישור הזמנה חדשה
 orders_order_cost: עלות הזמנה
@@ -117,13 +159,17 @@ orders_confirming_order: אישור הזמנת משלוח
 orders_order_confirmed: ההזמנה אושרה
 orders_order_created: ההזמנה נוצרה
 order_confirm_archive: אשר את הביטול
+order_page: עמוד הזמנה
+order_details: פרטי הזמנה
+order_location: נקודת איסוף
+navigate: נווט
 
 
 
 # Update Orders
 order_a_updating: עדכון טבלת ההזמנות
 order_a_accepted: ההזמנה התקבלה
-order_a_go_to: לכו לאסוף את החבילה
+order_a_go_to: הגיע הזמן לאסוף את החבילה
 order_a_not_available: הזמנה זו אינה זמינה עוד
 
 # Order Picked up
@@ -135,6 +181,14 @@ order_p_update_pnd: אנא צור קשר עם התמיכה של PickNdell
 order_cenceled_successfuly: הזמנתך בוטלה בהצלחה
 order_cancel_message: ההזמנה בוטלה
 order_delivered: ההזמנה הועברה
+
+# Delivery
+report_package_delivery: דווח כי החבילה נמסרה
+take_photo_of_delivery: צלמו את פעולת המסירה
+image_not_selected: לא נבחרה תמונה
+please_take_photo_delivery: אנא צלם את פעולת המסירה לפני שתצהיר על המסירה
+submit_delivery_photo: שלח תמונת משלוח 
+
 
 # Registration page
 register_join: הצטרף ל- PickNdell
@@ -149,13 +203,17 @@ register_create: צור חשבון
 register_already_have: כבר יש לך חשבון
 register_err: שְׁגִיאָה
 register_alert_fields: אנא מלא את כל השדות
+please_enter_the_five_email_code: אנא הזן את חמש הספרות שקיבלת בדואל החדש שלך
+please_enter_valid_email_code: אנא הזן קוד 
 
 # Courier
-your_level: דרגת פיקאנדל
-level_tooltip: רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות \n רוקי - 1 \n מתקדם - 10 \n מומחה - ללא הגבלה
+your_level: דרגת פיקנדל
+level_tooltip: רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות \n טירון - 1 \n מתקדם - 10 \n מומחה - ללא הגבלה
 daily_earnings: רווח יומי
 
 # Sender
+sender: שולח
+courier: שליח
 daily_cost: עלות יומית
 new_order: צור הזמנה חדשה
 credit_card: כרטיס אשראי
@@ -165,3 +223,26 @@ credit_card_number_not_valid: מספר כרטיס האשראי אינו חוקי
 restaurant: מִסעָדָה
 package_type: סוג האריזה
 urgency: דְחִיפוּת
+
+# Payments
+payments: תשלומים
+balance: מאזן
+current_payment_method: אמצעי התשלום
+change_payment_method: שנה אמצעי תשלום
+none: לא מוגדר
+bank: בנק
+paypal: PayPal
+paypal_account_here: חשבון Paypal כאן
+bank_account: חשבון בנק
+update_bank_details: עדכן את פרטי הבנק
+please_select_payment_method: אנא בחר את אמצעי התשלום המועדף עליך. \n אמצעי זה ישמש לך למשלוח תשלומים עבור המשלוחים שלך
+please_enter_valid_paypal: אנא הזן חשבון PayPal תקף
+payment_method_updated: אמצעי התשלום המועדף עודכן
+please_submit_bank_details: אנא מלא תחילה את פרטי הבנק שלך
+bank_details: פרטי חשבון בנק
+bank_details_info: אנא צור קשר עם הבנק שלך לקבלת הפרטים הבאים. שם חשבון הבנק צריך להיות באנגלית בלבד
+bank_account_name: שם החשבון
+please_enter_valid_iban: אנא הזן IBAN חוקי
+please_enter_valid_swift: אנא הזן קוד SWIFT חוקי
+please_enter_account_name: אנא הזן שם חשבון (באנגלית)
+

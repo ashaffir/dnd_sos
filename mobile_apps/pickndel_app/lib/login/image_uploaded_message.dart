@@ -19,36 +19,37 @@ class ImageUploaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final translations = ExampleLocalizations.of(context);
+    final trans = ExampleLocalizations.of(context);
 
     return Scaffold(
       // backgroundColor: mainBackground,
       appBar: AppBar(
         title: imageType == 'delivery'
-            ? Text('Delivery Confirmaiton')
-            : Text('Profile Update'),
+            ? Text(trans.orders_delivery_confirmation)
+            : Text(trans.profile_update_title),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 30),
+                padding: EdgeInsets.only(
+                    right: RIGHT_MARGINE, left: LEFT_MARGINE, top: 30),
               ),
               uploadStatus == "ok"
                   ? imageType == 'delivery'
                       ? Text(
-                          'Delivery and confirmation photo updated. Good Job!',
+                          trans.orders_delivery_success,
                           style: bigLightBlueTitle,
                         )
                       : Text(
-                          'Your profile was successfully updated',
+                          trans.profile_updated,
                           style: bigLightBlueTitle,
                         )
                   : Text(
-                      'Something went wrong. Please try again later',
+                      trans.messages_communication_error,
                       style: whiteTitle,
                     ),
               Padding(
@@ -67,7 +68,9 @@ class ImageUploaded extends StatelessWidget {
                 padding: EdgeInsets.only(top: 50),
               ),
               // ProfileButton(),
-              DashboardButton(),
+              DashboardButton(
+                buttonText: trans.back_to_dashboard,
+              ),
             ],
           ),
         ),

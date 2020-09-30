@@ -106,6 +106,8 @@ class _OrderSummaryState extends State<OrderSummary> {
       User user}) async {
     print(
         'NEW ORDER: pua: $pickupAddressId, doa: $dropoffAddressId, urgent: $isUrgent, package: $packageType, user: ${user.username}');
+    final trans = ExampleLocalizations.of(context);
+
     final geocoding = new GoogleMapsPlaces(apiKey: PLACES_API_KEY);
     // final places = new GoogleMapsPlaces(apiKey: PLACES_API_KEY);
 
@@ -135,13 +137,14 @@ class _OrderSummaryState extends State<OrderSummary> {
 
     // Send information to server to check the price for the order
     try {
-      _orderPrice = await OrderRepository().newOrderRepo(
-          user: user,
-          priceOrder: true,
-          pickupAddress: pickupAddress,
-          dropoffAddress: dropoffAddress,
-          urgency: widget.isUrgent,
-          packageType: widget.packageType);
+      _orderPrice = await OrderRepository(user: user, context: context)
+          .newOrderRepo(
+              user: user,
+              priceOrder: true,
+              pickupAddress: pickupAddress,
+              dropoffAddress: dropoffAddress,
+              urgency: widget.isUrgent,
+              packageType: widget.packageType);
 
       return _orderPrice;
     } catch (e) {
@@ -152,8 +155,7 @@ class _OrderSummaryState extends State<OrderSummary> {
           builder: (context) {
             return ErrorPage(
               user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),
@@ -163,11 +165,29 @@ class _OrderSummaryState extends State<OrderSummary> {
   }
 
   Future updateOrderCreated(dynamic updateOrderId) async {
+    final trans = ExampleLocalizations.of(context);
+
     print('UPDATINNG ORDER...');
-    final orderUpdated =
-        await OrderRepository().updateOrder(updateOrderId, 'STARTED');
-    print('orderUpdated: $orderUpdated');
-    return orderUpdated;
+    try {
+      final orderUpdated =
+          await OrderRepository().updateOrder(updateOrderId, 'STARTED');
+      print('orderUpdated: $orderUpdated');
+      return orderUpdated;
+    } catch (e) {
+      print('Failed updating order started/accepted. ERROR: $e');
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: widget.user,
+              errorMessage: trans.messages_communication_error,
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Widget getOrderSummaryPage(dynamic order) {
@@ -203,8 +223,8 @@ class _OrderSummaryState extends State<OrderSummary> {
               flex: 5,
             ),
             Text(
-              countryCode == 'Israel'
-                  ? '${translations.orders_order_cost}: ₪ ${roundDouble(_orderPrice * widget.user.usdIls, 2)}'
+              countryCode == 'Israel' || countryCode == 'ישראל'
+                  ? '${translations.orders_order_cost}: ${roundDouble(_orderPrice * widget.user.usdIls, 2)}  ₪'
                   : '${translations.orders_order_cost}: \$ $_orderPrice',
               style: whiteTitle,
             ),
@@ -222,24 +242,19 @@ class _OrderSummaryState extends State<OrderSummary> {
               color: Colors.green,
               onPressed: () {
                 print('Confirmed...');
-                // priceConfirmation(
-                //     context: context,
-                //     user: widget.user,
-                //     pickupAddressId: _pickupAddressId,
-                //     dropoffAddressId: _dropoffAddressId,
-                //     packageType: _businessCategory,
-                //     isUrgent: _urgencyOption);
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => OrderCreated(
-                        pickupAddressName: widget.pickupAddressName,
-                        dropoffAddressName: widget.dropoffAddressName,
-                        pickupAddressId: widget.pickupAddressId,
-                        dropoffAddressId: widget.dropoffAddressId,
-                        user: widget.user,
-                        packageType: widget.packageType,
-                        isUrgent: widget.isUrgent),
+                    builder: (context) {
+                      return OrderCreated(
+                          pickupAddressName: widget.pickupAddressName,
+                          dropoffAddressName: widget.dropoffAddressName,
+                          pickupAddressId: widget.pickupAddressId,
+                          dropoffAddressId: widget.dropoffAddressId,
+                          user: widget.user,
+                          packageType: widget.packageType,
+                          isUrgent: widget.isUrgent);
+                    },
                   ),
                   (Route<dynamic> route) =>
                       false, // No Back option for this page

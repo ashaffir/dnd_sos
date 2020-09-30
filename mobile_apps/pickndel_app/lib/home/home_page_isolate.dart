@@ -18,7 +18,7 @@ import 'package:pickndell/location/place.dart';
 import 'package:pickndell/location/search_bloc.dart';
 import 'package:pickndell/login/id_upload.dart';
 import 'package:pickndell/login/phone_update.dart';
-import 'package:pickndell/login/profile_updated.dart';
+import 'package:pickndell/login/profile_update.dart';
 import 'package:pickndell/model/credit_card_update.dart';
 import 'package:pickndell/orders/new_order.dart';
 import 'package:pickndell/model/user_location.dart';

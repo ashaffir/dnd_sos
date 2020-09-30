@@ -232,12 +232,13 @@ showAlertDialog(
     String url,
     String nameRoute,
     String buttonText,
+    String okButtontext,
     Color buttonColor,
     Color buttonTextColor,
     Color buttonBorderColor}) {
   // set up the AlertDialog
-  Widget okButton = IconButton(
-    icon: Icon(Icons.cancel),
+  Widget okButton = FlatButton(
+    child: okButtontext != null ? Text(okButtontext) : Icon(Icons.close),
     onPressed: () {
       Navigator.pop(context);
     },

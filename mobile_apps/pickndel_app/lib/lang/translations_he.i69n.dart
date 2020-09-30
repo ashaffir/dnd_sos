@@ -65,6 +65,9 @@ class Translations_he extends Translations {
   String get upload_photo => "העלה תמונה";
   String get back_to_dashboard => "חזרה לדף הראשי";
   String get back_to_profile => "חזרה לפרופיל";
+  String get back_to_login => "חזרה לדף הכניסה";
+  String get back => "חזור";
+  String get close => "סגור";
   String get change_the_name => "לשנות את השם";
   String get change_the_email => "שנה את הדואל";
   String get change_the_category => "שנה את הקטגוריה";
@@ -73,6 +76,22 @@ class Translations_he extends Translations {
   String get month_not_valid => "החודש שהוזן לא תקף";
   String get year_not_valid => "השנה שהוזנה לא תקפה";
   String get cvv_number_not_valid => "CVV אינו תקף";
+  String get choose_gallery => "בחר מתוך הגלריה";
+  String get submit_photo_id => "שלח תמונה של מסמך מזהה";
+  String get take_a_picture => "צלם תמונה";
+  String get uploading_image => "מעלה תמונה, אנא המתן";
+  String get uploading_to_pickndell => "מעלה ל- PickNdell, אנא המתן";
+  String get profile_updated => "הפרופיל שלך עודכן בהצלחה";
+  String get profile_update_title => "עדכון פרופיל";
+  String get welcome_send => "לשׁלוח";
+  String get welcome_deliver => "להעביר";
+  String get verifying_code => "אימות קוד";
+  String get document_type => "סוג מסמך";
+  String get select => "בחר";
+  String get id_expiry_date_picker => "תאריך תפוגה של התעודה המזהה";
+  String get not_now => "לא עכשיו";
+  String get cancel => "בטל";
+  String get submit => "שלח";
   String get enter_with_country_code => "הזן טלפון עם קוד מדינה, למשל";
   String get enter_here => "הזן כאן";
   String get update => "עדכן";
@@ -90,6 +109,19 @@ class Translations_he extends Translations {
   String get home_status => "סטטוס זמינות";
   String get home_available => "זמין";
   String get home_unavailable => "אינו זמין";
+  String get rookie => "טירון";
+  String get advanced => "מתקדם";
+  String get expert => "מומחה";
+  String get profile => "פרופיל";
+  String get updating_profile => "מעדכן פרופיל";
+  String get sending_code => "שולח קוד";
+  String get please_enter_sms_code => "אנא הזן את הקוד שקיבלת באמצעות SMS";
+  String get document_expiry_date => "תאריך תפוגה של המסמך";
+  String get error_updating_profile => "שגיאה בעדכון הפרופיל";
+  String get profile_update_error =>
+      "אירעה שגיאה בעדכון הפרופיל שלך. בבקשה נסו שוב מאוחר יותר";
+  String get please_select_vehicle => "אנא בחר את סוג הרכב בו אתה משתמש";
+  String get updating => "מעדכן";
   String get orders_title_open => "הזמנות";
   String get orders_title_active => "הזמנות פעילות";
   String get orders_title_business => "הזמנות פתוחות";
@@ -131,6 +163,10 @@ class Translations_he extends Translations {
       "אירעה שגיאה בעדכון ההזמנה הזו. אנא נסו שוב מאוחר יותר";
   String get orders_order_delivery => "הזמן משלוח";
   String get orders_error => "הודעת שגיאה";
+  String get orders_delivery_confirmation => "אישור משלוח";
+  String get orders_delivery_success =>
+      "המסירה ותמונת האישור עודכנו בהצלחה. עבודה טובה!";
+  String get orders_change_status => "שנה סטטוס";
   String get messages_register_title => "אשר";
   String get messages_register_thanks => "תודה";
   String get messages_register_activation =>
@@ -143,6 +179,12 @@ class Translations_he extends Translations {
   String get messages_select_pickup_address => "אנא בחר כתובת איסוף";
   String get messages_select_dropoff_address => "אנא בחר כתובת יעד";
   String get messages_package_type => "אנא בחר את סוג החבילה";
+  String get messages_communication_error =>
+      "הייתה בעיה בתקשורת עם השרת. בבקשה נסו שוב מאוחר יותר";
+  String get messages_please_choose_docoument_type => "אנא בחר סוג מסמך";
+  String get messages_hint_expiry_data => "מתי תוקף מסמך הזהות פג";
+  String get messages_please_choose_valid_expiry_date =>
+      "אנא בחר תאריך תפוגה תקף";
   String get orders_creating_new_order => "יצירת הזמנת משלוח חדשה";
   String get order_new_order_confirmation => "אישור הזמנה חדשה";
   String get orders_order_cost => "עלות הזמנה";
@@ -151,9 +193,13 @@ class Translations_he extends Translations {
   String get orders_order_confirmed => "ההזמנה אושרה";
   String get orders_order_created => "ההזמנה נוצרה";
   String get order_confirm_archive => "אשר את הביטול";
+  String get order_page => "עמוד הזמנה";
+  String get order_details => "פרטי הזמנה";
+  String get order_location => "נקודת איסוף";
+  String get navigate => "נווט";
   String get order_a_updating => "עדכון טבלת ההזמנות";
   String get order_a_accepted => "ההזמנה התקבלה";
-  String get order_a_go_to => "לכו לאסוף את החבילה";
+  String get order_a_go_to => "הגיע הזמן לאסוף את החבילה";
   String get order_a_not_available => "הזמנה זו אינה זמינה עוד";
   String get order_p_picked => "ההזמנה נאספה";
   String get order_p_report => "דיווחת שההזמנה נאספה על ידי שליח";
@@ -162,6 +208,12 @@ class Translations_he extends Translations {
   String get order_cenceled_successfuly => "הזמנתך בוטלה בהצלחה";
   String get order_cancel_message => "ההזמנה בוטלה";
   String get order_delivered => "ההזמנה הועברה";
+  String get report_package_delivery => "דווח כי החבילה נמסרה";
+  String get take_photo_of_delivery => "צלמו את פעולת המסירה";
+  String get image_not_selected => "לא נבחרה תמונה";
+  String get please_take_photo_delivery =>
+      "אנא צלם את פעולת המסירה לפני שתצהיר על המסירה";
+  String get submit_delivery_photo => "שלח תמונת משלוח";
   String get register_join => "הצטרף ל- PickNdell";
   String get register_form => "טופס הרשמה";
   String get register_as => "הרשמה כ";
@@ -174,10 +226,15 @@ class Translations_he extends Translations {
   String get register_already_have => "כבר יש לך חשבון";
   String get register_err => "שְׁגִיאָה";
   String get register_alert_fields => "אנא מלא את כל השדות";
-  String get your_level => "דרגת פיקאנדל";
+  String get please_enter_the_five_email_code =>
+      "אנא הזן את חמש הספרות שקיבלת בדואל החדש שלך";
+  String get please_enter_valid_email_code => "אנא הזן קוד";
+  String get your_level => "דרגת פיקנדל";
   String get level_tooltip =>
-      "רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות \n רוקי - 1 \n מתקדם - 10 \n מומחה - ללא הגבלה";
+      "רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות \n טירון - 1 \n מתקדם - 10 \n מומחה - ללא הגבלה";
   String get daily_earnings => "רווח יומי";
+  String get sender => "שולח";
+  String get courier => "שליח";
   String get daily_cost => "עלות יומית";
   String get new_order => "צור הזמנה חדשה";
   String get credit_card => "כרטיס אשראי";
@@ -187,6 +244,28 @@ class Translations_he extends Translations {
   String get restaurant => "מִסעָדָה";
   String get package_type => "סוג האריזה";
   String get urgency => "דְחִיפוּת";
+  String get payments => "תשלומים";
+  String get balance => "מאזן";
+  String get current_payment_method => "אמצעי התשלום";
+  String get change_payment_method => "שנה אמצעי תשלום";
+  String get none => "לא מוגדר";
+  String get bank => "בנק";
+  String get paypal => "PayPal";
+  String get paypal_account_here => "חשבון Paypal כאן";
+  String get bank_account => "חשבון בנק";
+  String get update_bank_details => "עדכן את פרטי הבנק";
+  String get please_select_payment_method =>
+      "אנא בחר את אמצעי התשלום המועדף עליך. \n אמצעי זה ישמש לך למשלוח תשלומים עבור המשלוחים שלך";
+  String get please_enter_valid_paypal => "אנא הזן חשבון PayPal תקף";
+  String get payment_method_updated => "אמצעי התשלום המועדף עודכן";
+  String get please_submit_bank_details => "אנא מלא תחילה את פרטי הבנק שלך";
+  String get bank_details => "פרטי חשבון בנק";
+  String get bank_details_info =>
+      "אנא צור קשר עם הבנק שלך לקבלת הפרטים הבאים. שם חשבון הבנק צריך להיות באנגלית בלבד";
+  String get bank_account_name => "שם החשבון";
+  String get please_enter_valid_iban => "אנא הזן IBAN חוקי";
+  String get please_enter_valid_swift => "אנא הזן קוד SWIFT חוקי";
+  String get please_enter_account_name => "אנא הזן שם חשבון (באנגלית)";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -252,6 +331,12 @@ class Translations_he extends Translations {
         return back_to_dashboard;
       case 'back_to_profile':
         return back_to_profile;
+      case 'back_to_login':
+        return back_to_login;
+      case 'back':
+        return back;
+      case 'close':
+        return close;
       case 'change_the_name':
         return change_the_name;
       case 'change_the_email':
@@ -268,6 +353,38 @@ class Translations_he extends Translations {
         return year_not_valid;
       case 'cvv_number_not_valid':
         return cvv_number_not_valid;
+      case 'choose_gallery':
+        return choose_gallery;
+      case 'submit_photo_id':
+        return submit_photo_id;
+      case 'take_a_picture':
+        return take_a_picture;
+      case 'uploading_image':
+        return uploading_image;
+      case 'uploading_to_pickndell':
+        return uploading_to_pickndell;
+      case 'profile_updated':
+        return profile_updated;
+      case 'profile_update_title':
+        return profile_update_title;
+      case 'welcome_send':
+        return welcome_send;
+      case 'welcome_deliver':
+        return welcome_deliver;
+      case 'verifying_code':
+        return verifying_code;
+      case 'document_type':
+        return document_type;
+      case 'select':
+        return select;
+      case 'id_expiry_date_picker':
+        return id_expiry_date_picker;
+      case 'not_now':
+        return not_now;
+      case 'cancel':
+        return cancel;
+      case 'submit':
+        return submit;
       case 'enter_with_country_code':
         return enter_with_country_code;
       case 'enter_here':
@@ -302,6 +419,30 @@ class Translations_he extends Translations {
         return home_available;
       case 'home_unavailable':
         return home_unavailable;
+      case 'rookie':
+        return rookie;
+      case 'advanced':
+        return advanced;
+      case 'expert':
+        return expert;
+      case 'profile':
+        return profile;
+      case 'updating_profile':
+        return updating_profile;
+      case 'sending_code':
+        return sending_code;
+      case 'please_enter_sms_code':
+        return please_enter_sms_code;
+      case 'document_expiry_date':
+        return document_expiry_date;
+      case 'error_updating_profile':
+        return error_updating_profile;
+      case 'profile_update_error':
+        return profile_update_error;
+      case 'please_select_vehicle':
+        return please_select_vehicle;
+      case 'updating':
+        return updating;
       case 'orders_title_open':
         return orders_title_open;
       case 'orders_title_active':
@@ -380,6 +521,12 @@ class Translations_he extends Translations {
         return orders_order_delivery;
       case 'orders_error':
         return orders_error;
+      case 'orders_delivery_confirmation':
+        return orders_delivery_confirmation;
+      case 'orders_delivery_success':
+        return orders_delivery_success;
+      case 'orders_change_status':
+        return orders_change_status;
       case 'messages_register_title':
         return messages_register_title;
       case 'messages_register_thanks':
@@ -402,6 +549,14 @@ class Translations_he extends Translations {
         return messages_select_dropoff_address;
       case 'messages_package_type':
         return messages_package_type;
+      case 'messages_communication_error':
+        return messages_communication_error;
+      case 'messages_please_choose_docoument_type':
+        return messages_please_choose_docoument_type;
+      case 'messages_hint_expiry_data':
+        return messages_hint_expiry_data;
+      case 'messages_please_choose_valid_expiry_date':
+        return messages_please_choose_valid_expiry_date;
       case 'orders_creating_new_order':
         return orders_creating_new_order;
       case 'order_new_order_confirmation':
@@ -418,6 +573,14 @@ class Translations_he extends Translations {
         return orders_order_created;
       case 'order_confirm_archive':
         return order_confirm_archive;
+      case 'order_page':
+        return order_page;
+      case 'order_details':
+        return order_details;
+      case 'order_location':
+        return order_location;
+      case 'navigate':
+        return navigate;
       case 'order_a_updating':
         return order_a_updating;
       case 'order_a_accepted':
@@ -440,6 +603,16 @@ class Translations_he extends Translations {
         return order_cancel_message;
       case 'order_delivered':
         return order_delivered;
+      case 'report_package_delivery':
+        return report_package_delivery;
+      case 'take_photo_of_delivery':
+        return take_photo_of_delivery;
+      case 'image_not_selected':
+        return image_not_selected;
+      case 'please_take_photo_delivery':
+        return please_take_photo_delivery;
+      case 'submit_delivery_photo':
+        return submit_delivery_photo;
       case 'register_join':
         return register_join;
       case 'register_form':
@@ -464,12 +637,20 @@ class Translations_he extends Translations {
         return register_err;
       case 'register_alert_fields':
         return register_alert_fields;
+      case 'please_enter_the_five_email_code':
+        return please_enter_the_five_email_code;
+      case 'please_enter_valid_email_code':
+        return please_enter_valid_email_code;
       case 'your_level':
         return your_level;
       case 'level_tooltip':
         return level_tooltip;
       case 'daily_earnings':
         return daily_earnings;
+      case 'sender':
+        return sender;
+      case 'courier':
+        return courier;
       case 'daily_cost':
         return daily_cost;
       case 'new_order':
@@ -488,6 +669,46 @@ class Translations_he extends Translations {
         return package_type;
       case 'urgency':
         return urgency;
+      case 'payments':
+        return payments;
+      case 'balance':
+        return balance;
+      case 'current_payment_method':
+        return current_payment_method;
+      case 'change_payment_method':
+        return change_payment_method;
+      case 'none':
+        return none;
+      case 'bank':
+        return bank;
+      case 'paypal':
+        return paypal;
+      case 'paypal_account_here':
+        return paypal_account_here;
+      case 'bank_account':
+        return bank_account;
+      case 'update_bank_details':
+        return update_bank_details;
+      case 'please_select_payment_method':
+        return please_select_payment_method;
+      case 'please_enter_valid_paypal':
+        return please_enter_valid_paypal;
+      case 'payment_method_updated':
+        return payment_method_updated;
+      case 'please_submit_bank_details':
+        return please_submit_bank_details;
+      case 'bank_details':
+        return bank_details;
+      case 'bank_details_info':
+        return bank_details_info;
+      case 'bank_account_name':
+        return bank_account_name;
+      case 'please_enter_valid_iban':
+        return please_enter_valid_iban;
+      case 'please_enter_valid_swift':
+        return please_enter_valid_swift;
+      case 'please_enter_account_name':
+        return please_enter_account_name;
       default:
         return super[key];
     }

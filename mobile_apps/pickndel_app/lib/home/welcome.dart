@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:pickndell/common/global.dart';
-import 'package:pickndell/login/login_page.dart';
+import 'package:pickndell/localizations.dart';
+import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/registration.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatefulWidget {
   final UserRepository userRepository;
+  final String country;
 
-  WelcomePage({this.userRepository});
+  WelcomePage({this.userRepository, this.country});
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  @override
+  void initState() {
+    print('${widget.country}');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return getWelcomePage(widget.userRepository);
@@ -30,12 +38,15 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   Widget getWelcomePage(UserRepository userRepository) {
+    final trans = ExampleLocalizations.of(context);
     return SafeArea(
       child: Stack(children: <Widget>[
         Positioned.fill(
           //
           child: Image(
-            image: AssetImage('assets/images/mobile-background.jpg'),
+            image: widget.country == 'IL' || widget.country == 'ישראל'
+                ? AssetImage('assets/images/mobile-background-rtl.jpg')
+                : AssetImage('assets/images/mobile-background.jpg'),
             fit: BoxFit.fill,
           ),
         ),
@@ -47,12 +58,20 @@ class _WelcomePageState extends State<WelcomePage> {
                 Spacer(flex: 3),
                 RaisedButton(
                   padding: EdgeInsets.all(30),
-                  child: Text(
-                    'Send',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.black,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        trans.welcome_send,
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        "(${trans.sender})",
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
                   ),
                   onPressed: () {
                     print('Send');
@@ -85,11 +104,16 @@ class _WelcomePageState extends State<WelcomePage> {
                 Spacer(flex: 1),
                 RaisedButton(
                   padding: EdgeInsets.all(30),
-                  child: Text(
-                    'Deliver',
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        trans.welcome_deliver,
+                        style: TextStyle(
+                          fontSize: 24,
+                        ),
+                      ),
+                      Text("(${trans.courier})")
+                    ],
                   ),
                   color: ordersBackground,
                   onPressed: () {

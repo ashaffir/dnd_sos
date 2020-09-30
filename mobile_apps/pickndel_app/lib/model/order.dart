@@ -12,7 +12,7 @@ class Order {
   String order_country;
   double distance_to_business;
   double price;
-  String fare;
+  double fare;
   String status;
   String business_phone;
   String business_name;

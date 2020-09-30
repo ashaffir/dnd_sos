@@ -11,6 +11,7 @@ import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/message_page.dart';
+import 'package:pickndell/login/profile_updated_page.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
 import 'package:pickndell/repository/user_repository.dart';
@@ -93,167 +94,191 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                           left: LEFT_MARGINE,
                           right: RIGHT_MARGINE,
                           top: TOP_MARGINE),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          MessagingWidget(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: LEFT_MARGINE, right: RIGHT_MARGINE),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            MessagingWidget(),
 
-                          // Image.asset(
-                          //   'assets/images/pickndell-logo-white.png',
-                          //   width: MediaQuery.of(context).size.width * 0.70,
-                          //   // height: MediaQuery.of(context).size.height * 0.50,
-                          //   // width: 300,
-                          // ),
-                          // Padding(
-                          //   padding: EdgeInsets.all(10.0),
-                          // ),
-                          Text(
-                            "Bank Details",
-                            style: whiteTitle,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10.0),
-                          ),
-                          // DropdownButtonFormField(
-                          //   decoration: InputDecoration(
-                          //       labelText: "Bank Name" + ":",
-                          //       prefixIcon: Icon(Icons.business)),
-                          //   value: _userType,
-                          //   items: _registrationTypes,
-                          //   validator: (value) {
-                          //     if (dropdownMenue(value) == null) {
-                          //       return null;
-                          //     } else {
-                          //       return trans.register_alert_as;
-                          //     }
-                          //   },
-                          //   onChanged: (value) {
-                          //     setState(() {
-                          //       print('dropdown: $value');
-                          //       _userType = value;
-                          //     });
-                          //   },
-                          //   // hint: Text("Registration as:"),
-                          // ),
-                          // Padding(
-                          //   padding: EdgeInsets.all(10.0),
-                          // ),
-
-                          /////////////// Bank Name ////////////
-                          ///
-
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: "IBAN", icon: Icon(Icons.language)),
-                            controller: _iban,
-                            validator: (iban) {
-                              if (isValid(iban)) {
-                                return null;
-                              } else {
-                                return "Please enter a valid IBAN";
-                              }
-                            },
-                            // validator: (String value) {
-                            //   if (value.isEmpty) {
-                            //     return "Valid email required.";
-                            //   }
-                          ),
-
-                          /////////////// Name of the account ////////////
-                          ///
-
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: "Account name",
-                                icon: Icon(Icons.person_pin)),
-                            controller: _nameAccount,
-                            // obscureText: true,
-                            validator: validateName,
-                          ),
-
-                          /////////////// SWIFT code  ////////////
-
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: "SWIFT",
-                                icon: Icon(Icons.confirmation_number)),
-                            controller: _swiftCode,
-                            // obscureText: true,
-                            validator: (value) {
-                              if (value != null) {
-                                return null;
-                              } else {
-                                return "Please Enter a valid Swift Code";
-                              }
-                            },
-                            // validator: (val) => validateConfirmPassword(
-                            //     _password1Controller.text, val),
-                            // onSaved: (String val) {
-                            //   confirmPassword = val;
-                            // },
-                          ),
-
-                          /////////////// Name on the bank account  ////////////
-
-                          /////////////// Registration Button ////////////
-
-                          Padding(
-                            padding: const EdgeInsets.only(top: 30.0),
-                            child: FlatButton(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 8, bottom: 8, left: 10, right: 10),
-                                  child: Text(
-                                    _isLoading
-                                        ? "Updating bank details" + '...'
-                                        : "Update",
-                                    textDirection: TextDirection.ltr,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                      decoration: TextDecoration.none,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ),
-                                color: pickndellGreen,
-                                disabledColor: Colors.grey,
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(20.0)),
-                                onPressed: _isLoading
-                                    ? null
-                                    : () {
-                                        if (!_formKey.currentState.validate()) {
-                                          return;
-                                        } else {
-                                          if (_isLoading) {
-                                            return null;
-                                          } else {
-                                            return _sendBankDetails(
-                                                widget.user);
-                                          }
-                                        }
-                                      }),
-                          ),
-                          Padding(padding: EdgeInsets.only(top: 30.0)),
-                          Divider(color: Colors.white),
-                          Padding(padding: EdgeInsets.only(top: 30.0)),
-                          InkWell(
-                            child: Row(
+                            // Image.asset(
+                            //   'assets/images/pickndell-logo-white.png',
+                            //   width: MediaQuery.of(context).size.width * 0.70,
+                            //   // height: MediaQuery.of(context).size.height * 0.50,
+                            //   // width: 300,
+                            // ),
+                            // Padding(
+                            //   padding: EdgeInsets.all(10.0),
+                            // ),
+                            Text(
+                              trans.bank_details,
+                              style: whiteTitle,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 50.0),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
-                                Icon(Icons.arrow_back),
-                                Padding(padding: EdgeInsets.only(right: 10.0)),
-                                Text('Back'),
+                                Icon(Icons.info),
+                                Padding(padding: EdgeInsets.only(right: 10)),
+                                Flexible(child: Text(trans.bank_details_info)),
                               ],
                             ),
-                            onTap: () {
-                              print('BACK');
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
+                            Divider(
+                              color: Colors.white,
+                            ),
+                            // DropdownButtonFormField(
+                            //   decoration: InputDecoration(
+                            //       labelText: "Bank Name" + ":",
+                            //       prefixIcon: Icon(Icons.business)),
+                            //   value: _userType,
+                            //   items: _registrationTypes,
+                            //   validator: (value) {
+                            //     if (dropdownMenue(value) == null) {
+                            //       return null;
+                            //     } else {
+                            //       return trans.register_alert_as;
+                            //     }
+                            //   },
+                            //   onChanged: (value) {
+                            //     setState(() {
+                            //       print('dropdown: $value');
+                            //       _userType = value;
+                            //     });
+                            //   },
+                            //   // hint: Text("Registration as:"),
+                            // ),
+                            // Padding(
+                            //   padding: EdgeInsets.all(10.0),
+                            // ),
+
+                            /////////////// Bank Name ////////////
+                            ///
+
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  labelText: "IBAN",
+                                  icon: Icon(Icons.language)),
+                              controller: _iban,
+                              validator: (iban) {
+                                if (isValid(iban)) {
+                                  return null;
+                                } else {
+                                  return trans.please_enter_valid_iban;
+                                }
+                              },
+                              // validator: (String value) {
+                              //   if (value.isEmpty) {
+                              //     return "Valid email required.";
+                              //   }
+                            ),
+
+                            /////////////// Name of the account ////////////
+                            ///
+
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  labelText: trans.bank_account_name,
+                                  icon: Icon(Icons.person_pin)),
+                              controller: _nameAccount,
+                              // obscureText: true,
+                              validator: (value) {
+                                if (validateName(value) == null) {
+                                  return null;
+                                } else {
+                                  return trans.please_enter_account_name;
+                                }
+                              },
+                            ),
+
+                            /////////////// SWIFT code  ////////////
+
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  labelText: "SWIFT",
+                                  icon: Icon(Icons.confirmation_number)),
+                              controller: _swiftCode,
+                              // obscureText: true,
+                              validator: (value) {
+                                if (value.isNotEmpty) {
+                                  return null;
+                                } else {
+                                  return trans.please_enter_valid_swift;
+                                }
+                              },
+                              // validator: (val) => validateConfirmPassword(
+                              //     _password1Controller.text, val),
+                              // onSaved: (String val) {
+                              //   confirmPassword = val;
+                              // },
+                            ),
+
+                            /////////////// Name on the bank account  ////////////
+
+                            /////////////// Registration Button ////////////
+
+                            Padding(
+                              padding: const EdgeInsets.only(top: 30.0),
+                              child: FlatButton(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 8, bottom: 8, left: 10, right: 10),
+                                    child: Text(
+                                      _isLoading
+                                          ? trans.updating + '...'
+                                          : trans.update,
+                                      textDirection: TextDirection.ltr,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                        decoration: TextDecoration.none,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                  color: pickndellGreen,
+                                  disabledColor: Colors.grey,
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(20.0)),
+                                  onPressed: _isLoading
+                                      ? null
+                                      : () {
+                                          if (!_formKey.currentState
+                                              .validate()) {
+                                            return;
+                                          } else {
+                                            if (_isLoading) {
+                                              return null;
+                                            } else {
+                                              return _sendBankDetails(
+                                                  widget.user);
+                                            }
+                                          }
+                                        }),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 30.0)),
+                            Divider(color: Colors.white),
+                            Padding(padding: EdgeInsets.only(top: 30.0)),
+                            InkWell(
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(Icons.arrow_back),
+                                  Padding(
+                                      padding: EdgeInsets.only(right: 10.0)),
+                                  Text(trans.back),
+                                ],
+                              ),
+                              onTap: () {
+                                print('BACK');
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ))),
           ),
@@ -312,10 +337,10 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
         Navigator.push(
             context,
             new MaterialPageRoute(
-                builder: (context) => MessagePage(
+                builder: (context) => ProfileUpdatedPage(
                       user: widget.user,
-                      messageType: "statusOK",
-                      content: "Bank details updated",
+                      status: "statusOK",
+                      message: "Bank details updated",
                     )));
       } else {
         print("Failed registration process. Error: $res");

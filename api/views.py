@@ -135,7 +135,7 @@ class NewLoginViewSet(ObtainAuthToken):
              # Daily profit
             daily_profit = 0.0
             for order in daily_orders:
-                daily_profit += order.price
+                daily_profit += order.fare
 
             daily_profit = round(daily_profit,2)
 
@@ -477,7 +477,7 @@ def user_profile(request):
             # Daily profit
         daily_profit = 0.0
         for order in daily_orders:
-            daily_profit += order.price
+            daily_profit += order.fare
 
         daily_profit = round(daily_profit,2)
     else:
@@ -490,16 +490,17 @@ def user_profile(request):
         orders_in_progress = Order.objects.filter(Q(business=user.pk) & 
                 (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
 
+        orders_delivered_today = Order.objects.filter(Q(business=user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
 
         print(f'USER PROF: {user_profile.business_name}')
         num_orders_in_progress = len(orders_in_progress)
 
-        daily_orders = Order.objects.filter(business=user.pk, created__contains=today)
+        daily_orders = Order.objects.filter(business=user.pk, created__contains=today, status='COMPLETED')
         num_daily_orders = len(daily_orders)
 
         # Daily cost
         daily_cost = 0.0
-        for order in daily_orders:
+        for order in orders_delivered_today:
             daily_cost += order.price
 
             daily_cost = round(daily_cost,2)

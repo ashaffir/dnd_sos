@@ -150,7 +150,9 @@ class _OrderArchivedState extends State<OrderArchived> {
               Spacer(
                 flex: 2,
               ),
-              DashboardButton(),
+              DashboardButton(
+                buttonText: translations.back_to_dashboard,
+              ),
               Spacer(
                 flex: 2,
               ),

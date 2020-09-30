@@ -72,7 +72,7 @@ class FreelancerUpdateForm(forms.ModelForm):
             ('Scooter', _("Scooter")),
             ('Bicycle', _("Bicycle")),
             ('Motorcycle', _("Motorcycle")),
-            ('Other', _("Other")),
+            ('Truck', _("Truck")),
         ))
     
     active_hours = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=Employee.ACTIVE_HOURS)

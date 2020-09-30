@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pickndell/common/global.dart';
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/buttons.dart';
@@ -15,6 +16,8 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final trans = ExampleLocalizations.of(context);
+
     return Scaffold(
       // appBar: AppBar(
       //   title: Text('Error'),
@@ -49,7 +52,11 @@ class ErrorPage extends StatelessWidget {
               Spacer(
                 flex: 2,
               ),
-              user != null ? DashboardButton() : LoginButton(),
+              user != null
+                  ? DashboardButton()
+                  : LoginButton(
+                      buttonText: trans.back_to_login,
+                    ),
               Spacer(
                 flex: 3,
               )

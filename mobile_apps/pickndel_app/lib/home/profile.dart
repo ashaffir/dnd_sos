@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:async/async.dart';
 import 'dart:async';
 import 'dart:io';
@@ -5,6 +7,7 @@ import 'dart:ui';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
@@ -16,8 +19,9 @@ import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/id_upload.dart';
 import 'package:pickndell/login/image_uploaded_message.dart';
 import 'package:pickndell/login/phone_update.dart';
-import 'package:pickndell/login/profile_updated.dart';
+import 'package:pickndell/login/profile_update.dart';
 import 'package:pickndell/model/credit_card_update.dart';
+import 'package:pickndell/networking/CustomException.dart';
 import 'package:pickndell/networking/messaging_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
@@ -75,8 +79,13 @@ class _ProfilePageState extends State<ProfilePage> {
   String _vehicleType;
   List<String> _vehicleTypeList;
 
-  _loadVehicleTypes() {
-    _vehicleTypeList = ['Car', 'Scooter', 'Bicycle', 'Motorcycle', 'Other'];
+  _loadVehicleTypes() async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String country = await getCountryName();
+
+    _vehicleTypeList = country == 'Israel' || country == 'ישראל'
+        ? ['רכב', 'קטנוע', 'אופניים', 'אופנוע', 'משאית']
+        : ['Car', 'Scooter', 'Bicycle', 'Motorcycle', 'Truck'];
 
     _vehicleTypeList.forEach((element) {
       setState(() {
@@ -92,15 +101,19 @@ class _ProfilePageState extends State<ProfilePage> {
   String _businessCategory;
   List<String> _businessCategoryList;
 
-  _loadCategoriesTypes() {
-    _businessCategoryList = [
-      'Restaurant',
-      'Clothes',
-      'Convenience',
-      'Grocery',
-      'Office',
-      'Other'
-    ];
+  _loadCategoriesTypes() async {
+    String country = await getCountryName();
+
+    _businessCategoryList = country == 'Israel' || country == 'ישראל'
+        ? ['מסעדה', 'בגדים', 'נוחות', 'מכולת', 'משרד', 'אחר']
+        : [
+            'Restaurant',
+            'Clothes',
+            'Convenience',
+            'Grocery',
+            'Office',
+            'Other'
+          ];
 
     _businessCategoryList.forEach((element) {
       setState(() {
@@ -138,6 +151,14 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  String _country;
+
+  Future checkCountry() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    _country = localStorage.getString('userCountry');
+  }
+
+  // The routine was not accessed to save performance...
   Future _checkProfile() async {
     setState(() {
       _updatingProfile = true;
@@ -171,7 +192,8 @@ class _ProfilePageState extends State<ProfilePage> {
     _getProfilePic();
     _getCurrentUser();
     // _getUserInfo(); // Not used because the prefs "user" is not set (at dashboard).
-    getCountryName();
+    checkCountry();
+    // getCountryName();
     // if (_emailCodeVerification) {}
 
     // _checkProfile();
@@ -466,16 +488,21 @@ class _ProfilePageState extends State<ProfilePage> {
                         Padding(
                           padding: EdgeInsets.only(right: 10.0),
                         ),
-                        InkWell(
-                          onTap: () {
-                            updateProfile(
-                                context: context, updateField: 'email');
-                          },
-                          child: Text(
-                            currentUser.username != null
-                                ? '${currentUser.username}'
-                                : " ",
-                            style: userContentStyle,
+                        Flexible(
+                          child: InkWell(
+                            onTap: () {
+                              updateProfile(
+                                  context: context, updateField: 'email');
+                            },
+                            child: Text(
+                              currentUser.username != null
+                                  ? '${currentUser.username}'
+                                  : " ",
+                              style: userContentStyle,
+                              overflow: TextOverflow.fade,
+                              maxLines: 1,
+                              softWrap: false,
+                            ),
                           ),
                         ),
                       ],
@@ -510,6 +537,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     builder: (context) =>
                                                         IdUpload(
                                                           user: currentUser,
+                                                          country: _country,
                                                           updateField:
                                                               'photo_id',
                                                         )),
@@ -528,6 +556,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   MaterialPageRoute(
                                       builder: (context) => IdUpload(
                                             user: currentUser,
+                                            country: _country,
                                             updateField: 'photo_id',
                                           )),
                                 );
@@ -540,6 +569,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 MaterialPageRoute(
                                     builder: (context) => IdUpload(
                                           user: currentUser,
+                                          country: _country,
                                           updateField: 'photo_id',
                                         )),
                               );
@@ -718,7 +748,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         if (currentUser.isEmployee == 1)
                           FlatButton.icon(
                             icon: Icon(Icons.monetization_on),
-                            label: Text('Payments'),
+                            label: Text(translations.payments),
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(BUTTON_BORDER_RADIUS),
@@ -729,6 +759,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 MaterialPageRoute(
                                     builder: (context) => PaymentsPage(
                                           user: currentUser,
+                                          userCountry: _country,
                                         )),
                               );
                             },
@@ -796,7 +827,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   updateField == 'business category'
                       ? DropdownButtonFormField(
                           decoration: InputDecoration(
-                              labelText: 'Category' + ":",
+                              labelText: trans.category + ":",
                               prefixIcon: Icon(Icons.business)),
                           value: _businessCategory,
                           items: _businessCategories,
@@ -817,21 +848,40 @@ class _ProfilePageState extends State<ProfilePage> {
                       : updateField == 'vehicle'
                           ? DropdownButtonFormField(
                               decoration: InputDecoration(
-                                  labelText: 'Vehicle' + ":",
+                                  labelText: trans.home_vehicle + ":",
                                   prefixIcon: Icon(Icons.drive_eta)),
                               value: _vehicleType,
                               items: _vehicleTypes,
                               validator: (value) {
-                                if (dropdownMenue(value) == null) {
+                                if (value != null) {
                                   return null;
                                 } else {
-                                  return 'Please select the type of vehicle you user';
+                                  return trans.please_select_vehicle;
                                 }
                               },
                               onChanged: (value) {
                                 setState(() {
                                   print('dropdown: $value');
-                                  _vehicleType = value;
+                                  // ['רכב', 'קטנוע', 'אופניים', 'אופנוע', 'משאית']
+                                  switch (value) {
+                                    case 'רכב':
+                                      _vehicleType = 'Car';
+                                      break;
+                                    case 'קטנוע':
+                                      _vehicleType = 'Scooter';
+                                      break;
+                                    case 'אופניים':
+                                      _vehicleType = 'Bicycle';
+                                      break;
+                                    case 'אופנוע':
+                                      _vehicleType = 'Motorcycle';
+                                      break;
+                                    case 'משאית':
+                                      _vehicleType = 'Truck';
+                                      break;
+                                    default:
+                                      _vehicleType = value;
+                                  }
                                 });
                               },
                             )
@@ -880,6 +930,9 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           actions: <Widget>[
             okButton,
+
+            /////////////////// Profile update email button ///////////
+            ///
             FlatButton(
                 child: Text(trans.update),
                 shape: StadiumBorder(
@@ -894,7 +947,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   if (!_formKey.currentState.validate()) {
                     return;
                   } else {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
                     if (updateField == 'email') {
                       print(
                           '> STAGE 1) Email update requested. Sending email-verification code');
@@ -905,12 +958,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.pop(context);
                       //2) Open a popup with a text field for the code
                       print('> STAGE 4) Showing verification code entry form.');
-                      String _sentEmailCode = showVerificationAlert(
+                      showVerificationAlert(
                         context: context,
                         user: currentUser,
                         updateField: 'email',
-                        title:
-                            'Please enter the five digits you have received in your new email',
+                        title: trans.please_enter_the_five_email_code,
                       );
                       //3) on submission, call ProfileUpdated with the email update field
                     } else if (updateField == 'phone') {
@@ -959,11 +1011,28 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<bool> sendEmailVerificationCode(
       {String email, User user, String direction}) async {
+    final trans = ExampleLocalizations.of(context);
     bool _codeRequestSent = false;
     var _emailVerificationApi;
     if (direction == 'request') {
-      _emailVerificationApi = await emailVerificationAPI(
-          email: email, code: "", user: user, codeDirection: 'send_code');
+      try {
+        _emailVerificationApi = await emailVerificationAPI(
+            email: email, code: "", user: user, codeDirection: 'send_code');
+      } on FetchDataException catch (e) {
+        print('Failed to send request for an email code. ERROR: $e');
+        return Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ErrorPage(
+                user: widget.user,
+                errorMessage: trans.messages_communication_error,
+              );
+            },
+          ),
+          (Route<dynamic> route) => false, // No Back option for this page
+        );
+      }
     } else {
       _emailVerificationApi = await emailVerificationAPI(
           email: email, code: "", user: user, codeDirection: 'test_result');
@@ -988,6 +1057,7 @@ class _ProfilePageState extends State<ProfilePage> {
   // Email/Phone change - Code verification
   showVerificationAlert(
       {BuildContext context, String title, User user, String updateField}) {
+    final trans = ExampleLocalizations.of(context);
     final TextEditingController _verificationCodeController =
         new TextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -1011,7 +1081,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       validator: (value) {
                         if (value != null) {
                           if (validateVerificationCode(value) != null) {
-                            return 'Please enter a valid code';
+                            return trans.please_enter_valid_email_code;
                           } else {
                             return null;
                           }
@@ -1022,14 +1092,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               )),
           actions: [
-            IconButton(
-              icon: Icon(Icons.cancel),
+            FlatButton(
+              child: Text(trans.close),
               onPressed: () {
                 Navigator.pop(verifContext);
               },
             ),
             FlatButton(
-              child: Text('Submit'),
+              child: Text(trans.submit),
               textColor: DEFAUT_TEXT_COLOR,
               onPressed: () {
                 print('Sending verification code...');
@@ -1063,14 +1133,15 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _onCameraClick() {
+    final trans = ExampleLocalizations.of(context);
     final action = CupertinoActionSheet(
       message: Text(
-        "Submit Photo ID",
+        trans.submit_photo_id,
         style: TextStyle(fontSize: 15.0),
       ),
       actions: <Widget>[
         CupertinoActionSheetAction(
-          child: Text("Choose from gallery",
+          child: Text(trans.choose_gallery,
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           isDefaultAction: false,
@@ -1087,7 +1158,7 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text("Take a picture",
+          child: Text(trans.take_a_picture,
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           isDestructiveAction: false,
@@ -1105,7 +1176,7 @@ class _ProfilePageState extends State<ProfilePage> {
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text("Cancel",
+        child: Text(trans.orders_cancel,
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         onPressed: () {
           Navigator.pop(context);
@@ -1135,9 +1206,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _sendToServer() async {
-    showProgress(context, 'Uploading to PickNdell, Please wait...', false);
+    final trans = ExampleLocalizations.of(context);
+    showProgress(context, trans.uploading_to_pickndell + '...', false);
     if (_image != null) {
-      updateProgress('Uploading image, Please wait...');
+      updateProgress(trans.uploading_image + '...');
       try {
         _uploadImage(imageFile: _image, user: widget.user);
       } catch (e) {
@@ -1154,6 +1226,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _uploadImage({File imageFile, User user}) async {
+    final trans = ExampleLocalizations.of(context);
+
     // open a bytestream
     var stream = new http.ByteStream(DelegatingStream(imageFile.openRead()));
     // get file length
@@ -1233,8 +1307,7 @@ class _ProfilePageState extends State<ProfilePage> {
           builder: (context) {
             return ErrorPage(
               user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),

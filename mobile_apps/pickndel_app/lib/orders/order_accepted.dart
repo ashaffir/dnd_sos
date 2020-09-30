@@ -98,7 +98,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               flex: 2,
             ),
             Text(
-              "Location:" + ' ${order["pick_up_address"]}',
+              '${translations.order_location}:  ${order["pick_up_address"]}',
               style: whiteTitle,
             ),
             Spacer(
@@ -111,7 +111,7 @@ class _OrderAcceptedState extends State<OrderAccepted> {
                   flex: 1,
                 ),
                 RaisedButton.icon(
-                  label: Text('Navigate'),
+                  label: Text(translations.navigate),
                   icon: Icon(
                     Icons.navigation,
                     color: pickndellGreen,
@@ -141,7 +141,9 @@ class _OrderAcceptedState extends State<OrderAccepted> {
               ],
             ),
             Padding(padding: EdgeInsets.only(top: 30)),
-            DashboardButton(),
+            DashboardButton(
+              buttonText: translations.back_to_dashboard,
+            ),
             Spacer(
               flex: 3,
             ),
@@ -165,27 +167,31 @@ class _OrderAcceptedState extends State<OrderAccepted> {
     return Scaffold(
       // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text(translations.order_a_accepted),
+        title: Text(translations.orders_error),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 20),
-        height: 260,
+        padding: EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Spacer(
-                flex: 4,
+                flex: 2,
               ),
               Text(
                 translations.order_a_not_available + "!",
                 style: bigLightBlueTitle,
               ),
               Spacer(
+                flex: 2,
+              ),
+              DashboardButton(
+                buttonText: translations.back_to_dashboard,
+              ),
+              Spacer(
                 flex: 4,
               ),
-              DashboardButton(),
             ],
           ),
         ),

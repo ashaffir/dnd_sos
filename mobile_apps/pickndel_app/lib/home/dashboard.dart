@@ -299,10 +299,47 @@ class _DashboardState extends State<Dashboard> {
                 /////////////// Push notification widget //////////
                 ///
                 MessagingWidget(),
+
+                /////////////// Header //////////
+                ///
                 Padding(padding: EdgeInsets.only(top: 20)),
-                Image.asset(
-                  'assets/images/pickndell-logo-white.png',
-                  width: MediaQuery.of(context).size.width * 0.40,
+                Row(
+                  children: <Widget>[
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Image.asset(
+                      'assets/images/pickndell-logo-white.png',
+                      width: MediaQuery.of(context).size.width * 0.40,
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilePage(
+                                        user: currentUser,
+                                      )),
+                            );
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.person),
+                              Text(translations.profile),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 30.0),
@@ -394,7 +431,11 @@ class _DashboardState extends State<Dashboard> {
                           Padding(
                             padding: EdgeInsets.only(right: 10.0),
                           ),
-                          Text("${currentUser.accountLevel}"),
+                          currentUser.accountLevel == 'Rookie'
+                              ? Text(translations.rookie)
+                              : currentUser.accountLevel == 'Advanced'
+                                  ? Text(translations.advanced)
+                                  : Text(translations.expert),
                           Padding(padding: EdgeInsets.only(right: 5.0)),
                           QuestionTooltip(
                             tooltipMessage: translations.level_tooltip,
@@ -559,9 +600,13 @@ class _DashboardState extends State<Dashboard> {
                                                 ? translations
                                                     .your_account_reviewed
                                                 : translations.complete_profile,
-                                            nameRoute: '/profile',
+                                            nameRoute:
+                                                currentUser.profilePending == 1
+                                                    ? null
+                                                    : '/profile',
                                             buttonText:
                                                 translations.got_to_profile,
+                                            okButtontext: translations.close,
                                             buttonColor: pickndellGreen,
                                             //     'https://pickndell.com/core/login'
                                           );
@@ -628,8 +673,8 @@ class _DashboardState extends State<Dashboard> {
                                             .your_account_not_approved_yet,
                                         content: translations.complete_profile,
                                         nameRoute: '/profile',
-                                        buttonText:
-                                            translations.got_to_profile);
+                                        buttonText: translations.got_to_profile,
+                                        okButtontext: translations.close);
                                   }
                                 },
                               ),
@@ -640,34 +685,34 @@ class _DashboardState extends State<Dashboard> {
                           )
                         : Row(),
 
+                    Padding(padding: EdgeInsets.only(top: 20)),
                     /////////////////// Profile Edit Button //////////
                     ///
-                    Padding(padding: EdgeInsets.only(top: 20)),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 30),
-                        ),
-                        FlatButton(
-                          child: Text(translations.edit_profile),
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: pickndellGreen,
-                                  width: 2,
-                                  style: BorderStyle.solid),
-                              borderRadius: BorderRadius.circular(50)),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilePage(
-                                        user: currentUser,
-                                      )),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Padding(
+                    //       padding: EdgeInsets.only(left: 30),
+                    //     ),
+                    //     FlatButton(
+                    //       child: Text(translations.edit_profile),
+                    //       shape: RoundedRectangleBorder(
+                    //           side: BorderSide(
+                    //               color: pickndellGreen,
+                    //               width: 2,
+                    //               style: BorderStyle.solid),
+                    //           borderRadius: BorderRadius.circular(50)),
+                    //       onPressed: () {
+                    //         Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => ProfilePage(
+                    //                     user: currentUser,
+                    //                   )),
+                    //         );
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
                     Divider(
                       thickness: 2,
                     ),

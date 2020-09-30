@@ -5,7 +5,7 @@ import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
-import 'package:pickndell/login/profile_updated.dart';
+import 'package:pickndell/login/profile_update.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/buttons.dart';
@@ -27,6 +27,7 @@ class PhoneUpdate extends StatefulWidget {
 class _PhoneUpdateState extends State<PhoneUpdate> {
   @override
   Widget build(BuildContext context) {
+    final trans = ExampleLocalizations.of(context);
     return FutureBuilder(
       future: sendPhoneVerificationRequest(
           user: widget.user, phone: widget.newPhone, action: 'new_phone'),
@@ -56,7 +57,7 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
           print("No data around here:");
         }
         print('Waiting for code verification...');
-        String loaderText = "Sending code...";
+        String loaderText = trans.sending_code + "...";
         return ColoredProgressDemo(loaderText);
       },
     );
@@ -64,6 +65,8 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
 
   Future<bool> sendPhoneVerificationRequest(
       {User user, String phone, String action}) async {
+    final trans = ExampleLocalizations.of(context);
+
     bool _codeRequestSent;
     var _phoneVerificationApi;
 
@@ -71,15 +74,33 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String userCountryCode = localStorage.getString('userCountry');
 
-    _phoneVerificationApi = await phoneVerificationAPI(
-        phone: phone,
-        countryCode: userCountryCode,
-        verificationCode: "",
-        user: user,
-        action: 'new_phone');
-    _codeRequestSent =
-        _phoneVerificationApi['response'] == "Update successful" ? true : false;
-    print('> STAGE 2) Reponse from TW/PND: $_codeRequestSent');
+    try {
+      _phoneVerificationApi = await phoneVerificationAPI(
+          phone: phone,
+          countryCode: userCountryCode,
+          verificationCode: "",
+          user: user,
+          action: 'new_phone');
+      _codeRequestSent =
+          _phoneVerificationApi['response'] == "Update successful"
+              ? true
+              : false;
+      print('> STAGE 2) Reponse from TW/PND: $_codeRequestSent');
+    } catch (e) {
+      print('Failed phone verification. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: widget.user,
+              errorMessage: trans.messages_communication_error,
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
 
     if (_codeRequestSent) {
       print('> STAGE 3) Save the phone in local memeory.');
@@ -209,7 +230,7 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(top: 40)),
                   Text(
-                    'Please Enter the code you received through SMS',
+                    trans.please_enter_sms_code,
                     style: whiteTitle,
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 30)),
@@ -230,7 +251,7 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 30)),
                   FlatButton(
-                    child: Text('Submit'),
+                    child: Text(trans.update),
                     shape: StadiumBorder(
                       side: BorderSide(
                         color: pickndellGreen,

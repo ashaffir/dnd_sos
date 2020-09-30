@@ -121,9 +121,9 @@ class _RegistrationState extends State<Registration> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            widget.userSelection != null
-                                ? '${widget.userSelection}'
-                                : "",
+                            widget.userSelection == 'Sender'
+                                ? trans.sender
+                                : trans.courier,
                             style: whiteTitle,
                           ),
                         ],
@@ -361,6 +361,8 @@ class _RegistrationState extends State<Registration> {
       _isLoading = true;
     });
 
+    final trans = ExampleLocalizations.of(context);
+
     try {
       var res = await createUser(
           email: _mailController.text,
@@ -395,8 +397,7 @@ class _RegistrationState extends State<Registration> {
           builder: (context) {
             return ErrorPage(
               // user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),

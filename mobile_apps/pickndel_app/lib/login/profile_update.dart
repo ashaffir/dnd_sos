@@ -96,7 +96,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
             print("No data:");
           }
           print('Waiting for code verification...');
-          String loaderText = "Verifying code...";
+          String loaderText = trans.verifying_code + "...";
           return ColoredProgressDemo(loaderText);
         },
       );
@@ -144,7 +144,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
             print("No data:");
           }
           print('WAITING FOR PROFILE UPDATE');
-          String loaderText = "Updating Profile...";
+          String loaderText = trans.updating_profile + "...";
           return ColoredProgressDemo(loaderText);
         },
       );
@@ -185,21 +185,58 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
 
   Future _updateCreditCard({User user, CreditCard creditCard}) async {
     var _cardUpdate;
-    _cardUpdate = await updateCreditCard(user: user, creditCard: creditCard);
-    return _cardUpdate;
+    final trans = ExampleLocalizations.of(context);
+
+    try {
+      _cardUpdate = await updateCreditCard(user: user, creditCard: creditCard);
+      return _cardUpdate;
+    } catch (e) {
+      print('Failed to update credit card. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage: trans.messages_communication_error,
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Future _updatePhotoId({User user, File image}) async {
+    final trans = ExampleLocalizations.of(context);
     var _photoIdUpdate;
     // _photoIdUpdate = await updatePhotoId(user: user, image: image);
-    _photoIdUpdate = await _uploadImage(image);
-    print('6: UPDATE: $_photoIdUpdate');
-    return _photoIdUpdate;
+    try {
+      _photoIdUpdate = await _uploadImage(image);
+      print('6: UPDATE: $_photoIdUpdate');
+      return _photoIdUpdate;
+    } catch (e) {
+      print('Fail uploading image. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: user,
+              errorMessage: trans.messages_communication_error,
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   String tphone;
   Future _checkPhoneVerificationCode(
       {String code, User user, String operation}) async {
+    final trans = ExampleLocalizations.of(context);
+
     tphone = await _getTempPhone();
     print('In function PHONE: $tphone, CODE: $code');
     var _codeVerified;
@@ -218,8 +255,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
           builder: (context) {
             return ErrorPage(
               user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),
@@ -241,12 +277,29 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
   String tmail;
   Future _checkEmailVerificationCode(
       {String code, User user, String operation}) async {
+    final trans = ExampleLocalizations.of(context);
     tmail = await _getTempEmail();
     print('In function EMAIL: $tmail, CODE: $code');
     var _codeVerified;
-    _codeVerified = await emailVerificationAPI(
-        email: tmail, code: code, user: user, codeDirection: 'test_result');
-    return _codeVerified;
+    try {
+      _codeVerified = await emailVerificationAPI(
+          email: tmail, code: code, user: user, codeDirection: 'test_result');
+      return _codeVerified;
+    } catch (e) {
+      print('Faled to verify email code. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: widget.user,
+              errorMessage: trans.messages_communication_error,
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Future<String> _getTempEmail() async {
@@ -293,6 +346,8 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
   }
 
   Future updateRemoteProfile(String updateField, String value) async {
+    final trans = ExampleLocalizations.of(context);
+
     print('UPDATINNG REMOTE PROFILE. CHANGING $updateField');
     var updateResponse;
     try {
@@ -308,8 +363,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
           builder: (context) {
             return ErrorPage(
               user: widget.user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),
@@ -324,7 +378,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
     return Scaffold(
       // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Profile Update'),
+        title: Text(trans.profile_update_title),
       ),
       body: Container(
         height: 600,
@@ -337,7 +391,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
                 padding: EdgeInsets.only(top: 30),
               ),
               Text(
-                'Your profile was successfully updated',
+                trans.profile_updated,
                 style: bigLightBlueTitle,
               ),
               Padding(padding: EdgeInsets.only(top: 40)),
@@ -351,7 +405,9 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
               Padding(
                 padding: EdgeInsets.only(top: 100),
               ),
-              DashboardButton(),
+              DashboardButton(
+                buttonText: trans.back_to_dashboard,
+              ),
 
               // DashboardButton(),
             ],
@@ -365,27 +421,45 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
   }
 
   Widget profileUpdatedErrorPage() {
-    final trans = ExampleLocalizations.of(context);
+    final translations = ExampleLocalizations.of(context);
 
-    return new Scaffold(
-      backgroundColor: mainBackground,
+    return Scaffold(
+      // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Error updating profile'),
+        title: Text(translations.error_updating_profile),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 20),
-        height: 160,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Spacer(
-              flex: 4,
-            ),
-            Text(
-              'Please try again later',
-              style: bigLightBlueTitle,
-            ),
-          ],
+        padding: EdgeInsets.only(right: RIGHT_MARGINE, left: LEFT_MARGINE),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Spacer(
+                flex: 2,
+              ),
+              Text(
+                translations.profile_update_error,
+                style: whiteTitleH2,
+              ),
+              Spacer(
+                flex: 2,
+              ),
+              Image.asset(
+                'assets/images/fail-icon.png',
+                width: MediaQuery.of(context).size.width * 0.50,
+              ),
+              Spacer(
+                flex: 2,
+              ),
+              DashboardButton(
+                buttonText: translations.back_to_dashboard,
+              ),
+              Spacer(
+                flex: 2,
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigation(

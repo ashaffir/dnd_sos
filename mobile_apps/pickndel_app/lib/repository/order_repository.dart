@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/dao/user_dao.dart';
+import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/place.dart';
 import 'package:pickndell/model/open_orders.dart';
 import 'package:pickndell/model/user_model.dart';
@@ -47,6 +48,7 @@ class OrderRepository {
   }
 
   Future updateOrder(String orderId, String status) async {
+    final trans = ExampleLocalizations.of(context);
     var _url = "order-update/";
     try {
       // var user = await UserDao().getUser(0);
@@ -61,8 +63,7 @@ class OrderRepository {
           builder: (context) {
             return ErrorPage(
               user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),
@@ -73,6 +74,8 @@ class OrderRepository {
   }
 
   Future getPriceParamsRepo({User user}) async {
+    final trans = ExampleLocalizations.of(context);
+
     var _url = "price-parameteres/";
     try {
       var response = await _provider.priceParams(user: user, url: _url);
@@ -86,8 +89,7 @@ class OrderRepository {
           builder: (context) {
             return ErrorPage(
               user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),
@@ -105,6 +107,7 @@ class OrderRepository {
       String urgency}) async {
     var _url = "new-order/";
     ApiProvider _provider = ApiProvider();
+    final trans = ExampleLocalizations.of(context);
 
     try {
       // var user = await UserDao().getUser(0);
@@ -126,8 +129,7 @@ class OrderRepository {
           builder: (context) {
             return ErrorPage(
               user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),

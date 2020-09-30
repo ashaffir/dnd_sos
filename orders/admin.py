@@ -23,10 +23,12 @@ class OrderAdmin(OSMGeoAdmin):
         'updated',
     )
     list_filter = (
-        'status',
+        'status','order_type'
     )
     readonly_fields = (
         'order_id', 'created', 'updated',
     )
+
+    search_fields = ('freelancer__email', 'business__email', )
 
     ordering = ('-updated',)

@@ -1,19 +1,12 @@
 import 'package:async/async.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pickndell/common/helper.dart';
-import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/image_uploaded_message.dart';
-import 'package:pickndell/login/message_page.dart';
-import 'package:pickndell/login/profile_updated.dart';
 import 'package:pickndell/model/user_model.dart';
-import 'package:pickndell/model/user_profile.NA.dart';
-import 'package:pickndell/repository/user_repository.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
@@ -26,9 +19,10 @@ String _expiryDate;
 
 class IdUpload extends StatefulWidget {
   final User user;
+  final String country;
   final updateField;
 
-  IdUpload({this.user, this.updateField});
+  IdUpload({this.user, this.updateField, this.country});
 
   @override
   _IdUploadState createState() => _IdUploadState();
@@ -46,7 +40,9 @@ class _IdUploadState extends State<IdUpload> {
   List<String> _idDocTypeList;
 
   _loadidDocTypes() {
-    _idDocTypeList = ['ID', 'Passport', 'Drivers License'];
+    _idDocTypeList = widget.country == 'IL'
+        ? ['תעודת זהות', 'דרכון', 'רישיון נהיגה']
+        : ['ID', 'Passport', 'Drivers License'];
 
     _idDocTypeList.forEach((element) {
       setState(() {
@@ -112,12 +108,12 @@ class _IdUploadState extends State<IdUpload> {
   String orderUpdated;
 
   Widget build(BuildContext context) {
-    final translations = ExampleLocalizations.of(context);
+    final trans = ExampleLocalizations.of(context);
 
     return new Scaffold(
       appBar: AppBar(
         // elevation: 0.0,
-        title: Text('Upload Photo ID'),
+        title: Text(trans.submit_photo_id),
         backgroundColor: mainBackground,
         iconTheme: IconThemeData(color: Colors.white),
       ),
@@ -209,11 +205,12 @@ class _IdUploadState extends State<IdUpload> {
   }
 
   _sendToServer() async {
+    final trans = ExampleLocalizations.of(context);
     if (_key.currentState.validate()) {
       _key.currentState.save();
       showProgress(context, 'Uploading to PickNdell, Please wait...', false);
       if (_image != null) {
-        updateProgress('Uploading image, Please wait...');
+        updateProgress(trans.uploading_image + '...');
         _uploadImage(imageFile: _image, user: widget.user);
       } else {
         print('false');
@@ -225,14 +222,15 @@ class _IdUploadState extends State<IdUpload> {
   }
 
   _onCameraClick() {
+    final trans = ExampleLocalizations.of(context);
     final action = CupertinoActionSheet(
       message: Text(
-        "Submit Photo ID",
+        trans.submit_photo_id,
         style: TextStyle(fontSize: 15.0),
       ),
       actions: <Widget>[
         CupertinoActionSheetAction(
-          child: Text("Choose from gallery",
+          child: Text(trans.choose_gallery,
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           isDefaultAction: false,
@@ -253,7 +251,7 @@ class _IdUploadState extends State<IdUpload> {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text("Take a picture",
+          child: Text(trans.take_a_picture,
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           isDestructiveAction: false,
@@ -271,7 +269,7 @@ class _IdUploadState extends State<IdUpload> {
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text("Cancel",
+        child: Text(trans.cancel,
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         onPressed: () {
           Navigator.pop(context);
@@ -282,6 +280,7 @@ class _IdUploadState extends State<IdUpload> {
   }
 
   Widget formUI() {
+    final trans = ExampleLocalizations.of(context);
     return new Column(
       children: <Widget>[
         Padding(
@@ -335,13 +334,13 @@ class _IdUploadState extends State<IdUpload> {
               width: 200,
               child: DropdownButtonFormField(
                 decoration: InputDecoration(
-                    labelText: 'Document Type' + ":",
+                    labelText: trans.document_type + ":",
                     prefixIcon: Icon(Icons.portrait)),
                 value: _idDocType,
                 items: _idDocTypes,
                 validator: (value) {
                   if (value == null) {
-                    return 'Please choose a document type: $value';
+                    return trans.messages_please_choose_docoument_type;
                   } else {
                     return null;
                   }
@@ -364,8 +363,8 @@ class _IdUploadState extends State<IdUpload> {
             controller: dateCtl,
             decoration: InputDecoration(
               icon: Icon(Icons.calendar_today),
-              labelText: "Document Expiry Date",
-              hintText: "When the ID document expires",
+              labelText: trans.document_expiry_date,
+              hintText: trans.messages_hint_expiry_data,
             ),
             onTap: () async {
               DateTime date = DateTime(1900);
@@ -377,9 +376,9 @@ class _IdUploadState extends State<IdUpload> {
                 firstDate: DateTime(2020),
                 lastDate: DateTime(2050),
                 initialDatePickerMode: DatePickerMode.year,
-                helpText: 'ID expiry date', // Can be used as title
-                cancelText: 'Not now',
-                confirmText: 'Select',
+                helpText: trans.id_expiry_date_picker, // Can be used as title
+                cancelText: trans.not_now,
+                confirmText: trans.select,
               );
               setState(() {
                 dateCtl.text =
@@ -388,7 +387,7 @@ class _IdUploadState extends State<IdUpload> {
             },
             validator: (value) {
               if (value.isEmpty) {
-                return 'Please choose a valid expiry date: $value';
+                return trans.messages_please_choose_valid_expiry_date;
               }
               _expiryDate = dateCtl.text;
               return null;
@@ -403,7 +402,7 @@ class _IdUploadState extends State<IdUpload> {
             child: RaisedButton(
               color: pickndellGreen,
               child: Text(
-                'Submit',
+                trans.submit,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               textColor: Colors.white,

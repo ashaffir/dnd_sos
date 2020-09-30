@@ -111,7 +111,7 @@ class MessagePage extends StatelessWidget {
                             ])
                           : messageType == "statusOK"
                               ? Text(
-                                  "Your profile was updated",
+                                  translations.profile_updated,
                                   style: whiteTitle,
                                 )
                               : messageType == "Error"
@@ -127,6 +127,8 @@ class MessagePage extends StatelessWidget {
                     // width: MediaQuery.of(context).size.width * 0.85,
                     // height: MediaQuery.of(context).size.width * 0.16,
                     child: messageType == "Registration"
+                        ////////////// Login page button /////////////
+                        ///
                         ? RaisedButton(
                             child: Text(
                               translations.messages_register_button,

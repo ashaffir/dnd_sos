@@ -103,6 +103,7 @@ flutter:
    - assets/images/pickndell-logotype-white.png
    - assets/images/pickndell-logo-white.png
    - assets/images/mobile-background.jpg
+   - assets/images/mobile-background-rtl.jpg
    - assets/languages/en.json
    - assets/languages/he.json
    - assets/images/scooter-icon.png

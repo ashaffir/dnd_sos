@@ -66,6 +66,9 @@ class Translations implements i69n.I69nMessageBundle {
   String get upload_photo => "Upload Photo";
   String get back_to_dashboard => "Back to dashboard";
   String get back_to_profile => "Back to profile";
+  String get back_to_login => "Back to login";
+  String get back => "Back";
+  String get close => "Close";
   String get change_the_name => "Change the name";
   String get change_the_email => "Change the email";
   String get change_the_category => "Change the category";
@@ -73,10 +76,23 @@ class Translations implements i69n.I69nMessageBundle {
   String get enter_with_country_code => "Enter phone with country code, e.g.";
   String get enter_here => "Enter here";
   String get update => "Update";
+  String get profile_update_title => "Profile Update";
+  String get submit_photo_id => "Submit Photo ID";
+  String get document_type => "Document Type";
+  String get choose_gallery => "Choose from gallery";
+  String get take_a_picture => "Take a picture";
+  String get uploading_image => "Uploading image, please wait";
+  String get uploading_to_pickndell => "Uploading to PickNdell, please wait";
+  String get profile_updated => "Your profile was successfully updated";
+  String get welcome_send => "Send";
+  String get welcome_deliver => "Deliver";
+  String get select => "Select";
   String get name_not_valid => "Name entered is not valid";
   String get month_not_valid => "Month not valid";
   String get year_not_valid => "Year not valid";
   String get cvv_number_not_valid => "CVV not valid";
+  String get cancel => "Cancel";
+  String get submit => "Submit";
   String get home_title => "Profile";
   String get home_courier_profile => "Courier Profile";
   String get home_sender_profile => "Sender Profile";
@@ -91,6 +107,24 @@ class Translations implements i69n.I69nMessageBundle {
   String get home_status => "Availability Status";
   String get home_available => "Available";
   String get home_unavailable => "Unavailable";
+  String get rookie => "Rookie";
+  String get advanced => "Advanced";
+  String get expert => "Expert";
+  String get profile => "Profile";
+  String get updating_profile => "Updating profile";
+  String get sending_code => "Sending code";
+  String get please_enter_sms_code =>
+      "Please Enter the code you received through SMS";
+  String get verifying_code => "Verifying code";
+  String get document_expiry_date => "Document Expiry Date";
+  String get id_expiry_date_picker => "ID expiry date";
+  String get not_now => "Not now";
+  String get error_updating_profile => "Error updating profile";
+  String get profile_update_error =>
+      "There was an error updating your profile. Please try again later";
+  String get please_select_vehicle =>
+      "Please select the type of vehicle you user";
+  String get updating => "Updating";
   String get orders_title_open => "Open Orders";
   String get orders_title_active => "Active Orders";
   String get orders_title_business => "Current Open Orders";
@@ -139,6 +173,10 @@ class Translations implements i69n.I69nMessageBundle {
   String get order_confirm_archive => "Confirm Cancellation";
   String get orders_order_delivery => "Order Delivery";
   String get orders_error => "Error";
+  String get orders_delivery_confirmation => "Delivery Confirmaiton";
+  String get orders_delivery_success =>
+      "Delivery and confirmation photo updated. Good Job!";
+  String get orders_change_status => "Change Status";
   String get messages_register_title => "Confirmation";
   String get messages_register_thanks => "Thank you";
   String get messages_register_activation =>
@@ -152,10 +190,21 @@ class Translations implements i69n.I69nMessageBundle {
   String get messages_select_dropoff_address =>
       "Please select a dropoff address";
   String get messages_package_type => "Please choose the package type";
+  String get messages_communication_error =>
+      "There was a problem communicating with the server. Please try again later";
+  String get messages_please_choose_docoument_type =>
+      "Please choose a document type";
+  String get messages_hint_expiry_data => "When the ID document expires";
+  String get messages_please_choose_valid_expiry_date =>
+      "Please choose a valid expiry date";
   String get order_a_updating => "Updating Orders Table";
   String get order_a_accepted => "Order Accepted";
   String get order_a_go_to => "Go to pick up";
   String get order_a_not_available => "This order is no longer available";
+  String get order_details => "Order Details";
+  String get order_page => "Order Page";
+  String get order_location => "Location";
+  String get navigate => "Navigate";
   String get order_p_picked => "Order Picked Up";
   String get order_p_report =>
       "You have reported that the order was picked up by a courier";
@@ -167,6 +216,12 @@ class Translations implements i69n.I69nMessageBundle {
   String get order_delivered => "Order Delivered";
   String get orders_update_error =>
       "There was an error updating this order. Please try again later";
+  String get report_package_delivery => "Report package delivery";
+  String get take_photo_of_delivery => "Take a photo of the delivery";
+  String get image_not_selected => "No image selected";
+  String get please_take_photo_delivery =>
+      "Please take a photo of the delivery before declaring delivery";
+  String get submit_delivery_photo => "Submit delivery photo";
   String get register_join => "Join PickNdel";
   String get register_form => "Registration Form";
   String get register_as => "Registration as";
@@ -183,10 +238,15 @@ class Translations implements i69n.I69nMessageBundle {
   String get profile_submit => "Submit Update";
   String get profile_update_in_progress => "Update in progress";
   String get profile_delete_account => "Delete my Account";
+  String get please_enter_the_five_email_code =>
+      "Please enter the five digits you have received in your new email";
+  String get please_enter_valid_email_code => "Please enter a valid code";
   String get your_level => "Your PickNdell Level";
   String get level_tooltip =>
       "The level of the account defines the number of concurrent deliveries you are entitled to do \n Rookie - 1 \n Advanced - 10 \n Expert - Unlimited";
   String get daily_earnings => "Daily Earnings";
+  String get sender => "Sender";
+  String get courier => "Courier";
   String get daily_cost => "Daily Cost";
   String get new_order => "Create a New Order";
   String get credit_card => "Credit Card";
@@ -196,6 +256,30 @@ class Translations implements i69n.I69nMessageBundle {
   String get restaurant => "Restaurant";
   String get package_type => "Package Type";
   String get urgency => "Urgency";
+  String get payments => "Payments";
+  String get balance => "Balance";
+  String get current_payment_method => "Payment method";
+  String get change_payment_method => "Change payment method";
+  String get none => "None";
+  String get bank => "Bank";
+  String get paypal => "PayPal";
+  String get paypal_account_here => "Paypal account here";
+  String get bank_account => "Bank Account";
+  String get update_bank_details => "Update bank details";
+  String get please_select_payment_method =>
+      "Please select your prefered payment method.\n This method will be used to send you payments for your deliveries";
+  String get please_enter_valid_paypal => "Please enter a valid paypal account";
+  String get payment_method_updated => "Preferred payment method updated";
+  String get please_submit_bank_details =>
+      "Please submit your bank details first";
+  String get bank_details => "Bank Details";
+  String get bank_details_info =>
+      "Please contact your bank for the details below. Bank account name should be only in English";
+  String get bank_account_name => "Account name";
+  String get please_enter_valid_iban => "Please enter a valid IBAN";
+  String get please_enter_valid_swift => "Please enter a valid Swift Code";
+  String get please_enter_account_name =>
+      "Please enter an account name (In English)";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -261,6 +345,12 @@ class Translations implements i69n.I69nMessageBundle {
         return back_to_dashboard;
       case 'back_to_profile':
         return back_to_profile;
+      case 'back_to_login':
+        return back_to_login;
+      case 'back':
+        return back;
+      case 'close':
+        return close;
       case 'change_the_name':
         return change_the_name;
       case 'change_the_email':
@@ -275,6 +365,28 @@ class Translations implements i69n.I69nMessageBundle {
         return enter_here;
       case 'update':
         return update;
+      case 'profile_update_title':
+        return profile_update_title;
+      case 'submit_photo_id':
+        return submit_photo_id;
+      case 'document_type':
+        return document_type;
+      case 'choose_gallery':
+        return choose_gallery;
+      case 'take_a_picture':
+        return take_a_picture;
+      case 'uploading_image':
+        return uploading_image;
+      case 'uploading_to_pickndell':
+        return uploading_to_pickndell;
+      case 'profile_updated':
+        return profile_updated;
+      case 'welcome_send':
+        return welcome_send;
+      case 'welcome_deliver':
+        return welcome_deliver;
+      case 'select':
+        return select;
       case 'name_not_valid':
         return name_not_valid;
       case 'month_not_valid':
@@ -283,6 +395,10 @@ class Translations implements i69n.I69nMessageBundle {
         return year_not_valid;
       case 'cvv_number_not_valid':
         return cvv_number_not_valid;
+      case 'cancel':
+        return cancel;
+      case 'submit':
+        return submit;
       case 'home_title':
         return home_title;
       case 'home_courier_profile':
@@ -311,6 +427,36 @@ class Translations implements i69n.I69nMessageBundle {
         return home_available;
       case 'home_unavailable':
         return home_unavailable;
+      case 'rookie':
+        return rookie;
+      case 'advanced':
+        return advanced;
+      case 'expert':
+        return expert;
+      case 'profile':
+        return profile;
+      case 'updating_profile':
+        return updating_profile;
+      case 'sending_code':
+        return sending_code;
+      case 'please_enter_sms_code':
+        return please_enter_sms_code;
+      case 'verifying_code':
+        return verifying_code;
+      case 'document_expiry_date':
+        return document_expiry_date;
+      case 'id_expiry_date_picker':
+        return id_expiry_date_picker;
+      case 'not_now':
+        return not_now;
+      case 'error_updating_profile':
+        return error_updating_profile;
+      case 'profile_update_error':
+        return profile_update_error;
+      case 'please_select_vehicle':
+        return please_select_vehicle;
+      case 'updating':
+        return updating;
       case 'orders_title_open':
         return orders_title_open;
       case 'orders_title_active':
@@ -403,6 +549,12 @@ class Translations implements i69n.I69nMessageBundle {
         return orders_order_delivery;
       case 'orders_error':
         return orders_error;
+      case 'orders_delivery_confirmation':
+        return orders_delivery_confirmation;
+      case 'orders_delivery_success':
+        return orders_delivery_success;
+      case 'orders_change_status':
+        return orders_change_status;
       case 'messages_register_title':
         return messages_register_title;
       case 'messages_register_thanks':
@@ -425,6 +577,14 @@ class Translations implements i69n.I69nMessageBundle {
         return messages_select_dropoff_address;
       case 'messages_package_type':
         return messages_package_type;
+      case 'messages_communication_error':
+        return messages_communication_error;
+      case 'messages_please_choose_docoument_type':
+        return messages_please_choose_docoument_type;
+      case 'messages_hint_expiry_data':
+        return messages_hint_expiry_data;
+      case 'messages_please_choose_valid_expiry_date':
+        return messages_please_choose_valid_expiry_date;
       case 'order_a_updating':
         return order_a_updating;
       case 'order_a_accepted':
@@ -433,6 +593,14 @@ class Translations implements i69n.I69nMessageBundle {
         return order_a_go_to;
       case 'order_a_not_available':
         return order_a_not_available;
+      case 'order_details':
+        return order_details;
+      case 'order_page':
+        return order_page;
+      case 'order_location':
+        return order_location;
+      case 'navigate':
+        return navigate;
       case 'order_p_picked':
         return order_p_picked;
       case 'order_p_report':
@@ -449,6 +617,16 @@ class Translations implements i69n.I69nMessageBundle {
         return order_delivered;
       case 'orders_update_error':
         return orders_update_error;
+      case 'report_package_delivery':
+        return report_package_delivery;
+      case 'take_photo_of_delivery':
+        return take_photo_of_delivery;
+      case 'image_not_selected':
+        return image_not_selected;
+      case 'please_take_photo_delivery':
+        return please_take_photo_delivery;
+      case 'submit_delivery_photo':
+        return submit_delivery_photo;
       case 'register_join':
         return register_join;
       case 'register_form':
@@ -481,12 +659,20 @@ class Translations implements i69n.I69nMessageBundle {
         return profile_update_in_progress;
       case 'profile_delete_account':
         return profile_delete_account;
+      case 'please_enter_the_five_email_code':
+        return please_enter_the_five_email_code;
+      case 'please_enter_valid_email_code':
+        return please_enter_valid_email_code;
       case 'your_level':
         return your_level;
       case 'level_tooltip':
         return level_tooltip;
       case 'daily_earnings':
         return daily_earnings;
+      case 'sender':
+        return sender;
+      case 'courier':
+        return courier;
       case 'daily_cost':
         return daily_cost;
       case 'new_order':
@@ -505,6 +691,46 @@ class Translations implements i69n.I69nMessageBundle {
         return package_type;
       case 'urgency':
         return urgency;
+      case 'payments':
+        return payments;
+      case 'balance':
+        return balance;
+      case 'current_payment_method':
+        return current_payment_method;
+      case 'change_payment_method':
+        return change_payment_method;
+      case 'none':
+        return none;
+      case 'bank':
+        return bank;
+      case 'paypal':
+        return paypal;
+      case 'paypal_account_here':
+        return paypal_account_here;
+      case 'bank_account':
+        return bank_account;
+      case 'update_bank_details':
+        return update_bank_details;
+      case 'please_select_payment_method':
+        return please_select_payment_method;
+      case 'please_enter_valid_paypal':
+        return please_enter_valid_paypal;
+      case 'payment_method_updated':
+        return payment_method_updated;
+      case 'please_submit_bank_details':
+        return please_submit_bank_details;
+      case 'bank_details':
+        return bank_details;
+      case 'bank_details_info':
+        return bank_details_info;
+      case 'bank_account_name':
+        return bank_account_name;
+      case 'please_enter_valid_iban':
+        return please_enter_valid_iban;
+      case 'please_enter_valid_swift':
+        return please_enter_valid_swift;
+      case 'please_enter_account_name':
+        return please_enter_account_name;
       default:
         throw Exception('Message $key doesn\'t exist in $this');
     }

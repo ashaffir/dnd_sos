@@ -42,10 +42,10 @@ class _OrderPageState extends State<OrderPage> {
     return new Scaffold(
       // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text('Order Page'),
+        title: Text(translations.order_page),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -53,7 +53,7 @@ class _OrderPageState extends State<OrderPage> {
               flex: 2,
             ),
             Text(
-              "Order Details",
+              translations.order_details,
               style: bigLightBlueTitle,
             ),
             Spacer(
@@ -116,7 +116,7 @@ class _OrderPageState extends State<OrderPage> {
               flex: 10,
             ),
             CupertinoActionSheetAction(
-              child: Text("Cancel",
+              child: Text(translations.cancel,
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.white)),
               onPressed: () {

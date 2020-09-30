@@ -78,7 +78,7 @@ class Order(models.Model):
     notes = models.TextField(max_length=500, blank=True, null=True)
 
     price = models.FloatField(null=True, blank=True)
-    fare = models.CharField(max_length=100, null=True, blank=True)
+    fare = models.FloatField(null=True, blank=True, default=0.0)
 
     # List of freelancers that were directly chosen by the business (in case there are more than one)
     selected_freelancers = JSONField(blank=True, null=True)

@@ -27,6 +27,9 @@ for_more_info: for more information
 upload_photo: Upload Photo
 back_to_dashboard: Back to dashboard
 back_to_profile: Back to profile
+back_to_login: Back to login
+back: Back
+close: Close
 change_the_name: Change the name
 change_the_email: Change the email
 change_the_category: Change the category
@@ -34,11 +37,23 @@ change_the_vehicle: Change the vehicle
 enter_with_country_code: Enter phone with country code, e.g.
 enter_here: Enter here
 update: Update
-
+profile_update_title: Profile Update
+submit_photo_id: Submit Photo ID
+document_type: Document Type
+choose_gallery: Choose from gallery
+take_a_picture: Take a picture
+uploading_image: Uploading image, please wait
+uploading_to_pickndell: Uploading to PickNdell, please wait
+profile_updated: Your profile was successfully updated
+welcome_send: Send
+welcome_deliver: Deliver
+select: Select
 name_not_valid: Name entered is not valid
 month_not_valid: Month not valid
 year_not_valid: Year not valid
 cvv_number_not_valid: CVV not valid
+cancel: Cancel
+submit: Submit
 
 # Homepage/Profile
 home_title: Profile
@@ -55,6 +70,21 @@ home_active_orders: Current Active Orders
 home_status: Availability Status
 home_available: Available
 home_unavailable: Unavailable
+rookie: Rookie
+advanced: Advanced
+expert: Expert
+profile: Profile
+updating_profile: Updating profile
+sending_code: Sending code
+please_enter_sms_code: Please Enter the code you received through SMS
+verifying_code: Verifying code
+document_expiry_date: Document Expiry Date
+id_expiry_date_picker: ID expiry date
+not_now: Not now
+error_updating_profile: Error updating profile
+profile_update_error: There was an error updating your profile. Please try again later
+please_select_vehicle: Please select the type of vehicle you user
+updating: Updating
 
 # Orders
 orders_title_open: Open Orders
@@ -103,6 +133,9 @@ orders_order_created: Order Created
 order_confirm_archive: Confirm Cancellation
 orders_order_delivery: Order Delivery
 orders_error: Error
+orders_delivery_confirmation: Delivery Confirmaiton
+orders_delivery_success: Delivery and confirmation photo updated. Good Job!
+orders_change_status: Change Status
 
 # Messages Page
 messages_register_title: Confirmation
@@ -116,11 +149,21 @@ messages_push_ignore: Ignore
 messages_select_pickup_address: Please select a pickup address
 messages_select_dropoff_address: Please select a dropoff address
 messages_package_type: Please choose the package type
+messages_communication_error: There was a problem communicating with the server. Please try again later
+messages_please_choose_docoument_type: Please choose a document type
+messages_hint_expiry_data: When the ID document expires
+messages_please_choose_valid_expiry_date: Please choose a valid expiry date
+
+
 # Order Accepted
 order_a_updating: Updating Orders Table
 order_a_accepted: Order Accepted
 order_a_go_to: Go to pick up
 order_a_not_available: This order is no longer available
+order_details: Order Details
+order_page: Order Page
+order_location: Location
+navigate: Navigate
 
 # Order Picked up
 order_p_picked: Order Picked Up
@@ -132,6 +175,13 @@ order_cancel_message: Order Canceled
 order_cenceled_successfuly: Your order was cancelled successfully
 order_delivered: Order Delivered
 orders_update_error: There was an error updating this order. Please try again later
+
+# Delivery
+report_package_delivery: Report package delivery
+take_photo_of_delivery: Take a photo of the delivery
+image_not_selected: No image selected
+please_take_photo_delivery: Please take a photo of the delivery before declaring delivery
+submit_delivery_photo: Submit delivery photo 
 
 # Registration page
 register_join: Join PickNdel
@@ -152,6 +202,8 @@ profile_title: Edit Profile
 profile_submit: Submit Update
 profile_update_in_progress: Update in progress
 profile_delete_account: Delete my Account
+please_enter_the_five_email_code: Please enter the five digits you have received in your new email
+please_enter_valid_email_code: Please enter a valid code
 
 #Courier
 your_level: Your PickNdell Level
@@ -159,6 +211,8 @@ level_tooltip: The level of the account defines the number of concurrent deliver
 daily_earnings: Daily Earnings
 
 # Sender
+sender: Sender
+courier: Courier
 daily_cost: Daily Cost
 new_order: Create a New Order
 credit_card: Credit Card
@@ -169,5 +223,26 @@ restaurant: Restaurant
 package_type: Package Type
 urgency: Urgency
 
+# Payments
+payments: Payments
+balance: Balance
+current_payment_method: Payment method
+change_payment_method: Change payment method
+none: None
+bank: Bank
+paypal: PayPal
+paypal_account_here: Paypal account here
+bank_account: Bank Account
+update_bank_details: Update bank details
+please_select_payment_method: Please select your prefered payment method.\n This method will be used to send you payments for your deliveries
+please_enter_valid_paypal: Please enter a valid paypal account
+payment_method_updated: Preferred payment method updated
+please_submit_bank_details: Please submit your bank details first
+bank_details: Bank Details
+bank_details_info: Please contact your bank for the details below. Bank account name should be only in English
+bank_account_name: Account name
+please_enter_valid_iban: Please enter a valid IBAN
+please_enter_valid_swift: Please enter a valid Swift Code
+please_enter_account_name: Please enter an account name (In English)
 
 

@@ -1,16 +1,13 @@
 import 'dart:isolate';
 
-import 'package:pickndell/app_localizations.dart';
 import 'package:pickndell/bloc/authentication_bloc.dart';
-import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/home/welcome.dart';
 import 'package:pickndell/localizations.dart';
-import 'package:pickndell/login/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pickndell/model/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bloc/login_bloc.dart';
@@ -33,13 +30,20 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  String _country;
   bool _isLoading = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   LoginBloc get _loginBloc => widget.loginBloc;
 
+  Future checkCountry() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    _country = localStorage.getString('userCountry');
+  }
+
   @override
   void initState() {
+    checkCountry();
     super.initState();
   }
 
@@ -209,7 +213,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                             context,
                             new MaterialPageRoute(
                                 // builder: (context) => Registration()));
-                                builder: (context) => WelcomePage()));
+                                builder: (context) => WelcomePage(
+                                      country: _country,
+                                    )));
                       },
                       child: Text(
                         translations.create_account,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // Time limits
 const MAX_WAIT_TIME = 10;
 // NGROK or other as such
-String serverDomain = 'https://1f15133f1d88.ngrok.io';
+String serverDomain = 'https://3dbc8c54441a.ngrok.io';
 String defaultCountry = "Israel";
 // Sizes
 ////////////////////

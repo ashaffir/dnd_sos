@@ -345,8 +345,8 @@ class OrdersList extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         ui.window.locale.languageCode == 'he'
-                            ? Text(
-                                translations.orders_fare + ': ${order.fare} ₪')
+                            ? Text(translations.orders_fare +
+                                ': ${roundDouble(order.fare * user.usdIls, 2)} ₪')
                             : Text(translations.orders_fare +
                                 ': \$ ${order.fare}'),
                         ButtonBar(
@@ -377,7 +377,9 @@ class OrdersList extends StatelessWidget {
                                       content: translations
                                           .orders_alert_tracking_content,
                                       nameRoute: '/',
-                                      buttonText: 'Change Status',
+                                      buttonText:
+                                          translations.orders_change_status,
+                                      okButtontext: translations.close,
                                       buttonBorderColor: Colors.blue);
                                   print('No tracking!!!');
                                 }
@@ -472,7 +474,7 @@ class OrdersList extends StatelessWidget {
                                 shape: StadiumBorder(
                                     side: BorderSide(color: pickndellGreen)),
                                 label: Text(
-                                  'Navigate',
+                                  translations.navigate,
                                   style: whiteButtonTitle,
                                 ),
                                 onPressed: () {
@@ -625,7 +627,7 @@ class OrdersList extends StatelessWidget {
                                   shape: StadiumBorder(
                                       side: BorderSide(color: pickndellGreen)),
                                   label: Text(
-                                    'Navigate',
+                                    translations.navigate,
                                     style: whiteButtonTitle,
                                   ),
                                   onPressed: () {
@@ -818,7 +820,10 @@ class OrdersList extends StatelessWidget {
                                         padding: EdgeInsets.only(right: 5.0)),
                                     country == 'Israel' || country == 'ישראל'
                                         ? Text(
-                                            "${roundDouble(order.price * user.usdIls, 2)} ₪")
+                                            "${roundDouble(order.price * user.usdIls, 2)} ₪",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          )
                                         : Text("\$ ${order.price}"),
                                   ],
                                 ),

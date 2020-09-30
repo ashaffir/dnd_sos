@@ -40,7 +40,7 @@ class EmployeeSignupForm(UserCreationForm):
         ('bicycle', 'Bicycle'),
         ('motorcycle', 'Motorcycle'),
         ('scooter', 'Scooter'),
-        ('other', 'Other'),
+        ('truck', 'Truck'),
     )
 
     ACTIVE_HOURS = (

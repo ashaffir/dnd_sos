@@ -146,7 +146,7 @@ class Employee(models.Model):
         ('Scooter', 'Scooter'),
         ('Bicycle', 'Bicycle'),
         ('Motorcycle', 'Motorcycle'),
-        ('Other', 'Other'),
+        ('Truck', 'Truck'),
     )
 
     ACCOUNT_LEVEL = (

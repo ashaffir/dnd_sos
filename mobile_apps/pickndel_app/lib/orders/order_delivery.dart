@@ -10,7 +10,7 @@ import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/image_uploaded_message.dart';
 import 'package:pickndell/login/message_page.dart';
-import 'package:pickndell/login/profile_updated.dart';
+import 'package:pickndell/login/profile_update.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/model/user_profile.NA.dart';
@@ -86,12 +86,12 @@ class _OrderDeliveryState extends State<OrderDelivery> {
   String orderUpdated;
 
   Widget build(BuildContext context) {
-    final translations = ExampleLocalizations.of(context);
+    final trans = ExampleLocalizations.of(context);
 
     return new Scaffold(
       appBar: AppBar(
         // elevation: 0.0,
-        title: Text('Report package delivery'),
+        title: Text(trans.report_package_delivery),
         backgroundColor: mainBackground,
         iconTheme: IconThemeData(color: Colors.white),
       ),
@@ -114,6 +114,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
 
   _uploadDeliveryImage({File imageFile, User user, Order order}) async {
     String newStatus = "COMPLETED";
+    final trans = ExampleLocalizations.of(context);
 
     // open a bytestream
     var stream = new http.ByteStream(DelegatingStream(imageFile.openRead()));
@@ -157,6 +158,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
       // listen for response
       response.stream.transform(utf8.decoder).listen((value) {
         if (value == "202") {
+          print('IMAGE DELIVERED');
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -171,6 +173,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
             (Route<dynamic> route) => false, // No Back option for this page
           );
         } else {
+          print('Failed image delivery. Bad response from selrver: $value');
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -187,14 +190,14 @@ class _OrderDeliveryState extends State<OrderDelivery> {
         }
       });
     } catch (e) {
+      print('Faled uploading delivery image. ERROR: $e');
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) {
             return ErrorPage(
               user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),
@@ -204,11 +207,12 @@ class _OrderDeliveryState extends State<OrderDelivery> {
   }
 
   _sendToServer() async {
+    final trans = ExampleLocalizations.of(context);
     if (_key.currentState.validate()) {
       _key.currentState.save();
-      showProgress(context, 'Updating PickNdell, Please wait...', false);
+      showProgress(context, trans.uploading_to_pickndell + '...', false);
       if (_image != null) {
-        updateProgress('Uploading image, Please wait...');
+        updateProgress(trans.uploading_image + '...');
         _uploadDeliveryImage(
             imageFile: _image, user: widget.user, order: widget.order);
       } else {
@@ -221,14 +225,15 @@ class _OrderDeliveryState extends State<OrderDelivery> {
   }
 
   _onCameraClick() {
+    final trans = ExampleLocalizations.of(context);
     final action = CupertinoActionSheet(
       message: Text(
-        "Submit Photo ID",
+        trans.submit_delivery_photo,
         style: TextStyle(fontSize: 15.0),
       ),
       actions: <Widget>[
         CupertinoActionSheetAction(
-          child: Text("Choose from gallery",
+          child: Text(trans.choose_gallery,
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           isDefaultAction: false,
@@ -242,7 +247,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text("Take a picture",
+          child: Text(trans.take_a_picture,
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           isDestructiveAction: false,
@@ -256,7 +261,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text("Cancel",
+        child: Text(trans.cancel,
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         onPressed: () {
           Navigator.pop(context);
@@ -267,9 +272,13 @@ class _OrderDeliveryState extends State<OrderDelivery> {
   }
 
   Widget formUI() {
+    final trans = ExampleLocalizations.of(context);
     return new Column(
       children: <Widget>[
-        Text('Take a photo of the delivery'),
+        Text(
+          trans.take_photo_of_delivery,
+          style: whiteTitleH3,
+        ),
         Padding(
           padding:
               // const EdgeInsets.only(left: 8.0, top: 32, right: 8, bottom: 8),
@@ -318,7 +327,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
             child: RaisedButton(
               color: pickndellGreen,
               child: Text(
-                'Submit',
+                trans.submit,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               textColor: Colors.white,
@@ -328,9 +337,9 @@ class _OrderDeliveryState extends State<OrderDelivery> {
                 if (_image == null) {
                   showAlertDialog(
                       context: context,
-                      title: "No image selected",
-                      content:
-                          "Please take a photo of the delivery before declaring delivery.");
+                      title: trans.image_not_selected,
+                      okButtontext: trans.close,
+                      content: trans.please_take_photo_delivery);
                 } else {
                   print('$_image');
                   _sendToServer();
@@ -346,7 +355,7 @@ class _OrderDeliveryState extends State<OrderDelivery> {
         Padding(padding: EdgeInsets.only(top: 30)),
         new GestureDetector(
           onTap: () => Navigator.of(context).pop(false),
-          child: Text("Cancel"),
+          child: Text(trans.cancel),
         ),
       ],
     );

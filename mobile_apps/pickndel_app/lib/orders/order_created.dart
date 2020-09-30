@@ -3,16 +3,13 @@ import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/credencials.dart';
 import 'package:pickndell/location/place.dart';
-import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import '../common/global.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class OrderCreated extends StatefulWidget {
   final String pickupAddressName;
@@ -85,6 +82,8 @@ class _OrderCreatedState extends State<OrderCreated> {
       User user}) async {
     print(
         'NEW ORDER: pua: $pickupAddressId, doa: $dropoffAddressId, urgent: $isUrgent, package: $packageType, user: ${user.username}');
+
+    final trans = ExampleLocalizations.of(context);
     final geocoding = new GoogleMapsPlaces(apiKey: PLACES_API_KEY);
     // final places = new GoogleMapsPlaces(apiKey: PLACES_API_KEY);
 
@@ -113,8 +112,8 @@ class _OrderCreatedState extends State<OrderCreated> {
     dropoffAddress.lng = doLongitude;
 
     try {
-      final orderCreatedResponse = await OrderRepository(user: user)
-          .newOrderRepo(
+      final orderCreatedResponse =
+          await OrderRepository(user: user, context: context).newOrderRepo(
               user: user,
               priceOrder: false,
               pickupAddress: pickupAddress,
@@ -131,8 +130,7 @@ class _OrderCreatedState extends State<OrderCreated> {
           builder: (context) {
             return ErrorPage(
               user: user,
-              errorMessage:
-                  'There was a problem communicating with the server. Please try again later.',
+              errorMessage: trans.messages_communication_error,
             );
           },
         ),
