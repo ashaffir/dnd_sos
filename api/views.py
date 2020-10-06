@@ -739,7 +739,7 @@ def payment_method(request):
                 profile.preferred_payment_method = 'PayPal'
                 profile.paypal_account = paypal
                 profile.save()
-                data['response'] = "OK"
+                data['response'] = "PayPal"
             else:
                 data['response'] = 'paypal missing'
                 return Response(data)
@@ -747,7 +747,7 @@ def payment_method(request):
         elif preferred_payment_method == 'bank' and profile.bank_details is not None:
             profile.preferred_payment_method = 'Bank'
             profile.save()
-            data['response'] = "OK"
+            data['response'] = "Bank"
         else:
             data['response'] = "data missing"
 
