@@ -691,16 +691,19 @@ def user_credit_card(request):
                 
                 credit_token = create_card_token(owner_id, due_date_yymm, card_number)
 
-                print(f'''Updating credit card with:
+                msg = f'''Updating credit card with:
                 one: {owner_name}
                 id: {owner_id}
                 Expiry: {due_date_yymm}
                 Card number: {card_number}
                 Response from iCredit: {credit_token}
-                ''')
+                '''
 
+                print(msg)
+                logger.info(msg)
             
             except Exception as e:
+                logger.error(f'Fail communication with the iCredit server. ERROR: {e}')
                 return Response(f'Fail communication with iCredit. ERROR: {e}')
 
             # Saving user's new Token
