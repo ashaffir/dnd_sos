@@ -791,6 +791,7 @@ def bank_details(request):
 
         print('Bank details update successfully!')
         data['response'] = 'OK'
+        data['iban'] = iban
         return Response(data, status=status.HTTP_200_OK)
     else:
         return Response(status.HTTP_400_BAD_REQUEST)
