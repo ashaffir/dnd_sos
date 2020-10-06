@@ -1359,11 +1359,26 @@ def phone_verification(request):
             if serializer.is_valid():            
                 data = serializer.data
                 if verification_status == 'approved':
-                    user.phone = new_phone
-                    user.save()
-                    data['response'] = 'Update successful'
-            
-                    check_profile_approved(user.pk, request.data['is_employee'])
+                    # Save to profile
+                    try:
+                        user.phone = new_phone
+                        user.save()
+                        data['response'] = 'Update successful'
+                        check_profile_approved(user.pk, request.data['is_employee'])
+                    except Exception as e:
+                        print(f'Faied to update PROFILE phone. E: {e}')
+                        logger.error(f'Faied to update PROFILE phone. E: {e}')
+                        data['response'] = 'Update Profile phone Failed'
+                        
+                    # Save to User
+                    try:
+                        user.user.phone_number = new_phone
+                        user.user.save()
+                        data['response'] = 'Update successful'
+                    except Exception as e:
+                        print(f'Faied to update USER phone. E: {e}')
+                        logger.error(f'Faied to update USER phone. E: {e}')
+                        data['response'] = 'Update USER phone Failed'
 
                     return Response(data)
                 else:
