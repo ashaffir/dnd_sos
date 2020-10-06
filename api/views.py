@@ -581,7 +581,8 @@ def user_profile(request):
             
 
     
-
+    # Sending user information to the app
+    ########################
     if request.method == 'POST':
         print(f'REQUEST: {request.data}')
         data = {}
@@ -620,43 +621,73 @@ def user_profile(request):
 
         return Response(data)
 
+    # Updating user profile information
+    ######################
     elif request.method == 'PUT':
+        print(f'REQUEST: {request.data}')
         if serializer.is_valid():
-            # if (new_status == 'STARTED' and old_status == 'REQUESTED') or  (new_status == 'STARTED' and old_status == 'RE_REQUESTED'):
             try:
-                if request.data['first_name']:
-                    updated_order = serializer.save()
-                    data = serializer.data
-                    data['response'] = 'Update successful'
-                    print(f'NAME update: {request.data["first_name"]}')
-            except:
-                pass
-            try:
-                if request.data['phone_number']:
-                    updated_order = serializer.save()
-                    data = serializer.data
-                    data['response'] = 'Update successful'
-                    print(f'PHONE update: {request.data["phone_number"]}')
-            except:
-                pass
-            
-            try:
-                if request.data['vehicle']:
-                    updated_order = serializer.save()
-                    data = serializer.data
-                    data['response'] = 'Update successful'
-                    print(f'VEHICLE update: {request.data["vehicle"]}')
-            except:
-                pass
+                serializer.save()
+                print(f'SER: {serializer.data}')
+                data = serializer.data
+                data['response'] = 'Update successful'
 
-            try:
-                if request.data['email']:
-                    updated_order = serializer.save()
-                    data = serializer.data
-                    data['response'] = 'Update successful'
-                    print(f'EMAIL update: {request.data["email"]}')
-            except:
-                pass
+                # Updating business user first name
+                try:
+                    user.user.first_name = request.data['business_name']
+                    user.user.save()
+                except Exception as e:
+                    print(f'Business name was not update. E: {e}')
+                    logger.info(f'Business name was not update. E: {e}')
+            except Exception as e:
+                print(f'Profile was not updated. E: {e}')
+                logger.info(f'Profile was not updated. E: {e}')
+
+
+            # try:
+            #     if request.data['first_name']:
+            #         print('> Updating name')
+            #         updated_order = serializer.save()
+            #         data = serializer.data
+            #         data['response'] = 'Update successful'
+            #         print(f'NAME update: {request.data["first_name"]}')
+            # except Exception as e:
+            #     print(f'Name was not updated. E: {e}')
+            #     logger.info(f'Name was not updated. E: {e}')
+            # try:
+            #     if request.data['phone_number']:
+            #         print('> Updating phone')
+            #         updated_order = serializer.save()
+            #         data = serializer.data
+            #         data['response'] = 'Update successful'
+            #         print(f'PHONE update: {request.data["phone_number"]}')
+            # except Exception as e:
+            #     print(f'Phone was not updated. E: {e}')
+            #     logger.info(f'Phone was not updated. E: {e}')
+
+            
+            # try:
+            #     if request.data['vehicle']:
+            #         print('> Updating vehicle')
+            #         updated_order = serializer.save()
+            #         data = serializer.data
+            #         data['response'] = 'Update successful'
+            #         print(f'VEHICLE update: {request.data["vehicle"]}')
+            # except Exception as e:
+            #     print(f'Vehicle was not updated. E: {e}')
+            #     logger.info(f'Vehicle was not updated. E: {e}')
+
+            # try:
+            #     if request.data['email']:
+            #         print('> Updating email')
+            #         updated_order = serializer.save()
+            #         data = serializer.data
+            #         data['response'] = 'Update successful'
+            #         print(f'EMAIL update: {request.data["email"]}')
+            #         print(f'HHHHHH: {data}')
+            # except Exception as e:
+            #     print(f'Email was not updated. E: {e}')
+            #     logger.info(f'Email was not updated. E: {e}')
 
         else:
             data = serializer.errors
