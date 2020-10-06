@@ -90,7 +90,7 @@ def calculate_freelancer_total_rating(f_id):
         total_rating = round(total_rating/ratings,2)
 
     else:
-        total_rating = order.freelancer_rating
+        total_rating = freelancer_orders[0].freelancer_rating
 
     freelancer.freelancer_total_rating = total_rating
     freelancer.save()
