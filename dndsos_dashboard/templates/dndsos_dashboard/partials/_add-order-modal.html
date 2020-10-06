@@ -3,6 +3,11 @@
 {% get_current_language as lang %}
 
 {% if business_profile.is_approved %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initAutocomplete&libraries=places&v=weekly" defer>
+    </script>
+
 <a class="mb-xs mt-xs mr-xs btn btn-primary" data-toggle="modal" data-target="#modalAddOrder">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></a>
 {% else %}
 <h4 style="color: red;"><i class="fa fa-exclamation"></i> {% trans 'Please complete your profile before adding orders' %}. 
@@ -36,6 +41,12 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">* {% trans 'City' %}</label>
+                            <div class="col-sm-37">
+                                <input type="text" id="where_load">
+                             </div>
+                             <div class="col-sm-37">
+                                <input type="text" id="to_autocomplete">
+                             </div>
                             <div class="col-sm-9">
                                 <select id="city" name="city" class="form-control" required>
                                     <option value="none">{% trans 'Choose a City' %}</option>
@@ -96,7 +107,6 @@
         </div>
     </div>
 </div>
-
 
 <script type="text/javascript">
     /*

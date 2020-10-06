@@ -1,13 +1,7 @@
 import 'package:pickndell/common/error_page.dart';
-import 'package:pickndell/common/helper.dart';
-import 'package:pickndell/home/dashboard.dart';
-import 'package:pickndell/home/home_page_isolate.dart';
-import 'package:pickndell/login/message_page.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
-import 'package:pickndell/repository/user_repository.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/progress_indicator.dart';

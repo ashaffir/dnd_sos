@@ -261,6 +261,8 @@
                                     </div>
                                 </div>
                             </section>
+                            <center><h3>{% trans 'You current courier rating' %}: {% if user.freelancer.freelancer_total_rating is None %} <b>{%trans 'Not rated' %}</b>  
+                                {% else %} {{ user.freelancer.freelancer_total_rating }} {% endif %}</h3></center>
                         </div>
                     </div>
                 </div>

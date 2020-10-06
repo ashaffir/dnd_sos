@@ -7,6 +7,8 @@ from django.template import RequestContext, TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.conf import settings
 
+from .models import Employee, Employer
+from orders.models import Order
 
 def send_mail(subject, email_template_name,
               context, to_email, html_email_template_name=None, request=None, from_email=None):
@@ -71,3 +73,24 @@ def check_captcha(request):
     response = json.loads(r.text)
     verify = response['success']
     return verify
+
+def calculate_freelancer_total_rating(f_id):
+    # Calculating overall freelancer rating
+    freelancer = Employee.objects.get(pk=f_id)
+    freelancer_orders = Order.objects.filter(freelancer=f_id, status='COMPLETED')
+
+    if len(freelancer_orders) > 1:
+        total_rating = 0
+        ratings = 0
+        for order in freelancer_orders:
+            if order.freelancer_rating:
+                total_rating += order.freelancer_rating
+                ratings += 1
+        
+        total_rating = round(total_rating/ratings,2)
+
+    else:
+        total_rating = order.freelancer_rating
+
+    freelancer.freelancer_total_rating = total_rating
+    freelancer.save()

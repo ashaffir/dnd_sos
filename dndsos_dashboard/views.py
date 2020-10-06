@@ -37,7 +37,7 @@ from core.decorators import employer_required, employee_required
 from .forms import BusinessUpdateForm, FreelancerUpdateForm, BankDetailsForm
 from .models import Email
 from orders.models import Order
-from .utilities import send_mail
+from .utilities import send_mail, calculate_freelancer_total_rating
 from geo.models import Street, CityModel
 from geo.geo_utils import location_calculator
 from payments.views import add_card, remove_card, credit_card_form, get_credit_card_information
@@ -494,24 +494,7 @@ def orders(request, b_id):
                 order.save()
 
                 # Calculating overall freelancer rating
-                freelancer = Employee.objects.get(pk=order.freelancer.freelancer.pk)
-                freelancer_orders = Order.objects.filter(freelancer=order.freelancer.freelancer.pk)
-
-                if len(freelancer_orders) > 1:
-                    total_rating = 0
-                    ratings = 0
-                    for order in freelancer_orders:
-                        if order.freelancer_rating:
-                            total_rating += order.freelancer_rating
-                            ratings += 1
-                    
-                    total_rating = round(total_rating/ratings,2)
-
-                else:
-                    total_rating = order.freelancer_rating
-
-                freelancer.freelancer_total_rating = total_rating
-                freelancer.save()
+                calculate_freelancer_total_rating(order.freelancer.freelancer.pk)
 
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             

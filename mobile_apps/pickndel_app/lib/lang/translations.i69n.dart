@@ -35,6 +35,14 @@ String _cardinal(int count,
 
 class Translations implements i69n.I69nMessageBundle {
   const Translations();
+  String get main => "Main";
+  String get open_orders => "Open Orders";
+  String get active_orders => "Active Orders";
+  String get business_orders => "Orders in Progress";
+  String get business_orders_in_progress => "Orders in Progress";
+  String get rejected_orders => "Rejected Orders";
+  String get delivered_orders => "Delivered Orders";
+  String get alerts => "Alerts";
   String get loginPageTitle => "PickNdell Login";
   String get email => "email";
   String get usernmane => "Username";
@@ -74,6 +82,8 @@ class Translations implements i69n.I69nMessageBundle {
   String get change_the_category => "Change the category";
   String get change_the_vehicle => "Change the vehicle";
   String get enter_with_country_code => "Enter phone with country code, e.g.";
+  String get phone_number_is_not_valid => "Phone number is not valid";
+  String get please_enter_a_valid_phone => "Please enter a valid new phone";
   String get enter_here => "Enter here";
   String get update => "Update";
   String get profile_update_title => "Profile Update";
@@ -125,9 +135,11 @@ class Translations implements i69n.I69nMessageBundle {
   String get please_select_vehicle =>
       "Please select the type of vehicle you user";
   String get updating => "Updating";
+  String get orders => "Orders";
   String get orders_title_open => "Open Orders";
   String get orders_title_active => "Active Orders";
   String get orders_title_business => "Current Open Orders";
+  String get orders_title_new_orders => "New Orders";
   String get orders_title_rejected => "Orders Require Your Attention";
   String get orders_created => "Created";
   String get orders_update => "Updated";
@@ -160,6 +172,7 @@ class Translations implements i69n.I69nMessageBundle {
       "New. Waiting for courier allocation";
   String get orders_status_waiting_delivery => "Picked up. Waiting Delivery";
   String get orders_status_rejected => "Rejected Order";
+  String get orders_status_delivered => "Order Delivered";
   String get orders_request_courier => "Request Courier";
   String get orders_check => "Please check";
   String get orders_empty_list => "Order list is Empty";
@@ -177,6 +190,8 @@ class Translations implements i69n.I69nMessageBundle {
   String get orders_delivery_success =>
       "Delivery and confirmation photo updated. Good Job!";
   String get orders_change_status => "Change Status";
+  String get orders_status => "status";
+  String get orders_urgent => "URGENT";
   String get messages_register_title => "Confirmation";
   String get messages_register_thanks => "Thank you";
   String get messages_register_activation =>
@@ -216,6 +231,12 @@ class Translations implements i69n.I69nMessageBundle {
   String get order_delivered => "Order Delivered";
   String get orders_update_error =>
       "There was an error updating this order. Please try again later";
+  String get orders_rate_courier => "Rate the courier";
+  String get orders_you_rated_courier => "You rated courier";
+  String get please_choose_rating => "Please choose rating";
+  String get click_or_drag_stars => "Click or drag the stars";
+  String get courier_rating_updated => "Courier rating was updated";
+  String get thank_you => "Thank you";
   String get report_package_delivery => "Report package delivery";
   String get take_photo_of_delivery => "Take a photo of the delivery";
   String get image_not_selected => "No image selected";
@@ -287,6 +308,22 @@ class Translations implements i69n.I69nMessageBundle {
           as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
+      case 'main':
+        return main;
+      case 'open_orders':
+        return open_orders;
+      case 'active_orders':
+        return active_orders;
+      case 'business_orders':
+        return business_orders;
+      case 'business_orders_in_progress':
+        return business_orders_in_progress;
+      case 'rejected_orders':
+        return rejected_orders;
+      case 'delivered_orders':
+        return delivered_orders;
+      case 'alerts':
+        return alerts;
       case 'loginPageTitle':
         return loginPageTitle;
       case 'email':
@@ -361,6 +398,10 @@ class Translations implements i69n.I69nMessageBundle {
         return change_the_vehicle;
       case 'enter_with_country_code':
         return enter_with_country_code;
+      case 'phone_number_is_not_valid':
+        return phone_number_is_not_valid;
+      case 'please_enter_a_valid_phone':
+        return please_enter_a_valid_phone;
       case 'enter_here':
         return enter_here;
       case 'update':
@@ -457,12 +498,16 @@ class Translations implements i69n.I69nMessageBundle {
         return please_select_vehicle;
       case 'updating':
         return updating;
+      case 'orders':
+        return orders;
       case 'orders_title_open':
         return orders_title_open;
       case 'orders_title_active':
         return orders_title_active;
       case 'orders_title_business':
         return orders_title_business;
+      case 'orders_title_new_orders':
+        return orders_title_new_orders;
       case 'orders_title_rejected':
         return orders_title_rejected;
       case 'orders_created':
@@ -523,6 +568,8 @@ class Translations implements i69n.I69nMessageBundle {
         return orders_status_waiting_delivery;
       case 'orders_status_rejected':
         return orders_status_rejected;
+      case 'orders_status_delivered':
+        return orders_status_delivered;
       case 'orders_request_courier':
         return orders_request_courier;
       case 'orders_check':
@@ -555,6 +602,10 @@ class Translations implements i69n.I69nMessageBundle {
         return orders_delivery_success;
       case 'orders_change_status':
         return orders_change_status;
+      case 'orders_status':
+        return orders_status;
+      case 'orders_urgent':
+        return orders_urgent;
       case 'messages_register_title':
         return messages_register_title;
       case 'messages_register_thanks':
@@ -617,6 +668,18 @@ class Translations implements i69n.I69nMessageBundle {
         return order_delivered;
       case 'orders_update_error':
         return orders_update_error;
+      case 'orders_rate_courier':
+        return orders_rate_courier;
+      case 'orders_you_rated_courier':
+        return orders_you_rated_courier;
+      case 'please_choose_rating':
+        return please_choose_rating;
+      case 'click_or_drag_stars':
+        return click_or_drag_stars;
+      case 'courier_rating_updated':
+        return courier_rating_updated;
+      case 'thank_you':
+        return thank_you;
       case 'report_package_delivery':
         return report_package_delivery;
       case 'take_photo_of_delivery':

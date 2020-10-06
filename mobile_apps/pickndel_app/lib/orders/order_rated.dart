@@ -1,27 +1,24 @@
 import 'package:pickndell/common/error_page.dart';
-import 'package:pickndell/common/helper.dart';
-
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
-import 'package:pickndell/repository/order_repository.dart';
+import 'package:pickndell/networking/ApiProvider.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
-import 'package:pickndell/ui/buttons.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../common/global.dart';
 
-class OrderPickedup extends StatefulWidget {
+class OrderRated extends StatefulWidget {
   final Order order;
   final User user;
-  OrderPickedup({this.order, this.user});
+  final double rating;
+  OrderRated({this.order, this.user, this.rating});
 
   @override
-  _OrderPickedupState createState() => _OrderPickedupState();
+  _OrderRatedState createState() => _OrderRatedState();
 }
 
-class _OrderPickedupState extends State<OrderPickedup> {
+class _OrderRatedState extends State<OrderRated> {
   @override
   void initState() {
     super.initState();
@@ -31,42 +28,44 @@ class _OrderPickedupState extends State<OrderPickedup> {
 
   Widget build(BuildContext context) {
     final translations = ExampleLocalizations.of(context);
+
     return FutureBuilder(
-      future: updateOrderPickedup(widget.order, widget.user),
+      future: updateOrderRating(widget.order, widget.rating),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          print('ORDER PICKED UP: ${snapshot.data["response"]}');
+          print('ORDER RATED: ${snapshot.data["response"]}');
 
           if (snapshot.data["response"] == "Update successful") {
-            return getOrderPickedupPage(widget.order);
+            return getOrderRatedPage(widget.order);
           } else if (snapshot.data["response"] == "Update failed") {
-            return orderPickedupErrorPage();
+            return orderRatedErrorPage();
           } else {
-            return orderPickedupErrorPage();
+            return orderRatedErrorPage();
           }
         } else {
           print("No data:");
         }
-        print('WAITING FOR ORDER PICKUP UPDATE');
-        String loaderText = translations.order_a_updating + "...";
+        print('WAITING FOR ORDER RATING UPDATE');
+        String loaderText = "Updating Order...";
 
         return ColoredProgressDemo(loaderText);
       },
     );
   }
 
-  Future updateOrderPickedup(Order order, User user) async {
-    print('Order picked up');
-    final trans = ExampleLocalizations.of(context);
+  Future updateOrderRating(Order order, double rating) async {
+    ApiProvider _provider = ApiProvider();
 
-    var orderId = order.order_id;
+    final trans = ExampleLocalizations.of(context);
+    var _url = "order-ratings/";
     try {
-      final orderUpdated = await OrderRepository(user: user, context: context)
-          .updateOrder(orderId, 'IN_PROGRESS');
-      print('orderUpdated: $orderUpdated');
-      return orderUpdated;
+      // var user = await UserDao().getUser(0);
+      var response =
+          await _provider.rating(_url, order.order_id, widget.user, rating);
+
+      return response;
     } catch (e) {
-      print('Failed report order picked up. E: $e');
+      print('UPDATE ORDER ERROR: $e');
       return Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -82,24 +81,30 @@ class _OrderPickedupState extends State<OrderPickedup> {
     }
   }
 
-  Widget getOrderPickedupPage(Order order) {
+  Widget getOrderRatedPage(Order order) {
     final translations = ExampleLocalizations.of(context);
+
     return new Scaffold(
       // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text(translations.order_p_picked),
+        title: Text(translations.orders_update),
       ),
       body: Container(
         padding: EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Spacer(
               flex: 2,
             ),
+            Center(
+              child: Text(
+                translations.courier_rating_updated,
+                style: bigLightBlueTitle,
+              ),
+            ),
             Text(
-              translations.order_p_report,
+              translations.thank_you,
               style: bigLightBlueTitle,
             ),
             Spacer(
@@ -112,12 +117,6 @@ class _OrderPickedupState extends State<OrderPickedup> {
             Spacer(
               flex: 4,
             ),
-            DashboardButton(
-              buttonText: translations.back_to_dashboard,
-            ),
-            Spacer(
-              flex: 4,
-            ),
           ],
         ),
       ),
@@ -127,17 +126,18 @@ class _OrderPickedupState extends State<OrderPickedup> {
     );
   }
 
-  Widget orderPickedupErrorPage() {
+  Widget orderRatedErrorPage() {
     final translations = ExampleLocalizations.of(context);
+
     return new Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
-        title: Text(translations.order_p_picked),
+        title: Text(translations.orders_error),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
+        // padding: EdgeInsets.only(left: 50),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Spacer(
@@ -147,32 +147,10 @@ class _OrderPickedupState extends State<OrderPickedup> {
               translations.order_p_problem,
               style: bigLightBlueTitle,
             ),
-            Spacer(
-              flex: 2,
-            ),
             Image.asset(
               'assets/images/fail-icon.png',
               width: MediaQuery.of(context).size.width * 0.50,
             ),
-            Spacer(
-              flex: 4,
-            ),
-            Row(
-              children: [
-                Text(translations.order_p_update_pnd),
-                Padding(padding: EdgeInsets.only(right: 10)),
-                IconButton(
-                    icon: Icon(Icons.email),
-                    onPressed: () {
-                      print('Contact email sent');
-                      launch(_emailLaunchUri.toString());
-                    }),
-              ],
-            ),
-            Spacer(
-              flex: 2,
-            ),
-            DashboardButton(),
             Spacer(
               flex: 4,
             ),
@@ -184,9 +162,4 @@ class _OrderPickedupState extends State<OrderPickedup> {
       ),
     );
   }
-
-  final Uri _emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: 'info@pickndell.com',
-      queryParameters: {'subject': 'PickNdell Support - Error Updating Order'});
 }

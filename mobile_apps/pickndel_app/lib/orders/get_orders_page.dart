@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:pickndell/lang/lang_helper.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
@@ -16,6 +17,14 @@ import 'package:pickndell/networking/Response.dart';
 import 'package:pickndell/model/open_orders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class FilteredOrders {
+  final String title;
+  final String uri;
+  final String ordersType;
+  final Icon icon;
+  FilteredOrders({this.title, this.uri, this.ordersType, this.icon});
+}
+
 class GetOrders extends StatefulWidget {
   final String ordersType;
   final User user;
@@ -31,6 +40,7 @@ class _GetOrdersState extends State<GetOrders> {
   bool locationTracking;
   User _currentUser;
   String _country;
+  String _userCountry;
 
   Future<bool> _checkTrackingStatus() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -43,12 +53,41 @@ class _GetOrdersState extends State<GetOrders> {
   }
 
   Future _checkCountry() async {
-    _country = await getCountryName();
+    _userCountry = await getCountryName();
+    setState(() {
+      _country = _userCountry;
+    });
   }
 
   Future _checkUser() async {
     _currentUser = await UserDao().getUser(0);
   }
+
+  FilteredOrders _filteredOrders;
+  List<FilteredOrders> _filteredOrdersList = <FilteredOrders>[
+    FilteredOrders(
+        title: 'All Orders',
+        uri: '/business-orders',
+        ordersType: 'businessOrders'),
+    FilteredOrders(
+        title: 'Requested',
+        uri: '/requested-orders',
+        ordersType: 'requestedOrders'),
+    FilteredOrders(
+        title: 'Started', uri: '/started-orders', ordersType: 'startedOrders'),
+    FilteredOrders(
+        title: 'In Progress',
+        uri: '/in-progress-orders',
+        ordersType: "inProgressOrders"),
+    FilteredOrders(
+        title: 'Delivered',
+        uri: '/delivered-orders',
+        ordersType: 'deliveredOrders'),
+    FilteredOrders(
+        title: 'Rejected',
+        uri: '/rejected-orders',
+        ordersType: 'rejectedOrders')
+  ];
 
   @override
   void initState() {
@@ -56,7 +95,8 @@ class _GetOrdersState extends State<GetOrders> {
     _checkUser();
     _checkTrackingStatus();
     _checkCountry();
-    _bloc = OrdersBloc(widget.ordersType);
+    _bloc = OrdersBloc(
+        context: context, ordersType: widget.ordersType, user: widget.user);
   }
 
   @override
@@ -77,17 +117,71 @@ class _GetOrdersState extends State<GetOrders> {
       appBar: AppBar(
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        title: Text(
-            widget.ordersType == 'openOrders'
-                ? translations.orders_title_open
-                : widget.ordersType == 'activeOrders'
-                    ? translations.orders_title_active
-                    : widget.ordersType == 'businessOrders'
-                        ? translations.orders_title_business
-                        : widget.ordersType == 'rejectedOrders'
-                            ? translations.orders_title_rejected
-                            : '---',
-            style: TextStyle(color: Colors.white, fontSize: 20)),
+        title: Row(
+          children: [
+            Text(
+                widget.ordersType == 'openOrders'
+                    ? translations.orders_title_open
+                    : widget.ordersType == 'activeOrders'
+                        ? translations.orders_title_active
+                        : widget.ordersType == 'businessOrders'
+                            ? translations.orders_title_open
+                            : widget.ordersType == 'rejectedOrders'
+                                ? translations.alerts
+                                : widget.ordersType == 'requestedOrders'
+                                    ? translations.orders_title_new_orders
+                                    : widget.ordersType == 'startedOrders'
+                                        ? translations.orders_title_business
+                                        : widget.ordersType ==
+                                                'inProgressOrders'
+                                            ? translations
+                                                .business_orders_in_progress
+                                            : widget.ordersType ==
+                                                    'deliveredOrders'
+                                                ? translations.delivered_orders
+                                                : '---',
+                style: TextStyle(color: Colors.white, fontSize: 20)),
+            if (widget.user.isEmployee == 0)
+              DropdownButton(
+                underline: SizedBox(),
+                icon: Icon(Icons.filter_list),
+                value: _filteredOrders,
+                onChanged: (value) {
+                  print('Filter: $_country');
+                  setState(() {
+                    print('VALUE: ${value.title}');
+                    _filteredOrders = value;
+                  });
+                  print('Filtering: ${_filteredOrders.uri}');
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return GetOrders(
+                          user: widget.user,
+                          ordersType: _filteredOrders.ordersType,
+                        );
+                      },
+                    ),
+                    (Route<dynamic> route) =>
+                        false, // No Back option for this page
+                  );
+                  // Navigator.pushReplacementNamed(
+                  //     context, '${_filteredOrders.uri}');
+                },
+                items: _filteredOrdersList
+                    .map<DropdownMenuItem<FilteredOrders>>(
+                        (FilteredOrders value) {
+                  return DropdownMenuItem<FilteredOrders>(
+                    value: value,
+                    child: _country == 'Israel' || _country == 'ישראל'
+                        ? Text(translateOrdersList(value.title))
+                        : Text(value.title),
+                  );
+                }).toList(),
+              ),
+          ],
+        ),
         backgroundColor: mainBackground,
       ),
       // backgroundColor: mainBackground,
@@ -117,8 +211,7 @@ class _GetOrdersState extends State<GetOrders> {
                 case Status.ERROR:
                   return ErrorPage(
                     user: widget.user,
-                    errorMessage:
-                        'There is a problem communicating with our server. Please try again later.',
+                    errorMessage: translations.messages_communication_error,
                     // onRetryPressed: () => _bloc.fetchOrder(),
                   );
                   break;

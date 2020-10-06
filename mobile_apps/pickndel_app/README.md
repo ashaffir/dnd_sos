@@ -68,6 +68,9 @@ Build commands:
 * Make sure the hot-builder is running (dynamically updates the changes in the Yaml files):
 > flutter packages pub run build_runner watch --delete-conflicting-outputs
 
+* Text direction: 
+- Directionality widget (https://stackoverflow.com/questions/50535185/right-to-left-rtl-in-flutter)
+
 * Add the key for the translated text in each Yaml file (each language)
 * Add the pointer to that key in the code (instead of the text, e.g. translation.loginPageTitle)
 * Restart the app

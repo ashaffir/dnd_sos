@@ -241,11 +241,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # Email Setup
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST = 'smtp.privateemail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'info@pickndell.com'
+EMAIL_HOST_USER = 'pickndell@gmail.com'
 EMAIL_HOST_PASSWORD = config['EMAIL_HOST_PASSWORD']
-DEFAULT_FROM_EMAIL = 'info@pickndell.com'
+DEFAULT_FROM_EMAIL = 'support@pickndell.com'
 
 # Private Email (Namecheap.com)
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

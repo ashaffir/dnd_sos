@@ -67,7 +67,13 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
                 code: widget.value,
                 operation: widget.operation),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasError) {
+            print('Failed to update the email. ERROR: ${snapshot.hasError}');
+            return ErrorPage(
+              user: widget.user,
+              errorMessage: 'The email entered was not valid.',
+            );
+          } else if (snapshot.hasData) {
             print(
                 '> STAGE 7) Cheking the response from the server: ${snapshot.data}');
 
@@ -75,14 +81,20 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
               print(
                   '> STAGE 8) Code verified successfully. Getting the temporary ${widget.updateField}...');
 
-              var data = widget.updateField == 'email'
-                  ? {"email": tmail}
-                  : {'phone': tphone};
+              var data = snapshot.data;
+              if (widget.updateField == 'email') {
+                data["email"] = tmail;
+              }
+
+              if (widget.updateField == 'phone') {
+                data["phone"] = tphone;
+              }
 
               print('> STAGE 9) Updating DB with data: $data');
-              rowUpdate(data);
 
-              print('> STAGE 10) FINISHED PROFILE UPDATED!!!!');
+              profileDBUpdate(data);
+
+              print('> STAGE 10) FINISHED PROFILE PHONE UPDATED!!!!');
               return getProfileUpdatedPage(snapshot.data);
             } else if (snapshot.data["response"] == "Update failed") {
               print('> STAGE 8.a) Falied with server response. ');
@@ -112,24 +124,22 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
                 : updateRemoteProfile(widget.updateField, widget.value),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            print('PROFILE UPDATED: ${snapshot.data}');
+            print('PROFILE UPDATED WITH: ${snapshot.data}');
 
             if (snapshot.data["response"] == "Update successful") {
-              var data = widget.updateField == 'credit_card'
-                  ? {'credit_card_token': snapshot.data['credit_card_token']}
-                  : snapshot.data;
+              var data = snapshot.data;
 
-              rowUpdate(data);
+              profileDBUpdate(data);
 
-              print('FINISHED PROFILE UPDATED!!!!');
-              if (widget.updateField == 'name') {
-                // return HomePageIsolate();
-                return ProfilePage(
-                  user: widget.user,
-                );
-              } else {
-                return getProfileUpdatedPage(snapshot.data);
-              }
+              print('PROFILE DB UPDATED');
+              // if (widget.updateField == 'name') {
+              //   // return HomePageIsolate();
+              //   return ProfilePage(
+              //     user: widget.user,
+              //   );
+              // } else {
+              return getProfileUpdatedPage(snapshot.data);
+              // }
             } else if (snapshot.data['response'] == 'ID updated') {
               return getProfileUpdatedPage(snapshot.data['response']);
             } else if (snapshot.data["response"] == "Update failed") {
@@ -153,7 +163,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
 
   // REFERENCE: Updating row in the DB
   //https://stackoverflow.com/questions/54102043/how-to-do-a-database-update-with-sqflite-in-flutter
-  Future<int> rowUpdate(dynamic data) async {
+  Future<int> profileDBUpdate(dynamic data) async {
     final db = await dbProvider.database;
     // final currentUser = await UserDao().getUser(0);
     final currentUser = widget.user;
@@ -293,7 +303,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
           builder: (context) {
             return ErrorPage(
               user: widget.user,
-              errorMessage: trans.messages_communication_error,
+              errorMessage: trans.profile_update_error,
             );
           },
         ),
@@ -402,12 +412,19 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
                 ),
               ),
 
-              Padding(
-                padding: EdgeInsets.only(top: 100),
-              ),
-              DashboardButton(
-                buttonText: trans.back_to_dashboard,
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(top: 100),
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     DashboardButton(
+              //       buttonText: trans.back_to_dashboard,
+              //     ),
+              //     ProfileButton(
+              //         buttonText: trans.back_to_profile, user: widget.user),
+              //   ],
+              // ),
 
               // DashboardButton(),
             ],

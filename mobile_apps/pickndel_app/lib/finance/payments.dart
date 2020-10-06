@@ -169,22 +169,25 @@ class _PaymentsPageState extends State<PaymentsPage> {
                         }),
                     SizedBox(
                       width: 200,
-                      child: TextFormField(
-                        controller: _paypalAccount,
-                        decoration: InputDecoration(
-                            // prefixIcon: Icon(Icons.monetization_on),
-                            labelText: trans.paypal_account_here),
-                        validator: (value) {
-                          if (value != null) {
-                            if (_group == 1) {
-                              if (validateEmail(value) != null) {
-                                return trans.please_enter_valid_paypal;
-                              } else {
-                                return null;
+                      child: Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: TextFormField(
+                          controller: _paypalAccount,
+                          decoration: InputDecoration(
+                              // prefixIcon: Icon(Icons.monetization_on),
+                              labelText: trans.paypal_account_here),
+                          validator: (value) {
+                            if (value != null) {
+                              if (_group == 1) {
+                                if (validateEmail(value) != null) {
+                                  return trans.please_enter_valid_paypal;
+                                } else {
+                                  return null;
+                                }
                               }
                             }
-                          }
-                        },
+                          },
+                        ),
                       ),
                     )
                   ],

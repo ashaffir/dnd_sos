@@ -475,6 +475,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             'Other': 'Other'
         }
 
+        content['is_urgent'] = True if int(content['urgency']) == 2 else False
         content['order_type'] = business_categories[business.business_category]
 
         # Creating the new order

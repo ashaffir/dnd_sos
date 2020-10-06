@@ -87,7 +87,6 @@ class ApiProvider {
     var freelancerPayload;
     var businessPayload;
     var orderUpdatePayload;
-    print('>>>>>>>>>>>> 1 $user <<<<<<<<<<<');
 
     freelancerPayload = {
       'order_id': orderId,
@@ -108,9 +107,36 @@ class ApiProvider {
         },
         body: jsonEncode(orderUpdatePayload),
       );
-      print('>>>>>>>>>>>> 2 <<<<<<<<<<<');
       postResponseJson = _response(response);
-      print('>>>>>>>>>>>> 3 <<<<<<<<<<<');
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return postResponseJson;
+  }
+
+// Updating Orders Ratings
+  Future<dynamic> rating(
+      String url, String orderId, User user, double rating) async {
+    var postResponseJson;
+    var orderUpdatePayload;
+
+    orderUpdatePayload = {
+      'is_employee': 0,
+      'order_id': orderId,
+      'freelancer_rating': rating,
+      'business_rating': ""
+    };
+
+    try {
+      final response = await http.post(
+        _baseUrl + url,
+        headers: <String, String>{
+          "Authorization": "Token ${user.token}",
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(orderUpdatePayload),
+      );
+      postResponseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }

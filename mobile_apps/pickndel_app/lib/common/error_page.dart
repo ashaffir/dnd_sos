@@ -53,7 +53,9 @@ class ErrorPage extends StatelessWidget {
                 flex: 2,
               ),
               user != null
-                  ? DashboardButton()
+                  ? DashboardButton(
+                      buttonText: trans.back_to_dashboard,
+                    )
                   : LoginButton(
                       buttonText: trans.back_to_login,
                     ),
@@ -69,6 +71,9 @@ class ErrorPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigation(
+        user: user,
       ),
     );
   }

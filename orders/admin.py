@@ -7,7 +7,7 @@ from .models import Order
 @admin.register(Order)
 class OrderAdmin(OSMGeoAdmin):
     fields = ( # changed
-        'order_id', 'order_type','order_city_name', 'pick_up_address', 'drop_off_address', 'status',
+        'order_id', 'order_type','order_city_name', 'pick_up_address', 'drop_off_address', 'status','is_urgent',
         'order_lat', 'order_lon','business_lat', 'business_lon', 'order_location',
         'distance_to_business','trip_completed', 'price','fare','private_sale_token','invoice_url',
         'freelancer','freelancer_rating','freelancer_rating_report', 'business','business_rating',
@@ -29,6 +29,6 @@ class OrderAdmin(OSMGeoAdmin):
         'order_id', 'created', 'updated',
     )
 
-    search_fields = ('freelancer__email', 'business__email', )
+    search_fields = ('freelancer__email', 'business__email', 'order_id', )
 
     ordering = ('-updated',)

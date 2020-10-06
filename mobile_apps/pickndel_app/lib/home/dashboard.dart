@@ -7,6 +7,7 @@ import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/location_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/home/profile.dart';
@@ -94,6 +95,8 @@ class _DashboardState extends State<Dashboard> {
   String _country;
 
   Future _checkProfile() async {
+    // final trans = ExampleLocalizations.of(context);
+
     setState(() {
       _updatingProfile = true;
     });
@@ -109,6 +112,17 @@ class _DashboardState extends State<Dashboard> {
       print('DASHBOARD PROFILE: ${_getProfileResponse["bank_details"]}');
     } catch (e) {
       print('ERROR >> DHASBOARD: Failed to update profile. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              errorMessage: 'Server Communication Error',
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
     }
 
     // Update local DB with user info
@@ -144,12 +158,11 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
+    _checkProfile();
     super.initState();
 
     getCountryName();
     if (_emailCodeVerification) {}
-
-    _checkProfile();
 
     /////////////// Device location tracking ///////////////
 
@@ -284,12 +297,9 @@ class _DashboardState extends State<Dashboard> {
     return SafeArea(
       child: Scaffold(
         // appBar: AppBar(
-        //   title: (currentUser.isApproved == 1)
-        //       ? Text('Dashboard')
-        //       : (currentUser.profilePending == 1)
-        //           ? Text(translations.home_title + ' (Pending Approval)')
-        //           : Text(translations.home_title + ' (Not Complete)'),
+        //   title: Text(translations.main),
         // ),
+        // drawer: MainMenu(),
         body: Container(
           child: SingleChildScrollView(
             child: Column(
@@ -304,41 +314,42 @@ class _DashboardState extends State<Dashboard> {
                 ///
                 Padding(padding: EdgeInsets.only(top: 20)),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Spacer(
-                      flex: 1,
-                    ),
+                    // Spacer(
+                    //   flex: 1,
+                    // ),
                     Image.asset(
                       'assets/images/pickndell-logo-white.png',
                       width: MediaQuery.of(context).size.width * 0.40,
                     ),
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilePage(
-                                        user: currentUser,
-                                      )),
-                            );
-                          },
-                          child: Row(
-                            children: <Widget>[
-                              Icon(Icons.person),
-                              Text(translations.profile),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Spacer(
-                      flex: 1,
-                    ),
+                    // Spacer(
+                    //   flex: 1,
+                    // ),
+                    // Column(
+                    //   children: <Widget>[
+                    //     InkWell(
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => ProfilePage(
+                    //                     user: currentUser,
+                    //                   )),
+                    //         );
+                    //       },
+                    //       child: Row(
+                    //         children: <Widget>[
+                    //           Icon(Icons.person),
+                    //           Text(translations.profile),
+                    //         ],
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
+                    // Spacer(
+                    //   flex: 1,
+                    // ),
                   ],
                 ),
                 Padding(
@@ -473,7 +484,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         Padding(padding: EdgeInsets.only(right: 10)),
 
-                        //////////// Courier star ratings: ////////
+                        //////////// Courier/Sender star ratings: ////////
                         SmoothStarRating(
                             rating: currentUser.rating != null
                                 ? currentUser.rating

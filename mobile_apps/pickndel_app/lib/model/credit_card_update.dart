@@ -73,64 +73,53 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                             children: [
                               ///////////////// CARD NUMBER //////////////
 
-                              TextFormField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    labelText: trans.credit_card_number,
-                                    icon: Icon(Icons.credit_card),
-                                    contentPadding: EdgeInsets.only(left: 10),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                controller: cardNumber,
-                                validator: (value) {
-                                  if (validateCard(value)) {
-                                    print('VALID NUMBER');
-                                    return null;
-                                  } else {
-                                    return trans.credit_card_number_not_valid;
-                                  }
-                                },
-                                onChanged: (cardNumber) {
-                                  setState(() {
-                                    creditCardNumber = cardNumber;
-                                  });
-                                  String brand =
-                                      CreditCardValidator.identifyCardBrand(
-                                          cardNumber);
-                                  IconData ccBrandIcon;
-                                  if (brand != null) {
-                                    if (brand == 'visa') {
-                                      ccBrandIcon = FontAwesomeIcons.ccVisa;
-                                    } else if (brand == 'master_card') {
-                                      ccBrandIcon =
-                                          FontAwesomeIcons.ccMastercard;
-                                    } else if (brand == 'american_express') {
-                                      ccBrandIcon = FontAwesomeIcons.ccAmex;
-                                    } else if (brand == 'discover') {
-                                      ccBrandIcon = FontAwesomeIcons.ccDiscover;
+                              Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      labelText: trans.credit_card_number,
+                                      icon: Icon(Icons.credit_card),
+                                      contentPadding: EdgeInsets.only(left: 10),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  controller: cardNumber,
+                                  validator: (value) {
+                                    if (validateCard(value)) {
+                                      print('VALID NUMBER');
+                                      return null;
+                                    } else {
+                                      return trans.credit_card_number_not_valid;
                                     }
-                                  }
-                                  setState(() {
-                                    brandIcon = ccBrandIcon;
-                                  });
-                                },
+                                  },
+                                  onChanged: (cardNumber) {
+                                    setState(() {
+                                      creditCardNumber = cardNumber;
+                                    });
+                                    String brand =
+                                        CreditCardValidator.identifyCardBrand(
+                                            cardNumber);
+                                    IconData ccBrandIcon;
+                                    if (brand != null) {
+                                      if (brand == 'visa') {
+                                        ccBrandIcon = FontAwesomeIcons.ccVisa;
+                                      } else if (brand == 'master_card') {
+                                        ccBrandIcon =
+                                            FontAwesomeIcons.ccMastercard;
+                                      } else if (brand == 'american_express') {
+                                        ccBrandIcon = FontAwesomeIcons.ccAmex;
+                                      } else if (brand == 'discover') {
+                                        ccBrandIcon =
+                                            FontAwesomeIcons.ccDiscover;
+                                      }
+                                    }
+                                    setState(() {
+                                      brandIcon = ccBrandIcon;
+                                    });
+                                  },
+                                ),
                               ),
-                              // SizedBox(
-                              //   height: 5,
-                              // ),
-                              // creditCardNumber.length < 13
-                              //     ? Text('Please enter atleast 13 characters')
-                              //     : CreditCardValidator.isCreditCardValid(
-                              //             cardNumber: creditCardNumber)
-                              //         ? Text(
-                              //             'The credit card number is valid.',
-                              //             style: TextStyle(color: Colors.green),
-                              //           )
-                              //         : Text(
-                              //             'The credit card number is invalid.',
-                              //             style: TextStyle(color: Colors.red),
-                              //           ),
 
                               ///////////////// NAME //////////////
                               Padding(padding: EdgeInsets.only(top: 20.0)),

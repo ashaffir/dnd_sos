@@ -36,6 +36,14 @@ String _cardinal(int count,
 
 class Translations_he extends Translations {
   const Translations_he();
+  String get main => "ראשי";
+  String get open_orders => "הזמנות פתוחות";
+  String get active_orders => "הזמנות פעילות";
+  String get business_orders => "הזמנות בתהליך";
+  String get business_orders_in_progress => "הזמנות בתהליך";
+  String get rejected_orders => "הזמנות שנדחו";
+  String get delivered_orders => "הזמנות שנמסרו";
+  String get alerts => "התראות";
   String get loginPageTitle => "כניסה ל PickNdell";
   String get email => "דוא״ל";
   String get usernmane => "שם משתמש";
@@ -72,6 +80,8 @@ class Translations_he extends Translations {
   String get change_the_email => "שנה את הדואל";
   String get change_the_category => "שנה את הקטגוריה";
   String get change_the_vehicle => "שנה את סוג הרכב";
+  String get phone_number_is_not_valid => "מספר הטלפון אינו תקין";
+  String get please_enter_a_valid_phone => "נא הכנס מספר טלפון תקין";
   String get name_not_valid => "השם שהוזן אינו חוקי";
   String get month_not_valid => "החודש שהוזן לא תקף";
   String get year_not_valid => "השנה שהוזנה לא תקפה";
@@ -122,9 +132,11 @@ class Translations_he extends Translations {
       "אירעה שגיאה בעדכון הפרופיל שלך. בבקשה נסו שוב מאוחר יותר";
   String get please_select_vehicle => "אנא בחר את סוג הרכב בו אתה משתמש";
   String get updating => "מעדכן";
+  String get orders => "הזמנות";
   String get orders_title_open => "הזמנות";
   String get orders_title_active => "הזמנות פעילות";
   String get orders_title_business => "הזמנות פתוחות";
+  String get orders_title_new_orders => "הזמנות חדשות";
   String get orders_title_rejected => "הזמנות מחייבות את תשומת לבך";
   String get orders_created => "התחיל";
   String get orders_update => "עודכן";
@@ -156,6 +168,7 @@ class Translations_he extends Translations {
   String get orders_status_waiting_allocaiton => "חדש. ממתין להקצאת שליח";
   String get orders_status_waiting_delivery => "נאסף. ממתין למסירה";
   String get orders_status_rejected => "מסירה שנדחתה";
+  String get orders_status_delivered => "ההזמנה נמסרה";
   String get orders_request_courier => "בקש שליח";
   String get orders_check => "אנא בדוק";
   String get orders_empty_list => "רשימת ההזמנות ריקה";
@@ -167,6 +180,14 @@ class Translations_he extends Translations {
   String get orders_delivery_success =>
       "המסירה ותמונת האישור עודכנו בהצלחה. עבודה טובה!";
   String get orders_change_status => "שנה סטטוס";
+  String get orders_status => "סטטוס";
+  String get orders_urgent => "דחוף";
+  String get orders_rate_courier => "דרג את השליח";
+  String get orders_you_rated_courier => "דירגת את השליח";
+  String get please_choose_rating => "אנא בחר דירוג";
+  String get click_or_drag_stars => "לחץ או גרור את הכוכבים";
+  String get courier_rating_updated => "דירוג השליח עודכן";
+  String get thank_you => "תודה רבה";
   String get messages_register_title => "אשר";
   String get messages_register_thanks => "תודה";
   String get messages_register_activation =>
@@ -242,7 +263,7 @@ class Translations_he extends Translations {
   String get credit_card_number => "מספר כרטיס אשראי";
   String get credit_card_number_not_valid => "מספר כרטיס האשראי אינו חוקי";
   String get restaurant => "מִסעָדָה";
-  String get package_type => "סוג האריזה";
+  String get package_type => "סוג המשלוח";
   String get urgency => "דְחִיפוּת";
   String get payments => "תשלומים";
   String get balance => "מאזן";
@@ -251,7 +272,7 @@ class Translations_he extends Translations {
   String get none => "לא מוגדר";
   String get bank => "בנק";
   String get paypal => "PayPal";
-  String get paypal_account_here => "חשבון Paypal כאן";
+  String get paypal_account_here => "חשבון PayPal";
   String get bank_account => "חשבון בנק";
   String get update_bank_details => "עדכן את פרטי הבנק";
   String get please_select_payment_method =>
@@ -273,6 +294,22 @@ class Translations_he extends Translations {
           as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
+      case 'main':
+        return main;
+      case 'open_orders':
+        return open_orders;
+      case 'active_orders':
+        return active_orders;
+      case 'business_orders':
+        return business_orders;
+      case 'business_orders_in_progress':
+        return business_orders_in_progress;
+      case 'rejected_orders':
+        return rejected_orders;
+      case 'delivered_orders':
+        return delivered_orders;
+      case 'alerts':
+        return alerts;
       case 'loginPageTitle':
         return loginPageTitle;
       case 'email':
@@ -345,6 +382,10 @@ class Translations_he extends Translations {
         return change_the_category;
       case 'change_the_vehicle':
         return change_the_vehicle;
+      case 'phone_number_is_not_valid':
+        return phone_number_is_not_valid;
+      case 'please_enter_a_valid_phone':
+        return please_enter_a_valid_phone;
       case 'name_not_valid':
         return name_not_valid;
       case 'month_not_valid':
@@ -443,12 +484,16 @@ class Translations_he extends Translations {
         return please_select_vehicle;
       case 'updating':
         return updating;
+      case 'orders':
+        return orders;
       case 'orders_title_open':
         return orders_title_open;
       case 'orders_title_active':
         return orders_title_active;
       case 'orders_title_business':
         return orders_title_business;
+      case 'orders_title_new_orders':
+        return orders_title_new_orders;
       case 'orders_title_rejected':
         return orders_title_rejected;
       case 'orders_created':
@@ -509,6 +554,8 @@ class Translations_he extends Translations {
         return orders_status_waiting_delivery;
       case 'orders_status_rejected':
         return orders_status_rejected;
+      case 'orders_status_delivered':
+        return orders_status_delivered;
       case 'orders_request_courier':
         return orders_request_courier;
       case 'orders_check':
@@ -527,6 +574,22 @@ class Translations_he extends Translations {
         return orders_delivery_success;
       case 'orders_change_status':
         return orders_change_status;
+      case 'orders_status':
+        return orders_status;
+      case 'orders_urgent':
+        return orders_urgent;
+      case 'orders_rate_courier':
+        return orders_rate_courier;
+      case 'orders_you_rated_courier':
+        return orders_you_rated_courier;
+      case 'please_choose_rating':
+        return please_choose_rating;
+      case 'click_or_drag_stars':
+        return click_or_drag_stars;
+      case 'courier_rating_updated':
+        return courier_rating_updated;
+      case 'thank_you':
+        return thank_you;
       case 'messages_register_title':
         return messages_register_title;
       case 'messages_register_thanks':

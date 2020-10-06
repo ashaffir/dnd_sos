@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:async/async.dart';
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,6 +11,7 @@ import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/finance/payments.dart';
 import 'package:pickndell/home/dashboard.dart';
+import 'package:pickndell/lang/lang_helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/id_upload.dart';
@@ -41,8 +39,9 @@ bool businessCategory = false;
 
 class ProfilePage extends StatefulWidget {
   final User user;
+  final String userCountry;
 
-  ProfilePage({this.user});
+  ProfilePage({this.user, this.userCountry});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -58,11 +57,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
 // User related
   var userData;
+  User currentUser_G;
   User currentUser;
+  User theCurrentUser;
   bool isEmployee;
 
   _getCurrentUser() async {
-    currentUser = await UserDao().getUser(0);
+    theCurrentUser = await UserDao().getUser(0);
+    setState(() {
+      currentUser_G = theCurrentUser;
+    });
   }
 
 // User is not being set so the blow is not used
@@ -133,22 +137,25 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _emailCodeVerification = false;
 
   Widget build(BuildContext context) {
-    if (_updatingProfile) {
-      String loaderText = "Loading Profile...";
-      return ColoredProgressDemo(loaderText);
-    } else {
-      return FutureBuilder(
-        future: UserDao().getUser(0),
-        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-          if (snapshot.hasData) {
-            return getProfilePage(snapshot.data);
-          } else {
-            print("No data");
-          }
-          return CircularProgressIndicator();
-        },
-      );
-    }
+    return getProfilePage(widget.user);
+    // if (_updatingProfile) {
+    //   String loaderText = "Loading Profile...";
+    //   return ColoredProgressDemo(loaderText);
+    // } else {
+    //   return FutureBuilder(
+    //     future: UserDao().getUser(0),
+    //     builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+    //       if (snapshot.hasData) {
+    //         currentUser = snapshot.data;
+    //         print('USER IS: ${snapshot.data.username}');
+    //         return getProfilePage(widget.user);
+    //       } else {
+    //         print("No data");
+    //       }
+    //       return CircularProgressIndicator();
+    //     },
+    //   );
+    // }
   }
 
   String _country;
@@ -190,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _loadVehicleTypes();
     _loadCategoriesTypes();
     _getProfilePic();
-    _getCurrentUser();
+    // _getCurrentUser();
     // _getUserInfo(); // Not used because the prefs "user" is not set (at dashboard).
     checkCountry();
     // getCountryName();
@@ -200,6 +207,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget getProfilePage(User currentUser) {
+    print('WIDGET USER: ${widget.user.phone}');
     final translations = ExampleLocalizations.of(context);
     return SafeArea(
       child: Scaffold(
@@ -444,11 +452,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             updateProfile(
                                 context: context, updateField: 'phone');
                           },
-                          child: Text(
-                            currentUser.phone != null
-                                ? '${currentUser.phone}'
-                                : " ",
-                            style: userContentStyle,
+                          child: Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: Text(
+                              currentUser.phone != null
+                                  ? '${currentUser.phone}'
+                                  : " ",
+                              style: userContentStyle,
+                            ),
                           ),
                         ),
                       ],
@@ -698,10 +709,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text(
                             currentUser.isEmployee == 1
                                 ? currentUser.vehicle != null
-                                    ? '${currentUser.vehicle}'
+                                    ? widget.userCountry == 'IL'
+                                        ? translateVehicle(currentUser.vehicle)
+                                        : '${currentUser.vehicle}'
                                     : " "
                                 : currentUser.businessCategory != null
-                                    ? '${currentUser.businessCategory}'
+                                    ? widget.userCountry == 'IL'
+                                        ? translateCategory(
+                                            currentUser.businessCategory)
+                                        : '${currentUser.businessCategory}'
                                     : " ",
                             style: userContentStyle,
                           ),
@@ -793,7 +809,8 @@ class _ProfilePageState extends State<ProfilePage> {
     final trans = ExampleLocalizations.of(context);
     User currentUser = await UserDao().getUser(0);
     TextEditingController _textInput = TextEditingController();
-    // set up the AlertDialog
+    /////// Cancel Button ////////////
+    ///
     Widget okButton = FlatButton(
       child: Text(trans.orders_cancel),
       onPressed: () {
@@ -824,6 +841,8 @@ class _ProfilePageState extends State<ProfilePage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  /////////// Business Category ////////////
+                  ///
                   updateField == 'business category'
                       ? DropdownButtonFormField(
                           decoration: InputDecoration(
@@ -841,10 +860,37 @@ class _ProfilePageState extends State<ProfilePage> {
                           onChanged: (value) {
                             setState(() {
                               print('dropdown: $value');
-                              _businessCategory = value;
+                              // ['מסעדה', 'בגדים', 'נוחות', 'מכולת', 'משרד', 'אחר']
+                              // 'Restaurant','Clothes','Convenience','Grocery','Office','Other'
+                              switch (value) {
+                                case 'מסעדה':
+                                  _businessCategory = 'Restaurant';
+                                  break;
+                                case 'בגדים':
+                                  _businessCategory = 'Clothes';
+                                  break;
+                                case 'נוחות':
+                                  _businessCategory = 'Convenience';
+                                  break;
+                                case 'מכולת':
+                                  _businessCategory = 'Grocery';
+                                  break;
+                                case 'משרד':
+                                  _businessCategory = 'Office';
+                                  break;
+                                case 'אחר':
+                                  _businessCategory = 'Other';
+                                  break;
+                                default:
+                                  _businessCategory = value;
+                              }
                             });
                           },
                         )
+
+                      /////////// Vehicle  ////////////
+                      ///
+
                       : updateField == 'vehicle'
                           ? DropdownButtonFormField(
                               decoration: InputDecoration(
@@ -885,44 +931,50 @@ class _ProfilePageState extends State<ProfilePage> {
                                 });
                               },
                             )
-                          : TextFormField(
-                              controller: _textInput,
-                              decoration: InputDecoration(
-                                  hintText: updateField == 'email'
-                                      ? currentUser.username
-                                      : trans.enter_here,
-                                  prefixIcon: updateField == 'name'
-                                      ? Icon(Icons.person)
-                                      : updateField == 'email'
-                                          ? Icon(Icons.email)
-                                          : updateField == 'phone'
-                                              ? Icon(Icons.phone)
-                                              : ""),
-                              validator: (value) {
-                                if (value != null) {
-                                  if (updateField == 'email' &&
-                                      validateEmail(value) != null) {
-                                    return 'Please enter a valid value';
-                                  } else if (updateField == 'phone' &&
-                                          validateMobile(value) != null ||
-                                      currentUser.phone.toString() == value) {
-                                    return 'Please enter a valid new phone';
-                                  } else if (updateField == 'name' &&
-                                      // validateName(value) != null) {
-                                      value.isEmpty) {
-                                    return 'Please enter a valid value';
-                                  } else if (updateField == 'vehicle' &&
-                                      validateName(value) != null) {
-                                    return 'Please enter a valid value';
-                                  } else if (value == '') {
-                                    return 'Please enter a valid value';
+
+                          /////////// Email/Name/Phone ////////////
+                          ///
+
+                          : Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: TextFormField(
+                                controller: _textInput,
+                                decoration: InputDecoration(
+                                    hintText: updateField == 'email'
+                                        ? currentUser.username
+                                        : trans.enter_here,
+                                    prefixIcon: updateField == 'name'
+                                        ? Icon(Icons.person)
+                                        : updateField == 'email'
+                                            ? Icon(Icons.email)
+                                            : updateField == 'phone'
+                                                ? Icon(Icons.phone)
+                                                : ""),
+                                validator: (value) {
+                                  if (value != null) {
+                                    if (updateField == 'email' &&
+                                        validateEmail(value) != null) {
+                                      return trans.alert_email;
+                                    } else if (updateField == 'phone' &&
+                                            isValidPhoneNumber(value) != null ||
+                                        currentUser.phone.toString() == value) {
+                                      return trans.please_enter_a_valid_phone;
+                                    } else if (updateField == 'name' &&
+                                        value.isEmpty) {
+                                      return trans.name_not_valid;
+                                    } else if (updateField == 'vehicle' &&
+                                        validateName(value) != null) {
+                                      return trans.please_select_vehicle;
+                                    } else if (value == '') {
+                                      return 'Please enter a valid value';
+                                    } else {
+                                      return null;
+                                    }
                                   } else {
-                                    return null;
+                                    return 'Please enter a valid value';
                                   }
-                                } else {
-                                  return 'Please enter a valid value';
-                                }
-                              },
+                                },
+                              ),
                             ),
                 ],
               ),

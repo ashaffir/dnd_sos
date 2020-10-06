@@ -1,3 +1,4 @@
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/map_utils.dart';
 import 'package:pickndell/home/dashboard.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
@@ -66,11 +67,28 @@ class _OrderAcceptedState extends State<OrderAccepted> {
 
   Future updateOrderAccepted(dynamic updateOrderId) async {
     print('UPDATINNG ORDER...');
-    final orderUpdated =
-        await OrderRepository(user: widget.user, context: context)
-            .updateOrder(updateOrderId, 'STARTED');
-    print('orderUpdated: $orderUpdated');
-    return orderUpdated;
+    final trans = ExampleLocalizations.of(context);
+
+    try {
+      final orderUpdated =
+          await OrderRepository(user: widget.user, context: context)
+              .updateOrder(updateOrderId, 'STARTED');
+      print('orderUpdated: $orderUpdated');
+      return orderUpdated;
+    } catch (e) {
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: widget.user,
+              errorMessage: trans.messages_communication_error,
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Widget getOrderAcceptedPage(dynamic order) {

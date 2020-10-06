@@ -22,6 +22,10 @@ class OrderRepository {
     var _activeOrdersUrl = "active-orders/?user=";
     var _businessOrdersUrl = "business-orders/?user=";
     var _rejectedOrdersUrl = "rejected-orders/?user=";
+    var _requestedOrdersUrl = "requested-orders/?user=";
+    var _startedOrdersUrl = "started-orders/?user=";
+    var _inProgressOrdersUrl = "in-progress-orders/?user=";
+    var _deliveredOrdersUrl = "delivered-orders/?user=";
 
     var _user = await UserDao().getUser(0);
     var _response = ordersType == 'openOrders'
@@ -30,7 +34,17 @@ class OrderRepository {
             ? await _provider.get(_activeOrdersUrl, _user)
             : ordersType == 'businessOrders'
                 ? await _provider.get(_businessOrdersUrl, _user)
-                : await _provider.get(_rejectedOrdersUrl, _user);
+                : ordersType == 'requestedOrders'
+                    ? await _provider.get(_requestedOrdersUrl, _user)
+                    : ordersType == 'startedOrders'
+                        ? await _provider.get(_startedOrdersUrl, _user)
+                        : ordersType == 'inProgressOrders'
+                            ? await _provider.get(_inProgressOrdersUrl, _user)
+                            : ordersType == 'deliveredOrders'
+                                ? await _provider.get(
+                                    _deliveredOrdersUrl, _user)
+                                : await _provider.get(
+                                    _rejectedOrdersUrl, _user);
 
     Orders od = Orders();
     od.orders = [];
@@ -69,7 +83,6 @@ class OrderRepository {
         ),
         (Route<dynamic> route) => false, // No Back option for this page
       );
-      ;
     }
   }
 

@@ -3,13 +3,9 @@ import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
-import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/profile_update.dart';
 import 'package:pickndell/model/user_model.dart';
-import 'package:pickndell/repository/user_repository.dart';
-import 'package:pickndell/ui/buttons.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,25 +28,22 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
       future: sendPhoneVerificationRequest(
           user: widget.user, phone: widget.newPhone, action: 'new_phone'),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        print('SNAPSHO DATA: ${snapshot.data}');
-        if (snapshot.hasData) {
+        if (snapshot.hasError) {
+          print('Error Phone update');
+          return ErrorPage(
+            user: widget.user,
+            errorMessage: trans.phone_number_is_not_valid,
+          );
+        } else if (snapshot.hasData) {
+          print('SNAPSHO DATA: ${snapshot.data}');
           if (snapshot.data) {
             print('CONDITION TRUE');
             return phoneUpdatedPage();
           } else {
-            // return phoneUpdatedErrorPage();
             print('Phone is not valid');
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return ErrorPage(
-                    user: widget.user,
-                    errorMessage: 'Phone number is not valid',
-                  );
-                },
-              ),
-              (Route<dynamic> route) => false, // No Back option for this page
+            return ErrorPage(
+              user: widget.user,
+              errorMessage: trans.phone_number_is_not_valid,
             );
           }
         } else {
@@ -120,10 +113,7 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
       // );
     } else {
       print('> STAGE 4.a) BAD Phone entered.');
-      // showAlertDialog(
-      //     context: context,
-      //     title: 'Phone not Valid',
-      //     buttonTextColor: Colors.white);
+      showAlertDialog(title: 'Phone not Valid', buttonTextColor: Colors.white);
     }
 
     return _codeRequestSent;
@@ -285,50 +275,6 @@ class _PhoneUpdateState extends State<PhoneUpdate> {
               ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomNavigation(
-        user: widget.user,
-      ),
-    );
-  }
-
-  Widget phoneUpdatedErrorPage() {
-    final trans = ExampleLocalizations.of(context);
-
-    return new Scaffold(
-      backgroundColor: mainBackground,
-      appBar: AppBar(
-        title: Text('Error updating phone'),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(40),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Spacer(
-              flex: 5,
-            ),
-            Text(
-              'Phone number is not valid.',
-              style: whiteTitle,
-            ),
-            Spacer(
-              flex: 2,
-            ),
-            Text(
-              'Please try again later',
-              style: whiteTitle,
-            ),
-            Spacer(
-              flex: 5,
-            ),
-            DashboardButton(),
-            Spacer(
-              flex: 5,
-            ),
-          ],
         ),
       ),
       bottomNavigationBar: BottomNavigation(

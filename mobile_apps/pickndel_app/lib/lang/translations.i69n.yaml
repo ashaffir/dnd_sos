@@ -1,3 +1,11 @@
+main: Main
+open_orders: Open Orders
+active_orders: Active Orders
+business_orders: Orders in Progress
+business_orders_in_progress: Orders in Progress
+rejected_orders: Rejected Orders
+delivered_orders: Delivered Orders
+alerts: Alerts
 loginPageTitle: PickNdell Login
 email: email
 usernmane: Username
@@ -35,6 +43,9 @@ change_the_email: Change the email
 change_the_category: Change the category
 change_the_vehicle: Change the vehicle
 enter_with_country_code: Enter phone with country code, e.g.
+phone_number_is_not_valid: Phone number is not valid
+please_enter_a_valid_phone: Please enter a valid new phone
+
 enter_here: Enter here
 update: Update
 profile_update_title: Profile Update
@@ -87,9 +98,11 @@ please_select_vehicle: Please select the type of vehicle you user
 updating: Updating
 
 # Orders
+orders: Orders
 orders_title_open: Open Orders
 orders_title_active: Active Orders
 orders_title_business: Current Open Orders
+orders_title_new_orders: New Orders
 orders_title_rejected: Orders Require Your Attention
 orders_created: Created
 orders_update: Updated
@@ -120,6 +133,7 @@ orders_status_waiting_pickup: Waiting for pick up
 orders_status_waiting_allocaiton: New. Waiting for courier allocation
 orders_status_waiting_delivery: Picked up. Waiting Delivery
 orders_status_rejected: Rejected Order
+orders_status_delivered: Order Delivered
 orders_request_courier: Request Courier
 orders_check: Please check
 orders_empty_list: Order list is Empty
@@ -136,6 +150,8 @@ orders_error: Error
 orders_delivery_confirmation: Delivery Confirmaiton
 orders_delivery_success: Delivery and confirmation photo updated. Good Job!
 orders_change_status: Change Status
+orders_status: status
+orders_urgent: URGENT
 
 # Messages Page
 messages_register_title: Confirmation
@@ -175,6 +191,12 @@ order_cancel_message: Order Canceled
 order_cenceled_successfuly: Your order was cancelled successfully
 order_delivered: Order Delivered
 orders_update_error: There was an error updating this order. Please try again later
+orders_rate_courier: Rate the courier
+orders_you_rated_courier: You rated courier
+please_choose_rating: Please choose rating
+click_or_drag_stars: Click or drag the stars
+courier_rating_updated: Courier rating was updated
+thank_you: Thank you
 
 # Delivery
 report_package_delivery: Report package delivery

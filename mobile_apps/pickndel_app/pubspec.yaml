@@ -115,6 +115,7 @@ flutter:
    - assets/images/crying-icon.png
    - assets/images/like-face.png
    - assets/images/error-icon.png
+   - assets/images/pickndell-logotype-512x512.jpg
  
 
   # An image asset can refer to one or more resolution-specific "variants", see

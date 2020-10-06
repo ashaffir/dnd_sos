@@ -1,3 +1,4 @@
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
@@ -59,12 +60,29 @@ class _OrderArchivedState extends State<OrderArchived> {
   }
 
   Future updateOrderArchived(dynamic updateOrderId) async {
+    final trans = ExampleLocalizations.of(context);
     print('UPDATINNG ORDER...');
-    final orderUpdated =
-        await OrderRepository(user: widget.user, context: context)
-            .updateOrder(updateOrderId, 'ARCHIVED');
-    print('orderUpdated: $orderUpdated');
-    return orderUpdated;
+    try {
+      final orderUpdated =
+          await OrderRepository(user: widget.user, context: context)
+              .updateOrder(updateOrderId, 'ARCHIVED');
+      print('orderUpdated: $orderUpdated');
+      return orderUpdated;
+    } catch (e) {
+      print('Failed to update order archived. ERROR: $e');
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: widget.user,
+              errorMessage: trans.messages_communication_error,
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Widget getOrderArchivedPage(dynamic order) {

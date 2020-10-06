@@ -103,15 +103,6 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                           children: <Widget>[
                             MessagingWidget(),
 
-                            // Image.asset(
-                            //   'assets/images/pickndell-logo-white.png',
-                            //   width: MediaQuery.of(context).size.width * 0.70,
-                            //   // height: MediaQuery.of(context).size.height * 0.50,
-                            //   // width: 300,
-                            // ),
-                            // Padding(
-                            //   padding: EdgeInsets.all(10.0),
-                            // ),
                             Text(
                               trans.bank_details,
                               style: whiteTitle,
@@ -158,62 +149,71 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                             /////////////// Bank Name ////////////
                             ///
 
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: "IBAN",
-                                  icon: Icon(Icons.language)),
-                              controller: _iban,
-                              validator: (iban) {
-                                if (isValid(iban)) {
-                                  return null;
-                                } else {
-                                  return trans.please_enter_valid_iban;
-                                }
-                              },
-                              // validator: (String value) {
-                              //   if (value.isEmpty) {
-                              //     return "Valid email required.";
-                              //   }
+                            Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "IBAN",
+                                    icon: Icon(Icons.language)),
+                                controller: _iban,
+                                validator: (iban) {
+                                  if (isValid(iban)) {
+                                    return null;
+                                  } else {
+                                    return trans.please_enter_valid_iban;
+                                  }
+                                },
+                                // validator: (String value) {
+                                //   if (value.isEmpty) {
+                                //     return "Valid email required.";
+                                //   }
+                              ),
                             ),
 
                             /////////////// Name of the account ////////////
                             ///
 
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: trans.bank_account_name,
-                                  icon: Icon(Icons.person_pin)),
-                              controller: _nameAccount,
-                              // obscureText: true,
-                              validator: (value) {
-                                if (validateName(value) == null) {
-                                  return null;
-                                } else {
-                                  return trans.please_enter_account_name;
-                                }
-                              },
+                            Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: trans.bank_account_name,
+                                    icon: Icon(Icons.person_pin)),
+                                controller: _nameAccount,
+                                // obscureText: true,
+                                validator: (value) {
+                                  if (validateName(value) == null) {
+                                    return null;
+                                  } else {
+                                    return trans.please_enter_account_name;
+                                  }
+                                },
+                              ),
                             ),
 
                             /////////////// SWIFT code  ////////////
 
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: "SWIFT",
-                                  icon: Icon(Icons.confirmation_number)),
-                              controller: _swiftCode,
-                              // obscureText: true,
-                              validator: (value) {
-                                if (value.isNotEmpty) {
-                                  return null;
-                                } else {
-                                  return trans.please_enter_valid_swift;
-                                }
-                              },
-                              // validator: (val) => validateConfirmPassword(
-                              //     _password1Controller.text, val),
-                              // onSaved: (String val) {
-                              //   confirmPassword = val;
-                              // },
+                            Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "SWIFT",
+                                    icon: Icon(Icons.confirmation_number)),
+                                controller: _swiftCode,
+                                // obscureText: true,
+                                validator: (value) {
+                                  if (value.isNotEmpty) {
+                                    return null;
+                                  } else {
+                                    return trans.please_enter_valid_swift;
+                                  }
+                                },
+                                // validator: (val) => validateConfirmPassword(
+                                //     _password1Controller.text, val),
+                                // onSaved: (String val) {
+                                //   confirmPassword = val;
+                                // },
+                              ),
                             ),
 
                             /////////////// Name on the bank account  ////////////

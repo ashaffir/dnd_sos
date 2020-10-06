@@ -77,6 +77,11 @@ class App extends StatelessWidget {
   final String businessOrders = "businessOrders";
   final String rejectedOrders = "rejectedOrders";
 
+  final String requestedOrders = "requestedOrders";
+  final String startedOrders = "startedOrders";
+  final String inProgressOrders = "inProgressOrders";
+  final String deliveredOrders = "deliveredOrders";
+
   final UserRepository userRepository;
 
   App({Key key, @required this.userRepository}) : super(key: key);
@@ -150,8 +155,24 @@ class App extends StatelessWidget {
                   ordersType: businessOrders,
                   user: userInfo,
                 ),
+            '/requested-orders': (context) => GetOrders(
+                  ordersType: requestedOrders,
+                  user: userInfo,
+                ),
             '/rejected-orders': (context) => GetOrders(
                   ordersType: rejectedOrders,
+                  user: userInfo,
+                ),
+            '/started-orders': (context) => GetOrders(
+                  ordersType: startedOrders,
+                  user: userInfo,
+                ),
+            '/in-progress-orders': (context) => GetOrders(
+                  ordersType: inProgressOrders,
+                  user: userInfo,
+                ),
+            '/delivered-orders': (context) => GetOrders(
+                  ordersType: deliveredOrders,
                   user: userInfo,
                 ),
             '/order-accepted': (context) => OrderAccepted(),

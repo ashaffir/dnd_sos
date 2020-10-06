@@ -1,3 +1,12 @@
+main: ראשי
+open_orders: הזמנות פתוחות
+active_orders: הזמנות פעילות
+business_orders: הזמנות בתהליך
+business_orders_in_progress: הזמנות בתהליך
+rejected_orders: הזמנות שנדחו
+delivered_orders: הזמנות שנמסרו
+alerts: התראות
+
 loginPageTitle: כניסה ל PickNdell
 email: דוא״ל
 usernmane: שם משתמש
@@ -34,6 +43,10 @@ change_the_name: לשנות את השם
 change_the_email: שנה את הדואל
 change_the_category: שנה את הקטגוריה
 change_the_vehicle: שנה את סוג הרכב
+
+phone_number_is_not_valid: מספר הטלפון אינו תקין
+please_enter_a_valid_phone: נא הכנס מספר טלפון תקין
+
 name_not_valid: השם שהוזן אינו חוקי
 month_not_valid: החודש שהוזן לא תקף
 year_not_valid: השנה שהוזנה לא תקפה
@@ -89,9 +102,11 @@ updating: מעדכן
 
 
 # Orders
+orders: הזמנות
 orders_title_open: הזמנות
 orders_title_active: הזמנות פעילות
 orders_title_business: הזמנות פתוחות
+orders_title_new_orders: הזמנות חדשות
 orders_title_rejected: הזמנות מחייבות את תשומת לבך
 orders_created: התחיל
 orders_update: עודכן
@@ -122,6 +137,7 @@ orders_status_waiting_pickup: מחכה לאיסוף
 orders_status_waiting_allocaiton: חדש. ממתין להקצאת שליח
 orders_status_waiting_delivery: נאסף. ממתין למסירה
 orders_status_rejected: מסירה שנדחתה
+orders_status_delivered: ההזמנה נמסרה
 orders_request_courier: בקש שליח
 orders_check: אנא בדוק
 orders_empty_list:  רשימת ההזמנות ריקה
@@ -131,6 +147,15 @@ orders_error: הודעת שגיאה
 orders_delivery_confirmation: אישור משלוח
 orders_delivery_success: המסירה ותמונת האישור עודכנו בהצלחה. עבודה טובה!
 orders_change_status: שנה סטטוס
+orders_status: סטטוס
+orders_urgent: דחוף
+orders_rate_courier: דרג את השליח
+orders_you_rated_courier: דירגת את השליח
+please_choose_rating: אנא בחר דירוג
+click_or_drag_stars: לחץ או גרור את הכוכבים
+courier_rating_updated: דירוג השליח עודכן
+thank_you: תודה רבה
+
 
 
 # Messages page
@@ -221,7 +246,7 @@ update_credit_card: עדכן כרטיס אשראי
 credit_card_number: מספר כרטיס אשראי
 credit_card_number_not_valid: מספר כרטיס האשראי אינו חוקי
 restaurant: מִסעָדָה
-package_type: סוג האריזה
+package_type: סוג המשלוח
 urgency: דְחִיפוּת
 
 # Payments
@@ -232,7 +257,7 @@ change_payment_method: שנה אמצעי תשלום
 none: לא מוגדר
 bank: בנק
 paypal: PayPal
-paypal_account_here: חשבון Paypal כאן
+paypal_account_here: חשבון PayPal
 bank_account: חשבון בנק
 update_bank_details: עדכן את פרטי הבנק
 please_select_payment_method: אנא בחר את אמצעי התשלום המועדף עליך. \n אמצעי זה ישמש לך למשלוח תשלומים עבור המשלוחים שלך

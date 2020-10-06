@@ -34,7 +34,7 @@ from core.models import User, Employee, Employer
 from orders.models import Order
 from dndsos.models import ContactUs
 from dndsos_dashboard.views import phone_verify
-from dndsos_dashboard.utilities import send_mail
+from dndsos_dashboard.utilities import send_mail, calculate_freelancer_total_rating
 
 from .utils import clean_phone_number, check_profile_approved
 from payments.views import create_card_token
@@ -301,7 +301,7 @@ class BusinessOrdersViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         queryset_list = Order.objects.all()
         user = self.request.GET.get('user')
-        print(f'User: {user}')
+        print(f'Orders for User: {user}')
         if user:
             queryset_list = queryset_list.filter(
                 Q(business=user) & 
@@ -309,10 +309,30 @@ class BusinessOrdersViewSet(viewsets.ModelViewSet):
                     Q(status='STARTED') | 
                     Q(status="IN_PROGRESS") | 
                     Q(status="REQUESTED") |
-                    Q(status="RE_REQUESTED") 
+                    Q(status="RE_REQUESTED") | 
+                    Q(status="COMPLETED")  
                     ) 
             )
         return queryset_list
+
+class BusinessRequestedOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderAPISerializer
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = (IsAuthenticated,)
+
+    # queryset = Order.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        user = self.request.GET.get('user')
+        print(f'New requested or re-requested Orders for User: {user}')
+
+        if user:
+            queryset_list = queryset_list.filter(
+                Q(business=user) & (Q(status="REQUESTED") | Q(status='RE_REQUESTED')) 
+            )
+        return queryset_list
+
 
 class BusinessRejectedOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
@@ -324,12 +344,66 @@ class BusinessRejectedOrdersViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         queryset_list = Order.objects.all()
         user = self.request.GET.get('user')
-        print(f'User: {user}')
+        print(f'Rejected Orders for User: {user}')
+
         if user:
             queryset_list = queryset_list.filter(
                 Q(business=user) & (Q(status="REJECTED")) 
             )
         return queryset_list
+
+class BusinessStartedOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderAPISerializer
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = (IsAuthenticated,)
+
+    # queryset = Order.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        user = self.request.GET.get('user')
+        print(f'Started Orders for User: {user}')
+        if user:
+            queryset_list = queryset_list.filter(
+                Q(business=user) & (Q(status="STARTED")) 
+            )
+        return queryset_list
+
+class BusinessInProgressOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderAPISerializer
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = (IsAuthenticated,)
+
+    # queryset = Order.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        user = self.request.GET.get('user')
+        print(f'In Progress Orders for User: {user}')
+        if user:
+            queryset_list = queryset_list.filter(
+                Q(business=user) & (Q(status="IN_PROGRESS")) 
+            )
+        return queryset_list
+
+class BusinessDeliveredOrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderAPISerializer
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = (IsAuthenticated,)
+
+    # queryset = Order.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        queryset_list = Order.objects.all()
+        user = self.request.GET.get('user')
+        print(f'Delivered/Completed Orders for User: {user}')
+
+        if user:
+            queryset_list = queryset_list.filter(
+                Q(business=user) & (Q(status="COMPLETED")) 
+            )
+        return queryset_list
+
 
 class OrdersView(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
@@ -601,42 +675,46 @@ def user_credit_card(request):
     data = {}
     if request.data['is_employee'] == 1:
         user = Employee.objects.get(pk=request.data['user_id'])
+        serializer = EmployeeProfileSerializer(user, data=request.data)
     else:
         user = Employer.objects.get(pk=request.data['user_id'])
+        serializer = EmployerProfileSerializer(user, data=request.data)
 
     if request.method == 'POST':
-        try:
-            owner_name = request.data['owner_name']
-            due_date_yymm = request.data['expiry_date']
-            card_number = "4580000000000000" if settings.DEBUG else request.data['card_number'];
-            owner_id = request.data['owner_id']
+        if serializer.is_valid():
+            data = serializer.data
+            try:
+                owner_name = request.data['owner_name']
+                due_date_yymm = request.data['expiry_date']
+                card_number = "4580000000000000" if settings.DEBUG else request.data['card_number'];
+                owner_id = request.data['owner_id']
+                
+                credit_token = create_card_token(owner_id, due_date_yymm, card_number)
+
+                print(f'''Updating credit card with:
+                one: {owner_name}
+                id: {owner_id}
+                Expiry: {due_date_yymm}
+                Card number: {card_number}
+                Response from iCredit: {credit_token}
+                ''')
+
             
-            credit_token = create_card_token(owner_id, due_date_yymm, card_number)
+            except Exception as e:
+                return Response(f'Fail communication with iCredit. ERROR: {e}')
 
-            print(f'''Updating credit card with:
-            one: {owner_name}
-            id: {owner_id}
-            Expiry: {due_date_yymm}
-            Card number: {card_number}
-            Response from iCredit: {credit_token}
-            ''')
+            # Saving user's new Token
+            try:
+                user.credit_card_token = credit_token
+                user.save()
+                data["response"] = "Update successful"
+                data["credit_card_token"] = credit_token
+                check_profile_approved(user.pk, request.data['is_employee'])
 
-        
-        except Exception as e:
-            return Response(f'Fail communication with iCredit. ERROR: {e}')
-
-        # Saving user's new Token
-        try:
-            user.credit_card_token = credit_token
-            user.save()
-            data["response"] = "Update successful"
-            data["credit_card_token"] = credit_token
-            check_profile_approved(user.pk, request.data['is_employee'])
-
-            return Response(data)
-        except Exception as e:
-            logger.error(f'Failed saving the new credit card token. ERROR: {e}')
-            return Response(f'Failed saving the new credit card token. ERROR: {e}')
+                return Response(data)
+            except Exception as e:
+                logger.error(f'Failed saving the new credit card token. ERROR: {e}')
+                return Response(f'Failed saving the new credit card token. ERROR: {e}')
 
     else:
         return Response(status.HTTP_400_BAD_REQUEST)
@@ -965,6 +1043,7 @@ def new_order(request):
             
         data['order_type'] = package_type
         data['business'] = User.objects.get(pk=user_profile.pk)
+        data['is_urgent'] = True if order_urgency == 'Urgent' else False; 
 
         instance = Order.objects.create(**data)
         print(f'ORDER INSTANCE: {instance}')
@@ -1007,6 +1086,30 @@ def order_delivery(request):
             return Response(status.HTTP_202_ACCEPTED)
         else:
             return Response("Wrong status configuration", status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response(status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST',])
+@permission_classes((IsAuthenticated,))
+def order_ratings(request):
+    try:
+        update_order = Order.objects.get(order_id=request.data['order_id'])
+    except Order.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'POST':
+        data = {}
+        order = Order.objects.get(pk=request.data['order_id'])
+        if request.data['is_employee'] == 0:
+            rating = request.data['freelancer_rating']
+            order.freelancer_rating = rating            
+            order.save()
+            calculate_freelancer_total_rating(order.freelancer.freelancer.pk)
+            data['response'] = 'Update successful'
+            return Response(data, status.HTTP_200_OK)
+    else:
+        return Response("Wrong status configuration", status=status.HTTP_400_BAD_REQUEST)
     
     return Response(status.HTTP_400_BAD_REQUEST)
 
@@ -1152,8 +1255,10 @@ def phone_verification(request):
     data = {}
     if request.data['is_employee'] == 1:
         user = Employee.objects.get(pk=request.data['user_id'])
+        serializer = EmployeeProfileSerializer(user, data=request.data)
     else:
         user = Employer.objects.get(pk=request.data['user_id'])
+        serializer = EmployerProfileSerializer(user, data=request.data)
 
     if request.method == 'POST':
         # Items 1 and 2
@@ -1216,18 +1321,21 @@ def phone_verification(request):
                 print('Sending approval request to Twilio')
                 verification_status = phone_verify(request, action='verify_code', phone=new_phone, code=user_code)
 
+            if serializer.is_valid():            
+                data = serializer.data
+                if verification_status == 'approved':
+                    user.phone = new_phone
+                    user.save()
+                    data['response'] = 'Update successful'
             
-            if verification_status == 'approved':
-                user.phone = new_phone
-                user.save()
-                data['response'] = 'Update successful'
-        
-                check_profile_approved(user.pk, request.data['is_employee'])
+                    check_profile_approved(user.pk, request.data['is_employee'])
 
-                return Response(data)
+                    return Response(data)
+                else:
+                    data['response'] = f'Bad phone request. ERROR: {verification_status}'
+                    return Response(data)
             else:
-                data['response'] = f'Bad phone request. ERROR: {verification_status}'
-                return Response(data)
+                return Response(serializer.errors)
         
         return Response(status.HTTP_400_BAD_REQUEST)
 
@@ -1244,8 +1352,10 @@ def email_verification(request):
 
     if request.data['is_employee'] == 1:
         user = Employee.objects.get(pk=request.data['user_id'])
+        serializer = EmployeeProfileSerializer(user, data=request.data)
     else:
         user = Employer.objects.get(pk=request.data['user_id'])
+        serializer = EmployerProfileSerializer(user, data=request.data)
 
     if request.method == 'POST':
         if (request.data['check'] == 'send_code'):
@@ -1278,22 +1388,24 @@ def email_verification(request):
             user_code = request.data['code']
             new_email = request.data["email"]
             if user_code == server_code:
-                print(f'Updating email with: {new_email}')
-                # Updating Profile
-                user.email = new_email
-                user.username = new_email
-                user.save()
-                
-                # Updating User model
-                user = User.objects.get(pk=request.data['user_id'])
-                user.email = new_email
-                user.username = new_email
-                user.save()
+                if serializer.is_valid():
+                    data = serializer.data
+                    print(f'Updating email with: {new_email}')
+                    # Updating Profile
+                    user.email = new_email
+                    user.username = new_email
+                    user.save()
+                    
+                    # Updating User model
+                    user = User.objects.get(pk=request.data['user_id'])
+                    user.email = new_email
+                    user.username = new_email
+                    user.save()
 
-                check_profile_approved(user.pk, request.data['is_employee'])
+                    check_profile_approved(user.pk, request.data['is_employee'])
 
-                data['response'] = 'Update successful'
-                return Response(data)
+                    data['response'] = 'Update successful'
+                    return Response(data)
             else:
                 data['response'] = "Update failed"
                 return Response(data)

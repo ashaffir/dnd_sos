@@ -58,6 +58,7 @@ class Order(models.Model):
     pick_up_address = models.CharField(max_length=255, null=True)
     drop_off_address = models.CharField(max_length=255, null=True)
     order_type = models.CharField(max_length=50, choices=ORDER_TYPES, default=FOOD)
+    is_urgent = models.BooleanField(default=False)
     
     # GEO
     order_country = models.CharField(max_length=100, null=True, blank=True)
@@ -109,9 +110,9 @@ class Order(models.Model):
         related_name='business_orders'
     )
 
-    freelancer_rating = models.IntegerField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
+    freelancer_rating = models.FloatField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
     freelancer_rating_report = models.TextField(max_length=500, null=True, blank=True)
-    business_rating = models.IntegerField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
+    business_rating = models.FloatField(null=True, blank=True,validators=[MaxValueValidator(5), MinValueValidator(0)])
 
     chat = JSONField(blank=True, null=True)
     new_message = JSONField(blank=True, null=True, default=dict)

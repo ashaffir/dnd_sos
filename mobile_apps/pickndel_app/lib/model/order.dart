@@ -12,6 +12,7 @@ class Order {
   String order_country;
   double distance_to_business;
   double price;
+  int isUrgent;
   double fare;
   String status;
   String business_phone;
@@ -24,6 +25,8 @@ class Order {
   double dropoffAddressLng;
   double businessLat;
   double businessLng;
+  double freelancerRating;
+  double businessRating;
 
   Order({
     this.order_id,
@@ -36,6 +39,7 @@ class Order {
     this.order_street_name,
     this.distance_to_business,
     this.price,
+    this.isUrgent,
     this.fare,
     this.status,
     this.business_phone,
@@ -49,6 +53,8 @@ class Order {
     this.dropoffAddressLng,
     this.businessLat,
     this.businessLng,
+    this.freelancerRating,
+    this.businessRating,
   });
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -68,6 +74,7 @@ class Order {
     order_street_name = json['order_street_name'];
     distance_to_business = json['distance_to_business'];
     price = json['price'];
+    isUrgent = json['is_urgent'] == true ? 1 : 0;
     fare = json['fare'];
     status = json['status'];
 
@@ -93,6 +100,11 @@ class Order {
 
     businessLat = json['business_lat'];
     businessLng = json['business_lon'];
+
+    freelancerRating =
+        json['freelancer_rating'] == null ? 0 : json['freelancer_rating'];
+    businessRating =
+        json['business_rating'] == null ? 0 : json['business_rating'];
   }
 
 // Order.activeDuration()
@@ -110,6 +122,7 @@ class Order {
     data['order_street_name'] = this.order_street_name;
     data['distance_to_business'] = this.distance_to_business;
     data['price'] = this.price;
+    data['is_urgent'] = this.isUrgent;
     data['fare'] = this.fare;
     data['status'] = this.status;
     data['lat'] = this.pickUpAddressLat;
@@ -118,6 +131,9 @@ class Order {
     data['business_lon'] = this.businessLng;
     data['order_lat'] = this.dropoffAddressLat;
     data['order_lon'] = this.dropoffAddressLng;
+
+    data['freelancer_rating'] = this.freelancerRating;
+    data['business_rating'] = this.businessRating;
     return data;
   }
 }

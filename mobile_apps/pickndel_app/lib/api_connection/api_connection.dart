@@ -422,7 +422,7 @@ Future phoneVerificationAPI(
     String verificationCode,
     User user,
     String action}) async {
-  var emailVerificationReponse;
+  var phoneVerificationReponse;
   var payload = {
     "action": action,
     "is_employee": user.isEmployee,
@@ -441,11 +441,11 @@ Future phoneVerificationAPI(
       },
       body: jsonEncode(payload),
     );
-    emailVerificationReponse = _response(response);
+    phoneVerificationReponse = _response(response);
   } on SocketException {
     throw FetchDataException('No Internet connection');
   }
-  return emailVerificationReponse;
+  return phoneVerificationReponse;
 }
 
 Future emailVerificationAPI(

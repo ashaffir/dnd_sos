@@ -67,6 +67,21 @@ String validateMobile(String value) {
   return null;
 }
 
+bool isValidPhoneNumber(String phoneNumber) {
+  // copied the pattern from here: https://regexr.com/3c53v
+  final pattern = r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{10,12}$';
+  final regExp = RegExp(pattern);
+
+  if (phoneNumber == null || phoneNumber.isEmpty) {
+    return false;
+  }
+
+  if (!regExp.hasMatch(phoneNumber)) {
+    return false;
+  }
+  return null;
+}
+
 String validateVerificationCode(String value) {
   String patttern = r'(^[0-9]{5}$)';
   RegExp regExp = new RegExp(patttern);

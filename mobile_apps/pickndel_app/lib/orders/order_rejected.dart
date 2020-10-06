@@ -1,8 +1,8 @@
+import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/order_repository.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -53,19 +53,37 @@ class _OrderRejectedState extends State<OrderRejected> {
   }
 
   Future updateOrderRejected(Order order) async {
+    final trans = ExampleLocalizations.of(context);
+
     print('Updating order delivered...');
-    var orderId = order.order_id;
-    final orderUpdated =
-        await OrderRepository().updateOrder(orderId, 'REJECTED');
-    print('orderUpdated: $orderUpdated');
-    return orderUpdated;
+    try {
+      var orderId = order.order_id;
+      final orderUpdated =
+          await OrderRepository(context: context, user: widget.user)
+              .updateOrder(orderId, 'REJECTED');
+      print('orderUpdated: $orderUpdated');
+      return orderUpdated;
+    } catch (e) {
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ErrorPage(
+              user: widget.user,
+              errorMessage: trans.messages_communication_error,
+            );
+          },
+        ),
+        (Route<dynamic> route) => false, // No Back option for this page
+      );
+    }
   }
 
   Widget getOrderRejectedPage(Order order) {
     final translations = ExampleLocalizations.of(context);
 
     return new Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
         title: Text('Order Delivered'),
       ),
@@ -98,25 +116,45 @@ class _OrderRejectedState extends State<OrderRejected> {
     final translations = ExampleLocalizations.of(context);
 
     return new Scaffold(
-      backgroundColor: mainBackground,
+      // backgroundColor: mainBackground,
       appBar: AppBar(
         title: Text(translations.order_delivered),
       ),
       body: Container(
         // padding: EdgeInsets.only(left: 50),
-        height: 160,
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Spacer(
-              flex: 4,
-            ),
-            Text(
-              translations.order_p_problem,
-              style: bigLightBlueTitle,
-            ),
-          ],
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: LEFT_MARGINE, right: RIGHT_MARGINE),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Spacer(
+                flex: 2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Flexible(
+                    child: Text(
+                      translations.order_p_problem,
+                      style: bigLightBlueTitle,
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(
+                flex: 2,
+              ),
+              Image.asset(
+                'assets/images/fail-icon.png',
+                width: MediaQuery.of(context).size.width * 0.50,
+              ),
+              Spacer(
+                flex: 2,
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigation(
