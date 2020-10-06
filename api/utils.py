@@ -31,7 +31,7 @@ def check_profile_approved(user_id, is_employee):
         else:
             user.profile_pending = True
             user.save()
-            alert_admin(user_id)
+            alert_admin(user)
             return True
     else:
         user = Employer.objects.get(user=user_id)
@@ -75,12 +75,15 @@ def check_profile_approved(user_id, is_employee):
 
                 return True
 
-def alert_admin(user_id):
+def alert_admin(user):
     print('Alerting Admin on new pending user account...')
     user_email = settings.ADMIN_EMAIL
-    subject = 'PickNdell Pending Profile'
+    subject = 'PickNdell Pending Courier Profile'
     content = f'''
-        User ID: {user_id}
+        User name: {user.name}
+        User email: {user.email}
+        User phone: {user.phone}
+        User ID: {user.user_id}
     '''
     message = {
         # 'user': instance,
@@ -93,6 +96,6 @@ def alert_admin(user_id):
             html_email_template_name='core/emails/update_admin_email.html')
         return True
     except Exception as e:
-        print(f'Faled sending the Admin alert email on pending account. ERROR: {e}')
-        logger(f'Faled sending the Admin alert email on pending account. ERROR: {e}')
+        print(f'Failed sending the Admin alert email on pending account. ERROR: {e}')
+        logger(f'Failed sending the Admin alert email on pending account. ERROR: {e}')
         return False
