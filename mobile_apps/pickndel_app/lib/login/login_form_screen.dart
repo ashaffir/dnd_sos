@@ -105,37 +105,43 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   ),
                   /////////////// Username/Email ////////////
                   Padding(padding: EdgeInsets.only(bottom: 20)),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        // labelText: 'email', icon: Icon(Icons.person)),
-                        labelText: translations.email,
-                        icon: Icon(Icons.person)),
-                    controller: _usernameController,
-                    validator: (value) {
-                      if (validateEmail(value) == null) {
-                        return null;
-                      } else {
-                        return translations.alert_email;
-                      }
-                    },
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          // labelText: 'email', icon: Icon(Icons.person)),
+                          labelText: translations.email,
+                          icon: Icon(Icons.person)),
+                      controller: _usernameController,
+                      validator: (value) {
+                        if (validateEmail(value) == null) {
+                          return null;
+                        } else {
+                          return translations.alert_email;
+                        }
+                      },
+                    ),
                   ),
 
                   /////////////// Password ////////////
 
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: translations.password,
-                        icon: Icon(Icons.security)),
-                    // labelText: AppLocalizations.of(contex).translate('password'), icon: Icon(Icons.security)),
-                    controller: _passwordController,
-                    obscureText: true,
-                    validator: (value) {
-                      if (validatePassword(value) == null) {
-                        return null;
-                      } else {
-                        return translations.alert_password;
-                      }
-                    },
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          labelText: translations.password,
+                          icon: Icon(Icons.security)),
+                      // labelText: AppLocalizations.of(contex).translate('password'), icon: Icon(Icons.security)),
+                      controller: _passwordController,
+                      obscureText: true,
+                      validator: (value) {
+                        if (validatePassword(value) == null) {
+                          return null;
+                        } else {
+                          return translations.alert_password;
+                        }
+                      },
+                    ),
                   ),
                   /////////////// Forgot password ////////////
 

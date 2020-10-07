@@ -10,7 +10,7 @@ class EmptyList extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            translations.orders_empty_list,
+            translations.empty_list,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,

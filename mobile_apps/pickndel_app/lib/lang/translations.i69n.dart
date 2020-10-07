@@ -84,6 +84,7 @@ class Translations implements i69n.I69nMessageBundle {
   String get enter_with_country_code => "Enter phone with country code, e.g.";
   String get phone_number_is_not_valid => "Phone number is not valid";
   String get please_enter_a_valid_phone => "Please enter a valid new phone";
+  String get unknown => "Unknown";
   String get enter_here => "Enter here";
   String get update => "Update";
   String get profile_update_title => "Profile Update";
@@ -192,6 +193,7 @@ class Translations implements i69n.I69nMessageBundle {
   String get orders_change_status => "Change Status";
   String get orders_status => "status";
   String get orders_urgent => "URGENT";
+  String get empty_list => "Empty List";
   String get messages_register_title => "Confirmation";
   String get messages_register_thanks => "Thank you";
   String get messages_register_activation =>
@@ -270,6 +272,7 @@ class Translations implements i69n.I69nMessageBundle {
   String get courier => "Courier";
   String get daily_cost => "Daily Cost";
   String get new_order => "Create a New Order";
+  String get credit_card_owner_name => "Credit card owner name";
   String get credit_card => "Credit Card";
   String get update_credit_card => "Update Credit Card";
   String get credit_card_number => "Credit Card Number";
@@ -402,6 +405,8 @@ class Translations implements i69n.I69nMessageBundle {
         return phone_number_is_not_valid;
       case 'please_enter_a_valid_phone':
         return please_enter_a_valid_phone;
+      case 'unknown':
+        return unknown;
       case 'enter_here':
         return enter_here;
       case 'update':
@@ -606,6 +611,8 @@ class Translations implements i69n.I69nMessageBundle {
         return orders_status;
       case 'orders_urgent':
         return orders_urgent;
+      case 'empty_list':
+        return empty_list;
       case 'messages_register_title':
         return messages_register_title;
       case 'messages_register_thanks':
@@ -740,6 +747,8 @@ class Translations implements i69n.I69nMessageBundle {
         return daily_cost;
       case 'new_order':
         return new_order;
+      case 'credit_card_owner_name':
+        return credit_card_owner_name;
       case 'credit_card':
         return credit_card;
       case 'update_credit_card':

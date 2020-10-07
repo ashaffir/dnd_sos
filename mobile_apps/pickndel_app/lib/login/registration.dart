@@ -165,48 +165,57 @@ class _RegistrationState extends State<Registration> {
 
                       //////////////// Email section ////////////////
                       ///
-                      TextFormField(
-                        decoration: InputDecoration(
-                            labelText: trans.email, icon: Icon(Icons.person)),
-                        controller: _mailController,
-                        validator: (value) {
-                          if (validateEmail(value) == null) {
-                            return null;
-                          } else {
-                            return trans.alert_email;
-                          }
-                        },
-                        // validator: (String value) {
-                        //   if (value.isEmpty) {
-                        //     return "Valid email required.";
-                        //   }
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: trans.email, icon: Icon(Icons.person)),
+                          controller: _mailController,
+                          validator: (value) {
+                            if (validateEmail(value) == null) {
+                              return null;
+                            } else {
+                              return trans.alert_email;
+                            }
+                          },
+                          // validator: (String value) {
+                          //   if (value.isEmpty) {
+                          //     return "Valid email required.";
+                          //   }
+                        ),
                       ),
 
                       /////////////// password ////////////
                       ///
-                      TextFormField(
-                        decoration: InputDecoration(
-                            labelText: trans.password,
-                            icon: Icon(Icons.security)),
-                        controller: _password1Controller,
-                        obscureText: true,
-                        validator: validatePassword,
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: trans.password,
+                              icon: Icon(Icons.security)),
+                          controller: _password1Controller,
+                          obscureText: true,
+                          validator: validatePassword,
+                        ),
                       ),
 
                       /////////////// confirm password ////////////
                       ///
 
-                      TextFormField(
-                        decoration: InputDecoration(
-                            labelText: trans.register_confirm_pass,
-                            icon: Icon(Icons.security)),
-                        controller: _password2Controller,
-                        obscureText: true,
-                        validator: (val) => validateConfirmPassword(
-                            _password1Controller.text, val),
-                        onSaved: (String val) {
-                          confirmPassword = val;
-                        },
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: trans.register_confirm_pass,
+                              icon: Icon(Icons.security)),
+                          controller: _password2Controller,
+                          obscureText: true,
+                          validator: (val) => validateConfirmPassword(
+                              _password1Controller.text, val),
+                          onSaved: (String val) {
+                            confirmPassword = val;
+                          },
+                        ),
                       ),
 
                       /////////////// Accept Terms ////////////

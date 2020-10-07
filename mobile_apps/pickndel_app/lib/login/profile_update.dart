@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/database/user_database.dart';
-import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/credit_card.dart';
 import 'package:pickndell/model/user_model.dart';
@@ -412,20 +411,6 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
                 ),
               ),
 
-              // Padding(
-              //   padding: EdgeInsets.only(top: 100),
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     DashboardButton(
-              //       buttonText: trans.back_to_dashboard,
-              //     ),
-              //     ProfileButton(
-              //         buttonText: trans.back_to_profile, user: widget.user),
-              //   ],
-              // ),
-
               // DashboardButton(),
             ],
           ),
@@ -483,5 +468,10 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
         user: widget.user,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

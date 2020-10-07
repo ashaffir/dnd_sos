@@ -241,7 +241,7 @@ Future<dynamic> updateCreditCard({User user, CreditCard creditCard}) async {
   return postResponseJson;
 }
 
-///////////// Update Bank details ///////////
+///////////// Update Payments methof details ///////////
 Future<dynamic> updatePaymentMethod(
     {User user, String paymentMethod, String paypalAccount}) async {
   var postResponseJson;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/database/user_database.dart';
 import 'package:pickndell/finance/bank_details_form.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/message_page.dart';
@@ -26,6 +27,7 @@ class PaymentsPage extends StatefulWidget {
 }
 
 class _PaymentsPageState extends State<PaymentsPage> {
+  final dbProvider = DatabaseProvider.dbProvider;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _paypalAccount = TextEditingController();
   bool checkboxValue = false;
@@ -342,6 +344,21 @@ class _PaymentsPageState extends State<PaymentsPage> {
     )..show(context);
   }
 
+  Future<int> _profileDBUpdatePayment(String paymentMethod) async {
+    final db = await dbProvider.database;
+    final currentUser = widget.user;
+    int updateCount;
+    if (currentUser.isEmployee == 1) {
+      updateCount = await db.rawUpdate('''
+    UPDATE $userTable 
+    SET preferredPaymentMethod = ?
+    WHERE id = ?
+    ''', [paymentMethod, 0]);
+    }
+    print('UPDATED DB WITH PAYMENT METHOD: $updateCount ');
+    return updateCount;
+  }
+
   void _updatePaymentMethod({User user, int group, String paypal}) async {
     final trans = ExampleLocalizations.of(context);
     setState(() {
@@ -353,8 +370,9 @@ class _PaymentsPageState extends State<PaymentsPage> {
           user: user,
           paymentMethod: group == 1 ? "paypal" : "bank",
           paypalAccount: paypal);
-      if (res['response'] == "OK") {
+      if (res['response'] == "Bank" || res['response'] == "PayPal") {
         print('Sucess updating preferred payment method: $res');
+        _profileDBUpdatePayment(res['response']);
 
         Navigator.pushAndRemoveUntil(
           context,

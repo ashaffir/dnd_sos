@@ -105,6 +105,7 @@ class Translations_he extends Translations {
   String get enter_with_country_code => "הזן טלפון עם קוד מדינה, למשל";
   String get enter_here => "הזן כאן";
   String get update => "עדכן";
+  String get unknown => "לא ידוע";
   String get home_title => "עמוד פרופיל";
   String get home_courier_profile => "פרופיל שליח";
   String get home_sender_profile => "פרופיל שולח";
@@ -188,6 +189,7 @@ class Translations_he extends Translations {
   String get click_or_drag_stars => "לחץ או גרור את הכוכבים";
   String get courier_rating_updated => "דירוג השליח עודכן";
   String get thank_you => "תודה רבה";
+  String get empty_list => "רשימה ריקה";
   String get messages_register_title => "אשר";
   String get messages_register_thanks => "תודה";
   String get messages_register_activation =>
@@ -259,6 +261,7 @@ class Translations_he extends Translations {
   String get daily_cost => "עלות יומית";
   String get new_order => "צור הזמנה חדשה";
   String get credit_card => "כרטיס אשראי";
+  String get credit_card_owner_name => "שם בעל כרטיס האשראי";
   String get update_credit_card => "עדכן כרטיס אשראי";
   String get credit_card_number => "מספר כרטיס אשראי";
   String get credit_card_number_not_valid => "מספר כרטיס האשראי אינו חוקי";
@@ -432,6 +435,8 @@ class Translations_he extends Translations {
         return enter_here;
       case 'update':
         return update;
+      case 'unknown':
+        return unknown;
       case 'home_title':
         return home_title;
       case 'home_courier_profile':
@@ -590,6 +595,8 @@ class Translations_he extends Translations {
         return courier_rating_updated;
       case 'thank_you':
         return thank_you;
+      case 'empty_list':
+        return empty_list;
       case 'messages_register_title':
         return messages_register_title;
       case 'messages_register_thanks':
@@ -720,6 +727,8 @@ class Translations_he extends Translations {
         return new_order;
       case 'credit_card':
         return credit_card;
+      case 'credit_card_owner_name':
+        return credit_card_owner_name;
       case 'update_credit_card':
         return update_credit_card;
       case 'credit_card_number':

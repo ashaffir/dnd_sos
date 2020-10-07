@@ -19,8 +19,9 @@ class OrderPage extends StatefulWidget {
   final Order order;
   final String orderId;
   final User user;
+  final String country;
 
-  OrderPage({this.order, this.orderId, this.user});
+  OrderPage({this.order, this.orderId, this.user, this.country});
 
   @override
   _OrderPageState createState() => _OrderPageState();
@@ -127,6 +128,46 @@ class _OrderPageState extends State<OrderPage> {
               translations.orders_to + ": ${widget.order.drop_off_address}",
               style: whiteTitleH3,
             ),
+            Spacer(
+              flex: 6,
+            ),
+            Divider(color: Colors.white),
+            Spacer(
+              flex: 2,
+            ),
+
+            // Delivery Fare -  for couriers
+            if ((widget.country == 'Israel' || widget.country == 'ישראל') &&
+                widget.user.isEmployee == 1)
+              Text(
+                translations.orders_fare +
+                    ": " +
+                    "${roundDouble(widget.order.fare * widget.user.usdIls, 2)} ₪",
+                style: whiteTitleH3,
+              ),
+            if ((widget.country != 'Israel' && widget.country != 'ישראל') &&
+                widget.user.isEmployee == 1)
+              Text(
+                translations.orders_fare + ": " + "${widget.order.fare} \$",
+                style: whiteTitleH3,
+              ),
+
+            // Cost for Businesses/Sender
+            if ((widget.country == 'Israel' || widget.country == 'ישראל') &&
+                widget.user.isEmployee == 0)
+              Text(
+                translations.orders_order_cost +
+                    ": " +
+                    "${roundDouble(widget.order.price * widget.user.usdIls, 2)} ₪",
+                style: whiteTitleH3,
+              ),
+            if ((widget.country != 'Israel' && widget.country != 'ישראל') &&
+                widget.user.isEmployee == 0)
+              Text(
+                translations.orders_fare + ": " + "${widget.order.price} \$",
+                style: whiteTitleH3,
+              ),
+
             Spacer(
               flex: 6,
             ),
@@ -297,42 +338,47 @@ class _OrderPageState extends State<OrderPage> {
                           },
                         ),
                       Padding(padding: EdgeInsets.all(5.0)),
-                      RaisedButton.icon(
-                        icon: Icon(
-                          Icons.navigation,
-                          color: pickndellGreen,
-                        ),
-                        color: Colors.transparent,
-                        shape: StadiumBorder(
-                            side: BorderSide(color: pickndellGreen)),
-                        label: Text(
-                          translations.navigate,
-                          style: whiteButtonTitle,
-                        ),
-                        onPressed: () {
-                          if (widget.order.status == 'IN_PROGRESS') {
-                            print('IN PROGRESS STATUS: ${widget.order.status}');
-                            print(
-                                '>>>>> NAVIGATE TO DROP OFF: LAT: ${widget.order.dropoffAddressLat} LON: ${widget.order.dropoffAddressLng}');
+                      if (widget.order.status == 'STARTED' ||
+                          widget.order.status == 'IN_PROGRESS')
+                        RaisedButton.icon(
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          icon: Icon(
+                            Icons.navigation,
+                            color: pickndellGreen,
+                          ),
+                          color: Colors.transparent,
+                          shape: StadiumBorder(
+                              side: BorderSide(color: pickndellGreen)),
+                          label: Text(
+                            translations.navigate,
+                            style: whiteButtonTitle,
+                          ),
+                          onPressed: () {
+                            if (widget.order.status == 'IN_PROGRESS') {
+                              print(
+                                  'IN PROGRESS STATUS: ${widget.order.status}');
+                              print(
+                                  '>>>>> NAVIGATE TO DROP OFF: LAT: ${widget.order.dropoffAddressLat} LON: ${widget.order.dropoffAddressLng}');
 
-                            MapUtils.openMap(widget.order.dropoffAddressLat,
-                                widget.order.dropoffAddressLng);
-                          } else {
-                            print('STARTED STATUS: ${widget.order.status}');
-                            print(
-                                '>>>>> NAVIGATE TO PICKUP: LAT: ${widget.order.pickUpAddressLat} LON: ${widget.order.pickUpAddressLng}');
+                              MapUtils.openMap(widget.order.dropoffAddressLat,
+                                  widget.order.dropoffAddressLng);
+                            } else {
+                              print('STARTED STATUS: ${widget.order.status}');
+                              print(
+                                  '>>>>> NAVIGATE TO PICKUP: LAT: ${widget.order.pickUpAddressLat} LON: ${widget.order.pickUpAddressLng}');
 
-                            MapUtils.openMap(widget.order.pickUpAddressLat,
-                                widget.order.pickUpAddressLng);
-                          }
-                        },
-                      ),
+                              MapUtils.openMap(widget.order.pickUpAddressLat,
+                                  widget.order.pickUpAddressLng);
+                            }
+                          },
+                        ),
                       if (widget.user.isEmployee == 1 &&
                           widget.order.status == 'REQUESTED')
                         RaisedButton(
+                          padding: EdgeInsets.all(30),
                           child: Text(
                             translations.orders_accept,
-                            style: whiteButtonTitle,
+                            style: whiteTitleH2,
                           ),
                           color: pickndellGreen,
                           shape: RoundedRectangleBorder(
@@ -358,9 +404,10 @@ class _OrderPageState extends State<OrderPage> {
             if (widget.user.isEmployee == 1 &&
                 (widget.order.status == 'IN_PROGRESS'))
               RaisedButton(
+                padding: EdgeInsets.all(20),
                 child: Text(
                   translations.orders_report_delivered,
-                  style: whiteButtonTitle,
+                  style: whiteTitleH4,
                 ),
                 color: pickndellGreen,
                 shape: RoundedRectangleBorder(

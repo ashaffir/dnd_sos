@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/database/user_database.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/image_uploaded_message.dart';
@@ -34,6 +35,7 @@ class _IdUploadState extends State<IdUpload> {
   String firstName, lastName, email, mobile, password, confirmPassword;
   bool _validate = false;
   TextEditingController dateCtl = TextEditingController();
+  final dbProvider = DatabaseProvider.dbProvider;
 
   var _idDocTypes = List<DropdownMenuItem>();
   String _idDocType;
@@ -134,6 +136,21 @@ class _IdUploadState extends State<IdUpload> {
     );
   }
 
+  Future<int> profileDBUpdateID() async {
+    final db = await dbProvider.database;
+    final currentUser = widget.user;
+    int updateCount;
+    if (currentUser.isEmployee == 1) {
+      updateCount = await db.rawUpdate('''
+    UPDATE $userTable 
+    SET idDoc = ?
+    WHERE id = ?
+    ''', ['true', 0]);
+    }
+    print('DB UPDATED PHOTO ID: $updateCount ');
+    return updateCount;
+  }
+
   _uploadImage({File imageFile, User user}) async {
     // open a bytestream
     var stream = new http.ByteStream(DelegatingStream(imageFile.openRead()));
@@ -174,6 +191,7 @@ class _IdUploadState extends State<IdUpload> {
     // listen for response
     response.stream.transform(utf8.decoder).listen((value) {
       if (value == "202") {
+        profileDBUpdateID();
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -210,7 +228,7 @@ class _IdUploadState extends State<IdUpload> {
       _key.currentState.save();
       showProgress(context, 'Uploading to PickNdell, Please wait...', false);
       if (_image != null) {
-        updateProgress(trans.uploading_image + '...');
+        updateProgress(trans.uploading_to_pickndell + '...');
         _uploadImage(imageFile: _image, user: widget.user);
       } else {
         print('false');

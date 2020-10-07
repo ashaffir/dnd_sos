@@ -320,6 +320,7 @@ class OrdersList extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => OrderPage(
                         user: user,
+                        country: country,
                         order: order,
                         orderId: order.order_id,
                       ),
@@ -331,8 +332,11 @@ class OrdersList extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: 10),
                       ),
-                      Text(translations.orders_owner +
-                          ': ${order.business_name}'),
+                      order != null
+                          ? Text(translations.orders_owner +
+                              ': ${order.business_name}')
+                          : Text(translations.orders_owner +
+                              ': ${translations.unknown}'),
                       ListTile(
                         ////////// Delivery/Business Icons according to type of delivery ////////////////
                         ///
@@ -537,6 +541,7 @@ class OrdersList extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => OrderPage(
                               user: user,
+                              country: country,
                               order: order,
                               orderId: order.order_id,
                             ),
@@ -577,6 +582,7 @@ class OrdersList extends StatelessWidget {
                                           MaterialPageRoute(
                                             builder: (context) => OrderPage(
                                               user: user,
+                                              country: country,
                                               order: order,
                                               orderId: order.order_id,
                                             ),
@@ -680,6 +686,7 @@ class OrdersList extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => OrderPage(
                             user: user,
+                            country: country,
                             order: order,
                             orderId: order.order_id,
                           ),
@@ -792,6 +799,7 @@ class OrdersList extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => OrderPage(
                             user: user,
+                            country: country,
                             order: order,
                             orderId: order.order_id,
                           ),
@@ -902,6 +910,7 @@ class OrdersList extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => OrderPage(
                             user: user,
+                            country: country,
                             order: order,
                             orderId: order.order_id,
                           ),
@@ -986,6 +995,7 @@ class OrdersList extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => OrderPage(
                             user: user,
+                            country: country,
                             order: order,
                             orderId: order.order_id,
                           ),
@@ -1139,6 +1149,7 @@ class OrdersList extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => OrderPage(
                             user: user,
+                            country: country,
                             order: order,
                             orderId: order.order_id,
                           ),
@@ -1236,6 +1247,7 @@ class OrdersList extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => OrderPage(
                             user: user,
+                            country: country,
                             order: order,
                             orderId: order.order_id,
                           ),

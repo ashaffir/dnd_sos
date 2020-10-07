@@ -9,6 +9,7 @@ import 'package:pickndell/common/global.dart';
 import 'package:pickndell/dao/user_dao.dart';
 import 'package:pickndell/database/user_database.dart';
 import 'package:pickndell/home/home_page_isolate.dart';
+import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/model/user_model.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -242,6 +243,8 @@ launchURL(String url) async {
 //helper method to show alert dialog
 showAlertDialog(
     {BuildContext context,
+    User user,
+    String country,
     String title,
     String content,
     String url,
@@ -284,8 +287,19 @@ showAlertDialog(
     color: buttonColor != null ? buttonColor : pickndellGreen,
     onPressed: () {
       if (nameRoute != null) {
-        Navigator.pop(context);
-        Navigator.pushNamed(context, nameRoute);
+        if (nameRoute == 'profile') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProfilePage(
+                      user: user,
+                      userCountry: country,
+                    )),
+          );
+        } else {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, nameRoute);
+        }
       } else {
         print('No nameRoute');
       }

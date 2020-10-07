@@ -25,7 +25,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
-import 'package:pickndell/ui/progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -49,12 +48,13 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   ReceivePort port = ReceivePort();
+  TextEditingController _textInput = TextEditingController();
+
   String logStr = '';
   bool isRunning;
   bool isTracking = false;
   // LocationDto lastLocation;
   DateTime lastTimeLocation;
-
 // User related
   var userData;
   User currentUser_G;
@@ -197,11 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _loadVehicleTypes();
     _loadCategoriesTypes();
     _getProfilePic();
-    // _getCurrentUser();
-    // _getUserInfo(); // Not used because the prefs "user" is not set (at dashboard).
     checkCountry();
-    // getCountryName();
-    // if (_emailCodeVerification) {}
 
     // _checkProfile();
   }
@@ -211,13 +207,6 @@ class _ProfilePageState extends State<ProfilePage> {
     final translations = ExampleLocalizations.of(context);
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: (currentUser.isApproved == 1)
-        //       ? Text(translations.home_title)
-        //       : (currentUser.profilePending == 1)
-        //           ? Text(translations.home_title + ' (Pending Approval)')
-        //           : Text(translations.home_title + ' (Not Complete)'),
-        // ),
         body: Container(
           child: SingleChildScrollView(
             child: Column(
@@ -226,13 +215,6 @@ class _ProfilePageState extends State<ProfilePage> {
               children: <Widget>[
                 MessagingWidget(),
                 Padding(padding: EdgeInsets.only(top: 20)),
-                // Image.asset(
-                //   'assets/images/pickndell-logo-white.png',
-                //   width: MediaQuery.of(context).size.width * 0.40,
-                // ),
-                // Padding(
-                //   padding: EdgeInsets.only(top: 30.0),
-                // ),
                 (currentUser.isEmployee == 1)
                     ? Text(
                         translations.home_courier_profile,
@@ -808,7 +790,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Future updateProfile({BuildContext context, String updateField}) async {
     final trans = ExampleLocalizations.of(context);
     User currentUser = await UserDao().getUser(0);
-    TextEditingController _textInput = TextEditingController();
     /////// Cancel Button ////////////
     ///
     Widget okButton = FlatButton(
@@ -826,7 +807,15 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: updateField == 'phone'
-              ? Text('${trans.enter_with_country_code} +972541234567')
+              ? Column(
+                  children: [
+                    Text('${trans.enter_with_country_code}:'),
+                    Padding(padding: EdgeInsets.only(right: 10)),
+                    Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Text("+972541234567")),
+                  ],
+                )
               : updateField == 'name'
                   ? Text('${trans.change_the_name}')
                   : updateField == 'email'
@@ -1032,7 +1021,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             false, // No Back option for this page
                       );
                     } else {
-                      print('UPDATED FIELD: $updateField');
+                      print(
+                          'UPDATED FIELD: $updateField with new value ${_textInput.text}');
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(

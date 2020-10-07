@@ -558,7 +558,7 @@ class _DashboardState extends State<Dashboard> {
                                   )
                                 : Text(
                                     currentUser.isEmployee == 1
-                                        ? '\$ ${roundDouble(currentUser.dailyProfit, 2)}'
+                                        ? '$_country  \$ ${roundDouble(currentUser.dailyProfit, 2)}'
                                         : '\$ ${roundDouble(currentUser.dailyCost, 2)}',
                                     style: whiteTitleH2,
                                   ),
@@ -603,6 +603,8 @@ class _DashboardState extends State<Dashboard> {
                                         } else {
                                           showAlertDialog(
                                             context: context,
+                                            user: currentUser,
+                                            country: _country,
                                             title: translations
                                                 .your_account_not_approved_yet,
                                             content: (currentUser
@@ -614,7 +616,7 @@ class _DashboardState extends State<Dashboard> {
                                             nameRoute:
                                                 currentUser.profilePending == 1
                                                     ? null
-                                                    : '/profile',
+                                                    : 'profile',
                                             buttonText:
                                                 translations.got_to_profile,
                                             okButtontext: translations.close,
@@ -680,10 +682,12 @@ class _DashboardState extends State<Dashboard> {
                                   } else {
                                     showAlertDialog(
                                         context: context,
+                                        user: currentUser,
+                                        country: _country,
                                         title: translations
                                             .your_account_not_approved_yet,
                                         content: translations.complete_profile,
-                                        nameRoute: '/profile',
+                                        nameRoute: 'profile',
                                         buttonText: translations.got_to_profile,
                                         okButtontext: translations.close);
                                   }

@@ -126,7 +126,8 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
 
                               TextFormField(
                                 decoration: InputDecoration(
-                                    labelText: trans.home_name,
+                                    labelText:
+                                        " " + trans.credit_card_owner_name,
                                     icon: Icon(Icons.person),
                                     contentPadding: EdgeInsets.only(left: 10),
                                     border: OutlineInputBorder(

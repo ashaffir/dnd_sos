@@ -9,6 +9,7 @@ import 'package:iban/iban.dart';
 import 'package:pickndell/api_connection/api_connection.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/database/user_database.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/login/message_page.dart';
 import 'package:pickndell/login/profile_updated_page.dart';
@@ -34,6 +35,8 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
   TextEditingController _nameAccount = new TextEditingController();
   TextEditingController _idNumber = new TextEditingController();
   TextEditingController _swiftCode = new TextEditingController();
+
+  final dbProvider = DatabaseProvider.dbProvider;
 
   String bankName;
   String bankBranch;
@@ -316,6 +319,21 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
     )..show(context);
   }
 
+  Future<int> profileDBUpdateBank(String iban) async {
+    final db = await dbProvider.database;
+    final currentUser = widget.user;
+    int updateCount;
+    if (currentUser.isEmployee == 1) {
+      updateCount = await db.rawUpdate('''
+    UPDATE $userTable 
+    SET bankDetails = ?
+    WHERE id = ?
+    ''', [iban, 0]);
+    }
+    print('DB UPDATED BANK DETAILS: $updateCount ');
+    return updateCount;
+  }
+
   void _sendBankDetails(User user) async {
     setState(() {
       _isLoading = true;
@@ -334,6 +352,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
       if (res['response'] == "OK") {
         print('Sucess updating bank details: $res');
 
+        profileDBUpdateBank(res['iban']);
         Navigator.push(
             context,
             new MaterialPageRoute(

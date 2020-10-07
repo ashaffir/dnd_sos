@@ -72,6 +72,9 @@ enter_with_country_code: הזן טלפון עם קוד מדינה, למשל
 enter_here: הזן כאן
 update: עדכן
 
+unknown: לא ידוע
+
+
 # HomePage/Profile
 home_title: עמוד פרופיל
 home_courier_profile: פרופיל שליח
@@ -155,7 +158,7 @@ please_choose_rating: אנא בחר דירוג
 click_or_drag_stars: לחץ או גרור את הכוכבים
 courier_rating_updated: דירוג השליח עודכן
 thank_you: תודה רבה
-
+empty_list: רשימה ריקה
 
 
 # Messages page
@@ -242,6 +245,7 @@ courier: שליח
 daily_cost: עלות יומית
 new_order: צור הזמנה חדשה
 credit_card: כרטיס אשראי
+credit_card_owner_name: שם בעל כרטיס האשראי
 update_credit_card: עדכן כרטיס אשראי
 credit_card_number: מספר כרטיס אשראי
 credit_card_number_not_valid: מספר כרטיס האשראי אינו חוקי

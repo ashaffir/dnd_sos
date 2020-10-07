@@ -45,6 +45,7 @@ change_the_vehicle: Change the vehicle
 enter_with_country_code: Enter phone with country code, e.g.
 phone_number_is_not_valid: Phone number is not valid
 please_enter_a_valid_phone: Please enter a valid new phone
+unknown: Unknown
 
 enter_here: Enter here
 update: Update
@@ -152,6 +153,7 @@ orders_delivery_success: Delivery and confirmation photo updated. Good Job!
 orders_change_status: Change Status
 orders_status: status
 orders_urgent: URGENT
+empty_list: Empty List
 
 # Messages Page
 messages_register_title: Confirmation
@@ -237,6 +239,7 @@ sender: Sender
 courier: Courier
 daily_cost: Daily Cost
 new_order: Create a New Order
+credit_card_owner_name: Credit card owner name
 credit_card: Credit Card
 update_credit_card: Update Credit Card
 credit_card_number: Credit Card Number
