@@ -257,7 +257,7 @@ DEFAULT_FROM_EMAIL = 'support@pickndell.com'
 # EMAIL_HOST_PASSWORD = '110011'
 # DEFAULT_FROM_EMAIL = 'admin@myretrochic.com'
 
-ADMIN_EMAIL = 'alfred.shaffir@gmail.com'
+ADMIN_EMAIL = config['ADMIN_EMAIL']
 
 # use bootstrap friendly message tags
 from django.contrib.messages import constants as messages
