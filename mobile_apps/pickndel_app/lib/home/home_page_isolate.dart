@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
-import 'package:background_locator/location_settings.dart';
+// import 'package:background_locator/location_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
@@ -272,26 +272,26 @@ class _HomePageIsolateState extends State<HomePageIsolate> {
 
   void _startLocator() {
     Map<String, dynamic> data = {'countInit': 1};
-    BackgroundLocator.registerLocationUpdate(
-      LocationCallbackHandler.callback,
-      initCallback: LocationCallbackHandler.initCallback,
-      initDataCallback: data,
+    // BackgroundLocator.registerLocationUpdate(
+    //   LocationCallbackHandler.callback,
+    //   initCallback: LocationCallbackHandler.initCallback,
+    //   initDataCallback: data,
 /*
         Comment initDataCallback, so service not set init variable,
         variable stay with value of last run after unRegisterLocationUpdate
  */
-      disposeCallback: LocationCallbackHandler.disposeCallback,
-      androidNotificationCallback: LocationCallbackHandler.notificationCallback,
-      settings: LocationSettings(
-          notificationChannelName: "PickNdell",
-          notificationTitle: "You are currently available.",
-          notificationMsg: "Senders are able to share orders with you.",
-          notificationIcon: "assets/images/pickndell-logotype-white.png",
-          wakeLockTime: 20,
-          autoStop: false,
-          distanceFilter: 10,
-          interval: 5),
-    );
+    //   disposeCallback: LocationCallbackHandler.disposeCallback,
+    //   androidNotificationCallback: LocationCallbackHandler.notificationCallback,
+    //   settings: LocationSettings(
+    //       notificationChannelName: "PickNdell",
+    //       notificationTitle: "You are currently available.",
+    //       notificationMsg: "Senders are able to share orders with you.",
+    //       notificationIcon: "assets/images/pickndell-logotype-white.png",
+    //       wakeLockTime: 20,
+    //       autoStop: false,
+    //       distanceFilter: 10,
+    //       interval: 5),
+    // );
   }
 
   Widget getHomePageIsolate(User currentUser) {

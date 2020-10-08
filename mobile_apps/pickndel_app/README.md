@@ -57,6 +57,11 @@ Build commands:
 > flutter clean
 > flutter build apk --split-per-abi
 
+# New bandle build version
+> flutter clean
+
+
+
 # REFERENCE: Android app deployment on to the Google Play
 - https://flutter.dev/docs/deployment/android
 - Change app version: https://stackoverflow.com/questions/53570575/flutter-upgrade-the-version-code-for-play-store

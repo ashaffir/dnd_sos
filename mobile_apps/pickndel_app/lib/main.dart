@@ -1,11 +1,7 @@
-import 'package:pickndell/app_localizations.dart';
 import 'package:pickndell/finance/payments.dart';
 import 'package:pickndell/home/dashboard.dart';
-import 'package:pickndell/finance/payments.dart';
 import 'package:pickndell/home/profile.dart';
-import 'package:pickndell/home/welcome.dart';
 import 'package:pickndell/localizations.dart';
-import 'package:pickndell/location/gmap.dart';
 import 'package:pickndell/orders/order_accepted.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +17,6 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/authentication_bloc.dart';
-import 'home/home_page_isolate.dart';
 import 'login/logout_page.dart';
 import 'model/user_model.dart';
 import 'orders/get_orders_page.dart';

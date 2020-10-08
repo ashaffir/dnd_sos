@@ -275,3 +275,5 @@ please_enter_valid_iban: אנא הזן IBAN חוקי
 please_enter_valid_swift: אנא הזן קוד SWIFT חוקי
 please_enter_account_name: אנא הזן שם חשבון (באנגלית)
 
+use_locaiton: אנו משתמשים במיקום שלך
+prominent_message: PickNdell אוספת נתוני מיקום ברקע כדי לאפשר זיהוי שליחים רלוונטיים למשלוח שלך ו / או עסקים דורשים מסירה בסביבתך.

@@ -92,7 +92,7 @@ class OrdersList extends StatelessWidget {
                         ),
                         Spacer(),
                         // Conditions for the new status
-                        newStatus == "ARCHIVED" // Order accepted
+                        newStatus == "ARCHIVED" // Order deleted
                             ? SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.30,
                                 child: RaisedButton(

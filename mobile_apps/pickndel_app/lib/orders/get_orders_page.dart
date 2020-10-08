@@ -59,7 +59,12 @@ class _GetOrdersState extends State<GetOrders> {
     });
   }
 
+  int _isEmployee;
+  // int currentIsEmployee;
+
   Future _checkUser() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    _isEmployee = localStorage.getInt('isEmployee');
     _currentUser = await UserDao().getUser(0);
   }
 
@@ -141,7 +146,8 @@ class _GetOrdersState extends State<GetOrders> {
                                                 ? translations.delivered_orders
                                                 : '---',
                 style: TextStyle(color: Colors.white, fontSize: 20)),
-            if (widget.user.isEmployee == 0)
+            // if (widget.user.isEmployee == 0)
+            if (_isEmployee == 0)
               DropdownButton(
                 underline: SizedBox(),
                 icon: Icon(Icons.filter_list),

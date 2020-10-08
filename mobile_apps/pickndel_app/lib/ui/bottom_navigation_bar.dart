@@ -6,6 +6,7 @@ import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/login/logout_page.dart';
 import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/orders/get_orders_page.dart';
 import 'package:pickndell/repository/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +22,6 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   User _currentUser;
   User currentUser;
-
   String _country;
 
   Future _getCountry() async {
@@ -214,8 +214,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                           color: Colors.white,
                                         ),
                                         onTap: () {
-                                          Navigator.pushReplacementNamed(
-                                              context, '/open-orders');
+                                          print('PAGE: Open Orders....');
+                                          // Navigator.pushReplacementNamed(
+                                          //     context, '/open-orders');
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => GetOrders(
+                                                    user: user,
+                                                    ordersType: "openOrders")),
+                                          );
                                         },
                                       ),
 

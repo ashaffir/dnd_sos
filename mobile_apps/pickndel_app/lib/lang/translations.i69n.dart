@@ -304,6 +304,9 @@ class Translations implements i69n.I69nMessageBundle {
   String get please_enter_valid_swift => "Please enter a valid Swift Code";
   String get please_enter_account_name =>
       "Please enter an account name (In English)";
+  String get use_locaiton => "Use Your Location";
+  String get prominent_message =>
+      "PickNdell collects location data in the background to enable identifying relevant couriers for your delivery and/or businesses require delivery in your vicinity.";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -803,6 +806,10 @@ class Translations implements i69n.I69nMessageBundle {
         return please_enter_valid_swift;
       case 'please_enter_account_name':
         return please_enter_account_name;
+      case 'use_locaiton':
+        return use_locaiton;
+      case 'prominent_message':
+        return prominent_message;
       default:
         throw Exception('Message $key doesn\'t exist in $this');
     }

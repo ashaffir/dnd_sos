@@ -1,12 +1,8 @@
-import 'package:background_locator/generated/i18n.dart';
 import 'package:pickndell/common/global.dart';
-import 'package:pickndell/home/home_page_isolate.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:pickndell/model/user_model.dart';
-import 'package:pickndell/repository/user_repository.dart';
 import 'package:pickndell/ui/buttons.dart';
-import 'package:pickndell/ui/bottom_nav_bar.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 
 class ImageUploaded extends StatelessWidget {

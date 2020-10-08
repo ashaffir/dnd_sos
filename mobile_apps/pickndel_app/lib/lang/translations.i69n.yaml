@@ -271,3 +271,6 @@ please_enter_valid_swift: Please enter a valid Swift Code
 please_enter_account_name: Please enter an account name (In English)
 
 
+use_locaiton: Use Your Location
+prominent_message: PickNdell collects location data in the background to enable identifying relevant couriers for your delivery and/or businesses require delivery in your vicinity.
+

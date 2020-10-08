@@ -290,6 +290,9 @@ class Translations_he extends Translations {
   String get please_enter_valid_iban => "אנא הזן IBAN חוקי";
   String get please_enter_valid_swift => "אנא הזן קוד SWIFT חוקי";
   String get please_enter_account_name => "אנא הזן שם חשבון (באנגלית)";
+  String get use_locaiton => "אנו משתמשים במיקום שלך";
+  String get prominent_message =>
+      "PickNdell אוספת נתוני מיקום ברקע כדי לאפשר זיהוי שליחים רלוונטיים למשלוח שלך ו / או עסקים דורשים מסירה בסביבתך.";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -781,6 +784,10 @@ class Translations_he extends Translations {
         return please_enter_valid_swift;
       case 'please_enter_account_name':
         return please_enter_account_name;
+      case 'use_locaiton':
+        return use_locaiton;
+      case 'prominent_message':
+        return prominent_message;
       default:
         return super[key];
     }

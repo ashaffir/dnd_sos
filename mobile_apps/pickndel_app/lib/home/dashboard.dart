@@ -4,13 +4,15 @@ import 'dart:ui';
 
 import 'package:background_locator/background_locator.dart';
 import 'package:background_locator/location_dto.dart';
-import 'package:background_locator/location_settings.dart';
+import 'package:background_locator/settings/android_settings.dart';
+import 'package:background_locator/settings/ios_settings.dart';
+import 'package:background_locator/settings/locator_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
-import 'package:pickndell/home/profile.dart';
+import 'package:pickndell/home/prominent_disclosure.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
 import 'package:pickndell/location/location_callback_handler.dart';
@@ -52,6 +54,9 @@ class _DashboardState extends State<Dashboard> {
   // LocationDto lastLocation;
   DateTime lastTimeLocation;
 
+  // Tracking location disclosure
+  bool disclosure;
+
 // User related
   var userData;
   bool isEmployee;
@@ -81,6 +86,7 @@ class _DashboardState extends State<Dashboard> {
       return FutureBuilder(
         future: UserDao().getUser(0),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          // prominentDisclosure();
           if (snapshot.hasData) {
             return getDashboard(snapshot.data);
           } else {
@@ -238,21 +244,30 @@ class _DashboardState extends State<Dashboard> {
   void _onStart() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     LocationRepository updateAvailability = LocationRepository();
-    if (await _checkLocationPermission()) {
-      print('GOT PERMISSIONS!!');
-      _startLocator();
-      setState(() {
-        isRunning = true;
-        lastTimeLocation = null;
-        // lastLocation = null;
 
-        print('isRunning: $isRunning');
-      });
+    disclosure = localStorage.getBool('disclosure');
+    if (disclosure == null || disclosure == false) {
+      disclosure = await prominentDisclosure(context);
+      // localStorage.setBool('disclosure', disclosure);
+    } else if (disclosure) {
+      if (await _checkLocationPermission()) {
+        print('GOT PERMISSIONS!!');
+        _startLocator();
+        setState(() {
+          isRunning = true;
+          lastTimeLocation = null;
+          // lastLocation = null;
+
+          print('isRunning: $isRunning');
+        });
+      } else {
+        // show error
+      }
+      await localStorage.setBool('locationTracking', isRunning);
+      await updateAvailability.updateAvailability(isRunning);
     } else {
-      // show error
+      print('DECLINED');
     }
-    await localStorage.setBool('locationTracking', isRunning);
-    await updateAvailability.updateAvailability(isRunning);
   }
 
   void onStop() async {
@@ -270,26 +285,31 @@ class _DashboardState extends State<Dashboard> {
 
   void _startLocator() {
     Map<String, dynamic> data = {'countInit': 1};
-    BackgroundLocator.registerLocationUpdate(
-      LocationCallbackHandler.callback,
-      initCallback: LocationCallbackHandler.initCallback,
-      initDataCallback: data,
+    BackgroundLocator.registerLocationUpdate(LocationCallbackHandler.callback,
+        initCallback: LocationCallbackHandler.initCallback,
+        initDataCallback: data,
 /*
         Comment initDataCallback, so service not set init variable,
         variable stay with value of last run after unRegisterLocationUpdate
  */
-      disposeCallback: LocationCallbackHandler.disposeCallback,
-      androidNotificationCallback: LocationCallbackHandler.notificationCallback,
-      settings: LocationSettings(
-          notificationChannelName: "PickNdell",
-          notificationTitle: "You are currently available.",
-          notificationMsg: "Senders are able to share orders with you.",
-          notificationIcon: "assets/images/pickndell-logotype-white.png",
-          wakeLockTime: 20,
-          autoStop: false,
-          distanceFilter: 10,
-          interval: 5),
-    );
+        disposeCallback: LocationCallbackHandler.disposeCallback,
+        iosSettings: IOSSettings(
+            accuracy: LocationAccuracy.NAVIGATION, distanceFilter: 0),
+        autoStop: false,
+        androidSettings: AndroidSettings(
+            accuracy: LocationAccuracy.NAVIGATION,
+            interval: 5,
+            distanceFilter: 10,
+            androidNotificationSettings: AndroidNotificationSettings(
+                notificationChannelName: 'PickNdell',
+                notificationTitle: 'You are currently available',
+                notificationMsg: 'Senders are able to share orders with you',
+                // notificationBigMsg:
+                //     'Background location is on to keep the app up-tp-date with your location. This is required for main features to work properly when the app is not running.',
+                notificationIcon: 'assets/images/pickndell-logotype-white.png',
+                notificationIconColor: Colors.grey,
+                notificationTapCallback:
+                    LocationCallbackHandler.notificationCallback)));
   }
 
   Widget getDashboard(User currentUser) {
@@ -323,33 +343,6 @@ class _DashboardState extends State<Dashboard> {
                       'assets/images/pickndell-logo-white.png',
                       width: MediaQuery.of(context).size.width * 0.40,
                     ),
-                    // Spacer(
-                    //   flex: 1,
-                    // ),
-                    // Column(
-                    //   children: <Widget>[
-                    //     InkWell(
-                    //       onTap: () {
-                    //         Navigator.push(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //               builder: (context) => ProfilePage(
-                    //                     user: currentUser,
-                    //                   )),
-                    //         );
-                    //       },
-                    //       child: Row(
-                    //         children: <Widget>[
-                    //           Icon(Icons.person),
-                    //           Text(translations.profile),
-                    //         ],
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                    // Spacer(
-                    //   flex: 1,
-                    // ),
                   ],
                 ),
                 Padding(
@@ -544,22 +537,22 @@ class _DashboardState extends State<Dashboard> {
                           children: [
                             Text(
                               currentUser.isEmployee == 1
-                                  ? translations.daily_earnings
-                                  : translations.daily_cost,
+                                  ? translations.daily_earnings + ":"
+                                  : translations.daily_cost + ":",
                               style: whiteTitleH4,
                             ),
                             Padding(padding: EdgeInsets.only(right: 10)),
                             _country == 'Israel' || _country == 'ישראל'
                                 ? Text(
                                     currentUser.isEmployee == 1
-                                        ? ' ${roundDouble(currentUser.dailyProfit * currentUser.usdIls, 2)} ₪'
-                                        : ' ${roundDouble(currentUser.dailyCost * currentUser.usdIls, 2)} ₪',
+                                        ? ': ${roundDouble(currentUser.dailyProfit * currentUser.usdIls, 2)} ₪'
+                                        : ': ${roundDouble(currentUser.dailyCost * currentUser.usdIls, 2)} ₪',
                                     style: whiteTitleH2,
                                   )
                                 : Text(
                                     currentUser.isEmployee == 1
-                                        ? '$_country  \$ ${roundDouble(currentUser.dailyProfit, 2)}'
-                                        : '\$ ${roundDouble(currentUser.dailyCost, 2)}',
+                                        ? ' \$ ${roundDouble(currentUser.dailyProfit, 2)}'
+                                        : ' \$ ${roundDouble(currentUser.dailyCost, 2)}',
                                     style: whiteTitleH2,
                                   ),
                           ],

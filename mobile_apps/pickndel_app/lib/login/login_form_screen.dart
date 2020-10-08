@@ -1,8 +1,7 @@
-import 'dart:isolate';
-
 import 'package:pickndell/bloc/authentication_bloc.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/home/prominent_disclosure.dart';
 import 'package:pickndell/home/welcome.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +40,28 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     _country = localStorage.getString('userCountry');
   }
 
+  bool disclosureStatus;
+  bool disclosureCurrent;
+
+  Future checkDisclosure() async {
+    SharedPreferences localstorage = await SharedPreferences.getInstance();
+    disclosureCurrent = localstorage.getBool('disclosure');
+    if (disclosureCurrent == null) {
+      prominentDisclosure(context);
+      setState(() {
+        disclosureStatus = localstorage.getBool('disclosure');
+        print('>>> Set new disclosure: $disclosureStatus');
+      });
+    } else {
+      disclosureStatus = disclosureCurrent;
+      print('>>> Set current disclosure: $disclosureStatus');
+    }
+  }
+
   @override
   void initState() {
     checkCountry();
+    checkDisclosure();
     super.initState();
   }
 
@@ -181,12 +199,6 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             FlatButton(
-                              // shape: RoundedRectangleBorder(
-                              //     side: BorderSide(
-                              //         color: Colors.blue,
-                              //         width: 1,
-                              //         style: BorderStyle.solid),
-                              //     borderRadius: BorderRadius.circular(50)),
                               onPressed: _launchURL,
                               child: Text(
                                 translations.forgot_password,
