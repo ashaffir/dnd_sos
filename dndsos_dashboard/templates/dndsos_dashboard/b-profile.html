@@ -88,7 +88,7 @@
 												<p><b>{% trans 'Phone' %}</b>: {{ profile.phone }}</p>
 												<!-- <p><b>{% trans 'Business Type' %}</b>: {{ profile.business_type }}</p> -->
 												<p><b>{% trans 'Business Category' %}</b>: {{ profile.business_category }}</p>
-												<p><b>{% trans 'Address' %}:</b> {{ profile.building_number }} {{ profile.street }}, {{ profile.city }}</p>
+												<p><b>{% trans 'Address' %}:</b> {{ profile.address }} </p>
 											</div>
 										</section>
 
@@ -108,9 +108,9 @@
 												<ul class="simple-todo-list">
 													<li class="{% if required_fields.business_name %}completed{% else %}{% endif %}">{% trans 'Name' %} </li>
 													<li class="{% if required_fields.phone %}completed{% else %}{% endif %}">{% trans 'Phone' %} </li>
-													<li class="{% if required_fields.city %}completed{% else %}{% endif %}">{% trans 'City' %} </li>
+													<!-- <li class="{% if required_fields.city %}completed{% else %}{% endif %}">{% trans 'City' %} </li>
 													<li class="{% if required_fields.street %}completed{% else %}{% endif %}">{% trans 'Street' %} </li>
-													<li class="{% if required_fields.building_number %}completed{% else %}{% endif %}">{% trans 'Building Number' %} </li>
+													<li class="{% if required_fields.building_number %}completed{% else %}{% endif %}">{% trans 'Building Number' %} </li> -->
 													<li class="{% if required_fields.credit_card_token %}completed{% else %}{% endif %}">{% trans 'Credit Card' %} </li>
 												</ul>
 											</div>
@@ -143,57 +143,29 @@
 														
 															<div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Phone Number' %}</label>
-																{% if user.business.phone %}
-																<div class="col-md-6 text-center">
-																	<div class="text-center" style="font-size: 1.3rem;padding-top:0.7rem; padding-bottom:0.7rem;background-color:rgb(240, 247, 247); border-radius: 5px">
-																		{{ user.business.phone  }}
-																	</div>
-
-																</div>
-																{% else %}
+																
 																<div class="col-md-4">
-																	<input class="form-control" type="text" name="phoneNumber" placeholder="{% trans 'Phone with country prefix' %}">
+																	{% if user.business.phone %}
+																		<input class="form-control" type="text" name="phoneNumber" placeholder="{{user.business.phone}}">
+																	{% else %}
+																		<input class="form-control" type="text" name="phoneNumber" placeholder="{% trans 'Phone with country prefix' %}">
+																	{% endif %}
 																</div>
 																<div class="col-md-3 text-left">
-																	<button class="btn btn-primary" name="addPhone" type="submit">{% trans 'Add Phone' %}</button>
+																	<button class="btn btn-primary" name="addPhone" type="submit">{% trans 'Add/Change Phone' %}</button>
 																</div>
-																{% endif %}
 															</div>
 
-															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">{% trans 'City' %}</label>
-																<!-- <div class="col-md-8">{{ form.city }}</div> -->
+															 <div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">{% trans 'Business/Sender Address' %}</label>
 																<div class="col-md-4">
-																	<select id="city" name="city" class="form-control" required>
-																		<option value="none">---------------</option>
-																		{% for city in cities %}
-																			<option value="{{ city.hebrew_name }}">{{ city.hebrew_name }}</option>
-																		{% endfor %}
-																	</select>								
+																	{% if user.business.address %}
+																		<input id="searchTextField" name="profileAddress" class="form-control" type="text" placeholder="{{ user.business.address }}">
+																	{% else %}
+																		<input id="searchTextField" name="profileAddress" class="form-control" type="text" placeholder="{% trans 'Address' %} ({% trans 'start typing' %})">
+																	{% endif %}
+																	<div id="map_canvas"></div>    																								   
 																</div>
-															</div>
-
-															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">{% trans 'Street' %}</label>
-																{% if user.business.street %}
-																	<div class="col-md-6">
-																		<div class="text-center" style="font-size: 1.3rem;padding-top:0.7rem; padding-bottom:0.7rem; background-color:rgb(240, 247, 247); border-radius: 5px">{{ user.business.street }}</div>
-																	</div>
-																{% endif %}
-
-															</div>
-															<div class="row" style="margin-top: 1%;">
-																<div class="col-md-3"></div>
-																<div class="col-md-5" id="streets">
-																	<p>{% trans '-- Pick a city --' %}</p>
-																	<!-- Loaded from Ajax -->
-																	
-																</div>
-															</div>
-
-															<div class="row" style="margin-top: 1%;">
-																<label class="col-md-3 control-label" for="">{% trans 'Building Number' %}</label>
-																<div class="col-md-2">{{ form.building_number }}</div>
 															</div>
 
 															<div class="row" style="margin-top: 1%;">
@@ -232,6 +204,7 @@
 
 									<!-- Credit Cards Management -->
 									<div id="add_cc" class="tab-pane">
+										<h3>Update Your Credit Card</h3>
 										{% if user.business.credit_card_token %}
 											<div class="row">
 												<div class="col-md-12">
@@ -250,10 +223,7 @@
 												</div>
 											</div>
 										{% else %}
-											<iframe src="{{ icredit_form_url }}" frameborder="0" allowtransparency="true" onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));' style="height:600px;width:100%;border:none;overflow:hidden;" frameborder="0" allowfullscreen>
-											</iframe>
-										{% endif %}
-										<!-- <form class="form-horizontal" enctype="multipart/form-data" id="add_card" name="add_card" method="POST" action="{% url 'payments:add-card' %}">
+										<form class="form-horizontal" enctype="multipart/form-data" id="add_card" name="add_card" method="POST" action="{% url 'payments:add-card' %}">
 											{% csrf_token %}
 											<div class="row">
 												<div class="col-md-6">
@@ -261,9 +231,10 @@
 												</div>
 												<div class="col-md-6">
 													<div class="card-icon mt-2 center">
-														<span class="icon-top"><img src="{% static 'assets/images/visa.png' %}" alt=""></span>
+														<span class="icon-top"><img src="{% static 'assets/images/payments-badge.jpg' %}" style="width: 70%;" alt=""></span>
+														<!-- <span class="icon-top"><img src="{% static 'assets/images/visa.png' %}" alt=""></span>
 														<span class="icon-top"><img src="{% static 'assets/images/mastercard.png' %}" alt=""></span>
-														<span class="icon-top"><img src="{% static 'assets/images/credit-card.png' %}" alt=""></span>
+														<span class="icon-top"><img src="{% static 'assets/images/credit-card.png' %}" alt=""></span> -->
 													</div>		
 												</div>
 											</div>										
@@ -272,6 +243,12 @@
 														<label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Cardholder Name</label>
 														<div class="col-lg-8 col-md-8 col-sm-8 col-12">
 															<input type="text" id="name" class="form-control" name="name" value="" required placeholder="Cardholder Name">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Cardholder ID Number</label>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-12">
+															<input type="text" id="owner-id-number" class="form-control" name="owner-id-number" value="" required placeholder="Cardholder ID Number">
 														</div>
 													</div>
 													<div class="form-group row">
@@ -332,8 +309,10 @@
 												</div>
 											</div>
 
-										</form> -->
-
+										</form>
+									
+										{% endif %}
+										
 									</div>
 									<!-- END Credit Cards Management -->
 
@@ -345,6 +324,12 @@
     </section>
 	<script src="{% static 'assets/vendor/fuelux/js/spinner.js' %}"></script>
 	<script src="{% static 'assets/vendor/dropzone/dropzone.js' %}"></script>
+	
+	<!-- Google autocomplete address -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_key }}&sensor=false&libraries=places" type="text/javascript"></script>
+	<script src="{% static 'assets/javascripts/profile_address.js' %}"></script>
+	
 	<script>
 	function preview_image()
 	{

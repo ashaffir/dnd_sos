@@ -3,6 +3,8 @@ from django.contrib.gis.db import models as geomodels
 from django.contrib.gis.db.models import PointField
 from django.contrib.postgres.fields import JSONField
 
+from places.fields import PlacesField
+
 from core.models import User, Employee, Employer
 
 class FreelancerLocation(models.Model):
@@ -94,3 +96,27 @@ class UserLocation(geomodels.Model):
 
     # def __str__(self):
     #     return self.user_id
+
+
+class Place(models.Model):
+    location = PlacesField(blank=True)
+
+    def __str__(self):
+        return self.location.place
+
+
+
+class Route(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class RoutePoint(models.Model):
+    name = models.CharField(max_length=50)
+    location = PlacesField()
+    route = models.ForeignKey(Route, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

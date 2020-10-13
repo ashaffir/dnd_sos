@@ -58,16 +58,68 @@
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class=""></i></a>
         </div>
     </header>
-
+<style>
+    .verticalLine {
+        border-left: thin solid grey;
+      }
+      input[type=checkbox]
+    {
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    padding: 10px;
+    }
+</style>
     <!-- start: page -->
         <section class="panel">
             <div class="panel-body">
-                <h3 class="">{% trans 'Add new order' %}</h3>
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include 'dndsos_dashboard/partials/_add-order-modal.html' %}
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <button id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary btn-lg">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></button>
+                        <div class="row" style="margin-top: 1rem">
+                    <form action="" id="newOrderForm">
+                        <div class="col-md-1" style="padding-left: 4rem;">
+                                <h4><input id="urgency" type="checkbox" style="height: 1rem;"></h4>
+                            </div>
+                            <div class="col-md-1">
+                                <h4>{% trans 'Urgent' %}</h4>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
+                    <div class="col-1"></div>
+            <!-- include 'dndsos_dashboard/partials/_add-order-modal.html'  -->
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="row">
+                                   <h5>{% trans 'From' %}</h5> <input id="searchTextField1" class="form-control" type="text" placeholder="{% trans 'Pickup address' %} ({% trans 'start typing' %})">
+                                    <div id="map_canvas1"></div>    
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-info" onclick="getCurrentLocation()" style="margin-top:1rem;font-size:1rem"> <i class="fa fa-location-arrow fa-2x"> </i> {% trans 'Current locaiton' %}</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-info" onclick="getProfileAddress()" style="margin-top: 1rem; font-size:1rem"><i class="fa fa-map-marker fa-2x"> </i> {% trans 'Profile address' %}</button>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="col-md-2" style="padding-top:4rem">
+                                <center><i class="fa fa-arrow-circle-right fa-2x" style="color: green;"></i></center>
+                            </div>
+                            <div class="col-md-5">
+                                <h5>{%trans 'To' %}</h5><input id="searchTextField2" class="form-control" type="text" placeholder="{% trans 'Dropoff address' %} ({% trans 'start typing' %})" >
+                                <div id="map_canvas2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div> <!-- Main Row -->
+            </div> 
+            <!-- Panel body -->
                 <hr>
                 <div class="table-responsive" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
                     <table class="table  table-bordered table-striped mb-none display orders" id="ordersTable">
@@ -95,43 +147,10 @@
     })		
 </script>
 
-<!-- <script>
+	<!-- Get current location  -->
 
-    /////// Price currency converter for table ///////
-    /// NOT used. Used template tags instead
-
-    let usd_ils_rate = '{{ usd_ils }}'
-    let usd_eur_rate = '{{ usd_eur }}'
-
-    window.addEventListener("load", function(){
-        let conv_price;
-        let prices = document.querySelectorAll('#price_cell');
-        language = '{{ lang }}'
-        if (language == 'he') {
-            currency = '₪'
-        } else if (language == 'en') {
-            currency = '$'
-        } else {
-            currency = '€'
-        }
-        for (let price of prices) {
-            price_ele = price.innerHTML;
-            let t_price = price.innerText;
-            let f_price = parseFloat(t_price);
-            if (language == 'he') {
-                conv_price = f_price * usd_ils_rate;
-                price.innerHTML= conv_price.toFixed(1).toString() + ' ' + currency
-            } else if (language == 'en') {
-                conv_price = f_price;
-                price.innerHTML= currency + ' ' + conv_price.toFixed(1).toString()
-            } else {
-                conv_price = f_price * usd_eur_rate;
-                price.innerHTML= currency + ' ' + conv_price.toFixed(1).toString()
-            }
-        }
-
-    });
-
-</script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_key }}&sensor=false&libraries=places" type="text/javascript"></script>
+	<script src="{% static 'assets/javascripts/geolocaiton.js' %}"></script>
 {% endblock content %}
 

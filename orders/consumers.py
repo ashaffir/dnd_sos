@@ -379,70 +379,90 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         # Adding GEO location info before creating the order
         geolocator = Nominatim(user_agent="dndsos", timeout=3)
         
+        print('-------------- 1 --------------')
         try:
             drop_off_address = content.get('drop_off_address')
             location = geolocator.geocode(drop_off_address)
-            order_lat = location.latitude
-            order_lon = location.longitude
-    
+
+            # order_lat = location.latitude
+            # order_lon = location.longitude
+            order_lat = content.get('dropoff_lat')
+            order_lon = content.get('dropoff_lng')
+
+
             # Checking OS
             if platform.system() == 'Darwin':
-                order_location = Point(location.latitude,location.longitude)
+                order_location = Point(order_lat,order_lon)
             else:
-                order_location = Point(location.longitude, location.latitude)
+                order_location = Point(order_lon, order_lat)
            
-            order_coords = (location.latitude,location.longitude)  # The cords for geopy are reversed to GeoDjango Point.
+            order_coords = (order_lat,order_lon)  # The cords for geopy are reversed to GeoDjango Point.
 
-        except:
-            try:
-                drop_off_address = content.get('drop_off_address').split(',')[1]
-                location = geolocator.geocode(drop_off_address)
-                order_lat = location.latitude
-                order_lon = location.longitude
+        # except:
+        #     try:
+        #         drop_off_address = content.get('drop_off_address').split(',')[1]
+        #         location = geolocator.geocode(drop_off_address)
+        #         order_lat = location.latitude
+        #         order_lon = location.longitude
 
-                # Checking OS
-                if platform.system() == 'Darwin':
-                    order_location = Point(location.latitude,location.longitude)
-                else:
-                    order_location = Point(location.longitude, location.latitude)
+        #         # Checking OS
+        #         if platform.system() == 'Darwin':
+        #             order_location = Point(location.latitude,location.longitude)
+        #         else:
+        #             order_location = Point(location.longitude, location.latitude)
                 
-                order_coords = (location.latitude,location.longitude)
+        #         order_coords = (location.latitude,location.longitude)
     
                 
-            except Exception as e:
-                print(f'Failed getting the location for {drop_off_address}')
-                logger.error(f'Failed getting the location for {drop_off_address}')
-                order_location = None
-                order_coords = None
-                order_lat = None
-                order_lon = None
+        except Exception as e:
+            print(f'Failed getting the location for {drop_off_address}')
+            logger.error(f'Failed getting the location for {drop_off_address}')
+            order_location = None
+            order_coords = None
+            order_lat = None
+            order_lon = None
 
+        print('-------------- 2 --------------')
 
         content['order_location'] = order_location
         content['order_lon'] = order_lon
         content['order_lat'] = order_lat
 
+        pup_addr = content.get('pickup_address').replace('\'', "").replace('\"', "")
+        content['pick_up_address'] = pup_addr
+
+        dof_addr = content.get('dropoff_address').replace('\'', "").replace('\"', "")
+        content['drop_off_address'] = dof_addr
+
         # Calculate distance between drop off address the business
         business = Employer.objects.get(pk=content.get('business'))
         business_address = business.building_number + ' ' + business.street + ',' + business.city
         
+        print('-------------- 3 --------------')
+        
+        pickup_lat = content.get('pickup_lat')
+        pickup_lon = content.get('pickup_lng')
+
         try:
             business_location = geolocator.geocode(business_address)
-            business_coords = (business_location.latitude, business_location.longitude)
+            # business_coords = (business_location.latitude, business_location.longitude)
+            business_coords = (pickup_lat, pickup_lon)
             order_to_business_distance = distance(business_coords, order_coords).km
             order_to_business_distance_meters = order_to_business_distance * 1000
         except Exception as e:
-            logger.error(f'''Fail getting business location. ERROR: {e}
-                            business address: {business_address}
-                            business location: {business_location}
-                        ''')
-            settings.DEFAULT_ORDER_TO_BUISINESS_DISTANCE = 1000
+            logger.error(f'''Fail getting business location. ERROR: {e}''')
 
-        content['business_lat'] = business_location.latitude
-        content['business_lon'] = business_location.longitude
+        content['business_lat'] = pickup_lat
+        content['business_lon'] = pickup_lon
+
+        print('-------------- 4 --------------')
 
         # Calculating the price for the order (price calculation)
+
+        print(f'URGENT: {content["urgency"]}')
         urgency = int(content['urgency'])
+        print('-------------- 5 --------------')
+
         if order_to_business_distance_meters > 1000:
             price = urgency * (settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT)
             content['price'] = round(price,2)

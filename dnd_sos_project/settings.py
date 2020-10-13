@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'django_twilio', # Twilio Phone SMS verification
     "fcm_django",
     'imagekit', # image processing, https://github.com/matthewwithanm/django-imagekit/
+    'corsheaders',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -83,6 +84,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'geo.apps.GeoConfig',
     'leaflet',
+    'places',
 
 ]
 
@@ -106,6 +108,7 @@ os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,6 +129,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR,'payments/templates'),
             os.path.join(BASE_DIR,'dndsos_dashboard/templates'),
             os.path.join(BASE_DIR,'notifier/templates'),
+            os.path.join(BASE_DIR,'geo/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -369,3 +373,11 @@ LOGGING = {
         },
     },
 }
+
+
+# Google Places
+PLACES_MAPS_API_KEY=config['GOOGLE_MAPS_KEY']
+PLACES_MAP_WIDGET_HEIGHT=200
+PLACES_MAP_WIDGET_WIDTH=200
+# PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
+# PLACES_MARKER_OPTIONS='{"draggable": true}'

@@ -1,0 +1,90 @@
+<!-- REFERENCE: Google Maps Autocomplete:  https://jsfiddle.net/limeric29/6ax9N/ -->
+<!-- https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_key }}&sensor=false&libraries=places" type="text/javascript"></script>
+<!-- CHECK ELEMENT ID also UPDATE CSS -->Please fill in:
+<input id="searchTextField" type="text" size="50">
+<div id="map_canvas"></div>
+<!-- <div ng-controller="Ctrl"> -->
+    <!-- <input id="lat" type="text" />
+    <input id="lng" type="text" /> -->
+<!-- </div> -->
+
+<script>
+    function initialize() {
+        var mapOptions = {
+            center: new google.maps.LatLng(-33.8688, 151.2195),
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById('map_canvas'),
+        mapOptions);
+
+        var input = document.getElementById('searchTextField');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.bindTo('bounds', map);
+
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+            map: map
+        });
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            infowindow.close();
+            var place = autocomplete.getPlace();
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17); // Why 17? Because it looks good.
+            }
+
+
+            var address = '';
+            if (place.address_components) {
+                address = [(place.address_components[0] && place.address_components[0].short_name || ''), (place.address_components[1] && place.address_components[1].short_name || ''), (place.address_components[2] && place.address_components[2].short_name || '')].join(' ');
+            }
+
+            console.log(`LAT: ${place.geometry.location.lat()}`)
+            console.log(`LNG: ${place.geometry.location.lng()}`)
+            // updateTextFields(place.geometry.location.lat(),place.geometry.location.lng());
+
+            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address + "<br>" + place.geometry.location);
+            infowindow.open(map, marker);
+        });
+
+        /*
+        // Sets a listener on a radio button to change the filter type on Places
+        // Autocomplete.
+        function setupClickListener(id, types) {
+            var radioButton = document.getElementById(id);
+            google.maps.event.addDomListener(radioButton, 'click', function () {
+                autocomplete.setTypes(types);
+            });
+        }
+
+            var image = new google.maps.MarkerImage(
+            place.icon,
+            new google.maps.Size(71, 71),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(17, 34),
+            new google.maps.Size(35, 35));
+            marker.setIcon(image);
+            marker.setPosition(place.geometry.location);
+
+        setupClickListener('changetype-all', []);
+        setupClickListener('changetype-establishment', ['establishment']);
+        setupClickListener('changetype-geocode', ['geocode']);
+
+        function updateTextFields(lat, lng) {
+            $('#lat').val(lat);
+            $('#lng').val(lng);
+        }
+*/
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>

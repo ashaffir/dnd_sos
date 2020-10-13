@@ -2,9 +2,11 @@
 {% load i18n %}
 {% get_current_language as lang %}
 
-
 {% if business_profile.is_approved %}
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initAutocomplete&libraries=places&v=weekly" defer>
+    </script>
 
 <a class="mb-xs mt-xs mr-xs btn btn-primary" data-toggle="modal" data-target="#modalAddOrder">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></a>
 {% else %}
@@ -38,7 +40,28 @@
                     </header> -->
                     <div class="panel-body">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">* {% trans 'Pickup address' %}</label>
+                            <label class="col-sm-3 control-label">* {% trans 'City' %}</label>
+                            <div class="col-sm-9">
+                                <select id="city" name="city" class="form-control" required>
+                                    <option value="none">{% trans 'Choose a City' %}</option>
+                                    {% for city in cities %}
+                                        <option value="{{ city.city_symbol }}">{{ city.hebrew_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label class="error" for="city"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">* {% trans 'Street' %}</label>
+                            <div class="col-sm-4" id="streets">
+                                    <!-- Loaded from Ajax -->
+                                    <p>Choose city</p>
+                                    <label class="error" for="street"></label>
+                            </div>
+                            <div class="col-sm-2 pl-3">
+                                <input class="form-control" type="text" name="building" id="building" placeholder="{% trans '#' %}" required>
+                                <label class="error" for="building"></label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label"> <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'Urgency impacts the price' %}"></i> {% trans 'Urgency' %}</label>
@@ -79,6 +102,29 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    /*
+        Placement of cities and streets in the selection areas
+    */
+    $("#city").change(function () {
+
+        let city = document.querySelector('#city'); 
+        let selected_city = $(this).val();
+        let city_streets_url = '{% url "geo:city-streets" %}'
+		console.log(selected_city);
+        $.ajax({
+            url: city_streets_url,
+            data: {
+                city: selected_city
+            },
+            success: function(response) {
+            //console.log(response)
+            $('#streets').html(response);
+            }
+        })		
+    });
+
+</script>
 {% block orders_js %}
 
 {% endblock orders_js %}

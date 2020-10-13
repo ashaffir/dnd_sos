@@ -237,14 +237,19 @@
 															<div class="col-md-2 payments">
 																<img src="{% static 'assets/images/paypal-logo.png' %}" alt="paypal-logo">
 															</div>
-															<div class="col-md-6">
+															<div class="col-md-5">
 																<input name="paypal_account" class="form-control" type="text" placeholder="{% if user.freelancer.paypal_account %} {{ user.freelancer.paypal_account }} {% else %}Enter Paypal account here {% endif %}">
 															</div>
-															<div class="col-md-2">
+															<div class="col-md-1">
 																<button type="submit" name="addPaypal" id="addPaypal" class="btn btn-primary ">{% trans 'Update' %}</button>
 															</div>
-															<div class="col-md-1">
-																<button type="submit" name="makePreferred_paypal" class="btn {% if user.freelancer.preferred_payment_method == 'PayPal' %} btn-primary {% else %} btn-secondary {% endif %}" >{% trans 'Preferred' %}</button>
+															<div class="col-md-1"></div>
+															<div class="col-md-3">
+																{% if user.freelancer.preferred_payment_method == 'PayPal' %}
+																	<button type="submit" name="makePreferred_paypal" class="btn  btn-success" disabled>{% trans 'Preferred' %}</button>
+																{% else %}
+																	<button type="submit" name="makePreferred_paypal" class="btn  btn-primary" >{% trans 'Make Preferred' %}</button>
+																{% endif %}
 															</div>
 														</div>
 
@@ -259,14 +264,19 @@
 															<div class="col-md-2 payments">
 																<img src="{% static 'assets/images/bank-transfer.png' %}" alt="bit-logo" style="max-width: 50%;">
 															</div>
-															<div class="col-md-6">
+															<div class="col-md-5">
 																<h5>{% if user.freelancer.bank_details %} IBAN: {{ user.freelancer.bank_details.iban }} {% else %} {% trans 'Update your bank details' %}. {% endif %}</h5>
 															</div>
-															<div class="col-md-2">
+															<div class="col-md-1">
 																<a href="{% url 'dndsos_dashboard:f-bank-details' f_id=user.pk %}" type="button" name="bankPayments" id="bankPayments" class="btn btn-primary ">{% trans 'Update' %}</a>
 															</div>
-															<div class="col-md-1">
-																<button type="submit" name="makePreferred_bank" class="btn {% if user.freelancer.preferred_payment_method == 'Bank' %} btn-primary {% else %} btn-secondary {% endif %}" >{% trans 'Preferred' %}</button>
+															<div class="col-md-1"></div>
+															<div class="col-md-3">
+																{% if user.freelancer.preferred_payment_method == 'Bank' %}
+																	<button type="submit" name="makePreferred_bank" class="btn btn-success" disabled>{% trans 'Preferred' %}</button>
+																{% else %}
+																	<button type="submit" name="makePreferred_bank" class="btn btn-primary " >{% trans 'Make Preferred' %}</button>
+																{% endif %}
 															</div>
 														</div>
 														
@@ -275,12 +285,16 @@
 															<div class="col-md-2 payments">
 																<img src="{% static 'assets/images/bit-logo.png' %}" alt="bit-logo" style="max-width: 50%;">
 															</div>
-															<div class="col-md-8">
+															<div class="col-md-7">
 																<p> {% trans 'Use my phone number for payments' %}.</p>
 															</div>
-															<div class="col-md-1">
-																<button type="submit" name="makePreferred_phone" class="btn {% if user.freelancer.preferred_payment_method == 'Phone' %} btn-primary {% else %} btn-secondary {% endif %}" >{% trans 'Preferred' %}</button>
-															</div>
+															<div class="col-md-3">
+																{% if user.freelancer.preferred_payment_method == 'Phone' %}
+																	<button type="submit" name="makePreferred_phone" class="btn btn-success" disabled>{% trans 'Preferred' %}</button>
+																{% else %}
+																	<button type="submit" name="makePreferred_phone" class="btn btn-primary" >{% trans 'Make Preferred' %}</button>
+																{% endif %}
+																</div>
 														</div>
 
 

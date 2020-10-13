@@ -59,7 +59,7 @@ Build commands:
 
 # New bandle build version
 > flutter clean
-
+> flutter build appbundle
 
 
 # REFERENCE: Android app deployment on to the Google Play

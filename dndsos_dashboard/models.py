@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 
+from places.fields import PlacesField
+
 from .utils.models import TimeStampedUUIDModel
 from ckeditor.fields import RichTextField
 from core.models import User, Employee, Employer
@@ -21,3 +23,7 @@ class Email(models.Model):
    
     def __str__(self):
         return self.name
+
+
+class OrderLocationModel(models.Model):
+    location = PlacesField()

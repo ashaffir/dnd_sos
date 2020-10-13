@@ -5,15 +5,18 @@ import time
 from django.shortcuts import render
 from django.views.generic import DetailView
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.gis.geos import fromstr, Point
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
-from .models import City, BusinessLocation, Street, FreelancerLocation, CityModel
+from .models import City, BusinessLocation, Street, FreelancerLocation, CityModel, Place, RoutePoint, Route
 from core.models import Employee
 from orders.models import Order
+from .forms import LocationForm
 
 # @csrf_exempt
 def freelancer_location(request):
@@ -116,3 +119,27 @@ class Businesses(generic.ListView):
             distance=Distance('location',user_location)
         ).order_by('distance')[0:6]
     template_name = 'geo/businesses.html' 
+
+def autocomplete(request):
+    context = {}
+    form = LocationForm()
+    context['form'] = form
+
+    context['google_key'] = settings.PLACES_MAPS_API_KEY
+
+    return render(request, 'geo/autocomplete.html', context)
+
+
+class PlaceCreate(CreateView):
+    model = Place
+    fields = ['location']
+    success_url = 'place_create'
+
+# def place_create(request):
+
+
+
+class PlaceUpdate(UpdateView):
+    model = Place
+    fields = ['location']
+    template_name_suffix = '_update_form'

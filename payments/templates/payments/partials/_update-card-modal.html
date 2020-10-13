@@ -12,14 +12,67 @@
                         <!-- <header class="panel-heading">
                             <p>Fill out the information for the credit card.</p>              
                         </header> -->
-                        <div class="panel-body">
-                            <iframe src="{{ icredit_form_url }}" frameborder="0" allowtransparency="true" onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));' style="height:700px;width:100%;border:none;overflow:hidden;" frameborder="0" allowfullscreen>
-                            </iframe>
-                        </div>
-                        <!-- <div class="modal-footer">
-                            <button id="cancel_f_order" value="{{ order_id }}" name="cancel_f_order" type="submit" class="btn btn-primary">Confirm</button>
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                        </div> -->
+
+                        <form class="form-horizontal" enctype="multipart/form-data" id="add_card" name="add_card" method="POST" action="{% url 'payments:add-card' %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="mb-xlg">Add/Remove credit cards</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-icon mt-2 center">
+                                        <span class="icon-top"><img src="{% static 'assets/images/payments-badge.jpg' %}" style="width: 70%;" alt=""></span>
+                                        <!-- <span class="icon-top"><img src="{% static 'assets/images/visa.png' %}" alt=""></span>
+                                        <span class="icon-top"><img src="{% static 'assets/images/mastercard.png' %}" alt=""></span>
+                                        <span class="icon-top"><img src="{% static 'assets/images/credit-card.png' %}" alt=""></span> -->
+                                    </div>		
+                                </div>
+                            </div>										
+                            <div class="body-sec">
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Cardholder Name</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-12">
+                                            <input type="text" id="name" class="form-control" name="name" value="" required placeholder="Cardholder Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Cardholder ID Number</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-12">
+                                            <input type="text" id="owner-id-number" class="form-control" name="owner-id-number" value="" required placeholder="Cardholder ID Number">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Card Number</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-12">
+                                            <input type="text" pattern="\d*" maxlength="16" minlength="16" title="must be numeric 16 digit" id="card-number" class="form-control" name="card-number" value="" required placeholder="Card Number">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">Expiration Date</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-12">
+                                            <input type="date" id="expiry-date" class="form-control" name="expiry-date" value="" required placeholder="Expiration Date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-md-4 col-sm-4 col-12 col-form-label">CVV</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-12">
+                                            <input type="text" pattern="\d*" maxlength="4" minlength="3" title="must be numeric 3 digit" id="cvv" class="form-control" name="cvv" value="" required placeholder="CVV">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="panel-footer mt-4">
+                                <div class="row">
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <button type="submit" name="add_credit_card" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
                      </section>
                 </div>
             </div>

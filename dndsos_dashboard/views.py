@@ -35,11 +35,11 @@ from core.forms import EmployeeProfileForm, EmployerProfileForm
 from core.decorators import employer_required, employee_required
 
 from .forms import BusinessUpdateForm, FreelancerUpdateForm, BankDetailsForm
-from .models import Email
+from .models import Email, OrderLocationModel
 from orders.models import Order
 from .utilities import send_mail, calculate_freelancer_total_rating
 from geo.models import Street, CityModel
-from geo.geo_utils import location_calculator
+from geo.geo_utils import location_calculator, address_location_calculator
 from payments.views import add_card, remove_card, credit_card_form, get_credit_card_information
 from payments.models import Card
 
@@ -220,8 +220,10 @@ def b_profile(request, b_id):
     context['card_number'] = card_info['CardNumber'][-4:]
     context['card_due_date'] = card_info['CardDueDate']
 
-    if request.method == 'POST':
+    context['google_key'] = settings.PLACES_MAPS_API_KEY
 
+    if request.method == 'POST':
+        print(f'PROFILE DATA: {request.POST}')
         # form = BusinessUpdateForm(request.POST,request.FILES, instance=user_profile)
 
         if 'update_profile' in request.POST:
@@ -232,27 +234,26 @@ def b_profile(request, b_id):
             new_bio = request.POST.get("bio")
             new_building = request.POST.get("building_number")
 
-            if request.POST.get("city") != 'none':
-                new_city = request.POST.get("city").replace('\'', '').replace('\"', '')
-                user_profile.city = new_city
-            else:
-                pass
-
             if request.POST.get("city_streets"):
                 new_street = request.POST.get("city_streets").replace('\'', '').replace('\"', '')
                 user_profile.street = new_street
             else:
                 pass
 
-            # Setting the business location coordinates
-            try:
-                user_profile.location, user_profile.lon, user_profile.lat = location_calculator(new_city,new_street, new_building, 'israel')
-                if not user_profile.location or not user_profile.lon or not user_profile.lat:
-                    print('Failed to update business address')
-                    messages.error(request, 'This address is not valid please try again or a nearby location.')
-                    return redirect(request.META['HTTP_REFERER'])
-            except:
-                pass
+            if request.POST.get("profileAddress"):
+                business_address = request.POST.get("profileAddress")
+                user_profile.address = business_address
+
+                # Setting the business location coordinates
+                try:
+                    # user_profile.location, user_profile.lon, user_profile.lat = location_calculator(new_city,new_street, new_building, 'israel')
+                    user_profile.location, user_profile.lon, user_profile.lat = address_location_calculator(business_address)
+                    if not user_profile.location or not user_profile.lon or not user_profile.lat:
+                        print('Failed to update business address')
+                        messages.error(request, 'This address is not valid please try again or a nearby location.')
+                        return redirect(request.META['HTTP_REFERER'])
+                except Exception as e:
+                    logger.error(f'Failed getting business location coordinates. ERROR: {e}')
 
             profile_pic = request.FILES.get("profile_pic")
 
@@ -311,9 +312,9 @@ def b_profile(request, b_id):
     required_fields = {
         'business_name': False,
         'phone': False,
-        'street': False,
-        'building_number':False,
-        'city': False,
+        # 'street': False,
+        # 'building_number':False,
+        # 'city': False,
         'credit_card_token': False
         }    
 
@@ -502,6 +503,7 @@ def orders(request, b_id):
         else:
             pass
 
+    context['google_key'] = settings.PLACES_MAPS_API_KEY
     return render(request, 'dndsos_dashboard/orders.html', context)
 
 @employer_required

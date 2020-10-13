@@ -826,10 +826,7 @@
 					/* LOADER DISPLAY */
 					$('.loading').show()
 
-					//$('.inProgress').show()
-
-					//const street_e = document.querySelector('#street');
-					//const notes_e = document.querySelector('#notes');
+					/*
 					let order_city_e = document.querySelector('#city');
 					let order_city_symbol = order_city_e.value
 					let order_city_name = order_city_e.options[order_city_e.selectedIndex].text
@@ -867,26 +864,44 @@
 					//let drop_off_address = order_building + ' ' + order_street_symbol + ', ' + order_city_symbol
 					console.log(`Order address: ${drop_off_address}`)
 
+					*/
 
+					const urgency_elem = document.querySelector('#urgency');
+					let urgency;
+					if (urgency_elem.checked){
+						urgency = 2;
+					} else {
+						urgency = 1;
+					}
+
+					console.log(`PICKUP LAT: ${pickup_lat}`);
+					console.log(`PICKUP LND: ${pickup_lng}`);
+					console.log(`DROPOFF LAT: ${dropoff_lat}`);
+					console.log(`DROPOFF LNG: ${dropoff_lng}`);
+
+					console.log(`PICKUP ADDRESS: ${pickup_address}`);
+					console.log(`DROPOFF ADDRESS: ${dropoff_address}`);
+					
 					businessSocket.send(JSON.stringify({
 						'type': 'create.order', 
 						'data': {
 							'event': 'Create Order',
 							'business': user_id,
 							'business_name': user_name,
-							'order_city_name': order_city_name,
-							'order_city_symbol': order_city_symbol,
-							'order_street_name': order_street_name,
-							'order_street_symbol': order_street_symbol,
-							'pick_up_address': pick_up_address,
-							'drop_off_address': drop_off_address,
+							'pickup_lat': pickup_lat,
+							'pickup_lng': pickup_lng,
+							'dropoff_lat': dropoff_lat,
+							'dropoff_lng': dropoff_lng,
+							'pickup_address': pickup_address,
+							'dropoff_address': dropoff_address,
 							'urgency': urgency,
-							'country': '{{ lang }}',
-							//'notes': notes,
-							'select_freelancers':freelancer
+							'select_freelancers': 'all',
+							'country': '{{ lang }}'
 						}
 					}));
 
+					document.getElementById("newOrderForm").reset();
+			
 					// Reload only the order table.
 					$.ajax({
 						url: "{% url 'orders:orders-table' %}",

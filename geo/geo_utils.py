@@ -56,4 +56,21 @@ def location_calculator(city, street, building=1, country='israel'):
         print(f'No location found for: city - {city} | street - {street}')
         return None, None, None
 
+def address_location_calculator(address):
+    geolocator = Nominatim(user_agent="dndsos", timeout=3)
+    location = geolocator.geocode(address)
+
+    try:
+        if platform.system() == 'Darwin':
+            point = Point(location.latitude,location.longitude)
+        else:
+            point = Point(location.longitude, location.latitude)
+    
+        return point, location.longitude, location.latitude
+
+    except Exception as e:
+        print(f'No location found for: city - {city} | street - {street}')
+        return None, None, None
+
+    
     
