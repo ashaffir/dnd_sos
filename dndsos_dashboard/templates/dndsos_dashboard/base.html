@@ -824,7 +824,6 @@
 				
 				addOrder = function(e) {
 					/* LOADER DISPLAY */
-					$('.loading').show()
 
 					/*
 					let order_city_e = document.querySelector('#city');
@@ -874,6 +873,7 @@
 						urgency = 1;
 					}
 
+					/*
 					console.log(`PICKUP LAT: ${pickup_lat}`);
 					console.log(`PICKUP LND: ${pickup_lng}`);
 					console.log(`DROPOFF LAT: ${dropoff_lat}`);
@@ -881,7 +881,32 @@
 
 					console.log(`PICKUP ADDRESS: ${pickup_address}`);
 					console.log(`DROPOFF ADDRESS: ${dropoff_address}`);
+					*/
+					function hasNumber(myString) {
+						return /\d/.test(myString);
+					  }
 					
+					  if (pickup_address === undefined)
+						{
+							alert('Pickup address is missing');
+							return false;
+							location.reload();
+						} else if (dropoff_address === undefined){
+							alert('Dropoff address is missing');
+							return false;
+							location.reload();
+						} else if (!hasNumber(pickup_address)) {
+							alert('Pickup address missing building number');
+							return false;
+							location.reload();	
+						} else if (!hasNumber(dropoff_address)) {
+							alert('Dropoff address missing building number');
+							return false;
+							location.reload();	
+						}else {
+							$('.loading').show()
+						}
+
 					businessSocket.send(JSON.stringify({
 						'type': 'create.order', 
 						'data': {
@@ -908,7 +933,7 @@
 							$('#ordersTable').html(response);
 						}
 				})		
-
+					location.reload();
 					$('#modalAddOrder').modal('hide');
 
 				};
