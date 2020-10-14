@@ -21,3 +21,7 @@ redis-server -v  # Version check
 
 # Debug:
 sudo lsof -i TCP:8001 | grep LISTEN
+
+# Languages
+django-admin makemessages -l he
+django-admin compilemessages
