@@ -546,6 +546,10 @@
 
 				// Handing the acceptance of an offer from the Modal
 				$("#accept").click( function() {
+					freelancerCheck =  checkFreelancer();
+					if (!freelancerCheck){
+						return false;
+					}
 					/* LOADER DISPLAY */
 					$('.loading').show()
 
@@ -581,6 +585,12 @@
 				})
 
 				accept_order = function(order_id){
+					
+					freelancerCheck =  checkFreelancer();
+					if (!freelancerCheck){
+						return false;
+					}
+
 					/* LOADER DISPLAY */
 					$('.loading').show()
 					freelancerSocket.send(JSON.stringify({
@@ -643,7 +653,51 @@
 						}
 					})		
 				}
-	
+
+		checkFreelancer = function (){
+			const current_active_orders = '{{ current_active_orders }}';
+			const freelancer_account_level = '{{ freelancer_account_level }}';
+			const rookie_max = '{{ rookie_max }}';
+			const advanced_max = '{{ advanced_max }}';
+			const expert_max = '{{ expert_max }}';
+			const freelancer_is_approved = '{{ freelancer_is_approved }}';
+
+			console.log('Checking Freelancer....');
+			
+			if (freelancer_is_approved == '1'){
+				switch(freelancer_account_level) {
+					case 'Rookie':
+					  if (parseInt(current_active_orders) >= parseInt(rookie_max)){
+						  alert(`You can have only ${rookie_max} active order/s at a Rookie account level`);
+						  return false;
+					  }
+					  break;
+					case 'Advanced':
+					if (parseInt(current_active_orders) >= parseInt(advanced_max)){
+						alert(`You can have up to ${advanced_max} active order at a Advanced account level`);
+						return false;
+					}
+					break;
+					case 'Expert':
+					if (parseInt(current_active_orders) >= parseInt(expert_max)){
+						alert(`You can have up to ${expert_max} active order at a Expert account level`);
+						return false;
+					}
+					break;
+					default:
+						console.log('None Employee');
+						alert(`Action not allowed. Please contact PickNdell support`);
+						return false;
+
+				  }	
+			} else {
+				alert(`Your account is not approved yet. Please contact PickNdelll support is you have any questions`);
+				return false;
+			}
+
+			return true;
+		}
+
 		update_freelancer_notifications = function(){
 			$.ajax({
 				url: "{% url 'orders:deliveries-table' %}",

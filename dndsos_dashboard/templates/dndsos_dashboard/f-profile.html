@@ -57,6 +57,8 @@
 										<h4>{% trans 'Profile Information' %} -
 											{% if profile.is_approved %} 
 											<span style="color: green; border: solid green 2px; padding:0.5rem; border-radius: 2rem  " ><b>{% trans 'Approved' %}</b></span> 
+											{% elif profile.profile_pending %}
+											<span style="color: orange; border: solid orange 2px; padding:0.5rem; border-radius: 2rem  " ><b>{% trans 'Pending Approval' %}</b></span> 
 											{% else %}
 											<span style="color: red;" ><b>{% trans 'Not Approved' %}</b> 
 												<span style="font-size: 1.5rem;">({% trans 'Please complete profile' %})</span> 

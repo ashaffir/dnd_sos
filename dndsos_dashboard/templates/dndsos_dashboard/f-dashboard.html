@@ -261,11 +261,25 @@
                                     </div>
                                 </div>
                             </section>
-                            <center><h3>{% trans 'You current courier rating' %}: {% if user.freelancer.freelancer_total_rating is None %} <b>{%trans 'Not rated' %}</b>  
-                                {% else %} {{ user.freelancer.freelancer_total_rating }} {% endif %}</h3></center>
                         </div>
                     </div>
-                </div>
+
+                    <h4>{% trans 'Your current courier rating' %}: {% if user.freelancer.freelancer_total_rating is None %} <b>{%trans 'Not rated' %}</b>  
+                        {% else %} <b>{{ user.freelancer.freelancer_total_rating }}</b> {% endif %}</h4>
+                    <h4>{% trans 'Your PickNdell Account Level' %}: {% if user.freelancer.account_level is None %} <b>{%trans 'Not rated' %}</b>  
+                        {% else %} <b>{{ user.freelancer.account_level }}</b> 
+                            <i class="fa fa-question-circle" data-toggle="tooltip" 
+                            data-trigger="hover" class="form-control" data-original-title="{% trans 'Your account level defines the maximum number of packages you can deliver per route, i.e. how many orders you are allowed accept' %}."></i> {% endif %}</h4></center>
+                            {% if user.freelancer.account_level %}
+                                {% if user.freelancer.account_level == 'Rookie' %}
+                                    <i>You are allowed to have only one package per delivery route.</i>
+                                {% elif user.freelancer.account_level == 'Advanced' %}
+                                    <p>You are allowed to have up to ten (10) packages per delivery route.</p>
+                                {% elif user.freelancer.account_level == 'Expert' %}
+                                    <p>You are allowed to have up to fifty (50) packages per delivery route.</p>
+                                {% endif %}
+                            {% endif %}
+                    </div>
             </section>
         </div>
     </div>          

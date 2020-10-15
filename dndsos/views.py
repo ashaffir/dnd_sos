@@ -150,3 +150,8 @@ def check_captcha(request):
     response = json.loads(r.text)
     verify = response['success']
     return verify
+
+def csrf_failure(request, reason=""):
+    context = {}
+    ctx = {'message': 'Error. Please Login'}
+    return render(request, 'dndsos/403.html', context)

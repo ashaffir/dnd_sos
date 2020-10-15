@@ -2,7 +2,9 @@ import platform
 from forex_python.converter import CurrencyRates # https://github.com/MicroPyramid/forex-python
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from core.models import Employee
+from django.db.models import Q
+from core.models import Employee, User
+from orders.models import Order
 
 
 # @login_required
@@ -66,4 +68,29 @@ def getCurrencyRates(request):
     usd_eur = c.get_rate('USD', 'EUR')
     context['usd_ils'] = usd_ils
     context['usd_eur'] = usd_eur
+    return context
+
+def getFreelancerActiveOrders(request):
+    context = {}
+    try:
+        user = User.objects.get(pk=request.user.pk)
+        freelancer_profile = Employee.objects.get(user=user)
+        freelancer_active_orders = Order.objects.filter(
+                                    (Q(freelancer=freelancer_profile.user) & Q(status='IN_PROGRESS'))                            
+                                    | (Q(freelancer=freelancer_profile.user) & Q(status='STARTED')))
+        context['current_active_orders'] = len(freelancer_active_orders)
+        context['freelancer_account_level'] = freelancer_profile.account_level
+        context['freelancer_is_approved'] = 1 if freelancer_profile.is_approved else 0
+        context['rookie_max'] = settings.ROOKIE_LEVEL
+        context['advanced_max'] = settings.ADVANCED_LEVEL
+        context['expert_max'] = settings.EXPERT_LEVEL
+    except Exception as e:
+        print('User is not an Employee')
+        context['current_active_orders'] = 1
+        context['freelancer_is_approved'] = False
+        context['freelancer_account_level'] = 'Rookie'
+        context['rookie_max'] = settings.ROOKIE_LEVEL
+        context['advanced_max'] = settings.ADVANCED_LEVEL
+        context['expert_max'] = settings.EXPERT_LEVEL
+
     return context

@@ -144,6 +144,7 @@ TEMPLATES = [
                 'dndsos_dashboard.context_processors.checkOS',
                 'dndsos_dashboard.context_processors.pageLanguage',
                 'dndsos_dashboard.context_processors.getCurrencyRates',
+                'dndsos_dashboard.context_processors.getFreelancerActiveOrders',
                 
                 # 'dndsos_dashboard.context_processors.requested_freelancer',                
             ],
@@ -381,3 +382,15 @@ PLACES_MAP_WIDGET_HEIGHT=200
 PLACES_MAP_WIDGET_WIDTH=200
 # PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
 # PLACES_MARKER_OPTIONS='{"draggable": true}'
+
+CSRF_FAILURE_VIEW = 'dndsos.views.csrf_failure'
+
+# Transferwise
+# REFERENCE TransferWise: https://api-docs.transferwise.com/#payouts-guide
+TW_TEST_API_KEY = "2eb356de-96b6-4625-9463-ca10dd0cbad6" 
+
+
+# Account level parameters
+ROOKIE_LEVEL = 1
+ADVANCED_LEVEL = 10
+EXPERT_LEVEL = 50

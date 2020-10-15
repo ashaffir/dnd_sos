@@ -1029,7 +1029,7 @@ msgid "Businesses Pool"
 msgstr "עסקים שעבדת איתם"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:264
-msgid "You current courier rating"
+msgid "Your current courier rating"
 msgstr "דירוג השליח הנוכחי שלך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:264
