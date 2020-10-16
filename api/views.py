@@ -619,6 +619,9 @@ def user_profile(request):
             data = serializer.errors
             logger.error(f'Failed reading user profile. ERROR: {data}')
 
+        data['account_level_rookie'] = settings.ROOKIE_LEVEL
+        data['account_level_advanced'] = settings.ADVANCED_LEVEL
+        data['account_level_expert'] = settings.EXPERT_LEVEL
         return Response(data)
 
     # Updating user profile information
