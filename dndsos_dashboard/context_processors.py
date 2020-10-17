@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db.models import Q
 from core.models import Employee, User
 from orders.models import Order
-
+from dndsos.models import AdminParameters
 
 # @login_required
 def business_type(request):
@@ -73,6 +73,7 @@ def getCurrencyRates(request):
 def getFreelancerActiveOrders(request):
     context = {}
     try:
+        admin_params = AdminParameters.objects.all().first()
         user = User.objects.get(pk=request.user.pk)
         freelancer_profile = Employee.objects.get(user=user)
         freelancer_active_orders = Order.objects.filter(
@@ -81,9 +82,9 @@ def getFreelancerActiveOrders(request):
         context['current_active_orders'] = len(freelancer_active_orders)
         context['freelancer_account_level'] = freelancer_profile.account_level
         context['freelancer_is_approved'] = 1 if freelancer_profile.is_approved else 0
-        context['rookie_max'] = settings.ROOKIE_LEVEL
-        context['advanced_max'] = settings.ADVANCED_LEVEL
-        context['expert_max'] = settings.EXPERT_LEVEL
+        context['rookie_max'] = admin_params.rookie_level_max
+        context['advanced_max'] = admin_params.advanced_level_max
+        context['expert_max'] = admin_params.expert_level_max
     except Exception as e:
         print('User is not an Employee')
         context['current_active_orders'] = 1

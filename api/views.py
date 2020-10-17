@@ -32,7 +32,7 @@ from rest_framework.pagination import (LimitOffsetPagination, PageNumberPaginati
 
 from core.models import User, Employee, Employer
 from orders.models import Order
-from dndsos.models import ContactUs
+from dndsos.models import ContactUs, AdminParameters
 from dndsos_dashboard.views import phone_verify
 from dndsos_dashboard.utilities import send_mail, calculate_freelancer_total_rating
 
@@ -592,10 +592,17 @@ def user_profile(request):
             usd_ils = c.get_rate('USD', 'ILS')
             usd_eur = c.get_rate('USD', 'EUR')
         except Exception as e:
-            print(f'Failed to load currencies. ERROR: {e}')
-            logger.error(f'Failed to load currencies. Setting defaults. ERROR: {e}')
-            usd_ils = 3.5
-            usd_eur = 0.8
+            print(f'Failed to getting currencies from CurrencyRates model. ERROR: {e}')
+            logger.error(f'Failed to getting currencies from CurrencyRates model. Setting defaults. ERROR: {e}')
+            try:
+                admin_params = AdminParameters.objects.all().first()
+                usd_ils = admin_params.usd_ils_default
+                usd_eur = admin_params.usd_eur_default
+            except Exception as e:
+                print(f'Failed to load default currencies. ERROR: {e}')
+                logger.error(f'Failed to load currencies. Setting defaults. ERROR: {e}')
+                usd_ils = 3.5
+                usd_eur = 0.8
 
         if serializer.is_valid():
             data = serializer.data

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ContactUs, ContentPage, FreelancerFeedback
+from .models import ContactUs, ContentPage, FreelancerFeedback, AdminParameters
 
 @admin.register(ContactUs)
 class ContactUs(admin.ModelAdmin):
@@ -8,7 +8,7 @@ class ContactUs(admin.ModelAdmin):
     search_fields = ('name','email')
     ordering = ('-created',)
 
-# admin.site.register(ContentPage)
+admin.site.register(AdminParameters)
 
 @admin.register(ContentPage)
 class ContentPage(admin.ModelAdmin):

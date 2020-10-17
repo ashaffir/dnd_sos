@@ -445,21 +445,24 @@ def f_profile(request, f_id):
         user_profile.save()
 
         # Updating Admin about the new pending profile
-        try:
-            subject = 'PickNdell Account Pending message'
-            content = '''
-                Courier waiting for profile approval
-            '''
-            message = {
-                'user': user_profile,
-                'message': content
-            }
+        if request.method == 'POST':
+            logger.info(f'Updatin Admin with profile data from user {request.user}')
+            try:
+                subject = 'PickNdell Account Pending message'
+                content = '''
+                    Courier waiting for profile approval
+                '''
+                message = {
+                    'user': user_profile,
+                    'message': content
+                }
 
-            send_mail(subject, email_template_name=None,
-                    context=message, to_email=[settings.ADMIN_EMAIL],
-                    html_email_template_name='core/emails/update_admin_email.html')
-        except Exception as e:
-            logger.error(f'Failed sending admin mail about pending profile for {user_profile}. ERROR: {e}')
+                send_mail(subject, email_template_name=None,
+                        context=message, to_email=[settings.ADMIN_EMAIL],
+                        html_email_template_name='core/emails/update_admin_email.html')
+            except Exception as e:
+                logger.error(f'Failed sending admin mail about pending profile for {user_profile}. ERROR: {e}')
+
     else:
         user_profile.profile_pending = False
         user_profile.save()
