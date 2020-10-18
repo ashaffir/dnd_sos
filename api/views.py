@@ -752,8 +752,8 @@ def user_credit_card(request):
 
             except Exception as e:
                 logger.error(f'Fail communication with the iCredit server. ERROR: {e}')
-                data["response"] = "Failed updating credit card"
-                return Response(f'Fail communication with iCredit. ERROR: {e}')
+                data["response"] =f'Fail communication with iCredit. ERROR: {e}'
+                return Response(data)
 
             # Saving user's new Token
             try:
