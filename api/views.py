@@ -742,21 +742,24 @@ def user_credit_card(request):
 
                 print(msg)
                 logger.info(msg)
-            
+
+                if len(credit_token) < 10:
+                    logger.error(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
+                    return Response(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
+
+
             except Exception as e:
                 logger.error(f'Fail communication with the iCredit server. ERROR: {e}')
                 return Response(f'Fail communication with iCredit. ERROR: {e}')
 
             # Saving user's new Token
             try:
-                print(f'>>>> SAVING TOKEN {credit_token}')
                 user.credit_card_token = credit_token
                 user.save()
                 data["response"] = "Update successful"
                 data["credit_card_token"] = credit_token
                 check_profile_approved(user.pk, request.data['is_employee'])
                 
-                print(f'>>>> RESPONSE FORM TOKEN SAVE: {data}')
                 return Response(data)
             except Exception as e:
                 logger.error(f'Failed saving the new credit card token. ERROR: {e}')
