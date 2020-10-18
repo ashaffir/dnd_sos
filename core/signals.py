@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver, Signal
 from django.core.signals import request_finished
 from django.conf import settings
+from django.utils.translation import gettext
 
 logger = logging.getLogger(__file__)
 
@@ -31,13 +32,13 @@ def employee_signal(sender, instance, update_fields, **kwargs):
                 print(f'User profile approved: {update_fields}')
                 try:
                     user_email = instance.email
-                    subject = 'Your PickNdell Account is Approved'
-                    content = '''
+                    subject = gettext('Your PickNdell Account is Approved')
+                    content = gettext('''
                     Thank you for applying to PickNdell network. 
                     We reviewed the information you have submitted and approved your account. 
                     You can now start delivering.
                     Good Luck!!
-                    '''
+                    ''')
                     message = {
                         'user': instance,
                         'message': content
