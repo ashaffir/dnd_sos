@@ -10,7 +10,8 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 double _userRating;
 
-Widget deliveredOrders({Order order, User user, BuildContext context}) {
+Widget deliveredOrders(
+    {Order order, User user, BuildContext context, String country}) {
   final trans = ExampleLocalizations.of(context);
   return Center(
     child: InkWell(
@@ -22,6 +23,7 @@ Widget deliveredOrders({Order order, User user, BuildContext context}) {
                 user: user,
                 order: order,
                 orderId: order.order_id,
+                country: country,
               ),
             ));
       },

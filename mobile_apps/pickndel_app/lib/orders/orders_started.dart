@@ -7,7 +7,8 @@ import 'package:pickndell/orders/order_list.dart';
 import 'package:pickndell/orders/order_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Widget startedOrders({Order order, User user, BuildContext context}) {
+Widget startedOrders(
+    {Order order, User user, BuildContext context, String country}) {
   final trans = ExampleLocalizations.of(context);
   return Center(
     child: InkWell(
@@ -19,6 +20,7 @@ Widget startedOrders({Order order, User user, BuildContext context}) {
                 user: user,
                 order: order,
                 orderId: order.order_id,
+                country: country,
               ),
             ));
       },
