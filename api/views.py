@@ -713,6 +713,7 @@ def user_profile(request):
 @permission_classes((IsAuthenticated,))
 def user_credit_card(request):
     print(f'CREDIT CARD REQUEST: {request.data}')
+    logger.info(f'CREDIT CARD REQUEST: {request.data}')
     data = {}
     if request.data['is_employee'] == 1:
         user = Employee.objects.get(pk=request.data['user_id'])
