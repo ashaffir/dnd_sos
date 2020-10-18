@@ -728,7 +728,6 @@ def user_credit_card(request):
                 owner_name = request.data['owner_name']
                 due_date_yymm = request.data['expiry_date']
                 card_number = "4580000000000000" if settings.DEBUG else request.data['card_number'];
-                cvv_number = request.data['cvv']
                 owner_id = request.data['owner_id']
                 
                 credit_token = create_card_token(owner_id, due_date_yymm, card_number)
@@ -738,7 +737,6 @@ def user_credit_card(request):
                 id: {owner_id}
                 Expiry: {due_date_yymm}
                 Card number: {card_number}
-                CVV: {cvv_number}
                 Response from iCredit: {credit_token}
                 '''
 
