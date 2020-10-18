@@ -42,6 +42,10 @@ class _GetOrdersState extends State<GetOrders> {
   String _country;
   String _userCountry;
 
+  int _rookieLevelLimit;
+  int _advancedLevelLimit;
+  int _expertLevelLimit;
+
   Future<bool> _checkTrackingStatus() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     locationTracking = await localStorage.get('locationTracking');
@@ -66,6 +70,13 @@ class _GetOrdersState extends State<GetOrders> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     _isEmployee = localStorage.getInt('isEmployee');
     _currentUser = await UserDao().getUser(0);
+  }
+
+  Future _checAccountLevels() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    _rookieLevelLimit = localStorage.getInt('rookieLevel');
+    _advancedLevelLimit = localStorage.getInt('advancedLevel');
+    _expertLevelLimit = localStorage.getInt('expertLevel');
   }
 
   FilteredOrders _filteredOrders;
@@ -100,6 +111,7 @@ class _GetOrdersState extends State<GetOrders> {
     _checkUser();
     _checkTrackingStatus();
     _checkCountry();
+    _checAccountLevels();
     _bloc = OrdersBloc(
         context: context, ordersType: widget.ordersType, user: widget.user);
   }
@@ -209,6 +221,9 @@ class _GetOrdersState extends State<GetOrders> {
                     ordersType: widget.ordersType,
                     locationTracking: locationTracking,
                     country: _country,
+                    rookieLevelLimit: _rookieLevelLimit,
+                    advancedLevelLimit: _advancedLevelLimit,
+                    expertLevelLimit: _expertLevelLimit,
                   );
                   break;
                 case Status.EMPTY:

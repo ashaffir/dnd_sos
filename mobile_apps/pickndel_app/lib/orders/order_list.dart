@@ -31,13 +31,19 @@ class OrdersList extends StatelessWidget {
   final bool locationTracking;
   final User user;
   final String country;
+  final int rookieLevelLimit;
+  final int advancedLevelLimit;
+  final int expertLevelLimit;
   const OrdersList(
       {Key key,
       this.ordersList,
       this.ordersType,
       this.locationTracking,
       this.user,
-      this.country})
+      this.country,
+      this.rookieLevelLimit,
+      this.advancedLevelLimit,
+      this.expertLevelLimit})
       : super(key: key);
 
 // REFERENCE - Alert dialog: https://www.youtube.com/watch?v=FGfhnS6skMQ
@@ -138,17 +144,37 @@ class OrdersList extends StatelessWidget {
                                           side: BorderSide(
                                               color: buttonBorderColor)),
                                       onPressed: () {
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => OrderAccepted(
-                                              order: order,
-                                              user: user,
+                                        if ((user.accountLevel == 'Rookie' &&
+                                                user.activeOrders <=
+                                                    rookieLevelLimit) ||
+                                            (user.accountLevel == 'Advanced' &&
+                                                user.activeOrders <=
+                                                    advancedLevelLimit) ||
+                                            (user.accountLevel == 'Expert' &&
+                                                user.activeOrders <=
+                                                    expertLevelLimit)) {
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OrderAccepted(
+                                                order: order,
+                                                user: user,
+                                              ),
                                             ),
-                                          ),
-                                          (Route<dynamic> route) =>
-                                              false, // No Back option for this page
-                                        );
+                                            (Route<dynamic> route) =>
+                                                false, // No Back option for this page
+                                          );
+                                        } else {
+                                          showAlertDialog(
+                                              context: context,
+                                              title: translations
+                                                  .account_level_limit,
+                                              content: translations
+                                                      .orders_account_limit +
+                                                  "${user.accountLevel}",
+                                              okButtontext: translations.close);
+                                        }
                                       },
                                     ),
                                   )

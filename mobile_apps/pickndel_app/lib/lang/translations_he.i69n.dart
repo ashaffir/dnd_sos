@@ -190,6 +190,9 @@ class Translations_he extends Translations {
   String get courier_rating_updated => "דירוג השליח עודכן";
   String get thank_you => "תודה רבה";
   String get empty_list => "רשימה ריקה";
+  String get orders_account_limit =>
+      "הגעת למגבלת ההזמנות הפעילות המותרות ברמת חשבונך";
+  String get account_level_limit => "מגבלת רמת חשבון";
   String get messages_register_title => "אשר";
   String get messages_register_thanks => "תודה";
   String get messages_register_activation =>
@@ -208,6 +211,8 @@ class Translations_he extends Translations {
   String get messages_hint_expiry_data => "מתי תוקף מסמך הזהות פג";
   String get messages_please_choose_valid_expiry_date =>
       "אנא בחר תאריך תפוגה תקף";
+  String get messages_please_check_pickndell_website =>
+      "אנא עיין באתר PickNdell לקבלת פרטים נוספים על מגבלות רמת החשבון";
   String get orders_creating_new_order => "יצירת הזמנת משלוח חדשה";
   String get order_new_order_confirmation => "אישור הזמנה חדשה";
   String get orders_order_cost => "עלות הזמנה";
@@ -254,7 +259,7 @@ class Translations_he extends Translations {
   String get please_enter_valid_email_code => "אנא הזן קוד";
   String get your_level => "דרגת פיקנדל";
   String get level_tooltip =>
-      "רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות \n טירון - 1 \n מתקדם - 10 \n מומחה - ללא הגבלה";
+      "רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות";
   String get daily_earnings => "רווח יומי";
   String get sender => "שולח";
   String get courier => "שליח";
@@ -600,6 +605,10 @@ class Translations_he extends Translations {
         return thank_you;
       case 'empty_list':
         return empty_list;
+      case 'orders_account_limit':
+        return orders_account_limit;
+      case 'account_level_limit':
+        return account_level_limit;
       case 'messages_register_title':
         return messages_register_title;
       case 'messages_register_thanks':
@@ -630,6 +639,8 @@ class Translations_he extends Translations {
         return messages_hint_expiry_data;
       case 'messages_please_choose_valid_expiry_date':
         return messages_please_choose_valid_expiry_date;
+      case 'messages_please_check_pickndell_website':
+        return messages_please_check_pickndell_website;
       case 'orders_creating_new_order':
         return orders_creating_new_order;
       case 'order_new_order_confirmation':

@@ -54,6 +54,11 @@ class _DashboardState extends State<Dashboard> {
   // LocationDto lastLocation;
   DateTime lastTimeLocation;
 
+  // Account level limits
+  int _rookieLevelLimit;
+  int _advancedLevelLimit;
+  int _expertLevelLimit;
+
   // Tracking location disclosure
   bool disclosure;
 
@@ -115,7 +120,7 @@ class _DashboardState extends State<Dashboard> {
     // Get user information from the server
     try {
       _getProfileResponse = await getProfile(user: _currentUser);
-      print('DASHBOARD PROFILE: ${_getProfileResponse["bank_details"]}');
+      print('DASHBOARD PROFILE DATA: ${_getProfileResponse}');
     } catch (e) {
       print('ERROR >> DHASBOARD: Failed to update profile. ERROR: $e');
       return Navigator.pushAndRemoveUntil(
@@ -148,6 +153,16 @@ class _DashboardState extends State<Dashboard> {
 
       await localStorage.setDouble('usdIls', _currentUser.usdIls);
       await localStorage.setDouble('usdEur', _currentUser.usdEur);
+
+      // Setting the current account levels
+      await localStorage.setInt(
+          'rookieLevel', _getProfileResponse["account_level_rookie"]);
+
+      await localStorage.setInt(
+          'advancedLevel', _getProfileResponse["account_level_advanced"]);
+      await localStorage.setInt(
+          'expertLevel', _getProfileResponse["account_level_expert"]);
+
       print('>>> COUNTRY: $_country');
       print('>>> USD-ILS: ${_currentUser.usdIls}');
       print('>>> USD-EUR: ${_currentUser.usdEur}');
@@ -442,7 +457,8 @@ class _DashboardState extends State<Dashboard> {
                                   : Text(translations.expert),
                           Padding(padding: EdgeInsets.only(right: 5.0)),
                           QuestionTooltip(
-                            tooltipMessage: translations.level_tooltip,
+                            tooltipMessage:
+                                "${translations.level_tooltip}: \n ${translations.messages_please_check_pickndell_website}",
                           ),
                         ],
                       ),

@@ -154,6 +154,8 @@ orders_change_status: Change Status
 orders_status: status
 orders_urgent: URGENT
 empty_list: Empty List
+orders_account_limit: You have reached the limit of active orders allowed for your account level of
+account_level_limit: Acount Level Limit
 
 # Messages Page
 messages_register_title: Confirmation
@@ -171,7 +173,7 @@ messages_communication_error: There was a problem communicating with the server.
 messages_please_choose_docoument_type: Please choose a document type
 messages_hint_expiry_data: When the ID document expires
 messages_please_choose_valid_expiry_date: Please choose a valid expiry date
-
+messages_please_check_pickndell_website: Please check PickNdell website for more details about account level limits
 
 # Order Accepted
 order_a_updating: Updating Orders Table
@@ -231,7 +233,7 @@ please_enter_valid_email_code: Please enter a valid code
 
 #Courier
 your_level: Your PickNdell Level
-level_tooltip: The level of the account defines the number of concurrent deliveries you are entitled to do \n Rookie - 1 \n Advanced - 10 \n Expert - Unlimited
+level_tooltip: The level of the account defines the number of concurrent deliveries you are entitled to do
 daily_earnings: Daily Earnings
 
 # Sender

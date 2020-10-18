@@ -124,108 +124,121 @@ class _CreditCardUpdateState extends State<CreditCardUpdate> {
                               ///////////////// NAME //////////////
                               Padding(padding: EdgeInsets.only(top: 20.0)),
 
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    labelText:
-                                        " " + trans.credit_card_owner_name,
-                                    icon: Icon(Icons.person),
-                                    contentPadding: EdgeInsets.only(left: 10),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                controller: cardHolderName,
-                                validator: (value) {
-                                  if (validateName(value) == null) {
-                                    print('VALID NAME');
-                                    return null;
-                                  } else {
-                                    return trans.name_not_valid;
-                                  }
-                                },
+                              Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText:
+                                          " " + trans.credit_card_owner_name,
+                                      icon: Icon(Icons.person),
+                                      contentPadding: EdgeInsets.only(left: 10),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  controller: cardHolderName,
+                                  validator: (value) {
+                                    if (validateName(value) == null) {
+                                      print('VALID NAME');
+                                      return null;
+                                    } else {
+                                      return trans.name_not_valid;
+                                    }
+                                  },
+                                ),
                               ),
                               // Padding(padding: EdgeInsets.only(top: 10.0)),
 
                               ////////////////// Expiery ////////////
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 100,
-                                    child: TextFormField(
-                                      inputFormatters: [
-                                        LengthLimitingTextInputFormatter(2),
-                                      ],
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        labelText: "MM",
-                                        icon: Icon(Icons.date_range),
+                              Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 100,
+                                      child: TextFormField(
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(2),
+                                        ],
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                          labelText: "MM",
+                                          icon: Icon(Icons.date_range),
+                                        ),
+                                        controller: expiryMonth,
+                                        validator: (value) {
+                                          if (validateMonth(value) == null) {
+                                            print('VALID Month');
+                                            return null;
+                                          } else {
+                                            return trans.month_not_valid;
+                                          }
+                                        },
                                       ),
-                                      controller: expiryMonth,
-                                      validator: (value) {
-                                        if (validateMonth(value) == null) {
-                                          print('VALID Month');
-                                          return null;
-                                        } else {
-                                          return trans.month_not_valid;
-                                        }
-                                      },
                                     ),
-                                  ),
-                                  Padding(padding: EdgeInsets.only(right: 5.0)),
-                                  Text('/'),
-                                  Padding(padding: EdgeInsets.only(right: 5.0)),
-                                  Container(
-                                    width: 50,
-                                    child: TextFormField(
-                                      inputFormatters: [
-                                        LengthLimitingTextInputFormatter(2),
-                                      ],
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        labelText: "YY",
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 5.0)),
+                                    Text('/'),
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 5.0)),
+                                    Container(
+                                      width: 50,
+                                      child: TextFormField(
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(2),
+                                        ],
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                          labelText: "YY",
+                                        ),
+                                        controller: expiryYear,
+                                        validator: (value) {
+                                          if (validateYear(value) == null) {
+                                            print('VALID Year');
+                                            return null;
+                                          } else {
+                                            return trans.year_not_valid;
+                                          }
+                                        },
                                       ),
-                                      controller: expiryYear,
-                                      validator: (value) {
-                                        if (validateYear(value) == null) {
-                                          print('VALID Year');
-                                          return null;
-                                        } else {
-                                          return trans.year_not_valid;
-                                        }
-                                      },
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               Padding(padding: EdgeInsets.only(top: 20.0)),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 100,
-                                    child: TextFormField(
-                                      inputFormatters: [
-                                        LengthLimitingTextInputFormatter(3),
-                                      ],
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                          labelText: "CVV",
-                                          icon: Icon(Icons.security),
-                                          contentPadding:
-                                              EdgeInsets.only(left: 10),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10))),
-                                      controller: cvvCode,
-                                      validator: (value) {
-                                        if (validateCvv(value) == null) {
-                                          print('VALID CVV NUMBER');
-                                          return null;
-                                        } else {
-                                          return trans.cvv_number_not_valid;
-                                        }
-                                      },
+                              ////////////// CVV //////////////
+                              ///
+                              Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 100,
+                                      child: TextFormField(
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(3),
+                                        ],
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                            labelText: "CVV",
+                                            icon: Icon(Icons.security),
+                                            contentPadding:
+                                                EdgeInsets.only(left: 10),
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10))),
+                                        controller: cvvCode,
+                                        validator: (value) {
+                                          if (validateCvv(value) == null) {
+                                            print('VALID CVV NUMBER');
+                                            return null;
+                                          } else {
+                                            return trans.cvv_number_not_valid;
+                                          }
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),

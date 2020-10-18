@@ -159,6 +159,8 @@ click_or_drag_stars: לחץ או גרור את הכוכבים
 courier_rating_updated: דירוג השליח עודכן
 thank_you: תודה רבה
 empty_list: רשימה ריקה
+orders_account_limit: הגעת למגבלת ההזמנות הפעילות המותרות ברמת חשבונך
+account_level_limit: מגבלת רמת חשבון
 
 
 # Messages page
@@ -177,6 +179,7 @@ messages_communication_error: הייתה בעיה בתקשורת עם השרת. 
 messages_please_choose_docoument_type: אנא בחר סוג מסמך
 messages_hint_expiry_data: מתי תוקף מסמך הזהות פג
 messages_please_choose_valid_expiry_date: אנא בחר תאריך תפוגה תקף
+messages_please_check_pickndell_website: אנא עיין באתר PickNdell לקבלת פרטים נוספים על מגבלות רמת החשבון
 
 
 orders_creating_new_order: יצירת הזמנת משלוח חדשה
@@ -236,7 +239,7 @@ please_enter_valid_email_code: אנא הזן קוד
 
 # Courier
 your_level: דרגת פיקנדל
-level_tooltip: רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות \n טירון - 1 \n מתקדם - 10 \n מומחה - ללא הגבלה
+level_tooltip: רמת החשבון מגדירה את מספר המשלוחים במקביל שאתה זכאי לעשות
 daily_earnings: רווח יומי
 
 # Sender

@@ -647,8 +647,8 @@ def user_profile(request):
                     user.user.first_name = request.data['business_name']
                     user.user.save()
                 except Exception as e:
-                    print(f'Business name was not update. E: {e}')
-                    logger.info(f'Business name was not update. E: {e}')
+                    print(f'Business name was not updated. E: {e}')
+                    logger.info(f'Business name was not updated. E: {e}')
             except Exception as e:
                 print(f'Profile was not updated. E: {e}')
                 logger.info(f'Profile was not updated. E: {e}')
@@ -728,6 +728,7 @@ def user_credit_card(request):
                 owner_name = request.data['owner_name']
                 due_date_yymm = request.data['expiry_date']
                 card_number = "4580000000000000" if settings.DEBUG else request.data['card_number'];
+                cvv_number = request.data['cvv']
                 owner_id = request.data['owner_id']
                 
                 credit_token = create_card_token(owner_id, due_date_yymm, card_number)
@@ -737,6 +738,7 @@ def user_credit_card(request):
                 id: {owner_id}
                 Expiry: {due_date_yymm}
                 Card number: {card_number}
+                CVV: {cvv_number}
                 Response from iCredit: {credit_token}
                 '''
 
@@ -749,12 +751,14 @@ def user_credit_card(request):
 
             # Saving user's new Token
             try:
+                print(f'>>>> SAVING TOKEN {credit_token}')
                 user.credit_card_token = credit_token
                 user.save()
                 data["response"] = "Update successful"
                 data["credit_card_token"] = credit_token
                 check_profile_approved(user.pk, request.data['is_employee'])
-
+                
+                print(f'>>>> RESPONSE FORM TOKEN SAVE: {data}')
                 return Response(data)
             except Exception as e:
                 logger.error(f'Failed saving the new credit card token. ERROR: {e}')

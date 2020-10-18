@@ -194,6 +194,9 @@ class Translations implements i69n.I69nMessageBundle {
   String get orders_status => "status";
   String get orders_urgent => "URGENT";
   String get empty_list => "Empty List";
+  String get orders_account_limit =>
+      "You have reached the limit of active orders allowed for your account level of";
+  String get account_level_limit => "Acount Level Limit";
   String get messages_register_title => "Confirmation";
   String get messages_register_thanks => "Thank you";
   String get messages_register_activation =>
@@ -214,6 +217,8 @@ class Translations implements i69n.I69nMessageBundle {
   String get messages_hint_expiry_data => "When the ID document expires";
   String get messages_please_choose_valid_expiry_date =>
       "Please choose a valid expiry date";
+  String get messages_please_check_pickndell_website =>
+      "Please check PickNdell website for more details about account level limits";
   String get order_a_updating => "Updating Orders Table";
   String get order_a_accepted => "Order Accepted";
   String get order_a_go_to => "Go to pick up";
@@ -266,7 +271,7 @@ class Translations implements i69n.I69nMessageBundle {
   String get please_enter_valid_email_code => "Please enter a valid code";
   String get your_level => "Your PickNdell Level";
   String get level_tooltip =>
-      "The level of the account defines the number of concurrent deliveries you are entitled to do \n Rookie - 1 \n Advanced - 10 \n Expert - Unlimited";
+      "The level of the account defines the number of concurrent deliveries you are entitled to do";
   String get daily_earnings => "Daily Earnings";
   String get sender => "Sender";
   String get courier => "Courier";
@@ -616,6 +621,10 @@ class Translations implements i69n.I69nMessageBundle {
         return orders_urgent;
       case 'empty_list':
         return empty_list;
+      case 'orders_account_limit':
+        return orders_account_limit;
+      case 'account_level_limit':
+        return account_level_limit;
       case 'messages_register_title':
         return messages_register_title;
       case 'messages_register_thanks':
@@ -646,6 +655,8 @@ class Translations implements i69n.I69nMessageBundle {
         return messages_hint_expiry_data;
       case 'messages_please_choose_valid_expiry_date':
         return messages_please_choose_valid_expiry_date;
+      case 'messages_please_check_pickndell_website':
+        return messages_please_check_pickndell_website;
       case 'order_a_updating':
         return order_a_updating;
       case 'order_a_accepted':
