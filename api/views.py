@@ -746,11 +746,13 @@ def user_credit_card(request):
 
                 if len(credit_token) < 10:
                     logger.error(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
+                    data["response"] = "Failed updating credit card"
                     return Response(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
 
 
             except Exception as e:
                 logger.error(f'Fail communication with the iCredit server. ERROR: {e}')
+                data["response"] = "Failed updating credit card"
                 return Response(f'Fail communication with iCredit. ERROR: {e}')
 
             # Saving user's new Token
@@ -764,6 +766,7 @@ def user_credit_card(request):
                 return Response(data)
             except Exception as e:
                 logger.error(f'Failed saving the new credit card token. ERROR: {e}')
+                data["response"] = "Failed updating credit card"
                 return Response(f'Failed saving the new credit card token. ERROR: {e}')
 
     else:
