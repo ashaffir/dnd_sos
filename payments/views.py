@@ -41,8 +41,8 @@ def create_card_token(owner_id, due_date_yymm,card_number):
     '''
     Creating credit card token from an API request
     '''
-    CREATE_TOKEN_TEST =  "https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/CreateToken"    
-    CREATE_TOKEN_PROD = " https://icredit.rivhit.co.il/api/iCreditRestApiService.svc/CreateToken"
+    CREATE_TOKEN_TEST = "https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/CreateToken"
+    CREATE_TOKEN_PROD = " https://pci.rivhit.co.il/Api/iCreditRestApiService.svc/CreateToken"
     
     CREATE_TOKEN_URL = CREATE_TOKEN_TEST if settings.DEBUG else CREATE_TOKEN_PROD
 
@@ -62,10 +62,11 @@ def create_card_token(owner_id, due_date_yymm,card_number):
     
     try:
         token_response = requests.post(CREATE_TOKEN_URL, data=payload, headers=verify_headers)
-        print(f'PAYLOAD: {payload}')
+        print(f'CC TOKEN REQUEST PAYLOAD: {payload}')
         if not token_response.json()["ErrorMessage"]:
             return token_response.json()["Token"]
         else:
+            print(f'ERROR: {token_response}')
             return 'error'
     except Exception as e:
         print(f'ERROR CREDIT CART TOKEN: {e}')
