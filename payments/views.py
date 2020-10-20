@@ -19,10 +19,10 @@ from orders.models import Order
 
 logger = logging.getLogger(__file__)
 
-if settings.DEBUG_SERVER:
-    CURRENT_DOMAIN = 'https://pickndell.com'
-else: 
+if settings.DEBUG:
     CURRENT_DOMAIN = 'https://1b6b94e07038.ngrok.io'
+else: 
+    CURRENT_DOMAIN = 'https://pickndell.com'
 
 
 HEADERS = {
@@ -62,11 +62,12 @@ def create_card_token(owner_id, due_date_yymm,card_number):
     
     try:
         token_response = requests.post(CREATE_TOKEN_URL, data=payload, headers=verify_headers)
+        print(f'CC TOKEN REQUEST URL: {CREATE_TOKEN_URL}')
         print(f'CC TOKEN REQUEST PAYLOAD: {payload}')
         if not token_response.json()["ErrorMessage"]:
             return token_response.json()["Token"]
         else:
-            print(f'ERROR: {token_response}')
+            print(f'ERROR GENERATING CC TOKEN: {token_response}')
             return 'error'
     except Exception as e:
         print(f'ERROR CREDIT CART TOKEN: {e}')
@@ -122,27 +123,9 @@ def credit_card_form(request):
             ],\
         "Custom1":' + f"{request.user.pk}" +'}'
 
-    # payload_test = '{ \
-    #     "GroupPrivateToken":"7a81fc4b-1b18-4add-b730-d434a9f5120a", \
-    #     "RedirectURL": "' + CURRENT_DOMAIN + '/payments/success-card-collection/' + f'{str(b_id)}' + '", \
-    #     "IPNURL": "' + CURRENT_DOMAIN + '/payments/ipn-listener-card-info/", \
-    #     "CustomerLastName":"test", \
-    #     "EmailAddress":"alfred.shaffir@gmail.com", \
-    #     "SaleType": 3, \
-    #     "HideItemList":true, \
-    #     "DocumentLanguage":"English", \
-    #     "Items": [ \
-    #         {\
-    #         "UnitPrice": "10",\
-    #         "Quantity": "1",\
-    #         "Description": "collect only"\
-    #         }\
-    #         ],\
-    #     "Custom1":' + f"{request.user.pk}" +'}'
-
     payload = payload_test if settings.DEBUG else payload_prod
 
-    print(f'PAYLOAD: \n {payload}')
+    print(f'CC FORM PAYLOAD: \n {payload}')
 
     try:
         get_card_form = requests.post(GET_URL, data=payload, headers=HEADERS)
@@ -152,8 +135,11 @@ def credit_card_form(request):
 
     print(f">>> Credit card form: OUTBOUND: ***************{get_card_form.json()}****************")
     icredit_form_url = get_card_form.json()['URL']
+    print(f'URL: {icredit_form_url}')
     private_token = get_card_form.json()['PrivateSaleToken']
+    print(f'PRIVATE TOKEN: {private_token}')
     public_token = get_card_form.json()['PublicSaleToken']
+    print(f'PUBLIC TOKEN: {public_token}')
 
     return icredit_form_url,private_token, public_token
 
@@ -177,6 +163,8 @@ def get_credit_card_information(token=None):
     GET_CARD_DETAILS_TEST = 'https://testpci.rivhit.co.il/api/RivhitRestAPIService.svc/GetTokenDetails'
     GET_CARD_DETAILS_PROD = 'https://pci.rivhit.co.il/api/RivhitRestAPIService.svc/GetTokenDetails'
 
+    GET_CARD_DETAILS_URL =  GET_CARD_DETAILS_TEST if settings.DEBUG else GET_CARD_DETAILS_PROD   
+
     # credit_box_token = settings.CREDIT_BOX_TOKEN
 
     credit_box_token = 'd27a5712-53a5-4543-bf3e-7a3c16164ff8' if settings.DEBUG else settings.CREDIT_BOX_TOKEN
@@ -184,11 +172,13 @@ def get_credit_card_information(token=None):
     
     payload = '{ \
         "CreditboxToken":"' + f'{credit_box_token}' + '", \
-        "Token": " ' + f'{token}' + '  " \
+        "Token": "' + f'{token}' + '" \
         }'
     
     try:
-        card_info = requests.post(GET_CARD_DETAILS_TEST, data=payload, headers=HEADERS)
+        print(f'GET_CARD_DETAILS_URL: {GET_CARD_DETAILS_URL}')
+        print(f'payload: {payload}')
+        card_info = requests.post(GET_CARD_DETAILS_URL, data=payload, headers=HEADERS)
         print(f"CARD INFO: ***************{card_info.json()}****************")
         logger.info(f"CARD INFO: ***************{card_info.json()}****************")
         return card_info.json()
@@ -308,6 +298,8 @@ def success_card_collection(request, b_id):
     business = Employer.objects.get(pk=b_id)
     business.credit_card_token = request.GET.get("Token")
     business.save()
+    print(f'Saved CC token in DB')
+    logger.info(f'Saved CC token in DB')
     return render(request, 'payments/success-card-collection.html', context)
 
 def failed_card_collection(request):
