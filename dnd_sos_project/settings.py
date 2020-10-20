@@ -30,14 +30,15 @@ SECRET_KEY = config['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-DEBUG_SERVER = False
+# DEBUG_SERVER = False
 
-if platform.system() == 'Darwin':
-    pass
-# On Linux is revered
-else:
-    if DEBUG:
-        DEBUG_SERVER = True
+# if platform.system() == 'Darwin':
+#     pass
+# # On Linux is revered
+# else:
+#     if DEBUG:
+#         DEBUG_SERVER = True
+#     else:
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']

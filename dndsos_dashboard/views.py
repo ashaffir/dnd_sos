@@ -212,14 +212,18 @@ def b_profile(request, b_id):
 
     form = BusinessUpdateForm(instance=user_profile)
 
-    icredit_form_url,private_token, public_token = credit_card_form(request)
-    context['icredit_form_url'] = icredit_form_url
+    # icredit_form_url,private_token, public_token = credit_card_form(request)
+    # context['icredit_form_url'] = icredit_form_url
 
     # To display the last digits of the current credit card
-    card_info = get_credit_card_information(token=public_token)
-    context['card_number'] = card_info['CardNumber'][-4:]
-    context['card_due_date'] = card_info['CardDueDate']
-
+    if user_profile.credit_card_token:
+        cc_token = user_profile.credit_card_token
+        card_info = get_credit_card_information(token=cc_token)
+        context['card_number'] = card_info['CardNumber'][-4:]
+        context['card_due_date'] = card_info['CardDueDate']
+    else:
+        pass
+    # For addresses autocomplete
     context['google_key'] = settings.PLACES_MAPS_API_KEY
 
     if request.method == 'POST':
