@@ -28,7 +28,7 @@ with open('config.json') as config_file:
 SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 DEBUG_SERVER = False
 
@@ -45,7 +45,8 @@ else:
     ALLOWED_HOSTS = [
         '127.0.0.1',
         'www.pickndell.com',
-        'pickndell.com'
+        'pickndell.com',
+        '18.223.164.155'
     ]
 
 
