@@ -167,6 +167,7 @@ messages_register_button: Go to Login
 messages_push_accept: Accept
 messages_push_ignore: Ignore 
 messages_select_pickup_address: Please select a pickup address
+messages_address_missing_building: Please enter a valid address with a building number
 messages_select_dropoff_address: Please select a dropoff address
 messages_package_type: Please choose the package type
 messages_communication_error: There was a problem communicating with the server. Please try again later

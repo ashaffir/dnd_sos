@@ -173,6 +173,8 @@ messages_register_button: היכנס לחשבונך
 messages_push_accept: אשר
 messages_push_ignore: בטל
 messages_select_pickup_address: אנא בחר כתובת איסוף
+messages_address_missing_building: אנא הזן כתובת חוקית עם מספר בניין
+
 messages_select_dropoff_address: אנא בחר כתובת יעד
 messages_package_type: אנא בחר את סוג החבילה
 messages_communication_error: הייתה בעיה בתקשורת עם השרת. בבקשה נסו שוב מאוחר יותר

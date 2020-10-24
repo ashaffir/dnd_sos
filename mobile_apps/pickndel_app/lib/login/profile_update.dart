@@ -124,7 +124,6 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             print('PROFILE UPDATED WITH: ${snapshot.data}');
-
             if (snapshot.data["response"] == "Update successful") {
               var data = snapshot.data;
 

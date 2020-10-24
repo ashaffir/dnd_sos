@@ -91,6 +91,7 @@ class Order(models.Model):
     transaction_auth_num = models.CharField(max_length=100, null=True, blank=True)
     customer_transaction_id = models.CharField(max_length=100, null=True, blank=True)
     private_sale_token = models.CharField(max_length=100, null=True, blank=True)
+    sale_id = models.CharField(max_length=100, null=True, blank=True)
     invoice_url = models.URLField(null=True, blank=True)
 
     freelancer = models.ForeignKey( # new

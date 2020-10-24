@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:pickndell/common/helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/backend_service.dart';
 import 'package:pickndell/location/credencials.dart';
@@ -178,6 +179,10 @@ class _NewOrderState extends State<NewOrder> {
                                       return trans
                                           .messages_select_pickup_address;
                                     }
+                                    if (!value.contains(new RegExp(r'[0-9]'))) {
+                                      return trans
+                                          .messages_address_missing_building;
+                                    }
                                     return null;
                                   }),
                             ),
@@ -235,6 +240,10 @@ class _NewOrderState extends State<NewOrder> {
                                     if (value.isEmpty) {
                                       return trans
                                           .messages_select_dropoff_address;
+                                    }
+                                    if (!value.contains(new RegExp(r'[0-9]'))) {
+                                      return trans
+                                          .messages_address_missing_building;
                                     }
                                     return null;
                                   }),

@@ -46,6 +46,14 @@ String timeConvert(String dateTime) {
   return convertedTime;
 }
 
+// bool validateAddress(String value) {
+
+//   if (value.contains(new ) {
+//     return true;
+//   }
+//   return false;
+// }
+
 String validateName(String value) {
   String patttern = r"(^[a-zA-Z\u05D0-\u05EA' ]*$)";
   RegExp regExp = new RegExp(patttern);

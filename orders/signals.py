@@ -116,6 +116,8 @@ def order_signal(sender, instance, update_fields, **kwargs):
 #     business_id = instance.business_id
 #     print(f'>>>>>>> SIGNAL >>> Order Status Change: {instance.status}. ID: {instance.order_id}')  
     
+    # STARTED (Accepted by the freelancer)
+    #################################
     elif instance.status == 'STARTED' and not instance.private_sale_token:
         print(f'ORDER {instance.order_id} updated with status: STARTED')
 
@@ -139,13 +141,18 @@ def order_signal(sender, instance, update_fields, **kwargs):
                     }
                 }
             )
-        print('>>> getting private token')
+
+        # Locking the price 
+        ####################
+        print('>>> SIGNALS: getting private token')
+        logger.info('>>> SIGNALS: getting private token')
         private_sale_token = lock_delivery_price(order_instance)
         order_instance.private_sale_token = private_sale_token
-        print('>>> saving token')
+        print('>>> SIGNALS: Saved pending transaction token')
         order_instance.save()
         
         
+    # REJECTED (canceled by the freelancer)
     elif instance.status == 'REJECTED':
         print(f'ORDER {instance.order_id} updated with status: REJECTED')
         order_data = ReadOnlyOrderSerializer(instance).data        
@@ -159,13 +166,12 @@ def order_signal(sender, instance, update_fields, **kwargs):
             }
         )
 
-    elif instance.status == 'COMPLETED' and not instance.invoice_url:
+    # COMPLETED / DELIVERED
+    #################################
+    elif instance.status == 'COMPLETED' and not instance.sale_id:
         print(f'ORDER {instance.order_id} updated with status: DELIVERED (COMPLETED)')
         order_data = ReadOnlyOrderSerializer(instance).data        
         
-        # Updating Credit card processor
-        ###########
-        print('Updating RIVHIT')
         try:
             # order_instance = Order.objects.get(pk=instance.order_id)
             freelancer = User.objects.get(pk=instance.freelancer.pk)
@@ -188,16 +194,22 @@ def order_signal(sender, instance, update_fields, **kwargs):
 
             order_private_sale_token = instance.private_sale_token
 
+            # Updating iCredit/Rivhit
+            #########################
+            print('>> SIGNALS: Updating RIVHIT')
+            logger.info('>> SIGNALS: Updating RIVHIT')
             complete_charge_information = complete_charge(order_private_sale_token)
             
             try:
-                invoice_url = complete_charge_information['data']['DocumentURL']
-                instance.invoice_url = invoice_url
+                instance.sale_id = complete_charge_information['data']['SaleId']
+                instance.invoice_url = complete_charge_information['data']['DocumentURL']
                 instance.save()
-                print(f'INVOICE: {invoice_url}')
+                print(f">>> SINGNALS: INVOICE: {complete_charge_information['data']['DocumentURL']}")
+                logger.info(f">>> SIGNALS: INVOICE: {complete_charge_information['data']['DocumentURL']}")
 
             except Exception as e:
-                print(f'>> Failed generating invoice URL. ERROR: {e}')
+                print(f'>>> SIGNALS: Failed generating invoice URL. ERROR: {e}')
+                logger.error(f'>>> SIGNALS: Failed generating invoice URL. ERROR: {e}')
 
             # Updating Freelance balance:
             print(f'OPEN BALANCE: {freelancer.freelancer.balance}')
@@ -233,64 +245,7 @@ def order_signal(sender, instance, update_fields, **kwargs):
         )
 
     else:
-        print(f'DEFAULT: ORDER {instance.order_id} updated with status: {instance.status}')
-
-
-#     elif instance.status == 'REQUESTED':
-#         channel_layer = get_channel_layer()
-#         async_to_sync(channel_layer.group_send)(
-#             str(instance.order_id), {
-#                 'type':"update.order",
-#                 # 'type':"order.canceled",
-#                 'data': {
-#                     'event': 'Order Canceled',
-#                     'order_id': str(instance.order_id), 
-#                     'business_id': business_id,
-#                     'status': str(instance.status)
-#                 }
-#             }
-#         )
-    
-#     elif instance.status == 'RE_REQUESTED': # Avoiding second update through the sigmnl
-#         print('RE-REQUEST. No action on this signal.')
-#         pass
-
-#     elif instance.status == 'ARCHIVED':
-#         channel_layer = get_channel_layer()
-#         async_to_sync(channel_layer.group_send)(
-#             str(instance.order_id), {
-#                 'type':"echo.message",
-#                 # 'type':"order.canceled",
-#                 'data': {
-#                     'event': 'Order Canceled',
-#                     'order_id': str(instance.order_id),
-#                     'freelancer': str(instance.freelancer.pk),
-#                     'business_id': business_id,
-#                     'status': str(instance.status)
-#                 }
-#             }
-#         )
-
-    # elif instance.status == 'IN_PROGRESS':
-    #     print(f''''
-    #     >>>>>>> SIGNAL: Order In Progress: {instance.order_id}  
-    #     update: {instance.status} type: {type(instance.status)}
-    #     update: {instance.order_id} type: {type(instance.order_id)}
-    #     update: {instance.business_id} type: {type(instance.business_id)}
-    #     update: {instance.freelancer.pk} type: {type(instance.freelancer.pk)}
-    #     ''')
-    #     channel_layer = get_channel_layer()
-    #     async_to_sync(channel_layer.group_send)(
-    #         str(instance.order_id), {
-    #             'type':"order.dispached",
-    #             'event': 'Order Dispached',
-    #             'order_id': str(instance.order_id), 
-    #             'business': business_id,
-    #             'freelancer': instance.freelancer.pk,
-    #             'status': str(instance.status)
-    #         }
-    #     )
-
+        print(f'SIGNALS: ORDER {instance.order_id} updated with status: {instance.status}')
 
 
 

@@ -207,6 +207,8 @@ class Translations implements i69n.I69nMessageBundle {
   String get messages_push_accept => "Accept";
   String get messages_push_ignore => "Ignore";
   String get messages_select_pickup_address => "Please select a pickup address";
+  String get messages_address_missing_building =>
+      "Please enter a valid address with a building number";
   String get messages_select_dropoff_address =>
       "Please select a dropoff address";
   String get messages_package_type => "Please choose the package type";
@@ -643,6 +645,8 @@ class Translations implements i69n.I69nMessageBundle {
         return messages_push_ignore;
       case 'messages_select_pickup_address':
         return messages_select_pickup_address;
+      case 'messages_address_missing_building':
+        return messages_address_missing_building;
       case 'messages_select_dropoff_address':
         return messages_select_dropoff_address;
       case 'messages_package_type':

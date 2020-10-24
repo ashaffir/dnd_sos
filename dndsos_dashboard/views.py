@@ -218,9 +218,15 @@ def b_profile(request, b_id):
     # To display the last digits of the current credit card
     if user_profile.credit_card_token:
         cc_token = user_profile.credit_card_token
-        card_info = get_credit_card_information(token=cc_token)
-        context['card_number'] = card_info['CardNumber'][-4:]
-        context['card_due_date'] = card_info['CardDueDate']
+        try:
+            card_info = get_credit_card_information(token=cc_token)
+            context['card_number'] = card_info['CardNumber'][-4:]
+            context['card_due_date'] = card_info['CardDueDate']
+        except Exception as e:
+            print(f'Failed getting CC info from iCredit. ERROR: {e}')
+            logger.error(f'Failed getting CC info from iCredit. ERROR: {e}')
+            messages.error(request, gettext('Failed getting credit card information. Please contact Pickndell support'))
+            # return redirect(request.META['HTTP_REFERER'])
     else:
         pass
     # For addresses autocomplete
@@ -310,6 +316,7 @@ def b_profile(request, b_id):
                         return render(request, 'dndsos_dashboard/failed-phone-verification.html')
                                     
         elif 'add_credit_card' in request.POST:
+            # Executed directly from the HTML form (via payments:add-card URL)
             pass        
 
     # Check profile completion

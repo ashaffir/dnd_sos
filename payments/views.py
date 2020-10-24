@@ -11,7 +11,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-
+from django.utils.translation import gettext
 
 from .models import Card
 from core.models import Employee, Employer
@@ -20,7 +20,7 @@ from orders.models import Order
 logger = logging.getLogger(__file__)
 
 if settings.DEBUG:
-    CURRENT_DOMAIN = 'https://1b6b94e07038.ngrok.io'
+    CURRENT_DOMAIN = 'https://90b5f03e3570.ngrok.io'
 else: 
     CURRENT_DOMAIN = 'https://pickndell.com'
 
@@ -178,6 +178,7 @@ def get_credit_card_information(token=None):
     try:
         print(f'GET_CARD_DETAILS_URL: {GET_CARD_DETAILS_URL}')
         print(f'payload: {payload}')
+        logger.info(f'CARD DETAILS PAYLOAD: {payload}  URL: {GET_CARD_DETAILS_URL}')
         card_info = requests.post(GET_CARD_DETAILS_URL, data=payload, headers=HEADERS)
         print(f"CARD INFO: ***************{card_info.json()}****************")
         logger.info(f"CARD INFO: ***************{card_info.json()}****************")
@@ -186,6 +187,58 @@ def get_credit_card_information(token=None):
         print(f'ERROR retreiving credit card information: {e}')
         context['error'] = e
         return e
+
+def lock_price_cc_check(cc_token):
+    
+    SALE_CHARGE_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/SaleChargeToken'
+    SALE_CHARGE_PROD = 'https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/SaleChargeToken'
+    SALE_CHARGE_URL = SALE_CHARGE_TEST if settings.DEBUG else SALE_CHARGE_PROD
+
+    CC_TEST_TOKEN = "ba56dcb2-1f19-4627-b203-4a77a1939f4f"
+
+    CC_TOKEN = CC_TEST_TOKEN if settings.DEBUG else cc_token
+    print(f'CC_TOKEN: {CC_TOKEN}')
+
+    GROUP_PRIVATE_TOKEN = "a1408bfc-18da-49dc-aa77-d65870f7943e" if settings.DEBUG else settings.GROUP_PRIVATE_TOKEN
+
+    payload = '{ \
+            "GroupPrivateToken": "' + GROUP_PRIVATE_TOKEN + '", \
+            "CreditcardToken": "' + CC_TOKEN + '", \
+            "IPNURL": "' + CURRENT_DOMAIN + '/payments/ipn-listener-lock-price/", \
+            "CustomerLastName": "none", \
+            "CustomerFirstName": "none", \
+            "Address": "none", \
+            "City": "none", \
+            "EmailAddress": "alfred.shaffir@gmail.com", \
+            "NumberOfPayments": 1, \
+            "SaleType": 2, \
+            "Items": [ \
+                { \
+                "UnitPrice": "1", \
+                "Quantity": "1", \
+                "Description": "cc validation" \
+                } \
+            ] \
+        }'
+
+    # print(f'SALE CHARGE PAYLOAD: \n {payload} ')
+
+    try:
+        sales_charge = requests.post(SALE_CHARGE_URL, data=payload, headers=HEADERS)
+        print(f'CC VALIDATION SALES CHARGE RESPONSE: \n {sales_charge.json()}')
+        logger.info(f'PAYMENTS: CC VALIDATION SALES CHARGE RESPONSE: \n {sales_charge.json()}')
+        
+    except Exception as e:
+        print(f'ERROR cc validation: {e}')
+        context['error'] = e
+
+    cc_valprivate_sale_token = sales_charge.json()['PrivateSaleToken']
+
+    print(f">>> CC VALIDATION LOCK. TOKEN:{sales_charge.json()['PrivateSaleToken']}****************")    
+
+    cc_val = (cc_valprivate_sale_token != "00000000-0000-0000-0000-000000000000")
+
+    return cc_val
 
 
 def lock_delivery_price(order):
@@ -203,30 +256,20 @@ def lock_delivery_price(order):
 
     SALE_CHARGE_TEST = 'https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/SaleChargeToken'
     SALE_CHARGE_PROD = 'https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/SaleChargeToken'
+    SALE_CHARGE_URL = SALE_CHARGE_TEST if settings.DEBUG else SALE_CHARGE_PROD
 
-    # payload = '{ \
-    #         "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e", \
-    #         "CreditcardToken": "' + f'{b_credit_card_token}' + '", \
-    #         "IPNURL": "' + CURRENT_DOMAIN + '/payments/ipn-listener-lock-price/", \
-    #         "CustomerLastName": "none", \
-    #         "CustomerFirstName": "none", \
-    #         "Address": "none", \
-    #         "City": "none", \
-    #         "EmailAddress": "alfred.shaffir@gmail.com", \
-    #         "NumberOfPayments": 1, \
-    #         "SaleType": 2, \
-    #         "Items": [ \
-    #             { \
-    #             "UnitPrice": "' + f'{order_price}' + '", \
-    #             "Quantity": "1", \
-    #             "Description": "delivery" \
-    #             } \
-    #         ] \
-    #     }'
+    CC_TEST_TOKEN = "ba56dcb2-1f19-4627-b203-4a77a1939f4f"
+
+    CC_TOKEN = CC_TEST_TOKEN if settings.DEBUG else b_credit_card_token
+    
+    # print(f'CC_TOKEN: {CC_TOKEN}')
+    # logger.info(f'CC_TOKEN: {CC_TOKEN}')
+
+    GROUP_PRIVATE_TOKEN = "a1408bfc-18da-49dc-aa77-d65870f7943e" if settings.DEBUG else settings.GROUP_PRIVATE_TOKEN
 
     payload = '{ \
-            "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e", \
-            "CreditcardToken": "ba56dcb2-1f19-4627-b203-4a77a1939f4f", \
+            "GroupPrivateToken": "' + GROUP_PRIVATE_TOKEN + '", \
+            "CreditcardToken": "' + CC_TOKEN + '", \
             "IPNURL": "' + CURRENT_DOMAIN + '/payments/ipn-listener-lock-price/", \
             "CustomerLastName": "none", \
             "CustomerFirstName": "none", \
@@ -244,10 +287,11 @@ def lock_delivery_price(order):
             ] \
         }'
 
-    # print(f'SALE CHARGE PAYLOAD: \n {payload} ')
+    print(f'SALE CHARGE PAYLOAD: \n {payload} ')
+    logger.info(f'SALE CHARGE PAYLOAD: \n {payload} ')
 
     try:
-        sales_charge = requests.post(SALE_CHARGE_TEST, data=payload, headers=HEADERS)
+        sales_charge = requests.post(SALE_CHARGE_URL, data=payload, headers=HEADERS)
         print(f'SALES CHARGE RESPONSE: \n {sales_charge.json()}')
         logger.info(f'PAYMENTS: SALES CHARGE RESPONSE: \n {sales_charge.json()}')
         
@@ -264,9 +308,10 @@ def lock_delivery_price(order):
 @csrf_exempt
 @require_POST
 def ipn_listener_lock_price(request):
-    print(f">>> IPN LOCK PRICE TX ID: ***************{request.POST.get('CustomerTransactionId')}****************")
     transaction_auth_num = request.POST.get('TransactionAuthNum')
     customer_transaction_id = request.POST.get('CustomerTransactionId')
+    print(f">>> IPN LOCK PRICE TX ID: ***************{request.POST.get('CustomerTransactionId')}****************")
+    logger.info(f">>> IPN LOCK PRICE TX ID: ***************{request.POST.get('CustomerTransactionId')}****************")
 
     return HttpResponse(status=200)
 
@@ -284,140 +329,15 @@ def complete_charge(private_sale_token):
     
     try:
         complete_charge = requests.post(CHARGE_PENDING_URL, data=payload, headers=HEADERS)
-        print(f'>>>>>>>>>>>>> COMPLETE: {complete_charge.json()}')
+        print(f'>>> CHARGE COMPLETE: {complete_charge.json()}')
+        logger.info(f'>>> CHARGE COMPLETE: {complete_charge.json()}')
         return complete_charge.json()
     except Exception as e:
         print(f'ERROR completing the charge: {e}')
+        logger.error(f'ERROR completing the charge: {e}')
         context['error'] = e
         return e
 
-
-
-def success_card_collection(request, b_id):
-    context = {}
-    business = Employer.objects.get(pk=b_id)
-    business.credit_card_token = request.GET.get("Token")
-    business.save()
-    print(f'Saved CC token in DB')
-    logger.info(f'Saved CC token in DB')
-    return render(request, 'payments/success-card-collection.html', context)
-
-def failed_card_collection(request):
-    context = {}
-    return render(request, 'payments/failed-card-collection.html', context)
-
-
-@login_required
-def add_card(request):
-    context = {}
-    print('request.user',type(request.user))
-    if request.method == 'POST':
-
-        print('request data', request.POST)
-        # stripe.api_key = settings.STRIPE_SECRET_KEY
-
-        name = request.POST.get("name")
-        owner_id = request.POST.get("owner-id-number")
-        card_number = request.POST.get("card-number")
-        expiry_date = request.POST.get("expiry-date")
-        # cvv = request.POST.get("cvv")
-        exp_year = expiry_date[2:4]
-        exp_month = expiry_date[5:7]
-        print(exp_month,exp_year)
-        due_date_yymm = exp_year + exp_month
-
-        cvv = hash(request.POST.get("cvv"))
-        if name and card_number and expiry_date and cvv:
-
-            # cards = Card.objects.filter(card_holder=request.user, status=True)
-            # for i in cards:
-            #     if i.card_number == card_number:
-            #         messages.error(request,'card already exist, please try any other card ')
-            #         return redirect('/orders/add-card')
-            # else:
-
-            #     try:
-            #         print("request.user",request.user)
-            #         card = Card.objects.create(
-            #             name=name,
-            #             card_number=card_number,
-            #             expiry_date=expiry_date,
-            #             cvv=cvv,
-            #             card_holder=request.user
-            #         )
-            #         card.save()
-            #         messages.success(request, "Card added")
-            #     except Exception as ex:
-            #         print(ex)
-            #         messages.error(request, ex)
-
-
-            try:
-                credit_token = create_card_token(owner_id, due_date_yymm, card_number)
-                print(f'CREDIT TOKEN: {credit_token}')
-                msg = f'''Updating credit card with:
-                    name: {name}
-                    id: {owner_id}
-                    Expiry: {due_date_yymm}
-                    Card number: {card_number}
-                    Response from iCredit: {credit_token}
-                    '''
-                print(msg)
-                logger.info(msg)
-            except Exception as e:
-                logger.error(f'Failed getting CC token from Rivhit. ERROR: {e}')
-                messages.error(request, 'Communication error. Please try again later.')
-                return redirect(request.META['HTTP_REFERER'])
-
-            user = Employer.objects.get(pk=request.user.pk)
-            if credit_token != 'error' and len(credit_token) > 10:
-                try:
-                    user.credit_card_token = credit_token
-                    user.save()
-                    messages.success(request, 'Credit card update successfully.')
-                    # return render(request, 'dndsos_dashboard/b-profile.html', context)
-                except Exception as e:
-                    logger.error(f'Failed saving the new credit card token. ERROR: {e}')
-                    messages.error(request, 'Error updating credit card information.')
-                    return redirect(request.META['HTTP_REFERER'])
-            else:
-                logger.error('Got bad CC token from Rivhit.')
-                messages.error(request, 'Error updating credit card information.')
-                return redirect(request.META['HTTP_REFERER'])
-
-        else:
-            messages.error('please do fill all the fields')
-
-    return redirect(request.META['HTTP_REFERER'])
-    # return render(request, "order/add-card.html", {'cards': cards})
-
-
-@login_required
-def remove_card(request):
-    card_id = request.GET.get("card-id")
-    try:
-        card = Card.objects.get(id=card_id, card_holder=request.user)
-        # card.status = False
-        # card.save()
-        card.delete()
-        messages.success(request, "Card Removed")
-
-    except Exception as e:
-        messages.error(request, "Invalid user request")
-    
-    try:
-        cards = Card.objects.filter(card_holder=request.user, status=True)
-    except:
-        cards = []
-    # return render(request, "payments/add-card.html", {'cards': cards})
-    return redirect(request.META['HTTP_REFERER'])
-
-def charge(request):
-    context = {}
-    if request.method == 'POST':
-        pass
-
-    return render(request, 'payments/charge.html')
 
 def ipn_listener_test(request):
     context = {}
@@ -467,3 +387,221 @@ def ipn_listener_test(request):
         context['verified'] = e
     
     return render(request, 'payments/iCredit.html', context)
+
+def success_card_collection(request, b_id):
+    context = {}
+    business = Employer.objects.get(pk=b_id)
+    business.credit_card_token = request.GET.get("Token")
+    business.save()
+    print(f'>>> Saved CC token in DB')
+    logger.info(f'>>> Saved CC token in DB')
+    return render(request, 'payments/success-card-collection.html', context)
+
+def failed_card_collection(request):
+    context = {}
+    return render(request, 'payments/failed-card-collection.html', context)
+
+
+@login_required
+def add_card(request):
+    context = {}
+    print('request.user',type(request.user))
+    if request.method == 'POST':
+
+        print('request data', request.POST)
+        # stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        name = request.POST.get("name")
+        owner_id = request.POST.get("owner-id-number")
+        card_number = request.POST.get("card-number")
+        expiry_date = request.POST.get("expiry-date")
+        # cvv = request.POST.get("cvv")
+        exp_year = expiry_date[2:4]
+        exp_month = expiry_date[5:7]
+        print(exp_month,exp_year)
+        due_date_yymm = exp_year + exp_month
+
+        cvv = hash(request.POST.get("cvv"))
+
+        if name and card_number and expiry_date and cvv:
+
+            # cards = Card.objects.filter(card_holder=request.user, status=True)
+            # for i in cards:
+            #     if i.card_number == card_number:
+            #         messages.error(request,'card already exist, please try any other card ')
+            #         return redirect('/orders/add-card')
+            # else:
+
+            #     try:
+            #         print("request.user",request.user)
+            #         card = Card.objects.create(
+            #             name=name,
+            #             card_number=card_number,
+            #             expiry_date=expiry_date,
+            #             cvv=cvv,
+            #             card_holder=request.user
+            #         )
+            #         card.save()
+            #         messages.success(request, "Card added")
+            #     except Exception as ex:
+            #         print(ex)
+            #         messages.error(request, ex)
+
+
+            try:
+                credit_token = create_card_token(owner_id, due_date_yymm, card_number)
+                print(f'CREDIT TOKEN: {credit_token}')
+                
+                # Checking the CC with sales token
+                cc_val = lock_price_cc_check(credit_token)
+
+                if cc_val:
+                    print(f'>>> CC VALIDATED <<<')
+                    logger.info(f'>>> CC VALIDATED <<< ')
+                    msg = f'''Updating credit card with:
+                        name: {name}
+                        id: {owner_id}
+                        Expiry: {due_date_yymm}
+                        Card number: {card_number}
+                        CVV: {request.POST.get("cvv")}
+                        Response from iCredit: {credit_token}
+                        '''
+                    print(msg)
+                    logger.info(msg)
+                else:
+                    print('>>> FAIL CC VALIDATION <<< ')
+                    logger.error(f'Failed CC validation. ERROR: {e}')
+                    messages.error(request, gettext('Credit cart is not valid. Please make sure to enter valid credit card information'))
+                    return redirect(request.META['HTTP_REFERER'])
+            except Exception as e:
+                logger.error(f'Failed getting CC token from Rivhit. ERROR: {e}')
+                messages.error(request, 'Communication error. Please try again later.')
+                return redirect(request.META['HTTP_REFERER'])
+
+            user = Employer.objects.get(pk=request.user.pk)
+            if credit_token != 'error' and len(credit_token) > 10:
+                try:
+                    user.credit_card_token = credit_token
+                    user.save()
+                    messages.success(request, 'Credit card update successfully.')
+                    # return render(request, 'dndsos_dashboard/b-profile.html', context)
+                except Exception as e:
+                    logger.error(f'Failed saving the new credit card token. ERROR: {e}')
+                    messages.error(request, 'Error updating credit card information.')
+                    return redirect(request.META['HTTP_REFERER'])
+            else:
+                logger.error('Got bad CC token from Rivhit.')
+                messages.error(request, 'Error updating credit card information.')
+                return redirect(request.META['HTTP_REFERER'])
+
+        else:
+            messages.error('Please fill out all the fields')
+
+    return redirect(request.META['HTTP_REFERER'])
+    # return render(request, "order/add-card.html", {'cards': cards})
+
+
+@login_required
+def remove_card(request):
+    card_id = request.GET.get("card-id")
+    try:
+        card = Card.objects.get(id=card_id, card_holder=request.user)
+        # card.status = False
+        # card.save()
+        card.delete()
+        messages.success(request, "Card Removed")
+
+    except Exception as e:
+        messages.error(request, "Invalid user request")
+    
+    try:
+        cards = Card.objects.filter(card_holder=request.user, status=True)
+    except:
+        cards = []
+    # return render(request, "payments/add-card.html", {'cards': cards})
+    return redirect(request.META['HTTP_REFERER'])
+
+def charge(request):
+    context = {}
+    if request.method == 'POST':
+        pass
+
+    return render(request, 'payments/charge.html')
+
+'''Response from SaleChargeToken
+
+{'ClientMessage': None, 
+'DebugMessage': None, 
+'Status': 0, 
+'data': 
+    {'Address': 'none', 
+    'Amount': 1.03, 
+    'AuthNum': '0661207', 
+    'CardDueDate': '0625', 
+    'CardHolderId': 11068020, 
+    'CardLabel': 2, 
+    'CardName': '(ויזה) Cal', 
+    'CardNum': '458098XXXXXX1630', 
+    'CardProducer': 2, 
+    'City': 'none', 
+    'Comments': '', 
+    'Country': None, 
+    'CreditTerms': 1, 
+    'Custom1': None, 
+    'Custom2': None, 
+    'Custom3': None, 
+    'Custom4': None, 
+    'Custom5': None, 
+    'Custom6': None, 
+    'Custom7': None, 
+    'Custom8': None, 
+    'Custom9': None, 
+    'CustomerFirstName': 'none', 
+    'CustomerId': None, 
+    'CustomerLastName': 'none', 
+    'CustomerTransactionId': '94300557-a95b-4183-a008-8262a4363158', 
+    'DefrayelCompany': 1, 
+    'Discount': 0, 
+    'DocumentNum': None, 
+    'DocumentType': None, 
+    'DocumentURL': None, 
+    'EmailAddress': 'alfred.shaffir@gmail.com', 
+    'FaxNumber': None, 
+    'FileNum': '21', 
+    'FirstAmount': 0.0, 
+    'ForeignSign': 0, 
+    'GroupId': '8936df0b-fb46-47a4-88bc-c0c27c506d10', 
+    'IdNumber': None, 
+    'NonFirstAmount': 0.0, 
+    'NumOfPayment': 0, 
+    'Order': None, 
+    'POB': None, 
+    'ParamJ': 0, 
+    'PayPalPayingCustomer': '', 
+    'PayPalTransactionId': '', 
+    'PhoneNumber': None, 
+    'PhoneNumber2': None, 
+    'ReceiptNum': None, 
+    'ReceiptType': None, 
+    'ReceiptURL': None, 
+    'RecurringId': None, 
+    'Reference': None, 
+    'RegisterNum': 527, 
+    'SaleId': 'af632e42-add9-4334-812a-7db2d011e27e', 
+    'SalePrivateToken': '1e1e260a-d43d-4a08-8299-fc501d0b763c', 
+    'SaleTime': '/Date(1603289486757+0300)/', 
+    'SaleWasCharged': True, 'SerialNum': 176, 
+    'SolekSapak': '8008476', 'State': None, 
+    'Status': 2, 
+    'TerminalName': 'תשלום רשת', 
+    'Token': 'b753f7f0-e852-4b69-a37f-35ed4a7910f1', 
+    'TransactionAmount': None, 
+    'TransactionDateTime': '/Date(1603289681003+0300)/', 
+    'TransactionId': '8d99bf31-5dac-46b3-b0fb-fa416e19ef0c', 
+    'TransactionStatus': 0, 
+    'TransactionType': 2, 
+    'VatNumber': None, 
+    'Zipcode': None
+    }
+}
+'''

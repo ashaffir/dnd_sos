@@ -85,12 +85,12 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
     # Sending JSON messages 
     async def echo_message(self, event):
-        print(f'>>> ECHO 1: {event}')
+        logger.info(f'>>> ECHO 1: {event}')
         await self.send_json(event)
 
     # Sending direct text messages 
     async def text_message(self, event):
-        print(f'>>> ECHO 2: {event}')
+        # print(f'>>> ECHO 2: {event}')
         await self.send(event)
 
 
@@ -300,7 +300,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 })
             else:            
             # Send updates to the business that created this order.
-                print(f'UPDATED: {order_data}')
+                logger.info(f'WS UPDATING ORDER GROUP: {order_data}')
                 await self.channel_layer.group_send(group=order_id, message={
                     'type': 'echo.message',
                     'data': order_data
@@ -436,7 +436,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
         # Calculate distance between drop off address the business
         business = Employer.objects.get(pk=content.get('business'))
-        business_address = business.building_number + ' ' + business.street + ',' + business.city
+        business_address = business.address
         
         print('-------------- 3 --------------')
         
@@ -474,8 +474,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             content['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
             content['distance_to_business'] = round(order_to_business_distance,2)
         
-        print('PRICE  CALCULATED')
-        logger.info(f'Order price calculated')
+        print(f'PRICE CALCULATED: {price}')
+        logger.info(f'PRICE CALCULATED: {price}')
 
         if not business.location:
             business.location = Point(business_location.longitude,business_location.latitude, srid=4326)
@@ -543,10 +543,13 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         updating_business = content.get('business')
         next_status = content.get('status')
         
-        print(f"UPDATE CONTENT: ***************{content}****************")
+        print(f">> CONSUMERS >> UPDATE ORDER: {content}")
+        logger.info(f">> CONSUMERS >> UPDATE ORDER: {content}")
 
         if replying_fl:
             if event == 'Order Accepted':
+                print('>>>>> CONSUMERS: ORDER ACCEPTED <<<<<<<')
+                logger.info('>>>>> CONSUMERS: ORDER ACCEPTED <<<<<<<')
                 if order_instance.freelancer:  # Freelancer already allocated
                     accepted_fl = order_instance.freelancer.pk
                 else:
@@ -558,7 +561,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     order_updated = False
                 else: 
                     # Locking the price on the business credit card
-                    lock_delivery_price(order_instance)
+                    
+                    # lock_delivery_price(order_instance) ## Duplicated with the one in Signals
 
                     serializer = OrderSerializer(data=content)
                     serializer.is_valid(raise_exception=True)
@@ -574,14 +578,18 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 
 
             elif event == 'Freelancer Canceled':
-                print('CANCELED!!!!')
+                print('>>>>> ORDER CANCELED <<<<<<<')
                 content['freelancer'] = None
                 serializer = OrderSerializer(data=content)
                 serializer.is_valid(raise_exception=True)
                 order = serializer.update(order_instance, serializer.validated_data)
                 order_updated = True
+            
+            
             elif event == 'Order Delivered':
-                print('DELIVERED!!!!')
+                print('>>>>> ORDER COMPLETED/DELIVERED <<<<<<<')
+                logger.info('>>>>> ORDER COMPLETED/DELIVERED <<<<<<<')
+                
                 content['status'] = 'COMPLETED'
 
                 freelancer = User.objects.get(pk=order_instance.freelancer.pk)
@@ -607,9 +615,17 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 complete_charge_information = complete_charge(order_private_sale_token)
                 
                 try:
+                    print(f'''
+                    DocumentURL: {complete_charge_information['data']['DocumentURL']}
+                    SaleId: {complete_charge_information['data']['SaleId']}
+                    CustomerTransactionId: {complete_charge_information['data']['CustomerTransactionId']}
+                    TransactionId: {complete_charge_information['data']['TransactionId']}
+                    ''')
                     content['invoice_url'] = complete_charge_information['data']['DocumentURL']
+                    content['sale_id'] = complete_charge_information['data']['SaleId']
                 except Exception as e:
-                    print('>> Failed generating invoice. ERROR: {e}')
+                    print('>>> CONSUMERS: Failed generating invoice. ERROR: {e}')
+                    logger.error('>>> CONSUMERS: Failed generating invoice. ERROR: {e}')
 
                 Payment.objects.create(
                     payment_date = datetime.now(),

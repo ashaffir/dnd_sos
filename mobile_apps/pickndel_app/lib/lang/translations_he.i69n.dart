@@ -203,6 +203,8 @@ class Translations_he extends Translations {
   String get messages_push_accept => "אשר";
   String get messages_push_ignore => "בטל";
   String get messages_select_pickup_address => "אנא בחר כתובת איסוף";
+  String get messages_address_missing_building =>
+      "אנא הזן כתובת חוקית עם מספר בניין";
   String get messages_select_dropoff_address => "אנא בחר כתובת יעד";
   String get messages_package_type => "אנא בחר את סוג החבילה";
   String get messages_communication_error =>
@@ -627,6 +629,8 @@ class Translations_he extends Translations {
         return messages_push_ignore;
       case 'messages_select_pickup_address':
         return messages_select_pickup_address;
+      case 'messages_address_missing_building':
+        return messages_address_missing_building;
       case 'messages_select_dropoff_address':
         return messages_select_dropoff_address;
       case 'messages_package_type':

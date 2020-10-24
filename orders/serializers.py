@@ -41,7 +41,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ('order_id','status','pick_up_address','created', 'updated', 'is_urgent',
                 'drop_off_address', 'distance_to_business','order_location', 'order_lon', 'order_lat','business_lat', 'business_lon',
-                'price','fare','private_sale_token','customer_transaction_id','invoice_url', 'transaction_auth_num',
+                'price','fare','private_sale_token','customer_transaction_id','invoice_url', 'transaction_auth_num','sale_id',
                 'order_type','business', 'freelancer','delivery_photo',)
 
                 

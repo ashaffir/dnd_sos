@@ -730,24 +730,37 @@ def user_credit_card(request):
                 due_date_yymm = request.data['expiry_date']
                 card_number = "4580000000000000" if settings.DEBUG else request.data['card_number'];
                 owner_id = request.data['owner_id']
+                cvv = request.data['cvv']
                 
                 credit_token = create_card_token(owner_id, due_date_yymm, card_number)
+                # Checking the CC with sales token
+                cc_val = lock_price_cc_check(credit_token)
 
-                msg = f'''Updating credit card with:
-                one: {owner_name}
-                id: {owner_id}
-                Expiry: {due_date_yymm}
-                Card number: {card_number}
-                Response from iCredit: {credit_token}
-                '''
+                if cc_val:
+                    print(f'>>> CC VALIDATED <<<')
+                    logger.info(f'>>> CC VALIDATED <<< ')
 
-                print(msg)
-                logger.info(msg)
+                    msg = f'''Updating credit card with:
+                    one: {owner_name}
+                    id: {owner_id}
+                    Expiry: {due_date_yymm}
+                    CVV: {cvv}
+                    Card number: {card_number}
+                    Response from iCredit: {credit_token}
+                    '''
 
-                if len(credit_token) < 10:
-                    logger.error(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
-                    data["response"] = "Failed updating credit card"
-                    return Response(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
+                    print(msg)
+                    logger.info(msg)
+
+                    if len(credit_token) < 10:
+                        logger.error(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
+                        data["response"] = "Failed updating credit card"
+                        return Response(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
+                else:
+                    print('>>> FAIL CC VALIDATION <<< ')
+                    logger.error(f'Failed CC validation. ERROR: {e}')
+                    data["response"] =f'Failed CC validation. ERROR: {e}'
+                    return Response(data)
 
 
             except Exception as e:

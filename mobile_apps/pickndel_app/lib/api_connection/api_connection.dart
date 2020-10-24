@@ -213,12 +213,14 @@ Future<dynamic> updatePhotoId({User user, File image}) async {
 Future<dynamic> updateCreditCard({User user, CreditCard creditCard}) async {
   var postResponseJson;
   String userToken = user.token;
+  print('------------ 2 -------------');
 
   var data = {
     "user_id": user.userId,
     "is_employee": user.isEmployee,
     "owner_name": user.name,
     "owner_id": "",
+    "cvv": creditCard.cvv,
     "expiry_date": creditCard.expiryDate,
     "card_number": creditCard.cardNumber
   };

@@ -5,12 +5,14 @@ import 'package:pickndell/lang/lang_helper.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/model/order.dart';
 import 'package:pickndell/model/user_model.dart';
+import 'package:pickndell/orders/order_accepted.dart';
 import 'package:pickndell/orders/order_delivery.dart';
 import 'package:pickndell/orders/order_list.dart';
 import 'package:pickndell/orders/order_picked_up.dart';
 import 'package:pickndell/orders/order_rated.dart';
 import 'package:pickndell/ui/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import '../common/global.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,7 +32,27 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   var updatedOrderId;
   @override
+  int _rookieLevelLimit;
+  int _advancedLevelLimit;
+  int _expertLevelLimit;
+
+  Future _checAccountLevels() async {
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      _rookieLevelLimit = localStorage.getInt('rookieLevel');
+      _advancedLevelLimit = localStorage.getInt('advancedLevel');
+      _expertLevelLimit = localStorage.getInt('expertLevel');
+    } catch (e) {
+      print(
+          'Failed getting the account level limits from SharedPreferences. ERROR: $e');
+      _rookieLevelLimit = 1;
+      _advancedLevelLimit = 11;
+      _expertLevelLimit = 25;
+    }
+  }
+
   void initState() {
+    _checAccountLevels();
     super.initState();
     try {
       updatedOrderId = widget.order.order_id;
@@ -388,9 +410,34 @@ class _OrderPageState extends State<OrderPage> {
                           onPressed: () {
                             print('Accepted!!');
                             String newStatus = "STARTED";
-                            OrdersList(
-                              user: widget.user,
-                            ).orderAlert(context, widget.order, newStatus);
+                            if ((widget.user.accountLevel == 'Rookie' &&
+                                    widget.user.activeOrders <=
+                                        _rookieLevelLimit) ||
+                                (widget.user.accountLevel == 'Advanced' &&
+                                    widget.user.activeOrders <=
+                                        _advancedLevelLimit) ||
+                                (widget.user.accountLevel == 'Expert' &&
+                                    widget.user.activeOrders <=
+                                        _expertLevelLimit)) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OrderAccepted(
+                                    order: widget.order,
+                                    user: widget.user,
+                                  ),
+                                ),
+                                (Route<dynamic> route) =>
+                                    false, // No Back option for this page
+                              );
+                            } else {
+                              showAlertDialog(
+                                  context: context,
+                                  title: translations.account_level_limit,
+                                  content: translations.orders_account_limit +
+                                      "${widget.user.accountLevel}",
+                                  okButtontext: translations.close);
+                            }
                           },
                         ),
                     ],
