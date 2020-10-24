@@ -292,7 +292,7 @@ def lock_delivery_price(order):
 
     try:
         sales_charge = requests.post(SALE_CHARGE_URL, data=payload, headers=HEADERS)
-        print(f'SALES CHARGE RESPONSE: \n {sales_charge.json()}')
+        print(f'PAYMENTS: SALES CHARGE RESPONSE: \n {sales_charge.json()}')
         logger.info(f'PAYMENTS: SALES CHARGE RESPONSE: \n {sales_charge.json()}')
         
     except Exception as e:
@@ -301,7 +301,8 @@ def lock_delivery_price(order):
 
     private_sale_token = sales_charge.json()['PrivateSaleToken']
 
-    print(f">>> OUTBOUND LOCK. TOKEN:{sales_charge.json()['PrivateSaleToken']}  PRICE: {order_price} ****************")    
+    print(f">>> OUTBOUND LOCK PRICE TOKEN:{sales_charge.json()['PrivateSaleToken']}  PRICE: {order_price} ****************")    
+    logger.info(f">>> OUTBOUND LOCK PRICE TOKEN:{sales_charge.json()['PrivateSaleToken']}  PRICE: {order_price} ****************")    
 
     return private_sale_token
 
@@ -310,8 +311,8 @@ def lock_delivery_price(order):
 def ipn_listener_lock_price(request):
     transaction_auth_num = request.POST.get('TransactionAuthNum')
     customer_transaction_id = request.POST.get('CustomerTransactionId')
-    print(f">>> IPN LOCK PRICE TX ID: ***************{request.POST.get('CustomerTransactionId')}****************")
-    logger.info(f">>> IPN LOCK PRICE TX ID: ***************{request.POST.get('CustomerTransactionId')}****************")
+    print(f">>> IPN LOCK PRICE RESPONSE: ***************{request.POST}****************")
+    logger.info(f">>> IPN LOCK PRICE RESPONSE: ***************{request.POST}****************")
 
     return HttpResponse(status=200)
 
