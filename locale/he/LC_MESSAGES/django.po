@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-18 11:02+0300\n"
+"POT-Creation-Date: 2020-10-25 16:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,8 +56,8 @@ msgid ""
 msgstr ""
 "\n"
 "                    תודה שפנית לרשת PickNdell. \n"
-"                    בדקנו את המידע שהגשת "
-"                    ואישרנו את חשבונך. \n"
+"                    בדקנו את המידע שהגשת                     ואישרנו את "
+"חשבונך. \n"
 "                    כעת תוכל להתחיל להעביר חבילות.\n"
 "                    בהצלחה!!\n"
 "                    "
@@ -100,6 +100,8 @@ msgstr "הודעת חשבון PickNdell"
 
 #: core/templates/core/emails/profile_approved_email.html:25
 #: core/templates/core/emails/sender_approved_email.html:25
+#: dndsos_dashboard/templates/dndsos_dashboard/emails/email_template.html:34
+#: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:22
 msgid "Dear"
 msgstr ""
 
@@ -107,6 +109,7 @@ msgstr ""
 #: core/templates/core/emails/sender_approved_email.html:33
 #: core/templates/registration/account_activation_email.html:35
 #: dndsos/templates/dndsos/email_verification_email.html:31
+#: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:46
 msgid "If you have received this email by mistake, please ignore it"
 msgstr "אם קיבלת דואל זה בטעות, אנא התעלם ממנו"
 
@@ -227,67 +230,67 @@ msgstr "הרשמת שליח"
 msgid "Sender/Business sign up"
 msgstr "הרשמת שולח / בית עסק"
 
-#: core/views.py:90
+#: core/views.py:94
 msgid ". Check your email and click the link to activate your account."
 msgstr "בדוק את הדואל שלך ולחץ על הקישור כדי להפעיל את חשבונך"
 
-#: core/views.py:89
+#: core/views.py:93
 msgid "An accout activation link has been sent to your email): "
 msgstr "קישור להפעלת חשבון נשלח לדואל שלך"
 
-#: core/views.py:114
+#: core/views.py:118
 msgid "Profile has been updated successfully"
 msgstr "הפרופיל עודכן בהצלחה"
 
-#: core/views.py:295
+#: core/views.py:299
 msgid "Your profile has been updated."
 msgstr "הפרופיל שלך עודכן."
 
-#: core/views.py:372
+#: core/views.py:376
 msgid "You have successfully confirmed your email. Log in to proceed."
 msgstr "אישרת בהצלחה את הדואל שלך. התחבר כדי להמשיך."
 
-#: core/views.py:384
+#: core/views.py:388
 msgid "<p>An activation link has been sent to your Email</p>"
 msgstr "קישור הפעלה נשלח לדואל שלך"
 
-#: core/views.py:397
+#: core/views.py:401
 msgid "Welcome "
 msgstr "ברוך הבא"
 
-#: core/views.py:397
+#: core/views.py:401
 msgid ". Your account is now operational"
 msgstr "חשבונך הופעל"
 
-#: core/views.py:412
+#: core/views.py:416
 msgid "Enter password"
 msgstr "הזן את הסיסמה"
 
-#: core/views.py:416
+#: core/views.py:420
 msgid "Minimum password length should be 8"
 msgstr "אורך הסיסמא המינימלי צריך להיות 8"
 
-#: core/views.py:420
+#: core/views.py:424
 msgid "Mismatch password"
 msgstr "סיסמתך לא התאימה"
 
-#: core/views.py:430
+#: core/views.py:434
 msgid "Successfully changed the password, please login again."
 msgstr "שינית את הסיסמה בהצלחה, אנא התחבר שוב."
 
-#: core/views.py:465
+#: core/views.py:469
 msgid "Check your mail inbox to reset password"
 msgstr "בדוק את תיבת הדואר שלך כדי לאפס את הסיסמה"
 
-#: core/views.py:475
+#: core/views.py:479
 msgid "This email is not registered to us. Please register first "
 msgstr "דואל זה אינו רשום לנו. אנא הירשם קודם"
 
-#: core/views.py:479
+#: core/views.py:483
 msgid "Please enter a valid email"
 msgstr "אנא הכנס דואל חוקי"
 
-#: core/views.py:483
+#: core/views.py:487
 msgid "Please do enter the email"
 msgstr "אנא הזן את הדואל"
 
@@ -898,30 +901,25 @@ msgstr "העברות"
 msgid "Deliveries Summary Table"
 msgstr "סיכום העברות"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/emails/delivery_order_email.html:32
-#: dndsos_dashboard/templates/dndsos_dashboard/emails/freelancer_response.html:10
-msgid "Delivery Alert from DND-SOS!"
-msgstr ""
+#: dndsos_dashboard/templates/dndsos_dashboard/emails/email_template.html:35
+msgid "Thank you for choosing"
+msgstr "תודה שבחרת"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/emails/delivery_order_email.html:34
-msgid "hi"
-msgstr "היי"
+#: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:24
+msgid "Total"
+msgstr "סך הכל"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/emails/delivery_order_email.html:36
-msgid ""
-"You have received an offer to make a delivery with the following details"
-msgstr ""
+#: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:26
+msgid "Delivery Cost"
+msgstr "דמי משלוח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/emails/freelancer_response.html:12
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:85
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:121
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_business-orders-alerts-list.html:26
-msgid "To"
-msgstr "אל"
+#: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:28
+msgid "Subtotal"
+msgstr "סך כולל"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/emails/freelancer_response.html:14
-msgid "The following order was accepted by a freelancer"
-msgstr ""
+#: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:30
+msgid "Amount Charged"
+msgstr "סכום לחיוב"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:12
 msgid "Bank Details"
@@ -1071,8 +1069,8 @@ msgid ""
 "Your account level defines the maximum number of packages you can deliver "
 "per route, i.e. how many orders you are allowed accept"
 msgstr ""
-"רמת החשבון שלך מגדירה את מספר החבילות המרבי שתוכל לספק"
-"לכל מסלול, כלומר כמה הזמנות שמותר לך לקבל"
+"רמת החשבון שלך מגדירה את מספר החבילות המרבי שתוכל לספקלכל מסלול, כלומר כמה "
+"הזמנות שמותר לך לקבל"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:19
 msgid "Courier Profile"
@@ -1338,6 +1336,12 @@ msgstr "לראות הצעות חדשות"
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:44
 msgid "Directly requested by the business"
 msgstr "מבוקש ישירות על ידי בית העסק"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:85
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:121
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_business-orders-alerts-list.html:26
+msgid "To"
+msgstr "אל"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:85
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:121
@@ -1752,9 +1756,19 @@ msgstr "לאימות הטלפון שלך"
 msgid "digits code here"
 msgstr "קוד ספרות כאן"
 
-#: dndsos_dashboard/views.py:369
+#: dndsos_dashboard/views.py:228
+msgid ""
+"Failed getting credit card information. Please contact Pickndell support"
+msgstr "קבלת פרטי כרטיס האשראי נכשלה. אנא צרו קשר עם התמיכה של פיקנדל"
+
+#: dndsos_dashboard/views.py:380
 msgid "You have successfully updated your profile."
 msgstr "הצלחת לעדכן את הפרופיל שלך."
+
+#: dndsos_dashboard/views.py:1056 orders/consumers.py:624
+#: orders/consumers.py:626
+msgid "Thank you for choosing PickNdell"
+msgstr "תודה שבחרת ב- PickNdell"
 
 #: payments/models.py:16
 msgid "Card status"
@@ -1771,6 +1785,12 @@ msgstr "אמצעי תשלום"
 #: payments/templates/payments/partials/_update-card-modal.html:8
 msgid "Update credit card"
 msgstr "עדכון כרטיסי אשראי"
+
+#: payments/views.py:474
+msgid ""
+"Credit card is not valid. Please make sure to enter valid credit card "
+"information"
+msgstr "כרטיס האשראי אינו תקף. אנא הקפד להזין כרטיס אשראי תקף"
 
 #: venv_dnd_sos/lib/python3.8/site-packages/_pytest/config/argparsing.py:443
 #, python-format
@@ -3118,6 +3138,9 @@ msgstr ""
 #, python-format
 msgid "The option '%s' is not a valid option for a QR code."
 msgstr ""
+
+#~ msgid "hi"
+#~ msgstr "היי"
 
 #~ msgid "Current locaiton"
 #~ msgstr "מיקום נוכחי"

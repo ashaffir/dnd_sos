@@ -86,7 +86,6 @@ def getFreelancerActiveOrders(request):
         context['advanced_max'] = admin_params.advanced_level_max
         context['expert_max'] = admin_params.expert_level_max
     except Exception as e:
-        print('User is not an Employee')
         context['current_active_orders'] = 1
         context['freelancer_is_approved'] = False
         context['freelancer_account_level'] = 'Rookie'

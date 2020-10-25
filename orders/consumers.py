@@ -17,11 +17,13 @@ from django.db.models.signals import post_save
 from django.contrib.gis.geos import Point, fromstr
 from django.conf import settings
 from django.db.models import Q
+from django.utils.translation import gettext
 
 from orders.models import Order
 from orders.serializers import ReadOnlyOrderSerializer, OrderSerializer
 from core.models import User, Employer, Employee
 from payments.models import Payment
+from dndsos_dashboard.utilities import send_mail
 
 from geo.models import UserLocation
 from payments.views import lock_delivery_price, complete_charge
@@ -574,9 +576,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 freelancer.is_active = True
                 freelancer.save()
 
-
-                
-
             elif event == 'Freelancer Canceled':
                 print('>>>>> ORDER CANCELED <<<<<<<')
                 content['freelancer'] = None
@@ -587,9 +586,14 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             
             
             elif event == 'Order Delivered':
-                print('>>>>> ORDER COMPLETED/DELIVERED <<<<<<<')
-                logger.info('>>>>> ORDER COMPLETED/DELIVERED <<<<<<<')
-                
+                print('>>>>> CONSUMERS: ORDER COMPLETED/DELIVERED <<<<<<<')
+                logger.info('>>>>> CONSUMERS: ORDER COMPLETED/DELIVERED <<<<<<<')
+
+                serializer = OrderSerializer(data=content)
+                serializer.is_valid(raise_exception=True)
+                order = serializer.update(order_instance, serializer.validated_data)
+
+
                 content['status'] = 'COMPLETED'
 
                 freelancer = User.objects.get(pk=order_instance.freelancer.pk)
@@ -610,38 +614,28 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                     freelancers_list.append(freelancer.pk)
                     business.relationships['freelancers'] = list(set(freelancers_list))
 
-                order_private_sale_token = order_instance.private_sale_token
-
-                complete_charge_information = complete_charge(order_private_sale_token)
-                
-                try:
-                    print(f'''
-                    DocumentURL: {complete_charge_information['data']['DocumentURL']}
-                    SaleId: {complete_charge_information['data']['SaleId']}
-                    CustomerTransactionId: {complete_charge_information['data']['CustomerTransactionId']}
-                    TransactionId: {complete_charge_information['data']['TransactionId']}
-                    ''')
-                    content['invoice_url'] = complete_charge_information['data']['DocumentURL']
-                    content['sale_id'] = complete_charge_information['data']['SaleId']
-                except Exception as e:
-                    print('>>> CONSUMERS: Failed generating invoice. ERROR: {e}')
-                    logger.error('>>> CONSUMERS: Failed generating invoice. ERROR: {e}')
-
-                Payment.objects.create(
-                    payment_date = datetime.now(),
-                    order = order_instance,
-                    freelancer = freelancer.freelancer,
-                    business = business.business,
-                    amount = order_instance.price
-                )
-
                 freelancer.save()
                 business.save()
 
-                # Updating the order in the DB
-                serializer = OrderSerializer(data=content)
-                serializer.is_valid(raise_exception=True)
-                order = serializer.update(order_instance, serializer.validated_data)
+                # Sending email to the Sender with order summary
+                print(f'>>> CONSUMERS: Sending summary email to sender: {business.business.email}')
+                logger.info(f'>>> CONSUMERS: Sending summary email to sender: {business.business.email}')
+                try:
+                    subject = gettext('Thank you for choosing PickNdell')
+                    message = {}
+                    email_content = gettext('Thank you for choosing PickNdell')
+                    currency = '₪'
+                    message['order'] = order_instance
+                    message['user'] = business.business
+                    message['currency'] = currency
+                    message['email_content'] = email_content
+                    send_mail(subject, email_template_name=None,
+                            context=message, to_email=[business.business.email],
+                            html_email_template_name='dndsos_dashboard/emails/sender_order_summary_email.html')
+                except Exception as e:
+                    print(f'CONSUMERS: Failed sending summary email to sender. ERROR: {e}')
+                    logger.error(f'CONSUMERS: Failed sending summary email to sender. ERROR: {e}')
+
                 order_updated = True
 
 

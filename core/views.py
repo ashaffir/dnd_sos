@@ -34,6 +34,8 @@ def employer_signup(request):
         form = EmployerSignupForm(request.POST)
         if form.is_valid():
             user = form.save() # add employer to db with is_active as False
+            user.username = user.email
+            user.save()
             
             # send employer a accout activation email
             # current_site = request._current_scheme_host
@@ -68,7 +70,9 @@ def employee_signup(request):
         form = EmployeeSignupForm(request.POST)
         if form.is_valid():
             user = form.save() # add freelancer to db with is_active as False
-            
+            user.username = user.email
+            user.save()
+
             # send freelancer a accout activation email
             # current_site = request._current_scheme_host
 

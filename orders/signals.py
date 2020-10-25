@@ -11,6 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 # from django.contrib.auth.models import User
 from django.db.models import Q
+from django.utils.translation import gettext
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
@@ -123,8 +124,6 @@ def order_signal(sender, instance, update_fields, **kwargs):
 
         order_data = ReadOnlyOrderSerializer(instance).data
         
-        order_instance = Order.objects.get(pk=instance.order_id)
-
         # Updating WS
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
@@ -146,10 +145,10 @@ def order_signal(sender, instance, update_fields, **kwargs):
         ####################
         print('>>> SIGNALS: getting private token')
         logger.info('>>> SIGNALS: getting private token')
-        private_sale_token = lock_delivery_price(order_instance)
-        order_instance.private_sale_token = private_sale_token
+        private_sale_token = lock_delivery_price(instance)
+        instance.private_sale_token = private_sale_token
         print('>>> SIGNALS: Saved pending transaction token')
-        order_instance.save()
+        instance.save()
         
         
     # REJECTED (canceled by the freelancer)
@@ -172,58 +171,71 @@ def order_signal(sender, instance, update_fields, **kwargs):
         print(f'ORDER {instance.order_id} updated with status: DELIVERED (COMPLETED)')
         order_data = ReadOnlyOrderSerializer(instance).data        
         
+        freelancer = User.objects.get(pk=instance.freelancer.pk)
+        business = User.objects.get(pk=instance.business.pk)
+
+        # Updating the involved parties relationships
+        if not freelancer.relationships:
+            freelancer.relationships = {'businesses':[business.pk]}
+        else:
+            businesses_list = freelancer.relationships['businesses']
+            businesses_list.append(business.pk)
+            freelancer.relationships['businesses'] = list(set(businesses_list))
+
+        if not business.relationships:
+            business.relationships = {'freelancers':[freelancer.pk]}
+        else:
+            freelancers_list = business.relationships['freelancers']
+            freelancers_list.append(freelancer.pk)
+            business.relationships['freelancers'] = list(set(freelancers_list))
+
+        # Updating iCredit/Rivhit
+        #########################
         try:
-            # order_instance = Order.objects.get(pk=instance.order_id)
-            freelancer = User.objects.get(pk=instance.freelancer.pk)
-            business = User.objects.get(pk=instance.business.pk)
-
-            # Updating the involved parties relationships
-            if not freelancer.relationships:
-                freelancer.relationships = {'businesses':[business.pk]}
-            else:
-                businesses_list = freelancer.relationships['businesses']
-                businesses_list.append(business.pk)
-                freelancer.relationships['businesses'] = list(set(businesses_list))
-
-            if not business.relationships:
-                business.relationships = {'freelancers':[freelancer.pk]}
-            else:
-                freelancers_list = business.relationships['freelancers']
-                freelancers_list.append(freelancer.pk)
-                business.relationships['freelancers'] = list(set(freelancers_list))
-
+            print(f'>>> SIGNALS: Updating iCredit with completed order {instance}')
+            logger.info(f'>>> SIGNALS: Updating iCredit with completed order {instance}')
             order_private_sale_token = instance.private_sale_token
-
-            # Updating iCredit/Rivhit
-            #########################
-            print('>> SIGNALS: Updating RIVHIT')
-            logger.info('>> SIGNALS: Updating RIVHIT')
             complete_charge_information = complete_charge(order_private_sale_token)
-            
-            try:
-                instance.sale_id = complete_charge_information['data']['SaleId']
-                instance.invoice_url = complete_charge_information['data']['DocumentURL']
-                instance.save()
-                print(f">>> SINGNALS: INVOICE: {complete_charge_information['data']['DocumentURL']}")
-                logger.info(f">>> SIGNALS: INVOICE: {complete_charge_information['data']['DocumentURL']}")
+            icredit_status = complete_charge_information['Status']
+            if icredit_status != 0:
+                return 
 
-            except Exception as e:
-                print(f'>>> SIGNALS: Failed generating invoice URL. ERROR: {e}')
-                logger.error(f'>>> SIGNALS: Failed generating invoice URL. ERROR: {e}')
+            print(f'''DocumentURL: {complete_charge_information['data']['DocumentURL']}
+            SaleId: {complete_charge_information['data']['SaleId']}
+            CustomerTransactionId: {complete_charge_information['data']['CustomerTransactionId']}
+            TransactionId: {complete_charge_information['data']['TransactionId']}
+            CardNum: {complete_charge_information['data']['CardNum']}
+            ''')
+            instance.invoice_url = complete_charge_information['data']['DocumentURL']
+            instance.sale_id = complete_charge_information['data']['SaleId']
+            instance.order_cc = complete_charge_information['data']['CardNum'][-4:]
 
-            # Updating Freelance balance:
-            print(f'OPEN BALANCE: {freelancer.freelancer.balance}')
-            freelancer.freelancer.balance += instance.price
-            print(f'CLOSE BALANCE: {freelancer.freelancer.balance}')
-
-            freelancer.freelancer.save()
-            freelancer.save()
-            business.save()
+            # instance.sale_id = complete_charge_information['data']['SaleId']
+            # instance.invoice_url = complete_charge_information['data']['DocumentURL']
+            instance.save()
+            print(f">>> SIGNALS: INVOICE: {complete_charge_information['data']['DocumentURL']}")
+            logger.info(f">>> SIGNALS: INVOICE: {complete_charge_information['data']['DocumentURL']}")
 
         except Exception as e:
-            print(f'Failed updating RIVHIT. ERROR: {e}')
+            print(f'>>> SIGNALS: Failed generating invoice URL. ERROR: {e}')
+            logger.error(f'>>> SIGNALS: Failed generating invoice URL. ERROR: {e}')
+            return
 
-        # Log the payment
+        # Updating Freelance balance:
+        ###############
+        print(f'OPEN BALANCE: {freelancer.freelancer.balance}')
+        logger.info(f'OPEN BALANCE: {freelancer.freelancer.balance}')
+        freelancer.freelancer.balance += instance.price
+        print(f'CLOSE BALANCE: {freelancer.freelancer.balance}')
+        logger.info(f'CLOSE BALANCE: {freelancer.freelancer.balance}')
+
+        freelancer.freelancer.save()
+        freelancer.save()
+        business.save()
+
+        # Creating payment for the completed order
+        print(f'>>> SIGNALS: creating payment: business - {business}  Freelancer: {freelancer}')
+        logger.info(f'>>> SIGNALS: creating payment: business - {business}  Freelancer: {freelancer}')
         Payment.objects.create(
             created = datetime.now(),
             order = instance,

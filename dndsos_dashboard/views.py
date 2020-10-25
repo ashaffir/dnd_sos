@@ -1050,7 +1050,16 @@ def phone_verify(request,action,phone, code):
             return e
 
 def email_test(request):
-    return render(request, 'dndsos_dashboard/emails/delivery_order_email.html')
+    context = {}
+    order = Order.objects.last()
+    user = request.user
+    email_content = gettext('Thank you for choosing PickNdell')
+    currency = '₪'
+    context['order'] = order
+    context['user'] = user
+    context['currency'] = currency
+    context['email_content'] = email_content
+    return render(request, 'dndsos_dashboard/emails/sender_order_summary_email.html', context)
 
 
 def broadcast_order(request, order, f_list, order_status):

@@ -26,14 +26,15 @@
 <body style="padding: 0px; margin: 0px; background-color: #F7F8F9;">
     <div class="main-wrapper" style="box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; display: block; width: 634px; padding: 30px 30px; background-color: #ffffff; border-radius: 2px; margin: auto;" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
 		<div class="header-sec">
-			<img src="{{ domain }}{% static 'images/dndsos-logo-black.png' %}" alt="Logo" style="max-width: 20%;">
+			<img src="{% static 'assets/images/pickndell-logo-email.png' %}" alt="Logo" style="max-width: 20%;">
 		</div>
 		<div class="content-sec">
-			<h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{% trans 'Delivery Alert from DND-SOS!' %}</h5>
+			<h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{{ email_header }}</h5>
 		</div>
-        <p>{{ fl_name }} {% trans 'hi' %}, </p>
+        <p>{% trans 'Dear' %} {{ name }}, </p>
+        <p>{% trans 'Thank you for choosing' %} PickNdell.</p>
         
-        <p>{% trans 'You have received an offer to make a delivery with the following details' %}</p>
+        <p>{{ email_content }}</p>
         <h3>From:</h3>
         <p><b>Business name:</b> {{ ordering_business }}</p>
         <p><b>Business address:</b> {{ ordering_business_street }} {{ ordering_business_building }}, {{ ordering_business_city }}</p>
@@ -47,7 +48,7 @@
             <tbody>
                 <tr>
                     <td style="margin-right: 1rem;">
-                        <a href="{{ domain }}{% url 'dndsos_dashboard:freelancer-accept' fid=fl_id oid=oid %}" style="display: inline-block; text-decoration: none; font-size: 16px; font-weight: bold; font-family: sans-serif; width: 100px; height: 56px; text-align: center; line-height: 56px; background-color:#2e9e20; color: #ffffff;">Accept</a>                        
+                        <a href="{{ domain }}" style="display: inline-block; text-decoration: none; font-size: 16px; font-weight: bold; font-family: sans-serif; width: 100px; height: 56px; text-align: center; line-height: 56px; background-color:#2e9e20; color: #ffffff;">Accept</a>                        
                     </td>
                 </tr>
             </tbody>

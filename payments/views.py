@@ -336,7 +336,6 @@ def complete_charge(private_sale_token):
     except Exception as e:
         print(f'ERROR completing the charge: {e}')
         logger.error(f'ERROR completing the charge: {e}')
-        context['error'] = e
         return e
 
 
@@ -472,7 +471,7 @@ def add_card(request):
                 else:
                     print('>>> FAIL CC VALIDATION <<< ')
                     logger.error(f'Failed CC validation. ERROR: {e}')
-                    messages.error(request, gettext('Credit cart is not valid. Please make sure to enter valid credit card information'))
+                    messages.error(request, gettext('Credit card is not valid. Please make sure to enter valid credit card information'))
                     return redirect(request.META['HTTP_REFERER'])
             except Exception as e:
                 logger.error(f'Failed getting CC token from Rivhit. ERROR: {e}')

@@ -84,6 +84,8 @@ class Order(models.Model):
     # List of freelancers that were directly chosen by the business (in case there are more than one)
     selected_freelancers = JSONField(blank=True, null=True)
 
+    order_cc = models.CharField(max_length=20, null=True, blank=True)
+
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)
     delivery_photo = models.ImageField(null=True, blank=True, upload_to=delivery_photo_path, validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])])
 

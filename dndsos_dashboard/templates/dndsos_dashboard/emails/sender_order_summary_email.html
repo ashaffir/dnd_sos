@@ -1,0 +1,49 @@
+{% load static %}
+{% load i18n %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}" />
+
+</head>
+{% get_current_language as lang %}
+
+
+<body style="padding: 0px; margin: 0px; background-color: #F7F8F9;">
+    <div class="main-wrapper" style="box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; display: block; width: 634px; padding: 30px 30px; background-color: #ffffff; border-radius: 2px; margin: auto;" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+		<div class="header-sec">
+			<img src="{% static 'assets/images/pickndell-logo-email.png' %}" alt="Logo" style="max-width: 20%;">
+		</div>
+		<div class="content-sec">
+			<h5 style="font-size: 20px; font-family: sans-serif; color: #333333;">{{ email_header }}</h5>
+		</div>
+        <p>{% trans 'Dear' %} {{ user.business_name }}, </p>
+        <p>{{ email_content }}</p>
+        <h1>{% trans 'Total' %}: {{ currency }} {{ order.price }} </h1>
+        <hr>
+        <p><b>{% trans 'Delivery Cost' %}:</b> {{ currency }} {{ order.price }}</p>
+        <hr>
+        <p><b>{% trans 'Subtotal' %}:</b> {{ currency }} {{ order.price }}</p>
+        <hr>
+        <p><b>{% trans 'Amount Charged' %}</b></p>
+        <table>
+            <tr>
+                <td>
+                    <img src="{% static 'assets/images/credit-card.png' %}" alt="Credit card" style="max-width: 100%;"> 
+                </td>
+                <td>
+                    ●●●● {{ order.order_cc }}
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                    <h4> {{ currency }}{{ order.price }} </h4>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <p><em>{% trans 'If you have received this email by mistake, please ignore it' %}.</p></em>
+    </div>
+</body>
+</html>
