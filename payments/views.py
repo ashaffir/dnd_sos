@@ -529,9 +529,28 @@ def charge(request):
 
     return render(request, 'payments/charge.html')
 
-'''Response from SaleChargeToken
+''' Response from salesChargeToken
+{
+    'ChargeStatus': 0, 
+    'ClientMessage': None, 
+    'DebugMessage': None, 
+    'DocumentIdentity': '00000000-0000-0000-0000-000000000000', 
+    'DocumentLink': None, 
+    'DocumentNumber': 0, 
+    'DocumentType': 0, 
+    'PrintStatus': 0, 
+    'PrivateSaleToken': '38f2ed08-fae0-4496-bc9e-48a9e7606c52', 
+    'ReceiptIdentity': '00000000-0000-0000-0000-000000000000', 
+    'ReceiptLink': None, 'ReceiptNumber': 0, 
+    'ReceiptType': 0, 
+    'SaleToken': '8749b1cd-bb33-48ee-b82e-2740176b0c96', 
+    'Status': 0
+}
+'''
 
-{'ClientMessage': None, 
+'''Response from chargePendingSale of completion
+{
+'ClientMessage': None, 
 'DebugMessage': None, 
 'Status': 0, 
 'data': 
@@ -604,5 +623,54 @@ def charge(request):
     'VatNumber': None, 
     'Zipcode': None
     }
+}
+'''
+
+'''IPN RESPONSE
+{
+'SaleId': ['8247b10c-faf6-4c90-b094-cad10fd4f976'], 
+'GroupPrivateToken': ['a1408bfc-18da-49dc-aa77-d65870f7943e'], 
+'NumberOfItems': ['1'], 
+'ItemId1': ['0'], 
+'ItemCatalogNumber1': [''], 
+'ItemQuantity1': ['1'], 
+'ItemUnitPrice1': ['1.0'], 
+'ItemDescription1': ['delivery'], 
+'Discount': ['0.00'], 
+'Address': ['none'], 
+'EmailAddress': ['alfred.shaffir@gmail.com'], 
+'City': ['none'], 
+'CustomerFirstName': ['none'], 
+'CustomerLastName': ['none'], 
+'SaleTime': ['24.10.2020 13:56:10'], 
+'RecurringId': ['f40f0225-053d-4ae5-981b-d3710ddafc9b'], 
+'TransactionAmount': ['1.00'], 
+'TransactionAuthNum': ['0848345'], 
+'TransactionCardName': ['יורוקרד מסטרקרד'], 
+'TransactionCardNum': ['532610XXXXXX1008'], 
+'TransactionCardDueDateMMYY': ['0322'], 
+'TransactionCardProducer': ['1'], 
+'TransactionCardHolderId': [''], 
+'TransactionCreditTerms': ['1'], 
+'TransactionDefrayelCompany': ['2'], 
+'TransactionFirstAmount': ['0.00'], 
+'TransactionForeignSign': ['0'], 
+'TransactionNonFirstAmount': ['0.00'], 
+'TransactionNumOfPayment': ['0'], 
+'TransactionSolekSapak': [''], 
+'TransactionStatus': ['0'], 
+'TransactionTerminalName': ['טל.ש .טכנולוגיו'], 
+'TransactionTerminalNum': ['2380883'], 
+'TransactionTransAmount': ['1'], 
+'TransactionDateTime': ['24.10.2020 13:56:09'], 
+'TransactionType': ['1'], 
+'TransactionParamJ': ['5'], 
+'CustomerTransactionId': ['cc658ab6-7180-498a-9fcd-dd95272ba89c'], 
+'TransactionCurrency': ['1'], 
+'TransactionCurrencyDescription': ['ש"ח'], 
+'TransactionTypeDescription': ['עסקת חובה'], 
+'TransactionCreditTermsDescription': ['אשראי רגיל'], 
+'TransactionToken': ['ba56dcb2-1f19-4627-b203-4a77a1939f4f'], 
+'TransactionCardLabel': ['1']
 }
 '''
