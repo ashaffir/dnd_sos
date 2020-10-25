@@ -1106,7 +1106,8 @@ def new_order(request):
             user.save()
 
         except Exception as e:
-            print('Failed writing sender location to DB.')
+            print('>>> API: Failed writing sender location to DB.')
+            logger.error('>>> API: Failed writing sender location to DB.')
             
         data['order_type'] = package_type
         data['business'] = User.objects.get(pk=user_profile.pk)

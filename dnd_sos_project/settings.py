@@ -292,6 +292,7 @@ DEFAULT_UNIT_PRICE = config['DEFAULT_UNIT_PRICE']
 DISTANCE_UNIT = config['DISTANCE_UNIT'] # for pricing each unit
 DISTANCE_DIM = config['DISTANCE_DIM'] # m
 MAX_DISTANCE = config['MAX_DISTANCE'] # KM
+MAX_RANGE_TO_FREELANCER = config['MAX_RANGE_TO_FREELANCER'] # Max distance between new order pickup address and available freelancers in KM
 
 # Twilio settings
 # https://django-twilio.readthedocs.io/en/latest/index.html

@@ -1,13 +1,16 @@
 import platform
+import logging
 from geopy.geocoders import Nominatim
 from django.contrib.gis.geos import fromstr, Point
 
 from core.models import User, Employee, Employer
 from orders.models import Order
 
+logger = logging.getLogger(__file__)
+
 def distance_calculator(order):
     '''
-    Dynamically calculate the distancce between the order drop off address
+    Dynamically calculate the distance between the order drop off address
     and the freelancer that is delivering in reference to the distance between drop off address
     and the business.
 
@@ -24,7 +27,8 @@ def distance_calculator(order):
 
     try:
         order_range_to_freelancer = round(order_location.distance(freelancer_location) * 100, 3) * 1000 # In meters
-        print(f'DISTANCE between courier and order drop off address: {order_range_to_freelancer} meters')
+        print(f'>>> GEO UTILS: DISTANCE between courier and order drop off address: {order_range_to_freelancer} meters')
+        logger.info(f'>>> GEO UTILS: DISTANCE between courier and order drop off address: {order_range_to_freelancer} meters')
 
         if order_business_distance > order_range_to_freelancer:
             trip_completed = 100 * (order_business_distance - order_range_to_freelancer) / order_business_distance
@@ -33,7 +37,8 @@ def distance_calculator(order):
             print(f'Courier did not start moving.')
             trip_completed = 0
     except:
-        print(f'ERROR calculating distance between courier and order drop off address!')
+        print(f'>>> GEO UTILS: ERROR calculating distance between courier and order drop off address!')
+        logger.error(f'>>> GEO UTILS: ERROR calculating distance between courier and order drop off address!')
         trip_completed = 0
 
     return trip_completed
