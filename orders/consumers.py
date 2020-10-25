@@ -400,21 +400,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
            
             order_coords = (order_lat,order_lon)  # The cords for geopy are reversed to GeoDjango Point.
 
-        # except:
-        #     try:
-        #         drop_off_address = content.get('drop_off_address').split(',')[1]
-        #         location = geolocator.geocode(drop_off_address)
-        #         order_lat = location.latitude
-        #         order_lon = location.longitude
-
-        #         # Checking OS
-        #         if platform.system() == 'Darwin':
-        #             order_location = Point(location.latitude,location.longitude)
-        #         else:
-        #             order_location = Point(location.longitude, location.latitude)
-                
-        #         order_coords = (location.latitude,location.longitude)
-    
                 
         except Exception as e:
             print(f'Failed getting the location for {drop_off_address}')
@@ -594,8 +579,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
                 order = serializer.update(order_instance, serializer.validated_data)
 
 
-                content['status'] = 'COMPLETED'
-
                 freelancer = User.objects.get(pk=order_instance.freelancer.pk)
                 business = User.objects.get(pk=order_instance.business.pk)
 
@@ -616,25 +599,6 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
 
                 freelancer.save()
                 business.save()
-
-                # Sending email to the Sender with order summary
-                print(f'>>> CONSUMERS: Sending summary email to sender: {business.business.email}')
-                logger.info(f'>>> CONSUMERS: Sending summary email to sender: {business.business.email}')
-                try:
-                    subject = gettext('Thank you for choosing PickNdell')
-                    message = {}
-                    email_content = gettext('Thank you for choosing PickNdell')
-                    currency = '₪'
-                    message['order'] = order_instance
-                    message['user'] = business.business
-                    message['currency'] = currency
-                    message['email_content'] = email_content
-                    send_mail(subject, email_template_name=None,
-                            context=message, to_email=[business.business.email],
-                            html_email_template_name='dndsos_dashboard/emails/sender_order_summary_email.html')
-                except Exception as e:
-                    print(f'CONSUMERS: Failed sending summary email to sender. ERROR: {e}')
-                    logger.error(f'CONSUMERS: Failed sending summary email to sender. ERROR: {e}')
 
                 order_updated = True
 

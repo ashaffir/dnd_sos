@@ -175,6 +175,7 @@ def order_signal(sender, instance, update_fields, **kwargs):
         business = User.objects.get(pk=instance.business.pk)
 
         # Updating the involved parties relationships
+        #######################################
         if not freelancer.relationships:
             freelancer.relationships = {'businesses':[business.pk]}
         else:
@@ -255,6 +256,27 @@ def order_signal(sender, instance, update_fields, **kwargs):
                 }
             }
         )
+
+        # Sending email to the Sender with order summary
+        ##########################
+        print(f'>>> SIGNALS: Sending summary email to sender: {business.business.email}')
+        logger.info(f'>>> SIGNALS: Sending summary email to sender: {business.business.email}')
+        try:
+            subject = gettext('Thank you for choosing PickNdell')
+            message = {}
+            email_content = gettext('Thank you for choosing PickNdell')
+            currency = '₪'
+            message['order'] = instance
+            message['user'] = business.business
+            message['currency'] = currency
+            message['email_content'] = email_content
+            send_mail(subject, email_template_name=None,
+                    context=message, to_email=[business.business.email],
+                    html_email_template_name='dndsos_dashboard/emails/sender_order_summary_email.html')
+        except Exception as e:
+            print(f'SIGNALS: Failed sending summary email to sender. ERROR: {e}')
+            logger.error(f'SIGNALS: Failed sending summary email to sender. ERROR: {e}')
+
 
     else:
         print(f'SIGNALS: ORDER {instance.order_id} updated with status: {instance.status}')
