@@ -37,7 +37,7 @@ from dndsos_dashboard.views import phone_verify
 from dndsos_dashboard.utilities import send_mail, calculate_freelancer_total_rating
 
 from .utils import clean_phone_number, check_profile_approved
-from payments.views import create_card_token
+from payments.views import create_card_token, lock_price_cc_check
 from .serializers import (UserSerializer, LoginSerializer, 
                         ContactsSerializer, BusinessSerializer, 
                         UsernameSerializer, EmployeeProfileSerializer, EmployerProfileSerializer,)
