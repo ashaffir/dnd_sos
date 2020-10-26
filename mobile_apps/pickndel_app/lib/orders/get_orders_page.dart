@@ -159,7 +159,7 @@ class _GetOrdersState extends State<GetOrders> {
                                                 : '---',
                 style: TextStyle(color: Colors.white, fontSize: 20)),
             // if (widget.user.isEmployee == 0)
-            if (_isEmployee == 0)
+            if (_isEmployee == 0 && _currentUser.isEmployee == 0)
               DropdownButton(
                 underline: SizedBox(),
                 icon: Icon(Icons.filter_list),
