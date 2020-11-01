@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://pickndell.com/</loc>
+  <lastmod>2020-10-31T05:45:42+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://pickndell.com/core/login/</loc>
+  <lastmod>2020-10-31T05:45:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://pickndell.com/core/employer/signup/</loc>
+  <lastmod>2020-10-31T05:45:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://pickndell.com/core/employee/signup/</loc>
+  <lastmod>2020-10-31T05:45:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://pickndell.com/terms/</loc>
+  <lastmod>2020-10-31T05:45:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://pickndell.com/privacy/</loc>
+  <lastmod>2020-10-31T05:45:42+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://pickndell.com/core/forgot-password/</loc>
+  <lastmod>2020-10-31T05:45:42+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>

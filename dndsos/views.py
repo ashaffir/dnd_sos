@@ -106,16 +106,33 @@ def room(request, username):
     context = {}
     return render(request, 'dndsos/room.html', {'username_json': mark_safe(json.dumps(username))})
 
+
 def terms(request):
     context = {}
-    context['terms'] = ContentPage.objects.get(name='terms').content
+    return render(request, 'dndsos/terms.html', context)
+    
+def terms_courier(request):
+    context = {}
 
     try:
-        context['terms_he'] = ContentPage.objects.get(name='terms_he').content
+        context['terms_courier'] = ContentPage.objects.get(name='terms_courier').content
+        context['terms_courier_he'] = ContentPage.objects.get(name='terms_courier_he').content
     except Exception as e:
-        messages.warning(request, 'Terms HE is not ready.')
+        messages.error(request, gettext('This page is not loading properly. Please try again later'))
 
-    return render(request, 'dndsos/terms.html', context)
+    return render(request, 'dndsos/terms_courier.html', context)
+
+def terms_sender(request):
+    context = {}
+
+    try:
+        context['terms_sender'] = ContentPage.objects.get(name='terms_sender').content
+        context['terms_sender_he'] = ContentPage.objects.get(name='terms_sender_he').content
+    except Exception as e:
+        messages.error(request, gettext('This page is not loading properly. Please try again later'))
+
+    return render(request, 'dndsos/terms_sender.html', context)
+
 
 def privacy(request):
     context = {}

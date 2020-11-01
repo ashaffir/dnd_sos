@@ -47,7 +47,8 @@ else:
         '127.0.0.1',
         'www.pickndell.com',
         'pickndell.com',
-        '18.223.164.155'
+        '18.223.164.155',
+        'dndsos.com'
     ]
 
 

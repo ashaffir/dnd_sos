@@ -61,6 +61,10 @@ Build commands:
 > flutter clean
 > flutter build appbundle
 
+## BUILD APK ERRORS
+- Failed to transform libs.jar to match attributes...
+-> Solution: https://github.com/flutter/flutter/issues/58247 (compile with --profile/--debug and then with --release)
+* APK generated from Flutter are not running on the mobile device
 
 # REFERENCE: Android app deployment on to the Google Play
 - https://flutter.dev/docs/deployment/android

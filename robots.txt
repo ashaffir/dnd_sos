@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /core/
+Disallow: /orders/
+Disallow: /geo/
+Disallow: /payments/
+Disallow: /api/
+
+Allow: /
+
+
+Sitemap: https://pickndell.com/sitemap.xml

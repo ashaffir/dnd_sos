@@ -16,6 +16,7 @@ from django.utils.translation import gettext
 from .models import Card
 from core.models import Employee, Employer
 from orders.models import Order
+from .utils import getRates
 
 logger = logging.getLogger(__file__)
 
@@ -248,7 +249,8 @@ def lock_delivery_price(order):
     '''
     context = {}
     # order = Order.objects.get(pk=order_id)
-    order_price = order.price
+    usd_ils, usd_eur = getRates()
+    order_price = order.price * usd_ils
 
     b_id = order.business.business.pk
     b_credit_card_token = order.business.business.credit_card_token

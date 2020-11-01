@@ -260,11 +260,12 @@ class _DashboardState extends State<Dashboard> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     LocationRepository updateAvailability = LocationRepository();
 
-    disclosure = localStorage.getBool('disclosure');
-    if (disclosure == null || disclosure == false) {
-      disclosure = await prominentDisclosure(context);
-      // localStorage.setBool('disclosure', disclosure);
-    } else if (disclosure) {
+    // disclosure = localStorage.getBool('disclosure');
+    // if (disclosure == null || disclosure == false) {
+    disclosure = await prominentDisclosure(context);
+    // localStorage.setBool('disclosure', disclosure);
+    // } else if (disclosure) {
+    if (disclosure) {
       if (await _checkLocationPermission()) {
         print('GOT PERMISSIONS!!');
         _startLocator();

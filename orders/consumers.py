@@ -461,8 +461,8 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             content['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
             content['distance_to_business'] = round(order_to_business_distance,2)
         
-        print(f'PRICE CALCULATED: {price}')
-        logger.info(f'PRICE CALCULATED: {price}')
+        print(f'>> CONSUMENRS: PRICE CALCULATED: ${price}')
+        logger.info(f'>> CONSUMERS: PRICE CALCULATED: ${price}')
 
         if not business.location:
             business.location = Point(business_location.longitude,business_location.latitude, srid=4326)

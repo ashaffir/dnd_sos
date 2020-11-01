@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 from django.contrib.auth import views as auth_views
 from rest_framework.authtoken import views as api_views
-
+from django.views.generic.base import TemplateView
 from dndsos_dashboard.views import SignUpView
 
 admin.site.site_header = 'PickNdell'
@@ -16,6 +16,7 @@ app_name = 'dnd_sos_project'
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
+    # path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 
     path('', include('dndsos.urls')),
     path('dashboard/', include('dndsos_dashboard.urls')),
