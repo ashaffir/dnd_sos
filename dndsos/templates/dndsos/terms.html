@@ -7,11 +7,11 @@
 <div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
     <div text-align:center " class="special">
         <div class="row" style="margin-top:20%; margin-bottom:20%">
-            <div class="col-md-6 col-lg-6 text-right">
-                <a href="{% url 'dndsos:terms_courier' %}" class="btn btn-primary btn-lg">Terms of Use for Couriers</a>
+            <div class="col-md-6 col-lg-6 {% if lang == 'he' %}text-left {% else %} text-right {% endif %}">
+                <a href="{% url 'dndsos:terms_courier' %}" class="btn btn-primary btn-lg">{% trans 'Terms of Use for Couriers' %}</a>
             </div>
-            <div class="col-md-6 col-lg-6 text-left">
-                <a href="{% url 'dndsos:terms_sender' %}" class="btn btn-secondary btn-lg">Terms of Use for Senders</a>
+            <div class="col-md-6 col-lg-6 {% if lang == 'he' %}text-rigth {% else %} text-left {% endif %}"">
+                <a href="{% url 'dndsos:terms_sender' %}" class="btn btn-secondary btn-lg">{% trans 'Terms of Use for Senders' %}</a>
             </div>
         </div>
     </div>
