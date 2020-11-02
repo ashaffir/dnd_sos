@@ -393,7 +393,7 @@ msgstr "שולחים"
 
 #: dndsos/templates/dndsos/index.html:378
 msgid "Register as a Sender"
-msgstr ""
+msgstr "הירשם כשולח"
 
 #: dndsos/templates/dndsos/index.html:392
 msgid "Join as courier"
