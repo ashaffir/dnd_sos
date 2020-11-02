@@ -8,7 +8,6 @@
 {% get_current_language as lang %}
 
 <div class="" style="margin-top:8rem">
-  {% block head_title %}{% trans " Courier Signup" %}{% endblock %}
 </div>
 <div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
   <div class="row justify-content-center form-group">
@@ -26,7 +25,7 @@
                 <div class="mt-2">
                   {% if field.name == "terms_accepted" %}
                     {{ field }}
-                    <a href="{% url 'dndsos:terms' %}">{% trans 'Accept Terms and Conditions' %}</a>
+                    <a href="{% url 'dndsos:terms_courier' %}">{% trans 'Accept Courier Terms and Conditions' %}</a>
                     <hr>
                   {% else %}
                   <div class="row">

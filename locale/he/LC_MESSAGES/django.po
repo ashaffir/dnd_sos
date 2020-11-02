@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-25 16:50+0200\n"
+"POT-Creation-Date: 2020-11-02 07:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,35 +117,30 @@ msgstr "אם קיבלת דואל זה בטעות, אנא התעלם ממנו"
 msgid "PickNdell - Courier Sign Up"
 msgstr "הרשמת שליח"
 
-#: core/templates/core/employee/signup.html:11
-msgid " Courier Signup"
-msgstr "הרשמת שליח"
-
-#: core/templates/core/employee/signup.html:18
+#: core/templates/core/employee/signup.html:17
 msgid "Courier Sign Up"
 msgstr "הרשמת שליח"
 
-#: core/templates/core/employee/signup.html:20
-#: core/templates/core/employer/signup.html:17
+#: core/templates/core/employee/signup.html:19
+#: core/templates/core/employer/signup.html:16
 msgid "Already have an account? Then please"
 msgstr "כבר יש לך חשבון? אז בבקשה"
 
-#: core/templates/core/employee/signup.html:20
-#: core/templates/core/employer/signup.html:17
+#: core/templates/core/employee/signup.html:19
+#: core/templates/core/employer/signup.html:16
 msgid "sign in"
 msgstr "התחבר"
 
-#: core/templates/core/employee/signup.html:29
-#: core/templates/core/employer/signup.html:26
-msgid "Accept Terms and Conditions"
-msgstr "קבל תנאי PickNdell"
+#: core/templates/core/employee/signup.html:28
+msgid "Accept Courier Terms and Conditions"
+msgstr "קבל את התנאים וההגבלות של שליח"
 
-#: core/templates/core/employee/signup.html:44
-#: core/templates/core/employer/signup.html:42
+#: core/templates/core/employee/signup.html:43
+#: core/templates/core/employer/signup.html:41
 msgid "Sign Up"
 msgstr "הרשמה"
 
-#: core/templates/core/employee/signup.html:46
+#: core/templates/core/employee/signup.html:45
 msgid "Sender/Business? Register here"
 msgstr "בית עֵסֶק/שולח? הירשם כאן"
 
@@ -153,15 +148,15 @@ msgstr "בית עֵסֶק/שולח? הירשם כאן"
 msgid "PickNdell - Business Sign Up"
 msgstr "הרשמת בית עסק"
 
-#: core/templates/core/employer/signup.html:9
-msgid "Sender/Business Signup"
-msgstr "הרשמת שולח/בית עסק"
-
-#: core/templates/core/employer/signup.html:15
+#: core/templates/core/employer/signup.html:14
 msgid "Sender/Business Sign Up"
 msgstr "הרשמת שולח/בית עסק"
 
-#: core/templates/core/employer/signup.html:44
+#: core/templates/core/employer/signup.html:25
+msgid "Accept Sender Terms and Conditions"
+msgstr "קבל את התנאים וההגבלות של השולח"
+
+#: core/templates/core/employer/signup.html:43
 msgid "Courier? Register here"
 msgstr "שליח? הירשם כאן"
 
@@ -306,7 +301,7 @@ msgstr "מאפיינים"
 msgid "How it Works"
 msgstr "איך זה עובד"
 
-#: dndsos/templates/dndsos/base.html:76 dndsos/templates/dndsos/index.html:254
+#: dndsos/templates/dndsos/base.html:76 dndsos/templates/dndsos/index.html:260
 msgid "FAQ"
 msgstr "שאלות נפוצות"
 
@@ -356,69 +351,69 @@ msgstr "רשת איסוף ומסירה"
 msgid "Find couriers around you"
 msgstr "מצא שליחים פעילים בסביבתך"
 
-#: dndsos/templates/dndsos/index.html:55
-msgid "Join and get things delivered"
-msgstr "הצטרף כדי לשלוח דברים"
+#: dndsos/templates/dndsos/index.html:56
+msgid "Need something to be delivered"
+msgstr "מעוניין לשלוח משהו"
 
-#: dndsos/templates/dndsos/index.html:62
-msgid "Join and earn extra income as a courier"
-msgstr "הצטרף כשליח ותרוויח הכנסה נוספת"
+#: dndsos/templates/dndsos/index.html:60
+msgid "Earn extra income as a courier"
+msgstr "הכנסה נוספת כשליח"
 
-#: dndsos/templates/dndsos/index.html:78
+#: dndsos/templates/dndsos/index.html:84
 msgid "What is"
 msgstr "מה זה"
 
-#: dndsos/templates/dndsos/index.html:101
+#: dndsos/templates/dndsos/index.html:107
 msgid "Why"
 msgstr "למה"
 
-#: dndsos/templates/dndsos/index.html:173
+#: dndsos/templates/dndsos/index.html:179
 msgid "How it works"
 msgstr "איך זה עובד"
 
-#: dndsos/templates/dndsos/index.html:261
+#: dndsos/templates/dndsos/index.html:267
 msgid "Senders/Businesses"
 msgstr "בתי עסק/שולחים"
 
-#: dndsos/templates/dndsos/index.html:267
-#: dndsos/templates/dndsos/index.html:378
+#: dndsos/templates/dndsos/index.html:273
+#: dndsos/templates/dndsos/index.html:384
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:280
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:82
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:91
 msgid "Couriers"
 msgstr "שליחים"
 
-#: dndsos/templates/dndsos/index.html:356
+#: dndsos/templates/dndsos/index.html:362
 msgid "Pricing "
 msgstr "מחירים"
 
-#: dndsos/templates/dndsos/index.html:365
+#: dndsos/templates/dndsos/index.html:371
 msgid "Senders"
 msgstr "שולחים"
 
-#: dndsos/templates/dndsos/index.html:372
+#: dndsos/templates/dndsos/index.html:378
 msgid "Register as a Sender"
 msgstr ""
 
-#: dndsos/templates/dndsos/index.html:386
+#: dndsos/templates/dndsos/index.html:392
 msgid "Join as courier"
 msgstr "הצטרף כשליח"
 
-#: dndsos/templates/dndsos/index.html:583
+#: dndsos/templates/dndsos/index.html:589
 msgid "Get In Touch"
 msgstr "צור קשר"
 
-#: dndsos/templates/dndsos/index.html:598
+#: dndsos/templates/dndsos/index.html:604
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:43
 msgid "First Name"
 msgstr "שם פרטי"
 
-#: dndsos/templates/dndsos/index.html:604
+#: dndsos/templates/dndsos/index.html:610
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:53
 msgid "Last Name"
 msgstr "שם משפחה"
 
-#: dndsos/templates/dndsos/index.html:615
+#: dndsos/templates/dndsos/index.html:621
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:87
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:78
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:84
@@ -426,19 +421,27 @@ msgstr "שם משפחה"
 msgid "Email"
 msgstr "אימייל"
 
-#: dndsos/templates/dndsos/index.html:626
+#: dndsos/templates/dndsos/index.html:632
 msgid "Subject"
 msgstr "נושא"
 
-#: dndsos/templates/dndsos/index.html:636
+#: dndsos/templates/dndsos/index.html:642
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:5
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:5
 msgid "Message"
 msgstr "הודעה"
 
-#: dndsos/templates/dndsos/index.html:649
+#: dndsos/templates/dndsos/index.html:655
 msgid "Send Message"
 msgstr "שלח"
+
+#: dndsos/templates/dndsos/terms.html:11
+msgid "Terms of Use for Couriers"
+msgstr ""
+
+#: dndsos/templates/dndsos/terms.html:14
+msgid "Terms of Use for Senders"
+msgstr "תנאי שימוש"
 
 #: dndsos/views.py:34
 msgid ""
@@ -452,6 +455,10 @@ msgstr "מלא את השדות הדרושים לפני שליחת הטופס."
 #: dndsos/views.py:39
 msgid "Please confirm you are not a robot."
 msgstr "אנא אשר שאתה לא רובוט."
+
+#: dndsos/views.py:121 dndsos/views.py:132
+msgid "This page is not loading properly. Please try again later"
+msgstr "דף זה לא נטען כהלכה. בבקשה נסה שוב מאוחר יותר"
 
 #: dndsos_dashboard/forms.py:26
 msgid "Restaurant"
@@ -1765,8 +1772,7 @@ msgstr "קבלת פרטי כרטיס האשראי נכשלה. אנא צרו קש
 msgid "You have successfully updated your profile."
 msgstr "הצלחת לעדכן את הפרופיל שלך."
 
-#: dndsos_dashboard/views.py:1056 orders/consumers.py:624
-#: orders/consumers.py:626
+#: dndsos_dashboard/views.py:1056 orders/signals.py:266 orders/signals.py:268
 msgid "Thank you for choosing PickNdell"
 msgstr "תודה שבחרת ב- PickNdell"
 
@@ -1786,7 +1792,7 @@ msgstr "אמצעי תשלום"
 msgid "Update credit card"
 msgstr "עדכון כרטיסי אשראי"
 
-#: payments/views.py:474
+#: payments/views.py:476
 msgid ""
 "Credit card is not valid. Please make sure to enter valid credit card "
 "information"
@@ -3138,6 +3144,12 @@ msgstr ""
 #, python-format
 msgid "The option '%s' is not a valid option for a QR code."
 msgstr ""
+
+#~ msgid " Courier Signup"
+#~ msgstr "הרשמת שליח"
+
+#~ msgid "Sender/Business Signup"
+#~ msgstr "הרשמת שולח/בית עסק"
 
 #~ msgid "hi"
 #~ msgstr "היי"

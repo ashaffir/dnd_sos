@@ -46,24 +46,30 @@
           <img src="{% static 'images/deliverer.png' %}" alt="delivery scooter" class="img-fluid img-absolute main-image">
 
           <div class="row mb-1">
-            <div class="col-lg-4">
+            <div class="col-lg-8">
               <h1>{% trans 'Pickup and Delivery Network' %}</h1>
               <h4 class="mb-4">{% trans 'Find couriers around you' %}</h4>
-              <div>
-                {% if user.is_authenticated %}
-                {% else %}
-                  <a href="{% url 'core:employer_signup' %}" class="btn btn-success mr-2 mb-2" style="color:white">{% trans 'Join and get things delivered' %}</a>
-              {% endif %}
+              <div class="row">
+                  <div class="col-md-6">
+                    {% if user.is_authenticated %}
+                    {% else %}
+                      <a href="{% url 'core:employer_signup' %}" class="btn btn-success mr-2 mb-2" style="color:white">{% trans 'Need something to be delivered' %}?</a>
+                  {% endif %}
+                  </div>
+                  <div class="col-md-5">
+                    <a href="{% url 'core:employee_signup' %}" class="btn btn-warning text-white"> {% trans 'Earn extra income as a courier' %} </a>
+                  </div>
               </div>
             </div>
-              
           </div>
-          <div class="row mb-4">
-            <a href="{% url 'core:employee_signup' %}" class="text-warning h5 btn btn-outline-warning"> {% trans 'Join and earn extra income as a courier' %} </a>
+          <div class="row">
+            <div class="col-lg-8 col-md-8">
+                <hr>  
+            </div>
           </div>
           <div class="row">
               <!-- <a href="{% static '/downloads/pickndell_mobile_android.apk' %}">Download app</a> -->
-              <a href="https://play.google.com/store/apps/details?id=com.actappon.pickndell" target="_blank"><img src="{% static 'images/google-play-badge.png' %}" alt="pickndell mobile app" style="max-width: 35%;"></a>
+             <center> <a href="https://play.google.com/store/apps/details?id=com.actappon.pickndell" target="_blank"><img src="{% static 'images/google-play-badge.png' %}" alt="pickndell mobile app" style="max-width: 35%;"></a></center> 
           </div>
         </div>
       </div>
