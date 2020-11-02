@@ -437,7 +437,7 @@ msgstr "שלח"
 
 #: dndsos/templates/dndsos/terms.html:11
 msgid "Terms of Use for Couriers"
-msgstr ""
+msgstr "תנאי שימוש לשליחים"
 
 #: dndsos/templates/dndsos/terms.html:14
 msgid "Terms of Use for Senders"
