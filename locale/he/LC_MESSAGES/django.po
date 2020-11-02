@@ -441,7 +441,7 @@ msgstr "תנאי שימוש לשליחים"
 
 #: dndsos/templates/dndsos/terms.html:14
 msgid "Terms of Use for Senders"
-msgstr "תנאי שימוש"
+msgstr "תנאי שימוש לשולחים"
 
 #: dndsos/views.py:34
 msgid ""
