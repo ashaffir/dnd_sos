@@ -20,7 +20,7 @@
   }
   
   .tab a {
-    background-color: rgb(180, 216, 178);
+    background-color: #8bc34a;
     float: left;
     border: none;
     outline: none;
@@ -31,6 +31,18 @@
     border-bottom: 3px solid white;
   }
   
+  .tab.courier a {
+    background-color: #00d2b5;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 12px 14px;
+    transition: 0.3s;
+    font-size: 17px;
+    border-bottom: 3px solid white;
+  }
+
   .tab a:hover {
     border-bottom-color: #ddd;
     background-color: #ddd;
@@ -263,11 +275,11 @@
 
       <ul class="nav md-tabs responsive center" style="text-align:center">
         
-        <li class=" nav-item waves-effect waves-light center tab" style="width: 50%; text-align: center">
+        <li class="nav-item waves-effect waves-light tab " style="width: 50%; text-align: center">
           <a (click)="function1()" class="btn btn-warning font-weight-bold text-white m-2" href="#business_faq" data-toggle="tab" aria-selected="true"><img class=" center mobile-image" style="max-width: 20%;" src="{% static 'assets/images/shop-white.png' %}" alt=""><span class="d-none d-sm-block text-white"> {% trans 'Senders/Businesses' %}</span></a>
         </li>
 
-        <li class=" nav-item waves-effect waves-light tab" style="width: 50%;">
+        <li class=" nav-item waves-effect waves-light tab courier" style="width: 50%;">
           <a (click)="function2()" class="btn btn-warning font-weight-bold m-2" href="#freelancer_faq" data-toggle="tab" style="text-align:center; color:white">
             <img class="center mobile-image" style="max-width: 20%;" src="{% static 'assets/images/scooter.png' %}" alt="">
             <span class="d-none d-sm-block text-light">{% trans 'Couriers' %} </span></a>
