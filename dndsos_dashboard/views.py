@@ -1,5 +1,6 @@
 import logging
 import os
+import platform
 from datetime import datetime,date
 import phonenumbers
 from email_validator import validate_email, EmailNotValidError
@@ -7,6 +8,7 @@ from email_validator import validate_email, EmailNotValidError
 from django_twilio.decorators import twilio_view
 from twilio.rest import Client
 
+from django.contrib.gis.geos import fromstr, Point
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -253,11 +255,21 @@ def b_profile(request, b_id):
             if request.POST.get("profileAddress"):
                 business_address = request.POST.get("profileAddress")
                 user_profile.address = business_address
-
                 # Setting the business location coordinates
                 try:
                     # user_profile.location, user_profile.lon, user_profile.lat = location_calculator(new_city,new_street, new_building, 'israel')
-                    user_profile.location, user_profile.lon, user_profile.lat = address_location_calculator(business_address)
+                    # user_profile.location, user_profile.lon, user_profile.lat = address_location_calculator(business_address)
+                    business_lat = float(request.POST.get("business_lat"))
+                    business_lon = float(request.POST.get("business_lon"))
+                    user_profile.lat = business_lat
+                    user_profile.lon = business_lon
+                    try:
+                        user_profile.location = Point(business_lat, business_lon) if platform.system() == 'Darwin' else Point(business_lon, business_lat)
+                    except Exception as e:
+                        print(f'>> VIEWS DASHBOARD: Failed getting business location. ERROR {e}')
+                        logger.error(f'>> VIEWS DASHBOARD: Failed getting business location. ERROR {e}')
+                    
+                    print(f'>> VIEWS DASHBOARD: business location: {user_profile.location} lat: {user_profile.lat} lon: {user_profile.lon}')
                     if not user_profile.location or not user_profile.lon or not user_profile.lat:
                         print('Failed to update business address')
                         messages.error(request, 'This address is not valid please try again or a nearby location.')

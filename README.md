@@ -172,3 +172,6 @@ lt --port 8000
 
 # REFERENCE: django signals, update_fields
 - https://stackoverflow.com/questions/54578488/django-signals-kwargsupdate-fields-is-always-none-on-model-update-via-djan
+
+# REFERENCE: newsletter
+- https://django-newsletter.readthedocs.io/en/latest/installation.html

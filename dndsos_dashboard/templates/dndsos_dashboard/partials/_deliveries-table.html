@@ -4,6 +4,7 @@
 
 <thead>
     <tr>
+        <th>{% trans 'ID' %}</th>
         <th>{% trans 'Offer Date' %}</th>
         <th>{% trans 'Business' %}</th>
         <th>{% trans 'Pickup' %}</th>
@@ -22,6 +23,7 @@
 
     <!-- Updated time/date -->
     <tr class="">
+        <td>{{ order.order_public_id }}</td>
         <td>{{ order.updated }}</td>
         <td id="business_{{ order.order_id }}">{{ order.business.business.business_name }}</td>
         <td id="pickupAddress_{{ order.order_id }}">{{ order.pick_up_address }}</td>

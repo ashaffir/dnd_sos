@@ -161,6 +161,8 @@
 																<div class="col-md-4">
 																	{% if user.business.address %}
 																		<input id="searchTextField" name="profileAddress" class="form-control" type="text" placeholder="{{ user.business.address }}">
+																		<input type="hidden" name="business_lat" id="business_lat">
+																		<input type="hidden" name="business_lon" id="business_lon">
 																	{% else %}
 																		<input id="searchTextField" name="profileAddress" class="form-control" type="text" placeholder="{% trans 'Address' %} ({% trans 'start typing' %})">
 																	{% endif %}

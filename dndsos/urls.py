@@ -1,4 +1,6 @@
 from django.urls import path
+from django.urls.conf import include
+
 
 from dndsos import views
 
@@ -13,4 +15,5 @@ urlpatterns = [
     path('terms_sender/', views.terms_sender, name='terms_sender'),
     path('privacy/', views.privacy, name='privacy'),
     path('courier-addendum/', views.c_addendum, name='courier-addendum'),
+    path('newsletter/', include('newsletter.urls')),
 ]

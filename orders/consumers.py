@@ -27,6 +27,7 @@ from dndsos_dashboard.utilities import send_mail
 
 from geo.models import UserLocation
 from payments.views import lock_delivery_price, complete_charge
+from .utils import unique_order_id
 
 logger = logging.getLogger(__file__)
 
@@ -381,7 +382,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         # Adding GEO location info before creating the order
         geolocator = Nominatim(user_agent="dndsos", timeout=3)
         
-        print('-------------- 1 --------------')
+        print('-------------- 1 collecting order coordinates--------------')
         try:
             drop_off_address = content.get('drop_off_address')
             location = geolocator.geocode(drop_off_address)
@@ -409,7 +410,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
             order_lat = None
             order_lon = None
 
-        print('-------------- 2 --------------')
+        print('-------------- 2 order addresses --------------')
 
         content['order_location'] = order_location
         content['order_lon'] = order_lon
@@ -425,7 +426,7 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         business = Employer.objects.get(pk=content.get('business'))
         business_address = business.address
         
-        print('-------------- 3 --------------')
+        print('-------------- 3 sender coordinates --------------')
         
         pickup_lat = content.get('pickup_lat')
         pickup_lon = content.get('pickup_lng')
@@ -442,13 +443,12 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         content['business_lat'] = pickup_lat
         content['business_lon'] = pickup_lon
 
-        print('-------------- 4 --------------')
+        print('-------------- 4 price calculations --------------')
 
         # Calculating the price for the order (price calculation)
 
         print(f'URGENT: {content["urgency"]}')
         urgency = int(content['urgency'])
-        print('-------------- 5 --------------')
 
         if order_to_business_distance_meters > 1000:
             price = urgency * (settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT)
@@ -485,17 +485,24 @@ class OrderConsumer(AsyncJsonWebsocketConsumer):
         content['is_urgent'] = True if int(content['urgency']) == 2 else False
         content['order_type'] = business_categories[business.business_category]
 
+        print('-------------- 5 setting order public id --------------')
+        try:
+            content['order_public_id'] = unique_order_id(business.user)
+        except Exception as e:
+            print(f'>> CONSUMERS: Failed generating order public id. ERROR: {e}')
+
+
         # Creating the new order
         serializer = OrderSerializer(data=content)
         print('SERIALIZING THE ORDER....')
-        logger.info(f'Start serializing the new order')
+        logger.info(f'>> CONSUMERS: Serializing the new order')
 
         serializer.is_valid(raise_exception=True)
         print('ORDER VALID')
 
         order = serializer.create(serializer.validated_data)
         print('ORDER CREATED!!!!!')
-        logger.info(f'New order created. Order: {order.order_id}')
+        logger.info(f'>> CONSUMERS: New order created. Order: {order.order_id}')
         return order
 
     @database_sync_to_async

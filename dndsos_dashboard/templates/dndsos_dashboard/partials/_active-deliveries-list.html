@@ -29,6 +29,7 @@
         <div class="panel-body">
             <h4 class="title">{% trans 'Business Name' %}: <b>{{ order.business.business.business_name }}</b></h4>
             <div class="" >
+                <p class="">{% trans 'Order ID' %}: <b>{{ order.order_public_id }}</b></p>
                 <p class="">{% trans 'Started' %}: <b>{{ order.updated }}</b></p>
                 <p class="">{% trans 'Pick Up Address' %}: <b>{{ order.pick_up_address }}</b></p>
                 <p class="">{% trans 'Drop Off Address' %}: <b>{{ order.drop_off_address }}</b></p>

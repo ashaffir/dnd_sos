@@ -29,6 +29,7 @@
                     <div class="summary">
                         <h4 class="title">{{ order.business.employer.business_name }}</h4>
                         <div class="" >
+                            <p class="">{% trans 'Order ID' %}: <b>{{ order.order_public_id }}</b></p>
                             <p class="">{% trans 'Pick Up Address' %}: <b>{{ order.pick_up_address }}</b></p>
                             <p class="">{% trans 'Drop Off Address' %}: <b>{{ order.drop_off_address }}</b></p>
                         </div>

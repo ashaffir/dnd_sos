@@ -68,6 +68,10 @@ function initialize() {
 
         business_address = address;
 
+
+        document.getElementById("business_lat").value = business_lat;
+        document.getElementById("business_lon").value = business_lng;
+
         infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address + "<br>" + place.geometry.location);
         infowindow.open(map, marker);
     });

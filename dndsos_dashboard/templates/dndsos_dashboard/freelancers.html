@@ -113,7 +113,8 @@
 
                     <!-- Freelancers Map tab -->
                     <div id="freelancers_map" class="tab-pane active">
-
+                        
+                        {% if user.business.location %}
                         <!-- <form action="" method="POST" enctype="multipart/form-data" id="b_select_freelancers" name="select_freelancers">
                             {% csrf_token %} -->
                             <!-- <div class="row" >
@@ -123,7 +124,8 @@
                                 </div>
                             </div> -->
                             <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
-                                {% csrf_token %}    
+                                {% csrf_token %}   
+                                
                                 <div class="row" >
                                     <div class="col-md-4">
                                         <h4>{% trans 'Pick Available Couriers in range' %} {{ max_range }} {% trans 'km' %}</h4>
@@ -172,8 +174,8 @@
                                                     </div>
                                                 </header>
                                                 <div class="panel-body">
-                                                    <h4 class="text-semibold mt-sm">{{ freelancer.name }}</h4>
-                                                    <p>{% trans 'Short bio' %}: {{ freelancer.bio }} </p>
+												<h4 class="text-semibold mt-sm">{% trans 'Name' %}: {{ freelancer.freelancer.name }}</h4>
+                                                <p>{% trans 'Short bio' %}: {{ freelancer.bio }} </p>
                                                     <p>{% trans 'Vehicle' %}: {{ freelancer.vehicle }} </p>
                                                     <div class="row">
                                                         <div class="col-md-6">
@@ -235,11 +237,19 @@
                                     {% endfor %}
                                 </div>
                                 </form>
+                            {% else %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>{% trans 'Please add your address to the profile before using this page' %}</h3>
+                                </div>
+                            </div>
+                            {% endif %}
                     </div> 
                     <!-- End Business freelancers tab -->
                     
                     <!-- Freelancers Tab -->
                     <div id="select_tab" class="tab-pane">
+                        {% if user.business.location %}
                         <form action="" method="POST" enctype="multipart/form-data" id="select_freelancers" name="select_freelancers">
                             {% csrf_token %}
                             <div class="row" >
@@ -285,7 +295,7 @@
 												</div>
 											</header>
 											<div class="panel-body">
-												<h4 class="text-semibold mt-sm">{{ freelancer.name }}</h4>
+												<h4 class="text-semibold mt-sm">{% trans 'Name' %}: {{ freelancer.freelancer.name }}</h4>
 												<p>{% trans 'Short bio' %}: {{ freelancer.bio }} </p>
                                                 <p>{% trans 'Vehicle' %}: {{ freelancer.vehicle }} </p>
                                                 <div class="row">
@@ -348,6 +358,13 @@
                                 {% endfor %}
                             </div>
                             </form>
+                            {% else %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>{% trans 'Please add your address to the profile before using this page' %}</h3>
+                                </div>
+                            </div>
+                            {% endif %}
                     </div>
                     <!-- End Freelancers tab -->
 
@@ -385,8 +402,8 @@
                                             </div>
 											</header>
 											<div class="panel-body">
-												<h4 class="text-semibold mt-sm">{{ freelancer.employee.name }}</h4>
-												<p>{% trans 'Email' %}: {{ freelancer.email }} </p>
+												<h4 class="text-semibold mt-sm">{% trans 'Name' %}: {{ freelancer.freelancer.name }}</h4>
+                                                <p>{% trans 'Email' %}: {{ freelancer.email }} </p>
 												<p>{% trans 'Short bio' %}: {{ freelancer.freelancer.bio }} </p>
 												<p>{% trans 'City' %}: {{ freelancer.freelancer.city }} </p>
                                                 <p>{% trans 'Vehicle' %}: {{ freelancer.freelancer.vehicle }} </p>

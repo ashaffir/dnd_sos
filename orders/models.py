@@ -1,5 +1,6 @@
 import uuid
 import json
+import random
 from django.urls import reverse
 from django.db import models
 from django.conf import settings
@@ -16,6 +17,8 @@ from core.models import Employee, Employer, User
 def delivery_photo_path(instance, filename):
     return f'documents/orders/order.{instance.pk}.{filename}'
 
+def random_string():
+    return str(random.randint(10001, 99999))
 
 class Order(models.Model):
     
@@ -53,6 +56,7 @@ class Order(models.Model):
         (OTHER, OTHER),
     )
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    order_public_id = models.CharField(max_length=6, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     pick_up_address = models.CharField(max_length=255, null=True)
