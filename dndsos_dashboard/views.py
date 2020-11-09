@@ -236,6 +236,7 @@ def b_profile(request, b_id):
 
     if request.method == 'POST':
         print(f'PROFILE DATA: {request.POST}')
+        logger.info(f'PROFILE DATA: {request.POST}')
         # form = BusinessUpdateForm(request.POST,request.FILES, instance=user_profile)
 
         if 'update_profile' in request.POST:
@@ -261,6 +262,10 @@ def b_profile(request, b_id):
                     # user_profile.location, user_profile.lon, user_profile.lat = address_location_calculator(business_address)
                     business_lat = float(request.POST.get("business_lat"))
                     business_lon = float(request.POST.get("business_lon"))
+                    logger.info(f'BUSINESS LAT: {business_lat}')
+                    print(f'BUSINESS LAT: {business_lat}')
+                    logger.info(f'BUSINESS LON: {business_lon}')
+                    print(f'BUSINESS LON: {business_lon}')
                     user_profile.lat = business_lat
                     user_profile.lon = business_lon
                     try:
