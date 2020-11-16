@@ -60,13 +60,20 @@
           <div class="row mb-1">
             <div class="col-lg-8">
               <h1>{% trans 'Pickup and Delivery Network' %}</h1>
-              <h4 class="mb-4">{% trans 'Find couriers around you' %}</h4>
+              {% if couriers_only %}
+              {% else %}
+                <h4 class="mb-4">{% trans 'Find couriers around you' %}</h4>
+              {% endif %}
               <div class="row">
                   <div class="col-md-6">
                     {% if user.is_authenticated %}
                     {% else %}
-                      <a href="{% url 'core:employer_signup' %}" class="btn btn-success mr-2 mb-2" style="color:white">{% trans 'Need something to be delivered' %}?</a>
-                  {% endif %}
+
+                      {% if couriers_only %}
+                      {% else %}
+                          <a href="{% url 'core:employer_signup' %}" class="btn btn-success mr-2 mb-2" style="color:white">{% trans 'Need something to be delivered' %}?</a>
+                      {% endif %}
+                    {% endif %}
                   </div>
                   <div class="col-md-5">
                     <a href="{% url 'core:employee_signup' %}" class="btn btn-warning text-white"> {% trans 'Earn extra income as a courier' %} </a>

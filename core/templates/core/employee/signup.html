@@ -42,7 +42,10 @@
             </div>
             <button class="btn btn-success text-white" type="submit">{% trans "Sign Up" %} &raquo;</button>
           </form>
-          <a href="{% url 'core:employer_signup' %}">{% trans 'Sender/Business? Register here' %}</a>
+          {% if couriers_only %}
+          {% else %}
+            <a href="{% url 'core:employer_signup' %}">{% trans 'Sender/Business? Register here' %}</a>
+          {% endif %}
   
     </div>
   </div>    

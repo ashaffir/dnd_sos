@@ -16,6 +16,7 @@ from django.contrib.auth.tokens import default_token_generator
 from dndsos_dashboard.utilities import send_mail
 from django.utils.translation import gettext
 
+from dndsos.models import AdminParameters
 from .forms import *
 from .models import User, Employer, Employee, Asset, AssignedAsset
 from .tokens import account_activation_token
@@ -98,8 +99,11 @@ def employee_signup(request):
 
     else:
         form = EmployeeSignupForm()
-    
-    return render(request, 'core/employee/signup.html', {'form': form})
+
+    return render(request, 'core/employee/signup.html', {
+        'form': form,
+        'couriers_only': AdminParameters.objects.last().couriers_only
+        })
 
 
 # employer profile

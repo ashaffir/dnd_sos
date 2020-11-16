@@ -11,7 +11,7 @@ from django.utils.translation import gettext
 from django.http import HttpResponse
 
 from dndsos_dashboard.utilities import send_mail
-from .models import ContactUs, ContentPage
+from .models import ContactUs, ContentPage, AdminParameters
 from .forms import ContactForm
 
 logger = logging.getLogger(__file__)
@@ -19,6 +19,7 @@ logger = logging.getLogger(__file__)
 def home(request):
     context = {}
     form = ContactForm(request.POST or None)
+
 
     if request.POST:
 
@@ -69,6 +70,8 @@ def home(request):
     except Exception as e:
         messages.error(request, f'Missing content in DB! ERROR: {e}')
     
+    context['couriers_only'] = AdminParameters.objects.last().couriers_only
+
     context['form'] = form
     context['site_recaptcha'] = settings.RECAPTCHA_PUBLIC_KEY
     

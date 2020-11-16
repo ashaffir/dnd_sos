@@ -52,8 +52,10 @@ class FreelancerFeedback(models.Model):
 	 return f'{self.freelancer.name} | {self.freelancer.pk}'
 
 class AdminParameters(models.Model):
+	name = models.CharField(max_length=100, blank=True, null=True)
 	usd_ils_default = models.FloatField(default=3.5)
 	usd_eur_default = models.FloatField(default=0.8)
 	rookie_level_max = models.IntegerField(default=1)
 	advanced_level_max = models.IntegerField(default=10)
 	expert_level_max = models.IntegerField(default=50)
+	couriers_only = models.BooleanField(default=False)
