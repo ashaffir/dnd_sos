@@ -1,3 +1,4 @@
+{% if user.is_superuser %}
 {% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
@@ -96,3 +97,4 @@
     </form>
   </body>
 </html>
+{% endif %}
