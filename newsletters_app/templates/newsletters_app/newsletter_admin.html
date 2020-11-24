@@ -55,30 +55,44 @@
  
                 <div class="row mt-2">
                     <div class="col">
-                        <a class="btn btn-primary" href="{% url 'newsletters_app:newsletter_form' %}" >NEW</a>
-                    </div>                    
-                    <div class="col">
-                        <button class="btn btn-success" type="submit" name="sendNewsLetter" >SEND</button>
+                        <a class="btn btn-primary" href="{% url 'newsletters_app:newsletter_form' %}" >NEW Newsletter</a>
                     </div>                    
                 </div>
-                <form action="" enctype="multipart/form-data" name="selectNewsletterForm" method="POST">
-                    {% csrf_token %}
-                    <div class="row mt-4">
-                        <div class="col-3">
-                            <select class="form-control" name="newsletterSelect" id="newsletterSelect">
-                                <option class="form-select form-control" value="">------------</option>
-                                {% for nl in newsletters %}
-                                    <option class="form-select form-control" value="{{ nl.pk }}">{{ nl.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-secondary" name="selectNewsletterButton" type="submit">Preview</button>
-                        </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <form action="" enctype="multipart/form-data" name="selectNewsletterForm" method="POST">
+                            {% csrf_token %}
+                            <div class="row mt-4">
+                                <div class="col-3">
+                                    <select class="form-control" name="newsletterSelect" id="newsletterSelect">
+                                        <option class="form-select form-control" value="">------------</option>
+                                        {% for nl in newsletters %}
+                                        <option class="form-select form-control" value="{{ nl.pk }}">{{ nl.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-secondary" name="selectNewsletterButton" type="submit">Preview</button>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-3">
+                                    <input class="form-control" type="text" name="testEmail" id="">
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-info" type="submit" name="sendTest" >SEND TEST</button>
+                                </div>                    
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-3">
+                                    <button class="btn btn-success" type="submit" name="sendNewsLetter" >SEND NEWSLETTER</button>
+                                </div>                    
+
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
     </form>
   </body>
 </html>

@@ -39,6 +39,46 @@ def newsletter_admin(request):
             context['user'] = User.objects.get(pk=newsletter.recipients[0])
             return render(request, 'newsletters_app/newsletter.html', context)
 
+        elif 'sendTest' in request.POST:
+            if platform.system() == 'Darwin': # MAC
+                current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+            else:
+                current_site = settings.DOMAIN_PROD
+
+            newsletter = Newsletter.objects.get(pk=request.POST.get('newsletterSelect'))
+
+            test_recipient = request.POST.get('testEmail')            
+            user = User.objects.get(is_superuser=True)
+                
+            subject = newsletter.subject
+
+            message = {
+                'title_1':  newsletter.title_1,
+                'content_1':  newsletter.content_1,
+                'title_2':  newsletter.title_2,
+                'content_2':  newsletter.content_2,
+                'title_3':  newsletter.title_3,
+                'content_3':  newsletter.content_3,
+                'button_text': newsletter.button_text,
+                'button_link': newsletter.button_link,
+                'lang': 'he' if newsletter.language == 'Hebrew' else 'en',
+                'user': user,
+                'domain': current_site
+            }
+
+            context = message
+
+            try:
+                send_mail(subject, email_template_name=None,
+                    context=message, to_email=[test_recipient],
+                    html_email_template_name='newsletters_app/newsletter.html')
+                messages.success(request, f"TEST Newsletter sent successfully to {test_recipient}")
+                
+            except Exception as e:
+                logging.error(f">>> NEWSLETTER: Failed test email on user. ERROR: {e}")
+                print(f">>> NEWSLETTER: Failed test email on user. ERROR: {e}")
+
+
         elif 'sendNewsLetter' in request.POST:
             if platform.system() == 'Darwin': # MAC
                 current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
@@ -76,10 +116,10 @@ def newsletter_admin(request):
                     logging.error(f">>> NEWSLETTER: Failed email on user {user}. ERROR: {e}")
                     print(f">>> NEWSLETTER: Failed email on user {user}. ERROR: {e}")
 
-        newsletter.sent = True
-        newsletter.sent_date = datetime.datetime.now()
-        newsletter.save()
-        messages.success(request, f"Newsletter sent successfully to {len(newsletter.recipients)} users")
+            newsletter.sent = True
+            newsletter.sent_date = datetime.datetime.now()
+            newsletter.save()
+            messages.success(request, f"Newsletter sent successfully to {len(newsletter.recipients)} users")
         return redirect('newsletters_app:newsletter_admin')
     
     return render(request, 'newsletters_app/newsletter_admin.html', context)

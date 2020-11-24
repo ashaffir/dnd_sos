@@ -169,9 +169,9 @@
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %} >
                                                     {% if lang == 'he' %}
-                                                        <p>היי {{ user.first_name }}</p>
+                                                        <p>היי {% if user.first_name %}{{ user.first_name }}{% endif %}</p>
                                                     {% else %}
-                                                        <p>{% trans 'Hi' %} {{ user.first_name }}</p>
+                                                        <p>{% trans 'Hi' %} {% if user.first_name %}{{ user.first_name }}{% endif %}</p>
                                                     {% endif %}
 													<p >{{ content_1|safe }}</p>
 												</div>
