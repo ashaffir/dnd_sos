@@ -253,7 +253,7 @@ EMAIL_HOST = 'in-v3.mailjet.com'
 EMAIL_HOST_USER = config['MAILJET_HOST_USER']
 EMAIL_HOST_PASSWORD = config['MAILJET_HOST_PASSWORD']
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'support@pickndell.com'
+DEFAULT_FROM_EMAIL = 'PickNdell<support@pickndell.com>'
 
 # Email Setup
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
