@@ -1,7 +1,6 @@
 {% load static %}
 {% load i18n %}
 {% autoescape off %}
-{% get_current_language as lang %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
@@ -158,7 +157,7 @@
 									<tr>
 										<td width="100%" colspan="3" align="center" style="padding-bottom:10px;padding-top:25px;">
 											<div class="contentEditableContainer contentTextEditable">
-												<div class="contentEditable" >
+												<div class="contentEditable">
 													<h2 >{{ title_1 }}</h2>
 												</div>
 											</div>
@@ -166,10 +165,15 @@
 									</tr>
 									<tr>
 										<td width="100">&nbsp;</td>
-										<td width="400" align="center" style="padding-bottom:5px;">
+										<td width="400" align="left" style="padding-bottom:5px;">
 											<div class="contentEditableContainer contentTextEditable">
-												<div class="contentEditable" >
-													<p >{{ content_1 }}</p>
+												<div class="contentEditable" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %} >
+                                                    {% if lang == 'he' %}
+                                                        <p>היי {{ user.first_name }}</p>
+                                                    {% else %}
+                                                        <p>{% trans 'Hi' %} {{ user.first_name }}</p>
+                                                    {% endif %}
+													<p >{{ content_1|safe }}</p>
 												</div>
 											</div>
 										</td>
@@ -177,7 +181,8 @@
 									</tr>
 								</table>
 							</div>
-
+                            
+                            {% if button_text %}
 							<div class='movableContent'>
 								<table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
 									<tr>
@@ -199,7 +204,8 @@
 										<td width="100">&nbsp;</td>
 									</tr>
 								</table>
-							</div>
+                            </div>
+                            {% endif %}
 
                             {% if title_2 %}    
                                 <div class='movableContent'>
@@ -249,7 +255,7 @@
                                             <td width="100%" colspan="3" align="center" style="padding-bottom:40px;padding-top:100px;">
                                                 <div class="contentEditableContainer contentTextEditable">
                                                     <div class="contentEditable"  >
-                                                        <h2 >Our Core Values</h2>
+                                                        <h2 >{{ title_3 }}</h2>
                                                     </div>
                                                 </div>
 
@@ -309,7 +315,7 @@
 										<td width="100%" align="center" style="padding-bottom:10px;padding-top:100px;">
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
-													<h2>The People that Make the Company</h2>
+													<h2>{{ title_4 }}</h2>
 												</div>
 											</div>
 										</td>
@@ -357,7 +363,7 @@
 										<td width="100%" align="center" style="padding-bottom:10px;padding-top:100px;">
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
-													<h2>Liked this email?</h2>
+													<h2>{{ title_5 }}</h2>
 												</div>
 											</div>
 										</td>
@@ -410,7 +416,7 @@
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
 													<span style="font-size:13px;color:#181818;font-family:Helvetica, Arial, sans-serif;line-height:200%;">
-                                                        {% trans 'This newsletter was sent to email' %} {{ email }} </span>
+                                                        {% trans 'This newsletter was sent to email' %} {{ user.email }} </span>
 													<br/>
 													<!-- <span style="font-size:11px;color:#555;font-family:Helvetica, Arial, sans-serif;line-height:200%;">[CLIENTS.ADDRESS] | [CLIENTS.PHONE]</span>
 													<br/>
@@ -429,6 +435,7 @@
 													<td valign="top" width='34'>
 														<div class="contentEditableContainer contentFacebookEditable" style='display:inline;'>
 															<div class="contentEditable" >
+																<!-- <a href="https://www.facebook.com/pickNdell"><img src="{{ domain }}{% static 'newsletter_images/facebook.png' %}" data-default="placeholder" data-max-width="30" width='30' height='30' alt='facebook' style='margin-right:40x;' data-customIcon="true" ></a> -->
 																<a href="https://www.facebook.com/pickNdell"><img src="{{ domain }}{% static 'newsletter_images/facebook.png' %}" data-default="placeholder" data-max-width="30" width='30' height='30' alt='facebook' style='margin-right:40x;' data-customIcon="true" ></a>
 															</div>
 														</div>
@@ -465,7 +472,17 @@
 			</td>
 		</tr>
 	</table>
-	<!-- End of wrapper table -->
+    <!-- End of wrapper table -->
+    
+    {% if admin %}
+        <div class="row">
+            <div class="col">
+                <p>Send to: {{ recipients_type }}</p>
+                <!-- <a class="btn btn-warning" href="{% url 'newsletters_app:newsletter_admin' %}">Back to Admin</a> -->
+                <button class="btn btn-warning" type="button" onclick="history.back()">Back to Admin</button>
+            </div>
+        </div>
+    {% endif %}
 </body>
 </html>
 {% endautoescape %}

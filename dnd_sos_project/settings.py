@@ -156,6 +156,7 @@ TEMPLATES = [
                 'dndsos_dashboard.context_processors.pageLanguage',
                 'dndsos_dashboard.context_processors.getCurrencyRates',
                 'dndsos_dashboard.context_processors.getFreelancerActiveOrders',
+                'dndsos_dashboard.context_processors.couriersOnly',
                 
                 # 'dndsos_dashboard.context_processors.requested_freelancer',                
             ],
@@ -247,22 +248,23 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 # MailJet Email Setup
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'in-v3.mailjet.com'
-# EMAIL_HOST_USER = config['MAILJET_HOST_USER']
-# EMAIL_HOST_PASSWORD = config['MAILJET_HOST_PASSWORD']
-# EMAIL_PORT = 587
-# DEFAULT_FROM_EMAIL = 'ashaffir@gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_HOST_USER = config['MAILJET_HOST_USER']
+EMAIL_HOST_PASSWORD = config['MAILJET_HOST_PASSWORD']
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'support@pickndell.com'
 
 # Email Setup
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST = 'smtp.privateemail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pickndell@gmail.com'
-EMAIL_HOST_PASSWORD = config['EMAIL_HOST_PASSWORD']
-DEFAULT_FROM_EMAIL = 'support@pickndell.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'pickndell@gmail.com'
+# EMAIL_HOST_PASSWORD = config['EMAIL_HOST_PASSWORD']
+# DEFAULT_FROM_EMAIL = 'support@pickndell.com'
+
+### EMAIL_HOST = 'smtp.privateemail.com'
 
 # Private Email (Namecheap.com)
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

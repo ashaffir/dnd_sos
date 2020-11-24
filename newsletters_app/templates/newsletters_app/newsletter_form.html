@@ -1,0 +1,161 @@
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-08G0HG39V0"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-08G0HG39V0');
+      </script>
+    
+      <title>
+        {% block title %} PickNdell: Pickup & Delivery{% endblock title %}
+      </title>
+    
+    <link rel="icon" type="image/x-icon" href="{% static 'images/dndsos-logo-white.png' %}">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/aos.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" >
+
+    <form action="" name="newsletterForm" method="POST">
+        {% csrf_token %}
+            <div class="container">
+                <div class="">
+                    <div class="col">
+                        <h1>NewsLetter</h1>
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="name"></label>
+                        <label for="">Name</label>
+                        <input type="text" name="newsletter_name">
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="subject"></label>
+                        <label for="">Subject</label>
+                        <input type="text" name="subject">
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="title_1"></label>
+                        <label for="">Title 1</label>
+                        <input type="text" name="title_1">                   
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="content_1"></label>
+                        <label for="">Content 1</label>
+                        <textarea name="content_1"></textarea>
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="button_text"></label>
+                        <label for="">Button Text</label>
+                        <input type="text" name="button_text">                                 
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="button_link"></label>
+                        <label for="">Button Link</label>
+                        <input type="text" name="button_link">                                 
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="title_2"></label>
+                        <label for="">Title 2</label>
+                        <input type="text" name="title_2">                        
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="content_2"></label>
+                        <label for="">Content 2</label>
+                        <textarea name="content_2"></textarea>
+          
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="title_3"></label>
+                        <label for="">Title 3</label>           
+                        <input type="text" name="title_3">
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="content_3"></label>
+                        <label for="">Content 3</label>
+                        <textarea name="content_3"></textarea>   
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col">
+                        <label class="text-black" for="recipients"></label>
+                        <label for="">Recipients</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" name="couriers"> Couriers
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" name="businesses"> Businesses
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" name="all"> All
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col">
+                                <input type="checkbox" name="list"> List
+                                <input type="text" name="recipients_list">
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col">
+                        <button class="btn btn-success" type="submit" name="newsletterSend" >SEND</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </form>
+  </body>
+</html>

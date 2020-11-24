@@ -94,3 +94,8 @@ def getFreelancerActiveOrders(request):
         context['expert_max'] = settings.EXPERT_LEVEL
 
     return context
+
+def couriersOnly(request):
+    context = {}
+    context['couriers_only'] = AdminParameters.objects.last().couriers_only
+    return context

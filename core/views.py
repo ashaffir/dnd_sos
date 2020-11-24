@@ -20,7 +20,7 @@ from django.contrib.auth.tokens import default_token_generator
 from dndsos_dashboard.utilities import send_mail
 from django.utils.translation import gettext
 
-from dndsos.models import AdminParameters
+from dndsos.models import AdminParameters, AlertMessage
 from .forms import *
 from .models import User, Employer, Employee, Asset, AssignedAsset
 from .tokens import account_activation_token
@@ -37,6 +37,7 @@ def home(request):
 
 # handles employer signup requests
 def employer_signup(request):
+
     if request.method == 'POST':
         form = EmployerSignupForm(request.POST)
         if form.is_valid():
@@ -68,8 +69,18 @@ def employer_signup(request):
 
     else:
         form = EmployerSignupForm()
+
+    context = {}
+    context['form'] = form
     
-    return render(request, 'core/employer/signup.html', {'form': form})
+    if AdminParameters.objects.last().alert_message_page_business_signup:
+        context['show_message'] = True
+        alert = AlertMessage.objects.get(alert_message_page='business_signup')
+        context['alert_message_title'] = alert.alert_message_title
+        context['alert_message_content'] = alert.alert_message_content
+
+
+    return render(request, 'core/employer/signup.html', context)
 
 # handles freelancer signup requests
 def employee_signup(request):
@@ -134,8 +145,7 @@ def employee_signup(request):
         form = EmployeeSignupForm()
 
     return render(request, 'core/employee/signup.html', {
-        'form': form,
-        'couriers_only': AdminParameters.objects.last().couriers_only
+        'form': form
         })
 
 

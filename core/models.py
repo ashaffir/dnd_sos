@@ -21,6 +21,7 @@ class User(AbstractUser):
     # override username and email(unique)
     username = models.CharField(max_length=200, blank=False)
     email = models.EmailField(max_length=200, unique=True, blank=False)
+    joined = models.DateTimeField(auto_now_add=True)
     
     # denotes whether the user is Employer
     is_employer = models.BooleanField(default=False)
@@ -63,6 +64,8 @@ class User(AbstractUser):
     relationships = JSONField(null=True, blank=True)
 
     channel_name = models.CharField(max_length=100, null=True, blank=True)
+
+    newsletter_optin = models.BooleanField(default=True)
 
     def __str__(self):
         return self.email

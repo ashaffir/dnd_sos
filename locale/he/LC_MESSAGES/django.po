@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-02 07:27+0200\n"
+"POT-Creation-Date: 2020-11-24 09:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,24 +19,24 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: core/models.py:28
+#: core/models.py:29
 msgid "first name"
 msgstr "שם פרטי"
 
-#: core/models.py:131
+#: core/models.py:134
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:23
 msgid "Business Profile"
 msgstr "פרופיל בית עסק"
 
-#: core/models.py:132
+#: core/models.py:135
 msgid "Business Profiles"
 msgstr ""
 
-#: core/models.py:236
+#: core/models.py:239
 msgid "Freelancer Profile"
 msgstr ""
 
-#: core/models.py:237
+#: core/models.py:240
 msgid "Freelancer Profiles"
 msgstr ""
 
@@ -63,8 +63,9 @@ msgstr ""
 "                    "
 
 #: core/templates/core/emails/change-password-email.html:15
-#: core/templates/registration/account_activation_email.html:24
+#: core/templates/registration/account_activation_email.bak.html:24
 #: dndsos/templates/dndsos/email_verification_email.html:24
+#: newsletters_app/templates/newsletters_app/newsletter.html:171
 msgid "Hi"
 msgstr "היי"
 
@@ -103,11 +104,12 @@ msgstr "הודעת חשבון PickNdell"
 #: dndsos_dashboard/templates/dndsos_dashboard/emails/email_template.html:34
 #: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:22
 msgid "Dear"
-msgstr ""
+msgstr "שלום"
 
 #: core/templates/core/emails/profile_approved_email.html:30
 #: core/templates/core/emails/sender_approved_email.html:33
-#: core/templates/registration/account_activation_email.html:35
+#: core/templates/registration/account_activation_email.bak.html:35
+#: core/templates/registration/account_activation_email.html:298
 #: dndsos/templates/dndsos/email_verification_email.html:31
 #: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:46
 msgid "If you have received this email by mistake, please ignore it"
@@ -140,7 +142,7 @@ msgstr "קבל את התנאים וההגבלות של שליח"
 msgid "Sign Up"
 msgstr "הרשמה"
 
-#: core/templates/core/employee/signup.html:45
+#: core/templates/core/employee/signup.html:47
 msgid "Sender/Business? Register here"
 msgstr "בית עֵסֶק/שולח? הירשם כאן"
 
@@ -177,7 +179,6 @@ msgid "Confirm password"
 msgstr "אשר סיסמה"
 
 #: core/templates/core/password_change.html:60
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/widgets.py:397
 msgid "Change"
 msgstr "שנה"
 
@@ -185,23 +186,33 @@ msgstr "שנה"
 msgid "Your password was changed."
 msgstr "הסיסמה שלך שונתה."
 
-#: core/templates/registration/account_activation_email.html:19
+#: core/templates/registration/account_activation_email.bak.html:19
 #: dndsos/templates/dndsos/email_verification_email.html:19
 msgid "Message from PickNdell!"
 msgstr "הודעה מפיקאנדל"
 
-#: core/templates/registration/account_activation_email.html:25
+#: core/templates/registration/account_activation_email.bak.html:25
 msgid "click on the link below to activate your account"
 msgstr "לחץ על הקישור למטה כדי להפעיל את חשבונך"
 
-#: core/templates/registration/account_activation_email.html:28
-#: core/templates/registration/account_activation_email.html:30
+#: core/templates/registration/account_activation_email.bak.html:28
+#: core/templates/registration/account_activation_email.bak.html:30
+#: core/templates/registration/account_activation_email.html:264
+#: core/templates/registration/account_activation_email.html:267
 msgid "Activate account"
 msgstr "הפעל חשבון"
 
+#: core/templates/registration/account_activation_email.html:230
+msgid "Click on the link below to activate your account"
+msgstr "לחץ על הקישור למטה כדי להפעיל את חשבונך"
+
+#: core/templates/registration/account_activation_email.html:246
+msgid "Pickndell Team"
+msgstr "צוות פיקנדל"
+
 #: core/templates/registration/login.html:20
 #: core/templates/registration/login.html:26
-#: dndsos/templates/dndsos/base.html:92
+#: dndsos/templates/dndsos/base.html:100
 msgid "Login"
 msgstr "התחבר"
 
@@ -225,117 +236,117 @@ msgstr "הרשמת שליח"
 msgid "Sender/Business sign up"
 msgstr "הרשמת שולח / בית עסק"
 
-#: core/views.py:94
+#: core/views.py:139
 msgid ". Check your email and click the link to activate your account."
 msgstr "בדוק את הדואל שלך ולחץ על הקישור כדי להפעיל את חשבונך"
 
-#: core/views.py:93
+#: core/views.py:138
 msgid "An accout activation link has been sent to your email): "
 msgstr "קישור להפעלת חשבון נשלח לדואל שלך"
 
-#: core/views.py:118
+#: core/views.py:165
 msgid "Profile has been updated successfully"
 msgstr "הפרופיל עודכן בהצלחה"
 
-#: core/views.py:299
+#: core/views.py:346
 msgid "Your profile has been updated."
 msgstr "הפרופיל שלך עודכן."
 
-#: core/views.py:376
+#: core/views.py:423
 msgid "You have successfully confirmed your email. Log in to proceed."
 msgstr "אישרת בהצלחה את הדואל שלך. התחבר כדי להמשיך."
 
-#: core/views.py:388
+#: core/views.py:435
 msgid "<p>An activation link has been sent to your Email</p>"
 msgstr "קישור הפעלה נשלח לדואל שלך"
 
-#: core/views.py:401
+#: core/views.py:448
 msgid "Welcome "
 msgstr "ברוך הבא"
 
-#: core/views.py:401
+#: core/views.py:448
 msgid ". Your account is now operational"
 msgstr "חשבונך הופעל"
 
-#: core/views.py:416
+#: core/views.py:463
 msgid "Enter password"
 msgstr "הזן את הסיסמה"
 
-#: core/views.py:420
+#: core/views.py:467
 msgid "Minimum password length should be 8"
 msgstr "אורך הסיסמא המינימלי צריך להיות 8"
 
-#: core/views.py:424
+#: core/views.py:471
 msgid "Mismatch password"
 msgstr "סיסמתך לא התאימה"
 
-#: core/views.py:434
+#: core/views.py:481
 msgid "Successfully changed the password, please login again."
 msgstr "שינית את הסיסמה בהצלחה, אנא התחבר שוב."
 
-#: core/views.py:469
+#: core/views.py:516
 msgid "Check your mail inbox to reset password"
 msgstr "בדוק את תיבת הדואר שלך כדי לאפס את הסיסמה"
 
-#: core/views.py:479
+#: core/views.py:526
 msgid "This email is not registered to us. Please register first "
 msgstr "דואל זה אינו רשום לנו. אנא הירשם קודם"
 
-#: core/views.py:483
+#: core/views.py:530
 msgid "Please enter a valid email"
 msgstr "אנא הכנס דואל חוקי"
 
-#: core/views.py:487
+#: core/views.py:534
 msgid "Please do enter the email"
 msgstr "אנא הזן את הדואל"
 
-#: dndsos/templates/dndsos/base.html:73
+#: dndsos/templates/dndsos/base.html:81
 msgid "Home"
 msgstr "בית"
 
-#: dndsos/templates/dndsos/base.html:74
+#: dndsos/templates/dndsos/base.html:82
 msgid "Features"
 msgstr "מאפיינים"
 
-#: dndsos/templates/dndsos/base.html:75
+#: dndsos/templates/dndsos/base.html:83
 msgid "How it Works"
 msgstr "איך זה עובד"
 
-#: dndsos/templates/dndsos/base.html:76 dndsos/templates/dndsos/index.html:260
+#: dndsos/templates/dndsos/base.html:84 dndsos/templates/dndsos/index.html:279
 msgid "FAQ"
 msgstr "שאלות נפוצות"
 
-#: dndsos/templates/dndsos/base.html:80
+#: dndsos/templates/dndsos/base.html:88
 msgid "Pricing"
 msgstr "מחירים"
 
-#: dndsos/templates/dndsos/base.html:81
+#: dndsos/templates/dndsos/base.html:89
 msgid "Contact"
 msgstr "צור קשר"
 
-#: dndsos/templates/dndsos/base.html:85 dndsos/templates/dndsos/base.html:87
+#: dndsos/templates/dndsos/base.html:93 dndsos/templates/dndsos/base.html:95
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:20
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:19
 msgid "Dashboard"
-msgstr "לוּחַ מַחווָנִים"
+msgstr "לוח מחוונים"
 
-#: dndsos/templates/dndsos/base.html:89
+#: dndsos/templates/dndsos/base.html:97
 msgid "Logout"
 msgstr "התנתק"
 
-#: dndsos/templates/dndsos/base.html:237
+#: dndsos/templates/dndsos/base.html:245
 msgid "Terms of use"
 msgstr "תנאי שימוש"
 
-#: dndsos/templates/dndsos/base.html:238
+#: dndsos/templates/dndsos/base.html:246
 msgid "Privacy"
 msgstr "פְּרָטִיוּת"
 
-#: dndsos/templates/dndsos/base.html:251
+#: dndsos/templates/dndsos/base.html:259
 msgid "Copyright"
 msgstr "זכויות יוצרים"
 
-#: dndsos/templates/dndsos/base.html:251
+#: dndsos/templates/dndsos/base.html:259
 msgid "All rights reserved"
 msgstr "כל הזכויות שמורות"
 
@@ -343,95 +354,95 @@ msgstr "כל הזכויות שמורות"
 msgid "Please use the code below to activate the new email"
 msgstr "אנא השתמש בקוד שלמטה להפעלת הדואל החדש"
 
-#: dndsos/templates/dndsos/index.html:50
+#: dndsos/templates/dndsos/index.html:62
 msgid "Pickup and Delivery Network"
 msgstr "רשת איסוף ומסירה"
 
-#: dndsos/templates/dndsos/index.html:51
+#: dndsos/templates/dndsos/index.html:65
 msgid "Find couriers around you"
 msgstr "מצא שליחים פעילים בסביבתך"
 
-#: dndsos/templates/dndsos/index.html:56
+#: dndsos/templates/dndsos/index.html:74
 msgid "Need something to be delivered"
 msgstr "מעוניין לשלוח משהו"
 
-#: dndsos/templates/dndsos/index.html:60
+#: dndsos/templates/dndsos/index.html:79
 msgid "Earn extra income as a courier"
 msgstr "הכנסה נוספת כשליח"
 
-#: dndsos/templates/dndsos/index.html:84
+#: dndsos/templates/dndsos/index.html:103
 msgid "What is"
 msgstr "מה זה"
 
-#: dndsos/templates/dndsos/index.html:107
+#: dndsos/templates/dndsos/index.html:126
 msgid "Why"
 msgstr "למה"
 
-#: dndsos/templates/dndsos/index.html:179
+#: dndsos/templates/dndsos/index.html:198
 msgid "How it works"
 msgstr "איך זה עובד"
 
-#: dndsos/templates/dndsos/index.html:267
+#: dndsos/templates/dndsos/index.html:286
 msgid "Senders/Businesses"
 msgstr "בתי עסק/שולחים"
 
-#: dndsos/templates/dndsos/index.html:273
-#: dndsos/templates/dndsos/index.html:384
+#: dndsos/templates/dndsos/index.html:292
+#: dndsos/templates/dndsos/index.html:403
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:280
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:82
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:91
 msgid "Couriers"
 msgstr "שליחים"
 
-#: dndsos/templates/dndsos/index.html:362
+#: dndsos/templates/dndsos/index.html:381
 msgid "Pricing "
 msgstr "מחירים"
 
-#: dndsos/templates/dndsos/index.html:371
+#: dndsos/templates/dndsos/index.html:390
 msgid "Senders"
 msgstr "שולחים"
 
-#: dndsos/templates/dndsos/index.html:378
+#: dndsos/templates/dndsos/index.html:397
 msgid "Register as a Sender"
 msgstr "הירשם כשולח"
 
-#: dndsos/templates/dndsos/index.html:392
+#: dndsos/templates/dndsos/index.html:411
 msgid "Join as courier"
 msgstr "הצטרף כשליח"
 
-#: dndsos/templates/dndsos/index.html:589
+#: dndsos/templates/dndsos/index.html:608
 msgid "Get In Touch"
 msgstr "צור קשר"
 
-#: dndsos/templates/dndsos/index.html:604
+#: dndsos/templates/dndsos/index.html:623
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:43
 msgid "First Name"
 msgstr "שם פרטי"
 
-#: dndsos/templates/dndsos/index.html:610
+#: dndsos/templates/dndsos/index.html:629
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:53
 msgid "Last Name"
 msgstr "שם משפחה"
 
-#: dndsos/templates/dndsos/index.html:621
+#: dndsos/templates/dndsos/index.html:640
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:87
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:78
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:84
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:389
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:406
 msgid "Email"
 msgstr "אימייל"
 
-#: dndsos/templates/dndsos/index.html:632
+#: dndsos/templates/dndsos/index.html:651
 msgid "Subject"
 msgstr "נושא"
 
-#: dndsos/templates/dndsos/index.html:642
+#: dndsos/templates/dndsos/index.html:661
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:5
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:5
 msgid "Message"
 msgstr "הודעה"
 
-#: dndsos/templates/dndsos/index.html:655
+#: dndsos/templates/dndsos/index.html:674
 msgid "Send Message"
 msgstr "שלח"
 
@@ -443,26 +454,26 @@ msgstr "תנאי שימוש לשליחים"
 msgid "Terms of Use for Senders"
 msgstr "תנאי שימוש לשולחים"
 
-#: dndsos/views.py:34
+#: dndsos/views.py:51
 msgid ""
 "Thank you for your interest in PickNdell. We will get back to you shortly."
 msgstr "תודה על התעניינותך ב- PickNdell. נחזור אליך בהקדם."
 
-#: dndsos/views.py:36
+#: dndsos/views.py:53
 msgid "Please fill out the required fields before submitting the form."
 msgstr "מלא את השדות הדרושים לפני שליחת הטופס."
 
-#: dndsos/views.py:39
+#: dndsos/views.py:56
 msgid "Please confirm you are not a robot."
 msgstr "אנא אשר שאתה לא רובוט."
 
-#: dndsos/views.py:121 dndsos/views.py:132
+#: dndsos/views.py:140 dndsos/views.py:151
 msgid "This page is not loading properly. Please try again later"
 msgstr "דף זה לא נטען כהלכה. בבקשה נסה שוב מאוחר יותר"
 
 #: dndsos_dashboard/forms.py:26
 msgid "Restaurant"
-msgstr "מִסעָדָה"
+msgstr "מסעדה"
 
 #: dndsos_dashboard/forms.py:27
 msgid "Clothes"
@@ -474,7 +485,7 @@ msgstr "מוצרי נוֹחוּת"
 
 #: dndsos_dashboard/forms.py:29
 msgid "Grocery"
-msgstr "מַכּוֹלֶת"
+msgstr "מכולת"
 
 #: dndsos_dashboard/forms.py:30
 msgid "Office"
@@ -488,9 +499,9 @@ msgstr "אחר"
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:86
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:106
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:155
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:177
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:290
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:392
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:179
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:300
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:409
 msgid "Vehicle"
 msgstr "כלי רכב"
 
@@ -536,10 +547,10 @@ msgstr "הזמנות הממתינות להקצאת שליח"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:33
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:44
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:122
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:130
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:248
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:362
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:123
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:132
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:258
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:379
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:34
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:8
 msgid "There"
@@ -547,10 +558,10 @@ msgstr "יש"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:33
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:44
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:122
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:130
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:248
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:362
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:123
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:132
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:258
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:379
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:34
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:8
 msgid "are"
@@ -558,10 +569,10 @@ msgstr " "
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:33
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:44
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:122
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:130
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:248
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:362
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:123
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:132
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:258
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:379
 #: dndsos_dashboard/templates/dndsos_dashboard/open-orders.html:34
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:8
 msgid "is"
@@ -577,11 +588,11 @@ msgstr ""
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:35
 msgid "Means the order was rejected"
-msgstr ""
+msgstr "פירושו שההזמנה נדחתה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-alerts.html:36
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:45
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:363
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:380
 msgid "Show all"
 msgstr "רשימה מלאה"
 
@@ -606,7 +617,7 @@ msgstr "כתובת למסירת הזמנה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:52
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:97
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:32
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:33
 msgid "Started"
 msgstr "התחיל"
 
@@ -617,9 +628,8 @@ msgstr "סטָטוּס"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:54
 #: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:99
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1537
 msgid "Duration"
-msgstr "מֶשֶׁך"
+msgstr "משך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-dashboard.html:73
 msgid "minute/s"
@@ -670,8 +680,7 @@ msgstr "רשימה מלאה"
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:337
 #: dndsos_dashboard/templates/dndsos_dashboard/f-messages.html:10
 #: dndsos_dashboard/templates/dndsos_dashboard/f-messages.html:19
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:15
-#: venv_dnd_sos/lib/python3.8/site-packages/django/contrib/messages/apps.py:7
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:16
 msgid "Messages"
 msgstr "הודעות"
 
@@ -742,7 +751,7 @@ msgid "Business Category"
 msgstr "סוג בית העסק"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:91
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:165
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:167
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:93
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-removed-modal.html:33
 msgid "Address"
@@ -756,14 +765,16 @@ msgstr "השלמת פרופיל"
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:109
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:105
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:126
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:15
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:177
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:298
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:405
 msgid "Name"
 msgstr "שם"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:111
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:103
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:80
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:391
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:408
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:43
 msgid "City"
 msgstr "עיר"
@@ -808,7 +819,7 @@ msgstr "הוסף טלפון"
 msgid "Business/Sender Address"
 msgstr "כתובת שולח / בית עסק"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:165
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:167
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:85
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:92
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:113
@@ -816,17 +827,17 @@ msgstr "כתובת שולח / בית עסק"
 msgid "start typing"
 msgstr "תתחיל להקליד"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:172
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:174
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:176
 msgid "Newsletter Optin"
 msgstr "קבל עדכונים במייל"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:189
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:191
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:193
 msgid "Change Password"
 msgstr "שנה סיסמא"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:194
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:196
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:175
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:198
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:70
@@ -834,20 +845,20 @@ msgstr "שנה סיסמא"
 msgid "Submit"
 msgstr "שלח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:195
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:197
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:199
 msgid "Reset"
 msgstr "אִתחוּל"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:207
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:209
 msgid "Update Your Credit Card"
 msgstr "עדכון כרטיסי אשראי"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:211
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:213
 msgid "You already have a credit card in the system"
 msgstr "יש לך כבר כרטיס אשראי במערכת"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:222
+#: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:224
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:246
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:273
 msgid "Update"
@@ -987,8 +998,8 @@ msgid "Filter by City"
 msgstr "סנן לפי עיר"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:59
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:152
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:270
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:154
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:280
 msgid "Filter"
 msgstr "סנן"
 
@@ -1191,67 +1202,67 @@ msgstr "בחר שליח"
 msgid "Your Couriers"
 msgstr "השליחים שלך"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:121
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:122
 msgid "Active couriers around your business"
 msgstr "שליחים פעילים בסביבת העסק שלך"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:122
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:123
 msgid "active Couriers"
 msgstr "שליחים פעילים"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:129
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:247
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:131
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:257
 msgid "Pick Available Couriers in range"
 msgstr "בחר שליחים זמינים"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:129
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:247
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:131
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:257
 msgid "km"
 msgstr "קמ"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:130
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:248
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:132
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:258
 msgid "Couriers available"
 msgstr "שליחים זמינים"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:134
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:252
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:136
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:262
 msgid "Range from couriers"
 msgstr "מרחק מהשליח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:144
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:262
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:146
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:272
 msgid "Filter by Vehicle"
 msgstr "סנן לפי כלי תחבורה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:148
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:266
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:150
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:276
 #, python-format
 msgid " <option value=\"%(vehicle)s\">%(vehicle)s</option>"
 msgstr ""
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:176
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:289
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:390
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:178
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:299
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:407
 msgid "Short bio"
 msgstr "ביוגרפיה קצרה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:180
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:293
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:395
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:182
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:303
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:412
 msgid "Average Rating"
 msgstr "דירוג ממוצע"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:201
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:314
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:416
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:203
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:324
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:433
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-alerts-items.html:26
 msgid "Request Courier"
 msgstr "בקש שליח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:207
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:320
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:422
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:209
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:330
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:439
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:24
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:97
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:22
@@ -1260,63 +1271,68 @@ msgstr "בקש שליח"
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_broadcast-request-modal.html:25
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:7
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:17
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:104
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:115
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:106
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:117
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:11
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-modal.html:14
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-removed-modal.html:42
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_message-sent-modal.html:24
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_order-delivered-modal.html:24
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:150
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:154
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:13
 #: payments/templates/payments/partials/_update-card-modal.html:7
 msgid "Close"
 msgstr "סגור"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:208
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:321
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:210
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:331
 msgid "Which order would you like the freelancer for"
 msgstr "לאיזו הזמנה תרצה שליח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:222
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:335
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:437
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:224
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:345
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:454
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:96
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:73
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:16
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:114
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:116
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-modal.html:42
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:149
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:153
 msgid "Confirm"
 msgstr "אשר"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:224
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:337
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:439
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:226
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:347
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:456
 msgid "Cancel"
 msgstr "ביטול"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:361
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:243
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:364
+msgid "Please add your address to the profile before using this page"
+msgstr "אנא הוסף את כתובתך לפרופיל לפני שתשתמש בדף זה"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:378
 msgid "Pick Available Couriers From Your Pool"
 msgstr "בחר שליחים זמינים"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:362
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:379
 msgid "Couriers in your pool"
 msgstr "שליחים שעבדת עימם"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:423
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:440
 msgid "Which order would you like the courier for"
 msgstr "לאיזו הזמנה תרצה שליח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:448
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:465
 msgid "Show Orders Completed"
 msgstr "הצגת הזמנות שהושלמו"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:452
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:469
 msgid "Date"
 msgstr "תַאֲרִיך"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:453
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:470
 msgid "Drop-off"
 msgstr "מסירה"
 
@@ -1400,22 +1416,27 @@ msgstr "סע לאסוף"
 msgid "Deliver the package"
 msgstr "העבר את החבילה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:33
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:32
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_open-orders-list.html:32
-msgid "Pick Up Address"
-msgstr "כתובת איסוף"
+msgid "Order ID"
+msgstr "מספר הזמנה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:34
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_open-orders-list.html:33
+msgid "Pick Up Address"
+msgstr "כתובת איסוף"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:35
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_open-orders-list.html:34
 msgid "Drop Off Address"
 msgstr "כתובת למסירת הזמנה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:35
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:36
 msgid "Business Phone"
 msgstr "טלפון בית העסק"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:41
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:43
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:42
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:44
 msgid "Report Delivered"
 msgstr "דווח על מסירה"
 
@@ -1549,67 +1570,72 @@ msgid "View All"
 msgstr "רשימה מלאה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:8
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:105
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:141
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:107
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:145
 msgid "Confirmation"
 msgstr "אישור"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:13
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:110
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:146
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:112
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:150
 msgid "Are you sure you want to cancel this order"
 msgstr "האם אתה בטוח שברצונך לבטל הזמנה זו"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:7
-msgid "Offer Date"
-msgstr "תַאֲרִיך ההזמנה"
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:8
+msgid "ID"
+msgstr "ת.ז"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:8
+msgid "Offer Date"
+msgstr "תאריך ההזמנה"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:9
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-messages-list.html:11
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-removed-modal.html:28
 msgid "Business"
 msgstr "בית עסק"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:9
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:10
 msgid "Pickup"
 msgstr "איסוף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:10
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:11
 msgid "Destination"
 msgstr "יעד ההזמנה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:12
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:39
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:58
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:74
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:13
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:41
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:60
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:77
 msgid "Delivered"
 msgstr "נמסר"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:13
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:13
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:14
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:14
 msgid "Order Status"
 msgstr "סטָטוּס ההזמנה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:14
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:15
 msgid "Fare"
 msgstr "דמי נסיעה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:46
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:55
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:48
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:58
 msgid "Waiting for a Courier..."
 msgstr "ממתין לשליח ..."
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:50
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:52
 msgid "Go to pickup"
 msgstr "סע לאסוף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:54
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:64
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:56
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:67
 msgid "Being delivered..."
 msgstr "מועבר ..."
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:62
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:78
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:64
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:81
 msgid "Settled"
 msgstr "שולם"
 
@@ -1670,7 +1696,7 @@ msgstr "הוזמנת על ידי"
 msgid "New offer from"
 msgstr "הצעה חדשה מ-"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_open-orders-list.html:40
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_open-orders-list.html:41
 msgid "Accept"
 msgstr "קבל"
 
@@ -1678,59 +1704,63 @@ msgstr "קבל"
 msgid "Good Job"
 msgstr "עבודה טובה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:8
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:9
 msgid "Updated"
 msgstr "עודכן"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:9
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:10
 msgid "Order Destination"
 msgstr "יעד ההזמנה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:11
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:12
 msgid "Allocated Courier"
 msgstr "שליח מוקצה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:12
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:13
 msgid "Picked Up"
 msgstr "נאסף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:14
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:15
 msgid "Price"
 msgstr "מחיר"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:15
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:16
 msgid "Contact Courier"
 msgstr "צור קשר עם השליח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:16
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:17
 msgid "Courier Feedback"
 msgstr "מָשׁוֹב שליח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:17
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:18
 msgid "Invoice"
 msgstr "חשבונית"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:34
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:19
+msgid "Delete"
+msgstr ""
+
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:37
 msgid "Not Allocated"
 msgstr "לא מוקצה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:40
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:43
 msgid "Picked-Up"
 msgstr "נאסף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:58
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:61
 msgid "Waiting for pickup..."
 msgstr "ממתין לאיסוף ..."
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:67
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:70
 msgid "completed"
 msgstr "הושלמה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:129
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:133
 msgid "Download the invoice"
 msgstr "הורד את החשבונית"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:158
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:162
 msgid "Cancel your order"
 msgstr "בטל את ההזמנה"
 
@@ -1763,18 +1793,38 @@ msgstr "לאימות הטלפון שלך"
 msgid "digits code here"
 msgstr "קוד ספרות כאן"
 
-#: dndsos_dashboard/views.py:228
+#: dndsos_dashboard/views.py:230
 msgid ""
 "Failed getting credit card information. Please contact Pickndell support"
 msgstr "קבלת פרטי כרטיס האשראי נכשלה. אנא צרו קשר עם התמיכה של פיקנדל"
 
-#: dndsos_dashboard/views.py:380
+#: dndsos_dashboard/views.py:397
 msgid "You have successfully updated your profile."
 msgstr "הצלחת לעדכן את הפרופיל שלך."
 
-#: dndsos_dashboard/views.py:1056 orders/signals.py:266 orders/signals.py:268
+#: dndsos_dashboard/views.py:1073 orders/signals.py:266 orders/signals.py:268
 msgid "Thank you for choosing PickNdell"
 msgstr "תודה שבחרת ב- PickNdell"
+
+#: newsletters_app/templates/newsletters_app/newsletter.html:415
+msgid "This newsletter was sent to email"
+msgstr "עלון זה נשלח למייל"
+
+#: newsletters_app/templates/newsletters_app/newsletter.html:423
+msgid "Unsubscribe"
+msgstr "בטל את הרישום"
+
+#: newsletters_app/templates/newsletters_app/unsubscribe.html:20
+msgid "Unsubscribed"
+msgstr "המנוי בוטל"
+
+#: newsletters_app/templates/newsletters_app/unsubscribe.html:29
+msgid "You are unsubscribed"
+msgstr "אינך מנוי"
+
+#: newsletters_app/templates/newsletters_app/unsubscribe.html:30
+msgid "Unsubscribed by mistake / Re-subscribe"
+msgstr "ביטלת את הרישום בטעות / הירשם כמנוי מחדש"
 
 #: payments/models.py:16
 msgid "Card status"
@@ -1798,1352 +1848,134 @@ msgid ""
 "information"
 msgstr "כרטיס האשראי אינו תקף. אנא הקפד להזין כרטיס אשראי תקף"
 
-#: venv_dnd_sos/lib/python3.8/site-packages/_pytest/config/argparsing.py:443
-#, python-format
-msgid "ambiguous option: %(option)s could match %(matches)s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/forms.py:8
-msgid "Search files"
-msgstr "חפש קבצים"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
-msgid "Select an image to embed"
-msgstr "בחר תמונה"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:27
-msgid "Browse for the image you want, then click 'Embed Image' to continue..."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:29
-msgid ""
-"No images found. Upload images using the 'Image Button' dialog's 'Upload' "
-"tab."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:50
-msgid "Images in: "
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:62
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:80
-msgid "Embed Image"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:146
-msgid "Play Slideshow"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:147
-msgid "Pause Slideshow"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:148
-msgid "&lsaquo; Previous Photo"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:149
-msgid "Next Photo &rsaquo;"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:150
-msgid "Next &rsaquo;"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
-msgid "&lsaquo; Prev"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/crispy_forms/tests/test_form_helper.py:129
-#: venv_dnd_sos/lib/python3.8/site-packages/crispy_forms/tests/test_form_helper.py:139
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:53
-msgid "This field is required."
-msgstr "שדה חובה"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/crispy_forms/tests/test_layout.py:361
-msgid "i18n text"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/crispy_forms/tests/test_layout.py:361
-msgid "i18n legend"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/crispy_forms/tests/test_layout_objects.py:129
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:32
-msgid "Enter a valid value."
-msgstr "הזן ערך חוקי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/contrib/sitemaps/apps.py:7
-msgid "Site Maps"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/contrib/staticfiles/apps.py:9
-msgid "Static Files"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/contrib/syndication/apps.py:7
-msgid "Syndication"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/paginator.py:45
-msgid "That page number is not an integer"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/paginator.py:47
-msgid "That page number is less than 1"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/paginator.py:52
-msgid "That page contains no results"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:103
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:659
-msgid "Enter a valid URL."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:155
-msgid "Enter a valid integer."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:166
-msgid "Enter a valid email address."
-msgstr ""
-
-#. Translators: "letters" means latin letters: a-z and A-Z.
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:240
-msgid ""
-"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:247
-msgid ""
-"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:256
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:276
-msgid "Enter a valid IPv4 address."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:261
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:277
-msgid "Enter a valid IPv6 address."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:271
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:275
-msgid "Enter a valid IPv4 or IPv6 address."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:305
-msgid "Enter only digits separated by commas."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:311
-#, python-format
-msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:343
-#, python-format
-msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:352
-#, python-format
-msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:362
-#, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at least %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:377
-#, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at most %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:396
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:291
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:326
-msgid "Enter a number."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:398
-#, python-format
-msgid "Ensure that there are no more than %(max)s digit in total."
-msgid_plural "Ensure that there are no more than %(max)s digits in total."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:403
-#, python-format
-msgid "Ensure that there are no more than %(max)s decimal place."
-msgid_plural "Ensure that there are no more than %(max)s decimal places."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:408
-#, python-format
-msgid ""
-"Ensure that there are no more than %(max)s digit before the decimal point."
-msgid_plural ""
-"Ensure that there are no more than %(max)s digits before the decimal point."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:470
-#, python-format
-msgid ""
-"File extension “%(extension)s” is not allowed. Allowed extensions are: "
-"%(allowed_extensions)s."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/core/validators.py:522
-msgid "Null characters are not allowed."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/base.py:1181
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:759
-msgid "and"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/base.py:1183
-#, python-format
-msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:104
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:105
-msgid "This field cannot be null."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:106
-msgid "This field cannot be blank."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:107
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
-#. Eg: "Title must be unique for pub_date year"
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:111
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:130
-#, python-format
-msgid "Field of type: %(field_type)s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:937
-#, python-format
-msgid "“%(value)s” value must be either True or False."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:938
-#, python-format
-msgid "“%(value)s” value must be either True, False, or None."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:940
-msgid "Boolean (Either True or False)"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:981
-#, python-format
-msgid "String (up to %(max_length)s)"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1045
-msgid "Comma-separated integers"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1094
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
-"format."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1096
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1239
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
-"date."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1099
-msgid "Date (without time)"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1237
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1241
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1245
-msgid "Date (with time)"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1393
-#, python-format
-msgid "“%(value)s” value must be a decimal number."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1395
-msgid "Decimal number"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1534
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
-"uuuuuu] format."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1587
-msgid "Email address"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1610
-msgid "File path"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1676
-#, python-format
-msgid "“%(value)s” value must be a float."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1678
-msgid "Floating point number"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1716
-#, python-format
-msgid "“%(value)s” value must be an integer."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1718
-msgid "Integer"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1801
-msgid "Big (8 byte) integer"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1817
-msgid "IPv4 address"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1848
-msgid "IP address"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1928
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1929
-#, python-format
-msgid "“%(value)s” value must be either None, True or False."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1931
-msgid "Boolean (Either True, False or None)"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1966
-msgid "Positive integer"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1979
-msgid "Positive small integer"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1993
-#, python-format
-msgid "Slug (up to %(max_length)s)"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2025
-msgid "Small integer"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2032
-msgid "Text"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2060
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-"format."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2062
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-"invalid time."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2065
-msgid "Time"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2191
-msgid "URL"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2213
-msgid "Raw binary data"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2278
-#, python-format
-msgid "“%(value)s” is not a valid UUID."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2280
-msgid "Universally unique identifier"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/files.py:221
-msgid "File"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/files.py:360
-msgid "Image"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/related.py:778
-#, python-format
-msgid "%(model)s instance with %(field)s %(value)r does not exist."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/related.py:780
-msgid "Foreign Key (type determined by related field)"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/related.py:1012
-msgid "One-to-one relationship"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/related.py:1066
-#, python-format
-msgid "%(from)s-%(to)s relationship"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/related.py:1067
-#, python-format
-msgid "%(from)s-%(to)s relationships"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/db/models/fields/related.py:1109
-msgid "Many-to-many relationship"
-msgstr ""
-
-#. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/boundfield.py:149
-msgid ":?.!"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:246
-msgid "Enter a whole number."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:397
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:1127
-msgid "Enter a valid date."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:421
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:1128
-msgid "Enter a valid time."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:443
-msgid "Enter a valid date/time."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:472
-msgid "Enter a valid duration."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:473
-#, python-brace-format
-msgid "The number of days must be between {min_days} and {max_days}."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:533
-msgid "No file was submitted. Check the encoding type on the form."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:534
-msgid "No file was submitted."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:535
-msgid "The submitted file is empty."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:537
-#, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
-msgid_plural ""
-"Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:540
-msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:601
-msgid ""
-"Upload a valid image. The file you uploaded was either not an image or a "
-"corrupted image."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:763
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:853
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:1275
-#, python-format
-msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:854
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:969
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:1274
-msgid "Enter a list of values."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:970
-msgid "Enter a complete value."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/fields.py:1186
-msgid "Enter a valid UUID."
-msgstr ""
-
-#. Translators: This is the default suffix added to form field labels
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/forms.py:81
-msgid ":"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/forms.py:207
-#, python-format
-msgid "(Hidden field %(name)s) %(error)s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/formsets.py:93
-msgid "ManagementForm data is missing or has been tampered with"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/formsets.py:345
-#, python-format
-msgid "Please submit %d or fewer forms."
-msgid_plural "Please submit %d or fewer forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/formsets.py:352
-#, python-format
-msgid "Please submit %d or more forms."
-msgid_plural "Please submit %d or more forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/formsets.py:379
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/formsets.py:386
-msgid "Order"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/formsets.py:391
-msgid "Delete"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:754
-#, python-format
-msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:758
-#, python-format
-msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:764
-#, python-format
-msgid ""
-"Please correct the duplicate data for %(field_name)s which must be unique "
-"for the %(lookup)s in %(date_field)s."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:773
-msgid "Please correct the duplicate values below."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:1094
-msgid "The inline value did not match the parent instance."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:1161
-msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/models.py:1277
-#, python-format
-msgid "“%(pk)s” is not a valid value."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/utils.py:162
-#, python-format
-msgid ""
-"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
-"may be ambiguous or it may not exist."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/widgets.py:395
-msgid "Clear"
-msgstr "מחק"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/widgets.py:396
-msgid "Currently"
-msgstr "נוכחי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/widgets.py:709
-msgid "Unknown"
-msgstr "לא ידוע"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/widgets.py:710
-msgid "Yes"
-msgstr "כן"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/forms/widgets.py:711
-msgid "No"
-msgstr "לא"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/template/defaultfilters.py:788
-msgid "yes,no,maybe"
-msgstr "כן,לא, אולי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/template/defaultfilters.py:817
-#: venv_dnd_sos/lib/python3.8/site-packages/django/template/defaultfilters.py:834
-#, python-format
-msgid "%(size)d byte"
-msgid_plural "%(size)d bytes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/template/defaultfilters.py:836
-#, python-format
-msgid "%s KB"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/template/defaultfilters.py:838
-#, python-format
-msgid "%s MB"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/template/defaultfilters.py:840
-#, python-format
-msgid "%s GB"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/template/defaultfilters.py:842
-#, python-format
-msgid "%s TB"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/template/defaultfilters.py:844
-#, python-format
-msgid "%s PB"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dateformat.py:62
-msgid "p.m."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dateformat.py:63
-msgid "a.m."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dateformat.py:68
-msgid "PM"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dateformat.py:69
-msgid "AM"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dateformat.py:150
-msgid "midnight"
-msgstr "חצות"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dateformat.py:152
-msgid "noon"
-msgstr "צהריים"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:6
-msgid "Monday"
-msgstr "שני"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:6
-msgid "Tuesday"
-msgstr "שלישי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:6
-msgid "Wednesday"
-msgstr "רביעי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:6
-msgid "Thursday"
-msgstr "חמישי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:6
-msgid "Friday"
-msgstr "שישי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:7
-msgid "Saturday"
-msgstr "שבת"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:7
-msgid "Sunday"
-msgstr "ראשון"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:10
-msgid "Mon"
-msgstr "שני"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:10
-msgid "Tue"
-msgstr "שלישי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:10
-msgid "Wed"
-msgstr "רביעי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:10
-msgid "Thu"
-msgstr "חמישי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:10
-msgid "Fri"
-msgstr "שישי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:11
-msgid "Sat"
-msgstr "שבת"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:11
-msgid "Sun"
-msgstr "ראשון"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:14
-msgid "January"
-msgstr "ינואר"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:14
-msgid "February"
-msgstr "פברואר"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:14
-msgid "March"
-msgstr "מרץ"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:14
-msgid "April"
-msgstr "אפריל"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:14
-msgid "May"
-msgstr "מאי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:14
-msgid "June"
-msgstr "יוני"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:15
-msgid "July"
-msgstr "יולי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:15
-msgid "August"
-msgstr "אוגוסט"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:15
-msgid "September"
-msgstr "ספטמבר"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:15
-msgid "October"
-msgstr "אוקטובר"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:15
-msgid "November"
-msgstr "נובמבר"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:16
-msgid "December"
-msgstr "דצמבר"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:19
-msgid "jan"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:19
-msgid "feb"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:19
-msgid "mar"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:19
-msgid "apr"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:19
-msgid "may"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:19
-msgid "jun"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:20
-msgid "jul"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:20
-msgid "aug"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:20
-msgid "sep"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:20
-msgid "oct"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:20
-msgid "nov"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:20
-msgid "dec"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:23
-msgctxt "abbrev. month"
-msgid "Jan."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:24
-msgctxt "abbrev. month"
-msgid "Feb."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:25
-msgctxt "abbrev. month"
-msgid "March"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:26
-msgctxt "abbrev. month"
-msgid "April"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:27
-msgctxt "abbrev. month"
-msgid "May"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:28
-msgctxt "abbrev. month"
-msgid "June"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:29
-msgctxt "abbrev. month"
-msgid "July"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:30
-msgctxt "abbrev. month"
-msgid "Aug."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:31
-msgctxt "abbrev. month"
-msgid "Sept."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:32
-msgctxt "abbrev. month"
-msgid "Oct."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:33
-msgctxt "abbrev. month"
-msgid "Nov."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:34
-msgctxt "abbrev. month"
-msgid "Dec."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:37
-msgctxt "alt. month"
-msgid "January"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:38
-msgctxt "alt. month"
-msgid "February"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:39
-msgctxt "alt. month"
-msgid "March"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:40
-msgctxt "alt. month"
-msgid "April"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:41
-msgctxt "alt. month"
-msgid "May"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:42
-msgctxt "alt. month"
-msgid "June"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:43
-msgctxt "alt. month"
-msgid "July"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:44
-msgctxt "alt. month"
-msgid "August"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:45
-msgctxt "alt. month"
-msgid "September"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:46
-msgctxt "alt. month"
-msgid "October"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:47
-msgctxt "alt. month"
-msgid "November"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/dates.py:48
-msgctxt "alt. month"
-msgid "December"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/ipv6.py:8
-msgid "This is not a valid IPv6 address."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/text.py:69
-#, python-format
-msgctxt "String to return when truncating text"
-msgid "%(truncated_text)s…"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/text.py:235
-msgid "or"
-msgstr ""
-
-#. Translators: This string is used as a separator between list elements
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/text.py:254
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/timesince.py:83
-msgid ", "
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/timesince.py:9
-#, python-format
-msgid "%d year"
-msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/timesince.py:10
-#, python-format
-msgid "%d month"
-msgid_plural "%d months"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/timesince.py:11
-#, python-format
-msgid "%d week"
-msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/timesince.py:12
-#, python-format
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/timesince.py:13
-#, python-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/timesince.py:14
-#, python-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/utils/timesince.py:72
-msgid "0 minutes"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/csrf.py:110
-msgid "Forbidden"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/csrf.py:111
-msgid "CSRF verification failed. Request aborted."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/csrf.py:115
-msgid ""
-"You are seeing this message because this HTTPS site requires a “Referer "
-"header” to be sent by your Web browser, but none was sent. This header is "
-"required for security reasons, to ensure that your browser is not being "
-"hijacked by third parties."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/csrf.py:120
-msgid ""
-"If you have configured your browser to disable “Referer” headers, please re-"
-"enable them, at least for this site, or for HTTPS connections, or for “same-"
-"origin” requests."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/csrf.py:124
-msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the “Referrer-Policy: no-referrer” header, please remove them. The "
-"CSRF protection requires the “Referer” header to do strict referer checking. "
-"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
-"\" …> for links to third-party sites."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/csrf.py:132
-msgid ""
-"You are seeing this message because this site requires a CSRF cookie when "
-"submitting forms. This cookie is required for security reasons, to ensure "
-"that your browser is not being hijacked by third parties."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/csrf.py:137
-msgid ""
-"If you have configured your browser to disable cookies, please re-enable "
-"them, at least for this site, or for “same-origin” requests."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/csrf.py:142
-msgid "More information is available with DEBUG=True."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:41
-msgid "No year specified"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:61
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:111
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:208
-msgid "Date out of range"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:90
-msgid "No month specified"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:142
-msgid "No day specified"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:188
-msgid "No week specified"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:338
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:367
-#, python-format
-msgid "No %(verbose_name_plural)s available"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:589
-#, python-format
-msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/dates.py:623
-#, python-format
-msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/detail.py:54
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/list.py:67
-msgid "Page is not “last”, nor can it be converted to an int."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/list.py:72
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/generic/list.py:154
-#, python-format
-msgid "Empty list and “%(class_name)s.allow_empty” is False."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/static.py:40
-msgid "Directory indexes are not allowed here."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/static.py:42
-#, python-format
-msgid "“%(path)s” does not exist"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/static.py:80
-#, python-format
-msgid "Index of %(directory)s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:7
-msgid "Django: the Web framework for perfectionists with deadlines."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:346
-#, python-format
-msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:368
-msgid "The install worked successfully! Congratulations!"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:369
-#, python-format
-msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> is in your settings file and you have not configured any "
-"URLs."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:384
-msgid "Django Documentation"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:385
-msgid "Topics, references, &amp; how-to’s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:396
-msgid "Tutorial: A Polling App"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:397
-msgid "Get started with Django"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:408
-msgid "Django Community"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:409
-msgid "Connect, get help, or contribute"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:65
-#, python-format
-msgid "Some messages were sent: %s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:67
-#, python-format
-msgid "All messages were sent: %s"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:73
-#, python-format
-msgid "Some messages failed to send. %d devices were marked as inactive."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:81
-msgid "Send test notification"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:86
-msgid "Send test notification in bulk"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:91
-msgid "Send test data message"
-msgstr "שלח הודעה בדיקה"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:97
-msgid "Send test data message in bulk"
-msgstr "שלח הודעה אל"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:102
-msgid "Enable selected devices"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/admin.py:107
-msgid "Disable selected devices"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/fields.py:52
-msgid "Enter a valid hexadecimal number"
-msgstr "הזן ערך חוקי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:20
-msgid "Is active"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:21
-msgid "Inactive devices will not be sent notifications"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:26
-msgid "Creation date"
-msgstr "תחילת הזמנה"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:164
-msgid "Device ID"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:165
-msgid "Unique device identifier"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:168
-msgid "Registration token"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:174
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:258
-msgid "FCM device"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/models.py:259
-msgid "FCM devices"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/fcm_django/settings.py:7
-msgid "FCM Django"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/imagekit/admin.py:10
-msgid "Thumbnail"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/jsonfield/fields.py:48
-msgid "Enter valid JSON."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/jsonfield/forms.py:15
-#, python-format
-msgid "\"%(value)s\" value must be valid JSON."
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/places/fields.py:15
-msgid "A geoposition field (latitude and longitude)"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/places/forms.py:11
-msgid "Enter a valid geoposition."
-msgstr "הזן ערך חוקי"
-
-#: venv_dnd_sos/lib/python3.8/site-packages/places/forms.py:15
-msgid "place"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/places/forms.py:16
-#: venv_dnd_sos/lib/python3.8/site-packages/places/widgets.py:22
-msgid "Latitude"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/places/forms.py:17
-#: venv_dnd_sos/lib/python3.8/site-packages/places/widgets.py:29
-msgid "Longitude"
-msgstr ""
-
-#: venv_dnd_sos/lib/python3.8/site-packages/qr_code/qrcode/utils.py:73
-#, python-format
-msgid "The option '%s' is not a valid option for a QR code."
-msgstr ""
+#~ msgid "Search files"
+#~ msgstr "חפש קבצים"
+
+#~ msgid "Select an image to embed"
+#~ msgstr "בחר תמונה"
+
+#~ msgid "This field is required."
+#~ msgstr "שדה חובה"
+
+#~ msgid "Enter a valid value."
+#~ msgstr "הזן ערך חוקי"
+
+#~ msgid "Clear"
+#~ msgstr "מחק"
+
+#~ msgid "Currently"
+#~ msgstr "נוכחי"
+
+#~ msgid "Unknown"
+#~ msgstr "לא ידוע"
+
+#~ msgid "Yes"
+#~ msgstr "כן"
+
+#~ msgid "No"
+#~ msgstr "לא"
+
+#~ msgid "yes,no,maybe"
+#~ msgstr "כן,לא, אולי"
+
+#~ msgid "midnight"
+#~ msgstr "חצות"
+
+#~ msgid "noon"
+#~ msgstr "צהריים"
+
+#~ msgid "Monday"
+#~ msgstr "שני"
+
+#~ msgid "Tuesday"
+#~ msgstr "שלישי"
+
+#~ msgid "Wednesday"
+#~ msgstr "רביעי"
+
+#~ msgid "Thursday"
+#~ msgstr "חמישי"
+
+#~ msgid "Friday"
+#~ msgstr "שישי"
+
+#~ msgid "Saturday"
+#~ msgstr "שבת"
+
+#~ msgid "Sunday"
+#~ msgstr "ראשון"
+
+#~ msgid "Mon"
+#~ msgstr "שני"
+
+#~ msgid "Tue"
+#~ msgstr "שלישי"
+
+#~ msgid "Wed"
+#~ msgstr "רביעי"
+
+#~ msgid "Thu"
+#~ msgstr "חמישי"
+
+#~ msgid "Fri"
+#~ msgstr "שישי"
+
+#~ msgid "Sat"
+#~ msgstr "שבת"
+
+#~ msgid "Sun"
+#~ msgstr "ראשון"
+
+#~ msgid "January"
+#~ msgstr "ינואר"
+
+#~ msgid "February"
+#~ msgstr "פברואר"
+
+#~ msgid "March"
+#~ msgstr "מרץ"
+
+#~ msgid "April"
+#~ msgstr "אפריל"
+
+#~ msgid "May"
+#~ msgstr "מאי"
+
+#~ msgid "June"
+#~ msgstr "יוני"
+
+#~ msgid "July"
+#~ msgstr "יולי"
+
+#~ msgid "August"
+#~ msgstr "אוגוסט"
+
+#~ msgid "September"
+#~ msgstr "ספטמבר"
+
+#~ msgid "October"
+#~ msgstr "אוקטובר"
+
+#~ msgid "November"
+#~ msgstr "נובמבר"
+
+#~ msgid "December"
+#~ msgstr "דצמבר"
+
+#~ msgid "Send test data message"
+#~ msgstr "שלח הודעה בדיקה"
+
+#~ msgid "Send test data message in bulk"
+#~ msgstr "שלח הודעה אל"
+
+#~ msgid "Enter a valid hexadecimal number"
+#~ msgstr "הזן ערך חוקי"
+
+#~ msgid "Creation date"
+#~ msgstr "תחילת הזמנה"
+
+#~ msgid "Enter a valid geoposition."
+#~ msgstr "הזן ערך חוקי"
 
 #~ msgid " Courier Signup"
 #~ msgstr "הרשמת שליח"

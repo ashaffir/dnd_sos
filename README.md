@@ -172,6 +172,11 @@ lt --port 8000
 
 # REFERENCE: django signals, update_fields
 - https://stackoverflow.com/questions/54578488/django-signals-kwargsupdate-fields-is-always-none-on-model-update-via-djan
+- https://stackoverflow.com/questions/36719566/identify-the-changed-fields-in-django-post-save-signal
 
 # REFERENCE: newsletter templates
 - https://www.cakemail.com/templates/
+
+# REFERENCE: Sessions
+- https://docs.djangoproject.com/en/3.1/topics/http/sessions/
+

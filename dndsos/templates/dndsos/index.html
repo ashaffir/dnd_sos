@@ -684,6 +684,8 @@
     </div>
   </div>
 
+  {% include 'dndsos/_modal_message.html' %}
+
 <!-- JS for the FAQ section -->
 <script>
   // Add click event to all tablinks
@@ -693,6 +695,12 @@
   // Add active class to the selected tab
   $(this).addClass("active");
 });
+
+{% if show_home_message %}
+  $(window).on('load',function(){
+      $('#modalAlert').modal('show');
+  });
+{% endif %}
 
 </script>
 

@@ -78,7 +78,7 @@ class Employee(OSMGeoAdmin):
 
 @admin.register(User)
 class User(admin.ModelAdmin):
-    list_display = ['pk','email','is_employer','is_employee']
+    list_display = ['pk','email','joined','is_employer','is_employee']
     search_fields = ('username','email')
 
 admin.site.register(BankDetails)

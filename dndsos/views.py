@@ -20,6 +20,22 @@ def home(request):
     context = {}
     form = ContactForm(request.POST or None)
 
+    # General Alert Message modal/popup
+    # if AdminParameters.objects.last().alert_message:
+    #     print(f"{request.session.keys()}")
+    #     # Session control for displaying the messages
+    #     if 'alert_shown' not in request.session.keys():
+    #         context['alert_message_title'] = AdminParameters.objects.last().alert_message_title
+    #         context['alert_message_content'] = AdminParameters.objects.last().alert_message_content
+    #         request.session['alert_shown'] = True
+    #         context['show_message'] = True
+    #         # messages.info(request, 'This is test message')
+
+    #     print(f"{request.session.keys()}")
+    #     request.session.flush()
+    #     print(f"{request.session.keys()}")
+
+
 
     if request.POST:
 

@@ -1,0 +1,37 @@
+{% extends 'dndsos/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %} PickNdell - Unsubscribe{% endblock %}
+
+{% block content %}
+{% get_current_language as lang %}
+
+<style>
+  @media screen and (max-device-width: 360px) and (orientation: portrait){
+    .mobile-header {
+        margin-top: 2rem;
+    }
+  }
+</style>
+
+<div class="" style="margin-top: 9rem;">
+  {% block head_title %}{% trans "Unsubscribed" %}{% endblock %}
+</div>
+<div class="container" {% if lang == 'he' %} dir='rtl' align='right' {% else %} style="text-align: left;"{% endif %}>
+  <div class="row justify-content-center form-group">
+    <div class="col-lg-7 mt-5">
+        <center>
+            <div class="title">
+                
+            </div>
+            <h1 class="text-black mb-3 mobile-header" style="color: black;">{% trans "You are unsubscribed" %}</h1> 
+            <a class="button secondaryAction" href="{% url 'newsletters_app:re_subscribe' user_id=user.pk %}">{% trans "Unsubscribed by mistake / Re-subscribe" %}?</a>
+        </center>
+
+  
+    </div>
+  </div>    
+</div>
+{% endblock content %}

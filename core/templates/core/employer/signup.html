@@ -45,4 +45,14 @@
     </div>
   </div>    
 </div>
+
+{% include 'core/partials/_core_modal_message.html' %}
+
+<script>
+  {% if show_message %}
+    $(window).on('load',function(){
+        $('#modalAlert').modal('show');
+    });
+  {% endif %}
+</script>
 {% endblock %}
