@@ -68,3 +68,4 @@ dj-places==4.0.0
 django-cors-headers==3.5.0
 django-newsletter==0.9.1
 sorl-thumbnail==12.6.3
+mailchimp-marketing==3.0.23

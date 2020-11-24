@@ -85,8 +85,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # Newsletter related
-    'sorl.thumbnail',
-    'newsletter',
+    # 'sorl.thumbnail',
+    'newsletters_app',
+    
 
     # GEO
     'django.contrib.gis',
@@ -139,6 +140,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR,'dndsos_dashboard/templates'),
             os.path.join(BASE_DIR,'notifier/templates'),
             os.path.join(BASE_DIR,'geo/templates'),
+            os.path.join(BASE_DIR,'newsletters_app/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -405,7 +407,8 @@ ROOKIE_LEVEL = 1
 ADVANCED_LEVEL = 10
 EXPERT_LEVEL = 50
 
-# Newsletter
-MAILCHIMP_API_KEY = 'e8dfa4a084453e834b5875f398866c39-us20'
-MAILCHIMP_DATA_CENTER = 'us20'
-MAILCHIMP_EMAIL_LIST_ID = '6055fc759b'
+# Mailchimp Newsletter
+# MAILCHIMP_API_KEY = 'e8dfa4a084453e834b5875f398866c39-us20'
+# MAILCHIMP_DATA_CENTER = 'us20'
+# MAILCHIMP_EMAIL_LIST_ID = '6055fc759b'
+

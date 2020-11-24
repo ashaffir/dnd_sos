@@ -1,3 +1,7 @@
+import logging
+# import mailchimp_marketing as MailchimpMarketing
+# from mailchimp_marketing.api_client import ApiClientError
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -21,6 +25,8 @@ from .forms import *
 from .models import User, Employer, Employee, Asset, AssignedAsset
 from .tokens import account_activation_token
 from .decorators import employer_required, employee_required
+
+logger = logging.getLogger(__file__)
 
 def home(request):
     '''
@@ -89,7 +95,34 @@ def employee_signup(request):
             #         context=message, to_email=[user.email],
             #         html_email_template_name='registration/account_activation_email.html')
 
+            ####################################
+            # MailChimp newsletter subscription
+            ####################################
+            # mailchimp = MailchimpMarketing.Client()
+            # mailchimp.set_config({
+            # "api_key": settings.MAILCHIMP_API_KEY,
+            # "server": settings.MAILCHIMP_DATA_CENTER
+            # })
 
+            # list_id = settings.MAILCHIMP_EMAIL_LIST_ID
+
+            # member_info = {
+            #     "email_address": user.email,
+            #     "status": "subscribed",
+            #     "merge_fields": {
+            #         "FNAME": "A",
+            #         "LNAME": "B"
+            #     }
+            # }
+
+            # try:
+            #     response = mailchimp.lists.add_list_member(list_id, member_info)
+            #     print(">>> CORE VIEWS: Mailchimp response: {}".format(response))
+            #     logger.info(">>> CORE VIEWS: Mailchimp response: {}".format(response))
+            # except ApiClientError as error:
+            #     print(">>> CORE VIEWS: Failed MailChimp communication. ERROR: {}".format(error.text))
+            #     logger.error(">>> CORE VIEWS: Failed MailChimp communication. ERROR: {}".format(error.text))
+            ####################################
 
             messages.success(request, gettext('An accout activation link has been sent to your email): ' + user.email +
                                 gettext('. Check your email and click the link to activate your account.')))
