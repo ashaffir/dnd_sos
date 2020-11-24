@@ -6,7 +6,7 @@ from . import views
 app_name = 'newsletters_app'
 
 urlpatterns = [
-    path('', views.newsletter_admin, name='newsletter_admin'),
+    path('newsletter_admin', views.newsletter_admin, name='newsletter_admin'),
     path('unsubscribe/<str:user_id>', views.unsubscribe, name='unsubscribe'),
     path('newsletter_test', views.newsletter_test, name='newsletter_test'),
     path('newsletter_form', views.newsletter_form, name='newsletter_form'),

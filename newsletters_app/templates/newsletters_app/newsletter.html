@@ -479,7 +479,7 @@
             <div class="col">
                 <p>Send to: {{ recipients_type }}</p>
                 <!-- <a class="btn btn-warning" href="{% url 'newsletters_app:newsletter_admin' %}">Back to Admin</a> -->
-                <button class="btn btn-warning" type="button" onclick="history.back()">Back to Admin</button>
+                <a class="btn btn-warning" type="button" href="{% url 'newsletters_app:newsletter_admin' %}">Back to Admin</a>
             </div>
         </div>
     {% endif %}

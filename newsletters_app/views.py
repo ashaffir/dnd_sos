@@ -138,7 +138,9 @@ def newsletter_form(request):
             recipients = Employer.objects.filter(newsletter_optin=True)
             newsletter.recipients_type = 'businesses'
         else:
-            recipients = User.objects.filter(newsletter_optin=True)
+            recipients = []
+            recipients.extend(Employer.objects.filter(newsletter_optin=True))
+            recipients.extend(Employee.objects.filter(newsletter_optin=True))
             newsletter.recipients_type = 'all'
 
 
@@ -158,6 +160,7 @@ def newsletter_form(request):
 
         newsletter.recipients_count = len(recipients)
         newsletter.save()
+        context['admin'] = True
         return render(request, 'newsletters_app/newsletter.html', context)
         
     return render(request, 'newsletters_app/newsletter_form.html', context)
