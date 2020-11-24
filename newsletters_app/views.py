@@ -143,6 +143,7 @@ def newsletter_form(request):
 
 
         newsletter.name = request.POST.get('newsletter_name')
+        newsletter.subject = request.POST.get('subject')
         newsletter.title_1 = request.POST.get('title_1')
         newsletter.content_1 = request.POST.get('content_1')
         newsletter.title_2 = request.POST.get('title_2')
@@ -155,6 +156,7 @@ def newsletter_form(request):
         for user in recipients:
             newsletter.recipients.append(user.user.pk)
 
+        newsletter.recipients_count = len(recipients)
         newsletter.save()
         return render(request, 'newsletters_app/newsletter.html', context)
         

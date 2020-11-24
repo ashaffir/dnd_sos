@@ -27,6 +27,7 @@ class Newsletter(models.Model):
 
     recipients_type = models.CharField(max_length=20, null=True, blank=True)
     recipients = JSONField(blank=True, null=True, default=list)
+    recipients_count = models.IntegerField(blank=True, null=True, default=0)
 
 
 
