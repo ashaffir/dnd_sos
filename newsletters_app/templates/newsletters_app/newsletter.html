@@ -416,7 +416,11 @@
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
 													<span style="font-size:13px;color:#181818;font-family:Helvetica, Arial, sans-serif;line-height:200%;">
-                                                        {% trans 'This newsletter was sent to email' %} {{ user.email }} </span>
+                                                        {% trans 'This email was sent to' %} {{ user.email }} </span>
+                                                    <br/>
+													<span style="font-size:13px;color:#181818;font-family:Helvetica, Arial, sans-serif;line-height:200%;">
+                                                        {% trans 'You received this email because you created a PickNdell account' %}</span>
+                                                        
 													<br/>
 													<!-- <span style="font-size:11px;color:#555;font-family:Helvetica, Arial, sans-serif;line-height:200%;">[CLIENTS.ADDRESS] | [CLIENTS.PHONE]</span>
 													<br/>
@@ -435,7 +439,8 @@
 													<td valign="top" width='34'>
 														<div class="contentEditableContainer contentFacebookEditable" style='display:inline;'>
 															<div class="contentEditable" >
-																<!-- <a href="https://www.facebook.com/pickNdell"><img src="{{ domain }}{% static 'newsletter_images/facebook.png' %}" data-default="placeholder" data-max-width="30" width='30' height='30' alt='facebook' style='margin-right:40x;' data-customIcon="true" ></a> -->
+																<a href="https://www.instagram.com/pickndell"><img src="{{ domain }}{% static 'newsletter_images/Instagram.png' %}" data-default="placeholder" data-max-width="30" width='30' height='30' alt='facebook' style='margin-right:40x;' data-customIcon="true" ></a>
+																<a href="https://www.linkedin.com/company/pickndell"><img src="{{ domain }}{% static 'newsletter_images/linkedin.png' %}" data-default="placeholder" data-max-width="30" width='30' height='30' alt='facebook' style='margin-right:40x;' data-customIcon="true" ></a>
 																<a href="https://www.facebook.com/pickNdell"><img src="{{ domain }}{% static 'newsletter_images/facebook.png' %}" data-default="placeholder" data-max-width="30" width='30' height='30' alt='facebook' style='margin-right:40x;' data-customIcon="true" ></a>
 															</div>
 														</div>

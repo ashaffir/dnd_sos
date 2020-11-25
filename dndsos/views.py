@@ -60,6 +60,7 @@ def home(request):
 
     try:
         if request.LANGUAGE_CODE == 'he':
+            context['subtitle'] = ContentPage.objects.get(name='subtitle',section='subtitle', language='Hebrew')
             context['what_is_section'] = ContentPage.objects.get(section='what_is', language='Hebrew')
             context['why_section'] = ContentPage.objects.filter(section='why_section', language='Hebrew')
             context['how_1_section'] = ContentPage.objects.get(section='how', language='Hebrew', name='how-1')
@@ -71,6 +72,7 @@ def home(request):
             context['pricing_business'] = ContentPage.objects.get(section='pricing_business', language='Hebrew')
             context['pricing_freelancers'] = ContentPage.objects.get(section='pricing_freelancers', language='Hebrew')
         else:
+            context['subtitle'] = ContentPage.objects.get(name='subtitle', section='subtitle', language='English')
             context['what_is_section'] = ContentPage.objects.get(section='what_is', language='English')
             context['why_section'] = ContentPage.objects.filter(section='why_section', language='English')
             context['how_1_section'] = ContentPage.objects.get(section='how', language='English', name='how-1')

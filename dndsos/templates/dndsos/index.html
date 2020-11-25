@@ -62,7 +62,13 @@
               <h1>{% trans 'Pickup and Delivery Network' %}</h1>
               {% if couriers_only %}
               {% else %}
-                <h4 class="mb-4">{% trans 'Find couriers around you' %}</h4>
+                {% if subtitle.content %}
+                  {{ subtitle.content | safe }}
+                  <br>
+
+                {% else %}
+                  <h4 class="mb-4">{% trans 'Find couriers around you' %}</h4>
+                {% endif %}
               {% endif %}
               <div class="row">
                   <div class="col-md-6">

@@ -247,15 +247,23 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-# MailJet Email Setup
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'in-v3.mailjet.com'
-EMAIL_HOST_USER = config['MAILJET_HOST_USER']
-EMAIL_HOST_PASSWORD = config['MAILJET_HOST_PASSWORD']
-EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'PickNdell<support@pickndell.com>'
-
 # Email Setup
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'PickNdell<support@pickndell.com>'
+EMAIL_PORT = 587
+
+# MailJet
+# EMAIL_HOST = 'in-v3.mailjet.com'
+# EMAIL_HOST_USER = config['MAILJET_HOST_USER']
+# EMAIL_HOST_PASSWORD = config['MAILJET_HOST_PASSWORD']
+
+# SendinBlue
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST_USER = config['SENDINBLUE_HOST_USER']
+EMAIL_HOST_PASSWORD = config['SENDINBLUE_HOST_KEY']
+
+
+# GMAIL Email Setup
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_USE_TLS = True
