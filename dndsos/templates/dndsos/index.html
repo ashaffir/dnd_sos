@@ -62,7 +62,7 @@
               <h1>{% trans 'Pickup and Delivery Network' %}</h1>
               {% if couriers_only %}
               {% else %}
-                {% if subtitle.content %}
+                {% if subtitle.active %}
                   {{ subtitle.content | safe }}
                   <br>
 
