@@ -68,13 +68,20 @@ class UserLocationViewSet(APIView):
             user_id = self.request.GET.get('user')
             user = Employee.objects.get(pk=user_id)
         except Exception as e:
+            logger.error(f">>> API: Fail getting user ID correctly. ERROR: {e}")
             return Response({'response':'Bad user ID'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
+            user.lat = lat
+            user.lon = lon
+            print(f">>> API: User LAT: {lat}")
+            print(f">>> API: User LON: {lon}")
+            
             user_location = Point(lat,lon)
             user.location = user_location
             user.save()
         except Exception as e:
+            logger.error(f">>> API: Fail getting user location. ERROR: {e}")
             return Response({'response':'Bad coordinates'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'response':'Location updated'},status=200)
@@ -1349,6 +1356,7 @@ def phone_verification(request):
                     sent_sms_status = True
                 else:
                     print('Sending SMS code request to Twilio')
+                    logger.info('>>> API: Sending SMS code request to Twilio')
                     sent_sms_status = phone_verify(request, action='send_verification_code', phone=new_phone, code=None)
 
 
@@ -1356,7 +1364,8 @@ def phone_verification(request):
                     data['response'] = 'Update successful'
                     return Response(data)
                 else:
-                    print(f'Bad phone request. ERROR: {sent_sms_status}')
+                    print(f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
+                    logger.error(f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
                     data['response'] = f'Bad phone request. ERROR: {sent_sms_status}'
                     return Response(data)
                 

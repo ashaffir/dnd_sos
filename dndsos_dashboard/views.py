@@ -1049,7 +1049,8 @@ def phone_verify(request,action,phone, code):
 
             context['verification'] = verification
         except Exception as e:
-            print(f'Fail sending the confirmation code. ERROR: {e}')
+            print(f'>>> DASHBOARD: Fail sending the confirmation code to Twilio. ERROR: {e}')
+            logger.error(f'>>> DASHBOARD: Fail sending the confirmation code to Twilio. ERROR: {e}')
             return False 
         
         return True
@@ -1064,6 +1065,8 @@ def phone_verify(request,action,phone, code):
             context['verification_status'] = verification_check.status
             return verification_check.status
         except Exception as e:
+            print(f"DASHBOARD: Failed verifying the code sent to Twilio. ERROR: {e}")
+            logger.error(f"DASHBOARD: Failed verifying the code sent to Twilio. ERROR: {e}")
             return e
 
 def email_test(request):
