@@ -72,11 +72,11 @@ class UserLocationViewSet(APIView):
             return Response({'response':'Bad user ID'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            user.lat = lat
-            user.lon = lon
-            print(f">>> API: User LAT: {lat}")
-            print(f">>> API: User LON: {lon}")
-            
+            user.lat = float(self.request.data['lat'])
+            user.lon = float(self.request.data['lon'])
+            logger.info(f">>> API: User LAT: {lat}")
+            logger.info(f">>> API: User LON: {lon}")
+
             user_location = Point(lat,lon)
             user.location = user_location
             user.save()
