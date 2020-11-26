@@ -81,8 +81,8 @@ class UserLocationViewSet(APIView):
             logger.info(f">>> API: User Address: {location.address}")
             logger.info(f">>> API: User Address keys: {location.raw}")
             user.address = location.address
-            user.country = location.address.country
-            user.city = location.address.city
+            user.country = location.raw['address']['country']
+            user.city = location.raw['address']['town']
             
             user_location = Point(lat,lon)
             user.location = user_location
