@@ -76,7 +76,11 @@ class UserLocationViewSet(APIView):
             user.lon = float(self.request.data['lon'])
             logger.info(f">>> API: User LAT: {lat}")
             logger.info(f">>> API: User LON: {lon}")
-
+            geolocator = Nominatim(user_agent="dndsos", timeout=3)
+            location = geolocator.reverse(f"{user.lat}, {user.lon}")
+            logger.info(f">>> API: User Address: {locaiton.address}")
+            logger.info(f">>> API: User Address keys: {locaiton.keys()}")
+            
             user_location = Point(lat,lon)
             user.location = user_location
             user.save()
