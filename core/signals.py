@@ -15,6 +15,7 @@ logger = logging.getLogger(__file__)
 from dndsos_dashboard.utilities import send_mail
 
 from .models import Employee, Employer, User
+from newsletters_app.models import EmailTemplate
 
 @receiver(post_save, sender=Employee)   
 def employee_signal(sender, instance, update_fields, **kwargs): 
@@ -29,19 +30,37 @@ def employee_signal(sender, instance, update_fields, **kwargs):
     try:
         if 'is_approved' in update_fields:
             if instance.is_approved:
-                print(f'User profile approved: {update_fields}')
+                print(f'>>> CORE SIGNALS: User profile approved: {update_fields}')
+                logger.info(f'>>> CORE SIGNALS: User profile approved: {update_fields}')
+                
+                if platform.system() == 'Darwin': # MAC
+                    current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+                else:
+                    current_site = settings.DOMAIN_PROD
+
                 try:
                     user_email = instance.email
-                    subject = gettext('Your PickNdell Account is Approved')
-                    content = gettext('''
-                    Thank you for applying to PickNdell network. 
-                    We reviewed the information you have submitted and approved your account. 
-                    You can now start delivering.
-                    Good Luck!!
-                    ''')
+                    email_language = instance.language
+                    # print(f'>>> CORE SIGNALS: User profile language: {email_language}')
+                    email_template = EmailTemplate.objects.get(name='account_approval', language=email_language)
+                    # print(f'>>> CORE SIGNALS: email template: {email_template}')
+                    subject = email_template.subject
+                    content = email_template.content
+                    title = email_template.title
+                    
+                    # subject = gettext('Your PickNdell Account is Approved')
+                    # content = gettext('''
+                    # Thank you for applying to PickNdell network. 
+                    # We reviewed the information you have submitted and approved your account. 
+                    # You can now start delivering.
+                    # Good Luck!!
+                    # ''')
                     message = {
                         'user': instance,
-                        'message': content
+                        'title': title,
+                        'content': content,
+                        'lang': email_language,
+                        'domain': current_site
                     }
 
                     send_mail(subject, email_template_name=None,

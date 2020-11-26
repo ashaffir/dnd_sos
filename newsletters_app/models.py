@@ -29,6 +29,20 @@ class Newsletter(models.Model):
     recipients = JSONField(blank=True, null=True, default=list)
     recipients_count = models.IntegerField(blank=True, null=True, default=0)
 
+class EmailTemplate(models.Model):
+    LANGUAGES = (
+		('he', 'he'),
+		('en', 'en'),
+	)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    subject = models.CharField(max_length=100, null=True, blank=True)
+    title = models.CharField(max_length=100, null=True, blank=True)
+    content = RichTextField(max_length=2000, null=True, blank=True)
+    button_text = models.CharField(max_length=20, null=True, blank=True)
+    button_link = models.CharField(max_length=200, null=True, blank=True)
+    language = models.CharField(max_length=20, choices=LANGUAGES, default='en')
+
+
 
 
 

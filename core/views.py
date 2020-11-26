@@ -417,6 +417,7 @@ def activate_account(request, uidb64, token):
         else:
             user_profile = Employee.objects.get(user=user)
 
+        user_profile.language = request.LANGUAGE_CODE
         user_profile.email = user.email
         user_profile.save()
 

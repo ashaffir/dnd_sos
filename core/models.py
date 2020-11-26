@@ -101,6 +101,7 @@ class Employer(models.Model):
     lat = models.FloatField(null=True, blank=True)
     lon = models.FloatField(null=True, blank=True)
     location = PointField(blank=True, null=True)
+    language = models.CharField(max_length=100, blank=True, null=True)
 
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
@@ -176,6 +177,7 @@ class Employee(models.Model):
     country = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
+    language = models.CharField(max_length=100, blank=True, null=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
     vehicle = models.CharField(max_length=100, choices=VEHICLE, blank=True, null=True)

@@ -52,7 +52,7 @@ class Employee(OSMGeoAdmin):
         'pk',
         'user',
         'name',
-        'address',
+        'country',
         'city',
         'balance',
         'vehicle',
