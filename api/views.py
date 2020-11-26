@@ -78,8 +78,8 @@ class UserLocationViewSet(APIView):
             logger.info(f">>> API: User LON: {lon}")
             geolocator = Nominatim(user_agent="dndsos", timeout=3)
             location = geolocator.reverse(f"{user.lat}, {user.lon}")
-            logger.info(f">>> API: User Address: {locaiton.address}")
-            logger.info(f">>> API: User Address keys: {locaiton.keys()}")
+            logger.info(f">>> API: User Address: {location.address}")
+            logger.info(f">>> API: User Address keys: {location.keys()}")
             
             user_location = Point(lat,lon)
             user.location = user_location
