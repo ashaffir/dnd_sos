@@ -165,15 +165,15 @@ class Employee(models.Model):
         ('20:00-00:00', '20:00-00:00'),
     )
 
-    COUNTRIES = (
-        ('IL', 'Israel'),
-        ('USA', 'USA'),
-    )
+    # COUNTRIES = (
+    #     ('IL', 'Israel'),
+    #     ('USA', 'USA'),
+    # )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='freelancer')
     name = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
-    country = models.CharField(max_length=100, blank=True, null=True, choices=COUNTRIES)
+    country = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
     email = models.CharField(max_length=100, null=True, blank=True)
