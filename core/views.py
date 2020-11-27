@@ -1,4 +1,5 @@
 import logging
+import platform
 # import mailchimp_marketing as MailchimpMarketing
 # from mailchimp_marketing.api_client import ApiClientError
 
@@ -25,6 +26,7 @@ from .forms import *
 from .models import User, Employer, Employee, Asset, AssignedAsset
 from .tokens import account_activation_token
 from .decorators import employer_required, employee_required
+from newsletters_app.models import EmailTemplate
 
 logger = logging.getLogger(__file__)
 
@@ -421,7 +423,36 @@ def activate_account(request, uidb64, token):
         user_profile.email = user.email
         user_profile.save()
 
-        messages.success(request, gettext('You have successfully confirmed your email. Log in to proceed.'))
+        # Send activation/welcome email
+        ###############################
+        if platform.system() == 'Darwin': # MAC
+            current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
+        else:
+            current_site = settings.DOMAIN_PROD
+
+        try:
+            email_language = user_profile.language
+            email_template = EmailTemplate.objects.get(name='account_activated', language=email_language)
+            subject = email_template.subject
+            content = email_template.content
+            title = email_template.title
+            
+            message = {
+                'user': user_profile,
+                'title': title,
+                'content': content,
+                'lang': email_language,
+                'domain': current_site
+            }
+
+            send_mail(subject, email_template_name=None,
+                    context=message, to_email=[user_profile.email],
+                    html_email_template_name='core/emails/profile_approved_email.html')
+        except Exception as e:
+            logger.error(f'>>> CORE: Failed sending account activated to the user {user_profile}. ERROR: {e}')        
+            print(f'>>> CORE: Failed sending account activated to the user {user_profile}. ERROR: {e}')        
+
+        messages.success(request, gettext('You have successfully confirmed your email. Check your email for further instructions'))
         return redirect('core:login')
         # else:
         #     messages.info(request, 'Set a password for your Employee account.')
