@@ -384,6 +384,8 @@ def f_profile(request, f_id):
         if 'updateProfile' in request.POST:
             form = FreelancerUpdateForm(request.POST,request.FILES, instance=user_profile)            
 
+            user_profile.country = request.POST.get("country")
+
             if form.is_valid():
                 try:
                     form.save()
@@ -391,6 +393,7 @@ def f_profile(request, f_id):
                     # Patch: updating the name for the API access
                     user_freelancer = User.objects.get(pk=f_id)                  
                     user_freelancer.first_name = form.cleaned_data.get("name")
+                    user_freelancer.country = request.POST.get("country")
                     user_freelancer.save()
                     #####
 

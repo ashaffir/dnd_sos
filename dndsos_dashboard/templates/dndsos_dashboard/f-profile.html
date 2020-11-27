@@ -159,9 +159,17 @@
 																<label class="col-md-3 control-label" for="">{% trans 'Short Bio' %}</label>
 																<div class="col-md-8">{{ form.bio }}</div>	
 															</div>
-															<div class="row" style="margin-top: 1%;">
+															<!-- <div class="row" style="margin-top: 1%;">
 																<label class="col-md-3 control-label" for="">{% trans 'Country' %}</label>
 																<div class="col-md-4">{{ form.country }}</div>	
+															</div> -->
+															<div class="row" style="margin-top: 1%;">
+																<label class="col-md-3 control-label" for="">{% trans 'Country' %}</label>
+																<div class="col-md-4">
+																	<select class="form-control" name="country" id="country" required>
+																		<option value="">Choose your country...</option>
+																	</select>														
+																</div>	
 															</div>
 															<div class="row text-left" style="margin: 2%;" >
 																<label class="col-md-3 control-label" for="">{% trans 'ID Document' %}</label>
@@ -334,6 +342,30 @@
 			e.preventDefault();
 			$("#phoneVerifyModal").modal("show");
 		})
+	</script>
+
+	<script>
+		$.ajax({
+			method: 'GET',
+			url: 'https://restcountries.eu/rest/v2/all?fields=name;',
+			success: res => {
+				res.forEach(country => {
+					document.querySelector('#country').innerHTML +=
+						`<option value=${country.name}>${country.name}</option>`;
+				})
+				getLocation();
+			}
+		})
+	
+		function getLocation() {
+			fetch('https://extreme-ip-lookup.com/json/')
+				.then(res => res.json())
+				.then(response => {
+					document.querySelector(`option[value=${response.country}`).setAttribute('selected', 'selected');
+				})
+				.catch((data, status) => {})
+		}
+	
 	</script>
 
 {% endblock content %}

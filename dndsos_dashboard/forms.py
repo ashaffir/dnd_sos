@@ -55,13 +55,13 @@ class BusinessUpdateForm(forms.ModelForm):
 class FreelancerUpdateForm(forms.ModelForm):
     # phone = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}))
     
-    country = forms.ChoiceField(
-        required=True, 
-        widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Country'}),
-        choices=(
-            ('IL', 'Israel'),
-            ('USA', 'USA'),
-        ))
+    # country = forms.ChoiceField(
+    #     required=True, 
+    #     widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Country'}),
+    #     choices=(
+    #         ('IL', 'Israel'),
+    #         ('USA', 'USA'),
+    #     ))
 
     vehicle = forms.ChoiceField(
         label=_('Vehicle'), 
@@ -90,7 +90,7 @@ class FreelancerUpdateForm(forms.ModelForm):
         fields = [
             'name',
             'city',
-            'country',
+            # 'country',
             'bio',
             'email',
             # 'phone',

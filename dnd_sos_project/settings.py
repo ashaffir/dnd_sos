@@ -365,6 +365,7 @@ FCM_DJANGO_SETTINGS = {
 PICKNDELL_COMMISSION = 0.05
 DEFAULT_ORDER_TO_BUISINESS_DISTANCE = 1000
 
+## API from alfred.shaffir@gmail.com Google Cloud
 GOOGLE_MAPS_KEY = config['GOOGLE_MAPS_KEY']
 
 LOGGING = {
@@ -399,6 +400,9 @@ LOGGING = {
 
 
 # Google Places
+#################################################
+## API from alfred.shaffir@gmail.com Google Cloud 
+#################################################
 PLACES_MAPS_API_KEY=config['GOOGLE_MAPS_KEY']
 PLACES_MAP_WIDGET_HEIGHT=200
 PLACES_MAP_WIDGET_WIDTH=200
