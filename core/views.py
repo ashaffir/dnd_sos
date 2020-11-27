@@ -46,22 +46,6 @@ def employer_signup(request):
             user = form.save() # add employer to db with is_active as False
             user.username = user.email
             user.save()
-            
-            # send employer a accout activation email
-            # current_site = request._current_scheme_host
-            # subject = gettext('Activate PickNdell Account')
-
-            # message = {
-            #     'user': user,
-            #     'domain': current_site,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': account_activation_token.make_token(user)
-            # }
-
-            # send_mail(subject, email_template_name=None,
-            #         context=message, to_email=[user.email],
-            #         html_email_template_name='registration/account_activation_email.html')
-
 
             messages.success(request, 'An accout activation link has been sent to your email: ' + user.email +
                                 '. Check your email and click the link to activate your account.')
@@ -75,11 +59,14 @@ def employer_signup(request):
     context = {}
     context['form'] = form
     
-    if AdminParameters.objects.last().alert_message_page_business_signup:
-        context['show_message'] = True
-        alert = AlertMessage.objects.get(alert_message_page='business_signup')
-        context['alert_message_title'] = alert.alert_message_title
-        context['alert_message_content'] = alert.alert_message_content
+    try:
+        alert = AlertMessage.objects.get(alert_message_page='business_signup', alert_message_active=True)
+        if alert.alert_message_active:
+            context['show_message'] = True
+            context['alert_message_title'] = alert.alert_message_title
+            context['alert_message_content'] = alert.alert_message_content
+    except Exception as e:
+        logger.info(f">>> CORE: No alerts on signup business page.")
 
 
     return render(request, 'core/employer/signup.html', context)
@@ -92,21 +79,6 @@ def employee_signup(request):
             user = form.save() # add freelancer to db with is_active as False
             user.username = user.email
             user.save()
-
-            # send freelancer a accout activation email
-            # current_site = request._current_scheme_host
-
-            # subject = gettext('Activate PickNdell Account')
-            # message = {
-            #     'user': user,
-            #     'domain': current_site,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': account_activation_token.make_token(user)
-            # }
-
-            # send_mail(subject, email_template_name=None,
-            #         context=message, to_email=[user.email],
-            #         html_email_template_name='registration/account_activation_email.html')
 
             ####################################
             # MailChimp newsletter subscription

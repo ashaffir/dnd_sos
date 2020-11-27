@@ -59,13 +59,9 @@ class AdminParameters(models.Model):
 	advanced_level_max = models.IntegerField(default=10)
 	expert_level_max = models.IntegerField(default=50)
 	couriers_only = models.BooleanField(default=False)
-	alert_message_page_home = models.BooleanField(default=False)
-	alert_message_page_business_signup = models.BooleanField(default=False)
-	alert_message_page_freelancer_signup = models.BooleanField(default=False)
-	alert_message_page_business_dashboard = models.BooleanField(default=False)
-	alert_message_page_freelancer_dashboard = models.BooleanField(default=False)
 
 class AlertMessage(models.Model):
 	alert_message_page = models.CharField(max_length=100, null=True, blank=True)
 	alert_message_title = models.CharField(max_length=100, null=True, blank=True)
 	alert_message_content = RichTextField(max_length=1000, null=True, blank=True)
+	alert_message_active = models.BooleanField(default=False)
