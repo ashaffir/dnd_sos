@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-26 12:29+0200\n"
+"POT-Creation-Date: 2020-11-27 16:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,20 +23,20 @@ msgstr ""
 msgid "first name"
 msgstr "שם פרטי"
 
-#: core/models.py:135
+#: core/models.py:136
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:23
 msgid "Business Profile"
 msgstr "פרופיל בית עסק"
 
-#: core/models.py:136
+#: core/models.py:137
 msgid "Business Profiles"
 msgstr ""
 
-#: core/models.py:241
+#: core/models.py:242
 msgid "Freelancer Profile"
 msgstr ""
 
-#: core/models.py:242
+#: core/models.py:243
 msgid "Freelancer Profiles"
 msgstr ""
 
@@ -231,67 +231,69 @@ msgstr "הרשמת שליח"
 msgid "Sender/Business sign up"
 msgstr "הרשמת שולח / בית עסק"
 
-#: core/views.py:139
+#: core/views.py:113
 msgid ". Check your email and click the link to activate your account."
 msgstr "בדוק את הדואל שלך ולחץ על הקישור כדי להפעיל את חשבונך"
 
-#: core/views.py:138
+#: core/views.py:112
 msgid "An accout activation link has been sent to your email): "
 msgstr "קישור להפעלת חשבון נשלח לדואל שלך"
 
-#: core/views.py:165
+#: core/views.py:139
 msgid "Profile has been updated successfully"
 msgstr "הפרופיל עודכן בהצלחה"
 
-#: core/views.py:346
+#: core/views.py:320
 msgid "Your profile has been updated."
 msgstr "הפרופיל שלך עודכן."
 
-#: core/views.py:424
-msgid "You have successfully confirmed your email. Log in to proceed."
-msgstr "אישרת בהצלחה את הדואל שלך. התחבר כדי להמשיך."
+#: core/views.py:427
+msgid ""
+"You have successfully confirmed your email. Check your email for further "
+"instructions"
+msgstr "אישרת בהצלחה את הדואל שלך. אנא עיין בדואל שלך לקבלת הוראות נוספות."
 
-#: core/views.py:436
+#: core/views.py:439
 msgid "<p>An activation link has been sent to your Email</p>"
 msgstr "קישור הפעלה נשלח לדואל שלך"
 
-#: core/views.py:449
+#: core/views.py:452
 msgid "Welcome "
 msgstr "ברוך הבא"
 
-#: core/views.py:449
+#: core/views.py:452
 msgid ". Your account is now operational"
 msgstr "חשבונך הופעל"
 
-#: core/views.py:464
+#: core/views.py:467
 msgid "Enter password"
 msgstr "הזן את הסיסמה"
 
-#: core/views.py:468
+#: core/views.py:471
 msgid "Minimum password length should be 8"
 msgstr "אורך הסיסמא המינימלי צריך להיות 8"
 
-#: core/views.py:472
+#: core/views.py:475
 msgid "Mismatch password"
 msgstr "סיסמתך לא התאימה"
 
-#: core/views.py:482
+#: core/views.py:485
 msgid "Successfully changed the password, please login again."
 msgstr "שינית את הסיסמה בהצלחה, אנא התחבר שוב."
 
-#: core/views.py:517
+#: core/views.py:520
 msgid "Check your mail inbox to reset password"
 msgstr "בדוק את תיבת הדואר שלך כדי לאפס את הסיסמה"
 
-#: core/views.py:527
+#: core/views.py:530
 msgid "This email is not registered to us. Please register first "
 msgstr "דואל זה אינו רשום לנו. אנא הירשם קודם"
 
-#: core/views.py:531
+#: core/views.py:534
 msgid "Please enter a valid email"
 msgstr "אנא הכנס דואל חוקי"
 
-#: core/views.py:535
+#: core/views.py:538
 msgid "Please do enter the email"
 msgstr "אנא הזן את הדואל"
 
@@ -817,31 +819,31 @@ msgstr "כתובת שולח / בית עסק"
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:167
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:85
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:92
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:113
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:121
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:118
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:126
 msgid "start typing"
 msgstr "תתחיל להקליד"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:174
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:176
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:184
 msgid "Newsletter Optin"
 msgstr "קבל עדכונים במייל"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:191
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:193
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:201
 msgid "Change Password"
 msgstr "שנה סיסמא"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:196
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:175
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:198
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:206
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:70
 #: dndsos_dashboard/templates/dndsos_dashboard/phone-verify.html:34
 msgid "Submit"
 msgstr "שלח"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:197
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:199
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:207
 msgid "Reset"
 msgstr "אִתחוּל"
 
@@ -854,8 +856,8 @@ msgid "You already have a credit card in the system"
 msgstr "יש לך כבר כרטיס אשראי במערכת"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:224
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:246
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:273
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:254
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:281
 msgid "Update"
 msgstr "עדכון"
 
@@ -956,6 +958,7 @@ msgstr "שם החשבון"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:113
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:163
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:167
 msgid "Country"
 msgstr "ארץ"
 
@@ -1114,7 +1117,7 @@ msgid "Rating"
 msgstr "דירוג"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:108
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:167
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:175
 msgid "ID Document"
 msgstr "תעודת זהות או רישיון נהיגה"
 
@@ -1138,39 +1141,39 @@ msgstr "אימייל"
 msgid "Short Bio"
 msgstr "ביוגרפיה קצרה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:172
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:180
 msgid "Active Hours"
 msgstr "שעות פעילות"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:214
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:222
 msgid "Balance"
 msgstr "יתרה"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:218
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:226
 msgid "Your Balance"
 msgstr "היתרה שלך"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:231
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:239
 msgid "Payment Methods"
 msgstr "אמצעי תשלום"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:251
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:278
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:295
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:259
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:286
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:303
 msgid "Preferred"
 msgstr "מועדף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:253
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:280
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:297
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:261
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:288
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:305
 msgid "Make Preferred"
 msgstr "מועדף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:270
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:278
 msgid "Update your bank details"
 msgstr "עדכן את פרטי הבנק"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:291
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:299
 msgid "Use my phone number for payments"
 msgstr "השתמש במספר הטלפון שלי לתשלומים"
 
@@ -1356,40 +1359,47 @@ msgid "Directly requested by the business"
 msgstr "מבוקש ישירות על ידי בית העסק"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:85
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:121
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:126
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_business-orders-alerts-list.html:26
 msgid "To"
 msgstr "אל"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:85
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:121
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:126
 msgid "Dropoff address"
 msgstr "כתובת למסירת הזמנה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:92
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:113
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:118
 msgid "From"
 msgstr "איסוף"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:92
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:113
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:118
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:41
 msgid "Pickup address"
 msgstr "כתובת איסוף"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/orders.html:101
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:130
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:135
 msgid "Urgent"
 msgstr "דחוף"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:103
-#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:132
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:104
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:106
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:138
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:140
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:11
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:16
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:9
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:14
 msgid "Add new customer order"
 msgstr "הוסף הזמנה חדשה"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:107
+#: dndsos_dashboard/templates/dndsos_dashboard/orders.html:141
+msgid "Please complete your profile before creating new orders"
+msgstr "אנא השלם את הפרופיל לפני הוספת הזמנות"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_active-deliveries-list.html:8
 msgid "are no active deliveries"
@@ -1793,11 +1803,11 @@ msgid ""
 "Failed getting credit card information. Please contact Pickndell support"
 msgstr "קבלת פרטי כרטיס האשראי נכשלה. אנא צרו קשר עם התמיכה של פיקנדל"
 
-#: dndsos_dashboard/views.py:397
+#: dndsos_dashboard/views.py:400
 msgid "You have successfully updated your profile."
 msgstr "הצלחת לעדכן את הפרופיל שלך."
 
-#: dndsos_dashboard/views.py:1076 orders/signals.py:266 orders/signals.py:268
+#: dndsos_dashboard/views.py:1079 orders/signals.py:266 orders/signals.py:268
 msgid "Thank you for choosing PickNdell"
 msgstr "תודה שבחרת ב- PickNdell"
 

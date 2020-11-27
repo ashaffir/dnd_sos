@@ -100,7 +100,12 @@
                 <div class="row center">
                         <label for="urgency" style="padding: 1rem;">{% trans 'Urgent' %}</label>
                         <input type="checkbox" id="urgency" name="">
-                        <button style="margin: 2rem" id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary btn-lg">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></button>
+                        {% if business_profile.is_approved %}
+                            <button style="margin: 2rem" id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary btn-lg">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></button>
+                        {% else %}
+                            <button disabled style="margin: 2rem" id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary btn-lg">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></button>
+                            <p>{% trans 'Please complete your profile before creating new orders' %}</p>
+                        {% endif %}
                 </div>
             {% else %}
                 <div class="row" >
@@ -129,7 +134,12 @@
                 <div class="row center">
                         <label for="urgency" style="padding: 1rem;">{% trans 'Urgent' %}</label>
                         <input type="checkbox" id="urgency" name="">
-                        <button style="margin: 2rem" id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary btn-lg">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></button>
+                        {% if business_profile.is_approved %}
+                            <button style="margin: 2rem" id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary btn-lg">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></button>
+                        {% else %}
+                            <button disabled style="margin: 2rem" id="addOrder" onclick="addOrder()" name="addOrder" type="button" class="btn btn-primary btn-lg">{% trans 'Add new customer order' %} <i class="fa fa-plus"></i></button>
+                            <p class="h4" style="color: red;">{% trans 'Please complete your profile before creating new orders' %}</p>
+                        {% endif %}
                 </div>
                 {% endif %}
             </div> 
