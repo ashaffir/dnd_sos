@@ -82,7 +82,11 @@ class UserLocationViewSet(APIView):
             logger.info(f">>> API: User Address keys: {location.raw}")
             user.address = location.address
             user.country = location.raw['address']['country']
-            user.city = location.raw['address']['town']
+            
+            try:
+                user.city = location.raw['address']['town']
+            except Exception as e:
+                user.city = location.raw['address']['city']
             
             user_location = Point(lat,lon)
             user.location = user_location
