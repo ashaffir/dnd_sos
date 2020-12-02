@@ -401,7 +401,7 @@ LOGGING = {
 
 # Google Places
 #################################################
-## API from alfred.shaffir@gmail.com Google Cloud 
+## API from alfreds@actappon.com Google Cloud 
 #################################################
 PLACES_MAPS_API_KEY=config['GOOGLE_MAPS_KEY']
 PLACES_MAP_WIDGET_HEIGHT=200

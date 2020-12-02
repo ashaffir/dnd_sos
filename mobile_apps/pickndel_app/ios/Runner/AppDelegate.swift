@@ -16,6 +16,8 @@ func registerPlugins(registry: FlutterPluginRegistry) -> () {
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+    BackgroundLocatorPlugin.setPluginRegistrantCallback({_ in
+    })
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

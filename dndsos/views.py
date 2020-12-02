@@ -97,7 +97,7 @@ def home(request):
 
 
 def update_admin(request):
-    mail_subject = 'Contact request from DND SOS'
+    mail_subject = 'Contact request from PickNdell'
     try:    
         mail_context = {
             'fname': request.POST.get('fname'),

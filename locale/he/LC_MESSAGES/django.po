@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-27 16:00+0200\n"
+"POT-Creation-Date: 2020-12-02 15:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -231,69 +231,77 @@ msgstr "הרשמת שליח"
 msgid "Sender/Business sign up"
 msgstr "הרשמת שולח / בית עסק"
 
-#: core/views.py:113
+#: core/views.py:53
+msgid "An accout activation link has been sent to your email"
+msgstr "קישור להפעלת חשבון נשלח לדואל שלך"
+
+#: core/views.py:54
+msgid "Check your email and click the link to activate your account"
+msgstr "בדוק את הדואל שלך ולחץ על הקישור כדי להפעיל את חשבונך"
+
+#: core/views.py:118
 msgid ". Check your email and click the link to activate your account."
 msgstr "בדוק את הדואל שלך ולחץ על הקישור כדי להפעיל את חשבונך"
 
-#: core/views.py:112
+#: core/views.py:117
 msgid "An accout activation link has been sent to your email): "
 msgstr "קישור להפעלת חשבון נשלח לדואל שלך"
 
-#: core/views.py:139
+#: core/views.py:145
 msgid "Profile has been updated successfully"
 msgstr "הפרופיל עודכן בהצלחה"
 
-#: core/views.py:320
+#: core/views.py:344
 msgid "Your profile has been updated."
 msgstr "הפרופיל שלך עודכן."
 
-#: core/views.py:427
+#: core/views.py:460
 msgid ""
 "You have successfully confirmed your email. Check your email for further "
 "instructions"
 msgstr "אישרת בהצלחה את הדואל שלך. אנא עיין בדואל שלך לקבלת הוראות נוספות."
 
-#: core/views.py:439
+#: core/views.py:475
 msgid "<p>An activation link has been sent to your Email</p>"
 msgstr "קישור הפעלה נשלח לדואל שלך"
 
-#: core/views.py:452
+#: core/views.py:489
 msgid "Welcome "
 msgstr "ברוך הבא"
 
-#: core/views.py:452
+#: core/views.py:489
 msgid ". Your account is now operational"
 msgstr "חשבונך הופעל"
 
-#: core/views.py:467
+#: core/views.py:504
 msgid "Enter password"
 msgstr "הזן את הסיסמה"
 
-#: core/views.py:471
+#: core/views.py:508
 msgid "Minimum password length should be 8"
 msgstr "אורך הסיסמא המינימלי צריך להיות 8"
 
-#: core/views.py:475
+#: core/views.py:512
 msgid "Mismatch password"
 msgstr "סיסמתך לא התאימה"
 
-#: core/views.py:485
+#: core/views.py:523
 msgid "Successfully changed the password, please login again."
 msgstr "שינית את הסיסמה בהצלחה, אנא התחבר שוב."
 
-#: core/views.py:520
+#: core/views.py:560
 msgid "Check your mail inbox to reset password"
 msgstr "בדוק את תיבת הדואר שלך כדי לאפס את הסיסמה"
 
-#: core/views.py:530
+#: core/views.py:572
 msgid "This email is not registered to us. Please register first "
 msgstr "דואל זה אינו רשום לנו. אנא הירשם קודם"
 
-#: core/views.py:534
+#: core/views.py:576
 msgid "Please enter a valid email"
 msgstr "אנא הכנס דואל חוקי"
 
-#: core/views.py:538
+#: core/views.py:580
 msgid "Please do enter the email"
 msgstr "אנא הזן את הדואל"
 
@@ -1589,7 +1597,7 @@ msgstr "האם אתה בטוח שברצונך לבטל הזמנה זו"
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:7
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:8
 msgid "ID"
-msgstr "ת.ז"
+msgstr "מספר מזהה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:8
 msgid "Offer Date"

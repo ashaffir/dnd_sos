@@ -12,7 +12,7 @@
         <title>PickNdel • Dashboard</title>
         <link rel="icon" type="image/x-icon" href="{% static 'assets/images/dndsos-logo-white.png' %}">
 		<meta name="keywords" content="HTML5 Admin Template" />
-		<meta name="description" content="DnD SOS Admin">
+		<meta name="description" content="PickNdell Admin">
 		<meta name="author" content="DnD-SOS">
 
 		<!-- Mobile Metas -->
@@ -201,7 +201,7 @@
 										<img src="{% if user.freelancer.profile_pic %}{{user.freelancer.profile_pic.url}} {% else %} {% static 'assets/images/no-img.jpg' %} {% endif %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/logged-user.jpg' %}" />
 										{% endif %}
 									</figure>
-									<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@DnD SOS.com">
+									<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@PickNdell.com">
 										<span class="name">{% if user.is_employee %}  {{ user.freelancer.name }} {% else %} {{ user.business.business_name }} {% endif %}</span>
 										<span class="role">{% if user.is_staff %}administrator{% else %}{% endif %}</span>
 									</div>
