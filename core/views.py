@@ -62,9 +62,16 @@ def employer_signup(request):
     context = {}
     context['form'] = form
 
+    alert_language = request.LANGUAGE_CODE
+
     try:
-        alert = AlertMessage.objects.get(
-            alert_message_page='business_signup', alert_message_active=True)
+        try:
+            alert = AlertMessage.objects.get(
+                alert_message_page='business_signup', alert_message_active=True, alert_message_language=alert_language)
+        except:
+            alert = AlertMessage.objects.get(
+                alert_message_page='business_signup', alert_message_active=True, alert_message_language='en')
+
         if alert.alert_message_active:
             context['show_message'] = True
             context['alert_message_title'] = alert.alert_message_title
@@ -413,6 +420,7 @@ def activate_account(request, uidb64, token):
 
         user_group, _ = Group.objects.get_or_create(name=group)
         user.groups.add(user_group)
+        user.language = request.LANGUAGE_CODE
         user.save()
 
         if user.is_employer:
