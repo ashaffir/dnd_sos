@@ -1,3 +1,4 @@
+from django.core.files.base import ContentFile
 import base64
 import time
 import platform
@@ -8,7 +9,8 @@ from datetime import date, datetime
 
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic, distance
-from forex_python.converter import CurrencyRates # https://github.com/MicroPyramid/forex-python
+# https://github.com/MicroPyramid/forex-python
+from forex_python.converter import CurrencyRates
 
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.db.models import Q
@@ -28,7 +30,8 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.pagination import (LimitOffsetPagination, PageNumberPagination,)
+from rest_framework.pagination import (
+    LimitOffsetPagination, PageNumberPagination,)
 
 from core.models import User, Employee, Employer
 from orders.models import Order
@@ -38,16 +41,17 @@ from dndsos_dashboard.utilities import send_mail, calculate_freelancer_total_rat
 
 from .utils import clean_phone_number, check_profile_approved
 from payments.views import create_card_token, lock_price_cc_check
-from .serializers import (UserSerializer, LoginSerializer, 
-                        ContactsSerializer, BusinessSerializer, 
-                        UsernameSerializer, EmployeeProfileSerializer, EmployerProfileSerializer,)
+from .serializers import (UserSerializer, LoginSerializer,
+                          ContactsSerializer, BusinessSerializer,
+                          UsernameSerializer, EmployeeProfileSerializer, EmployerProfileSerializer,)
 from orders.serializers import OrderSerializer, OrderAPISerializer
-from .permissions import IsOwnerOrReadOnly, IsOwner # Custom permission
+from .permissions import IsOwnerOrReadOnly, IsOwner  # Custom permission
 
 logger = logging.getLogger(__file__)
 
 
 today = date.today()
+
 
 class UserLocationViewSet(APIView):
     authentication_classes = (TokenAuthentication,)
@@ -68,8 +72,9 @@ class UserLocationViewSet(APIView):
             user_id = self.request.GET.get('user')
             user = Employee.objects.get(pk=user_id)
         except Exception as e:
-            logger.error(f">>> API: Fail getting user ID correctly. ERROR: {e}")
-            return Response({'response':'Bad user ID'}, status=status.HTTP_400_BAD_REQUEST)
+            logger.error(
+                f">>> API: Fail getting user ID correctly. ERROR: {e}")
+            return Response({'response': 'Bad user ID'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user.lat = float(self.request.data['lat'])
@@ -82,139 +87,161 @@ class UserLocationViewSet(APIView):
             logger.info(f">>> API: User Address keys: {location.raw}")
             user.address = location.address
             user.country = location.raw['address']['country']
-            
+
             try:
                 user.city = location.raw['address']['town']
             except Exception as e:
                 user.city = location.raw['address']['city']
-            
-            user_location = Point(lat,lon)
+
+            user_location = Point(lat, lon)
             user.location = user_location
             user.save()
         except Exception as e:
             logger.error(f">>> API: Fail getting user location. ERROR: {e}")
-            return Response({'response':'Bad coordinates'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'response': 'Bad coordinates'}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'response':'Location updated'},status=200)
+        return Response({'response': 'Location updated'}, status=200)
+
 
 class UserAvailable(APIView):
     authentications_classes = (TokenAuthentication,)
+
     def put(self, request, *arg, **kwargs):
         try:
             user_id = self.request.GET.get('user')
             user = Employee.objects.get(pk=user_id)
         except Exception as e:
-            return Response({'response':'Bad user ID.'}, status=status.HTTP_400_BAD_REQUEST)
-            logger.error('Bad request for user. Error: {e}')
+            print(f'>>> API: Bad request for user. Error: {e}')
+            logger.error(f'>>> API: Bad request for user. Error: {e}')
+            return Response({'response': 'Bad user ID.'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user.is_available = self.request.data['available']
             user.save()
         except Exception as e:
-            print(f'Failed updated user availability')
-            return Response({'response':'User availability not updated'}, status=status.HTTP_400_BAD_REQUEST)
+            print(f'>>> API: Failed updated user availability. ERROR: {e}')
+            logger.error(
+                f'>>> API: Failed updated user availability. ERROR: {e}')
+            return Response({'response': 'User availability not updated'}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'response':'Availability updated'},status=200)
-
+        return Response({'response': 'Availability updated'}, status=200)
 
 
 class NewLoginViewSet(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
-
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
-        
+
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        
+
         # Checking if there is an FCM token for the push notifications
         try:
-            fcm_token = FCMDevice.objects.filter(user=user.pk).first().registration_id
+            fcm_token = FCMDevice.objects.filter(
+                user=user.pk).first().registration_id
         except Exception as e:
+            print(f"API: No token found for user {user.username}. E: {e}")
+            logger.info(
+                f"API: No token found for user {user.username}. E: {e}")
             fcm_token = '0'
 
         is_employee = User.objects.get(pk=user.pk).is_employee
-        print(f'Login RESPONSE: token: {token} \n user: {user.pk}\n is_employee: {user.is_employee}')
+        print(
+            f'>>> API: Login token: {token} \n user: {user.pk}\n is_employee: {user.is_employee}')
+        logger.info(
+            f'>>> API: Login token: {token} \n user: {user.pk}\n is_employee: {user.is_employee}')
 
         if is_employee:
-            # employee = Employee.objects.get_or_create(user=user)
-
-            user_profile,_ = Employee.objects.get_or_create(pk=user.pk)
-
-            active_orders = Order.objects.filter(
-                (Q(freelancer=user.pk) & Q(updated__contains=today)) & 
-                (Q(status='STARTED') | Q(status='IN_PROGRESS')))
-            
-            num_active_orders = len(active_orders)
-            
-            daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
-             # Daily profit
-            daily_profit = 0.0
-            for order in daily_orders:
-                daily_profit += order.fare
-
-            daily_profit = round(daily_profit,2)
-
-            # When a profile is new, there are no values. To avoid app crash, setting empty fields
             try:
-                name = user_profile.name
-            except:
-                name = ''
+                # employee = Employee.objects.get_or_create(user=user)
 
-            try: 
-                phone = user_profile.phone
-                if not phone:
-                    phone = 'Not set'
-            except:
-                phone = ''
+                user_profile, _ = Employee.objects.get_or_create(
+                    pk=user.pk).gagaga
 
-            
-            try: 
-                vehicle = user_profile.vehicle
-                if not vehicle:
-                    vehicle = "Not Set"
+                active_orders = Order.objects.filter(
+                    (Q(freelancer=user.pk) & Q(updated__contains=today)) &
+                    (Q(status='STARTED') | Q(status='IN_PROGRESS')))
 
-            except:
-                vehicle = ''
+                num_active_orders = len(active_orders)
 
-            try: 
-                freelancer_total_rating = user_profile.freelancer_total_rating
-                if not freelancer_total_rating:
+                daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(
+                    updated__contains=today) & Q(status='COMPLETED'))
+                # Daily profit
+                daily_profit = 0.0
+                for order in daily_orders:
+                    daily_profit += order.fare
+
+                daily_profit = round(daily_profit, 2)
+
+                # When a profile is new, there are no values. To avoid app crash, setting empty fields
+                try:
+                    name = user_profile.name
+                except:
+                    name = ''
+
+                try:
+                    phone = user_profile.phone
+                    if not phone:
+                        phone = 'Not set'
+                except:
+                    phone = ''
+
+                try:
+                    vehicle = user_profile.vehicle
+                    if not vehicle:
+                        vehicle = "Not Set"
+
+                except:
+                    vehicle = ''
+
+                try:
+                    freelancer_total_rating = user_profile.freelancer_total_rating
+                    if not freelancer_total_rating:
+                        freelancer_total_rating = 0.0
+                except:
                     freelancer_total_rating = 0.0
-            except:
-                freelancer_total_rating = 0.0
 
+                try:
+                    is_approved = user_profile.is_approved
+                except:
+                    is_approved = ""
 
-            try:
-                is_approved = user_profile.is_approved
-            except:
-                is_approved = ""
+                login_response = {'token': token.key,
+                                  'fcm_token': fcm_token,
+                                  "user": user.pk,
+                                  "is_employee": 1 if user.is_employee else 0,
+                                  "name": name,
+                                  "phone": phone,
+                                  "vehicle": vehicle,
+                                  "freelancer_total_rating": freelancer_total_rating,
+                                  "is_approved": 1 if is_approved else 0,
+                                  "num_active_orders": num_active_orders,
+                                  "daily_profit": daily_profit
+                                  }
 
+                print(f'>>>>> Login response: {login_response}')
+                logger.info(f'>>>>> Login response: {login_response}')
+                return Response(login_response)
+            except Exception as e:
+                print(
+                    f">>> API: Failed logging in user {user.username}. ERROR: {e}")
+                logger.error(
+                    f">>> API: Failed logging in user {user.username}. ERROR: {e}")
+                return Response(status=status.HTTP_404_NOT_FOUND)
 
-            return Response({'token': token.key,
-                            'fcm_token':fcm_token,
-                            "user":user.pk,
-                            "is_employee": 1 if user.is_employee else 0,
-                            "name": name,
-                            "phone": phone,
-                            "vehicle": vehicle,
-                            "freelancer_total_rating": freelancer_total_rating,
-                            "is_approved": 1 if is_approved else 0,
-                            "num_active_orders":num_active_orders,
-                            "daily_profit": daily_profit
-                            })
         else:
             user_profile, _ = Employer.objects.get_or_create(pk=user.pk)
             orders_in_progress = Order.objects.filter(
-                (Q(business=user.pk) & Q(updated__contains=today)) & 
+                (Q(business=user.pk) & Q(updated__contains=today)) &
                 (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
-            
+
             print(f'USER PROF: {user_profile.business_name}')
             num_orders_in_progress = len(orders_in_progress)
 
-            daily_orders = Order.objects.filter(business=user.pk, created__contains=today)
+            daily_orders = Order.objects.filter(
+                business=user.pk, created__contains=today)
             num_daily_orders = len(daily_orders)
 
             # Daily cost
@@ -222,15 +249,15 @@ class NewLoginViewSet(ObtainAuthToken):
             for order in daily_orders:
                 daily_cost += order.price
 
-            daily_cost = round(daily_cost,2)
-            
+            daily_cost = round(daily_cost, 2)
+
             # When a profile is new, there are no values. To avoid app crash, setting empty fields
             try:
                 business_name = user_profile.business_name
             except:
                 business_name = ""
 
-            try: 
+            try:
                 phone = user_profile.phone
             except:
                 phone = ''
@@ -245,42 +272,42 @@ class NewLoginViewSet(ObtainAuthToken):
             except:
                 is_approved = ""
 
-            try: 
+            try:
                 business_total_rating = user_profile.business_total_rating
                 if not business_total_rating:
                     business_total_rating = 0.0
             except:
                 business_total_rating = 0.0
 
-
             login_response = {'token': token.key,
-                            'fcm_token':fcm_token,
-                            "user":user.pk,
-                            "is_employee": 1 if user.is_employee else 0,
-                            "business_name":  business_name,
-                            "phone": phone,
-                            "business_category": business_category,
-                            "is_approved": 1 if is_approved else 0,
-                            "num_daily_orders": num_daily_orders,
-                            "business_total_rating":business_total_rating,
-                            "daily_cost": daily_cost,
-                            "num_orders_in_progress": num_orders_in_progress
-                            }
+                              'fcm_token': fcm_token,
+                              "user": user.pk,
+                              "is_employee": 1 if user.is_employee else 0,
+                              "business_name":  business_name,
+                              "phone": phone,
+                              "business_category": business_category,
+                              "is_approved": 1 if is_approved else 0,
+                              "num_daily_orders": num_daily_orders,
+                              "business_total_rating": business_total_rating,
+                              "daily_cost": daily_cost,
+                              "num_orders_in_progress": num_orders_in_progress
+                              }
             print(f'>>>>> Login response: {login_response}')
 
             return Response(login_response)
 
 
-
 class LoginView(APIView):
-    
+
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True) # Block the code from continue if raised exception
+        # Block the code from continue if raised exception
+        serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        django_login(request,user)
+        django_login(request, user)
         token, created = Token.objects.get_or_create(user=user)
-        return Response({"token":token.key}, status=200)
+        return Response({"token": token.key}, status=200)
+
 
 class LogoutView(APIView):
     authentication_classes = (TokenAuthentication,)
@@ -288,6 +315,7 @@ class LogoutView(APIView):
     def post(self, request):
         django_logout(request)
         return Response(status=204)
+
 
 class OpenOrdersViewSet(viewsets.ModelViewSet):
     # serializer_class = OrderSerializer
@@ -306,12 +334,13 @@ class OpenOrdersViewSet(viewsets.ModelViewSet):
                 Q(status='RE_REQUESTED')
             )
         print(f'Open Orders for user {query}: {queryset_list}')
-        
+
         return queryset_list
+
 
 class BusinessOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = (IsAuthenticated,)
 
     # queryset = Order.objects.all()
@@ -322,20 +351,21 @@ class BusinessOrdersViewSet(viewsets.ModelViewSet):
         print(f'Orders for User: {user}')
         if user:
             queryset_list = queryset_list.filter(
-                Q(business=user) & 
+                Q(business=user) &
                 (
-                    Q(status='STARTED') | 
-                    Q(status="IN_PROGRESS") | 
+                    Q(status='STARTED') |
+                    Q(status="IN_PROGRESS") |
                     Q(status="REQUESTED") |
-                    Q(status="RE_REQUESTED") | 
-                    Q(status="COMPLETED")  
-                    ) 
+                    Q(status="RE_REQUESTED") |
+                    Q(status="COMPLETED")
+                )
             )
         return queryset_list
 
+
 class BusinessRequestedOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = (IsAuthenticated,)
 
     # queryset = Order.objects.all()
@@ -347,14 +377,14 @@ class BusinessRequestedOrdersViewSet(viewsets.ModelViewSet):
 
         if user:
             queryset_list = queryset_list.filter(
-                Q(business=user) & (Q(status="REQUESTED") | Q(status='RE_REQUESTED')) 
+                Q(business=user) & (Q(status="REQUESTED") | Q(status='RE_REQUESTED'))
             )
         return queryset_list
 
 
 class BusinessRejectedOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = (IsAuthenticated,)
 
     # queryset = Order.objects.all()
@@ -366,13 +396,14 @@ class BusinessRejectedOrdersViewSet(viewsets.ModelViewSet):
 
         if user:
             queryset_list = queryset_list.filter(
-                Q(business=user) & (Q(status="REJECTED")) 
+                Q(business=user) & (Q(status="REJECTED"))
             )
         return queryset_list
 
+
 class BusinessStartedOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = (IsAuthenticated,)
 
     # queryset = Order.objects.all()
@@ -383,13 +414,14 @@ class BusinessStartedOrdersViewSet(viewsets.ModelViewSet):
         print(f'Started Orders for User: {user}')
         if user:
             queryset_list = queryset_list.filter(
-                Q(business=user) & (Q(status="STARTED")) 
+                Q(business=user) & (Q(status="STARTED"))
             )
         return queryset_list
 
+
 class BusinessInProgressOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = (IsAuthenticated,)
 
     # queryset = Order.objects.all()
@@ -400,13 +432,14 @@ class BusinessInProgressOrdersViewSet(viewsets.ModelViewSet):
         print(f'In Progress Orders for User: {user}')
         if user:
             queryset_list = queryset_list.filter(
-                Q(business=user) & (Q(status="IN_PROGRESS")) 
+                Q(business=user) & (Q(status="IN_PROGRESS"))
             )
         return queryset_list
 
+
 class BusinessDeliveredOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = (IsAuthenticated,)
 
     # queryset = Order.objects.all()
@@ -418,7 +451,7 @@ class BusinessDeliveredOrdersViewSet(viewsets.ModelViewSet):
 
         if user:
             queryset_list = queryset_list.filter(
-                Q(business=user) & (Q(status="COMPLETED")) 
+                Q(business=user) & (Q(status="COMPLETED"))
             )
         return queryset_list
 
@@ -445,20 +478,20 @@ class OrdersView(viewsets.ModelViewSet):
         #     )
         return queryset_list
 
+
 class ContactView(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all()
     serializer_class = ContactsSerializer
     # permission_classes = (IsAuthenticated,)
-    
+
     permission_classes = (IsAdminUser,)
+
 
 class UserProfile(viewsets.ModelViewSet):
     pass
 
 
-from django.core.files.base import ContentFile
-
-@api_view(['POST',])
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def user_profile_image(request):
     data = {}
@@ -471,14 +504,13 @@ def user_profile_image(request):
         profile = Employer.objects.get(pk=request.data['user_id'])
         # serializer = EmployerProfileSerializer(user, data=request.data)
 
-
     country = request.data['country']
     image_string = request.data["image"]
 
     # profile = Employee.objects.get(pk=8)
     # file_name = settings.MEDIA_ROOT + f'/id_docs/{country}/id_doc_{profile.pk}_{request.data["file_name"]}'
 
-    print('Processing profile image upload...')    
+    print('Processing profile image upload...')
     try:
         profile.profile_pic = image_string
         profile.save()
@@ -492,7 +524,8 @@ def user_profile_image(request):
         data['response'] = 'Failed updating profile image document'
         return Response(data)
 
-@api_view(['POST',])
+
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def user_photo_id(request):
     data = {}
@@ -511,9 +544,10 @@ def user_photo_id(request):
     # profile = Employee.objects.get(pk=8)
     # file_name = settings.MEDIA_ROOT + f'/id_docs/{country}/id_doc_{profile.pk}_{request.data["file_name"]}'
 
-    print('Processing image upload...')    
+    print('Processing image upload...')
     try:
-        print(f'API: IMAGE TYPE {type(image_string)} Expiry {id_doc_expiry_str}')
+        print(
+            f'API: IMAGE TYPE {type(image_string)} Expiry {id_doc_expiry_str}')
         profile.id_doc = image_string
         profile.id_doc_expiry = id_doc_expiry_dt
         profile.save()
@@ -532,7 +566,7 @@ def user_photo_id(request):
         return Response(data)
 
 
-@api_view(['PUT','POST',])
+@api_view(['PUT', 'POST', ])
 @permission_classes((IsAuthenticated,))
 def user_profile(request):
     '''
@@ -542,7 +576,7 @@ def user_profile(request):
     data = {}
 
     # try:
-        # user = User.objects.get(pk=request.user.pk)
+    # user = User.objects.get(pk=request.user.pk)
     if request.data['is_employee'] == 1:
         user = Employee.objects.get(pk=request.data['user_id'])
         serializer = EmployeeProfileSerializer(user, data=request.data)
@@ -553,41 +587,44 @@ def user_profile(request):
     if request.data['is_employee'] == 1:
         # Current active orders/deliveries (Freelancer)
         active_orders_today = Order.objects.filter(
-                    (Q(freelancer=user.pk) & Q(updated__contains=today)) & 
-                    (Q(status='STARTED') | Q(status='IN_PROGRESS')))
-                
+            (Q(freelancer=user.pk) & Q(updated__contains=today)) &
+            (Q(status='STARTED') | Q(status='IN_PROGRESS')))
+
         num_active_orders_today = len(active_orders_today)
 
         active_orders_total = Order.objects.filter(
-                    (Q(freelancer=user.pk) & 
-                    (Q(status='STARTED') | Q(status='IN_PROGRESS'))))
-                
+            (Q(freelancer=user.pk) &
+             (Q(status='STARTED') | Q(status='IN_PROGRESS'))))
+
         num_active_orders_total = len(active_orders_total)
 
         # Profile calculations
-        daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
-            # Daily profit
+        daily_orders = Order.objects.filter(Q(freelancer=request.user.pk) & Q(
+            updated__contains=today) & Q(status='COMPLETED'))
+        # Daily profit
         daily_profit = 0.0
         for order in daily_orders:
             daily_profit += order.fare
 
-        daily_profit = round(daily_profit,2)
+        daily_profit = round(daily_profit, 2)
     else:
         # Current orders in progress (Business)
         user_profile, _ = Employer.objects.get_or_create(pk=user.pk)
         orders_in_progress_today = Order.objects.filter(
-                (Q(business=user.pk) & Q(updated__contains=today)) & 
-                (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
+            (Q(business=user.pk) & Q(updated__contains=today)) &
+            (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
 
-        orders_in_progress = Order.objects.filter(Q(business=user.pk) & 
-                (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
+        orders_in_progress = Order.objects.filter(Q(business=user.pk) &
+                                                  (Q(status='STARTED') | Q(status='IN_PROGRESS') | Q(status="REJECTED") | Q(status="REQUESTED") | Q(status="RE_REQUESTED")))
 
-        orders_delivered_today = Order.objects.filter(Q(business=user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
+        orders_delivered_today = Order.objects.filter(
+            Q(business=user.pk) & Q(updated__contains=today) & Q(status='COMPLETED'))
 
         print(f'USER PROF: {user_profile.business_name}')
         num_orders_in_progress = len(orders_in_progress)
 
-        daily_orders = Order.objects.filter(business=user.pk, created__contains=today, status='COMPLETED')
+        daily_orders = Order.objects.filter(
+            business=user.pk, created__contains=today, status='COMPLETED')
         num_daily_orders = len(daily_orders)
 
         # Daily cost
@@ -595,10 +632,8 @@ def user_profile(request):
         for order in orders_delivered_today:
             daily_cost += order.price
 
-            daily_cost = round(daily_cost,2)
-            
+            daily_cost = round(daily_cost, 2)
 
-    
     # Sending user information to the app
     ########################
     if request.method == 'POST':
@@ -610,34 +645,38 @@ def user_profile(request):
             usd_ils = c.get_rate('USD', 'ILS')
             usd_eur = c.get_rate('USD', 'EUR')
         except Exception as e:
-            print(f'Failed to getting currencies from CurrencyRates model. ERROR: {e}')
-            logger.error(f'Failed to getting currencies from CurrencyRates model. Setting defaults. ERROR: {e}')
+            print(
+                f'Failed to getting currencies from CurrencyRates model. ERROR: {e}')
+            logger.error(
+                f'Failed to getting currencies from CurrencyRates model. Setting defaults. ERROR: {e}')
             try:
                 admin_params = AdminParameters.objects.all().first()
                 usd_ils = admin_params.usd_ils_default
                 usd_eur = admin_params.usd_eur_default
             except Exception as e:
                 print(f'Failed to load default currencies. ERROR: {e}')
-                logger.error(f'Failed to load currencies. Setting defaults. ERROR: {e}')
+                logger.error(
+                    f'Failed to load currencies. Setting defaults. ERROR: {e}')
                 usd_ils = 3.5
                 usd_eur = 0.8
 
         if serializer.is_valid():
             data = serializer.data
-            
+
             if request.data['is_employee'] == 1:
-                data['num_active_orders_today'] = num_active_orders_today 
+                data['num_active_orders_today'] = num_active_orders_today
                 data['num_active_orders_total'] = num_active_orders_total
                 data['daily_profit'] = daily_profit
             else:
-                data['orders_in_progress_today'] = len(orders_in_progress_today)
+                data['orders_in_progress_today'] = len(
+                    orders_in_progress_today)
                 data['num_daily_orders'] = num_daily_orders
                 data['num_orders_in_progress'] = num_orders_in_progress
                 data['daily_cost'] = daily_cost
 
             # Currency exchage rates
-            data['usd_ils'] = round(usd_ils,2)
-            data['usd_eur'] = round(usd_eur,2)
+            data['usd_ils'] = round(usd_ils, 2)
+            data['usd_eur'] = round(usd_eur, 2)
 
             print('SENDING PROFILE DATA')
         else:
@@ -650,7 +689,7 @@ def user_profile(request):
         return Response(data)
 
     # Updating user profile information
-    ######################
+    #####################################
     elif request.method == 'PUT':
         print(f'REQUEST: {request.data}')
         if serializer.is_valid():
@@ -665,57 +704,12 @@ def user_profile(request):
                     user.user.first_name = request.data['business_name']
                     user.user.save()
                 except Exception as e:
-                    print(f'Business name was not updated. E: {e}')
-                    logger.info(f'Business name was not updated. E: {e}')
+                    print(f'>>> API: Business name was not updated. E: {e}')
+                    logger.info(
+                        f'>>> API: Business name was not updated. E: {e}')
             except Exception as e:
-                print(f'Profile was not updated. E: {e}')
-                logger.info(f'Profile was not updated. E: {e}')
-
-
-            # try:
-            #     if request.data['first_name']:
-            #         print('> Updating name')
-            #         updated_order = serializer.save()
-            #         data = serializer.data
-            #         data['response'] = 'Update successful'
-            #         print(f'NAME update: {request.data["first_name"]}')
-            # except Exception as e:
-            #     print(f'Name was not updated. E: {e}')
-            #     logger.info(f'Name was not updated. E: {e}')
-            # try:
-            #     if request.data['phone_number']:
-            #         print('> Updating phone')
-            #         updated_order = serializer.save()
-            #         data = serializer.data
-            #         data['response'] = 'Update successful'
-            #         print(f'PHONE update: {request.data["phone_number"]}')
-            # except Exception as e:
-            #     print(f'Phone was not updated. E: {e}')
-            #     logger.info(f'Phone was not updated. E: {e}')
-
-            
-            # try:
-            #     if request.data['vehicle']:
-            #         print('> Updating vehicle')
-            #         updated_order = serializer.save()
-            #         data = serializer.data
-            #         data['response'] = 'Update successful'
-            #         print(f'VEHICLE update: {request.data["vehicle"]}')
-            # except Exception as e:
-            #     print(f'Vehicle was not updated. E: {e}')
-            #     logger.info(f'Vehicle was not updated. E: {e}')
-
-            # try:
-            #     if request.data['email']:
-            #         print('> Updating email')
-            #         updated_order = serializer.save()
-            #         data = serializer.data
-            #         data['response'] = 'Update successful'
-            #         print(f'EMAIL update: {request.data["email"]}')
-            #         print(f'HHHHHH: {data}')
-            # except Exception as e:
-            #     print(f'Email was not updated. E: {e}')
-            #     logger.info(f'Email was not updated. E: {e}')
+                print(f'>>> API: Profile was not updated. E: {e}')
+                logger.info(f'>>> API: Profile was not updated. E: {e}')
 
         else:
             data = serializer.errors
@@ -725,9 +719,12 @@ def user_profile(request):
 
         return Response(data)
     else:
+        print(f">>> API: Bad request getting user profile.")
+        logger.error(f">>> API: Bad request getting user profile.")
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST',])
+
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def user_credit_card(request):
     print(f'CREDIT CARD REQUEST: {request.data}')
@@ -746,11 +743,13 @@ def user_credit_card(request):
             try:
                 owner_name = request.data['owner_name']
                 due_date_yymm = request.data['expiry_date']
-                card_number = "4580000000000000" if settings.DEBUG else request.data['card_number'];
+                card_number = "4580000000000000" if settings.DEBUG else request.data[
+                    'card_number']
                 owner_id = request.data['owner_id']
                 cvv = request.data['cvv']
-                
-                credit_token = create_card_token(owner_id, due_date_yymm, card_number)
+
+                credit_token = create_card_token(
+                    owner_id, due_date_yymm, card_number)
                 # Checking the CC with sales token
                 cc_val = lock_price_cc_check(credit_token)
 
@@ -771,19 +770,20 @@ def user_credit_card(request):
                     logger.info(msg)
 
                     if len(credit_token) < 10:
-                        logger.error(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
+                        logger.error(
+                            f'Fail getting the token from iCredit server. ERROR: {credit_token}')
                         data["response"] = "Failed updating credit card"
                         return Response(f'Fail getting the token from iCredit server. ERROR: {credit_token}')
                 else:
                     print('>>> FAIL CC VALIDATION <<< ')
                     logger.error(f'Failed CC validation. ERROR: {e}')
-                    data["response"] =f'Failed CC validation. ERROR: {e}'
+                    data["response"] = f'Failed CC validation. ERROR: {e}'
                     return Response(data)
 
-
             except Exception as e:
-                logger.error(f'Fail communication with the iCredit server. ERROR: {e}')
-                data["response"] =f'Fail communication with iCredit. ERROR: {e}'
+                logger.error(
+                    f'Fail communication with the iCredit server. ERROR: {e}')
+                data["response"] = f'Fail communication with iCredit. ERROR: {e}'
                 return Response(data)
 
             # Saving user's new Token
@@ -793,15 +793,19 @@ def user_credit_card(request):
                 data["response"] = "Update successful"
                 data["credit_card_token"] = credit_token
                 check_profile_approved(user.pk, request.data['is_employee'])
-                
+
                 return Response(data)
             except Exception as e:
-                logger.error(f'Failed saving the new credit card token. ERROR: {e}')
+                logger.error(
+                    f'Failed saving the new credit card token. ERROR: {e}')
                 data["response"] = "Failed updating credit card"
                 return Response(f'Failed saving the new credit card token. ERROR: {e}')
 
     else:
+        print(f">>> API: bad request for user credit card information.")
+        logger.error(f">>> API: bad request for user credit card information.")
         return Response(status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
@@ -813,7 +817,7 @@ def payment_method(request):
             profile = Employee.objects.get(pk=request.data['user_id'])
         else:
             profile = Employer.objects.get(pk=request.data['user_id'])
-        
+
         preferred_payment_method = request.data['payment_method']
 
         if preferred_payment_method == 'paypal':
@@ -837,12 +841,12 @@ def payment_method(request):
 
         return Response(data)
     else:
+        print(f">>> API: Bad request for changing user payment method.")
+        logger.error(f">>> API: bad request for changing user payment method.")
         return Response(status.HTTP_400_BAD_REQUEST)
 
 
-
-
-@api_view(['POST',])
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def bank_details(request):
     data = {}
@@ -851,7 +855,7 @@ def bank_details(request):
             profile = Employee.objects.get(pk=request.data['user_id'])
         else:
             profile = Employer.objects.get(pk=request.data['user_id'])
-        
+
         profile.bank_details = dict()
 
         try:
@@ -860,12 +864,12 @@ def bank_details(request):
 
             try:
                 swift = request.data['swift_code']
-                profile.bank_details['swift'] = swift 
+                profile.bank_details['swift'] = swift
             except:
                 swift = None
             profile.bank_details['iban'] = iban
             profile.bank_details['name_account'] = name_account
-            
+
             profile.save()
 
         except Exception as e:
@@ -878,12 +882,12 @@ def bank_details(request):
         data['iban'] = iban
         return Response(data, status=status.HTTP_200_OK)
     else:
+        print(f">>> API: Bad request for changing user bank details.")
+        logger.error(f">>> API: bad request for changing user bank details.")
         return Response(status.HTTP_400_BAD_REQUEST)
 
 
-
-
-@api_view(['GET',])
+@api_view(['GET', ])
 @permission_classes((IsAdminUser,))
 def all_users(request):
     '''
@@ -893,7 +897,7 @@ def all_users(request):
         users = Employee.objects.all()
     except Exception as e:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
     if request.method == 'GET':
         serializer = UsernameSerializer(users, data=request.data)
         data = {}
@@ -904,12 +908,12 @@ def all_users(request):
         else:
             print(f'--------> {serializer.data}')
             data = serializer.errors
-        
-        return Response(data)
- 
 
-@api_view(['GET',])
-@permission_classes([IsAdminUser,])
+        return Response(data)
+
+
+@api_view(['GET', ])
+@permission_classes([IsAdminUser, ])
 def all_businesses(request):
     '''
     Returns the list of all businesses' names
@@ -927,29 +931,28 @@ def all_businesses(request):
             data['response'] = 'Business Names transmitted'
         else:
             data = serializer.errors
-        
+
         return Response(data)
 
 
 class ActiveOrdersViewSet(viewsets.ModelViewSet):
     serializer_class = OrderAPISerializer
-    authentication_classes = [TokenAuthentication,]
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = (IsAuthenticated,)
 
     # queryset = Order.objects.all()
     data = {}
+
     def get_queryset(self, *args, **kwargs):
         queryset_list = Order.objects.all()
         user = self.request.GET.get('user')
         if user:
             queryset_list = queryset_list.filter(
-                Q(freelancer=user) & 
-                (Q(status='STARTED') | Q(status="IN_PROGRESS")) 
+                Q(freelancer=user) &
+                (Q(status='STARTED') | Q(status="IN_PROGRESS"))
             )
         print(f'Active Orders for User: {user}: {queryset_list}')
         return queryset_list
-
-
 
 
 # @api_view(['GET',])
@@ -979,7 +982,7 @@ class ActiveOrdersViewSet(viewsets.ModelViewSet):
 #         return Response(data)
 
 
-@api_view(['GET',])
+@api_view(['GET', ])
 @permission_classes((IsAuthenticated,))
 def order_view(request):
     '''
@@ -998,10 +1001,11 @@ def order_view(request):
             data['response'] = 'Update successful'
         else:
             data = serializer.errors
-        
+
         return Response(data)
 
-@api_view(['POST',])
+
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def price_parameteres(request):
     data = {}
@@ -1009,7 +1013,8 @@ def price_parameteres(request):
     data['unit_price'] = settings.DEFAULT_UNIT_PRICE
     return Response(data)
 
-@api_view(['POST',])
+
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def new_order(request):
     '''
@@ -1026,7 +1031,7 @@ def new_order(request):
         user_profile = Employee.objects.get(pk=request.data['user_id'])
     else:
         user_profile = Employer.objects.get(pk=request.data['user_id'])
-    
+
     if not user_profile.is_approved:
         return Response('User is not approved')
 
@@ -1051,22 +1056,22 @@ def new_order(request):
     package_type = request.data['package_type']
 
     geolocator = Nominatim(user_agent="dndsos", timeout=3)
-        
+
     try:
         # Checking OS
         if platform.system() == 'Darwin':
-            order_location = Point(dropoff_address_lat,dropoff_address_lng)
+            order_location = Point(dropoff_address_lat, dropoff_address_lng)
         else:
             order_location = Point(dropoff_address_lng, dropoff_address_lat)
-        
-        order_coords = (dropoff_address_lat,dropoff_address_lng)
+
+        order_coords = (dropoff_address_lat, dropoff_address_lng)
 
         data['order_location'] = order_location
         data['order_lon'] = dropoff_address_lng
         data['order_lat'] = dropoff_address_lat
         data['business_lon'] = pickup_address_lng
         data['business_lat'] = pickup_address_lat
-                
+
     except Exception as e:
         print(f'Failed getting the location for {dropoff_address}')
         logger.error(f'Failed getting the location for {dropoff_address}')
@@ -1074,7 +1079,6 @@ def new_order(request):
         order_coords = None
         order_lat = None
         order_lon = None
-
 
         data['order_location'] = order_location
         data['order_lon'] = dropoff_address_lng
@@ -1098,22 +1102,26 @@ def new_order(request):
     urgency = 2 if order_urgency == 'Urgent' else 1
 
     if order_to_business_distance_meters > 1000:
-        price = urgency * (settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT)
-        data['price'] = round(price,2)
-        data['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
-        data['distance_to_business'] = round(order_to_business_distance,2)
+        price = urgency * (settings.DEFAULT_BASE_PRICE + settings.DEFAULT_UNIT_PRICE * (
+            order_to_business_distance_meters - 1000)/settings.DISTANCE_UNIT)
+        data['price'] = round(price, 2)
+        data['fare'] = str(
+            round(price * (1 - settings.PICKNDELL_COMMISSION), 2))
+        data['distance_to_business'] = round(order_to_business_distance, 2)
     else:
         price = settings.DEFAULT_BASE_PRICE
-        data['price'] = float(round(price,2))
-        data['fare'] = str(round(price * (1 - settings.PICKNDELL_COMMISSION),2))
-        data['distance_to_business'] = round(order_to_business_distance,2)
+        data['price'] = float(round(price, 2))
+        data['fare'] = str(
+            round(price * (1 - settings.PICKNDELL_COMMISSION), 2))
+        data['distance_to_business'] = round(order_to_business_distance, 2)
 
     if request.data['price_order']:
         return Response(data['price'])
-    
+
     else:
         try:
-            user_profile.location = Point(pickup_address_lat,pickup_address_lng)
+            user_profile.location = Point(
+                pickup_address_lat, pickup_address_lng)
             user_profile.address = pickup_address
             user_profile.lat = pickup_address_lat
             user_profile.lon = pickup_address_lng
@@ -1126,17 +1134,17 @@ def new_order(request):
         except Exception as e:
             print('>>> API: Failed writing sender location to DB.')
             logger.error('>>> API: Failed writing sender location to DB.')
-            
+
         data['order_type'] = package_type
         data['business'] = User.objects.get(pk=user_profile.pk)
-        data['is_urgent'] = True if order_urgency == 'Urgent' else False; 
+        data['is_urgent'] = True if order_urgency == 'Urgent' else False
 
         instance = Order.objects.create(**data)
         print(f'ORDER INSTANCE: {instance}')
         instance.new_message = {
             'business': '',
-            'freelancer':''
-            }
+            'freelancer': ''
+        }
         instance.save()
 
         print(f'DATA: {data}')
@@ -1144,7 +1152,7 @@ def new_order(request):
         return Response('Order Created')
 
 
-@api_view(['POST',])
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def order_delivery(request):
 
@@ -1152,7 +1160,7 @@ def order_delivery(request):
         update_order = Order.objects.get(order_id=request.data['order_id'])
     except Order.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
     if request.method == 'POST':
         data = {}
         order = Order.objects.get(pk=request.data['order_id'])
@@ -1166,41 +1174,52 @@ def order_delivery(request):
             except:
                 print('NO IMAGE')
                 pass
-            
+
             order.save()
             # data['response'] = 'Update successful'
             return Response(status.HTTP_202_ACCEPTED)
         else:
+            print(f">>> API: Failed updating order delivery. Wrong status configuration")
+            logger.error(
+                f">>> API: Failed updating order delivery. Wrong status configuration")
             return Response("Wrong status configuration", status=status.HTTP_400_BAD_REQUEST)
-    
+
+    print(f">>> API: Failed updating order delivery on bad request.")
+    logger.error(f">>> API: Failed updating order delivery on bad request.")
     return Response(status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST',])
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def order_ratings(request):
     try:
         update_order = Order.objects.get(order_id=request.data['order_id'])
     except Order.DoesNotExist:
+        print(f">>> API: Order does not exists for order ratings update.")
+        logger.error(
+            f">>> API: Order does not exists for order ratings update.")
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
     if request.method == 'POST':
         data = {}
         order = Order.objects.get(pk=request.data['order_id'])
         if request.data['is_employee'] == 0:
             rating = request.data['freelancer_rating']
-            order.freelancer_rating = rating            
+            order.freelancer_rating = rating
             order.save()
             calculate_freelancer_total_rating(order.freelancer.freelancer.pk)
             data['response'] = 'Update successful'
             return Response(data, status.HTTP_200_OK)
     else:
+        print(f">>> API: Wrong request for order ratings update.")
+        logger.error(f">>> >>> API: Wrong request for order ratings update.")
         return Response("Wrong status configuration", status=status.HTTP_400_BAD_REQUEST)
-    
+
+    logger.error(f">>> API: Bad request at order rating update.")
     return Response(status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['PUT',])
+@api_view(['PUT', ])
 @permission_classes((IsAuthenticated,))
 def order_update_view(request):
     '''
@@ -1215,7 +1234,8 @@ def order_update_view(request):
 
     # Identifying the business for the location and the phone
     business = Employer.objects.get(pk=update_order.business.pk)
-    print(f'ORDER UPDATE: BUSINESS OWNER: {business} Location: {business.location} Lat: {business.lat} Lon: {business.lon}')
+    print(
+        f'ORDER UPDATE: BUSINESS OWNER: {business} Location: {business.location} Lat: {business.lat} Lon: {business.lon}')
 
     if request.method == 'PUT':
         serializer = OrderSerializer(update_order, data=request.data)
@@ -1224,7 +1244,7 @@ def order_update_view(request):
         new_status = request.data["status"]
         if serializer.is_valid():
             if new_status:
-                if (new_status == 'STARTED' and old_status == 'REQUESTED') or  (new_status == 'STARTED' and old_status == 'RE_REQUESTED'):
+                if (new_status == 'STARTED' and old_status == 'REQUESTED') or (new_status == 'STARTED' and old_status == 'RE_REQUESTED'):
                     updated_order = serializer.save()
                     data = serializer.data
                     data['response'] = 'Update successful'
@@ -1272,10 +1292,11 @@ def order_update_view(request):
                 data['response'] = "Update failed. Missing status parameter."
         else:
             data = serializer.errors
-        
+
         return Response(data)
 
-@api_view(['GET',])
+
+@api_view(['GET', ])
 @permission_classes((IsAdminUser,))
 def all_user_orders(request):
     '''
@@ -1287,17 +1308,18 @@ def all_user_orders(request):
         if serializer.is_valid():
             account = serializer.save()
             order_data['token'] = Token.objects.get(user=account).key
-            
+
             if request.user.is_employee:
                 data = Order.objects.filter(freelancer=request.user.pk)
             else:
                 data = Order.objects.filter(business=request.user.pk)
         else:
             order_data = serializer.errors
-    
+
         return Response(order_data)
 
-@api_view(['POST',])
+
+@api_view(['POST', ])
 def registration_view(request):
     '''
     Register a new user with the API
@@ -1323,10 +1345,11 @@ def registration_view(request):
 
         else:
             data = serializer.errors
-        
+
         return Response(data)
-        
-@api_view(['POST',])
+
+
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def phone_verification(request):
     '''
@@ -1348,16 +1371,18 @@ def phone_verification(request):
 
     if request.method == 'POST':
         # Items 1 and 2
-        if request.data['action'] == 'new_phone' :
+        if request.data['action'] == 'new_phone':
             new_phone = request.data['phone']
             country_code = request.data['country_code']
-            
+
             # Checking phone validity before sending to Twilio
-            valid_new_phone_number = clean_phone_number(new_phone, country_code)
-            
+            valid_new_phone_number = clean_phone_number(
+                new_phone, country_code)
+
             if (valid_new_phone_number):
-                print(f'Phone is good: {new_phone}. Country: {country_code}. Sending to Twilio')
-                
+                print(
+                    f'Phone is good: {new_phone}. Country: {country_code}. Sending to Twilio')
+
                 if settings.DEBUG:
                     timer = 0
                     while timer < 3:
@@ -1368,18 +1393,20 @@ def phone_verification(request):
                 else:
                     print('Sending SMS code request to Twilio')
                     logger.info('>>> API: Sending SMS code request to Twilio')
-                    sent_sms_status = phone_verify(request, action='send_verification_code', phone=new_phone, code=None)
-
+                    sent_sms_status = phone_verify(
+                        request, action='send_verification_code', phone=new_phone, code=None)
 
                 if sent_sms_status:
                     data['response'] = 'Update successful'
                     return Response(data)
                 else:
-                    print(f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
-                    logger.error(f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
+                    print(
+                        f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
+                    logger.error(
+                        f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
                     data['response'] = f'Bad phone request. ERROR: {sent_sms_status}'
                     return Response(data)
-                
+
                 # TESTING
                 # data['response'] = 'Update successful'
                 return Response(data)
@@ -1388,14 +1415,10 @@ def phone_verification(request):
                 data['response'] = f'Bad phone number.'
                 return Response(data)
 
-
         # Items 3, 4, 5
         elif request.data['action'] == "verify_code":
             user_code = request.data['verification_code']
             new_phone = request.data['phone']
-            
-
-
 
             if settings.DEBUG:
                 timer = 0
@@ -1407,9 +1430,10 @@ def phone_verification(request):
                 verification_status = 'approved'
             else:
                 print('Sending approval request to Twilio')
-                verification_status = phone_verify(request, action='verify_code', phone=new_phone, code=user_code)
+                verification_status = phone_verify(
+                    request, action='verify_code', phone=new_phone, code=user_code)
 
-            if serializer.is_valid():            
+            if serializer.is_valid():
                 data = serializer.data
                 if verification_status == 'approved':
                     # Save to profile
@@ -1417,12 +1441,13 @@ def phone_verification(request):
                         user.phone = new_phone
                         user.save()
                         data['response'] = 'Update successful'
-                        check_profile_approved(user.pk, request.data['is_employee'])
+                        check_profile_approved(
+                            user.pk, request.data['is_employee'])
                     except Exception as e:
                         print(f'Faied to update PROFILE phone. E: {e}')
                         logger.error(f'Faied to update PROFILE phone. E: {e}')
                         data['response'] = 'Update Profile phone Failed'
-                        
+
                     # Save to User
                     try:
                         user.user.phone_number = new_phone
@@ -1439,16 +1464,18 @@ def phone_verification(request):
                     return Response(data)
             else:
                 return Response(serializer.errors)
-        
+
+        print(f">>> API: bad request at phone verification")
+        logger.error(f">>> API: bad request at phone verification")
         return Response(status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST',])
+@api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def email_verification(request):
     data = {}
 
-    if platform.system() == 'Darwin': # MAC
+    if platform.system() == 'Darwin':  # MAC
         current_site = 'http://127.0.0.1:8000' if settings.DEBUG else settings.DOMAIN_PROD
     else:
         current_site = settings.DOMAIN_PROD
@@ -1463,8 +1490,9 @@ def email_verification(request):
     if request.method == 'POST':
         if (request.data['check'] == 'send_code'):
             email = request.data['email']
-            verification_code = random.randint(10001,99999)
-            print(f'SENDING EMAIL VRIFICATION CODE {verification_code} EMAIL TO: {email}')
+            verification_code = random.randint(10001, 99999)
+            print(
+                f'SENDING EMAIL VRIFICATION CODE {verification_code} EMAIL TO: {email}')
             subject = 'Verify new email'
 
             message = {
@@ -1473,8 +1501,8 @@ def email_verification(request):
             }
 
             send_mail(subject, email_template_name=None,
-                    context=message, to_email=[email],
-                    html_email_template_name='dndsos/email_verification_email.html')
+                      context=message, to_email=[email],
+                      html_email_template_name='dndsos/email_verification_email.html')
             # Saving the code in user profile
             user.verification_code = verification_code
             user.save()
@@ -1483,7 +1511,7 @@ def email_verification(request):
             # user.email = email
             # user.username = email
             # user.save()
-            
+
             data['response'] = 'Update successful'
             return Response(data)
         elif (request.data['check'] == 'test_result'):
@@ -1498,14 +1526,15 @@ def email_verification(request):
                     user.email = new_email
                     user.username = new_email
                     user.save()
-                    
+
                     # Updating User model
                     user = User.objects.get(pk=request.data['user_id'])
                     user.email = new_email
                     user.username = new_email
                     user.save()
 
-                    check_profile_approved(user.pk, request.data['is_employee'])
+                    check_profile_approved(
+                        user.pk, request.data['is_employee'])
 
                     data['response'] = 'Update successful'
                     return Response(data)
@@ -1513,6 +1542,8 @@ def email_verification(request):
                 data['response'] = "Update failed"
                 return Response(data)
     else:
+        print(f">>> API: bad request at email verification")
+        logger.error(f">>> API: bad request at email verification")
         return Response(status.HTTP_400_BAD_REQUEST)
 
 
