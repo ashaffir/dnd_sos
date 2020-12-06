@@ -223,7 +223,7 @@ class NewLoginViewSet(ObtainAuthToken):
 
                 print(f'>>>>> Login response: {login_response}')
                 logger.info(f'>>>>> Login response: {login_response}')
-                return Response(login_response)
+                return Response(login_response, status=200)
             except Exception as e:
                 print(
                     f">>> API: Failed logging in user {user.username}. ERROR: {e}")
