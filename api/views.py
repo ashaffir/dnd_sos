@@ -81,7 +81,7 @@ class UserLocationViewSet(APIView):
             user.lon = float(self.request.data['lon'])
             logger.info(f">>> API: User LAT: {lat}")
             logger.info(f">>> API: User LON: {lon}")
-            geolocator = Nominatim(user_agent="dndsos", timeout=3)
+            geolocator = Nominatim(user_agent="dndsos")
             location = geolocator.reverse(f"{user.lat}, {user.lon}")
             logger.info(f">>> API: User Address: {location.address}")
             logger.info(f">>> API: User Address keys: {location.raw}")
@@ -98,7 +98,7 @@ class UserLocationViewSet(APIView):
             user.save()
         except Exception as e:
             logger.error(f">>> API: Fail getting user location. ERROR: {e}")
-            return Response({'response': 'Bad coordinates'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'response': 'Bad coordinates'}, status=status.HTTP_)
 
         return Response({'response': 'Location updated'}, status=200)
 
