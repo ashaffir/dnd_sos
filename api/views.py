@@ -158,7 +158,7 @@ class NewLoginViewSet(ObtainAuthToken):
                 # employee = Employee.objects.get_or_create(user=user)
 
                 user_profile, _ = Employee.objects.get_or_create(
-                    pk=user.pk).gagaga
+                    pk=user.pk)
 
                 active_orders = Order.objects.filter(
                     (Q(freelancer=user.pk) & Q(updated__contains=today)) &
