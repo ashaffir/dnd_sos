@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/dao/user_dao.dart';
+import 'package:pickndell/finance/payments.dart';
 import 'package:pickndell/home/profile.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
@@ -141,7 +142,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     height: 36,
                   ),
                   SizedBox(
-                      height: (56 * 5).toDouble(),
+                      height: (56 * 6).toDouble(),
                       child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -278,6 +279,30 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                         onTap: () {
                                           Navigator.pushReplacementNamed(
                                               context, '/rejected-orders');
+                                        },
+                                      ),
+
+                                    if (user.isEmployee == 1)
+                                      ////////// Payments page - Only for Couriers ///////////
+                                      ListTile(
+                                        title: Text(
+                                          trans.payments,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        leading: Icon(
+                                          Icons.attach_money,
+                                          color: Colors.white,
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PaymentsPage(
+                                                      user: user,
+                                                      userCountry: _country,
+                                                    )),
+                                          );
                                         },
                                       ),
 

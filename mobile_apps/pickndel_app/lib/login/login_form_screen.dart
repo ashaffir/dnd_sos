@@ -161,13 +161,13 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                       },
                     ),
                   ),
-                  /////////////// Forgot password ////////////
 
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: 30)),
+                      /////////////// Login Button ////////////
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -191,6 +191,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                           ),
                         ],
                       ),
+                      /////////////// Forgot password ////////////
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
                         child:

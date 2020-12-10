@@ -48,11 +48,11 @@ Future<Token> serverAuthentication(UserLogin userLogin) async {
     },
     body: jsonEncode(userLogin.toDatabaseJson()),
   );
-  print('LOGIN RESPONSE: ${response.body}');
   if (response.statusCode == 200) {
-    print('RESPONSE: ${response.body});');
+    print('LOGIN RESPONSE: ${response.body});');
     return Token.fromJson(json.decode(response.body));
   } else {
+    print('ERROR LOGIN: ${response.body}');
     print(json.decode(response.body).toString());
     throw Exception(json.decode(response.body));
   }

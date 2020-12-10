@@ -186,7 +186,7 @@ class _ProfileUpdatedState extends State<ProfileUpdated> {
         0
       ]);
     }
-    print('ROWS UPDATED: $updateCount ');
+    print('>>> PROFILE UPDATE: ROWS UPDATED $updateCount ');
 
     return updateCount;
   }

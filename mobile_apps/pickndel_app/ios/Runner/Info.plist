@@ -22,16 +22,16 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open and in the background.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to photo library when open.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to the camera when open.</string>
+	<string>This app needs access to the camera for profile photos, documents scanning photos and delivery order confirmation photos.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open and in the background to allow the tracking of the couriers while on route.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location when in the background to allow the tracking of the couriers while on route.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This allows us to distribute the delivery orders among the most relevant couriers.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to photo library when open for profile photos and ID documents scans.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

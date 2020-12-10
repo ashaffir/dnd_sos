@@ -12,6 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pickndell/common/error_page.dart';
 import 'package:pickndell/common/global.dart';
 import 'package:pickndell/common/helper.dart';
+import 'package:pickndell/finance/payments.dart';
 import 'package:pickndell/home/prominent_disclosure.dart';
 import 'package:pickndell/localizations.dart';
 import 'package:pickndell/location/geo_helpers.dart';
@@ -49,7 +50,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   ReceivePort port = ReceivePort();
   String logStr = '';
-  bool isRunning;
+  bool isRunning = false;
+  bool _isRunning = false;
   bool isTracking = false;
   // LocationDto lastLocation;
   DateTime lastTimeLocation;
@@ -84,6 +86,7 @@ class _DashboardState extends State<Dashboard> {
 
   Widget build(BuildContext context) {
     final trans = ExampleLocalizations.of(context);
+    print('>>> DASHBOARD: _updating_profile = $_updatingProfile');
     if (_updatingProfile) {
       String loaderText = trans.loading_account + "...";
       return ColoredProgressDemo(loaderText);
@@ -103,7 +106,7 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  String _country;
+  String _country = 'GB';
 
   Future _checkProfile() async {
     // final trans = ExampleLocalizations.of(context);
@@ -207,21 +210,26 @@ class _DashboardState extends State<Dashboard> {
 
   Future<void> initPlatformState() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    print('Initializing...');
-    await BackgroundLocator.initialize();
     // logStr = await FileManager.readLogFile();
-    print('Initialization done');
-    final _isRunning = await BackgroundLocator.isRegisterLocationUpdate();
+
+    try {
+      await BackgroundLocator.initialize();
+      print('>>> DASHBOARD: Background locator initialization done');
+      _isRunning = await BackgroundLocator.isRegisterLocationUpdate();
+      print('>>> DASHBOARD: Location tracking status: $_isRunning');
+    } catch (e) {
+      print('>>> DASHBOARD: fail getting location tracking status. ERROR $e');
+    }
     setState(() {
       isRunning = _isRunning;
     });
-    print('Running ${isRunning.toString()}');
+    print('>>> DASHBOARD: isRunning ${isRunning.toString()}');
     await localStorage.setBool('locationTracking', isRunning);
   }
 
   Future<void> updateUI(LocationDto data) async {
     // final log = await FileManager.readLogFile();
-    User currentUser = await UserDao().getUser(0);
+    // User currentUser = await UserDao().getUser(0);
     UserLocation userLocation = UserLocation();
     LocationRepository updateLocation = LocationRepository();
 

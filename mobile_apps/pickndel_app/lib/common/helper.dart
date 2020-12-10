@@ -462,7 +462,7 @@ Future<int> rowUpdate({User user, dynamic data}) async {
       0
     ]);
   }
-  print('ROWS UPDATED: $updateCount ');
+  print('>>> HELPER: ROWS UPDATED: $updateCount ');
 
   return updateCount;
 }
