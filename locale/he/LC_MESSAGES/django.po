@@ -1800,7 +1800,7 @@ msgstr "לאימות הטלפון שלך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/phone-verify.html:20
 msgid "please enter the code that was sent to you"
-msgstr ""
+msgstr "אנא הזן את הקוד שנשלח אליך"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/phone-verify.html:31
 msgid "digits code here"
