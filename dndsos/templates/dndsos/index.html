@@ -71,19 +71,15 @@
                 {% endif %}
               {% endif %}
               <div class="row">
+                {% if user.is_authenticated %}
+                {% else %}
                   <div class="col-md-6">
-                    {% if user.is_authenticated %}
-                    {% else %}
-
-                      {% if couriers_only %}
-                      {% else %}
-                          <a href="{% url 'core:employer_signup' %}" class="btn btn-success mr-2 mb-2" style="color:white">{% trans 'Need something to be delivered' %}?</a>
-                      {% endif %}
-                    {% endif %}
+                      <a href="{% url 'core:employer_signup' %}" class="btn btn-success mr-2 mb-2" style="color:white">{% trans 'Need something to be delivered' %}?</a>
                   </div>
                   <div class="col-md-5">
                     <a href="{% url 'core:employee_signup' %}" class="btn btn-warning text-white"> {% trans 'Earn extra income as a courier' %} </a>
                   </div>
+                {% endif %}
               </div>
             </div>
           </div>
