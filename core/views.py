@@ -50,8 +50,8 @@ def employer_signup(request):
             user.username = user.email
             user.save()
 
-            messages.success(request, gettext('An accout activation link has been sent to your email') + ": " + user.email + ". " +
-                             gettext('Check your email and click the link to activate your account'))
+            messages.success(request, gettext(
+                'An accout activation link has been sent to your email'))
             return redirect('dndsos:home')
         else:
             messages.error(request, 'Error')
@@ -121,8 +121,8 @@ def employee_signup(request):
             #     logger.error(">>> CORE VIEWS: Failed MailChimp communication. ERROR: {}".format(error.text))
             ####################################
 
-            messages.success(request, gettext('An accout activation link has been sent to your email): ' + user.email +
-                                              gettext('. Check your email and click the link to activate your account.')))
+            messages.success(request, gettext(
+                'An accout activation link has been sent to your email'))
             return redirect('dndsos:home')
         else:
             messages.error(request, 'Error')
@@ -465,7 +465,7 @@ def activate_account(request, uidb64, token):
                 f'>>> CORE: Failed sending account activated to the user {user_profile}. ERROR: {e}')
 
         messages.success(request, gettext(
-            'You have successfully confirmed your email. Check your email for further instructions'))
+            'You have successfully confirmed your email'))
         return redirect('core:login')
         # else:
         #     messages.info(request, 'Set a password for your Employee account.')

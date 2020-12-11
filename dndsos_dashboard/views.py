@@ -430,7 +430,7 @@ def f_profile(request, f_id):
                         'You have successfully updated your profile.'))
                 except Exception as e:
                     messages.success(
-                        request, gettext('There was an error updating your profile.'))
+                        request, gettext('There was an error updating your profile'))
             else:
                 for error in form.errors:
                     messages.error(request, f'Error: {error}')

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-02 15:59+0200\n"
+"POT-Creation-Date: 2020-12-11 09:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,24 +19,24 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: core/models.py:29
+#: core/models.py:32
 msgid "first name"
 msgstr "שם פרטי"
 
-#: core/models.py:136
+#: core/models.py:147
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:23
 msgid "Business Profile"
 msgstr "פרופיל בית עסק"
 
-#: core/models.py:137
+#: core/models.py:148
 msgid "Business Profiles"
 msgstr ""
 
-#: core/models.py:242
+#: core/models.py:268
 msgid "Freelancer Profile"
 msgstr ""
 
-#: core/models.py:243
+#: core/models.py:269
 msgid "Freelancer Profiles"
 msgstr ""
 
@@ -100,7 +100,7 @@ msgstr "שלום"
 
 #: core/templates/core/emails/sender_approved_email.html:33
 #: core/templates/registration/account_activation_email.bak.html:35
-#: core/templates/registration/account_activation_email.html:301
+#: core/templates/registration/account_activation_email.html:303
 #: dndsos/templates/dndsos/email_verification_email.html:31
 #: dndsos_dashboard/templates/dndsos_dashboard/emails/sender_order_summary_email.html:46
 msgid "If you have received this email by mistake, please ignore it"
@@ -153,6 +153,31 @@ msgstr "קבל את התנאים וההגבלות של השולח"
 msgid "Courier? Register here"
 msgstr "שליח? הירשם כאן"
 
+#: core/templates/core/partials/_core_modal_message.html:29
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:209
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:330
+#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:439
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:24
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:97
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:22
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:74
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:11
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_broadcast-request-modal.html:25
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:7
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:17
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:106
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:117
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:11
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-modal.html:14
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-removed-modal.html:42
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_message-sent-modal.html:24
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_order-delivered-modal.html:24
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:154
+#: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:13
+#: payments/templates/payments/partials/_update-card-modal.html:7
+msgid "Close"
+msgstr "סגור"
+
 #: core/templates/core/password_change.html:47
 msgid "Change password"
 msgstr "שנה סיסמא"
@@ -188,20 +213,20 @@ msgstr "לחץ על הקישור למטה כדי להפעיל את חשבונך"
 
 #: core/templates/registration/account_activation_email.bak.html:28
 #: core/templates/registration/account_activation_email.bak.html:30
-#: core/templates/registration/account_activation_email.html:267
-#: core/templates/registration/account_activation_email.html:270
+#: core/templates/registration/account_activation_email.html:269
+#: core/templates/registration/account_activation_email.html:272
 msgid "Activate account"
 msgstr "הפעל חשבון"
 
-#: core/templates/registration/account_activation_email.html:191
+#: core/templates/registration/account_activation_email.html:203
 msgid "Welcome to PickNdell"
 msgstr "ברוך הבא לפיקנדל"
 
-#: core/templates/registration/account_activation_email.html:233
+#: core/templates/registration/account_activation_email.html:235
 msgid "Click on the link below to activate your account"
 msgstr "לחץ על הקישור למטה כדי להפעיל את חשבונך"
 
-#: core/templates/registration/account_activation_email.html:249
+#: core/templates/registration/account_activation_email.html:251
 msgid "Pickndell Team"
 msgstr "צוות פיקנדל"
 
@@ -231,77 +256,72 @@ msgstr "הרשמת שליח"
 msgid "Sender/Business sign up"
 msgstr "הרשמת שולח / בית עסק"
 
-#: core/views.py:53
+#: core/views.py:54
 msgid "An accout activation link has been sent to your email"
 msgstr "קישור להפעלת חשבון נשלח לדואל שלך"
 
-#: core/views.py:54
-msgid "Check your email and click the link to activate your account"
-msgstr "בדוק את הדואל שלך ולחץ על הקישור כדי להפעיל את חשבונך"
-
-#: core/views.py:118
+#: core/views.py:125
 msgid ". Check your email and click the link to activate your account."
 msgstr "בדוק את הדואל שלך ולחץ על הקישור כדי להפעיל את חשבונך"
 
-#: core/views.py:117
+#: core/views.py:124
 msgid "An accout activation link has been sent to your email): "
 msgstr "קישור להפעלת חשבון נשלח לדואל שלך"
 
-#: core/views.py:145
+#: core/views.py:152
 msgid "Profile has been updated successfully"
 msgstr "הפרופיל עודכן בהצלחה"
 
-#: core/views.py:344
+#: core/views.py:351
 msgid "Your profile has been updated."
 msgstr "הפרופיל שלך עודכן."
 
-#: core/views.py:460
+#: core/views.py:468
 msgid ""
-"You have successfully confirmed your email. Check your email for further "
-"instructions"
-msgstr "אישרת בהצלחה את הדואל שלך. אנא עיין בדואל שלך לקבלת הוראות נוספות."
+"You have successfully confirmed your email"
+msgstr "אישרת בהצלחה את הדואל שלך"
 
-#: core/views.py:475
+#: core/views.py:483
 msgid "<p>An activation link has been sent to your Email</p>"
 msgstr "קישור הפעלה נשלח לדואל שלך"
 
-#: core/views.py:489
+#: core/views.py:497
 msgid "Welcome "
 msgstr "ברוך הבא"
 
-#: core/views.py:489
+#: core/views.py:497
 msgid ". Your account is now operational"
 msgstr "חשבונך הופעל"
 
-#: core/views.py:504
+#: core/views.py:512
 msgid "Enter password"
 msgstr "הזן את הסיסמה"
 
-#: core/views.py:508
+#: core/views.py:516
 msgid "Minimum password length should be 8"
 msgstr "אורך הסיסמא המינימלי צריך להיות 8"
 
-#: core/views.py:512
+#: core/views.py:520
 msgid "Mismatch password"
 msgstr "סיסמתך לא התאימה"
 
-#: core/views.py:523
+#: core/views.py:531
 msgid "Successfully changed the password, please login again."
 msgstr "שינית את הסיסמה בהצלחה, אנא התחבר שוב."
 
-#: core/views.py:560
+#: core/views.py:568
 msgid "Check your mail inbox to reset password"
 msgstr "בדוק את תיבת הדואר שלך כדי לאפס את הסיסמה"
 
-#: core/views.py:572
+#: core/views.py:580
 msgid "This email is not registered to us. Please register first "
 msgstr "דואל זה אינו רשום לנו. אנא הירשם קודם"
 
-#: core/views.py:576
+#: core/views.py:584
 msgid "Please enter a valid email"
 msgstr "אנא הכנס דואל חוקי"
 
-#: core/views.py:580
+#: core/views.py:588
 msgid "Please do enter the email"
 msgstr "אנא הזן את הדואל"
 
@@ -317,7 +337,7 @@ msgstr "מאפיינים"
 msgid "How it Works"
 msgstr "איך זה עובד"
 
-#: dndsos/templates/dndsos/base.html:84 dndsos/templates/dndsos/index.html:285
+#: dndsos/templates/dndsos/base.html:84 dndsos/templates/dndsos/index.html:290
 msgid "FAQ"
 msgstr "שאלות נפוצות"
 
@@ -367,69 +387,69 @@ msgstr "רשת איסוף ומסירה"
 msgid "Find couriers around you"
 msgstr "מצא שליחים פעילים בסביבתך"
 
-#: dndsos/templates/dndsos/index.html:80
+#: dndsos/templates/dndsos/index.html:77
 msgid "Need something to be delivered"
 msgstr "מעוניין לשלוח משהו"
 
-#: dndsos/templates/dndsos/index.html:85
+#: dndsos/templates/dndsos/index.html:80
 msgid "Earn extra income as a courier"
 msgstr "הכנסה נוספת כשליח"
 
-#: dndsos/templates/dndsos/index.html:109
+#: dndsos/templates/dndsos/index.html:114
 msgid "What is"
 msgstr "מה זה"
 
-#: dndsos/templates/dndsos/index.html:132
+#: dndsos/templates/dndsos/index.html:137
 msgid "Why"
 msgstr "למה"
 
-#: dndsos/templates/dndsos/index.html:204
+#: dndsos/templates/dndsos/index.html:209
 msgid "How it works"
 msgstr "איך זה עובד"
 
-#: dndsos/templates/dndsos/index.html:292
+#: dndsos/templates/dndsos/index.html:297
 msgid "Senders/Businesses"
 msgstr "בתי עסק/שולחים"
 
-#: dndsos/templates/dndsos/index.html:298
-#: dndsos/templates/dndsos/index.html:409
+#: dndsos/templates/dndsos/index.html:303
+#: dndsos/templates/dndsos/index.html:414
 #: dndsos_dashboard/templates/dndsos_dashboard/base.html:280
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:82
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:91
 msgid "Couriers"
 msgstr "שליחים"
 
-#: dndsos/templates/dndsos/index.html:387
+#: dndsos/templates/dndsos/index.html:392
 msgid "Pricing "
 msgstr "מחירים"
 
-#: dndsos/templates/dndsos/index.html:396
+#: dndsos/templates/dndsos/index.html:401
 msgid "Senders"
 msgstr "שולחים"
 
-#: dndsos/templates/dndsos/index.html:403
+#: dndsos/templates/dndsos/index.html:408
 msgid "Register as a Sender"
 msgstr "הירשם כשולח"
 
-#: dndsos/templates/dndsos/index.html:417
+#: dndsos/templates/dndsos/index.html:422
 msgid "Join as courier"
 msgstr "הצטרף כשליח"
 
-#: dndsos/templates/dndsos/index.html:614
+#: dndsos/templates/dndsos/index.html:619
 msgid "Get In Touch"
 msgstr "צור קשר"
 
-#: dndsos/templates/dndsos/index.html:629
+#: dndsos/templates/dndsos/index.html:634
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:43
 msgid "First Name"
 msgstr "שם פרטי"
 
-#: dndsos/templates/dndsos/index.html:635
+#: dndsos/templates/dndsos/index.html:640
 #: dndsos_dashboard/templates/dndsos_dashboard/f-bank-details.html:53
 msgid "Last Name"
 msgstr "שם משפחה"
 
-#: dndsos/templates/dndsos/index.html:646
+#: dndsos/templates/dndsos/index.html:651
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:87
 #: dndsos_dashboard/templates/dndsos_dashboard/f-businesses.html:78
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:84
@@ -437,17 +457,17 @@ msgstr "שם משפחה"
 msgid "Email"
 msgstr "אימייל"
 
-#: dndsos/templates/dndsos/index.html:657
+#: dndsos/templates/dndsos/index.html:662
 msgid "Subject"
 msgstr "נושא"
 
-#: dndsos/templates/dndsos/index.html:667
+#: dndsos/templates/dndsos/index.html:672
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:5
 #: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:5
 msgid "Message"
 msgstr "הודעה"
 
-#: dndsos/templates/dndsos/index.html:680
+#: dndsos/templates/dndsos/index.html:685
 msgid "Send Message"
 msgstr "שלח"
 
@@ -1266,30 +1286,6 @@ msgstr "דירוג ממוצע"
 msgid "Request Courier"
 msgstr "בקש שליח"
 
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:209
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:330
-#: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:439
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:24
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.bak.html:97
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:22
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_add-order-modal.html:74
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_b-message-modal.html:11
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_broadcast-request-modal.html:25
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:7
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_confirm-f-cancel-modal.html:17
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:106
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_deliveries-table.html:117
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-message-modal.html:11
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-modal.html:14
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_f-offer-removed-modal.html:42
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_message-sent-modal.html:24
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_order-delivered-modal.html:24
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_orders-table.html:154
-#: dndsos_dashboard/templates/dndsos_dashboard/partials/_rating-confirm.html:13
-#: payments/templates/payments/partials/_update-card-modal.html:7
-msgid "Close"
-msgstr "סגור"
-
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:210
 #: dndsos_dashboard/templates/dndsos_dashboard/freelancers.html:331
 msgid "Which order would you like the freelancer for"
@@ -1802,20 +1798,36 @@ msgstr "הטלפון שלך מאומת"
 msgid "To verify your phone"
 msgstr "לאימות הטלפון שלך"
 
+#: dndsos_dashboard/templates/dndsos_dashboard/phone-verify.html:20
+msgid "please enter the code that was sent to you"
+msgstr ""
+
 #: dndsos_dashboard/templates/dndsos_dashboard/phone-verify.html:31
 msgid "digits code here"
 msgstr "קוד ספרות כאן"
 
-#: dndsos_dashboard/views.py:230
+#: dndsos_dashboard/views.py:237
 msgid ""
 "Failed getting credit card information. Please contact Pickndell support"
 msgstr "קבלת פרטי כרטיס האשראי נכשלה. אנא צרו קשר עם התמיכה של פיקנדל"
 
-#: dndsos_dashboard/views.py:400
+#: dndsos_dashboard/views.py:359
+msgid "Something went wrong with your phone verification. Please try later."
+msgstr ""
+
+#: dndsos_dashboard/views.py:430
 msgid "You have successfully updated your profile."
 msgstr "הצלחת לעדכן את הפרופיל שלך."
 
-#: dndsos_dashboard/views.py:1079 orders/signals.py:266 orders/signals.py:268
+#: dndsos_dashboard/views.py:433
+msgid "There was an error updating your profile."
+msgstr "אירעה שגיאה בעדכון הפרופיל שלך"
+
+#: dndsos_dashboard/views.py:468
+msgid "Something went wrong with your phone verification. Please try later"
+msgstr "משהו השתבש באימות הטלפון שלך. אנא נסה מאוחר יותר"
+
+#: dndsos_dashboard/views.py:1174 orders/signals.py:287 orders/signals.py:289
 msgid "Thank you for choosing PickNdell"
 msgstr "תודה שבחרת ב- PickNdell"
 
@@ -1852,6 +1864,9 @@ msgid ""
 "Credit card is not valid. Please make sure to enter valid credit card "
 "information"
 msgstr "כרטיס האשראי אינו תקף. אנא הקפד להזין כרטיס אשראי תקף"
+
+#~ msgid "Check your email and click the link to activate your account"
+#~ msgstr "בדוק את הדואל שלך ולחץ על הקישור כדי להפעיל את חשבונך"
 
 #~ msgid "Your PickNdell Account is Approved"
 #~ msgstr "חשבון PickNdell שלך אושר"
