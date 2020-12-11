@@ -28,6 +28,16 @@ def send_mail(subject, email_template_name,
     request: {request}
     from email: {from_email}
     ''')
+
+    logger.info(f'''
+    subject: {subject}
+    html email template name: {html_email_template_name}
+    context: {context}
+    to email: {to_email}
+    request: {request}
+    from email: {from_email}
+    ''')
+
     ctx_dict = {}
     if request is not None:
         ctx_dict = RequestContext(request, ctx_dict)

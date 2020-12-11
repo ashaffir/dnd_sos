@@ -460,9 +460,9 @@ def activate_account(request, uidb64, token):
                       html_email_template_name='core/emails/profile_approved_email.html')
         except Exception as e:
             logger.error(
-                f'>>> CORE: Failed sending account activated to the user {user_profile}. ERROR: {e}')
+                f'>>> CORE: Failed sending account activated to the user. ERROR: {e}')
             print(
-                f'>>> CORE: Failed sending account activated to the user {user_profile}. ERROR: {e}')
+                f'>>> CORE: Failed sending account activated to the user. ERROR: {e}')
 
         messages.success(request, gettext(
             'You have successfully confirmed your email'))
