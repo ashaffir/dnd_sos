@@ -443,7 +443,10 @@ def f_profile(request, f_id):
 
         elif 'addPhone' in request.POST:
             try:
-                phone = request.POST.get('phoneNumber')
+                phone = request.POST.get(
+                    'countryCode') + request.POST.get('phoneNumber')
+                print(f"PHONE: {phone}")
+                return redirect(request.META['HTTP_REFERER'])
                 request.session['phone'] = phone
                 sent_sms_status = phone_verify(
                     request, action='send_verification_code', phone=phone, code=None)

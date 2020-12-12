@@ -136,10 +136,13 @@
 																{% else %}
 																<div class="col-md-9">
 																	<div class="row">
-																		<div class="col-md-6">
-																			<input class="form-control" type="text" name="phoneNumber" placeholder="{% trans 'Phone' %} ({% trans 'with country prefix' %})">
+																		<div class="col-md-2">
+																			<input type="text" class="form-control" name="countryCode" id="countryCode">
 																		</div>
-																		<div class="col-md-6">
+																		<div class="col-md-4">
+																			<input class="form-control" type="text" name="phoneNumber" placeholder="{% trans 'Phone' %}">
+																		</div>
+																		<div class="col-md-3">
 																			<button class="btn btn-primary" name="addPhone" type="submit">{% trans 'Add Phone' %}</button>
 																		</div>
 																	</div>
@@ -345,6 +348,7 @@
 	</script>
 
 	<script>
+		/*
 		$.ajax({
 			method: 'GET',
 			url: 'https://restcountries.eu/rest/v2/all?fields=name;',
@@ -356,14 +360,60 @@
 				getLocation();
 			}
 		})
-	
+		*/
+		$.ajax({
+			method: 'GET',
+			url: 'https://restcountries.eu/rest/v2/all?fields=name;callingCodes;',
+			success: res => {
+				res.forEach(country => {
+					document.querySelector('#countryCode').innerHTML +=
+						`<option value=${country.callingCodes}>${country.callingCodes}</option>`;
+
+						document.querySelector('#country').innerHTML +=
+						`<option value=${country.name}>${country.name}</option>`;
+
+				})
+				getLocation();
+			}
+		})
+
 		function getLocation() {
 			fetch('https://extreme-ip-lookup.com/json/')
 				.then(res => res.json())
 				.then(response => {
 					document.querySelector(`option[value=${response.country}`).setAttribute('selected', 'selected');
+					let country = response.country;
+					console.log(`Country: ${country}`);
+					fetch(`https://restcountries.eu/rest/v2/name/${country};`)
+					.then(res => res.json())
+					.then(response => {
+						//document.querySelector('#countryCode').innerHTML =
+						//	`<option value=+${response[0].callingCodes}>+${response[0].callingCodes}</option>`;
+						{% if lang == 'he' %}
+							document.querySelector('#countryCode').value = response[0].callingCodes + "+";		
+						{% else %}
+							document.querySelector('#countryCode').value = "+" + response[0].callingCodes;
+						{% endif %}	
+						//console.log(response[0].callingCodes);
+					})
 				})
 				.catch((data, status) => {})
+
+			/*
+			$.ajax({
+				method: 'GET',
+				url: `https://restcountries.eu/rest/v2/name/${country};`,
+				success: res => {
+					res.forEach(country => {
+						document.querySelector('#countryCode').innerHTML +=
+							`<option value=${country.callingCodes}>${country.callingCodes}</option>`;
+					})
+					getLocation();
+				}
+			})
+			*/
+		
+			
 		}
 	
 	</script>
