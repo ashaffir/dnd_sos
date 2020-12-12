@@ -445,8 +445,7 @@ def f_profile(request, f_id):
             try:
                 phone = request.POST.get(
                     'countryCode') + request.POST.get('phoneNumber')
-                print(f"PHONE: {phone}")
-                return redirect(request.META['HTTP_REFERER'])
+
                 request.session['phone'] = phone
                 sent_sms_status = phone_verify(
                     request, action='send_verification_code', phone=phone, code=None)
