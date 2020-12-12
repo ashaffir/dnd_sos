@@ -390,7 +390,7 @@
 						//document.querySelector('#countryCode').innerHTML =
 						//	`<option value=+${response[0].callingCodes}>+${response[0].callingCodes}</option>`;
 						{% if lang == 'he' %}
-							document.querySelector('#countryCode').value = response[0].callingCodes + "+";		
+							document.querySelector('#countryCode').value = "+" + response[0].callingCodes;		
 						{% else %}
 							document.querySelector('#countryCode').value = "+" + response[0].callingCodes;
 						{% endif %}	
