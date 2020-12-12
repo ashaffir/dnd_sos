@@ -445,7 +445,7 @@ def f_profile(request, f_id):
             try:
                 phone = request.POST.get(
                     'countryCode') + request.POST.get('phoneNumber')
-
+                logger.info(f'DASHBBOARD VIEWS: PHONE: {phone}')
                 request.session['phone'] = phone
                 sent_sms_status = phone_verify(
                     request, action='send_verification_code', phone=phone, code=None)
