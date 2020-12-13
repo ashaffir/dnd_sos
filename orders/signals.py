@@ -57,8 +57,8 @@ def announce_new_user(sender, instance, created, **kwargs):
                 current_site = settings.DOMAIN_PROD
 
             subject = 'Activate PickNdell Account'
-
             message = {
+                'lang': instance.language,
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -67,7 +67,7 @@ def announce_new_user(sender, instance, created, **kwargs):
 
             send_mail(subject, email_template_name=None,
                       context=message, to_email=[user.email],
-                      html_email_template_name='registration/account_activation_email.html')
+                      html_email_template_name='registration/account_activation_email_new.html')
 
 # REFERENCE: FCM: https://github.com/xtrinch/fcm-django
 

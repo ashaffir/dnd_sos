@@ -46,7 +46,8 @@ def employer_signup(request):
     if request.method == 'POST':
         form = EmployerSignupForm(request.POST)
         if form.is_valid():
-            user = form.save()  # add employer to db with is_active as False
+            # add employer to db with is_active as False
+            user = form.save(request.LANGUAGE_CODE)
             user.username = user.email
             user.save()
 
@@ -88,7 +89,8 @@ def employee_signup(request):
     if request.method == 'POST':
         form = EmployeeSignupForm(request.POST)
         if form.is_valid():
-            user = form.save()  # add freelancer to db with is_active as False
+            # add freelancer to db with is_active as False
+            user = form.save(request.LANGUAGE_CODE)
             user.username = user.email
             user.save()
 
@@ -248,6 +250,7 @@ def employer_notifications(request):
 @login_required
 def employee_add(request):
     if request.method == 'POST':
+        lang = request.LANGUAGE_CODE
         form = EmployeeCreationForm(request.POST)
         if form.is_valid():
             employee = form.save(commit=False)
@@ -262,8 +265,8 @@ def employee_add(request):
 
             # send employee a account activation email
             current_site = get_current_site(request)
-            subject = 'Activate Employee Account'
-            message = render_to_string('registration/account_activation_email.html', {
+            message = render_to_string('core/emails/profile_approved_email.htm', {
+                'lang': lang,
                 'user': employee,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(employee.pk)),
@@ -473,7 +476,7 @@ def activate_account(request, uidb64, token):
 
     # invalid link
     messages.error(
-        request, 'Account activation link is invalid or has expired. Contact system administratior for assistance')
+        request, gettext('Account activation link is invalid or has expired. Contact system administratior for assistance'))
     return redirect('core:home')
 
 # account activation email sent
@@ -592,7 +595,8 @@ def forgot_password(request):
         return render(request, 'core/forgot_password.html', {})
 
 
-def email_activation(request):
+def email_testing(request):
     context = {}
     context['test'] = True
-    return render(request, 'registration/account_activation_email.html', context)
+    context['lang'] = 'he'
+    return render(request, 'registration/account_activation_email_new.html', context)
