@@ -272,11 +272,11 @@
                             data-trigger="hover" class="form-control" data-original-title="{% trans 'Your account level defines the maximum number of packages you can deliver per route, i.e. how many orders you are allowed accept' %}."></i> {% endif %}</h4></center>
                             {% if user.freelancer.account_level %}
                                 {% if user.freelancer.account_level == 'Rookie' %}
-                                    <i>You are allowed to have only one package per delivery route.</i>
+                                    <i>{% trans 'You are allowed to have up to' %} 2 {% trans 'packages per delivery route' %}.</i>
                                 {% elif user.freelancer.account_level == 'Advanced' %}
-                                    <p>You are allowed to have up to ten (10) packages per delivery route.</p>
+                                    <p>{% trans 'You are allowed to have up to' %} 10 {% trans 'packages per delivery route' %}.</p>
                                 {% elif user.freelancer.account_level == 'Expert' %}
-                                    <p>You are allowed to have up to fifty (50) packages per delivery route.</p>
+                                    <p>{% trans 'You are allowed to have up to' %} 50 {% trans 'packages per delivery route' %}.</p>
                                 {% endif %}
                             {% endif %}
                     </div>

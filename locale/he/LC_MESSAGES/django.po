@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-13 14:48+0200\n"
+"POT-Creation-Date: 2020-12-22 16:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,20 +23,20 @@ msgstr ""
 msgid "first name"
 msgstr "שם פרטי"
 
-#: core/models.py:147
+#: core/models.py:151
 #: dndsos_dashboard/templates/dndsos_dashboard/b-profile.html:23
 msgid "Business Profile"
 msgstr "פרופיל בית עסק"
 
-#: core/models.py:148
+#: core/models.py:152
 msgid "Business Profiles"
 msgstr ""
 
-#: core/models.py:268
+#: core/models.py:286
 msgid "Freelancer Profile"
 msgstr ""
 
-#: core/models.py:269
+#: core/models.py:287
 msgid "Freelancer Profiles"
 msgstr ""
 
@@ -238,7 +238,6 @@ msgstr "לחץ על הקישור למטה כדי להפעיל את חשבונך"
 msgid "Pickndell Team"
 msgstr "צוות פיקנדל"
 
-#: core/templates/registration/login.html:20
 #: core/templates/registration/login.html:26
 #: dndsos/templates/dndsos/base.html:100
 msgid "Login"
@@ -364,19 +363,24 @@ msgstr "לוח מחוונים"
 msgid "Logout"
 msgstr "התנתק"
 
-#: dndsos/templates/dndsos/base.html:245
+#: dndsos/templates/dndsos/base.html:107
+#: dndsos_dashboard/templates/dndsos_dashboard/base.html:355
+msgid "Change Language"
+msgstr "שנה שפה"
+
+#: dndsos/templates/dndsos/base.html:246
 msgid "Terms of use"
 msgstr "תנאי שימוש"
 
-#: dndsos/templates/dndsos/base.html:246
+#: dndsos/templates/dndsos/base.html:247
 msgid "Privacy"
 msgstr "פְּרָטִיוּת"
 
-#: dndsos/templates/dndsos/base.html:259
+#: dndsos/templates/dndsos/base.html:260
 msgid "Copyright"
 msgstr "זכויות יוצרים"
 
-#: dndsos/templates/dndsos/base.html:259
+#: dndsos/templates/dndsos/base.html:260
 msgid "All rights reserved"
 msgstr "כל הזכויות שמורות"
 
@@ -1118,6 +1122,18 @@ msgstr ""
 "רמת החשבון שלך מגדירה את מספר החבילות המרבי שתוכל לספקלכל מסלול, כלומר כמה "
 "הזמנות שמותר לך לקבל"
 
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:275
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:277
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:279
+msgid "You are allowed to have up to"
+msgstr "מותר לך להחזיק עד "
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:275
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:277
+#: dndsos_dashboard/templates/dndsos_dashboard/f-dashboard.html:279
+msgid "packages per delivery route"
+msgstr "חבילות למסלול משלוח"
+
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:19
 msgid "Courier Profile"
 msgstr "פרופיל שליח"
@@ -1147,7 +1163,6 @@ msgid "Rating"
 msgstr "דירוג"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:108
-#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:178
 msgid "ID Document"
 msgstr "תעודת זהות או רישיון נהיגה"
 
@@ -1166,6 +1181,10 @@ msgstr "אימייל"
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:162
 msgid "Short Bio"
 msgstr "ביוגרפיה קצרה"
+
+#: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:178
+msgid "Driver License"
+msgstr "רישיון נהיגה"
 
 #: dndsos_dashboard/templates/dndsos_dashboard/f-profile.html:183
 msgid "Active Hours"
@@ -1811,7 +1830,7 @@ msgstr "קבלת פרטי כרטיס האשראי נכשלה. אנא צרו קש
 
 #: dndsos_dashboard/views.py:363
 msgid "Something went wrong with your phone verification. Please try later."
-msgstr ""
+msgstr "משהו השתבש באימות הטלפון שלך. אנא נסה מאוחר יותר"
 
 #: dndsos_dashboard/views.py:432
 msgid "You have successfully updated your profile."
@@ -1825,7 +1844,7 @@ msgstr "אירעה שגיאה בעדכון הפרופיל שלך"
 msgid "Something went wrong with your phone verification. Please try later"
 msgstr "משהו השתבש באימות הטלפון שלך. אנא נסה מאוחר יותר"
 
-#: dndsos_dashboard/views.py:1180 orders/signals.py:288 orders/signals.py:290
+#: dndsos_dashboard/views.py:1180 orders/signals.py:287 orders/signals.py:289
 msgid "Thank you for choosing PickNdell"
 msgstr "תודה שבחרת ב- PickNdell"
 
@@ -2059,9 +2078,6 @@ msgstr "כרטיס האשראי אינו תקף. אנא הקפד להזין כר
 
 #~ msgid "couriers"
 #~ msgstr "שליחים"
-
-#~ msgid "Change status"
-#~ msgstr "שנה סטָטוּס"
 
 #~ msgid "Waiting for a Freelancer..."
 #~ msgstr "ממתין לשליח ..."
