@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from django.contrib.messages import constants as messages
 import os
 import json
 import platform
@@ -18,7 +19,7 @@ import platform
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-with open('config.json') as config_file:
+with open(f'{BASE_DIR}/config.json') as config_file:
     config = json.load(config_file)
 
 # Quick-start development settings - unsuitable for production
@@ -68,13 +69,14 @@ INSTALLED_APPS = [
     'django_extensions',
     'ckeditor',
     'crispy_forms',
-    'rest_framework', #https://www.django-rest-framework.org/
+    'rest_framework',  # https://www.django-rest-framework.org/
     'rest_framework.authtoken',
-    'qr_code', # https://github.com/dprog-philippe-docourt/django-qr-code
-    'django_twilio', # Twilio Phone SMS verification
+    'qr_code',  # https://github.com/dprog-philippe-docourt/django-qr-code
+    'django_twilio',  # Twilio Phone SMS verification
     "fcm_django",
-    'imagekit', # image processing, https://github.com/matthewwithanm/django-imagekit/
+    'imagekit',  # image processing, https://github.com/matthewwithanm/django-imagekit/
     'corsheaders',
+    'django_crontab',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -87,7 +89,7 @@ INSTALLED_APPS = [
     # Newsletter related
     # 'sorl.thumbnail',
     'newsletters_app',
-    
+
 
     # GEO
     'django.contrib.gis',
@@ -110,9 +112,9 @@ CHANNEL_LAYERS = {
 }
 
 SITE_ID = 1
-#This is to stop the Async-to-Sync ERROR message in the consumer orders gathering process
+# This is to stop the Async-to-Sync ERROR message in the consumer orders gathering process
 # https://docs.djangoproject.com/en/3.0/topics/async/
-os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true" 
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 
 MIDDLEWARE = [
@@ -133,14 +135,14 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'templates'),
-            os.path.join(BASE_DIR,'dndsos/templates'),
-            os.path.join(BASE_DIR,'core/templates'),
-            os.path.join(BASE_DIR,'payments/templates'),
-            os.path.join(BASE_DIR,'dndsos_dashboard/templates'),
-            os.path.join(BASE_DIR,'notifier/templates'),
-            os.path.join(BASE_DIR,'geo/templates'),
-            os.path.join(BASE_DIR,'newsletters_app/templates'),
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'dndsos/templates'),
+            os.path.join(BASE_DIR, 'core/templates'),
+            os.path.join(BASE_DIR, 'payments/templates'),
+            os.path.join(BASE_DIR, 'dndsos_dashboard/templates'),
+            os.path.join(BASE_DIR, 'notifier/templates'),
+            os.path.join(BASE_DIR, 'geo/templates'),
+            os.path.join(BASE_DIR, 'newsletters_app/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -157,8 +159,8 @@ TEMPLATES = [
                 'dndsos_dashboard.context_processors.getCurrencyRates',
                 'dndsos_dashboard.context_processors.getFreelancerActiveOrders',
                 'dndsos_dashboard.context_processors.couriersOnly',
-                
-                # 'dndsos_dashboard.context_processors.requested_freelancer',                
+
+                # 'dndsos_dashboard.context_processors.requested_freelancer',
             ],
         },
     },
@@ -181,7 +183,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'dndsos', #LIVE DAATABASE
+        'NAME': 'dndsos',  # LIVE DAATABASE
         'USER': config['POSTGRES_USER'],
         'PASSWORD': config['POSTGRES_PASS'],
         'HOST': 'localhost',
@@ -245,7 +247,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Email Setup
 EMAIL_USE_TLS = True
@@ -286,7 +288,6 @@ EMAIL_HOST_PASSWORD = config['SENDINBLUE_HOST_KEY']
 ADMIN_EMAIL = config['ADMIN_EMAIL']
 
 # use bootstrap friendly message tags
-from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO:  'alert-info',
@@ -308,10 +309,11 @@ DEFAULT_BASE_PRICE = config['DEFAULT_BASE_PRICE']
 DEFAULT_UNIT_PRICE = config['DEFAULT_UNIT_PRICE']
 # DEFAULT_CURRENCY = config['DEFAULT_CURRENCY']
 
-DISTANCE_UNIT = config['DISTANCE_UNIT'] # for pricing each unit
-DISTANCE_DIM = config['DISTANCE_DIM'] # m
-MAX_DISTANCE = config['MAX_DISTANCE'] # KM
-MAX_RANGE_TO_FREELANCER = config['MAX_RANGE_TO_FREELANCER'] # Max distance between new order pickup address and available freelancers in KM
+DISTANCE_UNIT = config['DISTANCE_UNIT']  # for pricing each unit
+DISTANCE_DIM = config['DISTANCE_DIM']  # m
+MAX_DISTANCE = config['MAX_DISTANCE']  # KM
+# Max distance between new order pickup address and available freelancers in KM
+MAX_RANGE_TO_FREELANCER = config['MAX_RANGE_TO_FREELANCER']
 
 # Twilio settings
 # https://django-twilio.readthedocs.io/en/latest/index.html
@@ -332,8 +334,8 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('en','English'),
-    ('he','Hebrew'),
+    ('en', 'English'),
+    ('he', 'Hebrew'),
 ]
 
 LOCALE_PATHS = [
@@ -349,23 +351,23 @@ NOCAPTCHA = True
 DOMAIN_PROD = 'https://pickndell.com'
 
 FCM_DJANGO_SETTINGS = {
-        # "APP_VERBOSE_NAME": "[string for AppConfig's verbose_name]",
-        "APP_VERBOSE_NAME": "com.actappon.pickndell",
-         # default: _('FCM Django')
-        "FCM_SERVER_KEY": "AAAAMWr-paE:APA91bGk4eiHLV9VNZ1tscqCR2Wy30TUAm1HoqqmWb5D6twBYvniAc9cL7PYfR0hEPhCnBAom5lBgxdI2oZwpKYpQpUTLVe08NhMFQNng1RTMLJ-co3KPU582b365S8-7JBIsmJkSyU2",
-         # true if you want to have only one active device per registered user at a time
-         # default: False
-        "ONE_DEVICE_PER_USER": True,
-         # devices to which notifications cannot be sent,
-         # are deleted upon receiving error response from FCM
-         # default: False
-        "DELETE_INACTIVE_DEVICES": False,
+    # "APP_VERBOSE_NAME": "[string for AppConfig's verbose_name]",
+    "APP_VERBOSE_NAME": "com.actappon.pickndell",
+    # default: _('FCM Django')
+    "FCM_SERVER_KEY": "AAAAMWr-paE:APA91bGk4eiHLV9VNZ1tscqCR2Wy30TUAm1HoqqmWb5D6twBYvniAc9cL7PYfR0hEPhCnBAom5lBgxdI2oZwpKYpQpUTLVe08NhMFQNng1RTMLJ-co3KPU582b365S8-7JBIsmJkSyU2",
+    # true if you want to have only one active device per registered user at a time
+    # default: False
+    "ONE_DEVICE_PER_USER": True,
+    # devices to which notifications cannot be sent,
+    # are deleted upon receiving error response from FCM
+    # default: False
+    "DELETE_INACTIVE_DEVICES": False,
 }
 
 PICKNDELL_COMMISSION = 0.05
 DEFAULT_ORDER_TO_BUISINESS_DISTANCE = 1000
 
-## API from alfred.shaffir@gmail.com Google Cloud
+# API from alfred.shaffir@gmail.com Google Cloud
 GOOGLE_MAPS_KEY = config['GOOGLE_MAPS_KEY']
 
 LOGGING = {
@@ -401,11 +403,11 @@ LOGGING = {
 
 # Google Places
 #################################################
-## API from alfreds@actappon.com Google Cloud 
+# API from alfreds@actappon.com Google Cloud
 #################################################
-PLACES_MAPS_API_KEY=config['GOOGLE_MAPS_KEY']
-PLACES_MAP_WIDGET_HEIGHT=200
-PLACES_MAP_WIDGET_WIDTH=200
+PLACES_MAPS_API_KEY = config['GOOGLE_MAPS_KEY']
+PLACES_MAP_WIDGET_HEIGHT = 200
+PLACES_MAP_WIDGET_WIDTH = 200
 # PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
 # PLACES_MARKER_OPTIONS='{"draggable": true}'
 
@@ -413,7 +415,7 @@ CSRF_FAILURE_VIEW = 'dndsos.views.csrf_failure'
 
 # Transferwise
 # REFERENCE TransferWise: https://api-docs.transferwise.com/#payouts-guide
-TW_TEST_API_KEY = "2eb356de-96b6-4625-9463-ca10dd0cbad6" 
+TW_TEST_API_KEY = "2eb356de-96b6-4625-9463-ca10dd0cbad6"
 
 
 # Account level parameters
@@ -426,3 +428,8 @@ EXPERT_LEVEL = 50
 # MAILCHIMP_DATA_CENTER = 'us20'
 # MAILCHIMP_EMAIL_LIST_ID = '6055fc759b'
 
+# Cron jobs
+CRONJOBS = [
+    ('*/1 * * * *', 'core.cron.check_user_profile_complete',
+     f'>> {BASE_DIR}/cron.log')
+]

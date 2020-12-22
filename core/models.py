@@ -48,6 +48,7 @@ class User(AbstractUser):
     # phone number
     phone_number = models.CharField(
         max_length=15, blank=True, null=True, default=None)
+    phone_blacklisted = models.BooleanField(default=False)
 
     # date of birth
     date_of_birth = models.DateField(default=None, blank=True, null=True)
@@ -95,6 +96,8 @@ class Employer(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True, related_name='business')
 
+    joined = models.DateTimeField(auto_now_add=True)
+
     # business name
     business_name = models.CharField(max_length=200, blank=True, null=True)
 
@@ -117,6 +120,7 @@ class Employer(models.Model):
 
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
+    phone_blacklisted = models.BooleanField(default=False)
 
     credit_card_token = models.CharField(max_length=100, blank=True, null=True)
     # credit_card_info = JSONField(null=True, blank=True) # Will be retreived directly from Rivhit
@@ -188,6 +192,9 @@ class Employee(models.Model):
 
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True, related_name='freelancer')
+
+    joined = models.DateTimeField(auto_now_add=True)
+
     name = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
@@ -196,6 +203,7 @@ class Employee(models.Model):
     language = models.CharField(max_length=100, blank=True, null=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
+    phone_blacklisted = models.BooleanField(default=False)
     vehicle = models.CharField(
         max_length=100, choices=VEHICLE, blank=True, null=True)
     active_hours = models.CharField(max_length=100, blank=True, null=True)
@@ -226,6 +234,7 @@ class Employee(models.Model):
     id_doc = models.ImageField(null=True, blank=True, upload_to=id_path, validators=[
                                FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])])
     id_doc_expiry = models.DateField(null=True, blank=True)
+    id_expired = models.BooleanField(default=False)
 
     freelancer_total_rating = models.FloatField(null=True, blank=True)
     account_level = models.CharField(
@@ -235,10 +244,19 @@ class Employee(models.Model):
 
     new_messages = models.IntegerField(default=0)
 
-    # He filled up the profile information necessary
+    # Profile related
+    ##################
+    # Filled up the profile information necessary
     profile_pending = models.BooleanField(default=False)
-    # He filled up the profile information necessary
+
+    # Profile approved
     is_approved = models.BooleanField(default=False)
+    review_date = models.DateTimeField(null=True, blank=True)
+
+    is_rejected = models.BooleanField(default=False)
+    rejection_reason = models.CharField(max_length=100, blank=True, null=True)
+
+    profile_incomplete_message_sent = models.BooleanField(default=False)
 
     verification_code = models.CharField(
         max_length=20, null=True, blank=True)  # Used for email verificaiton

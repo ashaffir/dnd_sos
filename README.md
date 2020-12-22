@@ -220,3 +220,11 @@ django-admin compilemessages
 # REFERENCE: Adding robots.txt
 
 - https://tinyurl.com/yx8tyedn
+
+# REFERENCE: Cron jobs
+
+- https://www.youtube.com/watch?v=PUT29lvDFco
+- https://pypi.org/project/django-crontab/
+
+# REFERENCE: custom erro pages (404,500, 403...)
+- https://medium.com/@yildirimabdrhm/python-django-handling-custom-error-page-807087352bea

@@ -25,3 +25,9 @@ sudo lsof -i TCP:8001 | grep LISTEN
 # Languages
 django-admin makemessages -l he -i venv_dnd_sos
 django-admin compilemessages
+
+# Cron
+./manage.py crontab add 
+./manage.py crontab show
+./manage.py crontab remove
+

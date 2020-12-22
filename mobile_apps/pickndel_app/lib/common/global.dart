@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const MAX_WAIT_TIME = 10;
 // NGROK or other as such
 String serverDomain = 'https://pickndell.com';
-// String serverDomain = 'https://92fe6096b274.ngrok.io';
+// String serverDomain = 'https://7edf4a951f95.ngrok.io';
 String defaultCountry = "Israel";
 // Sizes
 ////////////////////
