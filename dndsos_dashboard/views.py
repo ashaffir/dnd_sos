@@ -553,9 +553,6 @@ def f_profile(request, f_id):
             logger.error(
                 f'Failed sending admin mail about pending profile. ERROR: {e}')
 
-    else:
-        user_profile.profile_pending = False
-        user_profile.save()
 
     # Check earnings due
     daily_orders = Order.objects.filter(
