@@ -1376,12 +1376,11 @@ def phone_verification(request):
             country_code = request.data['country_code']
 
             # Checking phone validity before sending to Twilio
-            valid_new_phone_number = clean_phone_number(
-                new_phone, country_code)
+            valid_new_phone_number = clean_phone_number(new_phone, country_code)
 
             if (valid_new_phone_number):
-                print(
-                    f'Phone is good: {new_phone}. Country: {country_code}. Sending to Twilio')
+                print(f'Phone is good: {new_phone}. Country: {country_code}. Sending to Twilio')
+                logger.info(f'>>> API@phonerification: Phone is good: {new_phone}. Country: {country_code}. Sending to Twilio')
 
                 if settings.DEBUG:
                     timer = 0
@@ -1392,18 +1391,15 @@ def phone_verification(request):
                     sent_sms_status = True
                 else:
                     print('Sending SMS code request to Twilio')
-                    logger.info('>>> API: Sending SMS code request to Twilio')
-                    sent_sms_status = phone_verify(
-                        request, action='send_verification_code', phone=new_phone, code=None)
+                    logger.info('>>> API@honerification: Sending SMS code request to Twilio')
+                    sent_sms_status = phone_verify(request, action='send_verification_code', phone=new_phone, code=None)
 
                 if sent_sms_status:
                     data['response'] = 'Update successful'
                     return Response(data)
                 else:
-                    print(
-                        f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
-                    logger.error(
-                        f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
+                    print(f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
+                    logger.error(f'>>> API: Bad phone request. ERROR: {sent_sms_status}')
                     data['response'] = f'Bad phone request. ERROR: {sent_sms_status}'
                     return Response(data)
 
@@ -1411,7 +1407,8 @@ def phone_verification(request):
                 # data['response'] = 'Update successful'
                 return Response(data)
             else:
-                print(f'Bad phone number. Phone: {new_phone}')
+                print(f'>>> API@phonerification: Bad phone number. Phone: {new_phone}')
+                logger.info(f'>>> API@phonerification: Bad phone number. Phone: {new_phone}')
                 data['response'] = f'Bad phone number.'
                 return Response(data)
 
@@ -1429,9 +1426,9 @@ def phone_verification(request):
                 sent_sms_status = True
                 verification_status = 'approved'
             else:
-                print('Sending approval request to Twilio')
-                verification_status = phone_verify(
-                    request, action='verify_code', phone=new_phone, code=user_code)
+                print(f'>>> API@phonerification: Sending approval request to Twilio')
+                logger.info(f'>>> API@phonerification: Sending code {user_code} and phone {new_phone} approval request to Twilio')
+                verification_status = phone_verify(request, action='verify_code', phone=new_phone, code=user_code)
 
             if serializer.is_valid():
                 data = serializer.data
@@ -1444,8 +1441,8 @@ def phone_verification(request):
                         check_profile_approved(
                             user.pk, request.data['is_employee'])
                     except Exception as e:
-                        print(f'Faied to update PROFILE phone. E: {e}')
-                        logger.error(f'Faied to update PROFILE phone. E: {e}')
+                        print(f'>>> API@phonerification: Failed to update PROFILE phone. E: {e}')
+                        logger.error(f'>>> API@phonerification: Failed to update PROFILE phone. E: {e}')
                         data['response'] = 'Update Profile phone Failed'
 
                     # Save to User
@@ -1460,6 +1457,7 @@ def phone_verification(request):
 
                     return Response(data)
                 else:
+                    logger.error(f'>>> API@phonerification: Failed to verify phone verification. ')
                     data['response'] = f'Bad phone request. ERROR: {verification_status}'
                     return Response(data)
             else:

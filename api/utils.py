@@ -8,11 +8,13 @@ from dndsos_dashboard.utilities import send_mail
 logger = logging.getLogger(__file__)
 
 def clean_phone_number(phone_number, country_code):
-    print(f'Checking: {phone_number} Country: {country_code}')
     z = phonenumbers.parse(phone_number, country_code)
     if not phonenumbers.is_valid_number(z):
         print(f'Phone not valid.')
+        logger.info(f'>> UTILS: clean_phone: Check FAILE!!! for {phone_number} Country: {country_code}')
         return False
+    print(f'>>> UTILS: clean_phone: Check OK for {phone_number} Country: {country_code}')
+    logger.info(f'>>> UTILS: clean_phone: Check OK for {phone_number} Country: {country_code}')
     return True
 
 def check_profile_approved(user_id, is_employee):
