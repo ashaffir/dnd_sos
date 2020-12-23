@@ -29,7 +29,7 @@ with open(f'{BASE_DIR}/config.json') as config_file:
 SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if config['DEBUG'] == 'True' else False
 
 # DEBUG_SERVER = False
 
