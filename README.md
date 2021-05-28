@@ -144,9 +144,18 @@ gdalinfo --version
 - and the version that you get needs to be install ed with pip in the env
   pip install gdal==<3.1.2>
 
+### If all goes to shit. Download and install locally:
+- https://docs.djangoproject.com/en/3.1/ref/contrib/gis/install/geolibs/ (at the bottom)
+
 #### On Mac
 
+Fix Postgres problems:
+  pip uninstall psycopg2 
+  pip install psycopg2-binary
+
 brew install postgis
+ > https://postgis.net/install/
+ >  https://postgresapp.com/downloads.html
 
 #### On Linux:
 

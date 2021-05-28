@@ -1,5 +1,5 @@
 import logging
-from forex_python.converter import CurrencyRates # https://github.com/MicroPyramid/forex-python
+# from forex_python.converter import CurrencyRates # https://github.com/MicroPyramid/forex-python
 from dndsos.models import ContactUs, AdminParameters
 
 logger = logging.getLogger(__file__)

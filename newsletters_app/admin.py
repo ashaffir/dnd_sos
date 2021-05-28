@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Newsletter, EmailTemplate
 
 @admin.register(Newsletter)
-class ContactUs(admin.ModelAdmin):
+class NewletterAdmin(admin.ModelAdmin):
     list_display = ('created','name','sent', 'sent_date','recipients_count',)
     search_fields = ('name',)
     ordering = ('-created',)

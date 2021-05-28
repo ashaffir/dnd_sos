@@ -249,8 +249,9 @@ def lock_delivery_price(order):
     '''
     context = {}
     # order = Order.objects.get(pk=order_id)
-    usd_ils, usd_eur = getRates()
-    order_price = order.price * usd_ils
+    # usd_ils, usd_eur = getRates()
+    # usd_ils, usd_eur = getRates()
+    order_price = order.price * 3.5
 
     b_id = order.business.business.pk
     b_credit_card_token = order.business.business.credit_card_token
