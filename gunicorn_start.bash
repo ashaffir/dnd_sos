@@ -5,7 +5,7 @@ DJANGODIR=/home/ubuntu/dnd_sos                             # Django project dire
 SOCKFILE=/home/ubuntu/venv_dndsos/run/gunicorn.sock  # we will communicte using this unix socket
 USER=ubuntu                                         # the user to run as
 GROUP=ubuntu                                        # the group to run as
-NUM_WORKERS=9                                       # how many worker processes should Gunicorn spawn
+NUM_WORKERS=2                                       # how many worker processes should Gunicorn spawn
 DJANGO_SETTINGS_MODULE=dnd_sos_project.settings      # which settings file should Django use
 DJANGO_WSGI_MODULE=dnd_sos_project.wsgi              # WSGI module name
 echo "Starting $NAME as `whoami`"
