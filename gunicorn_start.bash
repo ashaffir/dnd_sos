@@ -1,8 +1,8 @@
 #!/bin/bash
 
 NAME="dnd_sos_project"                                   # Name of the application
-DJANGODIR=/data/dnd_sos                             # Django project directory (above the "_project internal")
-SOCKFILE=/data/dnd_sos/venv_dnd/run/gunicorn.sock  # we will communicte using this unix socket
+DJANGODIR=/home/ubuntu/dnd_sos                             # Django project directory (above the "_project internal")
+SOCKFILE=/home/ubuntu/venv_dndsos/run/gunicorn.sock  # we will communicte using this unix socket
 USER=alfreds                                         # the user to run as
 GROUP=alfreds                                        # the group to run as
 NUM_WORKERS=9                                       # how many worker processes should Gunicorn spawn
@@ -13,7 +13,7 @@ echo "Starting $NAME as `whoami`"
 # Activate the virtual environment
 
 cd $DJANGODIR
-source /data/dnd_sos/venv_dnd/bin/activate
+source /home/ubuntu/venv_dndsos/bin/activate
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 
