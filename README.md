@@ -157,6 +157,8 @@ brew install postgis
  > https://postgis.net/install/
  >  https://postgresapp.com/downloads.html
 
+> https://thecodersblog.com/PostgreSQL-PostGIS-installation/
+> https://github.com/Homebrew/homebrew-core/issues/8499
 #### On Linux:
 
 sudo apt-get install gcc libpq-dev -y

@@ -87,8 +87,20 @@ def home(request):
 
     except Exception as e:
         messages.error(request, f'Missing content in DB! ERROR: {e}')
-    
-    context['couriers_only'] = AdminParameters.objects.last().couriers_only
+
+    try:
+        couriers_only = AdminParameters.objects.last().couriers_only
+        context['couriers_only'] = AdminParameters.objects.last().couriers_only
+    except:
+        couriers_params = AdminParameters.objects.create(
+            usd_ils_default = 3.5,
+            usd_eur_default = 0.8,
+            rookie_level_max = 1,
+            advanced_level_max = 10,
+            expert_level_max = 50,
+            couriers_only = False
+        )
+
 
     context['form'] = form
     context['site_recaptcha'] = settings.RECAPTCHA_PUBLIC_KEY
