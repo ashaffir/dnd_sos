@@ -68,4 +68,4 @@ sorl-thumbnail==12.6.3
 mailchimp-marketing==3.0.23
 django-crontab==0.7.1
 psycopg2-binary
-Pillow==8.3.1
+Pillow>=8.3.2
